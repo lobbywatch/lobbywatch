@@ -49,6 +49,7 @@
                     new IntegerField('id', true, true, true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -226,7 +227,8 @@
                 new FilterColumn($this->dataset, 'telephon_1', 'telephon_1', 'Telephon 1'),
                 new FilterColumn($this->dataset, 'telephon_2', 'telephon_2', 'Telephon 2'),
                 new FilterColumn($this->dataset, 'erfasst', 'erfasst', 'Erfasst'),
-                new FilterColumn($this->dataset, 'parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json')
+                new FilterColumn($this->dataset, 'parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json'),
+                new FilterColumn($this->dataset, 'vorname_kurz', 'vorname_kurz', 'Vorname Kurz')
             );
         }
     
@@ -289,7 +291,8 @@
                 ->addColumn($columns['telephon_1'])
                 ->addColumn($columns['telephon_2'])
                 ->addColumn($columns['erfasst'])
-                ->addColumn($columns['parlament_interessenbindungen_json']);
+                ->addColumn($columns['parlament_interessenbindungen_json'])
+                ->addColumn($columns['vorname_kurz']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -1768,6 +1771,31 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('vorname_kurz_edit');
+            $main_editor->SetMaxLength(15);
+            
+            $filterBuilder->addColumn(
+                $columns['vorname_kurz'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -2401,6 +2429,16 @@
             $column->SetDescription('Importierte Interessenbindungen von ws.parlament.ch als JSON. Rechtsformen: -, AG, Anst., EG, EidgKomm, Gen., GmbH, KollG, Komm., Körp., Stift., Ve., öffStift; Gremien: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV; Funktionen: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Alltagsvorname oder gebräuchlicher Spitzname, z.B. Nik für Niklaus');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -2858,6 +2896,13 @@
             $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
         }
     
         protected function AddEditColumns(Grid $grid)
@@ -2975,6 +3020,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -3063,6 +3110,7 @@
                     new StringField('homepage_de'),
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -3132,6 +3180,7 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -3244,6 +3293,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -3680,6 +3730,16 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for vorname_kurz field
+            //
+            $editor = new TextEdit('vorname_kurz_edit');
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Vorname Kurz', 'vorname_kurz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
         }
     
         protected function AddMultiEditColumns(Grid $grid)
@@ -3797,6 +3857,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -3885,6 +3947,7 @@
                     new StringField('homepage_de'),
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -3954,6 +4017,7 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -4066,6 +4130,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -4639,6 +4704,16 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for vorname_kurz field
+            //
+            $editor = new TextEdit('vorname_kurz_edit');
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Vorname Kurz', 'vorname_kurz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -4756,6 +4831,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -4844,6 +4921,7 @@
                     new StringField('homepage_de'),
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -4913,6 +4991,7 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -5025,6 +5104,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -5458,6 +5538,16 @@
             //
             $editor = new TextEdit('parlament_interessenbindungen_json_edit');
             $editColumn = new CustomEditColumn('Parlament Interessenbindungen Json', 'parlament_interessenbindungen_json', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for vorname_kurz field
+            //
+            $editor = new TextEdit('vorname_kurz_edit');
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Vorname Kurz', 'vorname_kurz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -5924,6 +6014,13 @@
             $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -6379,6 +6476,13 @@
             // View column for parlament_interessenbindungen_json field
             //
             $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
@@ -6962,6 +7066,13 @@
             // View column for parlament_interessenbindungen_json field
             //
             $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
         }
@@ -7556,6 +7667,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -7623,6 +7736,7 @@
                     new StringField('homepage_de'),
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -7679,6 +7793,7 @@
                     new StringField('homepage_de'),
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -7723,6 +7838,7 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -7766,6 +7882,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -12100,6 +12217,7 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -12414,6 +12532,7 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -12749,6 +12868,7 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -13958,6 +14078,7 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -14002,6 +14123,7 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),

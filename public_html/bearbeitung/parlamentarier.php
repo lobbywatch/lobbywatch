@@ -855,6 +855,7 @@
                     new IntegerField('id', true, true, true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -1015,6 +1016,7 @@
                     new IntegerField('id', true, true, true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -1705,6 +1707,7 @@
                     new IntegerField('id', true, true, true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -1789,6 +1792,7 @@
                     new IntegerField('id', true, true, true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -2837,6 +2841,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -2910,6 +2915,7 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('aktiv'),
+                    new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
                     new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
@@ -2923,6 +2929,7 @@
                     new IntegerField('vertretene_bevoelkerung'),
                     new StringField('rat'),
                     new StringField('kanton'),
+                    new IntegerField('romandie'),
                     new StringField('rat_de'),
                     new StringField('kanton_name_de'),
                     new StringField('rat_fr'),
@@ -3151,6 +3158,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -3224,6 +3232,7 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('aktiv'),
+                    new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
                     new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
@@ -3237,6 +3246,7 @@
                     new IntegerField('vertretene_bevoelkerung'),
                     new StringField('rat'),
                     new StringField('kanton'),
+                    new IntegerField('romandie'),
                     new StringField('rat_de'),
                     new StringField('kanton_name_de'),
                     new StringField('rat_fr'),
@@ -3465,6 +3475,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -3538,6 +3549,7 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('aktiv'),
+                    new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
                     new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
@@ -3551,6 +3563,7 @@
                     new IntegerField('vertretene_bevoelkerung'),
                     new StringField('rat'),
                     new StringField('kanton'),
+                    new IntegerField('romandie'),
                     new StringField('rat_de'),
                     new StringField('kanton_name_de'),
                     new StringField('rat_fr'),
@@ -4209,6 +4222,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -4282,6 +4296,7 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('aktiv'),
+                    new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
                     new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
@@ -4295,6 +4310,7 @@
                     new IntegerField('vertretene_bevoelkerung'),
                     new StringField('rat'),
                     new StringField('kanton'),
+                    new IntegerField('romandie'),
                     new StringField('rat_de'),
                     new StringField('kanton_name_de'),
                     new StringField('rat_fr'),
@@ -4369,6 +4385,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -4442,6 +4459,7 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('aktiv'),
+                    new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
                     new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
@@ -4455,6 +4473,7 @@
                     new IntegerField('vertretene_bevoelkerung'),
                     new StringField('rat'),
                     new StringField('kanton'),
+                    new IntegerField('romandie'),
                     new StringField('rat_de'),
                     new StringField('kanton_name_de'),
                     new StringField('rat_fr'),
@@ -4545,6 +4564,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -4618,6 +4638,7 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('aktiv'),
+                    new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
                     new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
@@ -4631,6 +4652,7 @@
                     new IntegerField('vertretene_bevoelkerung'),
                     new StringField('rat'),
                     new StringField('kanton'),
+                    new IntegerField('romandie'),
                     new StringField('rat_de'),
                     new StringField('kanton_name_de'),
                     new StringField('rat_fr'),
@@ -4705,6 +4727,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -4778,6 +4801,7 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('aktiv'),
+                    new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
                     new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
@@ -4791,6 +4815,7 @@
                     new IntegerField('vertretene_bevoelkerung'),
                     new StringField('rat'),
                     new StringField('kanton'),
+                    new IntegerField('romandie'),
                     new StringField('rat_de'),
                     new StringField('kanton_name_de'),
                     new StringField('rat_fr'),
@@ -5871,7 +5896,7 @@
                     new IntegerField('interessengruppe_id'),
                     new IntegerField('interessengruppe2_id'),
                     new IntegerField('interessengruppe3_id'),
-                    new IntegerField('branche_id'),
+                    new IntegerField('ALT_branche_id'),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
@@ -5893,6 +5918,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -5929,6 +5955,7 @@
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
+                    new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
                     new StringField('beschreibung_fr'),
                     new StringField('parlamentarier_kommissionen'),
@@ -5962,6 +5989,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -6024,6 +6052,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -6097,6 +6126,7 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('aktiv'),
+                    new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
                     new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
@@ -6247,7 +6277,7 @@
                     new IntegerField('interessengruppe_id'),
                     new IntegerField('interessengruppe2_id'),
                     new IntegerField('interessengruppe3_id'),
-                    new IntegerField('branche_id'),
+                    new IntegerField('ALT_branche_id'),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
@@ -6269,6 +6299,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -6305,6 +6336,7 @@
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
+                    new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
                     new StringField('beschreibung_fr'),
                     new StringField('parlamentarier_kommissionen'),
@@ -6338,6 +6370,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -6400,6 +6433,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -6473,6 +6507,7 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('aktiv'),
+                    new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
                     new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
@@ -6709,7 +6744,7 @@
                     new IntegerField('interessengruppe_id'),
                     new IntegerField('interessengruppe2_id'),
                     new IntegerField('interessengruppe3_id'),
-                    new IntegerField('branche_id'),
+                    new IntegerField('ALT_branche_id'),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
@@ -6731,6 +6766,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -6767,6 +6803,7 @@
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
+                    new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
                     new StringField('beschreibung_fr'),
                     new StringField('parlamentarier_kommissionen'),
@@ -6800,6 +6837,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -6862,6 +6900,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -6935,6 +6974,7 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('aktiv'),
+                    new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
                     new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
@@ -7640,7 +7680,7 @@
                     new IntegerField('interessengruppe_id'),
                     new IntegerField('interessengruppe2_id'),
                     new IntegerField('interessengruppe3_id'),
-                    new IntegerField('branche_id'),
+                    new IntegerField('ALT_branche_id'),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
@@ -7662,6 +7702,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -7689,6 +7730,7 @@
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
+                    new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
                     new StringField('beschreibung_fr'),
                     new StringField('parlamentarier_kommissionen'),
@@ -7722,6 +7764,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -7748,6 +7791,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -7821,6 +7865,7 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('aktiv'),
+                    new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
                     new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
@@ -7872,7 +7917,7 @@
                     new IntegerField('interessengruppe_id'),
                     new IntegerField('interessengruppe2_id'),
                     new IntegerField('interessengruppe3_id'),
-                    new IntegerField('branche_id'),
+                    new IntegerField('ALT_branche_id'),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
@@ -7894,6 +7939,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -7921,6 +7967,7 @@
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
+                    new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
                     new StringField('beschreibung_fr'),
                     new StringField('parlamentarier_kommissionen'),
@@ -7954,6 +8001,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -7980,6 +8028,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -8053,6 +8102,7 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('aktiv'),
+                    new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
                     new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
@@ -8112,7 +8162,7 @@
                     new IntegerField('interessengruppe_id'),
                     new IntegerField('interessengruppe2_id'),
                     new IntegerField('interessengruppe3_id'),
-                    new IntegerField('branche_id'),
+                    new IntegerField('ALT_branche_id'),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
@@ -8134,6 +8184,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -8161,6 +8212,7 @@
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
+                    new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
                     new StringField('beschreibung_fr'),
                     new StringField('parlamentarier_kommissionen'),
@@ -8194,6 +8246,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -8220,6 +8273,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -8293,6 +8347,7 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('aktiv'),
+                    new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
                     new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
@@ -8344,7 +8399,7 @@
                     new IntegerField('interessengruppe_id'),
                     new IntegerField('interessengruppe2_id'),
                     new IntegerField('interessengruppe3_id'),
-                    new IntegerField('branche_id'),
+                    new IntegerField('ALT_branche_id'),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
@@ -8366,6 +8421,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -8393,6 +8449,7 @@
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
+                    new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
                     new StringField('beschreibung_fr'),
                     new StringField('parlamentarier_kommissionen'),
@@ -8426,6 +8483,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -8452,6 +8510,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -8525,6 +8584,7 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('aktiv'),
+                    new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
                     new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
@@ -8730,6 +8790,8 @@
                     new DateTimeField('created_date', true, true),
                     new StringField('updated_visa', false, true),
                     new DateTimeField('updated_date', true, true),
+                    new IntegerField('aktiv', false, true),
+                    new IntegerField('published', true, true),
                     new IntegerField('bis_unix', false, true),
                     new IntegerField('von_unix', false, true),
                     new IntegerField('created_date_unix', true, true),
@@ -8804,7 +8866,9 @@
                 new FilterColumn($this->dataset, 'parlament_committee_function', 'parlament_committee_function', 'Parlament Committee Function'),
                 new FilterColumn($this->dataset, 'parlament_committee_function_name', 'parlament_committee_function_name', 'Parlament Committee Function Name'),
                 new FilterColumn($this->dataset, 'abkuerzung_fr', 'abkuerzung_fr', 'Abkuerzung Fr'),
-                new FilterColumn($this->dataset, 'name_fr', 'name_fr', 'Name Fr')
+                new FilterColumn($this->dataset, 'name_fr', 'name_fr', 'Name Fr'),
+                new FilterColumn($this->dataset, 'aktiv', 'aktiv', 'Aktiv'),
+                new FilterColumn($this->dataset, 'published', 'published', 'Published')
             );
         }
     
@@ -8832,7 +8896,9 @@
                 ->addColumn($columns['parlament_committee_function'])
                 ->addColumn($columns['parlament_committee_function_name'])
                 ->addColumn($columns['abkuerzung_fr'])
-                ->addColumn($columns['name_fr']);
+                ->addColumn($columns['name_fr'])
+                ->addColumn($columns['aktiv'])
+                ->addColumn($columns['published']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -9377,6 +9443,42 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('aktiv_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['aktiv'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('published_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['published'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -9630,6 +9732,32 @@
             $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -9812,6 +9940,26 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
         }
     
         protected function AddEditColumns(Grid $grid)
@@ -9893,6 +10041,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -10093,6 +10242,25 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for aktiv field
+            //
+            $editor = new TextEdit('aktiv_edit');
+            $editColumn = new CustomEditColumn('Aktiv', 'aktiv', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for published field
+            //
+            $editor = new TextEdit('published_edit');
+            $editColumn = new CustomEditColumn('Published', 'published', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
         }
     
         protected function AddMultiEditColumns(Grid $grid)
@@ -10174,6 +10342,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -10513,6 +10682,25 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for aktiv field
+            //
+            $editor = new TextEdit('aktiv_edit');
+            $editColumn = new CustomEditColumn('Aktiv', 'aktiv', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for published field
+            //
+            $editor = new TextEdit('published_edit');
+            $editColumn = new CustomEditColumn('Published', 'published', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -10594,6 +10782,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -10794,6 +10983,25 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for aktiv field
+            //
+            $editor = new TextEdit('aktiv_edit');
+            $editColumn = new CustomEditColumn('Aktiv', 'aktiv', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for published field
+            //
+            $editor = new TextEdit('published_edit');
+            $editColumn = new CustomEditColumn('Published', 'published', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -10982,6 +11190,26 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_name_fr_handler_print');
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -11163,6 +11391,26 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_name_fr_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddExportColumn($column);
         }
     
@@ -11450,6 +11698,26 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
         }
     
         private function AddCompareHeaderColumns(Grid $grid)
@@ -11693,6 +11961,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -11753,6 +12022,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -11840,6 +12110,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -11900,6 +12171,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -12086,9 +12358,9 @@
                     new StringField('typ', true, true),
                     new StringField('vernehmlassung', true, true),
                     new IntegerField('interessengruppe_id', false, true),
+                    new IntegerField('interessengruppe1_id', false, true),
                     new IntegerField('interessengruppe2_id', false, true),
                     new IntegerField('interessengruppe3_id', false, true),
-                    new IntegerField('branche_id', false, true),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name', false, true),
@@ -12096,11 +12368,14 @@
                     new StringField('adresse_strasse', false, true),
                     new StringField('adresse_zusatz', false, true),
                     new StringField('adresse_plz', false, true),
-                    new StringField('branche', false, true),
                     new StringField('interessengruppe', false, true),
                     new StringField('interessengruppe_fr', false, true),
                     new StringField('interessengruppe_branche', false, true),
                     new IntegerField('interessengruppe_branche_id', false, true),
+                    new StringField('interessengruppe1', false, true),
+                    new StringField('interessengruppe1_fr', false, true),
+                    new StringField('interessengruppe1_branche', false, true),
+                    new IntegerField('interessengruppe1_branche_id', false, true),
                     new StringField('interessengruppe2', false, true),
                     new StringField('interessengruppe2_fr', false, true),
                     new StringField('interessengruppe2_branche', false, true),
@@ -12150,6 +12425,8 @@
                     new DateTimeField('created_date', true, true),
                     new StringField('updated_visa', false, true),
                     new DateTimeField('updated_date', true, true),
+                    new IntegerField('aktiv', false, true),
+                    new IntegerField('published', true, true),
                     new IntegerField('bis_unix', false, true),
                     new IntegerField('von_unix', false, true),
                     new IntegerField('created_date_unix', true, true),
@@ -12161,7 +12438,6 @@
                     new DateField('parlamentarier_im_rat_seit', true, true),
                     new IntegerField('wirksamkeit_index', true, true),
                     new StringField('organisation_lobbyeinfluss', false, true),
-                    new IntegerField('parlamentarier_lobbyfaktor', false, true),
                     new DateTimeField('refreshed_date', true, true),
                     new IntegerField('verguetung', false, true),
                     new IntegerField('verguetung_jahr', false, true),
@@ -12237,7 +12513,6 @@
                 new FilterColumn($this->dataset, 'interessengruppe_id', 'interessengruppe_id', 'Interessengruppe Id'),
                 new FilterColumn($this->dataset, 'interessengruppe2_id', 'interessengruppe2_id', 'Interessengruppe2 Id'),
                 new FilterColumn($this->dataset, 'interessengruppe3_id', 'interessengruppe3_id', 'Interessengruppe3 Id'),
-                new FilterColumn($this->dataset, 'branche_id', 'branche_id', 'Branche Id'),
                 new FilterColumn($this->dataset, 'homepage', 'homepage', 'Homepage'),
                 new FilterColumn($this->dataset, 'handelsregister_url', 'handelsregister_url', 'Handelsregister Url'),
                 new FilterColumn($this->dataset, 'twitter_name', 'twitter_name', 'Twitter Name'),
@@ -12245,7 +12520,6 @@
                 new FilterColumn($this->dataset, 'adresse_strasse', 'adresse_strasse', 'Adresse Strasse'),
                 new FilterColumn($this->dataset, 'adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz'),
                 new FilterColumn($this->dataset, 'adresse_plz', 'adresse_plz', 'Adresse Plz'),
-                new FilterColumn($this->dataset, 'branche', 'branche', 'Branche'),
                 new FilterColumn($this->dataset, 'interessengruppe', 'interessengruppe', 'Interessengruppe'),
                 new FilterColumn($this->dataset, 'interessengruppe_branche', 'interessengruppe_branche', 'Interessengruppe Branche'),
                 new FilterColumn($this->dataset, 'interessengruppe2', 'interessengruppe2', 'Interessengruppe2'),
@@ -12282,7 +12556,6 @@
                 new FilterColumn($this->dataset, 'parlamentarier_im_rat_seit', 'parlamentarier_im_rat_seit', 'Parlamentarier Im Rat Seit'),
                 new FilterColumn($this->dataset, 'wirksamkeit_index', 'wirksamkeit_index', 'Wirksamkeit Index'),
                 new FilterColumn($this->dataset, 'organisation_lobbyeinfluss', 'organisation_lobbyeinfluss', 'Organisation Lobbyeinfluss'),
-                new FilterColumn($this->dataset, 'parlamentarier_lobbyfaktor', 'parlamentarier_lobbyfaktor', 'Parlamentarier Lobbyfaktor'),
                 new FilterColumn($this->dataset, 'refreshed_date', 'refreshed_date', 'Refreshed Date'),
                 new FilterColumn($this->dataset, 'interessengruppe_fr', 'interessengruppe_fr', 'Interessengruppe Fr'),
                 new FilterColumn($this->dataset, 'interessengruppe2_fr', 'interessengruppe2_fr', 'Interessengruppe2 Fr'),
@@ -12292,7 +12565,14 @@
                 new FilterColumn($this->dataset, 'verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung'),
                 new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr'),
                 new FilterColumn($this->dataset, 'updated_by_import', 'updated_by_import', 'Updated By Import'),
-                new FilterColumn($this->dataset, 'hauptberuflich', 'hauptberuflich', 'Hauptberuflich')
+                new FilterColumn($this->dataset, 'hauptberuflich', 'hauptberuflich', 'Hauptberuflich'),
+                new FilterColumn($this->dataset, 'interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id'),
+                new FilterColumn($this->dataset, 'interessengruppe1', 'interessengruppe1', 'Interessengruppe1'),
+                new FilterColumn($this->dataset, 'interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr'),
+                new FilterColumn($this->dataset, 'interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche'),
+                new FilterColumn($this->dataset, 'interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id'),
+                new FilterColumn($this->dataset, 'aktiv', 'aktiv', 'Aktiv'),
+                new FilterColumn($this->dataset, 'published', 'published', 'Published')
             );
         }
     
@@ -12335,7 +12615,6 @@
                 ->addColumn($columns['parlamentarier_im_rat_seit'])
                 ->addColumn($columns['wirksamkeit_index'])
                 ->addColumn($columns['organisation_lobbyeinfluss'])
-                ->addColumn($columns['parlamentarier_lobbyfaktor'])
                 ->addColumn($columns['refreshed_date'])
                 ->addColumn($columns['interessengruppe_fr'])
                 ->addColumn($columns['interessengruppe2_fr'])
@@ -12345,7 +12624,14 @@
                 ->addColumn($columns['verguetung_beschreibung'])
                 ->addColumn($columns['beschreibung_fr'])
                 ->addColumn($columns['updated_by_import'])
-                ->addColumn($columns['hauptberuflich']);
+                ->addColumn($columns['hauptberuflich'])
+                ->addColumn($columns['interessengruppe1_id'])
+                ->addColumn($columns['interessengruppe1'])
+                ->addColumn($columns['interessengruppe1_fr'])
+                ->addColumn($columns['interessengruppe1_branche'])
+                ->addColumn($columns['interessengruppe1_branche_id'])
+                ->addColumn($columns['aktiv'])
+                ->addColumn($columns['published']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -13193,24 +13479,6 @@
                 )
             );
             
-            $main_editor = new TextEdit('parlamentarier_lobbyfaktor_edit');
-            
-            $filterBuilder->addColumn(
-                $columns['parlamentarier_lobbyfaktor'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
-            
             $main_editor = new DateTimeEdit('refreshed_date_edit', false, 'd.m.Y H:i:s');
             
             $filterBuilder->addColumn(
@@ -13413,6 +13681,151 @@
             
             $filterBuilder->addColumn(
                 $columns['hauptberuflich'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessengruppe1_id_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['interessengruppe1_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessengruppe1');
+            
+            $filterBuilder->addColumn(
+                $columns['interessengruppe1'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessengruppe1_fr');
+            
+            $filterBuilder->addColumn(
+                $columns['interessengruppe1_fr'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessengruppe1_branche_edit');
+            $main_editor->SetMaxLength(100);
+            
+            $filterBuilder->addColumn(
+                $columns['interessengruppe1_branche'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessengruppe1_branche_id_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['interessengruppe1_branche_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('aktiv_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['aktiv'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('published_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['published'],
                 array(
                     FilterConditionOperator::EQUALS => $main_editor,
                     FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
@@ -13813,19 +14226,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for parlamentarier_lobbyfaktor field
-            //
-            $column = new NumberViewColumn('parlamentarier_lobbyfaktor', 'parlamentarier_lobbyfaktor', 'Parlamentarier Lobbyfaktor', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for refreshed_date field
             //
             $column = new DateTimeViewColumn('refreshed_date', 'refreshed_date', 'Refreshed Date', $this->dataset);
@@ -13937,6 +14337,94 @@
             // View column for hauptberuflich field
             //
             $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_fr field
+            //
+            $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -14239,16 +14727,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for parlamentarier_lobbyfaktor field
-            //
-            $column = new NumberViewColumn('parlamentarier_lobbyfaktor', 'parlamentarier_lobbyfaktor', 'Parlamentarier Lobbyfaktor', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for refreshed_date field
             //
             $column = new DateTimeViewColumn('refreshed_date', 'refreshed_date', 'Refreshed Date', $this->dataset);
@@ -14333,6 +14811,73 @@
             // View column for hauptberuflich field
             //
             $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_fr field
+            //
+            $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -14433,7 +14978,7 @@
                     new IntegerField('interessengruppe_id'),
                     new IntegerField('interessengruppe2_id'),
                     new IntegerField('interessengruppe3_id'),
-                    new IntegerField('branche_id'),
+                    new IntegerField('ALT_branche_id'),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
@@ -14455,6 +15000,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -14755,15 +15301,6 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for parlamentarier_lobbyfaktor field
-            //
-            $editor = new TextEdit('parlamentarier_lobbyfaktor_edit');
-            $editColumn = new CustomEditColumn('Parlamentarier Lobbyfaktor', 'parlamentarier_lobbyfaktor', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
             // Edit column for refreshed_date field
             //
             $editor = new DateTimeEdit('refreshed_date_edit', false, 'd.m.Y H:i:s');
@@ -14850,6 +15387,71 @@
             //
             $editor = new TextEdit('hauptberuflich_edit');
             $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_id field
+            //
+            $editor = new TextEdit('interessengruppe1_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Id', 'interessengruppe1_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1 field
+            //
+            $editor = new TextAreaEdit('interessengruppe1_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Interessengruppe1', 'interessengruppe1', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_fr field
+            //
+            $editor = new TextAreaEdit('interessengruppe1_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Interessengruppe1 Fr', 'interessengruppe1_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_edit');
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche', 'interessengruppe1_branche', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche_id field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche Id', 'interessengruppe1_branche_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for aktiv field
+            //
+            $editor = new TextEdit('aktiv_edit');
+            $editColumn = new CustomEditColumn('Aktiv', 'aktiv', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for published field
+            //
+            $editor = new TextEdit('published_edit');
+            $editColumn = new CustomEditColumn('Published', 'published', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -14949,7 +15551,7 @@
                     new IntegerField('interessengruppe_id'),
                     new IntegerField('interessengruppe2_id'),
                     new IntegerField('interessengruppe3_id'),
-                    new IntegerField('branche_id'),
+                    new IntegerField('ALT_branche_id'),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
@@ -14971,6 +15573,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -15288,15 +15891,6 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
-            // Edit column for branche_id field
-            //
-            $editor = new TextEdit('branche_id_edit');
-            $editColumn = new CustomEditColumn('Branche Id', 'branche_id', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
             // Edit column for homepage field
             //
             $editor = new TextAreaEdit('homepage_edit', 50, 8);
@@ -15359,16 +15953,6 @@
             $editor = new TextEdit('adresse_plz_edit');
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Adresse Plz', 'adresse_plz', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for branche field
-            //
-            $editor = new TextEdit('branche_edit');
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Branche', 'branche', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -15731,15 +16315,6 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
-            // Edit column for parlamentarier_lobbyfaktor field
-            //
-            $editor = new TextEdit('parlamentarier_lobbyfaktor_edit');
-            $editColumn = new CustomEditColumn('Parlamentarier Lobbyfaktor', 'parlamentarier_lobbyfaktor', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
             // Edit column for refreshed_date field
             //
             $editor = new DateTimeEdit('refreshed_date_edit', false, 'd.m.Y H:i:s');
@@ -15826,6 +16401,71 @@
             //
             $editor = new TextEdit('hauptberuflich_edit');
             $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_id field
+            //
+            $editor = new TextEdit('interessengruppe1_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Id', 'interessengruppe1_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1 field
+            //
+            $editor = new TextAreaEdit('interessengruppe1_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Interessengruppe1', 'interessengruppe1', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_fr field
+            //
+            $editor = new TextAreaEdit('interessengruppe1_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Interessengruppe1 Fr', 'interessengruppe1_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_edit');
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche', 'interessengruppe1_branche', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche_id field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche Id', 'interessengruppe1_branche_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for aktiv field
+            //
+            $editor = new TextEdit('aktiv_edit');
+            $editColumn = new CustomEditColumn('Aktiv', 'aktiv', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for published field
+            //
+            $editor = new TextEdit('published_edit');
+            $editColumn = new CustomEditColumn('Published', 'published', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -15925,7 +16565,7 @@
                     new IntegerField('interessengruppe_id'),
                     new IntegerField('interessengruppe2_id'),
                     new IntegerField('interessengruppe3_id'),
-                    new IntegerField('branche_id'),
+                    new IntegerField('ALT_branche_id'),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
@@ -15947,6 +16587,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -16247,15 +16888,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for parlamentarier_lobbyfaktor field
-            //
-            $editor = new TextEdit('parlamentarier_lobbyfaktor_edit');
-            $editColumn = new CustomEditColumn('Parlamentarier Lobbyfaktor', 'parlamentarier_lobbyfaktor', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for refreshed_date field
             //
             $editor = new DateTimeEdit('refreshed_date_edit', false, 'd.m.Y H:i:s');
@@ -16342,6 +16974,71 @@
             //
             $editor = new TextEdit('hauptberuflich_edit');
             $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_id field
+            //
+            $editor = new TextEdit('interessengruppe1_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Id', 'interessengruppe1_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1 field
+            //
+            $editor = new TextAreaEdit('interessengruppe1_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Interessengruppe1', 'interessengruppe1', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_fr field
+            //
+            $editor = new TextAreaEdit('interessengruppe1_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Interessengruppe1 Fr', 'interessengruppe1_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_edit');
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche', 'interessengruppe1_branche', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche_id field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche Id', 'interessengruppe1_branche_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for aktiv field
+            //
+            $editor = new TextEdit('aktiv_edit');
+            $editColumn = new CustomEditColumn('Aktiv', 'aktiv', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for published field
+            //
+            $editor = new TextEdit('published_edit');
+            $editColumn = new CustomEditColumn('Published', 'published', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -16646,16 +17343,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for parlamentarier_lobbyfaktor field
-            //
-            $column = new NumberViewColumn('parlamentarier_lobbyfaktor', 'parlamentarier_lobbyfaktor', 'Parlamentarier Lobbyfaktor', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for refreshed_date field
             //
             $column = new DateTimeViewColumn('refreshed_date', 'refreshed_date', 'Refreshed Date', $this->dataset);
@@ -16740,6 +17427,73 @@
             // View column for hauptberuflich field
             //
             $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessengruppe1_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_handler_print');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessengruppe1_fr field
+            //
+            $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_print');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_print');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -17039,16 +17793,6 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for parlamentarier_lobbyfaktor field
-            //
-            $column = new NumberViewColumn('parlamentarier_lobbyfaktor', 'parlamentarier_lobbyfaktor', 'Parlamentarier Lobbyfaktor', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
-            $grid->AddExportColumn($column);
-            
-            //
             // View column for refreshed_date field
             //
             $column = new DateTimeViewColumn('refreshed_date', 'refreshed_date', 'Refreshed Date', $this->dataset);
@@ -17133,6 +17877,73 @@
             // View column for hauptberuflich field
             //
             $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessengruppe1_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessengruppe1_fr field
+            //
+            $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -17432,13 +18243,6 @@
             $grid->AddCompareColumn($column);
             
             //
-            // View column for branche_id field
-            //
-            $column = new TextViewColumn('branche_id', 'branche_id', 'Branche Id', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddCompareColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
@@ -17495,15 +18299,6 @@
             //
             $column = new TextViewColumn('adresse_plz', 'adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for branche field
-            //
-            $column = new TextViewColumn('branche', 'branche', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -17812,16 +18607,6 @@
             $grid->AddCompareColumn($column);
             
             //
-            // View column for parlamentarier_lobbyfaktor field
-            //
-            $column = new NumberViewColumn('parlamentarier_lobbyfaktor', 'parlamentarier_lobbyfaktor', 'Parlamentarier Lobbyfaktor', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
-            $grid->AddCompareColumn($column);
-            
-            //
             // View column for refreshed_date field
             //
             $column = new DateTimeViewColumn('refreshed_date', 'refreshed_date', 'Refreshed Date', $this->dataset);
@@ -17906,6 +18691,73 @@
             // View column for hauptberuflich field
             //
             $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessengruppe1_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_handler_compare');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessengruppe1_fr field
+            //
+            $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_compare');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_compare');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -18091,6 +18943,30 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_fr field
+            //
+            $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
             // View column for organisation_name field
             //
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
@@ -18178,6 +19054,30 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_fr_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_fr field
+            //
+            $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -18292,14 +19192,6 @@
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_adresse_zusatz_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for branche field
-            //
-            $column = new TextViewColumn('branche', 'branche', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -18446,6 +19338,30 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_fr field
+            //
+            $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -18481,7 +19397,7 @@
                     new IntegerField('interessengruppe_id'),
                     new IntegerField('interessengruppe2_id'),
                     new IntegerField('interessengruppe3_id'),
-                    new IntegerField('branche_id'),
+                    new IntegerField('ALT_branche_id'),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
@@ -18503,6 +19419,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -18602,6 +19519,30 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_fr_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_fr field
+            //
+            $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -18779,9 +19720,9 @@
                     new StringField('typ', false, true),
                     new StringField('vernehmlassung', false, true),
                     new IntegerField('interessengruppe_id', false, true),
+                    new IntegerField('interessengruppe1_id', false, true),
                     new IntegerField('interessengruppe2_id', false, true),
                     new IntegerField('interessengruppe3_id', false, true),
-                    new IntegerField('branche_id', false, true),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name', false, true),
@@ -18789,10 +19730,12 @@
                     new StringField('adresse_strasse', false, true),
                     new StringField('adresse_zusatz', false, true),
                     new StringField('adresse_plz', false, true),
-                    new StringField('branche', false, true),
                     new StringField('interessengruppe', false, true),
                     new StringField('interessengruppe_branche', false, true),
                     new IntegerField('interessengruppe_branche_id', false, true),
+                    new StringField('interessengruppe1', false, true),
+                    new StringField('interessengruppe1_branche', false, true),
+                    new IntegerField('interessengruppe1_branche_id', false, true),
                     new StringField('interessengruppe2', false, true),
                     new StringField('interessengruppe2_branche', false, true),
                     new IntegerField('interessengruppe2_branche_id', false, true),
@@ -18838,6 +19781,8 @@
                     new DateTimeField('created_date', false, true),
                     new StringField('updated_visa', false, true),
                     new DateTimeField('updated_date', false, true),
+                    new IntegerField('aktiv', false, true),
+                    new IntegerField('published', false, true),
                     new IntegerField('bis_unix', false, true),
                     new IntegerField('von_unix', false, true),
                     new IntegerField('created_date_unix', false, true),
@@ -18916,7 +19861,6 @@
                 new FilterColumn($this->dataset, 'interessengruppe_id', 'interessengruppe_id', 'Interessengruppe Id'),
                 new FilterColumn($this->dataset, 'interessengruppe2_id', 'interessengruppe2_id', 'Interessengruppe2 Id'),
                 new FilterColumn($this->dataset, 'interessengruppe3_id', 'interessengruppe3_id', 'Interessengruppe3 Id'),
-                new FilterColumn($this->dataset, 'branche_id', 'branche_id', 'Branche Id'),
                 new FilterColumn($this->dataset, 'homepage', 'homepage', 'Homepage'),
                 new FilterColumn($this->dataset, 'handelsregister_url', 'handelsregister_url', 'Handelsregister Url'),
                 new FilterColumn($this->dataset, 'twitter_name', 'twitter_name', 'Twitter Name'),
@@ -18924,7 +19868,6 @@
                 new FilterColumn($this->dataset, 'adresse_strasse', 'adresse_strasse', 'Adresse Strasse'),
                 new FilterColumn($this->dataset, 'adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz'),
                 new FilterColumn($this->dataset, 'adresse_plz', 'adresse_plz', 'Adresse Plz'),
-                new FilterColumn($this->dataset, 'branche', 'branche', 'Branche'),
                 new FilterColumn($this->dataset, 'interessengruppe', 'interessengruppe', 'Interessengruppe'),
                 new FilterColumn($this->dataset, 'interessengruppe_branche', 'interessengruppe_branche', 'Interessengruppe Branche'),
                 new FilterColumn($this->dataset, 'interessengruppe2', 'interessengruppe2', 'Interessengruppe2'),
@@ -18958,7 +19901,13 @@
                 new FilterColumn($this->dataset, 'interessengruppe2_branche_id', 'interessengruppe2_branche_id', 'Interessengruppe2 Branche Id'),
                 new FilterColumn($this->dataset, 'interessengruppe3_branche_id', 'interessengruppe3_branche_id', 'Interessengruppe3 Branche Id'),
                 new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr'),
-                new FilterColumn($this->dataset, 'hauptberuflich', 'hauptberuflich', 'Hauptberuflich')
+                new FilterColumn($this->dataset, 'hauptberuflich', 'hauptberuflich', 'Hauptberuflich'),
+                new FilterColumn($this->dataset, 'interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id'),
+                new FilterColumn($this->dataset, 'interessengruppe1', 'interessengruppe1', 'Interessengruppe1'),
+                new FilterColumn($this->dataset, 'interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche'),
+                new FilterColumn($this->dataset, 'interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id'),
+                new FilterColumn($this->dataset, 'aktiv', 'aktiv', 'Aktiv'),
+                new FilterColumn($this->dataset, 'published', 'published', 'Published')
             );
         }
     
@@ -18996,7 +19945,13 @@
                 ->addColumn($columns['interessengruppe2_branche_id'])
                 ->addColumn($columns['interessengruppe3_branche_id'])
                 ->addColumn($columns['beschreibung_fr'])
-                ->addColumn($columns['hauptberuflich']);
+                ->addColumn($columns['hauptberuflich'])
+                ->addColumn($columns['interessengruppe1_id'])
+                ->addColumn($columns['interessengruppe1'])
+                ->addColumn($columns['interessengruppe1_branche'])
+                ->addColumn($columns['interessengruppe1_branche_id'])
+                ->addColumn($columns['aktiv'])
+                ->addColumn($columns['published']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -19753,6 +20708,127 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('interessengruppe1_id_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['interessengruppe1_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessengruppe1');
+            
+            $filterBuilder->addColumn(
+                $columns['interessengruppe1'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessengruppe1_branche_edit');
+            $main_editor->SetMaxLength(100);
+            
+            $filterBuilder->addColumn(
+                $columns['interessengruppe1_branche'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessengruppe1_branche_id_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['interessengruppe1_branche_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('aktiv_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['aktiv'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('published_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['published'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -20106,6 +21182,82 @@
             $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -20364,6 +21516,64 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
         }
     
         protected function AddEditColumns(Grid $grid)
@@ -20446,6 +21656,7 @@
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
+                    new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
                     new StringField('beschreibung_fr'),
                     new StringField('parlamentarier_kommissionen'),
@@ -20479,6 +21690,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -20535,7 +21747,7 @@
                     new IntegerField('interessengruppe_id'),
                     new IntegerField('interessengruppe2_id'),
                     new IntegerField('interessengruppe3_id'),
-                    new IntegerField('branche_id'),
+                    new IntegerField('ALT_branche_id'),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
@@ -20557,6 +21769,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -20797,6 +22010,61 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_id field
+            //
+            $editor = new TextEdit('interessengruppe1_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Id', 'interessengruppe1_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1 field
+            //
+            $editor = new TextAreaEdit('interessengruppe1_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Interessengruppe1', 'interessengruppe1', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_edit');
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche', 'interessengruppe1_branche', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche_id field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche Id', 'interessengruppe1_branche_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for aktiv field
+            //
+            $editor = new TextEdit('aktiv_edit');
+            $editColumn = new CustomEditColumn('Aktiv', 'aktiv', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for published field
+            //
+            $editor = new TextEdit('published_edit');
+            $editColumn = new CustomEditColumn('Published', 'published', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
         }
     
         protected function AddMultiEditColumns(Grid $grid)
@@ -20860,6 +22128,7 @@
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
+                    new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
                     new StringField('beschreibung_fr'),
                     new StringField('parlamentarier_kommissionen'),
@@ -20893,6 +22162,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -20949,7 +22219,7 @@
                     new IntegerField('interessengruppe_id'),
                     new IntegerField('interessengruppe2_id'),
                     new IntegerField('interessengruppe3_id'),
-                    new IntegerField('branche_id'),
+                    new IntegerField('ALT_branche_id'),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
@@ -20971,6 +22241,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -21270,15 +22541,6 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
-            // Edit column for branche_id field
-            //
-            $editor = new TextEdit('branche_id_edit');
-            $editColumn = new CustomEditColumn('Branche Id', 'branche_id', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
             // Edit column for homepage field
             //
             $editor = new TextAreaEdit('homepage_edit', 50, 8);
@@ -21341,16 +22603,6 @@
             $editor = new TextEdit('adresse_plz_edit');
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Adresse Plz', 'adresse_plz', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for branche field
-            //
-            $editor = new TextEdit('branche_edit');
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Branche', 'branche', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -21685,6 +22937,61 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_id field
+            //
+            $editor = new TextEdit('interessengruppe1_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Id', 'interessengruppe1_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1 field
+            //
+            $editor = new TextAreaEdit('interessengruppe1_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Interessengruppe1', 'interessengruppe1', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_edit');
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche', 'interessengruppe1_branche', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche_id field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche Id', 'interessengruppe1_branche_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for aktiv field
+            //
+            $editor = new TextEdit('aktiv_edit');
+            $editColumn = new CustomEditColumn('Aktiv', 'aktiv', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for published field
+            //
+            $editor = new TextEdit('published_edit');
+            $editColumn = new CustomEditColumn('Published', 'published', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -21767,6 +23074,7 @@
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
+                    new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
                     new StringField('beschreibung_fr'),
                     new StringField('parlamentarier_kommissionen'),
@@ -21800,6 +23108,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -21856,7 +23165,7 @@
                     new IntegerField('interessengruppe_id'),
                     new IntegerField('interessengruppe2_id'),
                     new IntegerField('interessengruppe3_id'),
-                    new IntegerField('branche_id'),
+                    new IntegerField('ALT_branche_id'),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
@@ -21878,6 +23187,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -22115,6 +23425,61 @@
             //
             $editor = new TextEdit('hauptberuflich_edit');
             $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_id field
+            //
+            $editor = new TextEdit('interessengruppe1_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Id', 'interessengruppe1_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1 field
+            //
+            $editor = new TextAreaEdit('interessengruppe1_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Interessengruppe1', 'interessengruppe1', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_edit');
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche', 'interessengruppe1_branche', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche_id field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche Id', 'interessengruppe1_branche_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for aktiv field
+            //
+            $editor = new TextEdit('aktiv_edit');
+            $editColumn = new CustomEditColumn('Aktiv', 'aktiv', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for published field
+            //
+            $editor = new TextEdit('published_edit');
+            $editColumn = new CustomEditColumn('Published', 'published', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -22396,6 +23761,64 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessengruppe1_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_print');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_print');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -22663,6 +24086,64 @@
             // View column for hauptberuflich field
             //
             $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessengruppe1_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -22964,13 +24445,6 @@
             $grid->AddCompareColumn($column);
             
             //
-            // View column for branche_id field
-            //
-            $column = new TextViewColumn('branche_id', 'branche_id', 'Branche Id', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddCompareColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
@@ -23027,15 +24501,6 @@
             //
             $column = new TextViewColumn('adresse_plz', 'adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for branche field
-            //
-            $column = new TextViewColumn('branche', 'branche', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -23327,6 +24792,64 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessengruppe1_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_compare');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_compare');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
         }
     
         private function AddCompareHeaderColumns(Grid $grid)
@@ -23486,6 +25009,22 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
             // View column for organisation_name field
             //
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
@@ -23552,6 +25091,22 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -23688,14 +25243,6 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
-            // View column for branche field
-            //
-            $column = new TextViewColumn('branche', 'branche', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_branche_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
             // View column for interessengruppe field
             //
             $column = new TextViewColumn('interessengruppe', 'interessengruppe', 'Interessengruppe', $this->dataset);
@@ -23799,6 +25346,22 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -23815,6 +25378,7 @@
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
+                    new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
                     new StringField('beschreibung_fr'),
                     new StringField('parlamentarier_kommissionen'),
@@ -23848,6 +25412,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -23894,7 +25459,7 @@
                     new IntegerField('interessengruppe_id'),
                     new IntegerField('interessengruppe2_id'),
                     new IntegerField('interessengruppe3_id'),
-                    new IntegerField('branche_id'),
+                    new IntegerField('ALT_branche_id'),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
@@ -23916,6 +25481,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -23994,6 +25560,22 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -24170,9 +25752,9 @@
                     new StringField('typ', true, true),
                     new StringField('vernehmlassung', true, true),
                     new IntegerField('interessengruppe_id', false, true),
+                    new IntegerField('interessengruppe1_id', false, true),
                     new IntegerField('interessengruppe2_id', false, true),
                     new IntegerField('interessengruppe3_id', false, true),
-                    new IntegerField('branche_id', false, true),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name', false, true),
@@ -24180,11 +25762,14 @@
                     new StringField('adresse_strasse', false, true),
                     new StringField('adresse_zusatz', false, true),
                     new StringField('adresse_plz', false, true),
-                    new StringField('branche', false, true),
                     new StringField('interessengruppe', false, true),
                     new StringField('interessengruppe_fr', false, true),
                     new StringField('interessengruppe_branche', false, true),
                     new IntegerField('interessengruppe_branche_id', false, true),
+                    new StringField('interessengruppe1', false, true),
+                    new StringField('interessengruppe1_fr', false, true),
+                    new StringField('interessengruppe1_branche', false, true),
+                    new IntegerField('interessengruppe1_branche_id', false, true),
                     new StringField('interessengruppe2', false, true),
                     new StringField('interessengruppe2_fr', false, true),
                     new StringField('interessengruppe2_branche', false, true),
@@ -24234,6 +25819,8 @@
                     new DateTimeField('created_date', true, true),
                     new StringField('updated_visa', false, true),
                     new DateTimeField('updated_date', true, true),
+                    new IntegerField('aktiv', false, true),
+                    new IntegerField('published', true, true),
                     new IntegerField('bis_unix', false, true),
                     new IntegerField('von_unix', false, true),
                     new IntegerField('created_date_unix', true, true),
@@ -24245,7 +25832,6 @@
                     new DateField('parlamentarier_im_rat_seit', true, true),
                     new IntegerField('wirksamkeit_index', true, true),
                     new StringField('organisation_lobbyeinfluss', false, true),
-                    new IntegerField('parlamentarier_lobbyfaktor', false, true),
                     new DateTimeField('refreshed_date', true, true),
                     new IntegerField('verguetung', false, true),
                     new IntegerField('verguetung_jahr', false, true),
@@ -24320,7 +25906,6 @@
                 new FilterColumn($this->dataset, 'interessengruppe_id', 'interessengruppe_id', 'Interessengruppe Id'),
                 new FilterColumn($this->dataset, 'interessengruppe2_id', 'interessengruppe2_id', 'Interessengruppe2 Id'),
                 new FilterColumn($this->dataset, 'interessengruppe3_id', 'interessengruppe3_id', 'Interessengruppe3 Id'),
-                new FilterColumn($this->dataset, 'branche_id', 'branche_id', 'Branche Id'),
                 new FilterColumn($this->dataset, 'homepage', 'homepage', 'Homepage'),
                 new FilterColumn($this->dataset, 'handelsregister_url', 'handelsregister_url', 'Handelsregister Url'),
                 new FilterColumn($this->dataset, 'twitter_name', 'twitter_name', 'Twitter Name'),
@@ -24328,7 +25913,6 @@
                 new FilterColumn($this->dataset, 'adresse_strasse', 'adresse_strasse', 'Adresse Strasse'),
                 new FilterColumn($this->dataset, 'adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz'),
                 new FilterColumn($this->dataset, 'adresse_plz', 'adresse_plz', 'Adresse Plz'),
-                new FilterColumn($this->dataset, 'branche', 'branche', 'Branche'),
                 new FilterColumn($this->dataset, 'interessengruppe', 'interessengruppe', 'Interessengruppe'),
                 new FilterColumn($this->dataset, 'interessengruppe_branche', 'interessengruppe_branche', 'Interessengruppe Branche'),
                 new FilterColumn($this->dataset, 'interessengruppe2', 'interessengruppe2', 'Interessengruppe2'),
@@ -24365,7 +25949,6 @@
                 new FilterColumn($this->dataset, 'parlamentarier_im_rat_seit', 'parlamentarier_im_rat_seit', 'Parlamentarier Im Rat Seit'),
                 new FilterColumn($this->dataset, 'wirksamkeit_index', 'wirksamkeit_index', 'Wirksamkeit Index'),
                 new FilterColumn($this->dataset, 'organisation_lobbyeinfluss', 'organisation_lobbyeinfluss', 'Organisation Lobbyeinfluss'),
-                new FilterColumn($this->dataset, 'parlamentarier_lobbyfaktor', 'parlamentarier_lobbyfaktor', 'Parlamentarier Lobbyfaktor'),
                 new FilterColumn($this->dataset, 'refreshed_date', 'refreshed_date', 'Refreshed Date'),
                 new FilterColumn($this->dataset, 'interessengruppe_fr', 'interessengruppe_fr', 'Interessengruppe Fr'),
                 new FilterColumn($this->dataset, 'interessengruppe2_fr', 'interessengruppe2_fr', 'Interessengruppe2 Fr'),
@@ -24375,7 +25958,14 @@
                 new FilterColumn($this->dataset, 'verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung'),
                 new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr'),
                 new FilterColumn($this->dataset, 'updated_by_import', 'updated_by_import', 'Updated By Import'),
-                new FilterColumn($this->dataset, 'hauptberuflich', 'hauptberuflich', 'Hauptberuflich')
+                new FilterColumn($this->dataset, 'hauptberuflich', 'hauptberuflich', 'Hauptberuflich'),
+                new FilterColumn($this->dataset, 'interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id'),
+                new FilterColumn($this->dataset, 'interessengruppe1', 'interessengruppe1', 'Interessengruppe1'),
+                new FilterColumn($this->dataset, 'interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr'),
+                new FilterColumn($this->dataset, 'interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche'),
+                new FilterColumn($this->dataset, 'interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id'),
+                new FilterColumn($this->dataset, 'aktiv', 'aktiv', 'Aktiv'),
+                new FilterColumn($this->dataset, 'published', 'published', 'Published')
             );
         }
     
@@ -24417,7 +26007,6 @@
                 ->addColumn($columns['parlamentarier_im_rat_seit'])
                 ->addColumn($columns['wirksamkeit_index'])
                 ->addColumn($columns['organisation_lobbyeinfluss'])
-                ->addColumn($columns['parlamentarier_lobbyfaktor'])
                 ->addColumn($columns['refreshed_date'])
                 ->addColumn($columns['interessengruppe_fr'])
                 ->addColumn($columns['interessengruppe2_fr'])
@@ -24427,7 +26016,14 @@
                 ->addColumn($columns['verguetung_beschreibung'])
                 ->addColumn($columns['beschreibung_fr'])
                 ->addColumn($columns['updated_by_import'])
-                ->addColumn($columns['hauptberuflich']);
+                ->addColumn($columns['hauptberuflich'])
+                ->addColumn($columns['interessengruppe1_id'])
+                ->addColumn($columns['interessengruppe1'])
+                ->addColumn($columns['interessengruppe1_fr'])
+                ->addColumn($columns['interessengruppe1_branche'])
+                ->addColumn($columns['interessengruppe1_branche_id'])
+                ->addColumn($columns['aktiv'])
+                ->addColumn($columns['published']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -25304,24 +26900,6 @@
                 )
             );
             
-            $main_editor = new TextEdit('parlamentarier_lobbyfaktor_edit');
-            
-            $filterBuilder->addColumn(
-                $columns['parlamentarier_lobbyfaktor'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
-            
             $main_editor = new DateTimeEdit('refreshed_date_edit', false, 'd.m.Y H:i:s');
             
             $filterBuilder->addColumn(
@@ -25524,6 +27102,151 @@
             
             $filterBuilder->addColumn(
                 $columns['hauptberuflich'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessengruppe1_id_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['interessengruppe1_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessengruppe1');
+            
+            $filterBuilder->addColumn(
+                $columns['interessengruppe1'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessengruppe1_fr');
+            
+            $filterBuilder->addColumn(
+                $columns['interessengruppe1_fr'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessengruppe1_branche_edit');
+            $main_editor->SetMaxLength(100);
+            
+            $filterBuilder->addColumn(
+                $columns['interessengruppe1_branche'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessengruppe1_branche_id_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['interessengruppe1_branche_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('aktiv_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['aktiv'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('published_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['published'],
                 array(
                     FilterConditionOperator::EQUALS => $main_editor,
                     FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
@@ -25914,19 +27637,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for parlamentarier_lobbyfaktor field
-            //
-            $column = new NumberViewColumn('parlamentarier_lobbyfaktor', 'parlamentarier_lobbyfaktor', 'Parlamentarier Lobbyfaktor', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for refreshed_date field
             //
             $column = new DateTimeViewColumn('refreshed_date', 'refreshed_date', 'Refreshed Date', $this->dataset);
@@ -26038,6 +27748,94 @@
             // View column for hauptberuflich field
             //
             $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_fr field
+            //
+            $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_fr_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_branche_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -26333,16 +28131,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for parlamentarier_lobbyfaktor field
-            //
-            $column = new NumberViewColumn('parlamentarier_lobbyfaktor', 'parlamentarier_lobbyfaktor', 'Parlamentarier Lobbyfaktor', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for refreshed_date field
             //
             $column = new DateTimeViewColumn('refreshed_date', 'refreshed_date', 'Refreshed Date', $this->dataset);
@@ -26427,6 +28215,73 @@
             // View column for hauptberuflich field
             //
             $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_fr field
+            //
+            $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_fr_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_branche_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -26521,7 +28376,7 @@
                     new IntegerField('interessengruppe_id'),
                     new IntegerField('interessengruppe2_id'),
                     new IntegerField('interessengruppe3_id'),
-                    new IntegerField('branche_id'),
+                    new IntegerField('ALT_branche_id'),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
@@ -26543,6 +28398,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -26847,15 +28703,6 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for parlamentarier_lobbyfaktor field
-            //
-            $editor = new TextEdit('parlamentarier_lobbyfaktor_edit');
-            $editColumn = new CustomEditColumn('Parlamentarier Lobbyfaktor', 'parlamentarier_lobbyfaktor', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
             // Edit column for refreshed_date field
             //
             $editor = new DateTimeEdit('refreshed_date_edit', false, 'd.m.Y H:i:s');
@@ -26942,6 +28789,71 @@
             //
             $editor = new TextEdit('hauptberuflich_edit');
             $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_id field
+            //
+            $editor = new TextEdit('interessengruppe1_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Id', 'interessengruppe1_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1 field
+            //
+            $editor = new TextAreaEdit('interessengruppe1_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Interessengruppe1', 'interessengruppe1', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_fr field
+            //
+            $editor = new TextAreaEdit('interessengruppe1_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Interessengruppe1 Fr', 'interessengruppe1_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_edit');
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche', 'interessengruppe1_branche', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche_id field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche Id', 'interessengruppe1_branche_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for aktiv field
+            //
+            $editor = new TextEdit('aktiv_edit');
+            $editColumn = new CustomEditColumn('Aktiv', 'aktiv', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for published field
+            //
+            $editor = new TextEdit('published_edit');
+            $editColumn = new CustomEditColumn('Published', 'published', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -27035,7 +28947,7 @@
                     new IntegerField('interessengruppe_id'),
                     new IntegerField('interessengruppe2_id'),
                     new IntegerField('interessengruppe3_id'),
-                    new IntegerField('branche_id'),
+                    new IntegerField('ALT_branche_id'),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
@@ -27057,6 +28969,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -27400,15 +29313,6 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
-            // Edit column for branche_id field
-            //
-            $editor = new TextEdit('branche_id_edit');
-            $editColumn = new CustomEditColumn('Branche Id', 'branche_id', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
             // Edit column for homepage field
             //
             $editor = new TextAreaEdit('homepage_edit', 50, 8);
@@ -27471,16 +29375,6 @@
             $editor = new TextEdit('adresse_plz_edit');
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Adresse Plz', 'adresse_plz', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for branche field
-            //
-            $editor = new TextEdit('branche_edit');
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Branche', 'branche', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -27843,15 +29737,6 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
-            // Edit column for parlamentarier_lobbyfaktor field
-            //
-            $editor = new TextEdit('parlamentarier_lobbyfaktor_edit');
-            $editColumn = new CustomEditColumn('Parlamentarier Lobbyfaktor', 'parlamentarier_lobbyfaktor', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
             // Edit column for refreshed_date field
             //
             $editor = new DateTimeEdit('refreshed_date_edit', false, 'd.m.Y H:i:s');
@@ -27938,6 +29823,71 @@
             //
             $editor = new TextEdit('hauptberuflich_edit');
             $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_id field
+            //
+            $editor = new TextEdit('interessengruppe1_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Id', 'interessengruppe1_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1 field
+            //
+            $editor = new TextAreaEdit('interessengruppe1_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Interessengruppe1', 'interessengruppe1', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_fr field
+            //
+            $editor = new TextAreaEdit('interessengruppe1_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Interessengruppe1 Fr', 'interessengruppe1_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_edit');
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche', 'interessengruppe1_branche', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche_id field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche Id', 'interessengruppe1_branche_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for aktiv field
+            //
+            $editor = new TextEdit('aktiv_edit');
+            $editColumn = new CustomEditColumn('Aktiv', 'aktiv', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for published field
+            //
+            $editor = new TextEdit('published_edit');
+            $editColumn = new CustomEditColumn('Published', 'published', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -28031,7 +29981,7 @@
                     new IntegerField('interessengruppe_id'),
                     new IntegerField('interessengruppe2_id'),
                     new IntegerField('interessengruppe3_id'),
-                    new IntegerField('branche_id'),
+                    new IntegerField('ALT_branche_id'),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
@@ -28053,6 +30003,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -28357,15 +30308,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for parlamentarier_lobbyfaktor field
-            //
-            $editor = new TextEdit('parlamentarier_lobbyfaktor_edit');
-            $editColumn = new CustomEditColumn('Parlamentarier Lobbyfaktor', 'parlamentarier_lobbyfaktor', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for refreshed_date field
             //
             $editor = new DateTimeEdit('refreshed_date_edit', false, 'd.m.Y H:i:s');
@@ -28452,6 +30394,71 @@
             //
             $editor = new TextEdit('hauptberuflich_edit');
             $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_id field
+            //
+            $editor = new TextEdit('interessengruppe1_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Id', 'interessengruppe1_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1 field
+            //
+            $editor = new TextAreaEdit('interessengruppe1_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Interessengruppe1', 'interessengruppe1', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_fr field
+            //
+            $editor = new TextAreaEdit('interessengruppe1_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Interessengruppe1 Fr', 'interessengruppe1_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_edit');
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche', 'interessengruppe1_branche', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche_id field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche Id', 'interessengruppe1_branche_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for aktiv field
+            //
+            $editor = new TextEdit('aktiv_edit');
+            $editColumn = new CustomEditColumn('Aktiv', 'aktiv', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for published field
+            //
+            $editor = new TextEdit('published_edit');
+            $editColumn = new CustomEditColumn('Published', 'published', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -28749,16 +30756,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for parlamentarier_lobbyfaktor field
-            //
-            $column = new NumberViewColumn('parlamentarier_lobbyfaktor', 'parlamentarier_lobbyfaktor', 'Parlamentarier Lobbyfaktor', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for refreshed_date field
             //
             $column = new DateTimeViewColumn('refreshed_date', 'refreshed_date', 'Refreshed Date', $this->dataset);
@@ -28843,6 +30840,73 @@
             // View column for hauptberuflich field
             //
             $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessengruppe1_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_handler_print');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessengruppe1_fr field
+            //
+            $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_fr_handler_print');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_branche_handler_print');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -29135,16 +31199,6 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for parlamentarier_lobbyfaktor field
-            //
-            $column = new NumberViewColumn('parlamentarier_lobbyfaktor', 'parlamentarier_lobbyfaktor', 'Parlamentarier Lobbyfaktor', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
-            $grid->AddExportColumn($column);
-            
-            //
             // View column for refreshed_date field
             //
             $column = new DateTimeViewColumn('refreshed_date', 'refreshed_date', 'Refreshed Date', $this->dataset);
@@ -29229,6 +31283,73 @@
             // View column for hauptberuflich field
             //
             $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessengruppe1_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessengruppe1_fr field
+            //
+            $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_fr_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_branche_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -29519,13 +31640,6 @@
             $grid->AddCompareColumn($column);
             
             //
-            // View column for branche_id field
-            //
-            $column = new TextViewColumn('branche_id', 'branche_id', 'Branche Id', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddCompareColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
@@ -29582,15 +31696,6 @@
             //
             $column = new TextViewColumn('adresse_plz', 'adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for branche field
-            //
-            $column = new TextViewColumn('branche', 'branche', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -29899,16 +32004,6 @@
             $grid->AddCompareColumn($column);
             
             //
-            // View column for parlamentarier_lobbyfaktor field
-            //
-            $column = new NumberViewColumn('parlamentarier_lobbyfaktor', 'parlamentarier_lobbyfaktor', 'Parlamentarier Lobbyfaktor', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
-            $grid->AddCompareColumn($column);
-            
-            //
             // View column for refreshed_date field
             //
             $column = new DateTimeViewColumn('refreshed_date', 'refreshed_date', 'Refreshed Date', $this->dataset);
@@ -29993,6 +32088,73 @@
             // View column for hauptberuflich field
             //
             $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessengruppe1_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_handler_compare');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessengruppe1_fr field
+            //
+            $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_fr_handler_compare');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_branche_handler_compare');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -30178,6 +32340,30 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_fr field
+            //
+            $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_fr_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_branche_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
             // View column for organisation_name field
             //
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
@@ -30265,6 +32451,30 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_fr_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_fr field
+            //
+            $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_fr_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_branche_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -30371,14 +32581,6 @@
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_adresse_zusatz_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for branche field
-            //
-            $column = new TextViewColumn('branche', 'branche', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -30525,6 +32727,30 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_fr field
+            //
+            $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_fr_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_branche_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -30560,7 +32786,7 @@
                     new IntegerField('interessengruppe_id'),
                     new IntegerField('interessengruppe2_id'),
                     new IntegerField('interessengruppe3_id'),
-                    new IntegerField('branche_id'),
+                    new IntegerField('ALT_branche_id'),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
@@ -30582,6 +32808,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -30681,6 +32908,30 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_fr_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_fr field
+            //
+            $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_fr_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_branche_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -30857,9 +33108,9 @@
                     new StringField('typ', false, true),
                     new StringField('vernehmlassung', false, true),
                     new IntegerField('interessengruppe_id', false, true),
+                    new IntegerField('interessengruppe1_id', false, true),
                     new IntegerField('interessengruppe2_id', false, true),
                     new IntegerField('interessengruppe3_id', false, true),
-                    new IntegerField('branche_id', false, true),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name', false, true),
@@ -30867,10 +33118,12 @@
                     new StringField('adresse_strasse', false, true),
                     new StringField('adresse_zusatz', false, true),
                     new StringField('adresse_plz', false, true),
-                    new StringField('branche', false, true),
                     new StringField('interessengruppe', false, true),
                     new StringField('interessengruppe_branche', false, true),
                     new IntegerField('interessengruppe_branche_id', false, true),
+                    new StringField('interessengruppe1', false, true),
+                    new StringField('interessengruppe1_branche', false, true),
+                    new IntegerField('interessengruppe1_branche_id', false, true),
                     new StringField('interessengruppe2', false, true),
                     new StringField('interessengruppe2_branche', false, true),
                     new IntegerField('interessengruppe2_branche_id', false, true),
@@ -30916,6 +33169,8 @@
                     new DateTimeField('created_date', false, true),
                     new StringField('updated_visa', false, true),
                     new DateTimeField('updated_date', false, true),
+                    new IntegerField('aktiv', false, true),
+                    new IntegerField('published', false, true),
                     new IntegerField('bis_unix', false, true),
                     new IntegerField('von_unix', false, true),
                     new IntegerField('created_date_unix', false, true),
@@ -30992,7 +33247,6 @@
                 new FilterColumn($this->dataset, 'interessengruppe_id', 'interessengruppe_id', 'Interessengruppe Id'),
                 new FilterColumn($this->dataset, 'interessengruppe2_id', 'interessengruppe2_id', 'Interessengruppe2 Id'),
                 new FilterColumn($this->dataset, 'interessengruppe3_id', 'interessengruppe3_id', 'Interessengruppe3 Id'),
-                new FilterColumn($this->dataset, 'branche_id', 'branche_id', 'Branche Id'),
                 new FilterColumn($this->dataset, 'homepage', 'homepage', 'Homepage'),
                 new FilterColumn($this->dataset, 'handelsregister_url', 'handelsregister_url', 'Handelsregister Url'),
                 new FilterColumn($this->dataset, 'twitter_name', 'twitter_name', 'Twitter Name'),
@@ -31000,7 +33254,6 @@
                 new FilterColumn($this->dataset, 'adresse_strasse', 'adresse_strasse', 'Adresse Strasse'),
                 new FilterColumn($this->dataset, 'adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz'),
                 new FilterColumn($this->dataset, 'adresse_plz', 'adresse_plz', 'Adresse Plz'),
-                new FilterColumn($this->dataset, 'branche', 'branche', 'Branche'),
                 new FilterColumn($this->dataset, 'interessengruppe', 'interessengruppe', 'Interessengruppe'),
                 new FilterColumn($this->dataset, 'interessengruppe_branche', 'interessengruppe_branche', 'Interessengruppe Branche'),
                 new FilterColumn($this->dataset, 'interessengruppe2', 'interessengruppe2', 'Interessengruppe2'),
@@ -31034,7 +33287,13 @@
                 new FilterColumn($this->dataset, 'interessengruppe2_branche_id', 'interessengruppe2_branche_id', 'Interessengruppe2 Branche Id'),
                 new FilterColumn($this->dataset, 'interessengruppe3_branche_id', 'interessengruppe3_branche_id', 'Interessengruppe3 Branche Id'),
                 new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr'),
-                new FilterColumn($this->dataset, 'hauptberuflich', 'hauptberuflich', 'Hauptberuflich')
+                new FilterColumn($this->dataset, 'hauptberuflich', 'hauptberuflich', 'Hauptberuflich'),
+                new FilterColumn($this->dataset, 'interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id'),
+                new FilterColumn($this->dataset, 'interessengruppe1', 'interessengruppe1', 'Interessengruppe1'),
+                new FilterColumn($this->dataset, 'interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche'),
+                new FilterColumn($this->dataset, 'interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id'),
+                new FilterColumn($this->dataset, 'aktiv', 'aktiv', 'Aktiv'),
+                new FilterColumn($this->dataset, 'published', 'published', 'Published')
             );
         }
     
@@ -31071,7 +33330,13 @@
                 ->addColumn($columns['interessengruppe2_branche_id'])
                 ->addColumn($columns['interessengruppe3_branche_id'])
                 ->addColumn($columns['beschreibung_fr'])
-                ->addColumn($columns['hauptberuflich']);
+                ->addColumn($columns['hauptberuflich'])
+                ->addColumn($columns['interessengruppe1_id'])
+                ->addColumn($columns['interessengruppe1'])
+                ->addColumn($columns['interessengruppe1_branche'])
+                ->addColumn($columns['interessengruppe1_branche_id'])
+                ->addColumn($columns['aktiv'])
+                ->addColumn($columns['published']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -31810,6 +34075,127 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('interessengruppe1_id_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['interessengruppe1_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessengruppe1');
+            
+            $filterBuilder->addColumn(
+                $columns['interessengruppe1'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessengruppe1_branche_edit');
+            $main_editor->SetMaxLength(100);
+            
+            $filterBuilder->addColumn(
+                $columns['interessengruppe1_branche'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessengruppe1_branche_id_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['interessengruppe1_branche_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('aktiv_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['aktiv'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('published_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['published'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -32146,6 +34532,82 @@
             $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -32397,6 +34859,64 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
         }
     
         protected function AddEditColumns(Grid $grid)
@@ -32470,6 +34990,7 @@
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
+                    new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
                     new StringField('beschreibung_fr'),
                     new StringField('parlamentarier_kommissionen'),
@@ -32503,6 +35024,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -32756,6 +35278,61 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_id field
+            //
+            $editor = new TextEdit('interessengruppe1_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Id', 'interessengruppe1_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1 field
+            //
+            $editor = new TextAreaEdit('interessengruppe1_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Interessengruppe1', 'interessengruppe1', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_edit');
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche', 'interessengruppe1_branche', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche_id field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche Id', 'interessengruppe1_branche_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for aktiv field
+            //
+            $editor = new TextEdit('aktiv_edit');
+            $editColumn = new CustomEditColumn('Aktiv', 'aktiv', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for published field
+            //
+            $editor = new TextEdit('published_edit');
+            $editColumn = new CustomEditColumn('Published', 'published', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
         }
     
         protected function AddMultiEditColumns(Grid $grid)
@@ -32810,6 +35387,7 @@
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
+                    new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
                     new StringField('beschreibung_fr'),
                     new StringField('parlamentarier_kommissionen'),
@@ -32843,6 +35421,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -33177,15 +35756,6 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
-            // Edit column for branche_id field
-            //
-            $editor = new TextEdit('branche_id_edit');
-            $editColumn = new CustomEditColumn('Branche Id', 'branche_id', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
             // Edit column for homepage field
             //
             $editor = new TextAreaEdit('homepage_edit', 50, 8);
@@ -33248,16 +35818,6 @@
             $editor = new TextEdit('adresse_plz_edit');
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Adresse Plz', 'adresse_plz', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for branche field
-            //
-            $editor = new TextEdit('branche_edit');
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Branche', 'branche', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -33594,6 +36154,61 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_id field
+            //
+            $editor = new TextEdit('interessengruppe1_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Id', 'interessengruppe1_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1 field
+            //
+            $editor = new TextAreaEdit('interessengruppe1_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Interessengruppe1', 'interessengruppe1', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_edit');
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche', 'interessengruppe1_branche', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche_id field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche Id', 'interessengruppe1_branche_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for aktiv field
+            //
+            $editor = new TextEdit('aktiv_edit');
+            $editColumn = new CustomEditColumn('Aktiv', 'aktiv', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for published field
+            //
+            $editor = new TextEdit('published_edit');
+            $editColumn = new CustomEditColumn('Published', 'published', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -33667,6 +36282,7 @@
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
+                    new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
                     new StringField('beschreibung_fr'),
                     new StringField('parlamentarier_kommissionen'),
@@ -33700,6 +36316,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -33950,6 +36567,61 @@
             //
             $editor = new TextEdit('hauptberuflich_edit');
             $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_id field
+            //
+            $editor = new TextEdit('interessengruppe1_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Id', 'interessengruppe1_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1 field
+            //
+            $editor = new TextAreaEdit('interessengruppe1_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Interessengruppe1', 'interessengruppe1', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_edit');
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche', 'interessengruppe1_branche', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe1_branche_id field
+            //
+            $editor = new TextEdit('interessengruppe1_branche_id_edit');
+            $editColumn = new CustomEditColumn('Interessengruppe1 Branche Id', 'interessengruppe1_branche_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for aktiv field
+            //
+            $editor = new TextEdit('aktiv_edit');
+            $editColumn = new CustomEditColumn('Aktiv', 'aktiv', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for published field
+            //
+            $editor = new TextEdit('published_edit');
+            $editColumn = new CustomEditColumn('Published', 'published', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -34217,6 +36889,64 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessengruppe1_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_print');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_print');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -34470,6 +37200,64 @@
             // View column for hauptberuflich field
             //
             $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessengruppe1_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -34755,13 +37543,6 @@
             $grid->AddCompareColumn($column);
             
             //
-            // View column for branche_id field
-            //
-            $column = new TextViewColumn('branche_id', 'branche_id', 'Branche Id', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddCompareColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
@@ -34818,15 +37599,6 @@
             //
             $column = new TextViewColumn('adresse_plz', 'adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for branche field
-            //
-            $column = new TextViewColumn('branche', 'branche', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -35118,6 +37890,64 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessengruppe1_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_id', 'interessengruppe1_id', 'Interessengruppe1 Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_compare');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_compare');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessengruppe1_branche_id field
+            //
+            $column = new NumberViewColumn('interessengruppe1_branche_id', 'interessengruppe1_branche_id', 'Interessengruppe1 Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
         }
     
         private function AddCompareHeaderColumns(Grid $grid)
@@ -35272,6 +38102,22 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
             // View column for organisation_name field
             //
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
@@ -35333,6 +38179,22 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -35456,14 +38318,6 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
-            // View column for branche field
-            //
-            $column = new TextViewColumn('branche', 'branche', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_branche_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
             // View column for interessengruppe field
             //
             $column = new TextViewColumn('interessengruppe', 'interessengruppe', 'Interessengruppe', $this->dataset);
@@ -35567,6 +38421,22 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -35583,6 +38453,7 @@
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
+                    new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
                     new StringField('beschreibung_fr'),
                     new StringField('parlamentarier_kommissionen'),
@@ -35616,6 +38487,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -35643,6 +38515,7 @@
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
+                    new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
                     new StringField('beschreibung_fr'),
                     new StringField('parlamentarier_kommissionen'),
@@ -35676,6 +38549,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -35751,6 +38625,22 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
+            //
+            // View column for interessengruppe1 field
+            //
+            $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for interessengruppe1_branche field
+            //
+            $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -35767,6 +38657,7 @@
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
+                    new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
                     new StringField('beschreibung_fr'),
                     new StringField('parlamentarier_kommissionen'),
@@ -35800,6 +38691,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -35827,6 +38719,7 @@
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
+                    new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
                     new StringField('beschreibung_fr'),
                     new StringField('parlamentarier_kommissionen'),
@@ -35860,6 +38753,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -36031,6 +38925,7 @@
                     new IntegerField('id', true, true, true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -36147,6 +39042,7 @@
                 new FilterColumn($this->dataset, 'id', 'id', 'Id'),
                 new FilterColumn($this->dataset, 'nachname', 'nachname', 'Nachname'),
                 new FilterColumn($this->dataset, 'vorname', 'vorname', 'Vorname'),
+                new FilterColumn($this->dataset, 'vorname_kurz', 'vorname_kurz', 'Vorname Kurz'),
                 new FilterColumn($this->dataset, 'zweiter_vorname', 'zweiter_vorname', 'Zweiter Vorname'),
                 new FilterColumn($this->dataset, 'rat_id', 'rat_id_abkuerzung_mixed', 'Rat'),
                 new FilterColumn($this->dataset, 'kanton_id', 'kanton_id_abkuerzung', 'Kanton'),
@@ -36225,6 +39121,7 @@
                 ->addColumn($columns['id'])
                 ->addColumn($columns['nachname'])
                 ->addColumn($columns['vorname'])
+                ->addColumn($columns['vorname_kurz'])
                 ->addColumn($columns['zweiter_vorname'])
                 ->addColumn($columns['kanton_id'])
                 ->addColumn($columns['kommissionen'])
@@ -36262,6 +39159,7 @@
                 ->setOptionsFor('id')
                 ->setOptionsFor('nachname')
                 ->setOptionsFor('vorname')
+                ->setOptionsFor('vorname_kurz')
                 ->setOptionsFor('rat_id')
                 ->setOptionsFor('kanton_id')
                 ->setOptionsFor('kommissionen')
@@ -36276,13 +39174,12 @@
                 ->setOptionsFor('beruf_interessengruppe_id')
                 ->setOptionsFor('geschlecht')
                 ->setOptionsFor('geburtstag')
-                ->setOptionsFor('titel')
                 ->setOptionsFor('zivilstand')
-                ->setOptionsFor('militaerischer_grad_id')
-                ->setOptionsFor('email')
                 ->setOptionsFor('parlament_interessenbindungen_updated')
                 ->setOptionsFor('arbeitssprache')
                 ->setOptionsFor('sprache')
+                ->setOptionsFor('adresse_plz')
+                ->setOptionsFor('adresse_ort')
                 ->setOptionsFor('erfasst')
                 ->setOptionsFor('eingabe_abgeschlossen_visa')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
@@ -36350,6 +39247,31 @@
             
             $filterBuilder->addColumn(
                 $columns['vorname'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('vorname_kurz_edit');
+            $main_editor->SetMaxLength(15);
+            
+            $filterBuilder->addColumn(
+                $columns['vorname_kurz'],
                 array(
                     FilterConditionOperator::EQUALS => $main_editor,
                     FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
@@ -38186,6 +41108,16 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::LARGE_DESKTOP);
+            $column->SetDescription('Alltagsvorname oder gebräuchlicher Spitzname, z.B. Nik für Niklaus');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for abkuerzung_mixed field
             //
             $column = new TextViewColumn('rat_id', 'rat_id_abkuerzung_mixed', 'Rat', $this->dataset);
@@ -38418,7 +41350,7 @@
             //
             // View column for photo field
             //
-            $column = new DownloadDataColumn('photo', 'photo', 'Photo', $this->dataset);
+            $column = new TextViewColumn('photo', 'photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Photo des Parlamentariers (JPEG/jpg)');
@@ -38866,6 +41798,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for zweiter_vorname field
             //
             $column = new TextViewColumn('zweiter_vorname', 'zweiter_vorname', 'Zweiter Vorname', $this->dataset);
@@ -39058,7 +41997,7 @@
             //
             // View column for photo field
             //
-            $column = new DownloadDataColumn('photo', 'photo', 'Photo', $this->dataset);
+            $column = new TextViewColumn('photo', 'photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -39414,6 +42353,16 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for vorname_kurz field
+            //
+            $editor = new TextEdit('vorname_kurz_edit');
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Vorname Kurz', 'vorname_kurz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for zweiter_vorname field
             //
             $editor = new TextEdit('zweiter_vorname_edit');
@@ -39472,6 +42421,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -39518,6 +42468,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -39614,6 +42566,7 @@
                     new StringField('homepage_de'),
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -39681,6 +42634,7 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -39834,6 +42788,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -40430,6 +43385,16 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
+            // Edit column for vorname_kurz field
+            //
+            $editor = new TextEdit('vorname_kurz_edit');
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Vorname Kurz', 'vorname_kurz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
             // Edit column for zweiter_vorname field
             //
             $editor = new TextEdit('zweiter_vorname_edit');
@@ -40488,6 +43453,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -40534,6 +43500,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -40630,6 +43598,7 @@
                     new StringField('homepage_de'),
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -40697,6 +43666,7 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -40850,6 +43820,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -41473,6 +44444,16 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for vorname_kurz field
+            //
+            $editor = new TextEdit('vorname_kurz_edit');
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Vorname Kurz', 'vorname_kurz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for zweiter_vorname field
             //
             $editor = new TextEdit('zweiter_vorname_edit');
@@ -41531,6 +44512,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -41577,6 +44559,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -41673,6 +44657,7 @@
                     new StringField('homepage_de'),
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -41740,6 +44725,7 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -41893,6 +44879,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -42389,6 +45376,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for zweiter_vorname field
             //
             $column = new TextViewColumn('zweiter_vorname', 'zweiter_vorname', 'Zweiter Vorname', $this->dataset);
@@ -42581,7 +45575,7 @@
             //
             // View column for photo field
             //
-            $column = new DownloadDataColumn('photo', 'photo', 'Photo', $this->dataset);
+            $column = new TextViewColumn('photo', 'photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -42954,6 +45948,13 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for zweiter_vorname field
             //
             $column = new TextViewColumn('zweiter_vorname', 'zweiter_vorname', 'Zweiter Vorname', $this->dataset);
@@ -43146,7 +46147,7 @@
             //
             // View column for photo field
             //
-            $column = new DownloadDataColumn('photo', 'photo', 'Photo', $this->dataset);
+            $column = new TextViewColumn('photo', 'photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -43510,6 +46511,13 @@
             $grid->AddCompareColumn($column);
             
             //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
             // View column for zweiter_vorname field
             //
             $column = new TextViewColumn('zweiter_vorname', 'zweiter_vorname', 'Zweiter Vorname', $this->dataset);
@@ -43702,7 +46710,7 @@
             //
             // View column for photo field
             //
-            $column = new DownloadDataColumn('photo', 'photo', 'Photo', $this->dataset);
+            $column = new TextViewColumn('photo', 'photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             
@@ -44350,9 +47358,6 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_weitere_aemter_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
-            $handler = new DownloadHTTPHandler($this->dataset, 'photo', 'photo_handler', '%photo_mime_type%', '%photo_dateiname_voll%', true);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
             //
             // View column for email field
             //
@@ -44487,9 +47492,6 @@
             $column = new TextViewColumn('weitere_aemter', 'weitere_aemter', 'Weitere Aemter', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_weitere_aemter_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            $handler = new DownloadHTTPHandler($this->dataset, 'photo', 'photo_handler', '%photo_mime_type%', '%photo_dateiname_voll%', true);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -44658,9 +47660,6 @@
             $column = new TextViewColumn('weitere_aemter', 'weitere_aemter', 'Weitere Ämter', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_weitere_aemter_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            $handler = new DownloadHTTPHandler($this->dataset, 'photo', 'photo_handler', '%photo_mime_type%', '%photo_dateiname_voll%', true);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -44849,6 +47848,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -44884,6 +47884,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -44958,6 +47960,7 @@
                     new StringField('homepage_de'),
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -45002,6 +48005,7 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -45045,6 +48049,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -45153,9 +48158,6 @@
             $column = new TextViewColumn('weitere_aemter', 'weitere_aemter', 'Weitere Ämter', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_weitere_aemter_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            $handler = new DownloadHTTPHandler($this->dataset, 'photo', 'photo_handler', '%photo_mime_type%', '%photo_dateiname_voll%', true);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //

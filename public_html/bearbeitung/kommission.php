@@ -65,6 +65,8 @@
                     new DateTimeField('created_date', true, true),
                     new StringField('updated_visa', false, true),
                     new DateTimeField('updated_date', true, true),
+                    new IntegerField('aktiv', false, true),
+                    new IntegerField('published', true, true),
                     new IntegerField('bis_unix', false, true),
                     new IntegerField('von_unix', false, true),
                     new IntegerField('created_date_unix', true, true),
@@ -168,7 +170,9 @@
                 new FilterColumn($this->dataset, 'kommission_abkuerzung_fr', 'kommission_abkuerzung_fr', 'Kommission Abkuerzung Fr'),
                 new FilterColumn($this->dataset, 'kommission_name_fr', 'kommission_name_fr', 'Kommission Name Fr'),
                 new FilterColumn($this->dataset, 'kommission_abkuerzung_mixed', 'kommission_abkuerzung_mixed', 'Kommission Abkuerzung Mixed'),
-                new FilterColumn($this->dataset, 'kommission_name_mixed', 'kommission_name_mixed', 'Kommission Name Mixed')
+                new FilterColumn($this->dataset, 'kommission_name_mixed', 'kommission_name_mixed', 'Kommission Name Mixed'),
+                new FilterColumn($this->dataset, 'aktiv', 'aktiv', 'Aktiv'),
+                new FilterColumn($this->dataset, 'published', 'published', 'Published')
             );
         }
     
@@ -203,7 +207,9 @@
                 ->addColumn($columns['kommission_abkuerzung_fr'])
                 ->addColumn($columns['kommission_name_fr'])
                 ->addColumn($columns['kommission_abkuerzung_mixed'])
-                ->addColumn($columns['kommission_name_mixed']);
+                ->addColumn($columns['kommission_name_mixed'])
+                ->addColumn($columns['aktiv'])
+                ->addColumn($columns['published']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -942,6 +948,42 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('aktiv_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['aktiv'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('published_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['published'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -1264,6 +1306,32 @@
             $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -1494,6 +1562,26 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_name_mixed_handler_view');
             $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
         }
     
         protected function AddEditColumns(Grid $grid)
@@ -1517,6 +1605,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -1590,6 +1679,7 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('aktiv'),
+                    new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
                     new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
@@ -1666,6 +1756,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -1844,6 +1935,25 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for aktiv field
+            //
+            $editor = new TextEdit('aktiv_edit');
+            $editColumn = new CustomEditColumn('Aktiv', 'aktiv', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for published field
+            //
+            $editor = new TextEdit('published_edit');
+            $editColumn = new CustomEditColumn('Published', 'published', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
         }
     
         protected function AddMultiEditColumns(Grid $grid)
@@ -1877,6 +1987,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -1950,6 +2061,7 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('aktiv'),
+                    new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
                     new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
@@ -2026,6 +2138,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -2459,6 +2572,25 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for aktiv field
+            //
+            $editor = new TextEdit('aktiv_edit');
+            $editColumn = new CustomEditColumn('Aktiv', 'aktiv', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for published field
+            //
+            $editor = new TextEdit('published_edit');
+            $editColumn = new CustomEditColumn('Published', 'published', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -2482,6 +2614,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -2555,6 +2688,7 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('aktiv'),
+                    new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
                     new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
@@ -2631,6 +2765,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -2807,6 +2942,25 @@
             $editor = new TextAreaEdit('kommission_name_mixed_edit', 50, 8);
             $editColumn = new CustomEditColumn('Kommission Name Mixed', 'kommission_name_mixed', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for aktiv field
+            //
+            $editor = new TextEdit('aktiv_edit');
+            $editColumn = new CustomEditColumn('Aktiv', 'aktiv', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for published field
+            //
+            $editor = new TextEdit('published_edit');
+            $editColumn = new CustomEditColumn('Published', 'published', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
@@ -3045,6 +3199,26 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_name_mixed_handler_print');
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -3274,6 +3448,26 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_name_mixed_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddExportColumn($column);
         }
     
@@ -3625,6 +3819,26 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_name_mixed_handler_compare');
             $grid->AddCompareColumn($column);
+            
+            //
+            // View column for aktiv field
+            //
+            $column = new NumberViewColumn('aktiv', 'aktiv', 'Aktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for published field
+            //
+            $column = new NumberViewColumn('published', 'published', 'Published', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
         }
     
         private function AddCompareHeaderColumns(Grid $grid)
@@ -3863,6 +4077,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -3936,6 +4151,7 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('aktiv'),
+                    new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
                     new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
@@ -4001,6 +4217,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -5333,6 +5550,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -5626,6 +5844,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -5994,6 +6213,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -7230,6 +7450,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -7290,6 +7511,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -7350,6 +7572,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -7410,6 +7633,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -9563,6 +9787,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -9633,6 +9858,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -9755,6 +9981,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -10052,6 +10279,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -10122,6 +10350,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -10274,6 +10503,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -10593,6 +10823,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -10663,6 +10894,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -10785,6 +11017,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -12163,6 +12396,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -12223,6 +12457,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -12283,6 +12518,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -12343,6 +12579,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -12403,6 +12640,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -12463,6 +12701,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -12523,6 +12762,7 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),

@@ -68,7 +68,7 @@
                     new IntegerField('interessengruppe_id'),
                     new IntegerField('interessengruppe2_id'),
                     new IntegerField('interessengruppe3_id'),
-                    new IntegerField('branche_id'),
+                    new IntegerField('ALT_branche_id'),
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
@@ -95,7 +95,6 @@
             $this->dataset->AddLookupField('interessengruppe_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'interessengruppe_id_anzeige_name', 'interessengruppe_id_anzeige_name_v_interessengruppe_simple'), 'interessengruppe_id_anzeige_name_v_interessengruppe_simple');
             $this->dataset->AddLookupField('interessengruppe2_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'interessengruppe2_id_anzeige_name', 'interessengruppe2_id_anzeige_name_v_interessengruppe_simple'), 'interessengruppe2_id_anzeige_name_v_interessengruppe_simple');
             $this->dataset->AddLookupField('interessengruppe3_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'interessengruppe3_id_anzeige_name', 'interessengruppe3_id_anzeige_name_v_interessengruppe_simple'), 'interessengruppe3_id_anzeige_name_v_interessengruppe_simple');
-            $this->dataset->AddLookupField('branche_id', 'v_branche_simple', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'branche_id_anzeige_name', 'branche_id_anzeige_name_v_branche_simple'), 'branche_id_anzeige_name_v_branche_simple');
             $this->dataset->AddLookupField('land_id', 'country', new IntegerField('id'), new StringField('continent', false, false, false, false, 'land_id_continent', 'land_id_continent_country'), 'land_id_continent_country');
             $this->dataset->AddLookupField('interessenraum_id', 'interessenraum', new IntegerField('id'), new StringField('name', false, false, false, false, 'interessenraum_id_name', 'interessenraum_id_name_interessenraum'), 'interessenraum_id_name_interessenraum');
         }
@@ -138,7 +137,6 @@
                 new FilterColumn($this->dataset, 'interessengruppe_id', 'interessengruppe_id_anzeige_name', 'Interessengruppe'),
                 new FilterColumn($this->dataset, 'interessengruppe2_id', 'interessengruppe2_id_anzeige_name', '2. Interessengruppe'),
                 new FilterColumn($this->dataset, 'interessengruppe3_id', 'interessengruppe3_id_anzeige_name', '3. Interessengruppe'),
-                new FilterColumn($this->dataset, 'branche_id', 'branche_id_anzeige_name', 'Branche'),
                 new FilterColumn($this->dataset, 'beschreibung', 'beschreibung', 'Beschreibung'),
                 new FilterColumn($this->dataset, 'homepage', 'homepage', 'Homepage'),
                 new FilterColumn($this->dataset, 'handelsregister_url', 'handelsregister_url', 'Handelsregister Url'),
@@ -170,7 +168,8 @@
                 new FilterColumn($this->dataset, 'abkuerzung_it', 'abkuerzung_it', 'Abkuerzung It'),
                 new FilterColumn($this->dataset, 'alias_namen_it', 'alias_namen_it', 'Alias Namen It'),
                 new FilterColumn($this->dataset, 'sekretariat', 'sekretariat', 'Sekretariat'),
-                new FilterColumn($this->dataset, 'updated_by_import', 'updated_by_import', 'Updated By Import')
+                new FilterColumn($this->dataset, 'updated_by_import', 'updated_by_import', 'Updated By Import'),
+                new FilterColumn($this->dataset, 'ALT_branche_id', 'ALT_branche_id', 'ALT Branche Id')
             );
         }
     
@@ -188,7 +187,6 @@
                 ->addColumn($columns['interessengruppe_id'])
                 ->addColumn($columns['interessengruppe2_id'])
                 ->addColumn($columns['interessengruppe3_id'])
-                ->addColumn($columns['branche_id'])
                 ->addColumn($columns['beschreibung'])
                 ->addColumn($columns['homepage'])
                 ->addColumn($columns['handelsregister_url'])
@@ -214,7 +212,8 @@
                 ->addColumn($columns['abkuerzung_it'])
                 ->addColumn($columns['alias_namen_it'])
                 ->addColumn($columns['sekretariat'])
-                ->addColumn($columns['updated_by_import']);
+                ->addColumn($columns['updated_by_import'])
+                ->addColumn($columns['ALT_branche_id']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -225,7 +224,6 @@
                 ->setOptionsFor('interessengruppe_id')
                 ->setOptionsFor('interessengruppe2_id')
                 ->setOptionsFor('interessengruppe3_id')
-                ->setOptionsFor('branche_id')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
                 ->setOptionsFor('kontrolliert_datum')
                 ->setOptionsFor('freigabe_datum')
@@ -536,41 +534,6 @@
             
             $filterBuilder->addColumn(
                 $columns['interessengruppe3_id'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $text_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $text_editor,
-                    FilterConditionOperator::BEGINS_WITH => $text_editor,
-                    FilterConditionOperator::ENDS_WITH => $text_editor,
-                    FilterConditionOperator::IS_LIKE => $text_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $text_editor,
-                    FilterConditionOperator::IN => $multi_value_select_editor,
-                    FilterConditionOperator::NOT_IN => $multi_value_select_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
-            
-            $main_editor = new DynamicCombobox('branche_id_edit', $this->CreateLinkBuilder());
-            $main_editor->setAllowClear(true);
-            $main_editor->setMinimumInputLength(0);
-            $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_branche_id_anzeige_name_search');
-            
-            $multi_value_select_editor = new RemoteMultiValueSelect('branche_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_branche_id_anzeige_name_search');
-            
-            $text_editor = new TextEdit('branche_id');
-            
-            $filterBuilder->addColumn(
-                $columns['branche_id'],
                 array(
                     FilterConditionOperator::EQUALS => $main_editor,
                     FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
@@ -1202,6 +1165,24 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('alt_branche_id_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['ALT_branche_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -1332,16 +1313,6 @@
             $column->setTarget('_self');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Fremdschlüssel Interessengruppe. 3. Interessengruppe der Organisation.');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('branche_id', 'branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Fremdschlüssel Branche.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1637,6 +1608,19 @@
             $column->SetDescription('Datum, wann die Organisation durch einen Import zu letzt aktualisiert wurde. Ein Datum bedeutet, dass die Organisation unter der Kontrolle des Importprozesses.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for ALT_branche_id field
+            //
+            $column = new NumberViewColumn('ALT_branche_id', 'ALT_branche_id', 'ALT Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Fremdschlüssel Branche.');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -1730,13 +1714,6 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('interessengruppe.php?operation=view&pk0=%interessengruppe3_id%');
             $column->setTarget('_self');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('branche_id', 'branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1953,6 +1930,16 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for ALT_branche_id field
+            //
+            $column = new NumberViewColumn('ALT_branche_id', 'ALT_branche_id', 'ALT Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
         }
     
         protected function AddEditColumns(Grid $grid)
@@ -2076,6 +2063,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -2129,6 +2117,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -2182,6 +2171,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -2193,69 +2183,6 @@
             $editColumn = new LookUpEditColumn(
                 '3. Interessengruppe', 
                 'interessengruppe3_id', 
-                $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for branche_id field
-            //
-            $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                MyPDOConnectionFactory::getInstance(),
-                GetConnectionOptions(),
-                '`v_branche_simple`');
-            $lookupDataset->addFields(
-                array(
-                    new StringField('anzeige_name'),
-                    new StringField('anzeige_name_de'),
-                    new StringField('anzeige_name_fr'),
-                    new StringField('anzeige_name_mixed'),
-                    new IntegerField('id', true),
-                    new StringField('name', true),
-                    new StringField('name_fr'),
-                    new IntegerField('kommission_id'),
-                    new IntegerField('kommission2_id'),
-                    new StringField('technischer_name', true),
-                    new StringField('beschreibung', true),
-                    new StringField('beschreibung_fr'),
-                    new StringField('angaben'),
-                    new StringField('angaben_fr'),
-                    new StringField('farbcode'),
-                    new StringField('symbol_abs'),
-                    new StringField('symbol_rel'),
-                    new StringField('symbol_klein_rel'),
-                    new StringField('symbol_dateiname_wo_ext'),
-                    new StringField('symbol_dateierweiterung'),
-                    new StringField('symbol_dateiname'),
-                    new StringField('symbol_mime_type'),
-                    new StringField('notizen'),
-                    new StringField('eingabe_abgeschlossen_visa'),
-                    new DateTimeField('eingabe_abgeschlossen_datum'),
-                    new StringField('kontrolliert_visa'),
-                    new DateTimeField('kontrolliert_datum'),
-                    new StringField('freigabe_visa'),
-                    new DateTimeField('freigabe_datum'),
-                    new StringField('created_visa', true),
-                    new DateTimeField('created_date', true),
-                    new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true),
-                    new StringField('name_de', true),
-                    new StringField('beschreibung_de', true),
-                    new StringField('angaben_de'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
-                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
-                    new IntegerField('kontrolliert_datum_unix'),
-                    new IntegerField('freigabe_datum_unix')
-                )
-            );
-            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new LookUpEditColumn(
-                'Branche', 
-                'branche_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
@@ -2509,6 +2436,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for ALT_branche_id field
+            //
+            $editor = new TextEdit('alt_branche_id_edit');
+            $editColumn = new CustomEditColumn('ALT Branche Id', 'ALT_branche_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
         }
     
         protected function AddMultiEditColumns(Grid $grid)
@@ -2604,6 +2540,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -2657,6 +2594,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -2710,6 +2648,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -2721,69 +2660,6 @@
             $editColumn = new LookUpEditColumn(
                 '3. Interessengruppe', 
                 'interessengruppe3_id', 
-                $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for branche_id field
-            //
-            $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                MyPDOConnectionFactory::getInstance(),
-                GetConnectionOptions(),
-                '`v_branche_simple`');
-            $lookupDataset->addFields(
-                array(
-                    new StringField('anzeige_name'),
-                    new StringField('anzeige_name_de'),
-                    new StringField('anzeige_name_fr'),
-                    new StringField('anzeige_name_mixed'),
-                    new IntegerField('id', true),
-                    new StringField('name', true),
-                    new StringField('name_fr'),
-                    new IntegerField('kommission_id'),
-                    new IntegerField('kommission2_id'),
-                    new StringField('technischer_name', true),
-                    new StringField('beschreibung', true),
-                    new StringField('beschreibung_fr'),
-                    new StringField('angaben'),
-                    new StringField('angaben_fr'),
-                    new StringField('farbcode'),
-                    new StringField('symbol_abs'),
-                    new StringField('symbol_rel'),
-                    new StringField('symbol_klein_rel'),
-                    new StringField('symbol_dateiname_wo_ext'),
-                    new StringField('symbol_dateierweiterung'),
-                    new StringField('symbol_dateiname'),
-                    new StringField('symbol_mime_type'),
-                    new StringField('notizen'),
-                    new StringField('eingabe_abgeschlossen_visa'),
-                    new DateTimeField('eingabe_abgeschlossen_datum'),
-                    new StringField('kontrolliert_visa'),
-                    new DateTimeField('kontrolliert_datum'),
-                    new StringField('freigabe_visa'),
-                    new DateTimeField('freigabe_datum'),
-                    new StringField('created_visa', true),
-                    new DateTimeField('created_date', true),
-                    new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true),
-                    new StringField('name_de', true),
-                    new StringField('beschreibung_de', true),
-                    new StringField('angaben_de'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
-                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
-                    new IntegerField('kontrolliert_datum_unix'),
-                    new IntegerField('freigabe_datum_unix')
-                )
-            );
-            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new LookUpEditColumn(
-                'Branche', 
-                'branche_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
@@ -3155,6 +3031,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for ALT_branche_id field
+            //
+            $editor = new TextEdit('alt_branche_id_edit');
+            $editColumn = new CustomEditColumn('ALT Branche Id', 'ALT_branche_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -3278,6 +3163,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -3331,6 +3217,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -3384,6 +3271,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -3395,69 +3283,6 @@
             $editColumn = new LookUpEditColumn(
                 '3. Interessengruppe', 
                 'interessengruppe3_id', 
-                $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for branche_id field
-            //
-            $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                MyPDOConnectionFactory::getInstance(),
-                GetConnectionOptions(),
-                '`v_branche_simple`');
-            $lookupDataset->addFields(
-                array(
-                    new StringField('anzeige_name'),
-                    new StringField('anzeige_name_de'),
-                    new StringField('anzeige_name_fr'),
-                    new StringField('anzeige_name_mixed'),
-                    new IntegerField('id', true),
-                    new StringField('name', true),
-                    new StringField('name_fr'),
-                    new IntegerField('kommission_id'),
-                    new IntegerField('kommission2_id'),
-                    new StringField('technischer_name', true),
-                    new StringField('beschreibung', true),
-                    new StringField('beschreibung_fr'),
-                    new StringField('angaben'),
-                    new StringField('angaben_fr'),
-                    new StringField('farbcode'),
-                    new StringField('symbol_abs'),
-                    new StringField('symbol_rel'),
-                    new StringField('symbol_klein_rel'),
-                    new StringField('symbol_dateiname_wo_ext'),
-                    new StringField('symbol_dateierweiterung'),
-                    new StringField('symbol_dateiname'),
-                    new StringField('symbol_mime_type'),
-                    new StringField('notizen'),
-                    new StringField('eingabe_abgeschlossen_visa'),
-                    new DateTimeField('eingabe_abgeschlossen_datum'),
-                    new StringField('kontrolliert_visa'),
-                    new DateTimeField('kontrolliert_datum'),
-                    new StringField('freigabe_visa'),
-                    new DateTimeField('freigabe_datum'),
-                    new StringField('created_visa', true),
-                    new DateTimeField('created_date', true),
-                    new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true),
-                    new StringField('name_de', true),
-                    new StringField('beschreibung_de', true),
-                    new StringField('angaben_de'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
-                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
-                    new IntegerField('kontrolliert_datum_unix'),
-                    new IntegerField('freigabe_datum_unix')
-                )
-            );
-            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new LookUpEditColumn(
-                'Branche', 
-                'branche_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
@@ -3711,6 +3536,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for ALT_branche_id field
+            //
+            $editor = new TextEdit('alt_branche_id_edit');
+            $editColumn = new CustomEditColumn('ALT Branche Id', 'ALT_branche_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -3810,13 +3644,6 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('interessengruppe.php?operation=view&pk0=%interessengruppe3_id%');
             $column->setTarget('_self');
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('branche_id', 'branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
@@ -4033,6 +3860,16 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for ALT_branche_id field
+            //
+            $column = new NumberViewColumn('ALT_branche_id', 'ALT_branche_id', 'ALT Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -4126,13 +3963,6 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('interessengruppe.php?operation=view&pk0=%interessengruppe3_id%');
             $column->setTarget('_self');
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('branche_id', 'branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
@@ -4349,6 +4179,16 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
+            
+            //
+            // View column for ALT_branche_id field
+            //
+            $column = new NumberViewColumn('ALT_branche_id', 'ALT_branche_id', 'ALT Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
         }
     
         private function AddCompareColumns(Grid $grid)
@@ -4442,13 +4282,6 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('interessengruppe.php?operation=view&pk0=%interessengruppe3_id%');
             $column->setTarget('_self');
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('branche_id', 'branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             
             //
@@ -4710,6 +4543,16 @@
             $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for ALT_branche_id field
+            //
+            $column = new NumberViewColumn('ALT_branche_id', 'ALT_branche_id', 'ALT Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddCompareColumn($column);
         }
     
@@ -5178,6 +5021,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -5221,6 +5065,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -5264,6 +5109,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -5278,7 +5124,7 @@
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
-                '`v_branche_simple`');
+                '`v_interessengruppe_simple`');
             $lookupDataset->addFields(
                 array(
                     new StringField('anzeige_name'),
@@ -5288,21 +5134,11 @@
                     new IntegerField('id', true),
                     new StringField('name', true),
                     new StringField('name_fr'),
-                    new IntegerField('kommission_id'),
-                    new IntegerField('kommission2_id'),
-                    new StringField('technischer_name', true),
+                    new IntegerField('branche_id', true),
                     new StringField('beschreibung', true),
                     new StringField('beschreibung_fr'),
-                    new StringField('angaben'),
-                    new StringField('angaben_fr'),
-                    new StringField('farbcode'),
-                    new StringField('symbol_abs'),
-                    new StringField('symbol_rel'),
-                    new StringField('symbol_klein_rel'),
-                    new StringField('symbol_dateiname_wo_ext'),
-                    new StringField('symbol_dateierweiterung'),
-                    new StringField('symbol_dateiname'),
-                    new StringField('symbol_mime_type'),
+                    new StringField('alias_namen'),
+                    new StringField('alias_namen_fr'),
                     new StringField('notizen'),
                     new StringField('eingabe_abgeschlossen_visa'),
                     new DateTimeField('eingabe_abgeschlossen_datum'),
@@ -5316,7 +5152,8 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
-                    new StringField('angaben_de'),
+                    new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -5325,13 +5162,13 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_branche_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessengruppe3_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
-                '`v_branche_simple`');
+                '`v_interessengruppe_simple`');
             $lookupDataset->addFields(
                 array(
                     new StringField('anzeige_name'),
@@ -5341,21 +5178,11 @@
                     new IntegerField('id', true),
                     new StringField('name', true),
                     new StringField('name_fr'),
-                    new IntegerField('kommission_id'),
-                    new IntegerField('kommission2_id'),
-                    new StringField('technischer_name', true),
+                    new IntegerField('branche_id', true),
                     new StringField('beschreibung', true),
                     new StringField('beschreibung_fr'),
-                    new StringField('angaben'),
-                    new StringField('angaben_fr'),
-                    new StringField('farbcode'),
-                    new StringField('symbol_abs'),
-                    new StringField('symbol_rel'),
-                    new StringField('symbol_klein_rel'),
-                    new StringField('symbol_dateiname_wo_ext'),
-                    new StringField('symbol_dateierweiterung'),
-                    new StringField('symbol_dateiname'),
-                    new StringField('symbol_mime_type'),
+                    new StringField('alias_namen'),
+                    new StringField('alias_namen_fr'),
                     new StringField('notizen'),
                     new StringField('eingabe_abgeschlossen_visa'),
                     new DateTimeField('eingabe_abgeschlossen_datum'),
@@ -5369,7 +5196,8 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
-                    new StringField('angaben_de'),
+                    new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -5378,13 +5206,13 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_branche_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessengruppe3_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
-                '`v_branche_simple`');
+                '`v_interessengruppe_simple`');
             $lookupDataset->addFields(
                 array(
                     new StringField('anzeige_name'),
@@ -5394,21 +5222,11 @@
                     new IntegerField('id', true),
                     new StringField('name', true),
                     new StringField('name_fr'),
-                    new IntegerField('kommission_id'),
-                    new IntegerField('kommission2_id'),
-                    new StringField('technischer_name', true),
+                    new IntegerField('branche_id', true),
                     new StringField('beschreibung', true),
                     new StringField('beschreibung_fr'),
-                    new StringField('angaben'),
-                    new StringField('angaben_fr'),
-                    new StringField('farbcode'),
-                    new StringField('symbol_abs'),
-                    new StringField('symbol_rel'),
-                    new StringField('symbol_klein_rel'),
-                    new StringField('symbol_dateiname_wo_ext'),
-                    new StringField('symbol_dateierweiterung'),
-                    new StringField('symbol_dateiname'),
-                    new StringField('symbol_mime_type'),
+                    new StringField('alias_namen'),
+                    new StringField('alias_namen_fr'),
                     new StringField('notizen'),
                     new StringField('eingabe_abgeschlossen_visa'),
                     new DateTimeField('eingabe_abgeschlossen_datum'),
@@ -5422,7 +5240,8 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
-                    new StringField('angaben_de'),
+                    new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -5431,13 +5250,13 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_branche_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessengruppe3_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
-                '`v_branche_simple`');
+                '`v_interessengruppe_simple`');
             $lookupDataset->addFields(
                 array(
                     new StringField('anzeige_name'),
@@ -5447,21 +5266,11 @@
                     new IntegerField('id', true),
                     new StringField('name', true),
                     new StringField('name_fr'),
-                    new IntegerField('kommission_id'),
-                    new IntegerField('kommission2_id'),
-                    new StringField('technischer_name', true),
+                    new IntegerField('branche_id', true),
                     new StringField('beschreibung', true),
                     new StringField('beschreibung_fr'),
-                    new StringField('angaben'),
-                    new StringField('angaben_fr'),
-                    new StringField('farbcode'),
-                    new StringField('symbol_abs'),
-                    new StringField('symbol_rel'),
-                    new StringField('symbol_klein_rel'),
-                    new StringField('symbol_dateiname_wo_ext'),
-                    new StringField('symbol_dateierweiterung'),
-                    new StringField('symbol_dateiname'),
-                    new StringField('symbol_mime_type'),
+                    new StringField('alias_namen'),
+                    new StringField('alias_namen_fr'),
                     new StringField('notizen'),
                     new StringField('eingabe_abgeschlossen_visa'),
                     new DateTimeField('eingabe_abgeschlossen_datum'),
@@ -5475,7 +5284,8 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
-                    new StringField('angaben_de'),
+                    new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -5484,60 +5294,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_branche_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            $lookupDataset = new TableDataset(
-                MyPDOConnectionFactory::getInstance(),
-                GetConnectionOptions(),
-                '`v_branche_simple`');
-            $lookupDataset->addFields(
-                array(
-                    new StringField('anzeige_name'),
-                    new StringField('anzeige_name_de'),
-                    new StringField('anzeige_name_fr'),
-                    new StringField('anzeige_name_mixed'),
-                    new IntegerField('id', true),
-                    new StringField('name', true),
-                    new StringField('name_fr'),
-                    new IntegerField('kommission_id'),
-                    new IntegerField('kommission2_id'),
-                    new StringField('technischer_name', true),
-                    new StringField('beschreibung', true),
-                    new StringField('beschreibung_fr'),
-                    new StringField('angaben'),
-                    new StringField('angaben_fr'),
-                    new StringField('farbcode'),
-                    new StringField('symbol_abs'),
-                    new StringField('symbol_rel'),
-                    new StringField('symbol_klein_rel'),
-                    new StringField('symbol_dateiname_wo_ext'),
-                    new StringField('symbol_dateierweiterung'),
-                    new StringField('symbol_dateiname'),
-                    new StringField('symbol_mime_type'),
-                    new StringField('notizen'),
-                    new StringField('eingabe_abgeschlossen_visa'),
-                    new DateTimeField('eingabe_abgeschlossen_datum'),
-                    new StringField('kontrolliert_visa'),
-                    new DateTimeField('kontrolliert_datum'),
-                    new StringField('freigabe_visa'),
-                    new DateTimeField('freigabe_datum'),
-                    new StringField('created_visa', true),
-                    new DateTimeField('created_date', true),
-                    new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true),
-                    new StringField('name_de', true),
-                    new StringField('beschreibung_de', true),
-                    new StringField('angaben_de'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
-                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
-                    new IntegerField('kontrolliert_datum_unix'),
-                    new IntegerField('freigabe_datum_unix')
-                )
-            );
-            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_branche_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessengruppe3_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5813,6 +5570,7 @@
                     new IntegerField('id', true, true, true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -5990,7 +5748,8 @@
                 new FilterColumn($this->dataset, 'telephon_1', 'telephon_1', 'Telephon 1'),
                 new FilterColumn($this->dataset, 'telephon_2', 'telephon_2', 'Telephon 2'),
                 new FilterColumn($this->dataset, 'erfasst', 'erfasst', 'Erfasst'),
-                new FilterColumn($this->dataset, 'parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json')
+                new FilterColumn($this->dataset, 'parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json'),
+                new FilterColumn($this->dataset, 'vorname_kurz', 'vorname_kurz', 'Vorname Kurz')
             );
         }
     
@@ -6054,7 +5813,8 @@
                 ->addColumn($columns['telephon_1'])
                 ->addColumn($columns['telephon_2'])
                 ->addColumn($columns['erfasst'])
-                ->addColumn($columns['parlament_interessenbindungen_json']);
+                ->addColumn($columns['parlament_interessenbindungen_json'])
+                ->addColumn($columns['vorname_kurz']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -7557,6 +7317,31 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('vorname_kurz_edit');
+            $main_editor->SetMaxLength(15);
+            
+            $filterBuilder->addColumn(
+                $columns['vorname_kurz'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -8200,6 +7985,16 @@
             $column->SetDescription('Importierte Interessenbindungen von ws.parlament.ch als JSON. Rechtsformen: -, AG, Anst., EG, EidgKomm, Gen., GmbH, KollG, Komm., Körp., Stift., Ve., öffStift; Gremien: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV; Funktionen: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Alltagsvorname oder gebräuchlicher Spitzname, z.B. Nik für Niklaus');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -8664,6 +8459,13 @@
             $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
         }
     
         protected function AddEditColumns(Grid $grid)
@@ -8781,6 +8583,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -8869,6 +8673,7 @@
                     new StringField('homepage_de'),
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -8938,6 +8743,7 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -9050,6 +8856,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -9492,6 +9299,16 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for vorname_kurz field
+            //
+            $editor = new TextEdit('vorname_kurz_edit');
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Vorname Kurz', 'vorname_kurz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
         }
     
         protected function AddMultiEditColumns(Grid $grid)
@@ -9609,6 +9426,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -9697,6 +9516,7 @@
                     new StringField('homepage_de'),
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -9766,6 +9586,7 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -9878,6 +9699,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -10448,6 +10270,16 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for vorname_kurz field
+            //
+            $editor = new TextEdit('vorname_kurz_edit');
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Vorname Kurz', 'vorname_kurz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -10565,6 +10397,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -10653,6 +10487,7 @@
                     new StringField('homepage_de'),
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -10722,6 +10557,7 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -10834,6 +10670,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -11273,6 +11110,16 @@
             //
             $editor = new TextEdit('parlament_interessenbindungen_json_edit');
             $editColumn = new CustomEditColumn('Parlament Interessenbindungen Json', 'parlament_interessenbindungen_json', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for vorname_kurz field
+            //
+            $editor = new TextEdit('vorname_kurz_edit');
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Vorname Kurz', 'vorname_kurz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -11746,6 +11593,13 @@
             $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -12208,6 +12062,13 @@
             // View column for parlament_interessenbindungen_json field
             //
             $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
@@ -12789,6 +12650,13 @@
             // View column for parlament_interessenbindungen_json field
             //
             $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
         }
@@ -13393,6 +13261,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -13460,6 +13330,7 @@
                     new StringField('homepage_de'),
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -13516,6 +13387,7 @@
                     new StringField('homepage_de'),
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -13560,6 +13432,7 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -13603,6 +13476,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -15000,6 +14874,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -15229,6 +15104,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -15469,6 +15345,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -16460,6 +16337,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -16513,6 +16391,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -16566,6 +16445,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -16619,6 +16499,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -16672,6 +16553,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
@@ -16725,6 +16607,7 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
+                    new IntegerField('published', true),
                     new IntegerField('created_date_unix', true),
                     new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),

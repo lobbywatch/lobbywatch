@@ -59,6 +59,7 @@
                     new IntegerField('id', true, true, true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -236,7 +237,8 @@
                 new FilterColumn($this->dataset, 'telephon_1', 'telephon_1', 'Telephon 1'),
                 new FilterColumn($this->dataset, 'telephon_2', 'telephon_2', 'Telephon 2'),
                 new FilterColumn($this->dataset, 'erfasst', 'erfasst', 'Erfasst'),
-                new FilterColumn($this->dataset, 'parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json')
+                new FilterColumn($this->dataset, 'parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json'),
+                new FilterColumn($this->dataset, 'vorname_kurz', 'vorname_kurz', 'Vorname Kurz')
             );
         }
     
@@ -273,7 +275,8 @@
                 ->addColumn($columns['telephon_1'])
                 ->addColumn($columns['telephon_2'])
                 ->addColumn($columns['erfasst'])
-                ->addColumn($columns['parlament_interessenbindungen_json']);
+                ->addColumn($columns['parlament_interessenbindungen_json'])
+                ->addColumn($columns['vorname_kurz']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -1002,6 +1005,30 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('vorname_kurz_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['vorname_kurz'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -1340,6 +1367,16 @@
             $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -1578,6 +1615,13 @@
             // View column for parlament_interessenbindungen_json field
             //
             $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
@@ -1895,6 +1939,16 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for vorname_kurz field
+            //
+            $editor = new TextEdit('vorname_kurz_edit');
+            $editColumn = new CustomEditColumn('Vorname Kurz', 'vorname_kurz', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
         }
     
         protected function AddMultiEditColumns(Grid $grid)
@@ -2152,6 +2206,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -2845,6 +2901,16 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for vorname_kurz field
+            //
+            $editor = new TextEdit('vorname_kurz_edit');
+            $editColumn = new CustomEditColumn('Vorname Kurz', 'vorname_kurz', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -3160,6 +3226,16 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for vorname_kurz field
+            //
+            $editor = new TextEdit('vorname_kurz_edit');
+            $editColumn = new CustomEditColumn('Vorname Kurz', 'vorname_kurz', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -3406,6 +3482,13 @@
             $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -3644,6 +3727,13 @@
             // View column for parlament_interessenbindungen_json field
             //
             $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
@@ -4180,6 +4270,13 @@
             // View column for parlament_interessenbindungen_json field
             //
             $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
         }

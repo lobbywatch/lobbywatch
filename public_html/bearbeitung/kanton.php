@@ -1393,6 +1393,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -1702,6 +1704,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -2556,6 +2560,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -2757,6 +2763,7 @@
                     new IntegerField('id', true, true, true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
@@ -2934,7 +2941,8 @@
                 new FilterColumn($this->dataset, 'telephon_1', 'telephon_1', 'Telephon 1'),
                 new FilterColumn($this->dataset, 'telephon_2', 'telephon_2', 'Telephon 2'),
                 new FilterColumn($this->dataset, 'erfasst', 'erfasst', 'Erfasst'),
-                new FilterColumn($this->dataset, 'parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json')
+                new FilterColumn($this->dataset, 'parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json'),
+                new FilterColumn($this->dataset, 'vorname_kurz', 'vorname_kurz', 'Vorname Kurz')
             );
         }
     
@@ -3011,7 +3019,8 @@
                 ->addColumn($columns['telephon_1'])
                 ->addColumn($columns['telephon_2'])
                 ->addColumn($columns['erfasst'])
-                ->addColumn($columns['parlament_interessenbindungen_json']);
+                ->addColumn($columns['parlament_interessenbindungen_json'])
+                ->addColumn($columns['vorname_kurz']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -4850,6 +4859,31 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('vorname_kurz_edit');
+            $main_editor->SetMaxLength(15);
+            
+            $filterBuilder->addColumn(
+                $columns['vorname_kurz'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -5641,6 +5675,16 @@
             $column->SetDescription('Importierte Interessenbindungen von ws.parlament.ch als JSON. Rechtsformen: -, AG, Anst., EG, EidgKomm, Gen., GmbH, KollG, Komm., Körp., Stift., Ve., öffStift; Gremien: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV; Funktionen: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Alltagsvorname oder gebräuchlicher Spitzname, z.B. Nik für Niklaus');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -6205,6 +6249,13 @@
             $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
         }
     
         protected function AddEditColumns(Grid $grid)
@@ -6322,6 +6373,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -7117,6 +7170,16 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for vorname_kurz field
+            //
+            $editor = new TextEdit('vorname_kurz_edit');
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Vorname Kurz', 'vorname_kurz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
         }
     
         protected function AddMultiEditColumns(Grid $grid)
@@ -7234,6 +7297,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -8029,6 +8094,16 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for vorname_kurz field
+            //
+            $editor = new TextEdit('vorname_kurz_edit');
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Vorname Kurz', 'vorname_kurz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -8146,6 +8221,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -8941,6 +9018,16 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for vorname_kurz field
+            //
+            $editor = new TextEdit('vorname_kurz_edit');
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Vorname Kurz', 'vorname_kurz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -9511,6 +9598,13 @@
             $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -10073,6 +10167,13 @@
             // View column for parlament_interessenbindungen_json field
             //
             $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
@@ -10645,6 +10746,13 @@
             // View column for parlament_interessenbindungen_json field
             //
             $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for vorname_kurz field
+            //
+            $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
         }
@@ -11378,6 +11486,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -11891,6 +12001,8 @@
                     new StringField('hauptort_it'),
                     new IntegerField('flaeche_km2', true),
                     new IntegerField('beitrittsjahr', true),
+                    new StringField('wappen_svg', true),
+                    new StringField('wappen_svg_pfad', true),
                     new StringField('wappen_klein', true),
                     new StringField('wappen', true),
                     new StringField('lagebild', true),
@@ -11952,6 +12064,8 @@
                 new FilterColumn($this->dataset, 'hauptort_it', 'hauptort_it', 'Hauptort It'),
                 new FilterColumn($this->dataset, 'flaeche_km2', 'flaeche_km2', 'Fläche km2'),
                 new FilterColumn($this->dataset, 'beitrittsjahr', 'beitrittsjahr', 'Beitrittsjahr'),
+                new FilterColumn($this->dataset, 'wappen_svg', 'wappen_svg', 'Wappen Svg'),
+                new FilterColumn($this->dataset, 'wappen_svg_pfad', 'wappen_svg_pfad', 'Wappen Svg Pfad'),
                 new FilterColumn($this->dataset, 'wappen_klein', 'wappen_klein', 'Wappen Klein'),
                 new FilterColumn($this->dataset, 'wappen', 'wappen', 'Wappen'),
                 new FilterColumn($this->dataset, 'lagebild', 'lagebild', 'Lagebild'),
@@ -11984,6 +12098,8 @@
                 ->addColumn($columns['hauptort_de'])
                 ->addColumn($columns['hauptort_fr'])
                 ->addColumn($columns['hauptort_it'])
+                ->addColumn($columns['wappen_svg'])
+                ->addColumn($columns['wappen_svg_pfad'])
                 ->addColumn($columns['homepage'])
                 ->addColumn($columns['beschreibung'])
                 ->addColumn($columns['notizen']);
@@ -12358,6 +12474,55 @@
                     FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
                     FilterConditionOperator::IS_BETWEEN => $main_editor,
                     FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('wappen_svg');
+            
+            $filterBuilder->addColumn(
+                $columns['wappen_svg'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('wappen_svg_pfad_edit');
+            $main_editor->SetMaxLength(255);
+            
+            $filterBuilder->addColumn(
+                $columns['wappen_svg_pfad'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -12941,6 +13106,29 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for wappen_svg field
+            //
+            $column = new TextViewColumn('wappen_svg', 'wappen_svg', 'Wappen Svg', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('kantonGrid_wappen_svg_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('SVG Wappen des Kantons');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for wappen_svg_pfad field
+            //
+            $column = new ExternalImageViewColumn('wappen_svg_pfad', 'wappen_svg_pfad', 'Wappen Svg Pfad', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setSourcePrefixTemplate('/sites/lobbywatch.ch/app/files/kanton/');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Pfad zu SVG Wappen des Kantons');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for wappen_klein field
             //
             $column = new ExternalImageViewColumn('wappen_klein', 'wappen_klein', 'Wappen Klein', $this->dataset);
@@ -13217,6 +13405,23 @@
             //
             $column = new TextViewColumn('beitrittsjahr', 'beitrittsjahr', 'Beitrittsjahr', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for wappen_svg field
+            //
+            $column = new TextViewColumn('wappen_svg', 'wappen_svg', 'Wappen Svg', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('kantonGrid_wappen_svg_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for wappen_svg_pfad field
+            //
+            $column = new ExternalImageViewColumn('wappen_svg_pfad', 'wappen_svg_pfad', 'Wappen Svg Pfad', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setSourcePrefixTemplate('/sites/lobbywatch.ch/app/files/kanton/');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -13543,6 +13748,27 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for wappen_svg field
+            //
+            $editor = new TextAreaEdit('wappen_svg_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Wappen Svg', 'wappen_svg', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for wappen_svg_pfad field
+            //
+            $editor = new TextEdit('wappen_svg_pfad_edit');
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Wappen Svg Pfad', 'wappen_svg_pfad', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for wappen_klein field
             //
             $editor = new TextEdit('wappen_klein_edit');
@@ -13847,6 +14073,27 @@
             $validator = new MinValueValidator(1291, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for wappen_svg field
+            //
+            $editor = new TextAreaEdit('wappen_svg_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Wappen Svg', 'wappen_svg', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for wappen_svg_pfad field
+            //
+            $editor = new TextEdit('wappen_svg_pfad_edit');
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Wappen Svg Pfad', 'wappen_svg_pfad', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -14214,6 +14461,27 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for wappen_svg field
+            //
+            $editor = new TextAreaEdit('wappen_svg_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Wappen Svg', 'wappen_svg', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for wappen_svg_pfad field
+            //
+            $editor = new TextEdit('wappen_svg_pfad_edit');
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Wappen Svg Pfad', 'wappen_svg_pfad', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for wappen_klein field
             //
             $editor = new TextEdit('wappen_klein_edit');
@@ -14424,6 +14692,23 @@
             //
             $column = new TextViewColumn('beitrittsjahr', 'beitrittsjahr', 'Beitrittsjahr', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for wappen_svg field
+            //
+            $column = new TextViewColumn('wappen_svg', 'wappen_svg', 'Wappen Svg', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('kantonGrid_wappen_svg_handler_print');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for wappen_svg_pfad field
+            //
+            $column = new ExternalImageViewColumn('wappen_svg_pfad', 'wappen_svg_pfad', 'Wappen Svg Pfad', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setSourcePrefixTemplate('/sites/lobbywatch.ch/app/files/kanton/');
             $grid->AddPrintColumn($column);
             
             //
@@ -14658,6 +14943,23 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for wappen_svg field
+            //
+            $column = new TextViewColumn('wappen_svg', 'wappen_svg', 'Wappen Svg', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('kantonGrid_wappen_svg_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for wappen_svg_pfad field
+            //
+            $column = new ExternalImageViewColumn('wappen_svg_pfad', 'wappen_svg_pfad', 'Wappen Svg Pfad', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setSourcePrefixTemplate('/sites/lobbywatch.ch/app/files/kanton/');
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for wappen_klein field
             //
             $column = new ExternalImageViewColumn('wappen_klein', 'wappen_klein', 'Wappen Klein', $this->dataset);
@@ -14886,6 +15188,23 @@
             //
             $column = new TextViewColumn('beitrittsjahr', 'beitrittsjahr', 'Beitrittsjahr', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for wappen_svg field
+            //
+            $column = new TextViewColumn('wappen_svg', 'wappen_svg', 'Wappen Svg', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('kantonGrid_wappen_svg_handler_compare');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for wappen_svg_pfad field
+            //
+            $column = new ExternalImageViewColumn('wappen_svg_pfad', 'wappen_svg_pfad', 'Wappen Svg Pfad', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setSourcePrefixTemplate('/sites/lobbywatch.ch/app/files/kanton/');
             $grid->AddCompareColumn($column);
             
             //
@@ -15165,6 +15484,14 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
+            // View column for wappen_svg field
+            //
+            $column = new TextViewColumn('wappen_svg', 'wappen_svg', 'Wappen Svg', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kantonGrid_wappen_svg_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
@@ -15189,6 +15516,14 @@
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'kantonGrid_notizen_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for wappen_svg field
+            //
+            $column = new TextViewColumn('wappen_svg', 'wappen_svg', 'Wappen Svg', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kantonGrid_wappen_svg_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -15219,6 +15554,14 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
+            // View column for wappen_svg field
+            //
+            $column = new TextViewColumn('wappen_svg', 'wappen_svg', 'Wappen Svg', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kantonGrid_wappen_svg_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
@@ -15243,6 +15586,14 @@
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'kantonGrid_notizen_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for wappen_svg field
+            //
+            $column = new TextViewColumn('wappen_svg', 'wappen_svg', 'Wappen Svg', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kantonGrid_wappen_svg_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
