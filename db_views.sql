@@ -451,7 +451,7 @@ FROM `kanton_jahr`;
 CREATE OR REPLACE VIEW `v_kanton_jahr_last` AS
 SELECT kanton_jahr.jahr max_jahr, kanton_jahr.*
 FROM `kanton_jahr`
-WHERE kanton_jahr.jahr = (SELECT max_kj.jahr FROM kanton_jahr max_kj WHERE max_kj.kanton_id = kanton_jahr.kanton_id);
+WHERE kanton_jahr.jahr = (SELECT MAX(max_kj.jahr) FROM kanton_jahr max_kj WHERE max_kj.kanton_id = kanton_jahr.kanton_id);
 
 -- CREATE OR REPLACE VIEW `v_kanton_2012` AS
 -- SELECT kanton.name_de as anzeige_name, kanton.name_de as anzeige_name_de, kanton.name_fr as anzeige_name_fr, kanton.*, kanton_jahr.`id` as -- kanton_jahr_id, kanton_jahr.`jahr`, kanton_jahr.einwohner, kanton_jahr.auslaenderanteil, kanton_jahr.bevoelkerungsdichte, -- kanton_jahr.anzahl_gemeinden, kanton_jahr.anzahl_nationalraete
@@ -640,7 +640,7 @@ FROM `organisation_jahr`;
 CREATE OR REPLACE VIEW `v_organisation_jahr_last` AS
 SELECT organisation_jahr.jahr max_jahr, organisation_jahr.*
 FROM `organisation_jahr`
-WHERE organisation_jahr.jahr = (SELECT max_oj.jahr FROM organisation_jahr max_oj WHERE max_oj.organisation_id = organisation_jahr.organisation_id);
+WHERE organisation_jahr.jahr = (SELECT MAX(max_oj.jahr) FROM organisation_jahr max_oj WHERE max_oj.organisation_id = organisation_jahr.organisation_id);
 
 CREATE OR REPLACE VIEW `v_organisation_anhang` AS
 SELECT organisation_anhang.organisation_id as organisation_id2, organisation_anhang.*
@@ -843,7 +843,7 @@ interessengruppe3.kommission2_name_fr as interessengruppe3_branche_kommission2_n
 NOW() as refreshed_date
 FROM `v_organisation_simple` organisation
 LEFT JOIN `v_branche` branche
-ON branche.id = organisation.branche_id
+ON branche.id = organisation.ALT_branche_id
 LEFT JOIN `v_interessengruppe` interessengruppe1
 ON interessengruppe1.id = organisation.interessengruppe_id
 LEFT JOIN `v_interessengruppe` interessengruppe2
@@ -1053,7 +1053,7 @@ IF(organisation.vernehmlassung IN ('immer', 'punktuell')
     ON (in_kommission.kommission_id = branche.kommission_id OR in_kommission.kommission_id = branche.kommission2_id)
     WHERE (in_kommission.bis >= NOW() OR in_kommission.bis IS NULL)
     AND in_kommission.parlamentarier_id = parlamentarier.id
-    AND branche.id IN (organisation.branche_id, organisation.interessengruppe_branche_id, organisation.interessengruppe2_branche_id, organisation.interessengruppe3_branche_id)), 'hoch',
+    AND branche.id IN (organisation.ALT_branche_id, organisation.interessengruppe_branche_id, organisation.interessengruppe2_branche_id, organisation.interessengruppe3_branche_id)), 'hoch',
 	IF(organisation.vernehmlassung IN ('immer', 'punktuell')
 	  AND interessenbindung.art IN ('geschaeftsfuehrend','vorstand','taetig','beirat','finanziell'), 'mittel', 'tief')
 ) wirksamkeit,
@@ -1182,7 +1182,7 @@ ADD PRIMARY KEY (`id`),
 -- ADD KEY `idx_lobbyeinfluss` (`lobbyeinfluss`, `anzeige_name`, `freigabe_datum`),
 ADD KEY `idx_freigabe` (`freigabe_datum`),
 -- indexes for joins on web
-ADD KEY `idx_branche_freigabe` (`branche_id`, `freigabe_datum`),
+ADD KEY `idx_branche_freigabe` (`ALT_branche_id`, `freigabe_datum`),
 ADD KEY `idx_interessengruppe_freigabe` (`interessengruppe_id`, `freigabe_datum`),
 ADD KEY `idx_interessengruppe2_freigabe` (`interessengruppe2_id`, `freigabe_datum`),
 ADD KEY `idx_interessengruppe3_freigabe` (`interessengruppe3_id`, `freigabe_datum`),
