@@ -2538,19 +2538,19 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
     $max_output_length = 10;
   }
 
-  $db_val_raw = isset($parlamentarier_db_obj->$field) ? $parlamentarier_db_obj->$field : null;
+  $db_val_raw = $parlamentarier_db_obj->$field ?? null;
   if ($db_normalize_function != null) {
     $db_val = $db_normalize_function($db_val_raw, $parlamentarier_db_obj, $field, $fields);
   } else {
     $db_val = $db_val_raw;
   }
 
-  $val_raw = !empty($parlamentarier_ws->$field_ws) ? $parlamentarier_ws->$field_ws : null;
+  $val_raw = $field_ws ?? null;
   $is_date = !is_array($val_raw) && /*isset($parlamentarier_db_obj->field) && is_string($db_val) &&*/ preg_match('/^\d{4}-\d{2}-\d{2}/', $val_raw);
   if ($is_date) {
     $val = substr($val_raw, 0, 10);
   } elseif ($id_function != null) {
-    $val = $id_function($val_raw, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field, $fields);
+    $val = $id_function($val_raw, $parlamentarier_ws, $parlamentarier_db_obj, $field, $fields);
   } elseif (is_array($val_raw)) {
     $val = implode(', ', $val_raw);
   } else {
