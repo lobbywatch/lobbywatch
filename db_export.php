@@ -2030,6 +2030,7 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
 
   $expression_cols_types = [];
   $expressions_filtered = getFilteredExpressionsSelect($alias_map);
+  $expression_rows = [];
   if (!empty($expressions_filtered)) {
     $expression_cols_cache_key = "$table_schema.$query_table_with_alias#" . implode(',', $expressions_filtered);
     if (empty($cached_cols[$expression_cols_cache_key])) {
