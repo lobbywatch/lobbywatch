@@ -49,6 +49,11 @@ MYSQL_CONTAINER=mysql57
 MYSQLADMIN="docker exec -it $MYSQL_CONTAINER mysqladmin"
 DB_USER=script
 
+DATE=`date +%Y%m%d_%H%M%S`
+DATE_SHORT=`date +%Y%m%d`
+HUMAN_NOW=$(date +"%d.%m.%Y %H:%M");
+HUMAN_DATE=$(date +"%d.%m.%Y");
+
 # Asks if [Yn] if script shoud continue, otherwise exit 1
 # $1: msg or nothing
 # Example call 1: askContinueYn
