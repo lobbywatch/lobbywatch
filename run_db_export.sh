@@ -3,6 +3,8 @@
 # Include common functions
 . common.sh
 
+enable_fail_onerror
+
 PHP='php'
 
 test_parameter=''
