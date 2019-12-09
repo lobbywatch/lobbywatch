@@ -80,7 +80,7 @@ if [ "$export_options" != "" ];then
     export_type="_$export_options"
 fi
 
-$PHP -f db_export.php -- -c -v -e=$export_options $test_parameter
+$PHP -f db_export.php -- -c -s -v -e=$export_options $test_parameter
 
 EXPORT=export
 
@@ -89,6 +89,14 @@ archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.csv.zip
 archive=$EXPORT/$base_name$export_type.csv.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 zip $archive_with_date export/*.csv
+cp $archive_with_date $archive
+ls -Alh $archive_with_date $archive
+
+base_name=lobbywatch_export_flat
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.csv.zip
+archive=$EXPORT/$base_name$export_type.csv.zip
+[ -f "$archive_with_date" ] && rm $archive_with_date
+zip $archive_with_date export/flat*.csv
 cp $archive_with_date $archive
 ls -Alh $archive_with_date $archive
 
@@ -113,6 +121,14 @@ archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.csv.zip
 archive=$EXPORT/$base_name$export_type.csv.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 zip $archive_with_date export/cartesian_parlamentarier_verguetungstransparenz.csv
+cp $archive_with_date $archive
+ls -Alh $archive_with_date $archive
+
+base_name=lobbywatch
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.csv.zip
+archive=$EXPORT/$base_name$export_type.sql.zip
+[ -f "$archive_with_date" ] && rm $archive_with_date
+zip $archive_with_date export/*.sql
 cp $archive_with_date $archive
 ls -Alh $archive_with_date $archive
 
