@@ -1973,7 +1973,7 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
 
   static $stmt_information_schema_cols;
   if (empty($stmt_information_schema_cols)) {
-    $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = :table_schema AND table_catalog='def' AND TABLE_NAME = :table;";
+    $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE, IF(EXTRA LIKE '%VIRTUAL%', 1, 0) `VIRTUAL_COLUMN` FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = :table_schema AND table_catalog='def' AND TABLE_NAME = :table;";
     if ($verbose > 5) print("$level_indent$sql\n");
     $stmt_information_schema_cols = $db->prepare($sql);
   }
@@ -2010,7 +2010,7 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
         if (empty($cached_cols[$additional_cols_cache_key])) {
           $additional_cols_quoted = array_map(function($str) { return "'$str'"; }, $additional_cols_filtered_cleaned);
           $additional_cols_str = implode(', ', $additional_cols_quoted);
-          $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$table_schema' AND table_catalog='def' AND TABLE_NAME = '$join_table_without_schema' AND COLUMN_NAME IN ($additional_cols_str);";
+          $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE, IF(EXTRA LIKE '%VIRTUAL%', 1, 0) `VIRTUAL_COLUMN` FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$table_schema' AND table_catalog='def' AND TABLE_NAME = '$join_table_without_schema' AND COLUMN_NAME IN ($additional_cols_str);";
           if ($verbose > 5) print("$level_indent$sql\n");
           $stmt_information_schema_cols_in_list = $db->query($sql);
           $unsorted_rows = $stmt_information_schema_cols_in_list->fetchAll();
@@ -2060,7 +2060,7 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
           case PDO::PARAM_LOB: $data_type = 'blob'; break;
           default: throw new RuntimeException("Unknown type: $pdo_type");
         }
-        $unsorted_rows[] = ['TABLE_NAME' => $query_table, 'COLUMN_NAME' => array_keys($expressions_filtered)[$i], 'DATA_TYPE' => $data_type];
+        $unsorted_rows[] = ['TABLE_NAME' => $query_table, 'COLUMN_NAME' => array_keys($expressions_filtered)[$i], 'DATA_TYPE' => $data_type, 'VIRTUAL_COLUMN' => 0];
       }
       $sorted_rows = $unsorted_rows;
       // $sorted_rows = sortRows($unsorted_rows, $cols_filtered_cleaned);
@@ -2078,11 +2078,12 @@ function getColNames(array $row, array $table_alias_map, array $alias_map, array
   $table_name = $row['TABLE_NAME'];
   $col = $row['COLUMN_NAME'];
   $data_type = $row['DATA_TYPE'];
+  $virtual_col = $row['VIRTUAL_COLUMN'];
 
   $table_name_alias = $table_alias_map[$table_name] ?? $table_name;
   $alias = $alias_map["$table_name_alias.$col"] ?? $alias_map[$col] ?? null;
   $select_field = $select_field_map["$table_name_alias.$col"] ?? $select_field_map[$col] ?? (hasJoin($table_meta) ? "$table_name_alias.$col" : $col);
-  return [$table_name, $col, $data_type, $table_name_alias, $alias, $select_field];
+  return [$table_name, $col, $data_type, $virtual_col, $table_name_alias, $alias, $select_field];
 }
 
 function export_tables(IExportFormat $exporter, array $tables, int $parent_id = null, array $parent_row = null, $level, string $table_schema, ?string $path, array $filter, string $eol = "\n", string $format = 'json', string $storage_type, $file, $records_limit = false, array &$cmd_args, PDO $db) {
@@ -2103,7 +2104,7 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
         list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols, $select_cols, $select_alias_cols, $alias_map, $select_field_map, $table_alias_map, $alias_table_map, $id_alias) = getSqlData("$num_key", $table_meta, $table_schema, $level, $filter, $exporter, $db);
 
         foreach ($cols as $row) {
-          list($table_name, $col, $data_type, $table_name_alias, $alias, $select_field) = getColNames($row, $table_alias_map, $alias_map, $select_field_map, $table_meta);
+          list($table_name, $col, $data_type, $virtual_col, $table_name_alias, $alias, $select_field) = getColNames($row, $table_alias_map, $alias_map, $select_field_map, $table_meta);
 
           if (isColOk($col, $table_meta, $table_name_alias, $query_table_alias, $intern_fields, $filter)) {
             $data_types[] = $data_type;
@@ -2162,17 +2163,19 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
     $export_header = $has_extra_col ? [$exporter->getExtraCol($table_meta)] : [];
 
     foreach ($cols as $row) {
-      list($table_name, $col, $data_type, $table_name_alias, $alias, $select_field) = getColNames($row, $table_alias_map, $alias_map, $select_field_map, $table_meta);
+      list($table_name, $col, $data_type, $virtual_col, $table_name_alias, $alias, $select_field) = getColNames($row, $table_alias_map, $alias_map, $select_field_map, $table_meta);
 
       if (isColOk($col, $table_meta, $table_name_alias, $query_table_alias, $intern_fields, $filter)) {
-        $data_types[] = $data_type;
-        $select_fields[] = $select_field;
-        // TODO add @ for attribute
+        if (!($exporter instanceof SqlExporter && $virtual_col)) {
+          $data_types[] = $data_type;
+          $select_fields[] = $select_field;
+          // TODO add @ for attribute
 
-        list($header_field, $skip_row_for_empty_field) = $exporter->getHeaderCol($alias ?? $col, $data_type, $table, $table_meta);
-        $export_header[] = $header_field;
-        $skip_rows_for_empty_field[] = $skip_row_for_empty_field;
-        if ($verbose > 4) print("$level_indent$header_field\n");
+          list($header_field, $skip_row_for_empty_field) = $exporter->getHeaderCol($alias ?? $col, $data_type, $table, $table_meta);
+          $export_header[] = $header_field;
+          $skip_rows_for_empty_field[] = $skip_row_for_empty_field;
+          if ($verbose > 4) print("$level_indent$header_field\n");
+        }
       } else {
         // Remove cols from create table statement
         if ($verbose > 3) print("${level_indent}Clean create: $col\n");
