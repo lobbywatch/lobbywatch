@@ -248,12 +248,14 @@ ask_DB_PW() {
 
 # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
 abort() {
+  line=$1
+  caller=$(caller)
     echo '
 ***************
 *** ABORTED ***
 ***************
 ' >&2
-    echo "An error occurred. Exiting..." >&2
+    echo "An error occurred on line $line. Exiting..." >&2
     date -Iseconds >&2
     exit 1
 }
@@ -262,7 +264,7 @@ abort() {
 enable_fail_onerror() {
   # Abort on errors
   # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
-  trap 'abort' 0
+  trap 'abort $LINENO' 0
   # https://sipb.mit.edu/doc/safe-shell/
   set -e -o pipefail
   # set -u
