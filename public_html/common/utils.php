@@ -1899,7 +1899,7 @@ function _lobbywatch_ws_get_land_id($iso2) {
     $sql = "
       SELECT id
       FROM v_$table $table
-      WHERE $table.`iso-2`=:iso2";
+      WHERE $table.`iso2`=:iso2";
 
 //     df($sql , 'sql');
     if (is_lobbywatch_forms()) {
