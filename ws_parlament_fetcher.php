@@ -745,6 +745,8 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   $different_db_values |= checkField('aemter', $parlamentarier_ws->mandate ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
   $different_db_values |= checkField('weitere_aemter', $parlamentarier_ws->additionalMandate ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
 
+  // $different_db_values |= $ib_changed = checkField('parlament_interessenbindungen', $parlamentarier_ws->concerns ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungen', 'parlament_interessenbindungen_updated', 'normalizeParlamentInteressenbindungen');
+  // $different_db_values |= $ib_json_changed = checkField('parlament_interessenbindungen_json', $parlamentarier_ws->concerns ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungenJson', 'parlament_interessenbindungen_updated', 'decodeJson');
   $different_db_values |= $ib_changed = checkField('parlament_interessenbindungen', $parlamentarier_ws_odata->d->results ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungenOdata', 'parlament_interessenbindungen_updated', 'normalizeParlamentInteressenbindungen');
   $different_db_values |= $ib_json_changed = checkField('parlament_interessenbindungen_json', $parlamentarier_ws_odata->d->results ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungenJsonOdata', 'parlament_interessenbindungen_updated', 'decodeJson');
 
@@ -1517,7 +1519,7 @@ function getParlamentInteressenbindungenOdata($concerns) {
       $interessenbindungen[] = "<tr><td>$concern->InterestName</td><td><abbr title='$concern->InterestTypeText'>$concern->InterestTypeShortText</abbr></td><td><abbr title='$concern->OrganizationTypeText'>$concern->OrganizationTypeShortText</abbr></td><td><abbr title='$concern->FunctionInAgencyText'>$concern->FunctionInAgencyShortText</abbr></td><td>$paid</td></tr>";
     }
   $html = "<table border='0'>" .
-  "<thead><tr><th>Name</th><th>Rechtsform</th><th><abbr title='Gremium'>Gr.</abbr></th><th><abbr title='Funktion'>F.</abbr></th><th>Bez.</th></tr></thead>\n" .
+  "<thead><tr><th>Name</th><th>Rechtsform</th><th><abbr title='Gremium'>Gr.</abbr></th><th><abbr title='Funktion'>F.</abbr></th><th><abbr title='Bezahlung: 0=ehrenamtlich, 1=bezahlt'>Bez.</abbr></th></tr></thead>\n" .
   "<tbody>\n" . implode("\n", $interessenbindungen) . "\n</tbody>\n</table>";
   }
   return $html;
