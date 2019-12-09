@@ -240,6 +240,7 @@ $sql_tables = [
   'organisation' => ['hist_field' => null, 'remove_cols' => []],
   'organisation_jahr' => ['hist_field' => null, 'remove_cols' => []],
   'parlamentarier' => ['hist_field' => 'im_rat_bis', 'remove_cols' => []],
+  'parlamentarier_transparenz' => ['hist_field' => null, 'remove_cols' => []],
   'person' => ['hist_field' => null, 'remove_cols' => []],
 
   'interessenbindung' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON interessenbindung.parlamentarier_id = p.id']],
