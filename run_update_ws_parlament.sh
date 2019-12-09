@@ -68,9 +68,9 @@ while test $# -gt 0; do
       case $1 in
                 -h|--help)
                         echo "Update Lobbywatch DB from ws.parlament.ch"
-                        echo " "
+                        echo
                         echo "$0 [options]"
-                        echo " "
+                        echo
                         echo "Options:"
                         echo "-B, --nobackup                   No remote prod backup or import"
                         echo "-o, --onlydownloadlastbak        No remote prod backup, only download (and import) last remote prod backup (useful for development, production update not possible)"
