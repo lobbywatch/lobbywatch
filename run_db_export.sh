@@ -84,10 +84,36 @@ $PHP -f db_export.php -- -c -v -e=$export_options $test_parameter
 
 EXPORT=export
 
-archive_date=$EXPORT/${DATE_SHORT}_lobbywatch_export$export_type.csv.zip
-archive=$EXPORT/lobbywatch_export$export_type.csv.zip
-[ -f "$archive_date" ] && rm $archive_date
-zip $archive_date export/*.csv
-cp $archive_date $archive
+base_name=lobbywatch_export
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.csv.zip
+archive=$EXPORT/$base_name$export_type.csv.zip
+[ -f "$archive_with_date" ] && rm $archive_with_date
+zip $archive_with_date export/*.csv
+cp $archive_with_date $archive
+ls -Alh $archive_with_date $archive
 
-ls -Alh $archive_date $archive
+base_name=lobbywatch_export_parlamentarier
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.csv.zip
+archive=$EXPORT/$base_name$export_type.csv.zip
+[ -f "$archive_with_date" ] && rm $archive_with_date
+zip $archive_with_date export/cartesian_essential_parlamentarier_interessenbindung.csv
+cp $archive_with_date $archive
+ls -Alh $archive_with_date $archive
+
+base_name=lobbywatch_export_parlamentarier_minimal
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.csv.zip
+archive=$EXPORT/$base_name$export_type.csv.zip
+[ -f "$archive_with_date" ] && rm $archive_with_date
+zip $archive_with_date export/cartesian_minimal_parlamentarier_interessenbindung.csv
+cp $archive_with_date $archive
+ls -Alh $archive_with_date $archive
+
+base_name=lobbywatch_export_parlamentarier_transparenzliste
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.csv.zip
+archive=$EXPORT/$base_name$export_type.csv.zip
+[ -f "$archive_with_date" ] && rm $archive_with_date
+zip $archive_with_date export/cartesian_parlamentarier_verguetungstransparenz.csv
+cp $archive_with_date $archive
+ls -Alh $archive_with_date $archive
+
+quit
