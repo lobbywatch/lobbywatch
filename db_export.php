@@ -1965,7 +1965,7 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
     $unpubl_cols = !$filter['unpubl'] || !$filter['hist'] ? array_map(function($col) use ($query_table_alias, $alias_table_map, $exporter) {preg_match('/(([^.])\.)?(\S+)/i', $col, $matches, PREG_UNMATCHED_AS_NULL); $col_table_alias = $matches[2] ?? $query_table_alias; $col_field = $matches[3] ?? null; return ("$col_table_alias." ?? '') . ($col_field) . ' ' . $exporter->formatFieldAlias(preg_replace('/(v_|_medium|_raw|_simple)/', '', $alias_table_map[$col_table_alias]), $col_field);}, $table_meta['unpubl_fields']) : [];
   }
 
-  $expression_cols = !$filter['unpubl'] ? array_map(function($table, $alias) use ($filter, $table_meta, $exporter) { return ("(IFNULL($alias." .  ($table_meta['freigabe_date'] ?? 'freigabe_datum') . " <= NOW(), FALSE))") . ' ' . $exporter->formatFieldAlias(preg_replace('/(v_|_medium|_raw|_simple)/', '', $table), 'published');}, array_keys($table_alias_map), $table_alias_map) : [];
+  $expression_cols = !$filter['unpubl'] && !($exporter instanceof SqlExporter) ? array_map(function($table, $alias) use ($filter, $table_meta, $exporter) { return ("(IFNULL($alias." .  ($table_meta['freigabe_date'] ?? 'freigabe_datum') . " <= NOW(), FALSE))") . ' ' . $exporter->formatFieldAlias(preg_replace('/(v_|_medium|_raw|_simple)/', '', $table), 'published');}, array_keys($table_alias_map), $table_alias_map) : [];
 
   list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge(setTableAliasToCols($table_meta['select_cols'] ?? [], $query_table_alias, hasJoin($table_meta)), $table_meta['additional_join_cols'] ?? [], $aktiv_cols, $unpubl_cols, $expression_cols));
 
