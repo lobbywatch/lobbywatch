@@ -3179,13 +3179,19 @@ function htmlDiffStyled($old, $new) {
   return $styled;
 }
 
-function htmlDiffTd($old, $new){
+function preprocessHtml(string $str, bool $cleanAbbr): string {
+  $clean = $cleanAbbr ? preg_replace('/<\/?abbr[^>]*>/i', '', $str) : $str;
+  $clean = preg_replace('/></', '> <', $clean);
+  return $clean;
+}
+
+function htmlDiffTd($old, $new, bool $cleanAbbr = true) {
   $ret = '';
-  $diff = diff(preg_split("/[\s]+/", $old), preg_split("/[\s]+/", $new));
+  $diff = diff(preg_split("/[\s]+/", preprocessHtml($old, $cleanAbbr)), preg_split("/[\s]+/", preprocessHtml($new, $cleanAbbr)));
   foreach ($diff as $k){
     if (is_array($k))
-      $ret .= (!empty($k['d'])?"<!--del-->" . styleDel(implode(' ',$k['d'])) . "<!--/del--> ":'').
-        (!empty($k['i'])?"<!--ins-->" . styleIns(implode(' ',$k['i'])) . "<!--/ins--> ":'');
+      $ret .= (!empty($k['d']) ? "<!--del-->" . styleDel(implode(' ',$k['d'])) . "<!--/del--> " : '') .
+        (!empty($k['i']) ? "<!--ins-->" . styleIns(implode(' ',$k['i'])) . "<!--/ins--> " : '');
     else $ret .= $k . ' ';
   }
   return $ret;
