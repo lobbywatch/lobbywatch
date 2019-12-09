@@ -3172,8 +3172,8 @@ function normalizeParlamentInteressenbindungen($str) {
   return $normalized;
 }
 
-function htmlDiffStyled($old, $new) {
-  $styled = $diff_raw = htmlDiffTd($old, $new);
+function htmlDiffStyled($old, $new, bool $cleanAbbr = true) {
+  $styled = $diff_raw = htmlDiffTd($old, $new, $cleanAbbr);
   $styled = preg_replace("%<(/?table|thead|/?tbody|/tr)>%i", "$0\n", $styled);
   $styled = preg_replace("%^\s(.*)\s*$%im", "$1", $styled);
   return $styled;
