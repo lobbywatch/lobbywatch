@@ -2558,7 +2558,7 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
   }
 
   // TODO enhance to support also dates with time
-  if ((isset($val) && (empty($db_val) || ($db_val != $val && !starts_with($val, 'STR_TO_DATE(')) || (is_string($db_val) && "STR_TO_DATE('{$db_val}','%Y-%m-%d')" != $val && starts_with($val, 'STR_TO_DATE('))))
+  if ((!empty($val) && (empty($db_val) || ($db_val != $val && !starts_with($val, 'STR_TO_DATE(')) || (is_string($db_val) && "STR_TO_DATE('{$db_val}','%Y-%m-%d')" != $val && starts_with($val, 'STR_TO_DATE('))))
       || ($mode == FIELD_MODE_OVERWRITE_NULL && is_null($val) && isset($db_val)))  {
     $msg = $verbose || $mode == FIELD_MODE_OVERWRITE_MARK_LOG ? " (" . (isset($db_val) ? cut($db_val, $max_output_length) . " → " : '') . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '';
     if ($mode == FIELD_MODE_OPTIONAL && !empty($db_val)) {
