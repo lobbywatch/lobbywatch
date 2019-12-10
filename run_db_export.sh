@@ -89,6 +89,8 @@ echo -e "\n$(date +%T) Start packing..."
 
 EXPORT=export
 MERKBLATT="docs/lobbywatch_daten_merkblatt.pdf"
+DATAMODEL="lobbywatch_datenmodell_simplified.pdf"
+DOCS="$MERKBLATT $DATAMODEL"
 
 format=csv
 base_name=lobbywatch_export_all
@@ -96,7 +98,7 @@ echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
-zip $archive_with_date $MERKBLATT $EXPORT/*.$format
+zip $archive_with_date $DOCS $EXPORT/*.$format
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 
@@ -105,7 +107,7 @@ echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
-zip $archive_with_date $MERKBLATT $EXPORT/flat*.$format
+zip $archive_with_date $DOCS $EXPORT/flat*.$format
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 
@@ -114,7 +116,7 @@ echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
-zip $archive_with_date $MERKBLATT $EXPORT/cartesian_essential_parlamentarier_interessenbindung.csv $EXPORT/cartesian_minimal_parlamentarier_interessenbindung.csv $EXPORT/cartesian_parlamentarier_verguetungstransparenz.csv $EXPORT/cartesian_minimal_parlamentarier_zutrittsberechtigung.csv $EXPORT/cartesian_minimal_parlamentarier_zutrittsberechtigung_mandat.csv
+zip $archive_with_date $DOCS $EXPORT/cartesian_essential_parlamentarier_interessenbindung.csv $EXPORT/cartesian_minimal_parlamentarier_interessenbindung.csv $EXPORT/cartesian_parlamentarier_verguetungstransparenz.csv $EXPORT/cartesian_minimal_parlamentarier_zutrittsberechtigung.csv $EXPORT/cartesian_minimal_parlamentarier_zutrittsberechtigung_mandat.csv
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 
@@ -123,7 +125,7 @@ echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
-zip $archive_with_date $MERKBLATT $EXPORT/cartesian_parlamentarier_verguetungstransparenz.csv
+zip $archive_with_date $DOCS $EXPORT/cartesian_parlamentarier_verguetungstransparenz.csv
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 
@@ -133,7 +135,7 @@ echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
-zip $archive_with_date $MERKBLATT $EXPORT/*.$format
+zip $archive_with_date $DOCS $EXPORT/*.$format
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 
