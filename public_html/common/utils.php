@@ -2538,19 +2538,19 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
     $max_output_length = 10;
   }
 
-  $db_val_raw = isset($parlamentarier_db_obj->$field) ? $parlamentarier_db_obj->$field : null;
+  $db_val_raw = $parlamentarier_db_obj->$field ?? null;
   if ($db_normalize_function != null) {
     $db_val = $db_normalize_function($db_val_raw, $parlamentarier_db_obj, $field, $fields);
   } else {
     $db_val = $db_val_raw;
   }
 
-  $val_raw = !empty($parlamentarier_ws->$field_ws) ? $parlamentarier_ws->$field_ws : null;
+  $val_raw = $field_ws ?? null;
   $is_date = !is_array($val_raw) && /*isset($parlamentarier_db_obj->field) && is_string($db_val) &&*/ preg_match('/^\d{4}-\d{2}-\d{2}/', $val_raw);
   if ($is_date) {
     $val = substr($val_raw, 0, 10);
   } elseif ($id_function != null) {
-    $val = $id_function($val_raw, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field, $fields);
+    $val = $id_function($val_raw, $parlamentarier_ws, $parlamentarier_db_obj, $field, $fields);
   } elseif (is_array($val_raw)) {
     $val = implode(', ', $val_raw);
   } else {
@@ -2558,7 +2558,7 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
   }
 
   // TODO enhance to support also dates with time
-  if ((isset($val) && (empty($db_val) || ($db_val != $val && !starts_with($val, 'STR_TO_DATE(')) || (is_string($db_val) && "STR_TO_DATE('{$db_val}','%Y-%m-%d')" != $val && starts_with($val, 'STR_TO_DATE('))))
+  if ((!empty($val) && (empty($db_val) || ($db_val != $val && !starts_with($val, 'STR_TO_DATE(')) || (is_string($db_val) && "STR_TO_DATE('{$db_val}','%Y-%m-%d')" != $val && starts_with($val, 'STR_TO_DATE('))))
       || ($mode == FIELD_MODE_OVERWRITE_NULL && is_null($val) && isset($db_val)))  {
     $msg = $verbose || $mode == FIELD_MODE_OVERWRITE_MARK_LOG ? " (" . (isset($db_val) ? cut($db_val, $max_output_length) . " → " : '') . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '';
     if ($mode == FIELD_MODE_OPTIONAL && !empty($db_val)) {
@@ -3172,20 +3172,26 @@ function normalizeParlamentInteressenbindungen($str) {
   return $normalized;
 }
 
-function htmlDiffStyled($old, $new) {
-  $styled = $diff_raw = htmlDiffTd($old, $new);
+function htmlDiffStyled($old, $new, bool $cleanAbbr = true) {
+  $styled = $diff_raw = htmlDiffTd($old, $new, $cleanAbbr);
   $styled = preg_replace("%<(/?table|thead|/?tbody|/tr)>%i", "$0\n", $styled);
   $styled = preg_replace("%^\s(.*)\s*$%im", "$1", $styled);
   return $styled;
 }
 
-function htmlDiffTd($old, $new){
+function preprocessHtml(string $str, bool $cleanAbbr): string {
+  $clean = $cleanAbbr ? preg_replace('/<\/?abbr[^>]*>/i', '', $str) : $str;
+  $clean = preg_replace('/></', '> <', $clean);
+  return $clean;
+}
+
+function htmlDiffTd($old, $new, bool $cleanAbbr = true) {
   $ret = '';
-  $diff = diff(preg_split("/[\s]+/", $old), preg_split("/[\s]+/", $new));
+  $diff = diff(preg_split("/[\s]+/", preprocessHtml($old, $cleanAbbr)), preg_split("/[\s]+/", preprocessHtml($new, $cleanAbbr)));
   foreach ($diff as $k){
     if (is_array($k))
-      $ret .= (!empty($k['d'])?"<!--del-->" . styleDel(implode(' ',$k['d'])) . "<!--/del--> ":'').
-        (!empty($k['i'])?"<!--ins-->" . styleIns(implode(' ',$k['i'])) . "<!--/ins--> ":'');
+      $ret .= (!empty($k['d']) ? "<!--del-->" . styleDel(implode(' ',$k['d'])) . "<!--/del--> " : '') .
+        (!empty($k['i']) ? "<!--ins-->" . styleIns(implode(' ',$k['i'])) . "<!--/ins--> " : '');
     else $ret .= $k . ' ';
   }
   return $ret;
