@@ -263,7 +263,7 @@ abort() {
 *** ABORTED ***
 ***************
 ' >&2
-    echo "An error occurred on line $line. Exiting..." >&2
+    echo "An error occurred on line $caller. Exiting..." >&2
     date -Iseconds >&2
     exit 1
 }
@@ -272,7 +272,7 @@ abort() {
 enable_fail_onerror() {
   # Abort on errors
   # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
-  trap 'abort $LINENO' 0
+  trap 'abort $LINENO' ERR
   # https://sipb.mit.edu/doc/safe-shell/
   set -e -o pipefail
   # set -u
