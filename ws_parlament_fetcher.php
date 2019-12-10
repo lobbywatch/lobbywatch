@@ -758,9 +758,6 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
     $new_ib_html_odata = getParlamentInteressenbindungenOdata($parlamentarier_ws_odata->d->results ?? []);
     $diff = htmlDiffStyled($old_ib_html_normalized, $new_ib_html_odata, true);
 
-    // FIXME first odata import Hack
-    $diff = $new_ib_html_odata;
-
     // $old_json = json_encode($old_ib_html);
     // $old_json_normalized = json_encode($old_ib_html_normalized);
     // $new_json = json_encode($new_ib_html);
