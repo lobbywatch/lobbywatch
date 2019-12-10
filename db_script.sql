@@ -589,7 +589,7 @@ select count(*) from interessenbindung join parlamentarier on interessenbindung.
 select count(*) from mandat join person on person.id=mandat.person_id join zutrittsberechtigung on zutrittsberechtigung.person_id=person.id join parlamentarier on parlamentarier.id=zutrittsberechtigung.parlamentarier_id WHERE parlamentarier.im_rat_bis IS NULL AND mandat.bis IS NULL AND zutrittsberechtigung.bis IS NULL;
 
 select rat.abkuerzung, count(*)
-from interessenbindung 
+from interessenbindung
 join parlamentarier on interessenbindung.parlamentarier_id = parlamentarier.id and parlamentarier.im_rat_bis IS NULL
 join rat on parlamentarier.rat_id = rat.id
 where  AND interessenbindung.bis IS NULL
@@ -656,7 +656,7 @@ select a.parlamentarier_id, a.stichdatum, b.stichdatum from parlamentarier_trans
 -- BAD Compare parlamentarier_transparenz select a.parlamentarier_id, a.stichdatum, b.stichdatum from parlamentarier_transparenz a RIGHT OUTER JOIN parlamentarier_transparenz b ON a.parlamentarier_id=b.parlamentarier_id AND b.stichdatum = '2017-11-01' WHERE a.stichdatum = '2017-05-27' order by a.parlamentarier_id
 
 -- Compare parlamentarier_transparenz
-select a.parlamentarier_id, a.stichdatum, b.stichdatum from parlamentarier_transparenz a LEFT OUTER JOIN parlamentarier_transparenz b ON a.parlamentarier_id=b.parlamentarier_id AND b.stichdatum = '2017-11-01' WHERE a.stichdatum = '2017-05-27' ORDER BY `a`.`parlamentarier_id` ASC 
+select a.parlamentarier_id, a.stichdatum, b.stichdatum from parlamentarier_transparenz a LEFT OUTER JOIN parlamentarier_transparenz b ON a.parlamentarier_id=b.parlamentarier_id AND b.stichdatum = '2017-11-01' WHERE a.stichdatum = '2017-05-27' ORDER BY `a`.`parlamentarier_id` ASC
 
 -- 24.10.2019 Find duplicated mandate and zutrittsberechtigung
 
@@ -666,3 +666,41 @@ SELECT p.id pid, m1.organisation_id, p.nachname, p.vorname, m1.id m1id, m2.id m2
 -- Double zutrittsberechtigung
 
 SELECT p.id pid, z1.parlamentarier_id, p.nachname, p.vorname, z1.id z1id, z2.id z2id, z1.von z1von, z1.bis z1bis, z2.von z2von, z2.bis z2bis  FROM `person` p JOIN zutrittsberechtigung z1 ON p.id = z1.person_id JOIN zutrittsberechtigung z2 ON p.id = z2.person_id WHERE z1.parlamentarier_id = z2.parlamentarier_id AND z1.von < z2.bis AND z1.bis IS NULL AND z1.von IS NOT NULL;
+
+-- 07.11.2019 Request of Titus
+
+-- Ich habe dazu an die folgenden Zahlen gedacht (Stichtag: heute bzw. «31.10.2019»)
+
+-- - Anzahl Lobbygruppen (von Hand gezählt komme ich auf 139)
+-- - Anzahl Lobbygruppen nach Wirksamkeit (hoch/mittel/gering)
+-- - Top 5 Lobbygruppen mit den meisten Parlamentsmitgliedern über alles und/oder nach Wirksamkeit
+-- - Top 5 Lobbygruppen mit den meisten Lobbyisten über alles und/oder nach Wirksamkeit
+-- - Anzahl Organisationen insgesamt in der DB
+-- - Anzahl Personen bzw. Lobbyisten (mehr oder weniger die «aktiven» mit mind. 1 Verbindung)
+-- - Durchschnittliche Anzahl Verbindungen zwischen Parlamentsmitgliedern und Organisationen
+-- - Durchschnittliche Anzahl Verbindungen zwischen Lobbyisten und Organisationen
+
+-- Vielleicht siehst auch Du noch nach Zahlen, die interessant und spannend wären, wenn man sie einmal herausholt (Du dürftest die Datenstruktur wohl fast auswendig kennen).
+
+-- Ich würde das gerne noch mit weiteren Zahlen von ausserhalb der DB ergänzen wollen:
+-- - Anzahl Seitenaufrufe pro Zeiteinheit x (wöchentlich, monatlich, …)
+-- - Anzahl Such-Anfragen
+-- - evtl. Anzahl Newsletter pro Jahr
+-- - Anzahl Newsletter-Abonnenten
+-- - Anzahl Mitglieder (plus evtl. SpenderInnen)
+-- - Einnahmen (Finanzierung) nach Beträgen abgestuft (bis 100 / 500 / 1000 / über 1000 CHF)
+-- - Anzahl Stunden für Recherche (gemäss Lohnabrechnungen)
+-- - Anzahl Stunden Freiwilligenarbeiten (Vorstand, Schätzung)
+
+-- Weitere Fragen RK
+-- - Durchschnittliche/Maximale Anzahl Interessenbindungen/Lobbyisten/Lobbyistenmandate pro Parlamentarier/Branche/Interessengruppe/Organisationen/Kommissionen über alles/aktuell/SR/NR/Kanton/Partei
+
+-- 02.12.2019 fix zb nachname Herr, Frau
+
+SET @disable_triggers = 1;
+
+DELETE FROM zutrittsberechtigung WHERE person_id IN (SELECT id FROM `person` WHERE `nachname` IN ('Herr', 'Frau', 'Madame', 'Monsieur'));
+DELETE FROM `person` WHERE `nachname` IN ('Herr', 'Frau', 'Madame', 'Monsieur');
+
+DELETE FROM zutrittsberechtigung_log WHERE person_id IN (SELECT id FROM `person_log` WHERE `nachname` IN ('Herr', 'Frau', 'Madame', 'Monsieur'));
+DELETE FROM `person_log` WHERE `nachname` IN ('Herr', 'Frau', 'Madame', 'Monsieur');
