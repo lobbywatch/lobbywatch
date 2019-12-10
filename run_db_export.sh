@@ -6,6 +6,7 @@
 enable_fail_onerror
 
 PHP='php'
+LS='ls -Alh'
 
 test_parameter=''
 export_options=''
@@ -20,7 +21,7 @@ while test $# -gt 0; do
             echo
             echo "Options:"
             echo "-e LIST                          Type of data to export, add this type of data -e=hist, -e=intern, -e=unpubl, -e=hist+unpubl+intern (default: filter at most)"
-            echo "-t, --test                       Test mode (no remote changes)"
+            echo "-t, --test                       Test mode (limit number of records)"
             echo "-r, --refresh                    Refresh views"
             echo "-a, --automatic                  Automatic"
             echo "-v [LEVEL], --verbose [LEVEL]    Verbose mode (Default level=1)"
@@ -80,56 +81,63 @@ if [ "$export_options" != "" ];then
     export_type="_$export_options"
 fi
 
+echo -e "$(date +%T) Start exporting..."
+
 $PHP -f db_export.php -- -c -s -v -e=$export_options $test_parameter
+
+echo -e "\n$(date +%T) Start packing..."
 
 EXPORT=export
 
-base_name=lobbywatch_export
-archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.csv.zip
-archive=$EXPORT/$base_name$export_type.csv.zip
+format=csv
+base_name=lobbywatch_export_all
+echo -e "\nPack $base_name.$format"
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
+archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
-zip $archive_with_date export/*.csv
+zip $archive_with_date $EXPORT/*.$format
 cp $archive_with_date $archive
-ls -Alh $archive_with_date $archive
+$LS $archive_with_date $archive
 
 base_name=lobbywatch_export_flat
-archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.csv.zip
-archive=$EXPORT/$base_name$export_type.csv.zip
+echo -e "\nPack $base_name.$format"
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
+archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
-zip $archive_with_date export/flat*.csv
+zip $archive_with_date $EXPORT/flat*.$format
 cp $archive_with_date $archive
-ls -Alh $archive_with_date $archive
+$LS $archive_with_date $archive
 
 base_name=lobbywatch_export_parlamentarier
-archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.csv.zip
-archive=$EXPORT/$base_name$export_type.csv.zip
+echo -e "\nPack $base_name.$format"
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
+archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
-zip $archive_with_date export/cartesian_essential_parlamentarier_interessenbindung.csv
+zip $archive_with_date $EXPORT/cartesian_essential_parlamentarier_interessenbindung.csv $EXPORT/cartesian_minimal_parlamentarier_interessenbindung.csv $EXPORT/cartesian_parlamentarier_verguetungstransparenz.csv $EXPORT/cartesian_minimal_parlamentarier_zutrittsberechtigung.csv $EXPORT/cartesian_minimal_parlamentarier_zutrittsberechtigung_mandat.csv
 cp $archive_with_date $archive
-ls -Alh $archive_with_date $archive
-
-base_name=lobbywatch_export_parlamentarier_minimal
-archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.csv.zip
-archive=$EXPORT/$base_name$export_type.csv.zip
-[ -f "$archive_with_date" ] && rm $archive_with_date
-zip $archive_with_date export/cartesian_minimal_parlamentarier_interessenbindung.csv
-cp $archive_with_date $archive
-ls -Alh $archive_with_date $archive
+$LS $archive_with_date $archive
 
 base_name=lobbywatch_export_parlamentarier_transparenzliste
-archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.csv.zip
-archive=$EXPORT/$base_name$export_type.csv.zip
+echo -e "\nPack $base_name.$format"
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
+archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
-zip $archive_with_date export/cartesian_parlamentarier_verguetungstransparenz.csv
+zip $archive_with_date $EXPORT/cartesian_parlamentarier_verguetungstransparenz.csv
 cp $archive_with_date $archive
-ls -Alh $archive_with_date $archive
+$LS $archive_with_date $archive
 
+format=sql
 base_name=lobbywatch
-archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.csv.zip
-archive=$EXPORT/$base_name$export_type.sql.zip
+echo -e "\nPack $base_name.$format"
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
+archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
-zip $archive_with_date export/*.sql
+zip $archive_with_date $EXPORT/*.$format
 cp $archive_with_date $archive
-ls -Alh $archive_with_date $archive
+$LS $archive_with_date $archive
+
+END_OVERALL=$(date +%s)
+DIFF=$(( $END_OVERALL - $START_OVERALL ))
+echo -e "\n$(date +%T)" "Overall elapsed:" $(convertsecs $DIFF) "(${DIFF}s)"
 
 quit
