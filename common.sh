@@ -54,6 +54,14 @@ DATE_SHORT=`date +%Y%m%d`
 HUMAN_NOW=$(date +"%d.%m.%Y %H:%M");
 HUMAN_DATE=$(date +"%d.%m.%Y");
 
+# Ref: http://stackoverflow.com/questions/12199631/convert-seconds-to-hours-minutes-seconds-in-bash
+convertsecs() {
+ ((h=${1}/3600))
+ ((m=${1}%3600/60))
+ ((s=${1}%60))
+ printf "%02d:%02d:%02d\n" $h $m $s
+}
+
 # Asks if [Yn] if script shoud continue, otherwise exit 1
 # $1: msg or nothing
 # Example call 1: askContinueYn
