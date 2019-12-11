@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Call for production
+# ./run_db_export.sh -v -t -d=lobbywat_lobbywatch --user-prefix=reader_ -p
+
 # Include common functions
 . common.sh
 
