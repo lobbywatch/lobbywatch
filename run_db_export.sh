@@ -5,7 +5,11 @@
 
 enable_fail_onerror
 
-PHP='php'
+if [[ "$USER" == "lobbywat" ]]; then
+    PHP='php74'
+else
+    PHP='php'
+fi
 LS='ls -Alh'
 ZIP='zip -j'
 
