@@ -177,8 +177,8 @@ checkLocalMySQLRunning() {
           }
         fi
         ;;
-      "bane" )
-        askContinueYn "MySQL not running. Start MySQL manually. Ready?"
+      "lobbywat" )
+        # Do nothing
         ;;
       * )
         askContinueYn "MySQL not running. Start MySQL manually. Ready?"
