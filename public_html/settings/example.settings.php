@@ -14,6 +14,7 @@ global $private_files_dir;
 global $env_dir;
 global $env;
 global $debug;
+global $settings;
 
 global $drupal_running;
 global $lobbywatch_mode;
@@ -57,6 +58,7 @@ $db_connections = [
   ],
 ];
 
+$settings['public_exports_dir'] = getenv('LW_PUBLIC_EXPORTS_DIR');
 
 if ($stage) {
   $env = "STAGE";

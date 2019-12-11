@@ -11,6 +11,7 @@ ZIP='zip -j'
 
 test_parameter=''
 export_options=''
+publish=false
 
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 while test $# -gt 0; do
@@ -22,7 +23,9 @@ while test $# -gt 0; do
             echo
             echo "Options:"
             echo "-e LIST                          Type of data to export, add this type of data -e=hist, -e=intern, -e=unpubl, -e=hist+unpubl+intern (default: filter at most)"
-            echo "-t, --test                       Test mode (limit number of records)"
+            echo "-t, --test                       Test mode (implies -n)"
+            echo "-n, --limit                      Limit number of records"
+            echo "-p, --publish                    Publish exports to public folder"
             echo "-r, --refresh                    Refresh views"
             echo "-a, --automatic                  Automatic"
             echo "-v [LEVEL], --verbose [LEVEL]    Verbose mode (Default level=1)"
@@ -33,7 +36,11 @@ while test $# -gt 0; do
             refresh="-r"
             shift
         ;;
-        -t|--test)
+        -p|--publish)
+            publish=true
+            shift
+        ;;
+        -n|--limit|-t|--test)
             test_parameter="-n"
             shift
         ;;
@@ -77,6 +84,13 @@ checkLocalMySQLRunning
 
 START_OVERALL=$(date +%s)
 
+if [[ "$LW_PUBLIC_EXPORTS_DIR" == "" ]]; then
+    echo -e "\nERROR: LW_PUBLIC_EXPORTS_DIR environment variable is not set"
+    abort
+else
+    PUBLIC_EXPORTS_DIR=$LW_PUBLIC_EXPORTS_DIR
+fi
+
 export_type=''
 if [ "$export_options" != "" ];then
     export_type="_$export_options"
@@ -102,6 +116,9 @@ archive=$EXPORT/$base_name$export_type.$format.zip
 $ZIP $archive_with_date $DOCS $EXPORT/*.$format
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
+if $publish; then
+    cp $archive $PUBLIC_EXPORTS_DIR
+fi
 
 base_name=lobbywatch_export_flat
 echo -e "\nPack $base_name.$format"
@@ -111,6 +128,9 @@ archive=$EXPORT/$base_name$export_type.$format.zip
 $ZIP $archive_with_date $DOCS $EXPORT/flat*.$format
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
+if $publish; then
+    cp $archive $PUBLIC_EXPORTS_DIR
+fi
 
 base_name=lobbywatch_export_parlamentarier
 echo -e "\nPack $base_name.$format"
@@ -120,6 +140,9 @@ archive=$EXPORT/$base_name$export_type.$format.zip
 $ZIP $archive_with_date $DOCS $EXPORT/cartesian_essential_parlamentarier_interessenbindung.csv $EXPORT/cartesian_minimal_parlamentarier_interessenbindung.csv $EXPORT/cartesian_parlamentarier_verguetungstransparenz.csv $EXPORT/cartesian_minimal_parlamentarier_zutrittsberechtigung.csv $EXPORT/cartesian_minimal_parlamentarier_zutrittsberechtigung_mandat.csv
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
+if $publish; then
+    cp $archive $PUBLIC_EXPORTS_DIR
+fi
 
 base_name=lobbywatch_export_parlamentarier_transparenzliste
 echo -e "\nPack $base_name.$format"
@@ -129,6 +152,9 @@ archive=$EXPORT/$base_name$export_type.$format.zip
 $ZIP $archive_with_date $DOCS $EXPORT/cartesian_parlamentarier_verguetungstransparenz.csv
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
+if $publish; then
+    cp $archive $PUBLIC_EXPORTS_DIR
+fi
 
 format=sql
 base_name=lobbywatch
@@ -139,6 +165,15 @@ archive=$EXPORT/$base_name$export_type.$format.zip
 $ZIP $archive_with_date $DOCS $EXPORT/*.$format
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
+if $publish; then
+    cp $archive $PUBLIC_EXPORTS_DIR
+fi
+
+if $publish; then
+    cp $DOCS $PUBLIC_EXPORTS_DIR
+    echo -e "\nPublished exports:"
+    $LS $PUBLIC_EXPORTS_DIR
+fi
 
 END_OVERALL=$(date +%s)
 DIFF=$(( $END_OVERALL - $START_OVERALL ))
