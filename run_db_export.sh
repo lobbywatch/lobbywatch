@@ -16,6 +16,9 @@ ZIP='zip -j'
 test_parameter=''
 export_options=''
 publish=false
+param_schema=''
+param_db=''
+param_user_prefix=''
 
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 while test $# -gt 0; do
@@ -32,9 +35,24 @@ while test $# -gt 0; do
             echo "-p, --publish                    Publish exports to public folder"
             echo "-r, --refresh                    Refresh views"
             echo "-a, --automatic                  Automatic"
+            echo "-d=SCHEMA                        DB schema (default SCHEMA: lobbywatchtest)"
+            echo "--user-prefix=USER               Prefix for db user in settings.php (default: reader_)"
+            echo "--db=DB                          DB name for settings.php"
             echo "-v [LEVEL], --verbose [LEVEL]    Verbose mode (Default level=1)"
-            echo "-l=DB, --local=DB                Local DB to use (Default: lobbywatchtest)"
+            echo "-h, --help                       Show help"
             quit
+        ;;
+        -d=*)
+            param_schema="-d=${1#*=}"
+            shift
+        ;;
+        --user-prefix=*)
+            param_user_prefix="--user-prefix=${1#*=}"
+            shift
+        ;;
+        --db=*)
+            param_db="--db=${1#*=}"
+            shift
         ;;
         -r|--refresh)
             refresh="-r"
@@ -64,14 +82,14 @@ while test $# -gt 0; do
             fi
             shift
         ;;
-        -l=*|--local=*)
-            db="${1#*=}"
-            if [[ $db == "" ]]; then
-                db="lobbywatchtest"
-            fi
-            env="local_${db}"
-            shift
-        ;;
+        # -l=*|--local=*)
+        #     db="${1#*=}"
+        #     if [[ $db == "" ]]; then
+        #         db="lobbywatchtest"
+        #     fi
+        #     env="local_${db}"
+        #     shift
+        # ;;
         *)
             break
         ;;
@@ -102,7 +120,7 @@ fi
 
 echo -e "$(date +%T) Start exporting..."
 
-$PHP -f db_export.php -- -c -s -v -e=$export_options $test_parameter
+$PHP -f db_export.php -- -c -s -v -e=$export_options $test_parameter $param_schema $param_db $param_user_prefix
 
 echo -e "\n$(date +%T) Start packing..."
 
