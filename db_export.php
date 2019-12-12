@@ -1191,7 +1191,7 @@ class JsonlExporter extends JsonExporter {
 class ArangoDBJsonlExporter extends JsonlExporter {
 
   function __construct() {
-    $this->format = 'jsonl';
+    $this->format = 'arangodb_jsonl';
     $this->fileSuffix = 'arangodb.jsonl';
     $this->formatName = 'ArangoDB Jsonl';
   }
@@ -1883,7 +1883,15 @@ function export(IExportFormat $exporter, string $table_schema, string $path, arr
     $exporter->validate($export_file);
   }
 
-  if ($verbose > 0) print(implode($cmd_args_sep, $cmd_args) . "\n\n");
+  if ($verbose > 1) print(implode($cmd_args_sep, $cmd_args) . "\n\n");
+
+  if (!empty($cmd_args)) {
+    $cmd_file_name = "$path/lobbywatch_" . $exporter->getFormat() . '_import.sh';
+    $cmd_file = fopen($cmd_file_name, 'w');
+    fwrite($cmd_file, implode($cmd_args_sep, $cmd_args) . "\n\n");
+    fclose($cmd_file);
+    if ($verbose > 1) print("Cmd file '$cmd_file_name' written");
+  }
 
   $end_export_tables = microtime(true);
   if ($verbose > 1) print($exporter->getFormatName() . ($storage_type == 'one_file' ? ' 1' : '') . ": Time elapsed: " . round($end_export_tables - $start_export_tables) . "s\n");
