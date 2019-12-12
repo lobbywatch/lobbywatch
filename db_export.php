@@ -744,8 +744,8 @@ class Neo4jCsvExporter extends CsvExporter {
 
   function __construct($sep = null, $qe = null) {
     parent::__construct($sep, $qe);
-    $this->format = 'csv_neo4j';
-    $this->formatName = 'Neo4J CSV';
+    $this->format = 'neo4j_csv';
+    $this->formatName = 'Neo4j CSV';
     $this->fileSuffix = 'csv';
   }
 
@@ -832,8 +832,16 @@ class Neo4jCsvExporter extends CsvExporter {
   function getImportHint(string &$separator): array {
     $separator = ' ';
     $cmd_args = [];
+    $cmd_args[] = '#!/bin/bash';
+    $cmd_args[] = '';
+    $cmd_args[] = '# Neo4j sample import script for Lobbywatch data';
+    $cmd_args[] = '# https://neo4j.com/docs/operations-manual/current/tools/import/';
+    $cmd_args[] = '';
+    $cmd_args[] = 'set -e';
+    $cmd_args[] = '';
     //     $cmd_args[] = "neo4j-admin";
     $cmd_args[] = "rm -r ~/.config/Neo4j\ Desktop/Application/neo4jDatabases/database-0b42a643-61a0-4b3f-8c54-4dfbe872d200/installation-3.5.6/data/databases/graph.db/; ~/.config/Neo4j\ Desktop/Application/neo4jDatabases/database-0b42a643-61a0-4b3f-8c54-4dfbe872d200/installation-3.5.6/bin/neo4j-admin";
+    $cmd_args[] = '';
     $cmd_args[] = "import";
     $cmd_args[] = "--database=graph.db";
     $cmd_args[] = "--id-type=INTEGER";
@@ -1012,7 +1020,7 @@ class JsonExporter extends AggregatedExporter {
 class JsonOrientDBExporter extends AbstractExporter {
 
   function __construct() {
-    $this->format = 'json_orientdb_etl';
+    $this->format = 'orientdb_etl_json';
     $this->fileSuffix = 'etl.json';
     $this->formatName = 'OrientDB ETL JSON';
   }
@@ -1030,6 +1038,13 @@ class JsonOrientDBExporter extends AbstractExporter {
   function getImportHint(string &$separator): array {
     $separator = "\n";
     $cmd_args = [];
+    $cmd_args[] = '#!/bin/bash';
+    $cmd_args[] = '';
+    $cmd_args[] = '# OrientDB sample import script for Lobbywatch data';
+    $cmd_args[] = '# http://orientdb.com/docs/3.0.x/etl/Import-from-JSON.html';
+    $cmd_args[] = '';
+    $cmd_args[] = 'set -e';
+    $cmd_args[] = '';
     //$cmd_args[] = "docker stop orientdb";
     $cmd_args[] = "echo -e \"docker restart orientdb\"; docker restart orientdb";
     $cmd_args[] = "echo -e \"drop database lw_test\"; docker exec -it orientdb bin/console.sh drop database plocal:/orientdb/databases/lw_test admin admin";
@@ -1203,6 +1218,14 @@ class ArangoDBJsonlExporter extends JsonlExporter {
   function getImportHint(string &$separator): array {
     $separator = "\n";
     $cmd_args = [];
+
+    $cmd_args[] = '#!/bin/bash';
+    $cmd_args[] = '';
+    $cmd_args[] = '# ArangoDB sample import script for Lobbywatch data';
+    $cmd_args[] = '# https://www.arangodb.com/docs/stable/programs-arangoimport-options.html';
+    $cmd_args[] = '';
+    $cmd_args[] = 'set -e';
+    $cmd_args[] = '';
 
     return $cmd_args;
   }
@@ -1886,7 +1909,7 @@ function export(IExportFormat $exporter, string $table_schema, string $path, arr
   if ($verbose > 1) print(implode($cmd_args_sep, $cmd_args) . "\n\n");
 
   if (!empty($cmd_args)) {
-    $cmd_file_name = "$path/lobbywatch_" . $exporter->getFormat() . '_import.sh';
+    $cmd_file_name = "$path/" . $exporter->getFormat() . '_lobbywatch_import.sh';
     $cmd_file = fopen($cmd_file_name, 'w');
     fwrite($cmd_file, implode($cmd_args_sep, $cmd_args) . "\n\n");
     fclose($cmd_file);
