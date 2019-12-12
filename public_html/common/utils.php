@@ -3202,8 +3202,10 @@ function htmlDiffTd($old, $new, bool $cleanAbbr = true) {
 function styleIns($str) {
   $styled = $str;
   $ins_style = "font-style: italic; color: blue;";
-  if (!preg_match('/<[^>]+>/', $styled)) {
-    $styled = "<i style='$ins_style font-weight: bold;'>$styled</i>";
+  // Create pure_text as sometimes the diff algo is shifted from tr lines. It starts earlier and ends earlier, fix it by cleaning tags from str for styling text only changes (without any tags)
+  $pure_text = preg_replace('/<.*/s', '', $styled);
+  if (!empty($pure_text)) {
+    $styled = "<i style='$ins_style font-weight: bold;'>$pure_text</i>";
   }
   // $styled = preg_replace("|</td>|i", "</i></td>", preg_replace("|<td>|i", "<td data-diff='ins'><i style='$ins_style'>", $styled));
   $styled = preg_replace("%<tr>%i", "<tr style='$ins_style'>", $styled);
@@ -3213,8 +3215,10 @@ function styleIns($str) {
 function styleDel($str) {
   $styled = $str;
   $del_style = "font-style: normal; text-decoration: line-through; color: red;";
-  if (!preg_match('/<[^>]+>/', $styled)) {
-    $styled = "<s style='$del_style font-weight: bold;'>$styled</s> ";
+  // Create pure_text as sometimes the diff algo is shifted from tr lines. It starts earlier and ends earlier, fix it by cleaning tags from str for styling text only changes (without any tags)
+  $pure_text = preg_replace('/<.*/s', '', $styled);
+  if (!empty($pure_text)) {
+    $styled = "<s style='$del_style font-weight: bold;'>$pure_text</s> ";
   }
   // $styled = preg_replace("|</td>|i", "</s></td>", preg_replace("|<td>|i", "<td data-diff='del'><s style='$del_style'>", $styled));
   $styled = preg_replace("%<tr>%i", "<tr style='$del_style'>", $styled);
