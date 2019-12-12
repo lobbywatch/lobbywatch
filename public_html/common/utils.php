@@ -3182,7 +3182,7 @@ function htmlDiffStyled($old, $new, bool $cleanAbbr = true) {
 function preprocessHtml(string $str, bool $cleanAbbr): string {
   $clean = $cleanAbbr ? preg_replace('/<\/?abbr[^>]*?>/i', '', $str) : $str;
   // $clean = preg_replace('/></', '> <', $clean);
-  $clean = preg_replace('/(<[^>]+>)/', '<!--split-->$1<!--split-->', $clean);
+  $clean = preg_replace('%<(/?table|/?thead|/?tbody|tr)[^>]*>%i', '<!--split-->$0', $clean);
   return $clean;
 }
 
@@ -3199,13 +3199,25 @@ function htmlDiffTd($old, $new, bool $cleanAbbr = true) {
   return $ret;
 }
 
+function splitTextOnFirstTag(string $str): array {
+  $tag_index = strpos($str , '<');
+  if ($tag_index > 0) {
+    $pure_text = substr($str, 0, $tag_index);
+    $tag_text = substr($str,$tag_index);
+  } else {
+    $pure_text = '';
+    $tag_text = $str;
+  }
+  return  [$pure_text, $tag_text];
+}
+
 function styleIns($str) {
   $styled = $str;
   $ins_style = "font-style: italic; color: blue;";
   // Create pure_text as sometimes the diff algo is shifted from tr lines. It starts earlier and ends earlier, fix it by cleaning tags from str for styling text only changes (without any tags)
-  $pure_text = preg_replace('/<.*/s', '', $styled);
+  list($pure_text, $tag_text) = splitTextOnFirstTag($styled);
   if (!empty($pure_text)) {
-    $styled = "<i style='$ins_style font-weight: bold;'>$pure_text</i>";
+    $styled = "<i style='$ins_style font-weight: bold;'>$pure_text</i>$tag_text";
   }
   // $styled = preg_replace("|</td>|i", "</i></td>", preg_replace("|<td>|i", "<td data-diff='ins'><i style='$ins_style'>", $styled));
   $styled = preg_replace("%<tr>%i", "<tr style='$ins_style'>", $styled);
@@ -3216,9 +3228,9 @@ function styleDel($str) {
   $styled = $str;
   $del_style = "font-style: normal; text-decoration: line-through; color: red;";
   // Create pure_text as sometimes the diff algo is shifted from tr lines. It starts earlier and ends earlier, fix it by cleaning tags from str for styling text only changes (without any tags)
-  $pure_text = preg_replace('/<.*/s', '', $styled);
+  list($pure_text, $tag_text) = splitTextOnFirstTag($styled);
   if (!empty($pure_text)) {
-    $styled = "<s style='$del_style font-weight: bold;'>$pure_text</s> ";
+    $styled = "<s style='$del_style font-weight: bold;'>$pure_text</s> $tag_text";
   }
   // $styled = preg_replace("|</td>|i", "</s></td>", preg_replace("|<td>|i", "<td data-diff='del'><s style='$del_style'>", $styled));
   $styled = preg_replace("%<tr>%i", "<tr style='$del_style'>", $styled);
