@@ -116,7 +116,7 @@ $aggregated_tables = [
     'interessenbindungen' => ['view' => 'v_interessenbindung_medium_raw', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
       'aggregated_tables' => [
         'verguetungen' => ['view' => 'v_interessenbindung_jahr', 'parent_id' => "interessenbindung_id", 'order_by' => 'jahr', 'hist_field' => '', 'remove_cols' => []],
-        // 'organisation' => ['view' => 'v_organisation_medium_raw', 'parent_id' => null, 'id_in_parent' => 'organisation_id', 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
+        'organisation' => ['view' => 'v_organisation_medium_raw', 'parent_id' => null, 'id_in_parent' => 'organisation_id', 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
         // 'aggregated_tables' => [
         //   'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'parent_id' => null, 'id_in_parent' => ['interessengruppe1_id', 'interessengruppe2_id', 'interessengruppe3_id'], 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
         //   'aggregated_tables' => [
@@ -127,12 +127,36 @@ $aggregated_tables = [
         //       ]],
         //       ]],
         //     ]],
-        //   ]],
+        //   ]
+        ],
       ],
     ],
     // TODO interessengruppen flach
-  ]],
-  'parlamentarier_nested' => ['display_name' => 'Parlamentarier', 'slow' => 3, 'view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'remove_cols' => [], 'aggregated_tables' => [
+    'zutrittsberechtigungen' => ['view' => 'v_zutrittsberechtigung_raw', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
+    'aggregated_tables' => [
+      'mandate' => ['view' => 'v_mandat_medium_raw', 'parent_id' => "person_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
+        'aggregated_tables' => [
+          'verguetungen' => ['view' => 'v_mandat_jahr', 'parent_id' => "mandat_id", 'order_by' => 'jahr', 'hist_field' => '', 'remove_cols' => []],
+          'organisation' => ['view' => 'v_organisation_medium_raw', 'parent_id' => null, 'id_in_parent' => 'organisation_id', 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
+          // 'aggregated_tables' => [
+          //   'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'parent_id' => null, 'id_in_parent' => ['interessengruppe1_id', 'interessengruppe2_id', 'interessengruppe3_id'], 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
+          //   'aggregated_tables' => [
+          //     'branche' => ['view' => 'v_branche_simple', 'parent_id' => null, 'id_in_parent' => ['branche_id'], 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
+          //     'aggregated_tables' => [
+          //       'kommissionen' => ['view' => 'v_kommission', 'parent_id' => null, 'id_in_parent' => ['kommission_id', 'kommission2_id'], 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
+          //       'aggregated_tables' => [
+          //       ]],
+          //       ]],
+          //     ]],
+          //   ]
+          ],
+        ],
+      ],
+    ],
+  ],
+]],
+  'parlamentarier_nested' => ['display_name' => 'Parlamentarier', 'slow' => 3, 'view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'remove_cols' => [],
+  'aggregated_tables' => [
     'in_kommission' => ['view' => 'v_in_kommission_liste', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => []],
     'parlamentarier_transparenz' => ['view' => 'v_parlamentarier_transparenz', 'parent_id' => "parlamentarier_id", 'order_by' => 'stichdatum', 'hist_field' => '', 'remove_cols' => []],
     'interessenbindungen' => ['view' => 'v_interessenbindung_medium_raw', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
@@ -153,6 +177,27 @@ $aggregated_tables = [
       ],
     ],
     // TODO interessengruppen flach
+    'zutrittsberechtigungen' => ['view' => 'v_zutrittsberechtigung_raw', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
+      'aggregated_tables' => [
+        'mandate' => ['view' => 'v_mandat_medium_raw', 'parent_id' => "person_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
+          'aggregated_tables' => [
+            'verguetungen' => ['view' => 'v_mandat_jahr', 'parent_id' => "mandat_id", 'order_by' => 'jahr', 'hist_field' => '', 'remove_cols' => []],
+            'organisation' => ['view' => 'v_organisation_medium_raw', 'parent_id' => null, 'id_in_parent' => 'organisation_id', 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
+            'aggregated_tables' => [
+              'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'parent_id' => null, 'id_in_parent' => ['interessengruppe1_id', 'interessengruppe2_id', 'interessengruppe3_id'], 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
+              'aggregated_tables' => [
+                'branche' => ['view' => 'v_branche_simple', 'parent_id' => null, 'id_in_parent' => ['branche_id'], 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
+                'aggregated_tables' => [
+                  'kommissionen' => ['view' => 'v_kommission', 'parent_id' => null, 'id_in_parent' => ['kommission_id', 'kommission2_id'], 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
+                  'aggregated_tables' => [
+                  ]],
+                  ]],
+                ]],
+              ]],
+          ],
+        ],
+      ],
+    ],
   ]],
   // TODO create essential
   // TODO branchen aggregated
