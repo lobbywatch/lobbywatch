@@ -79,7 +79,7 @@ try {
 
     $old_ib_html = normalizeParlamentInteressenbindungen($lastLogRowData['parlament_interessenbindungen']);
     $new_ib_html = normalizeParlamentInteressenbindungen($rowData['parlament_interessenbindungen']);
-    $ib_diff_html = htmlDiffStyled($old_ib_html, $new_ib_html, true);
+    $ib_diff_html = htmlDiffStyled($old_ib_html, $new_ib_html, false);
 
     $zbRetDetail = zutrittsberechtigteForParlamentarier($con, $id, false);
     $zbRet = zutrittsberechtigteForParlamentarier($con, $id, true);
@@ -158,7 +158,7 @@ try {
            'MailTo' => $mailtoParlam,
           'aemter' => $rowData['aemter'],
           'weitere_aemter' => $rowData['weitere_aemter'],
-          'parlament_interessenbindungen' => $ib_diff_html . "<br><p>_____________________________<br>Ohne Delta:</p>" . $new_ib_html,
+          'parlament_interessenbindungen' => $ib_diff_html /*. "<br><p>_____________________________<br>Ohne Delta:</p>" . $new_ib_html*/,
           'parlament_interessenbindungen_updated' => $rowData['parlament_interessenbindungen_updated_formatted'],
           'parlament_biografie_id' => $rowData['parlament_biografie_id'],
           'import_date_wsparlamentch' => $import_date_wsparlamentch,

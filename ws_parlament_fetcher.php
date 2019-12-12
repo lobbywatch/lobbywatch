@@ -38,7 +38,7 @@ export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlam
 // $json = file_get_contents($url);
 // $json = new_get_file_contents($url);
 
-const REQUEST_TIMEOUT_S = 10;
+const REQUEST_TIMEOUT_S = 5;
 const NEW_ID = 'LAST_INSERT_ID()';
 
 global $script;
@@ -767,7 +767,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
     $old_ib_html_normalized = normalizeParlamentInteressenbindungen($old_ib_html);
     $new_ib_html_old = getParlamentInteressenbindungen($parlamentarier_ws->concerns);
     $new_ib_html_odata = getParlamentInteressenbindungenOdata($parlamentarier_ws_odata->d->results ?? []);
-    $diff = htmlDiffStyled($old_ib_html_normalized, $new_ib_html_odata, true);
+    $diff = htmlDiffStyled($old_ib_html_normalized, $new_ib_html_odata, false);
 
     // $old_json = json_encode($old_ib_html);
     // $old_json_normalized = json_encode($old_ib_html_normalized);
