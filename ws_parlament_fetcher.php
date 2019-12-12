@@ -38,6 +38,7 @@ export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlam
 // $json = file_get_contents($url);
 // $json = new_get_file_contents($url);
 
+const REQUEST_TIMEOUT_S = 10;
 const NEW_ID = 'LAST_INSERT_ID()';
 
 global $script;
@@ -56,8 +57,9 @@ $user = getenv("USER");
 $show_sql = false;
 
 // Set user agent, otherwise only HTML will be returned instead of JSON, ref http://stackoverflow.com/questions/2107759/php-file-get-contents-and-headers
-$options = array(
-  'http'=>array(
+$options = [
+  'http'=> [
+    'timeout' => REQUEST_TIMEOUT_S,
     'method'=>"GET",
     'header'=>
       "Content-Type: application/json\r\n" .
@@ -65,12 +67,13 @@ $options = array(
 //       "User-Agent: Mozilla/5.0\r\n" // i.e. Firefox 60
 //       "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0\r\n" // i.e. Firefox 60
       "User-Agent:LWAgent/1.0\r\n"
-  )
-);
+    ]
+];
 
 $context = stream_context_create($options);
 
-
+// https://stackoverflow.com/questions/10236166/does-file-get-contents-have-a-timeout-setting
+ini_set('default_socket_timeout', REQUEST_TIMEOUT_S);
 
 $script = array();
 $script[] = "-- SQL script from ws.parlament.ch $transaction_date";
