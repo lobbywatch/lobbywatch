@@ -3174,40 +3174,50 @@ function normalizeParlamentInteressenbindungen($str) {
 
 function htmlDiffStyled($old, $new, bool $cleanAbbr = true) {
   $styled = $diff_raw = htmlDiffTd($old, $new, $cleanAbbr);
-  $styled = preg_replace("%<(/?table|thead|/?tbody|/tr)>%i", "$0\n", $styled);
-  $styled = preg_replace("%^\s(.*)\s*$%im", "$1", $styled);
+  $styled = preg_replace("%<(/?table|thead|/?tbody|/tr)[^>]*>%i", "$0\n", $styled);
+  $styled = preg_replace("%^\s(.*)\s*$%im", "$1\n", $styled);
   return $styled;
 }
 
 function preprocessHtml(string $str, bool $cleanAbbr): string {
-  $clean = $cleanAbbr ? preg_replace('/<\/?abbr[^>]*>/i', '', $str) : $str;
-  $clean = preg_replace('/></', '> <', $clean);
+  $clean = $cleanAbbr ? preg_replace('/<\/?abbr[^>]*?>/i', '', $str) : $str;
+  // $clean = preg_replace('/></', '> <', $clean);
+  $clean = preg_replace('/(<[^>]+>)/', '<!--split-->$1<!--split-->', $clean);
   return $clean;
 }
 
+/** Split before and after tags, not on whitespace.*/
 function htmlDiffTd($old, $new, bool $cleanAbbr = true) {
   $ret = '';
-  $diff = diff(preg_split("/[\s]+/", preprocessHtml($old, $cleanAbbr)), preg_split("/[\s]+/", preprocessHtml($new, $cleanAbbr)));
-  foreach ($diff as $k){
+  $diff = diff(preg_split("/(<!--split-->)+/", preprocessHtml($old, $cleanAbbr)), preg_split("/(<!--split-->)+/", preprocessHtml($new, $cleanAbbr)));
+  foreach ($diff as $k) {
     if (is_array($k))
-      $ret .= (!empty($k['d']) ? "<!--del-->" . styleDel(implode(' ',$k['d'])) . "<!--/del--> " : '') .
-        (!empty($k['i']) ? "<!--ins-->" . styleIns(implode(' ',$k['i'])) . "<!--/ins--> " : '');
-    else $ret .= $k . ' ';
+      $ret .= (!empty($k['d']) ? "<!--del-->" . styleDel(implode('', $k['d'])) . "<!--/del-->" : '') .
+        (!empty($k['i']) ? "<!--ins-->" . styleIns(implode('', $k['i'])) . "<!--/ins-->" : '');
+    else $ret .= $k;
   }
   return $ret;
 }
 
 function styleIns($str) {
   $styled = $str;
-  $styled = preg_replace("|</td>|i", "</i></td>", preg_replace("|<td>|i", "<td><i>", $styled));
-  $styled = preg_replace("%<tr>%i", "<tr style='font-style: italic; color: blue;'>", $styled);
+  $ins_style = "font-style: italic; color: blue;";
+  if (!preg_match('/<[^>]+>/', $styled)) {
+    $styled = "<i style='$ins_style font-weight: bold;'>$styled</i>";
+  }
+  // $styled = preg_replace("|</td>|i", "</i></td>", preg_replace("|<td>|i", "<td data-diff='ins'><i style='$ins_style'>", $styled));
+  $styled = preg_replace("%<tr>%i", "<tr style='$ins_style'>", $styled);
   return $styled;
 }
 
 function styleDel($str) {
   $styled = $str;
-  $styled = preg_replace("|</td>|i", "</s></td>", preg_replace("|<td>|i", "<td><s>", $styled));
-  $styled = preg_replace("%<tr>%i", "<tr style='text-decoration: line-through; color: red;'>", $styled);
+  $del_style = "font-style: normal; text-decoration: line-through; color: red;";
+  if (!preg_match('/<[^>]+>/', $styled)) {
+    $styled = "<s style='$del_style font-weight: bold;'>$styled</s> ";
+  }
+  // $styled = preg_replace("|</td>|i", "</s></td>", preg_replace("|<td>|i", "<td data-diff='del'><s style='$del_style'>", $styled));
+  $styled = preg_replace("%<tr>%i", "<tr style='$del_style'>", $styled);
   return $styled;
 }
 
