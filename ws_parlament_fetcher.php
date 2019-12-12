@@ -106,7 +106,7 @@ function main() {
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
-  $options = getopt('kphsv::dc',array('docroot:','db:','help'));
+  $options = getopt('kphsv::dcR',array('docroot:','db:','help'));
 
 //   var_dump($options);
 
@@ -143,6 +143,11 @@ function main() {
      $convert_images = true;
   }
 
+  $processRetired = true;
+  if (isset($options['R'])) {
+     $processRetired = false;
+  }
+
   if (isset($options['k'])) {
     parlamentarierOhneBiografieID();
     syncKommissionen();
@@ -153,7 +158,7 @@ function main() {
     parlamentarierOhneBiografieID();
     $img_path = "$docRoot/files/parlamentarier_photos";
     print("-- Image path: $img_path\n");
-    syncParlamentarier($img_path);
+    syncParlamentarier($img_path, $processRetired);
     setImportDate();
   }
 
@@ -174,6 +179,7 @@ function main() {
 Parameters:
 -k              Sync Kommissionen
 -p              Sync Parlamentarier
+-R              Omit retired parlamentarier
 -s              Output SQL script
 -v[level]       Verbose, optional level, 1 = default
 -d              Download all images (implies -c)
@@ -387,7 +393,7 @@ function syncKommissionen() {
   print("\n-- KOMMISSION " . ($new_kommission_count + $updated_kommission_count + $deleted_kommission_count + $new_inkommission_count + $new2_inkommission_count + $change_inkommission_count + $terminated_inkommission_count + $deleted_inkommission_count + $duplicate_inkommission_count > 0 ? 'DATA CHANGED' : 'DATA UNCHANGED') . "\n\n");
 }
 
-function syncParlamentarier($img_path) {
+function syncParlamentarier(string $img_path, bool $processRetired = true) {
   global $script;
   global $context;
   global $show_sql;
@@ -523,39 +529,41 @@ function syncParlamentarier($img_path) {
   $deleted_parlamentarier_count = 0;
   $modified_parlamentarier_count = 0;
 
-  print("\n\nRetired Parlamentarier in DB\n");
+  if ($processRetired) {
+    print("\n\nRetired Parlamentarier in DB\n");
 
-  $sign = '-';
-  $i = 0;
-  $parlamentarier_inactive_list = search_objects($parlamentarier_list_db, 'status', 'NOK');
-  foreach($parlamentarier_inactive_list as $parlamentarier_inactive) {
-    $i++;
-    $id = $parlamentarier_inactive->id;
-    $sign = '!';
+    $sign = '-';
+    $i = 0;
+    $parlamentarier_inactive_list = search_objects($parlamentarier_list_db, 'status', 'NOK');
+    foreach($parlamentarier_inactive_list as $parlamentarier_inactive) {
+      $i++;
+      $id = $parlamentarier_inactive->id;
+      $sign = '!';
 
-    $update = array();
-    $update_optional = array();
-    $fields = array();
-    if ($biografie_id = $parlamentarier_inactive->parlament_biografie_id) {
-      updateParlamentarierFields($id, $biografie_id, $parlamentarier_inactive, $update, $update_optional, $fields, $sign, $img_path, $delta);
-    } else {
-      $biografie_id = 'null';
+      $update = array();
+      $update_optional = array();
+      $fields = array();
+      if ($biografie_id = $parlamentarier_inactive->parlament_biografie_id) {
+        updateParlamentarierFields($id, $biografie_id, $parlamentarier_inactive, $update, $update_optional, $fields, $sign, $img_path, $delta);
+      } else {
+        $biografie_id = 'null';
+      }
+
+      switch ($sign) {
+        case '+': $new_parlamentarier_count++; break;
+        case '≠': $updated_parlamentarier_count++; break;
+        case '-': $deleted_parlamentarier_count++; break;
+        case '~': $modified_parlamentarier_count++; break;
+      }
+
+      print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad("| $sign | $parlamentarier_inactive->nachname, $parlamentarier_inactive->vorname |$biografie_id" . ($ok ? "| id=$id" : ''), 50, " ") . "| " . implode(" | ", $fields) . "\n");
     }
 
-    switch ($sign) {
-      case '+': $new_parlamentarier_count++; break;
-      case '≠': $updated_parlamentarier_count++; break;
-      case '-': $deleted_parlamentarier_count++; break;
-      case '~': $modified_parlamentarier_count++; break;
-    }
-
-    print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad("| $sign | $parlamentarier_inactive->nachname, $parlamentarier_inactive->vorname |$biografie_id" . ($ok ? "| id=$id" : ''), 50, " ") . "| " . implode(" | ", $fields) . "\n");
+    print("\n + : $new_parlamentarier_count");
+    print("\n ≠ : $updated_parlamentarier_count");
+    print("\n - : $deleted_parlamentarier_count");
+    print("\n ~ : $modified_parlamentarier_count");
   }
-
-  print("\n + : $new_parlamentarier_count");
-  print("\n ≠ : $updated_parlamentarier_count");
-  print("\n - : $deleted_parlamentarier_count");
-  print("\n ~ : $modified_parlamentarier_count");
 
   print("\n\nGeänderte Intressenbindungen der Parlamentarier:\n\n");
   print(implode("\n", $delta));

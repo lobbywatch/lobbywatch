@@ -62,6 +62,7 @@ DUMP_FILE=prod_bak/last_dbdump_data.txt
 DUMP_TYPE_PARAMETER='-o'
 FULL_DUMP_PARAMETER=''
 DUMP_TYPE_NAME='DATA dump'
+processRetired=''
 
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 while test $# -gt 0; do
@@ -80,6 +81,7 @@ while test $# -gt 0; do
                         echo "-D, --no-dl-pdf                  No download PDFs, use last PDFs"
                         echo "-r, --refresh                    Refresh views"
                         echo "-P, --noparlam                   Do not run parlamentarier script"
+                        echo "-R, --noretired                  Do not sync retired parlamentarier"
                         echo "-K, --nokommissionen             Do not run update Kommissionen"
                         echo "    --dl-images                  Download all images"
                         echo "-I, --noimageupload              Do not upload changed images"
@@ -122,6 +124,10 @@ while test $# -gt 0; do
                         ;;
                 -r|--refresh)
                         refresh="-r"
+                        shift
+                        ;;
+                -R|--noretired)
+                        processRetired='-R'
                         shift
                         ;;
                 -i|--import)
@@ -262,7 +268,7 @@ if ! $noparlam ; then
   if ! $automatic ; then
     askContinueYn "Run ws_parlament_fetcher.php for '$db' on '$HOSTNAME'?"
   fi
-  export P_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%dT%H%M%S"`.sql; $PHP -f ws_parlament_fetcher.php -- --db=$db -ps$kommissionen $download_images $verbose_mode | tee $P_FILE
+  export P_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%dT%H%M%S"`.sql; $PHP -f ws_parlament_fetcher.php -- --db=$db -ps$kommissionen $download_images $processRetired $verbose_mode | tee $P_FILE
 
   if $verbose ; then
     echo "Parlamentarier SQL: $P_FILE"
