@@ -1843,13 +1843,6 @@ Parameters:
 
   $start_export = microtime(true);
 
-  if (isset($options['t'])) {
-    export(new YamlExporter(), $schema, $path, $filter, $eol, 'one_file', $records_limit, $db);
-    export(new YamlExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
-    export(new MarkdownExporter(), $schema, $path, $filter, $eol, 'one_file', $records_limit, $db);
-    export(new MarkdownExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
-  }
-
   if (isset($options['c'])) {
     export(new CsvExporter($sep, $qe), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
    }
@@ -1885,6 +1878,11 @@ Parameters:
 
   if (isset($options['x'])) {
     export(new XmlExporter(), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
+  }
+
+  if (isset($options['t'])) {
+    export(new YamlExporter(), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
+    export(new MarkdownExporter(), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
   }
 
   if (isset($options['a'])) {

@@ -126,7 +126,7 @@ fi
 
 echo -e "$(date +%T) Start exporting..."
 
-$PHP -f db_export.php -- -c -s -m -v -g -j -o -l --arangodb -e=$export_options $all_data $test_parameter $param_schema $param_db $param_user_prefix
+$PHP -f db_export.php -- -c -s -m -v -g -j -o -l --arangodb -x -t -e=$export_options $all_data $test_parameter $param_schema $param_db $param_user_prefix
 
 echo -e "\n$(date +%T) Start packing..."
 
@@ -306,6 +306,132 @@ if $publish; then
 fi
 
 format=jsonl
+type=flat
+base_name=lobbywatch_export_$type
+echo -e "\nPack $base_name.$format"
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
+archive=$EXPORT/$base_name$export_type.$format.zip
+[ -f "$archive_with_date" ] && rm $archive_with_date
+$ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
+cp $archive_with_date $archive
+$LS $archive_with_date $archive
+if $publish; then
+    cp $archive $PUBLIC_EXPORTS_DIR
+fi
+
+format=xml
+type=aggregated
+base_name=lobbywatch_export_$type
+echo -e "\nPack $base_name.$format"
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
+archive=$EXPORT/$base_name$export_type.$format.zip
+[ -f "$archive_with_date" ] && rm $archive_with_date
+$ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
+cp $archive_with_date $archive
+$LS $archive_with_date $archive
+if $publish; then
+    cp $archive $PUBLIC_EXPORTS_DIR
+fi
+
+format=xml
+type=all
+base_name=lobbywatch_export_$type
+echo -e "\nPack $base_name.$format"
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
+archive=$EXPORT/$base_name$export_type.$format.zip
+[ -f "$archive_with_date" ] && rm $archive_with_date
+$ZIP $archive_with_date $DOCS $EXPORT/*.$format
+cp $archive_with_date $archive
+$LS $archive_with_date $archive
+if $publish; then
+    cp $archive $PUBLIC_EXPORTS_DIR
+fi
+
+format=xml
+type=flat
+base_name=lobbywatch_export_$type
+echo -e "\nPack $base_name.$format"
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
+archive=$EXPORT/$base_name$export_type.$format.zip
+[ -f "$archive_with_date" ] && rm $archive_with_date
+$ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
+cp $archive_with_date $archive
+$LS $archive_with_date $archive
+if $publish; then
+    cp $archive $PUBLIC_EXPORTS_DIR
+fi
+
+format=yaml
+type=aggregated
+base_name=lobbywatch_export_$type
+echo -e "\nPack $base_name.$format"
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
+archive=$EXPORT/$base_name$export_type.$format.zip
+[ -f "$archive_with_date" ] && rm $archive_with_date
+$ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
+cp $archive_with_date $archive
+$LS $archive_with_date $archive
+if $publish; then
+    cp $archive $PUBLIC_EXPORTS_DIR
+fi
+
+format=yaml
+type=all
+base_name=lobbywatch_export_$type
+echo -e "\nPack $base_name.$format"
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
+archive=$EXPORT/$base_name$export_type.$format.zip
+[ -f "$archive_with_date" ] && rm $archive_with_date
+$ZIP $archive_with_date $DOCS $EXPORT/*.$format
+cp $archive_with_date $archive
+$LS $archive_with_date $archive
+if $publish; then
+    cp $archive $PUBLIC_EXPORTS_DIR
+fi
+
+format=yaml
+type=flat
+base_name=lobbywatch_export_$type
+echo -e "\nPack $base_name.$format"
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
+archive=$EXPORT/$base_name$export_type.$format.zip
+[ -f "$archive_with_date" ] && rm $archive_with_date
+$ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
+cp $archive_with_date $archive
+$LS $archive_with_date $archive
+if $publish; then
+    cp $archive $PUBLIC_EXPORTS_DIR
+fi
+
+format=md
+type=aggregated
+base_name=lobbywatch_export_$type
+echo -e "\nPack $base_name.$format"
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
+archive=$EXPORT/$base_name$export_type.$format.zip
+[ -f "$archive_with_date" ] && rm $archive_with_date
+$ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
+cp $archive_with_date $archive
+$LS $archive_with_date $archive
+if $publish; then
+    cp $archive $PUBLIC_EXPORTS_DIR
+fi
+
+format=md
+type=all
+base_name=lobbywatch_export_$type
+echo -e "\nPack $base_name.$format"
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
+archive=$EXPORT/$base_name$export_type.$format.zip
+[ -f "$archive_with_date" ] && rm $archive_with_date
+$ZIP $archive_with_date $DOCS $EXPORT/*.$format
+cp $archive_with_date $archive
+$LS $archive_with_date $archive
+if $publish; then
+    cp $archive $PUBLIC_EXPORTS_DIR
+fi
+
+format=md
 type=flat
 base_name=lobbywatch_export_$type
 echo -e "\nPack $base_name.$format"
