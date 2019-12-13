@@ -2516,7 +2516,7 @@ function buildRowsSelect(string $table, string $query_table_alias, string $query
 
   $sql = $sql_select . $sql_from . $sql_join . $sql_where . $sql_order . $sql_limit . ';';
 
-  return [$sql, $parent_id_col, $sql_select, $sql_from, $sql_join, $sql_where, $sql_order];
+  return [$sql, $parent_id_col, $sql_select, $sql_from, $sql_join, $sql_where, $sql_order, $sql_limit];
 }
 
 function export_rows(IExportFormat $exporter, string $id_alias, int $parent_id = null, array $parent_row = null, $db, array $select_fields, bool $has_extra_col, string $table_schema, string $table_key, string $table, string $query_table, string $query_table_with_alias, string $query_table_alias, array $table_meta, array $data_types, array $skip_rows_for_empty_field, $filter, string $eol = "\n", string $format = 'json', int $level = 1, $records_limit, $export_file, &$cmd_args) {
@@ -2527,7 +2527,13 @@ function export_rows(IExportFormat $exporter, string $id_alias, int $parent_id =
 
   $level_indent = str_repeat("\t", $level);
 
-  list($sql, $parent_id_col, $sql_select, $sql_from, $sql_join, $sql_where, $sql_order) = buildRowsSelect($table, $query_table_alias, $query_table_with_alias, $table_meta, $select_fields, $filter, $records_limit);
+  list($sql_raw, $parent_id_col, $sql_select, $sql_from, $sql_join, $sql_where, $sql_order, $sql_limit) = buildRowsSelect($table, $query_table_alias, $query_table_with_alias, $table_meta, $select_fields, $filter, $format, $records_limit);
+
+  if (in_array($format, ['array', 'attribute_array'])) {
+    $sql = $sql_select . $sql_from . $sql_join . $sql_where . $sql_order . ';'; // No limit
+  } else {
+    $sql = $sql_raw;
+  }
 
   $id_in_parent_col = $table_meta['id_in_parent'] ?? null;
 
