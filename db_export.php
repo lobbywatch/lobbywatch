@@ -1376,6 +1376,14 @@ class GraphMLExporter extends XmlExporter {
     return ['node', 'relationship'];
   }
 
+  function formatFieldAliasOrNull(string $table, string $field): ?string {
+    return $this->formatFieldAlias($table, $field);
+  }
+
+  function formatFieldAlias(string $table, string $field): string {
+    return "${table}_$field";
+  }
+
   function prefersOneFile(): bool {
     return true;
   }
