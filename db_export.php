@@ -92,7 +92,7 @@ $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix
  * id (optional): string, field denoting ID, default id
  * order_by (optional): string, order by field
  * slow (optional): 0-3, indication of slowliness of this export, 0 fast, 3 very slow
- * transform_field (optional): array, field => transform function, transform_function($val, $key, $exporter, $format, $level, $table_key, $table)
+ * transform_field (optional): array, field => transform function, [0..9] => transform function (called for all fields), transform_function($val, $key, $data_type, $exporter, $format, $level, $table_key, $table)
  * aggregated_tables (optional): array
  * - Key (tkey): string, name of the aggregated table, table name if no view or table are provided
  * - view (optional), string, see above
@@ -102,7 +102,7 @@ $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix
  * - remove_cols (optional): array, see above
  * - freigabe_datum (optional): string, see above
  * - order_by (optional): string, see above
- * - transform_field (optional): array, field => transform function, transform_function($val, $key, $exporter, $format, $level, $table_key, $table)
+ * - transform_field (optional): array, field => transform function, [0..9] => transform function (called for all fields), transform_function($val, $key, $data_type, $exporter, $format, $level, $table_key, $table)
  */
 
 // TODO use YAML for config https://symfony.com/doc/current/components/yaml.html
@@ -2582,10 +2582,18 @@ function export_rows(IExportFormat $exporter, string $id_alias, int $parent_id =
       }
 
       if (!empty($table_meta['transform_field'])) {
+        $j = 0;
         foreach ($vals as $key => $val) {
-          if ($function = $table_meta['transform_field'][$key] ?? null) {
-            $vals[$key] = $function($val, $key, $exporter, $format, $level, $table_key, $table);
+          for ($i = 0; $i < 10; $i++) {
+            if ($function = $table_meta['transform_field'][$i] ?? null) {
+              $vals[$key] = $function($val, $key, $data_types[$j], $exporter, $format, $level, $table_key, $table);
+            }
           }
+
+          if ($function = $table_meta['transform_field'][$key] ?? null) {
+            $vals[$key] = $function($val, $key, $data_types[$j], $exporter, $format, $level, $table_key, $table);
+          }
+          $j++;
         }
       }
 
