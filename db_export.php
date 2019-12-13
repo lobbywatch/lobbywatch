@@ -1891,6 +1891,7 @@ Parameters:
     export(new SqlExporter($sep, $qe), $schema, $path, $filter, $eol, 'one_file', $records_limit, $db);
   }
 
+  print(getMemory() . "\n");
   $end_export = microtime(true);
   print("Total time elapsed: " . round($end_export - $start_export) . "s\n");
 }
