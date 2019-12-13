@@ -1417,7 +1417,7 @@ class GraphMLExporter extends XmlExporter {
   }
 
   function getFileHeader(bool $wrap, $transaction_date): array {
-    return ['<?xml version="1.0" encoding="UTF-8"?>', '<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">', ''];
+    return ['<?xml version="1.0" encoding="UTF-8"?>', "<!-- Exported: $transaction_date -->", '<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">', ''];
   }
 
   function getFileFooter(bool $wrap): array {
@@ -1652,7 +1652,9 @@ class MarkdownExporter extends AggregatedTextExporter {
 
   function getFileHeader(bool $wrap, $transaction_date): array {
     return ['Lobbywatch',
-            '=========='];
+            '==========',
+            '',
+            "Exportdatum: $transaction_date"];
   }
 
   function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $table_meta, bool $wrap, bool $first): array {
