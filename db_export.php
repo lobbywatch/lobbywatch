@@ -1836,16 +1836,24 @@ Parameters:
 
   $start_export = microtime(true);
 
-  if (isset($options['g'])) {
-    export(new Neo4jCsvExporter($sep, $qe), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
+  if (isset($options['c'])) {
+    export(new CsvExporter($sep, $qe), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
+   }
+
+   if (isset($options['s'])) {
+    export(new SqlExporter($sep, $qe), $schema, $path, $filter, $eol, 'one_file', $records_limit, $db);
   }
 
   if (isset($options['m'])) {
-   export(new GraphMLExporter($sep, $qe), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
+    export(new GraphMLExporter($sep, $qe), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
+   }
+
+   if (isset($options['g'])) {
+    export(new Neo4jCsvExporter($sep, $qe), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
   }
 
-  if (isset($options['c'])) {
-   export(new CsvExporter($sep, $qe), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
+  if (isset($options['arangodb'])) {
+    export(new ArangoDBJsonlExporter(), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
   }
 
   if (isset($options['j'])) {
@@ -1856,13 +1864,13 @@ Parameters:
     export(new JsonlExporter(), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
   }
 
-  if (isset($options['arangodb'])) {
-    export(new ArangoDBJsonlExporter(), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
-  }
-
   if (isset($options['o'])) {
     // export(new JsonExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
     export(new JsonOrientDBExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
+  }
+
+  if (isset($options['x'])) {
+    export(new XmlExporter(), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
   }
 
   if (isset($options['a'])) {
@@ -1881,14 +1889,6 @@ Parameters:
     export(new YamlExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
     export(new MarkdownExporter(), $schema, $path, $filter, $eol, 'one_file', $records_limit, $db);
     export(new MarkdownExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
-  }
-
-  if (isset($options['x'])) {
-    export(new XmlExporter(), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
-  }
-
-  if (isset($options['s'])) {
-    export(new SqlExporter($sep, $qe), $schema, $path, $filter, $eol, 'one_file', $records_limit, $db);
   }
 
   print(getMemory() . "\n");
