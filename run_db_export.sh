@@ -138,7 +138,8 @@ DOCS="$MERKBLATT $DATAMODEL"
 chmod 755 $EXPORT/*.sh
 
 format=csv
-base_name=lobbywatch_export_all
+type=all
+base_name=lobbywatch_export_$type
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
@@ -150,19 +151,23 @@ if $publish; then
     cp $archive $PUBLIC_EXPORTS_DIR
 fi
 
-base_name=lobbywatch_export_flat
+format=csv
+type=flat
+base_name=lobbywatch_export_$type
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
-$ZIP $archive_with_date $DOCS $EXPORT/flat*.$format
+$ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
     cp $archive $PUBLIC_EXPORTS_DIR
 fi
 
-base_name=lobbywatch_export_parlamentarier
+format=csv
+type=parlamentarier
+base_name=lobbywatch_export_$type
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
@@ -174,6 +179,7 @@ if $publish; then
     cp $archive $PUBLIC_EXPORTS_DIR
 fi
 
+format=csv
 base_name=lobbywatch_export_parlamentarier_transparenzliste
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
@@ -187,7 +193,7 @@ if $publish; then
 fi
 
 format=sql
-base_name=lobbywatch
+base_name=lobbywatch_export
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
@@ -200,7 +206,7 @@ if $publish; then
 fi
 
 format=graphml
-base_name=lobbywatch
+base_name=lobbywatch_export
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
@@ -214,7 +220,7 @@ fi
 
 format=csv
 type=neo4j
-base_name=lobbywatch_$type
+base_name=lobbywatch_export_$type
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
@@ -229,7 +235,7 @@ fi
 
 format=json
 type=orientdb
-base_name=lobbywatch_$type
+base_name=lobbywatch_export_$type
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
@@ -244,7 +250,7 @@ fi
 
 format=jsonl
 type=arangodb
-base_name=lobbywatch_arangodb
+base_name=lobbywatch_export_$type
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
@@ -259,7 +265,7 @@ fi
 
 format=json
 type=aggregated
-base_name=lobbywatch_$type
+base_name=lobbywatch_export_$type
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
@@ -273,7 +279,7 @@ fi
 
 format=json
 type=all
-base_name=lobbywatch_$type
+base_name=lobbywatch_export_$type
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
@@ -287,7 +293,7 @@ fi
 
 format=json
 type=flat
-base_name=lobbywatch_$type
+base_name=lobbywatch_export_$type
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
@@ -301,7 +307,7 @@ fi
 
 format=jsonl
 type=flat
-base_name=lobbywatch_$type
+base_name=lobbywatch_export_$type
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
@@ -315,7 +321,7 @@ fi
 
 if $publish; then
     cp $DOCS $PUBLIC_EXPORTS_DIR
-    echo -e "\nPublished exports:"
+    echo -e "\nPublished exports to $PUBLIC_EXPORTS_DIR:"
     $LS $PUBLIC_EXPORTS_DIR
 fi
 
