@@ -72,3 +72,4 @@ public_html/custom/build.php
 public_html/custom/deploy.php
 xdebug conditional breakpoint
 docs/lobbywatch_daten_merkblatt_v*.pdf
+exports/

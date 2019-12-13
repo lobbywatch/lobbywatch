@@ -1017,9 +1017,16 @@ class JsonExporter extends AggregatedExporter {
     return ['flat', 'aggregated', 'node', 'relationship'];
   }
 
-
   function getRowSeparator(): string {
     return ',';
+  }
+
+  function formatFieldAliasOrNull(string $table, string $field): ?string {
+    return $this->formatFieldAlias($table, $field);
+  }
+
+  function formatFieldAlias(string $table, string $field): string {
+    return "${table}_$field";
   }
 
   function getFileHeader(bool $wrap, $transaction_date): array {
@@ -1054,6 +1061,14 @@ class JsonOrientDBExporter extends AbstractExporter {
     $this->formatName = 'OrientDB ETL JSON';
   }
 
+  function formatFieldAliasOrNull(string $table, string $field): ?string {
+    return $this->formatFieldAlias($table, $field);
+  }
+
+  function formatFieldAlias(string $table, string $field): string {
+    return "${table}_$field";
+  }
+
   function supportsOneFile(): bool {
     return false;
   }
@@ -1066,18 +1081,22 @@ class JsonOrientDBExporter extends AbstractExporter {
 
   function getImportHint(string &$separator): array {
     $separator = "\n";
+
+    $this->db_name = 'lw_graph';
+    $db = $this->db_name;
+
     $cmd_args = [];
     $cmd_args[] = '#!/bin/bash';
     $cmd_args[] = '';
     $cmd_args[] = '# OrientDB sample import script for Lobbywatch data';
-    $cmd_args[] = '# http://orientdb.com/docs/3.0.x/etl/Import-from-JSON.html';
+    $cmd_args[] = '# https://orientdb.com/docs/3.0.x/etl/Import-from-JSON.html';
     $cmd_args[] = '';
     $cmd_args[] = 'set -e';
     $cmd_args[] = '';
     //$cmd_args[] = "docker stop orientdb";
     $cmd_args[] = "echo -e \"docker restart orientdb\"; docker restart orientdb";
-    $cmd_args[] = "echo -e \"drop database lw_test\"; docker exec -it orientdb bin/console.sh drop database plocal:/orientdb/databases/lw_test admin admin";
-    $cmd_args[] = "echo -e \"create database lw_test\"; docker exec -it orientdb bin/console.sh create database plocal:/orientdb/databases/lw_test admin admin PLOCAL GRAPH";
+    $cmd_args[] = "echo -e \"drop database $db\"; docker exec -it orientdb bin/console.sh drop database plocal:/orientdb/databases/$db admin admin";
+    $cmd_args[] = "echo -e \"create database $db\"; docker exec -it orientdb bin/console.sh create database plocal:/orientdb/databases/$db admin admin PLOCAL GRAPH";
     $cmd_args[] = "";
 
     return $cmd_args;
@@ -1085,7 +1104,7 @@ class JsonOrientDBExporter extends AbstractExporter {
 
   function getImportHintFromTable(string $export_file_name, string $export_file_base_name, string $export_file_suffix, string $export_file_path_name, string $table, array $table_meta): string {
     $tkey = $table_meta['tkey'];
-    return "echo -e \"\\n\\nImport '$tkey' with '$export_file_name'\"; docker exec -it orientdb /orientdb/bin/oetl.sh /import/$export_file_name";
+    return "echo -e \"\\n\\nImport '$tkey' with '$export_file_path_name'\"; docker exec -it orientdb /orientdb/bin/oetl.sh /import/$export_file_path_name; echo";
   }
 
   // https://stackoverflow.com/questions/33679571/how-to-use-orientdb-etl-to-create-edges-only
@@ -1095,6 +1114,8 @@ class JsonOrientDBExporter extends AbstractExporter {
 
     $source = $table_meta['source'];
     $tkey = $table_meta['tkey'];
+
+    $db = $this->db_name;
 
     // TODO extract variable from templates: db, path, ...
     if ($source == 'node') {
@@ -1122,7 +1143,7 @@ class JsonOrientDBExporter extends AbstractExporter {
   ],
   "loader" : {
     "orientdb": {
-      "dbURL": "plocal:/orientdb/databases/lw_test",
+      "dbURL": "plocal:/orientdb/databases/$db",
       "dbUser": "admin",
       "dbPassword": "admin",
       "dbAutoDropIfExists": false,
@@ -1173,7 +1194,7 @@ EOT;
   ],
   "loader" : {
     "orientdb": {
-      "dbURL": "plocal:/orientdb/databases/lw_test",
+      "dbURL": "plocal:/orientdb/databases/$db",
       "dbUser": "admin",
       "dbPassword": "admin",
       "dbAutoDropIfExists": false,
@@ -1266,7 +1287,7 @@ class ArangoDBJsonlExporter extends JsonlExporter {
     list($edgeName, $startId, $start_space, $sourceNode, $endId, $end_space, $targetNode) = $this->getEdge($table_meta);
     // return "echo -e \"\\n\\nImport '$tkey' with '$filename'\"; docker exec -it orientdb /orientdb/bin/oetl.sh /import/$filename";
     // cat '$filename' |
-    return "echo -e \"\\n\\nImport '$tkey' with '$export_file_name'\"; docker exec -it arangodb arangosh --server.authentication false --javascript.execute-string \"db._drop('$collection');\"; docker exec -it arangodb arangoimport --server.authentication false --file '/import/$export_file_name' --type jsonl --progress true --create-collection --collection $collection" . ($source == 'edgte' ? " --create-collection-type edge --from-collection-prefix $sourceNode --to-collection-prefix $targetNode" : '');
+    return "echo -e \"\\n\\nImport '$tkey' with '$export_file_path_name'\"; docker exec -it arangodb arangosh --server.authentication false --javascript.execute-string \"db._drop('$collection');\"; docker exec -it arangodb arangoimport --server.authentication false --file '/import/$export_file_path_name' --type jsonl --progress true --create-collection --collection $collection" . ($source == 'edgte' ? " --create-collection-type edge --from-collection-prefix $sourceNode --to-collection-prefix $targetNode" : '');
   }
 
   function formatRow(array $row, array $data_types, int $level, string $table_key, string $table, array $table_meta): string {
@@ -1749,7 +1770,7 @@ function main() {
 Parameters:
 -g                  Export csv for Neo4j graph DB to PATH (default SCHEMA: lobbywatchtest)
 -m                  Export GraphML DB to PATH (default SCHEMA: lobbywatchtest)
--o                  Export JSON and ETL for OrientDB to PATH (default SCHEMA: lobbywatchtest)
+-o                  Export JSON ETL for OrientDB to PATH (default SCHEMA: lobbywatchtest)
 -c                  Export plain csv to PATH (default SCHEMA: lobbywatchtest)
 -j                  Export aggregated JSON to PATH (default SCHEMA: lobbywatchtest)
 -t                  TEST export aggregated JSON to PATH (default SCHEMA: lobbywatchtest)
@@ -1832,7 +1853,7 @@ Parameters:
   }
 
   if (isset($options['o'])) {
-    export(new JsonExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
+    // export(new JsonExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
     export(new JsonOrientDBExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
   }
 
