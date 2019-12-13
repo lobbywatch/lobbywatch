@@ -92,6 +92,7 @@ $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix
  * id (optional): string, field denoting ID, default id
  * order_by (optional): string, order by field
  * slow (optional): 0-3, indication of slowliness of this export, 0 fast, 3 very slow
+ * transform_field (optional): array, field => transform function, transform_function($val, $key, $exporter, $format, $level, $table_key, $table)
  * aggregated_tables (optional): array
  * - Key (tkey): string, name of the aggregated table, table name if no view or table are provided
  * - view (optional), string, see above
@@ -101,6 +102,7 @@ $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix
  * - remove_cols (optional): array, see above
  * - freigabe_datum (optional): string, see above
  * - order_by (optional): string, see above
+ * - transform_field (optional): array, field => transform function, transform_function($val, $key, $exporter, $format, $level, $table_key, $table)
  */
 
 // TODO use YAML for config https://symfony.com/doc/current/components/yaml.html
@@ -111,7 +113,7 @@ $aggregated_tables = [
   // TODO use table as view name
   // TODO parlamentarier_aggregated fix YAML
   'essential_parlamentarier_nested' => ['display_name' => 'Parlamentarier', 'view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'remove_cols' => [], 'aggregated_tables' => [
-    'in_kommission' => ['view' => 'v_in_kommission_liste', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => []],
+    'in_kommission' => ['view' => 'v_in_kommission_liste', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [], 'transform_field' => ['sachbereiche' => 'transform_sachbereiche']],
     'parlamentarier_transparenz' => ['view' => 'v_parlamentarier_transparenz', 'parent_id' => "parlamentarier_id", 'order_by' => 'stichdatum', 'hist_field' => '', 'remove_cols' => []],
     'interessenbindungen' => ['view' => 'v_interessenbindung_medium_raw', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
       'aggregated_tables' => [
@@ -157,7 +159,7 @@ $aggregated_tables = [
 ]],
   'parlamentarier_nested' => ['display_name' => 'Parlamentarier', 'slow' => 3, 'view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'remove_cols' => [],
   'aggregated_tables' => [
-    'in_kommission' => ['view' => 'v_in_kommission_liste', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => []],
+    'in_kommission' => ['view' => 'v_in_kommission_liste', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [], 'transform_field' => ['sachbereiche' => 'transform_sachbereiche']],
     'parlamentarier_transparenz' => ['view' => 'v_parlamentarier_transparenz', 'parent_id' => "parlamentarier_id", 'order_by' => 'stichdatum', 'hist_field' => '', 'remove_cols' => []],
     'interessenbindungen' => ['view' => 'v_interessenbindung_medium_raw', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
       'aggregated_tables' => [
@@ -2626,4 +2628,9 @@ function getMemory(): string {
 function convert($size) {
     $unit = ['B','kiB','MiB','GiB','TiB','PiB'];
     return @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2) . ' ' . $unit[$i];
+}
+
+function transform_sachbereiche($field, $format) {
+  $str = str_replace("\r", '', str_replace("\n", '', $field));
+  return explode(';', $str);
 }
