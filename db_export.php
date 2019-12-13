@@ -1768,15 +1768,16 @@ function main() {
   if (isset($options['h']) || isset($options['help'])) {
     print("DB export
 Parameters:
--g                  Export csv for Neo4j graph DB to PATH (default SCHEMA: lobbywatchtest)
--m                  Export GraphML DB to PATH (default SCHEMA: lobbywatchtest)
--o                  Export JSON ETL for OrientDB to PATH (default SCHEMA: lobbywatchtest)
--c                  Export plain csv to PATH (default SCHEMA: lobbywatchtest)
--j                  Export aggregated JSON to PATH (default SCHEMA: lobbywatchtest)
--t                  TEST export aggregated JSON to PATH (default SCHEMA: lobbywatchtest)
--x                  Export aggregated XML to PATH (default SCHEMA: lobbywatchtest)
--s                  Export SQL to PATH (default SCHEMA: lobbywatchtest)
--a                  Export csv, csv_neo4j, json, jsonl, xml, sql to PATH (default SCHEMA: lobbywatchtest)
+-g                  Export csv for Neo4j graph DB to PATH
+-m                  Export GraphML DB to PATH
+-o                  Generate JSON ETL for OrientDB to PATH
+--arangodb          Generate  for ArangoDB to PATH
+-c                  Export plain csv to PATH
+-j                  Export aggregated JSON to PATH
+-t                  TEST export aggregated JSON to PATH
+-x                  Export aggregated XML to PATH
+-s                  Export SQL to PATH
+-a                  Export csv, csv_neo4j, json, jsonl, xml, sql to PATH
 -e=LIST             Type of data to export, add this type of data -e=hist, -e=intern, -e=unpubl, -e=hist+unpubl+intern (default: filter at most)
 --slow[=NUMBER]     Include slow exports, level 0 to 3, 0 no slow exports, 3 including slowest exports (default: 0, default of switch: 3)
 -p=PATH             Export path (default: export/)

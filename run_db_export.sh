@@ -211,13 +211,14 @@ if $publish; then
 fi
 
 format=csv
-base_name=lobbywatch_neoj4
+db=neo4j
+base_name=lobbywatch_$db
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
-$ZIP $archive_with_date $DOCS $EXPORT/neo4j*.sh
-$ZIP_TREE $archive_with_date $EXPORT/node*.csv $EXPORT/relationship*.csv
+$ZIP $archive_with_date $DOCS $EXPORT/$db*.sh
+$ZIP_TREE $archive_with_date $EXPORT/node*.$format $EXPORT/relationship*.$format
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -225,13 +226,29 @@ if $publish; then
 fi
 
 format=json
-base_name=lobbywatch_orientdb
+db=orientdb
+base_name=lobbywatch_$db
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
-$ZIP $archive_with_date $DOCS $EXPORT/orientdb*.sh
-$ZIP_TREE $archive_with_date $EXPORT/node*.json $EXPORT/relationship*.json
+$ZIP $archive_with_date $DOCS $EXPORT/$db*.sh
+$ZIP_TREE $archive_with_date $EXPORT/node*.$format $EXPORT/relationship*.$format
+cp $archive_with_date $archive
+$LS $archive_with_date $archive
+if $publish; then
+    cp $archive $PUBLIC_EXPORTS_DIR
+fi
+
+format=jsonl
+db=arangodb
+base_name=lobbywatch_arangodb
+echo -e "\nPack $base_name.$format"
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
+archive=$EXPORT/$base_name$export_type.$format.zip
+[ -f "$archive_with_date" ] && rm $archive_with_date
+$ZIP $archive_with_date $DOCS $EXPORT/$db*.sh
+$ZIP_TREE $archive_with_date $EXPORT/node*.$db.jsonl $EXPORT/relationship*.$db.jsonl
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
