@@ -14,8 +14,8 @@ else
     PHP='php'
 fi
 LS='ls -Alh'
-ZIP='zip -j'
-ZIP_TREE='zip'
+ZIP='zip -j -9'
+ZIP_TREE='zip -9'
 
 test_parameter=''
 export_options=''
