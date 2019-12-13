@@ -2364,7 +2364,15 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
       assert(count($select_fields) === count($data_types));
       $rows_data = export_rows($exporter, $id_alias, $parent_id, $parent_row, $db, $select_fields, $has_extra_col, $table_schema, $table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $table_meta, $data_types, $skip_rows_for_empty_field, $filter, $eol, $format, $level, $records_limit, $export_file, $cmd_args);
       if (in_array($format, ['array', 'attribute_array'])) {
-        $n = count($rows_data);
+        if (is_array($rows_data[0] ?? null)) {
+          // array of data arrays
+          $n = count($rows_data);
+        } elseif (is_array($rows_data ?? null) && !empty($rows_data)) {
+          // only one data array
+          $n = 1;
+        } else {
+          $n = 0;
+        }
         $aggregated_tables_data["${table}"] = $rows_data;
       } else {
         $n = $rows_data;
@@ -2630,7 +2638,11 @@ function export_rows(IExportFormat $exporter, string $id_alias, int $parent_id =
 
   // DONE return aggregated array here
   if (in_array($format, ['array', 'attribute_array'])) {
-    return $rows_data;
+    if (isset($ids_in_parent) && count($ids_in_parent) === 1) {
+      return $rows_data[0];
+    } else {
+      return $rows_data;
+    }
   } else {
     return $i;
   }
