@@ -2558,53 +2558,64 @@ function export_rows(IExportFormat $exporter, string $id_alias, int $parent_id =
     ++$i;
     if (!(!$records_limit || $i < abs($records_limit))) break;
 
-    for ($j = 0, $skip_row = false; $j < count($skip_rows_for_empty_field); $j++) if ($skip_rows_for_empty_field[$j] && is_null($row[$j])) $skip_row = true;
+    for ($j = 0, $skip_row = false; $j < count($skip_rows_for_empty_field) && !$skip_row; $j++) if ($skip_rows_for_empty_field[$j] && is_null($row[$j])) $skip_row = true;
 
     if ($i > 1 && !$skip_row && !in_array($format, ['array', 'attribute_array'])) fwrite($export_file, $exporter->getRowSeparator() . $eol);
 
-    $id = $row[$id_alias];
-    $vals = array_filter($row, function ($key) { return !is_numeric($key); }, ARRAY_FILTER_USE_KEY);
+    if (!$skip_row) {
+      $id = $row[$id_alias];
+      $vals = array_filter($row, function ($key) { return !is_numeric($key); }, ARRAY_FILTER_USE_KEY);
 
-    // TODO set json_decode params
-    if ($exporter->isAggregatedFormat()) {
+      // TODO set json_decode params
+      // TODO replace by transform_field function
+      if ($exporter->isAggregatedFormat()) {
         $j = 0;
         foreach ($vals as $key => $val) {
-            if ($data_types[$j++] == 'json' && $val !== null) {
-                $vals[$key] = json_decode($val, true);
-            }
-            // TODO fix id is missing in rat.xml <rat>
-            if (in_array($format, ['xml', 'attribute_array']) && in_array($key, [$table_meta['id'], 'anzeige_name'])) {
-                $vals["@$key"] = $val;
-            }
+          if ($data_types[$j++] == 'json' && $val !== null) {
+              $vals[$key] = json_decode($val, true);
+          }
+          // TODO fix id is missing in rat.xml <rat>
+          if (in_array($format, ['xml', 'attribute_array']) && in_array($key, [$table_meta['id'], 'anzeige_name'])) {
+              $vals["@$key"] = $val;
+          }
         }
+      }
 
-        $aggregated_tables = $table_meta['aggregated_tables'] ?? null;
-        if ($aggregated_tables) {
-            $aggregated_data = export_tables($exporter, $aggregated_tables, $id, $row, $level + 1, $table_schema, null, $filter, $eol, $format == 'xml' ? 'attribute_array' : 'array', $format == 'xml' ? 'attribute_array' : 'array', null, $records_limit, $cmd_args, $db);
-            $vals = array_merge($vals, $aggregated_data);
+      if (!empty($table_meta['transform_field'])) {
+        foreach ($vals as $key => $val) {
+          if ($function = $table_meta['transform_field'][$key] ?? null) {
+            $vals[$key] = $function($val, $key, $exporter, $format, $level, $table_key, $table);
+          }
         }
+      }
 
+      $vals = array_map(function($field) {return !empty($field) && is_string($field) ? str_replace("\r", '', $field) : $field;}, $vals);
+
+      if (($aggregated_tables = $table_meta['aggregated_tables'] ?? null) && $exporter->isAggregatedFormat()) {
+        $aggregated_data = export_tables($exporter, $aggregated_tables, $id, $row, $level + 1, $table_schema, null, $filter, $eol, $format == 'xml' ? 'attribute_array' : 'array', $format == 'xml' ? 'attribute_array' : 'array', null, $records_limit, $cmd_args, $db);
+        $vals = array_merge($vals, $aggregated_data);
+      }
+
+      if (in_array($format, ['array', 'attribute_array'])) {
         // TODO array_xml and array_json for attribute annotation?
         // TODO for array return, use $format or $storage_type?
         switch ($format) {
-        case 'array': $rows_data[] = $vals; $row_str = print_r($vals, true); break;
-        case 'attribute_array': $rows_data[] = $vals; $row_str = print_r($vals, true); break;
+          case 'array': $rows_data[] = $vals; $row_str = print_r($vals, true); break;
+          case 'attribute_array': $rows_data[] = $vals; $row_str = print_r($vals, true); break;
+        }
+      } else {
+        $row_str = $exporter->formatRow($vals, $data_types, $level, $table_key, $table, $table_meta);
+        fwrite($export_file, $row_str);
       }
+    } else {
+      if ($verbose > 2 && $skip_counter++ < 5) print("SKIP $i) $row_str\n");
     }
-    $clean_vals = array_map(function($field) {return !empty($field) && is_string($field) ? str_replace("\r", '', $field) : $field;}, $vals);
-    $row_str = $exporter->formatRow($clean_vals, $data_types, $level, $table_key, $table, $table_meta);
 
     // TODO list verbose level output -> make overview
     // TODO refactor verbose level outputs
     if ($verbose > 6 && $i < $show_limit) print("$i) $row_str\n");
     if ($verbose > 0 && ($level < 2 || $verbose > 2) && $i == $show_limit) print($level_indent . str_repeat('_', $num_indicator) . "\r$level_indent");
     if ($verbose > 0 && ($level < 2 || $verbose > 2) && $i >= $show_limit && $rows_count >= $num_indicator && ($i % round($rows_count / $num_indicator) == 0 || $i == $rows_count)) print('.');
-
-    if ($skip_row) {
-      if ($verbose > 2 && $skip_counter++ < 5) print("SKIP $i) $row_str\n");
-    } elseif (!in_array($format, ['array', 'attribute_array'])) {
-      fwrite($export_file, $row_str);
-    }
   }
 
   if ($verbose > 0 && ($level < 2 || $verbose > 2)) print("\n");
