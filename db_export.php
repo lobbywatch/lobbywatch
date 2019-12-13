@@ -164,7 +164,7 @@ $aggregated_tables = [
     'interessenbindungen' => ['view' => 'v_interessenbindung_medium_raw', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
       'aggregated_tables' => [
         'verguetungen' => ['view' => 'v_interessenbindung_jahr', 'parent_id' => "interessenbindung_id", 'order_by' => 'jahr', 'hist_field' => '', 'remove_cols' => []],
-        'organisation' => ['view' => 'v_organisation_medium_raw', 'parent_id' => null, 'id_in_parent' => 'organisation_id', 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
+        'organisation' => ['view' => 'v_organisation_simple', 'parent_id' => null, 'id_in_parent' => 'organisation_id', 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
         'aggregated_tables' => [
           'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'parent_id' => null, 'id_in_parent' => ['interessengruppe1_id', 'interessengruppe2_id', 'interessengruppe3_id'], 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
           'aggregated_tables' => [
@@ -184,7 +184,7 @@ $aggregated_tables = [
         'mandate' => ['view' => 'v_mandat_medium_raw', 'parent_id' => "person_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
           'aggregated_tables' => [
             'verguetungen' => ['view' => 'v_mandat_jahr', 'parent_id' => "mandat_id", 'order_by' => 'jahr', 'hist_field' => '', 'remove_cols' => []],
-            'organisation' => ['view' => 'v_organisation_medium_raw', 'parent_id' => null, 'id_in_parent' => 'organisation_id', 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
+            'organisation' => ['view' => 'v_organisation_simple', 'parent_id' => null, 'id_in_parent' => 'organisation_id', 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
             'aggregated_tables' => [
               'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'parent_id' => null, 'id_in_parent' => ['interessengruppe1_id', 'interessengruppe2_id', 'interessengruppe3_id'], 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
               'aggregated_tables' => [
