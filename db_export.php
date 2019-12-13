@@ -1676,7 +1676,7 @@ function main() {
 //     var_dump($argv); //the arguments passed
   // :  -> mandatory parameter
   // :: -> optional parameter
-  $options = getopt('hv::n::cjaxgmosp:e::1d:', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:', 'arangodb', 'slow::']);
+  $options = getopt('hv::n::cjaxgmoslp:e::1d:', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:', 'arangodb', 'slow::']);
 
 //    var_dump($options);
 
@@ -1775,7 +1775,8 @@ Parameters:
 -o                  Generate JSON ETL for OrientDB to PATH
 --arangodb          Generate  for ArangoDB to PATH
 -c                  Export plain csv to PATH
--j                  Export aggregated JSON to PATH
+-j                  Export JSON to PATH
+-l                  Export JSONL to PATH
 -t                  TEST export aggregated JSON to PATH
 -x                  Export aggregated XML to PATH
 -s                  Export SQL to PATH
@@ -1849,6 +1850,10 @@ Parameters:
 
   if (isset($options['j'])) {
     export(new JsonExporter(), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
+  }
+
+  if (isset($options['l'])) {
+    export(new JsonlExporter(), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
   }
 
   if (isset($options['arangodb'])) {
