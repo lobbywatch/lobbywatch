@@ -126,7 +126,7 @@ fi
 
 echo -e "$(date +%T) Start exporting..."
 
-$PHP -f db_export.php -- -c -s -m -v -g -j -o -l -e=$export_options $all_data $test_parameter $param_schema $param_db $param_user_prefix
+$PHP -f db_export.php -- -c -s -m -v -g -j -o -l --arangodb -e=$export_options $all_data $test_parameter $param_schema $param_db $param_user_prefix
 
 echo -e "\n$(date +%T) Start packing..."
 
