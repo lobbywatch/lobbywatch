@@ -1587,7 +1587,7 @@ abstract class AggregatedTextExporter extends AggregatedExporter {
 
   protected function serialize_field($field, string $key, int $level): string {
     $str = '';
-    if (is_array($field)) {
+    if (is_array($field[0] ?? null)) {
       $str .= str_repeat(' ', $level * $this->indent) . $this->property_prefix . "$key:$this->eol";
       foreach ($field as $row) {
         $levels = array_fill(0, count($row), $level + 2);
@@ -1595,6 +1595,11 @@ abstract class AggregatedTextExporter extends AggregatedExporter {
         $str .= str_repeat(' ', ($level + 1) * $this->indent) . $this->list_prefix . "$name:$this->eol";
         $str .= implode('', array_map([$this, 'serialize_field'], $row, array_keys($row), $levels));
       }
+    } elseif (is_array($field ?? null)) {
+      $row = $field;
+      $str .= str_repeat(' ', $level * $this->indent) . $this->property_prefix . "$key:$this->eol";
+      $levels = array_fill(0, count($row), $level + 1);
+      $str .= implode('', array_map([$this, 'serialize_field'], $row, array_keys($row), $levels));
     } else {
       $lines = explode("\n", $this->cleanField("$field"));
       $indented = array_map(function($line) use ($level) { return str_repeat(' ', ($level + 1) * $this->indent) . $line; }, $lines);
@@ -1676,7 +1681,7 @@ function main() {
 //     var_dump($argv); //the arguments passed
   // :  -> mandatory parameter
   // :: -> optional parameter
-  $options = getopt('hv::n::cjaxgmoslp:e::1d:', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:', 'arangodb', 'slow::']);
+  $options = getopt('hv::n::cjaxgmosltp:e::1d:', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:', 'arangodb', 'slow::']);
 
 //    var_dump($options);
 
@@ -1777,7 +1782,7 @@ Parameters:
 -c                  Export plain csv to PATH
 -j                  Export JSON to PATH
 -l                  Export JSONL to PATH
--t                  TEST export aggregated JSON to PATH
+-t                  Text format YAML and MD export to PATH
 -x                  Export aggregated XML to PATH
 -s                  Export SQL to PATH
 -a                  Export csv, csv_neo4j, json, jsonl, xml, sql to PATH
@@ -1835,6 +1840,13 @@ Parameters:
 
 
   $start_export = microtime(true);
+
+  if (isset($options['t'])) {
+    export(new YamlExporter(), $schema, $path, $filter, $eol, 'one_file', $records_limit, $db);
+    export(new YamlExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
+    export(new MarkdownExporter(), $schema, $path, $filter, $eol, 'one_file', $records_limit, $db);
+    export(new MarkdownExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
+  }
 
   if (isset($options['c'])) {
     export(new CsvExporter($sep, $qe), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
