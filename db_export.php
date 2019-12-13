@@ -449,7 +449,7 @@ interface IExportFormat {
   function getTableListFooter(string $table, array $table_meta, bool $wrap, bool $last): array;
   function getFileFooter(bool $wrap): array;
   function getImportHint(string &$separator): array;
-  function getImportHintFromTable(string $filename, string $table, array $table_meta): ?string;
+  function getImportHintFromTable(string $export_file_name, string $export_file_base_name, string $export_file_suffix, string $export_file_path_name, string $table, array $table_meta): ?string;
 
   function validate($file);
 }
@@ -569,7 +569,7 @@ abstract class AbstractExporter implements IExportFormat {
     return [];
   }
 
-  function getImportHintFromTable(string $filename, string $table, array $table_meta): ?string {
+  function getImportHintFromTable(string $export_file_name, string $export_file_base_name, string $export_file_suffix, string $export_file_path_name, string $table, array $table_meta): ?string {
     return null;
   }
 
@@ -853,7 +853,7 @@ class Neo4jCsvExporter extends CsvExporter {
   }
 
   function getImportHint(string &$separator): array {
-    $separator = ' ';
+    $separator = " \\\n";
     $cmd_args = [];
     $cmd_args[] = '#!/bin/bash';
     $cmd_args[] = '';
@@ -863,22 +863,27 @@ class Neo4jCsvExporter extends CsvExporter {
     $cmd_args[] = 'set -e';
     $cmd_args[] = '';
     $cmd_args[] = '# MATCH (n) DETACH DELETE n';
-    //     $cmd_args[] = "neo4j-admin";
-    $cmd_args[] = "rm -r ~/.config/Neo4j\ Desktop/Application/neo4jDatabases/database-0b42a643-61a0-4b3f-8c54-4dfbe872d200/installation-3.5.6/data/databases/graph.db/; ~/.config/Neo4j\ Desktop/Application/neo4jDatabases/database-0b42a643-61a0-4b3f-8c54-4dfbe872d200/installation-3.5.6/bin/neo4j-admin";
     $cmd_args[] = '';
-    $cmd_args[] = "import";
-    $cmd_args[] = "--database=graph.db";
-    $cmd_args[] = "--id-type=INTEGER";
-    $cmd_args[] = "--delimiter='\\t'";
-    $cmd_args[] = "--array-delimiter=','";
+    $cmd_args[] = '';
+    //     $cmd_args[] = "neo4j-admin";
+    $cmd_args[] = 'NEO4J_PATH="$HOME/.config/Neo4j Desktop/Application/neo4jDatabases/database-0b42a643-61a0-4b3f-8c54-4dfbe872d200/installation-3.5.6"';
+    $cmd_args[] = 'NEO4J_DB="$NEO4J_PATH/data/databases/graph.db/"';
+    $cmd_args[] = '[ -d "$NEO4J_DB" ] && rm -r "$NEO4J_DB" && echo "Existing graph.db deleted"';
+    $cmd_args[] = '';
+    $cmd_args[] = '"$NEO4J_PATH/bin/neo4j-admin" \\';
+    $cmd_args[] = "import \\";
+    $cmd_args[] = "--database=graph.db \\";
+    $cmd_args[] = "--id-type=INTEGER \\";
+    $cmd_args[] = "--delimiter='\\t' \\";
+    $cmd_args[] = "--array-delimiter=',' \\";
     $cmd_args[] = "--report-file=neo4j_import.log";
 
-    return $cmd_args;
+    return [implode("\n", $cmd_args)];
   }
 
-  function getImportHintFromTable(string $filename, string $table, array $table_meta): string {
+  function getImportHintFromTable(string $export_file_name, string $export_file_base_name, string $export_file_suffix, string $export_file_path_name, string $table, array $table_meta): string {
     $type = $table_meta['source'];
-    return "--{$type}s \"$filename\"";
+    return "--{$type}s \"$export_file_path_name\"";
   }
 
 }
@@ -1078,9 +1083,9 @@ class JsonOrientDBExporter extends AbstractExporter {
     return $cmd_args;
   }
 
-  function getImportHintFromTable(string $filename, string $table, array $table_meta): string {
+  function getImportHintFromTable(string $export_file_name, string $export_file_base_name, string $export_file_suffix, string $export_file_path_name, string $table, array $table_meta): string {
     $tkey = $table_meta['tkey'];
-    return "echo -e \"\\n\\nImport '$tkey' with '$filename'\"; docker exec -it orientdb /orientdb/bin/oetl.sh /import/$filename";
+    return "echo -e \"\\n\\nImport '$tkey' with '$export_file_name'\"; docker exec -it orientdb /orientdb/bin/oetl.sh /import/$export_file_name";
   }
 
   // https://stackoverflow.com/questions/33679571/how-to-use-orientdb-etl-to-create-edges-only
@@ -1254,14 +1259,14 @@ class ArangoDBJsonlExporter extends JsonlExporter {
     return $cmd_args;
   }
 
-  function getImportHintFromTable(string $filename, string $table, array $table_meta): string {
+  function getImportHintFromTable(string $export_file_name, string $export_file_base_name, string $export_file_suffix, string $export_file_path_name, string $table, array $table_meta): string {
     $tkey = $table_meta['tkey'];
     $source = $table_meta['source'];
     $collection = $source == 'node' ? camelize($table) : $table_meta['name'];
     list($edgeName, $startId, $start_space, $sourceNode, $endId, $end_space, $targetNode) = $this->getEdge($table_meta);
     // return "echo -e \"\\n\\nImport '$tkey' with '$filename'\"; docker exec -it orientdb /orientdb/bin/oetl.sh /import/$filename";
     // cat '$filename' |
-    return "echo -e \"\\n\\nImport '$tkey' with '$filename'\"; docker exec -it arangodb arangosh --server.authentication false --javascript.execute-string \"db._drop('$collection');\"; docker exec -it arangodb arangoimport --server.authentication false --file '/import/$filename' --type jsonl --progress true --create-collection --collection $collection" . ($source == 'edgte' ? " --create-collection-type edge --from-collection-prefix $sourceNode --to-collection-prefix $targetNode" : '');
+    return "echo -e \"\\n\\nImport '$tkey' with '$export_file_name'\"; docker exec -it arangodb arangosh --server.authentication false --javascript.execute-string \"db._drop('$collection');\"; docker exec -it arangodb arangoimport --server.authentication false --file '/import/$export_file_name' --type jsonl --progress true --create-collection --collection $collection" . ($source == 'edgte' ? " --create-collection-type edge --from-collection-prefix $sourceNode --to-collection-prefix $targetNode" : '');
   }
 
   function formatRow(array $row, array $data_types, int $level, string $table_key, string $table, array $table_meta): string {
@@ -1923,8 +1928,8 @@ function export(IExportFormat $exporter, string $table_schema, string $path, arr
 
   // Write file header
   if ($storage_type == 'one_file') {
-    $export_file_name = "$path/lobbywatch." . $exporter->getFileSuffix();
-    $export_file = fopen($export_file_name, 'w');
+    $export_file_path_name = "$path/lobbywatch." . $exporter->getFileSuffix();
+    $export_file = fopen($export_file_path_name, 'w');
 
     // TODO throw exception on default case
     fwrite($export_file, implode($eol, $exporter->getFileHeader(true, $transaction_date)));
@@ -1951,7 +1956,7 @@ function export(IExportFormat $exporter, string $table_schema, string $path, arr
     $cmd_file = fopen($cmd_file_name, 'w');
     fwrite($cmd_file, implode($cmd_args_sep, $cmd_args) . "\n\n");
     fclose($cmd_file);
-    if ($verbose > 1) print("Cmd file '$cmd_file_name' written");
+    if ($verbose > 0) print("\nCmd file '$cmd_file_name' written\n");
   }
 
   $end_export_tables = microtime(true);
@@ -2259,8 +2264,10 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
     list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols, $select_cols, $select_alias_cols, $alias_map, $select_field_map, $table_alias_map, $alias_table_map, $id_alias) = getSqlData("$num_key", $table_meta, $table_schema, $level, $filter, $exporter, $db);
 
     if ($storage_type == 'multi_file') {
-      $export_file_name = "$path/${source}_$table_key." . $exporter->getFileSuffix();
-      $export_file = fopen($export_file_name, 'w');
+      $export_file_base_name = "${source}_$table_key";
+      $export_file_name = "$export_file_base_name." . $exporter->getFileSuffix();
+      $export_file_path_name = "$path/$export_file_name";
+      $export_file = fopen($export_file_path_name, 'w');
 
       if (!empty($header = $exporter->getFileHeader(false, $transaction_date)))
         fwrite($export_file, implode($eol, $header) . $eol);
@@ -2343,7 +2350,7 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
       fwrite($export_file, implode($eol, $exporter->getFileFooter(false)));
       fclose($export_file);
 
-      if ($cmd_arg = $exporter->getImportHintFromTable($export_file_name, $table, $table_meta))
+      if ($cmd_arg = $exporter->getImportHintFromTable($export_file_name, $export_file_base_name, $exporter->getFileSuffix(), $export_file_path_name, $table, $table_meta))
         $cmd_args[] = $cmd_arg;
 
       // TODO validate files

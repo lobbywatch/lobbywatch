@@ -15,6 +15,7 @@ else
 fi
 LS='ls -Alh'
 ZIP='zip -j'
+ZIP_TREE='zip'
 
 test_parameter=''
 export_options=''
@@ -123,7 +124,7 @@ fi
 
 echo -e "$(date +%T) Start exporting..."
 
-$PHP -f db_export.php -- -c -s -m -v -e=$export_options $test_parameter $param_schema $param_db $param_user_prefix
+$PHP -f db_export.php -- -c -s -m -v -g -e=$export_options $test_parameter $param_schema $param_db $param_user_prefix
 
 echo -e "\n$(date +%T) Start packing..."
 
@@ -131,6 +132,8 @@ EXPORT=export
 MERKBLATT="docs/lobbywatch_daten_merkblatt.pdf"
 DATAMODEL="lobbywatch_datenmodell_simplified.pdf"
 DOCS="$MERKBLATT $DATAMODEL"
+
+chmod 755 $EXPORT/*.sh
 
 format=csv
 base_name=lobbywatch_export_all
@@ -201,6 +204,20 @@ archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 $ZIP $archive_with_date $DOCS $EXPORT/*.$format
+cp $archive_with_date $archive
+$LS $archive_with_date $archive
+if $publish; then
+    cp $archive $PUBLIC_EXPORTS_DIR
+fi
+
+format=csv
+base_name=lobbywatch_neoj4
+echo -e "\nPack $base_name.$format"
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
+archive=$EXPORT/$base_name$export_type.$format.zip
+[ -f "$archive_with_date" ] && rm $archive_with_date
+$ZIP $archive_with_date $DOCS $EXPORT/neo4j*.sh
+$ZIP_TREE $archive_with_date $EXPORT/node*.csv $EXPORT/relationship*.csv
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
