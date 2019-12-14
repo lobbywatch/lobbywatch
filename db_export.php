@@ -1643,7 +1643,7 @@ class YamlExporter extends AggregatedTextExporter {
 class MarkdownExporter extends AggregatedTextExporter {
   function __construct() {
     $this->format = 'md';
-    $this->fileSuffix = 'md';
+    $this->fileSuffix = 'export.md';
     $this->formatName = 'Markdown';
     $this->list_prefix = '* ';
     $this->property_prefix = '* ';

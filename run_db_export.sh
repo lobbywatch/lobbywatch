@@ -404,13 +404,14 @@ if $publish; then
 fi
 
 format=md
+format_selector=export
 type=aggregated
 base_name=lobbywatch_export_$type
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
-$ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
+$ZIP $archive_with_date $DOCS $EXPORT/$type*.$format_selector.$format
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -418,13 +419,14 @@ if $publish; then
 fi
 
 format=md
+format_selector=export
 type=all
 base_name=lobbywatch_export_$type
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
-$ZIP $archive_with_date $DOCS $EXPORT/*.$format
+$ZIP $archive_with_date $DOCS $EXPORT/*.$format_selector.$format
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -432,13 +434,14 @@ if $publish; then
 fi
 
 format=md
+format_selector=export
 type=flat
 base_name=lobbywatch_export_$type
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
-$ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
+$ZIP $archive_with_date $DOCS $EXPORT/$type*.$format_selector.$format
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
