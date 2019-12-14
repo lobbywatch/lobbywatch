@@ -134,6 +134,8 @@ EXPORT=export
 MERKBLATT="docs/lobbywatch_daten_merkblatt.pdf"
 DATAMODEL="lobbywatch_datenmodell_simplified.pdf"
 DOCS="$MERKBLATT $DATAMODEL"
+DOCU=docu
+DOCU_MD="md"
 
 chmod 755 $EXPORT/*.sh
 
@@ -145,6 +147,7 @@ archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 $ZIP $archive_with_date $DOCS $EXPORT/*.$format
+$ZIP_TREE $archive_with_date       $EXPORT/$DOCU/*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -159,6 +162,7 @@ archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 $ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
+$ZIP_TREE $archive_with_date       $EXPORT/$DOCU/$type*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -173,6 +177,7 @@ archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 $ZIP $archive_with_date $DOCS $EXPORT/cartesian_essential_parlamentarier_interessenbindung.csv $EXPORT/cartesian_minimal_parlamentarier_interessenbindung.csv $EXPORT/cartesian_parlamentarier_verguetungstransparenz.csv $EXPORT/cartesian_minimal_parlamentarier_zutrittsberechtigung.csv $EXPORT/cartesian_minimal_parlamentarier_zutrittsberechtigung_mandat.csv
+$ZIP_TREE $archive_with_date       $EXPORT/$DOCU/cartesian_essential_parlamentarier_interessenbindung.csv.$DOCU_MD $EXPORT/$DOCU/cartesian_minimal_parlamentarier_interessenbindung.csv.$DOCU_MD $EXPORT/$DOCU/cartesian_parlamentarier_verguetungstransparenz.csv.$DOCU_MD $EXPORT/$DOCU/cartesian_minimal_parlamentarier_zutrittsberechtigung.csv.$DOCU_MD $EXPORT/$DOCU/cartesian_minimal_parlamentarier_zutrittsberechtigung_mandat.csv.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -186,6 +191,7 @@ archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 $ZIP $archive_with_date $DOCS $EXPORT/cartesian_parlamentarier_verguetungstransparenz.csv
+$ZIP_TREE $archive_with_date       $EXPORT/$DOCU/cartesian_parlamentarier_verguetungstransparenz.csv.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -199,6 +205,7 @@ archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 $ZIP $archive_with_date $DOCS $EXPORT/*.$format
+$ZIP_TREE $archive_with_date       $EXPORT/$DOCU/*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -212,6 +219,7 @@ archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 $ZIP $archive_with_date $DOCS $EXPORT/*.$format
+$ZIP_TREE $archive_with_date       $EXPORT/$DOCU/*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -227,6 +235,7 @@ archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 $ZIP $archive_with_date $DOCS $EXPORT/$type*.sh
 $ZIP_TREE $archive_with_date $EXPORT/node*.$format $EXPORT/relationship*.$format
+$ZIP_TREE $archive_with_date $EXPORT/$DOCU/node*.$format.$DOCU_MD $EXPORT/$DOCU/relationship*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -242,6 +251,7 @@ archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 $ZIP $archive_with_date $DOCS $EXPORT/$type*.sh
 $ZIP_TREE $archive_with_date $EXPORT/node*.$format $EXPORT/relationship*.$format
+$ZIP_TREE $archive_with_date $EXPORT/$DOCU/node*.$format.$DOCU_MD $EXPORT/$DOCU/relationship*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -257,6 +267,7 @@ archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 $ZIP $archive_with_date $DOCS $EXPORT/$type*.sh
 $ZIP_TREE $archive_with_date $EXPORT/node*.$type.jsonl $EXPORT/relationship*.$type.jsonl
+$ZIP_TREE $archive_with_date $EXPORT/$DOCU/node*.$type.jsonl.$DOCU_MD $EXPORT/$DOCU/relationship*.$type.jsonl.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -271,6 +282,7 @@ archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 $ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
+$ZIP_TREE $archive_with_date       $EXPORT/$DOCU/$type*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -285,6 +297,7 @@ archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 $ZIP $archive_with_date $DOCS $EXPORT/*.$format
+$ZIP_TREE $archive_with_date       $EXPORT/$DOCU/*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -299,6 +312,7 @@ archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 $ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
+$ZIP_TREE $archive_with_date       $EXPORT/$DOCU/$type*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -313,6 +327,7 @@ archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 $ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
+$ZIP_TREE $archive_with_date       $EXPORT/$DOCU/$type*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -327,6 +342,7 @@ archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 $ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
+$ZIP_TREE $archive_with_date       $EXPORT/$DOCU/$type*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -341,6 +357,7 @@ archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 $ZIP $archive_with_date $DOCS $EXPORT/*.$format
+$ZIP_TREE $archive_with_date       $EXPORT/$DOCU/*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -355,6 +372,7 @@ archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 $ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
+$ZIP_TREE $archive_with_date       $EXPORT/$DOCU/$type*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -369,6 +387,7 @@ archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 $ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
+$ZIP_TREE $archive_with_date       $EXPORT/$DOCU/$type*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -383,6 +402,7 @@ archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 $ZIP $archive_with_date $DOCS $EXPORT/*.$format
+$ZIP_TREE $archive_with_date       $EXPORT/$DOCU/*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -397,6 +417,7 @@ archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
 $ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
+$ZIP_TREE $archive_with_date       $EXPORT/$DOCU/$type*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -404,14 +425,14 @@ if $publish; then
 fi
 
 format=md
-format_selector=export
 type=aggregated
 base_name=lobbywatch_export_$type
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
-$ZIP $archive_with_date $DOCS $EXPORT/$type*.$format_selector.$format
+$ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
+$ZIP_TREE $archive_with_date       $EXPORT/$DOCU/$type*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -419,14 +440,14 @@ if $publish; then
 fi
 
 format=md
-format_selector=export
 type=all
 base_name=lobbywatch_export_$type
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
-$ZIP $archive_with_date $DOCS $EXPORT/*.$format_selector.$format
+$ZIP $archive_with_date $DOCS $EXPORT/*.$format
+$ZIP_TREE $archive_with_date       $EXPORT/$DOCU/*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
@@ -434,14 +455,14 @@ if $publish; then
 fi
 
 format=md
-format_selector=export
 type=flat
 base_name=lobbywatch_export_$type
 echo -e "\nPack $base_name.$format"
 archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
 archive=$EXPORT/$base_name$export_type.$format.zip
 [ -f "$archive_with_date" ] && rm $archive_with_date
-$ZIP $archive_with_date $DOCS $EXPORT/$type*.$format_selector.$format
+$ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
+$ZIP_TREE $archive_with_date       $EXPORT/$DOCU/$type*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then

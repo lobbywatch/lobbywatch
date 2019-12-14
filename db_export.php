@@ -63,6 +63,7 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 // TODO PHPUnit for refactorings
 // TODO add parlamentarier_transparenz to exports
 // TODO add flag, automatically prefix fields with table names instead of doing manually, "expand alias", (allow overruling)
+// TODO support docu_de, docu_fr
 
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
@@ -73,6 +74,9 @@ global $intern_fields;
 
 $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix', 'created_visa', 'updated_date', 'updated_date_unix', 'updated_visa', 'autorisiert_datum',  'autorisiert_datum_unix', 'autorisierung_verschickt_visa', 'autorisierung_verschickt_datum', 'eingabe_abgeschlossen_datum', 'kontrolliert_datum', 'autorisierung_verschickt_datum_unix', 'eingabe_abgeschlossen_datum_unix', 'kontrolliert_datum_unix', 'autorisiert_visa', 'eingabe_abgeschlossen_visa', 'kontrolliert_visa', 'symbol_abs', 'photo', 'ALT_kommission', 'ALT_parlam_verbindung', 'email', 'telephon_1', 'telephon_2', 'adresse_strasse', 'adresse_zusatz', 'anzahl_interessenbindungen', 'anzahl_hauptberufliche_interessenbindungen', 'anzahl_nicht_hauptberufliche_interessenbindungen', 'anzahl_abgelaufene_interessenbindungen', 'anzahl_interessenbindungen_alle', 'anzahl_erfasste_verguetungen', 'anzahl_erfasste_hauptberufliche_verguetungen', 'anzahl_erfasste_nicht_hauptberufliche_verguetungen', 'verguetungstransparenz_berechnet', 'verguetungstransparenz_berechnet_nicht_beruflich', 'verguetungstransparenz_berechnet_alle', 'parlamentarier_lobbyfaktor', 'ALT_branche_id'];
 
+const EOL = "\n";
+
+const DOCU = "docu";
 /**
  * Export tables/views configuration array.
  *
@@ -93,6 +97,7 @@ $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix
  * order_by (optional): string, order by field
  * slow (optional): 0-3, indication of slowliness of this export, 0 fast, 3 very slow
  * transform_field (optional): array, field => transform function, [0..9] => transform function (called for all fields), transform_function($val, $key, $data_type, $exporter, $format, $level, $table_key, $table)
+ * docu (optional): array, description of this dataset
  * aggregated_tables (optional): array
  * - Key (tkey): string, name of the aggregated table, table name if no view or table are provided
  * - view (optional), string, see above
@@ -112,7 +117,7 @@ $aggregated_tables = [
   // TODO add CDATA fields for xml
   // TODO use table as view name
   // TODO parlamentarier_aggregated fix YAML
-  'essential_parlamentarier_nested' => ['display_name' => 'Parlamentarier', 'view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'remove_cols' => [], 'aggregated_tables' => [
+  'essential_parlamentarier_nested' => ['display_name' => 'Parlamentarier', 'view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'remove_cols' => [], 'docu' => ['Datensatz mit den wesentlichen Daten über Parlamentarier als geschachtelte Struktur.'], 'aggregated_tables' => [
     'in_kommission' => ['view' => 'v_in_kommission_liste', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [], 'transform_field' => ['sachbereiche' => 'transform_sachbereiche']],
     'parlamentarier_transparenz' => ['view' => 'v_parlamentarier_transparenz', 'parent_id' => "parlamentarier_id", 'order_by' => 'stichdatum', 'hist_field' => '', 'remove_cols' => []],
     'interessenbindungen' => ['view' => 'v_interessenbindung_medium_raw', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
@@ -409,6 +414,7 @@ $data_source = [
 
 // TODO add CC-BY-SA license note to exports header
 // TODO write PHPunit tests, e.g. for formatRow(), https://blog.dcycle.com/blog/2019-10-16/unit-testing/
+// TODO rename to IExporter
 interface IExportFormat {
   const FILE_ONE = 'one_file';
   const FILE_MULTI = 'multi_file';
@@ -422,6 +428,7 @@ interface IExportFormat {
   function getQuoteEscape(): ?string;
   function getFormatName(): string;
   function getFormat(): string;
+  function getFormatDesc(): array;
   function getFileSuffix(): string;
   function setFormatParameter(array $parameter);
   function getFormatParameter(): array;
@@ -430,6 +437,7 @@ interface IExportFormat {
   function hasHeaderDeclaration(): bool;
   function getHeaderDeclaration(array $cols): array;
   function getExtraCol(array $table_meta): ?string;
+  function getExtraColDesc(array $table_meta): ?string;
   /**
    * Returns data for one header column.
    */
@@ -442,12 +450,13 @@ interface IExportFormat {
    * @return array lines
    */
   // TODO $wrap
+  // TODO rename: remove List
   function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $table_meta, bool $wrap, bool $first): array;
   function formatRow(array $row, array $data_types, int $level, string $table_key, string $table, array $table_meta): string;
-  function getTableFooter(string $table, array $table_meta): array;
   /**
    * @return array lines
    */
+  // TODO rename: remove List in name
   function getTableListFooter(string $table, array $table_meta, bool $wrap, bool $last): array;
   function getFileFooter(bool $wrap): array;
   function getImportHint(string &$separator): array;
@@ -460,6 +469,7 @@ abstract class AbstractExporter implements IExportFormat {
   protected $format;
   protected $fileSuffix;
   protected $formatName;
+  protected $formatDesc = [];
   protected $parameter = [];
   protected $eol = "\n";
 
@@ -469,6 +479,10 @@ abstract class AbstractExporter implements IExportFormat {
 
   function getFormatName(): string {
     return $this->formatName;
+  }
+
+  function getFormatDesc(): array {
+    return $this->formatDesc;
   }
 
   function getFormatParameter(): array {
@@ -530,6 +544,10 @@ abstract class AbstractExporter implements IExportFormat {
     return null;
   }
 
+  function getExtraColDesc(array $table_meta): ?string {
+    return null;
+  }
+
   /**
    * Returns data for one header column.
    */
@@ -557,9 +575,6 @@ abstract class AbstractExporter implements IExportFormat {
   function formatRow(array $row, array $data_types, int $level, string $table_key, string $table, array $table_meta): string {
     return '';
   }
-  function getTableFooter(string $table, array $table_meta): array {
-    return [];
-  }
   function getTableListFooter(string $table, array $table_meta, bool $wrap, bool $last): array {
     return [];
   }
@@ -583,7 +598,7 @@ abstract class AbstractExporter implements IExportFormat {
     return false;
   }
 
-  protected function getEdge(array $table_meta): array {
+   protected function getEdge(array $table_meta): array {
     $edgeName = $table_meta['name'] ?? $table;
     $startId = $table_meta['start_id'] ?? $table_meta['id'] ?? 'id';
     $endId = $table_meta['end_id'] ?? $table_meta['id'] ?? 'id';
@@ -962,9 +977,6 @@ class SqlExporter extends FlatExporter implements IExportFormat {
     $qes = array_fill(0, count($data_types), $this->qe);
     return '(' . implode(",", array_map(['self', 'escape_sql_field'], $row, $data_types, $qes)) . ')';
   }
-  function getTableFooter(string $table, array $table_meta): array {
-    return [];
-  }
   function getTableListFooter(string $table, array $table_meta, bool $wrap, bool $last): array {
     return [';', ''];
   }
@@ -1040,9 +1052,6 @@ class JsonExporter extends AggregatedExporter {
   }
   function formatRow(array $row, array $data_types, int $level, string $table_key, string $table, array $table_meta): string {
     return json_encode($row, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
-  }
-  function getTableFooter(string $table, array $table_meta): array {
-    return ['}'];
   }
   function getTableListFooter(string $table, array $table_meta, bool $wrap, bool $last): array {
     return ["$this->eol]" . (!$last ? ',' : '')];
@@ -1340,9 +1349,6 @@ class XmlExporter extends AggregatedExporter {
   }
   function formatRow(array $row, array $data_types, int $level, string $table_key, string $table, array $table_meta): string {
     return str_repeat("\t", $level) . $this->array2xml($table, $table, $row);
-  }
-  function getTableFooter(string $table, array $table_meta): array {
-    return [];
   }
   function getTableListFooter(string $table, array $table_meta, bool $wrap, bool $last): array {
     return ["$this->eol</${table}_liste>"];
@@ -1643,7 +1649,7 @@ class YamlExporter extends AggregatedTextExporter {
 class MarkdownExporter extends AggregatedTextExporter {
   function __construct() {
     $this->format = 'md';
-    $this->fileSuffix = 'export.md';
+    $this->fileSuffix = 'md';
     $this->formatName = 'Markdown';
     $this->list_prefix = '* ';
     $this->property_prefix = '* ';
@@ -1761,8 +1767,8 @@ function main() {
   }
   print("-- Schema: $schema\n");
 
-  if (!file_exists($path) && !is_dir($path)) {
-    $ret = mkdir($path, 0777, true);
+  if (!file_exists($path . '/' . DOCU) && !is_dir($path . '/' . DOCU)) {
+    $ret = mkdir($path . '/' . DOCU, 0777, true);
     if ($ret == true)
       print("directory '$path' created successfully...");
     else
@@ -1970,16 +1976,24 @@ function export(IExportFormat $exporter, string $table_schema, string $path, arr
 
   // Write file header
   if ($storage_type == 'one_file') {
-    $export_file_path_name = "$path/lobbywatch." . $exporter->getFileSuffix();
+    $export_file_name = "lobbywatch." . $exporter->getFileSuffix();
+    $export_file_path_name = "$path/$export_file_name";
     $export_file = fopen($export_file_path_name, 'w');
+
+    $docu_file_path_name = "$path/" . DOCU . "/$export_file_name.md";
+    $docu_file = fopen($docu_file_path_name, 'w');
 
     // TODO throw exception on default case
     fwrite($export_file, implode($eol, $exporter->getFileHeader(true, $transaction_date)));
+    fwrite($docu_file, implode(EOL, getDocuFileHeader($exporter, $export_tables, $transaction_date, $table_schema, $filter, $export_file_path_name)));
   } elseif ($storage_type == 'multi_file') {
     $export_file = null;
+    $docu_file = null;
   }
 
-  export_tables($exporter, $export_tables, null, null, 1, $table_schema, $path, $filter, $eol, 'file', $storage_type, $export_file, $records_limit, $cmd_args, $db);
+  $docu_table_written = [];
+
+  export_tables($exporter, $export_tables, null, null, 1, $table_schema, $path, $filter, $eol, 'file', $storage_type, $export_file, $docu_file, $records_limit, $cmd_args, $db, $docu_table_written);
 
   // Write file end
   if ($storage_type == 'one_file') {
@@ -1989,6 +2003,9 @@ function export(IExportFormat $exporter, string $table_schema, string $path, arr
     // TODO validate files
     // TODO check result
     $exporter->validate($export_file);
+
+    fwrite($docu_file, implode(EOL, getDocuFileFooter($exporter, $export_tables, $transaction_date, $table_schema, $filter, $export_file_path_name)));
+    fclose($docu_file);
   }
 
   if ($verbose > 1) print(implode($cmd_args_sep, $cmd_args) . "\n\n");
@@ -2084,8 +2101,8 @@ function getFilteredExpressionsSelect(array $select_cols): array {
   return array_filter($select_cols, function($str) {return preg_match('/^\(/', $str);}, ARRAY_FILTER_USE_KEY);
 }
 
-function getCleanQueryTableName($query_table_name) {
-  return preg_replace('/(v_|_medium|_raw|_simple|_liste)/', '', $table);
+function getCleanQueryTableName($query_table) {
+  return preg_replace('/(v_|_medium|_raw|_simple|_liste)/', '', $query_table);
 }
 
 // Idea: get datatypes from query limit 0 instead of information schema (this allows SQL like CONCAT in stmts), use getColumnMeta()
@@ -2147,7 +2164,7 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
 
   static $stmt_information_schema_cols;
   if (empty($stmt_information_schema_cols)) {
-    $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE, IF(EXTRA LIKE '%VIRTUAL%', 1, 0) `VIRTUAL_COLUMN` FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = :table_schema AND table_catalog='def' AND TABLE_NAME = :table;";
+    $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE, IF(EXTRA LIKE '%VIRTUAL%', 1, 0) `VIRTUAL_COLUMN`, COLUMN_COMMENT FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = :table_schema AND table_catalog='def' AND TABLE_NAME = :table;";
     if ($verbose > 5) print("$level_indent$sql\n");
     $stmt_information_schema_cols = $db->prepare($sql);
   }
@@ -2184,7 +2201,7 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
         if (empty($cached_cols[$additional_cols_cache_key])) {
           $additional_cols_quoted = array_map(function($str) { return "'$str'"; }, $additional_cols_filtered_cleaned);
           $additional_cols_str = implode(', ', $additional_cols_quoted);
-          $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE, IF(EXTRA LIKE '%VIRTUAL%', 1, 0) `VIRTUAL_COLUMN` FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$table_schema' AND table_catalog='def' AND TABLE_NAME = '$join_table_without_schema' AND COLUMN_NAME IN ($additional_cols_str);";
+          $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE, IF(EXTRA LIKE '%VIRTUAL%', 1, 0) `VIRTUAL_COLUMN`, COLUMN_COMMENT FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$table_schema' AND table_catalog='def' AND TABLE_NAME = '$join_table_without_schema' AND COLUMN_NAME IN ($additional_cols_str);";
           if ($verbose > 5) print("$level_indent$sql\n");
           $stmt_information_schema_cols_in_list = $db->query($sql);
           $unsorted_rows = $stmt_information_schema_cols_in_list->fetchAll();
@@ -2234,7 +2251,7 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
           case PDO::PARAM_LOB: $data_type = 'blob'; break;
           default: throw new RuntimeException("Unknown type: $pdo_type");
         }
-        $unsorted_rows[] = ['TABLE_NAME' => $query_table, 'COLUMN_NAME' => array_keys($expressions_filtered)[$i], 'DATA_TYPE' => $data_type, 'VIRTUAL_COLUMN' => 0];
+        $unsorted_rows[] = ['TABLE_NAME' => $query_table, 'COLUMN_NAME' => array_keys($expressions_filtered)[$i], 'DATA_TYPE' => $data_type, 'VIRTUAL_COLUMN' => 0, 'COLUMN_COMMENT' => null];
       }
       $sorted_rows = $unsorted_rows;
       // $sorted_rows = sortRows($unsorted_rows, $cols_filtered_cleaned);
@@ -2253,14 +2270,15 @@ function getColNames(array $row, array $table_alias_map, array $alias_map, array
   $col = $row['COLUMN_NAME'];
   $data_type = $row['DATA_TYPE'];
   $virtual_col = $row['VIRTUAL_COLUMN'];
+  $col_comment = $row['COLUMN_COMMENT'];
 
   $table_name_alias = $table_alias_map[$table_name] ?? $table_name;
   $alias = $alias_map["$table_name_alias.$col"] ?? $alias_map[$col] ?? null;
   $select_field = $select_field_map["$table_name_alias.$col"] ?? $select_field_map[$col] ?? (hasJoin($table_meta) ? "$table_name_alias.$col" : $col);
-  return [$table_name, $col, $data_type, $virtual_col, $table_name_alias, $alias, $select_field];
+  return [$table_name, $col, $data_type, $virtual_col, $table_name_alias, $alias, $select_field, $col_comment];
 }
 
-function export_tables(IExportFormat $exporter, array $tables, int $parent_id = null, array $parent_row = null, $level, string $table_schema, ?string $path, array $filter, string $eol = "\n", string $format = 'json', string $storage_type, $file, $records_limit = false, array &$cmd_args, PDO $db) {
+function export_tables(IExportFormat $exporter, array $tables, int $parent_id = null, array $parent_row = null, $level, string $table_schema, ?string $path, array $filter, string $eol = "\n", string $format = 'json', string $storage_type, $parent_export_file, $parent_docu_file, $records_limit = false, array &$cmd_args, PDO $db, array &$docu_table_written) {
   global $verbose;
   global $intern_fields;
   global $transaction_date;
@@ -2268,7 +2286,8 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
   $level_indent = str_repeat("\t", $level);
 
   if ($storage_type == 'one_file') {
-    $export_file = $file;
+    $export_file = $parent_export_file;
+    $docu_file = $parent_docu_file;
 
     if ($exporter->hasHeaderDeclaration()) {
       if ($verbose > 2) print("${level_indent}Generate header declaration...");
@@ -2278,7 +2297,7 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
         list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols, $select_cols, $select_alias_cols, $alias_map, $select_field_map, $table_alias_map, $alias_table_map, $id_alias) = getSqlData("$num_key", $table_meta, $table_schema, $level, $filter, $exporter, $db);
 
         foreach ($cols as $row) {
-          list($table_name, $col, $data_type, $virtual_col, $table_name_alias, $alias, $select_field) = getColNames($row, $table_alias_map, $alias_map, $select_field_map, $table_meta);
+          list($table_name, $col, $data_type, $virtual_col, $table_name_alias, $alias, $select_field, $col_comment) = getColNames($row, $table_alias_map, $alias_map, $select_field_map, $table_meta);
 
           if (isColOk($col, $table_meta, $table_name_alias, $query_table_alias, $intern_fields, $filter)) {
             $data_types[] = $data_type;
@@ -2317,10 +2336,18 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
 
       if (!empty($header = $exporter->getFileHeader(false, $transaction_date)))
         fwrite($export_file, implode($eol, $header) . $eol);
+
+      $docu_file_path_name = "$path/" . DOCU . "/$export_file_name.md";
+      $docu_file = fopen($docu_file_path_name, 'w');
+
+      if (!empty($meta_header = getDocuFileHeader($exporter, $table_meta, $transaction_date, $table_schema, $filter, $export_file_path_name)))
+        fwrite($docu_file, implode(EOL, $meta_header) . $eol);
     } elseif ($storage_type == 'one_file') {
-      $export_file = $file;
+      $export_file = $parent_export_file;
+      $docu_file = $parent_docu_file;
     } else {
       $export_file = null;
+      $docu_file = $parent_docu_file;
     }
 
     if ($exporter instanceof SqlExporter) {
@@ -2337,9 +2364,10 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
     $select_fields = [];
     $has_extra_col = $exporter->getExtraCol($table_meta) !== null;
     $export_header = $has_extra_col ? [$exporter->getExtraCol($table_meta)] : [];
+    $docu_cols = !empty($extraColDesc = $exporter->getExtraColDesc($table_meta)) ? [$extraColDesc] : [];
 
     foreach ($cols as $row) {
-      list($table_name, $col, $data_type, $virtual_col, $table_name_alias, $alias, $select_field) = getColNames($row, $table_alias_map, $alias_map, $select_field_map, $table_meta);
+      list($table_name, $col, $data_type, $virtual_col, $table_name_alias, $alias, $select_field, $col_comment) = getColNames($row, $table_alias_map, $alias_map, $select_field_map, $table_meta);
 
       if (isColOk($col, $table_meta, $table_name_alias, $query_table_alias, $intern_fields, $filter)) {
         if (!($exporter instanceof SqlExporter && $virtual_col)) {
@@ -2351,6 +2379,11 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
           $export_header[] = $header_field;
           $skip_rows_for_empty_field[] = $skip_row_for_empty_field;
           if ($verbose > 4) print("$level_indent$header_field\n");
+
+          $docu_col = getDocuCol($level, $col, $col_comment, $data_type, $table, $table_meta);
+          if (!empty($docu_col)) {
+            $docu_cols[] = $docu_col;
+          }
         }
       } else {
         // Remove cols from create table statement
@@ -2369,8 +2402,16 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
 
     $num_cols = count($select_fields);
 
-    if (!in_array($format, ['array', 'attribute_array']) && !empty($header = $exporter->getTableListHeader($table, $export_header, $table_create_lines, $table_meta, $storage_type != 'multi_file', $storage_type == 'multi_file' || $i === 0)))
-    fwrite($export_file, implode($eol, $header) . $eol);
+    if (!in_array($format, ['array', 'attribute_array']) && !empty($header = $exporter->getTableListHeader($table, $export_header, $table_create_lines, $table_meta, $storage_type != 'multi_file', $storage_type == 'multi_file' || $i === 0))) {
+      fwrite($export_file, implode($eol, $header) . $eol);
+    }
+
+    if (!($docu_table_written[($docu_table_key = "$table_key#header")] ?? null)) {
+      $docu_table_header = getDocuTableHeader($level, $table_key, $table, $query_table, $table_meta, $storage_type != 'multi_file', $storage_type == 'multi_file' || $i === 0);
+      fwrite($docu_file, implode(EOL, $docu_table_header) . EOL);
+      fwrite($docu_file, implode(EOL, $docu_cols) . EOL);
+      $docu_table_written[$docu_table_key] = true;
+    }
 
     if (count(array_unique($export_header)) < count($export_header)) {
       // print("\nERROR: duplicate col names!\n\n");
@@ -2380,7 +2421,7 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
 
     if (!$exporter->getExportOnlyHeader()) {
       assert(count($select_fields) === count($data_types));
-      $rows_data = export_rows($exporter, $id_alias, $parent_id, $parent_row, $db, $select_fields, $has_extra_col, $table_schema, $table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $table_meta, $data_types, $skip_rows_for_empty_field, $filter, $eol, $format, $level, $records_limit, $export_file, $cmd_args);
+      $rows_data = export_rows($exporter, $id_alias, $parent_id, $parent_row, $db, $select_fields, $has_extra_col, $table_schema, $table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $table_meta, $data_types, $skip_rows_for_empty_field, $filter, $eol, $format, $level, $records_limit, $export_file, $docu_file, $cmd_args, $docu_table_written);
       if (in_array($format, ['array', 'attribute_array'])) {
         if (is_array($rows_data[0] ?? null)) {
           // array of data arrays
@@ -2395,6 +2436,11 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
       } else {
         $n = $rows_data;
         fwrite($export_file, implode($eol, $exporter->getTableListFooter($table, $table_meta, $storage_type != 'multi_file', $storage_type == 'multi_file' || $i === count($tables) - 1)) . $eol);
+
+        if (!($docu_table_written[($docu_table_key = "$table_key#footer")] ?? null)) {
+          fwrite($docu_file, implode(EOL, getDocuTableFooter($level, $table_key, $table, $query_table, $table_meta, $storage_type != 'multi_file', $storage_type == 'multi_file' || $i === count($tables) - 1)) . EOL);
+          $docu_table_written[$docu_table_key] = true;
+        }
       }
     } else {
       $n = 0;
@@ -2405,10 +2451,13 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
       fclose($export_file);
 
       if ($cmd_arg = $exporter->getImportHintFromTable($export_file_name, $export_file_base_name, $exporter->getFileSuffix(), $export_file_path_name, $table, $table_meta))
-        $cmd_args[] = $cmd_arg;
+      $cmd_args[] = $cmd_arg;
 
       // TODO validate files
       $exporter->validate($export_file);
+
+      fwrite($docu_file, implode(EOL, getDocuFileFooter($exporter, $table_meta, $transaction_date, $table_schema, $filter, $export_file_path_name)));
+      fclose($docu_file);
     }
 
     $end_export_table = microtime(true);
@@ -2547,7 +2596,7 @@ function buildRowsSelect(string $table, string $query_table_alias, string $query
   return [$sql, $parent_id_col, $sql_select, $sql_from, $sql_join, $sql_where, $sql_order, $sql_limit];
 }
 
-function export_rows(IExportFormat $exporter, string $id_alias, int $parent_id = null, array $parent_row = null, $db, array $select_fields, bool $has_extra_col, string $table_schema, string $table_key, string $table, string $query_table, string $query_table_with_alias, string $query_table_alias, array $table_meta, array $data_types, array $skip_rows_for_empty_field, $filter, string $eol = "\n", string $format = 'json', int $level = 1, $records_limit, $export_file, &$cmd_args) {
+function export_rows(IExportFormat $exporter, string $id_alias, int $parent_id = null, array $parent_row = null, $db, array $select_fields, bool $has_extra_col, string $table_schema, string $table_key, string $table, string $query_table, string $query_table_with_alias, string $query_table_alias, array $table_meta, array $data_types, array $skip_rows_for_empty_field, $filter, string $eol = "\n", string $format = 'json', int $level = 1, $records_limit, $export_file, $docu_file, &$cmd_args, &$docu_table_written) {
   global $verbose;
 
   $num_indicator = 20;
@@ -2626,7 +2675,7 @@ function export_rows(IExportFormat $exporter, string $id_alias, int $parent_id =
       $vals = array_map(function($field) {return !empty($field) && is_string($field) ? str_replace("\r", '', $field) : $field;}, $vals);
 
       if (($aggregated_tables = $table_meta['aggregated_tables'] ?? null) && $exporter->isAggregatedFormat()) {
-        $aggregated_data = export_tables($exporter, $aggregated_tables, $id, $row, $level + 1, $table_schema, null, $filter, $eol, $format == 'xml' ? 'attribute_array' : 'array', $format == 'xml' ? 'attribute_array' : 'array', null, $records_limit, $cmd_args, $db);
+        $aggregated_data = export_tables($exporter, $aggregated_tables, $id, $row, $level + 1, $table_schema, null, $filter, $eol, $format == 'xml' ? 'attribute_array' : 'array', $format == 'xml' ? 'attribute_array' : 'array', null, $docu_file, $records_limit, $cmd_args, $db, $docu_table_written);
         $vals = array_merge($vals, $aggregated_data);
       }
 
@@ -2677,6 +2726,83 @@ function getMemory(): string {
 function convert($size) {
     $unit = ['B','kiB','MiB','GiB','TiB','PiB'];
     return @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2) . ' ' . $unit[$i];
+}
+
+function getDocuTableHeader(int $level, string $table_key, string $table, string $query_table, array $table_meta, bool $wrap, bool $first): array {
+  $level_indent = str_repeat("    ", $level);
+  $clean_query_table = getCleanQueryTableName($query_table);
+  $table_docu = $table_meta['docu'] ?? [];
+
+  $docu = [];
+  $docu[] = '';
+  $docu[] = str_repeat("#", $level + 1) . " $table_key ($clean_query_table)";
+  $docu[] = '';
+  if (!empty($table_docu)) {
+    $docu[] = implode(EOL, $table_docu);
+    $docu[] = '';
+  }
+  if (!empty($table_meta['source'])) {
+    $docu[] = "Datensatztyp: " . ($table_meta['source']);
+    $docu[] = '';
+  }
+  $docu[] = 'Feld | Beschreibung';
+  $docu[] = '- | -';
+  return $docu;
+}
+
+function getDocuTableFooter(int $level, string $table_key, string $table, string $query_table, array $table_meta, bool $wrap, bool $last): array {
+  return [""];
+}
+
+// TODO see fillHintParams() in utils.php
+function getDocuCol(int $level, string $col, $col_comment, string $data_type, string $table, array $table_meta): ?string {
+  return "$col | $col_comment";
+}
+
+function getDocuFileHeader(IExportFormat $exporter, array $table_meta, string $transaction_date, string $table_schema, array $filter, string $export_file_path_name): array {
+
+  $is_public_export = !empty($filter['hist']) && !empty($filter['unpubl']);
+
+  $export_type = [];
+  if ($is_public_export) {
+    $export_type[] = 'Öffentlich / Public';
+  } else {
+    if (empty($filter['hist'])) $export_type[] ='historisiert';
+    if (empty($filter['unpubl'])) $export_type[] ='unveröffentlicht';
+    if (empty($filter['intern'])) $export_type[] ='intern';
+  }
+
+  $docu = [];
+  $docu[] = "Lobbywatch Export: " . ($formatName = $exporter->getFormatName());
+  $docu[] = "==================="  . str_repeat('=', strlen($formatName));
+  $docu[] = "";
+  $docu[] = "Datei: $export_file_path_name  ";
+  $docu[] = "Datum: $transaction_date  ";
+  if (!empty($table_meta['source'])) {
+    $docu[] = "Datensatztyp: " . ($table_meta['source']) . '  ';
+  }
+  $docu[] = "Exporttyp: " . implode('+', $export_type) . '  ';
+  $docu[] = "";
+  if (!empty($exporter->getFormatDesc())) {
+    $docu[] = "Formatbeschreibung: " . implode(EOL, $exporter->getFormatDesc());
+    $docu[] = "";
+  }
+  $docu[] = "Herausgeber: Lobbywatch (https://lobbywatch.ch)  ";
+  if ($is_public_export) {
+    $docu[] = "";
+    $docu[] = "Die Inhalte von Lobbywatch.ch sind lizenziert unter einer Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 International Lizenz. (https://creativecommons.org/licenses/by-sa/4.0/deed.de)";
+    $docu[] = "";
+    $docu[] = "Data are licensed unter CC BY-SA";
+  } else {
+    $docu[] = "Diese Daten dürfen ohne Einwilligung des Lobbywatch-Vorstandes nicht veröffentlicht oder weitergegeben werden.";
+  }
+  $docu[] = "";
+
+  return $docu;
+}
+
+function getDocuFileFooter(IExportFormat $exporter, array $table_meta, string $transaction_date, string $table_schema, array $filter, string $export_file_path_name): array {
+  return [''];
 }
 
 function transform_sachbereiche($field, $format) {
