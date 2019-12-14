@@ -14,20 +14,13 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 ./deploy.sh -p -r -s $SYNC_FILE
 */
 
-// TODO zip creation script: PHP or bash? -> bash (context/settings for path, pass some variables to PHP script)
-// TODO Export essential_parlamentarier_interessenbindung as CSV
 // TODO optimize cartesian with freigabe
 // TODO explain, replace views with original tables, remove select fields
 // TODO refactor extract const from code, make const, use keyword const
-// DONE add flag to skip big, not very helpful export (mark in table)
-// TODO export cmds to files
 // TODO add french columns to exports, add filter to get only german export
 // TODO export de, export fr, compined export?
-
 // TODO welche Daten mit welchem Tool, Übersicht machen
-
 // TODO generate meta file with date, git hash for reproduction
-// DONE ArangdoDB import
 // TODO JanusGraph import
 // TODO TigerGraph ETL CSV import (not open source)
 // TODO Check Graph DBs: Amazon Neptune, Oracle PGX, Neo4j Server, SAP HANA Graph, AgensGraph (over PostgreSQL), Azure CosmosDB, Redis Graph, SQL Server 2017 Graph, Cypher for Apache Spark, Cypher for Gremlin, SQL Property Graph Querying, TigerGraph, Memgraph, JanusGraph, DSE Graph
@@ -36,32 +29,23 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 // TODO XML (Excel 2003, SpreadsheetML): https://github.com/PHPOffice/PhpSpreadsheet, https://en.wikipedia.org/wiki/Microsoft_Office_XML_formats, https://phpspreadsheet.readthedocs.io/en/latest/
 // TODO unify exported field names
 // DONE MySQL Export PHP https://github.com/ifsnop/mysqldump-php/blob/master/src/Ifsnop/Mysqldump/Mysqldump.php
-// DONE add verbose mode -v
-// DONE handle properly DB schema
-// TODO add metadata: export date, DB, structure version
 // DONE JSON lines JSONL format support (http://jsonlines.org/) like CSV
+// DONE support Arango DB https://www.arangodb.com/docs/stable/programs-arangoimport-details.html
 // TODO add yaml for markdown
 // DONE export YAML (https://yaml.org/, https://www.php.net/manual/en/book.yaml.php, https://github.com/EvilFreelancer/yaml-php)
 // TODO Generate XML Schema from XML file (reverse engineer) (https://www.dotkam.com/2008/05/28/generate-xsd-from-xml/)
-// TODO write elapsed time
-// TODO handle freigabe_datum properly
-// TODO zip at the end
 // TODO option to refresh views before exporting
 // TODO refactor table_meta access, avoid multiple calls
 // TODO preprocess table_meta data for performance
 // TODO replace aktiv by exression (for NOW() replacement)
 // TODO replace NOW() by $variable
-// DONE order by anzeige_name
-// DONE check and enable sql_mode='strict_mode'
 // TODO refactor table and col alias handling, write easy functions, improve DX
 // TODO one function to split fields
 // TODO uniformize names
 // TODO hist should also clean jahr entries and stichdatum entries
-// TODO Prio Dim 1 (formats): CSV (cartesian_essential, flat), SQL, GraphML, SQL, Neo4j, Arango, OrientDB, JSON
+// DONE Prio Dim 1 (formats): CSV (cartesian_essential, flat), SQL, GraphML, SQL, Neo4j, Arango, OrientDB, JSON
 // TODO Prio Dim 2 (aggregation): parlamentarier, organisation, interessengruppe, branche, kommission
-// TODO structure for export, public folder, zip with and without date, contains file with date, add merkblatt
 // TODO PHPUnit for refactorings
-// TODO add parlamentarier_transparenz to exports
 // TODO add flag, automatically prefix fields with table names instead of doing manually, "expand alias", (allow overruling)
 // TODO support docu_de, docu_fr
 
@@ -206,10 +190,6 @@ $aggregated_tables = [
       ],
     ],
   ]],
-  // TODO create essential
-  // TODO branchen aggregated
-  // TODO interessengruppen aggregated
-  // TODO kommissionen aggregated
   ];
 
 // :ID(partei_id) :LABEL (separated by ;) :IGNORE
@@ -326,14 +306,11 @@ $sql_tables = [
   'zutrittsberechtigung' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON zutrittsberechtigung.parlamentarier_id = p.id']],
 ];
 
-// DONE full cartesian inkl kommissionen
-// DONE cartesian interessengruppeX_id flachdrücken
 // TODO add zutrittsberechtigte
 // TODO add indirekte
 // TODO add combined
 // TODO add zb.aktiv
 // TODO add mandat.aktiv
-// TODO verguetungstransparenz
 $cartesian_tables = [
   'parlamentarier_interessenbindung' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'unpubl_fields' => ['p.erfasst'], 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => ["LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id", "LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id", "LEFT JOIN v_organisation_medium_raw o ON o.id = i.organisation_id"], 'additional_join_cols' => [
     'i.beschreibung interessenbindung_beschreibung', 'i.von interessenbindung_von', 'i.bis interessenbindung_bis', 'i.art interessenbindung_art', 'i.funktion_im_gremium interessenbindung_funktion_im_gremium', 'i.deklarationstyp interessenbindung_deklarationstyp', 'i.status interessenbindung_status', 'i.hauptberuflich interessenbindung_hauptberuflich', 'i.behoerden_vertreter interessenbindung_behoerden_vertreter', 'i.wirksamkeit interessenbindung_wirksamkeit', 'i.wirksamkeit_index interessenbindung_wirksamkeit_index',
@@ -412,7 +389,6 @@ $data_source = [
   'cartesian' => $cartesian_tables,
 ];
 
-// TODO add CC-BY-SA license note to exports header
 // TODO write PHPunit tests, e.g. for formatRow(), https://blog.dcycle.com/blog/2019-10-16/unit-testing/
 // TODO rename to IExporter
 interface IExportFormat {
@@ -449,8 +425,6 @@ interface IExportFormat {
   /**
    * @return array lines
    */
-  // TODO $wrap
-  // TODO rename: remove List
   function getTableHeader(string $table, array $export_header, array $table_create_lines, array $table_meta, bool $wrap, bool $first): array;
   function formatRow(array $row, array $data_types, int $level, string $table_key, string $table, array $table_meta): string;
   /**
@@ -1261,8 +1235,6 @@ class JsonlExporter extends JsonExporter {
 }
 
 // TODO support filename prefix
-// DONE support Arango DB https://www.arangodb.com/docs/stable/programs-arangoimport-details.html
-
 class ArangoDBJsonlExporter extends JsonlExporter {
 
   function __construct() {
@@ -1527,7 +1499,7 @@ class GraphMLExporter extends XmlExporter {
         continue;
       }
 
-      // TODO handle JSON data as CDATA → does not help
+      // DONE handle JSON data as CDATA → does not help
       // https://stackoverflow.com/questions/6260224/how-to-write-cdata-using-simplexmlelement
       // $xml->title = NULL; // VERY IMPORTANT! We need a node where to append
       // $xml->title->addCData('Site Title');
@@ -1778,7 +1750,6 @@ function main() {
   utils_set_db_session_parameters_exec($db);
   print("-- $env: {$db_connection['database']}\n");
 
-  // TODO refactor program arguments
   if (isset($options['h']) || isset($options['help'])) {
     print("DB export
 Parameters:
@@ -1982,7 +1953,6 @@ function export(IExportFormat $exporter, string $table_schema, string $path, arr
     $docu_file_path_name = "$path/" . DOCU . "/$export_file_name.md";
     $docu_file = fopen($docu_file_path_name, 'w');
 
-    // TODO throw exception on default case
     fwrite($export_file, implode($eol, $exporter->getFileHeader(true, $transaction_date)));
     fwrite($docu_file, implode(EOL, getDocuFileHeader($exporter, $export_tables, $transaction_date, $table_schema, $filter, $export_file_path_name)));
   } elseif ($storage_type == 'multi_file') {
@@ -1999,8 +1969,6 @@ function export(IExportFormat $exporter, string $table_schema, string $path, arr
     fwrite($export_file, implode($eol, $exporter->getFileFooter(true)));
     fclose($export_file);
 
-    // TODO validate files
-    // TODO check result
     $exporter->validate($export_file);
 
     fwrite($docu_file, implode(EOL, getDocuFileFooter($exporter, $export_tables, $transaction_date, $table_schema, $filter, $export_file_path_name)));
@@ -2183,9 +2151,6 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
   if ($join && !empty($table_meta['additional_join_cols'])) {
     list($join_table_alias_map, $join_alias_table_map) = getJoinTableMaps($join);
     $additional_export_cols_all = array_merge($aktiv_cols, $unpubl_cols);
-    // TODO instead of unset filter alias
-    //array_pop($additional_export_cols); // remove query_table col
-    // TODO filter alias $additional_export_cols = array_merge($additional_export_cols, $unpubl_cols);
     $additional_export_cols = [];
     foreach ($join_table_alias_map as $join_table => $join_alias) {
       $additional_export_cols_filtered = getFilteredFields($additional_export_cols_all, $join_alias); // Not the best function, but just needed for filtering and counting later
@@ -2452,7 +2417,6 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
       if ($cmd_arg = $exporter->getImportHintFromTable($export_file_name, $export_file_base_name, $exporter->getFileSuffix(), $export_file_path_name, $table, $table_meta))
       $cmd_args[] = $cmd_arg;
 
-      // TODO validate files
       $exporter->validate($export_file);
 
       fwrite($docu_file, implode(EOL, getDocuFileFooter($exporter, $table_meta, $transaction_date, $table_schema, $filter, $export_file_path_name)));
@@ -2753,7 +2717,7 @@ function getDocuTableFooter(int $level, string $table_key, string $table, string
   return [""];
 }
 
-// TODO see fillHintParams() in utils.php
+// see fillHintParams() in utils.php
 function getDocuCol(int $level, string $col, $col_comment, string $data_type, string $table, array $table_meta): ?string {
   return "$col | $col_comment";
 }
