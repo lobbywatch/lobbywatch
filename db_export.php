@@ -391,7 +391,7 @@ $data_source = [
 
 // TODO write PHPunit tests, e.g. for formatRow(), https://blog.dcycle.com/blog/2019-10-16/unit-testing/
 // TODO rename to IExporter
-interface IExportFormat {
+interface IExporter {
   const FILE_ONE = 'one_file';
   const FILE_MULTI = 'multi_file';
   function supportsOneFile(): bool;
@@ -438,7 +438,7 @@ interface IExportFormat {
   function validate($file);
 }
 
-abstract class AbstractExporter implements IExportFormat {
+abstract class AbstractExporter implements IExporter {
   protected $format;
   protected $fileSuffix;
   protected $formatName;
@@ -590,7 +590,7 @@ abstract class AbstractExporter implements IExportFormat {
 
 }
 
-abstract class FlatExporter extends AbstractExporter implements IExportFormat {
+abstract class FlatExporter extends AbstractExporter implements IExporter {
 
   protected $qe;
   protected $sep;
@@ -647,7 +647,7 @@ abstract class FlatExporter extends AbstractExporter implements IExportFormat {
 
 }
 
-abstract class AggregatedExporter extends AbstractExporter implements IExportFormat {
+abstract class AggregatedExporter extends AbstractExporter implements IExporter {
 
   function supportsOneFile(): bool {
     return true;
@@ -878,7 +878,7 @@ class Neo4jCsvExporter extends CsvExporter {
 
 }
 
-class SqlExporter extends FlatExporter implements IExportFormat {
+class SqlExporter extends FlatExporter implements IExporter {
 
   // protected $oneline = false;
 
@@ -1910,7 +1910,7 @@ Parameters:
 // DONE one big input table with all definitions: format preferences in table?, restrictions/characteristics
 // DONE strategy: 1. keep dedicated export functions, 2. extend/enrich structured export function with dedicated functionality
 
-function export(IExportFormat $exporter, string $table_schema, string $path, array $filter, string $eol = "\n", string $storage_type = 'multi_file', $records_limit = false, PDO $db) {
+function export(IExporter $exporter, string $table_schema, string $path, array $filter, string $eol = "\n", string $storage_type = 'multi_file', $records_limit = false, PDO $db) {
   global $verbose;
   global $data_source;
   global $intern_fields;
@@ -2073,7 +2073,7 @@ function getCleanQueryTableName($query_table) {
 }
 
 // Idea: get datatypes from query limit 0 instead of information schema (this allows SQL like CONCAT in stmts), use getColumnMeta()
-function getSqlData(string $num_key, array $table_meta, string $table_schema, int $level, array $filter, IExportFormat $exporter, PDO $db) {
+function getSqlData(string $num_key, array $table_meta, string $table_schema, int $level, array $filter, IExporter $exporter, PDO $db) {
   global $verbose;
 
   $level_indent = str_repeat("\t", $level);
@@ -2242,7 +2242,7 @@ function getColNames(array $row, array $table_alias_map, array $alias_map, array
   return [$table_name, $col, $data_type, $virtual_col, $table_name_alias, $alias, $select_field, $col_comment];
 }
 
-function export_tables(IExportFormat $exporter, array $tables, int $parent_id = null, array $parent_row = null, $level, string $table_schema, ?string $path, array $filter, string $eol = "\n", string $format = 'json', string $storage_type, $parent_export_file, $parent_docu_file, $records_limit = false, array &$cmd_args, PDO $db, array &$docu_table_written) {
+function export_tables(IExporter $exporter, array $tables, int $parent_id = null, array $parent_row = null, $level, string $table_schema, ?string $path, array $filter, string $eol = "\n", string $format = 'json', string $storage_type, $parent_export_file, $parent_docu_file, $records_limit = false, array &$cmd_args, PDO $db, array &$docu_table_written) {
   global $verbose;
   global $intern_fields;
   global $transaction_date;
@@ -2559,7 +2559,7 @@ function buildRowsSelect(string $table, string $query_table_alias, string $query
   return [$sql, $parent_id_col, $sql_select, $sql_from, $sql_join, $sql_where, $sql_order, $sql_limit];
 }
 
-function export_rows(IExportFormat $exporter, string $id_alias, int $parent_id = null, array $parent_row = null, $db, array $select_fields, bool $has_extra_col, string $table_schema, string $table_key, string $table, string $query_table, string $query_table_with_alias, string $query_table_alias, array $table_meta, array $data_types, array $skip_rows_for_empty_field, $filter, string $eol = "\n", string $format = 'json', int $level = 1, $records_limit, $export_file, $docu_file, &$cmd_args, &$docu_table_written) {
+function export_rows(IExporter $exporter, string $id_alias, int $parent_id = null, array $parent_row = null, $db, array $select_fields, bool $has_extra_col, string $table_schema, string $table_key, string $table, string $query_table, string $query_table_with_alias, string $query_table_alias, array $table_meta, array $data_types, array $skip_rows_for_empty_field, $filter, string $eol = "\n", string $format = 'json', int $level = 1, $records_limit, $export_file, $docu_file, &$cmd_args, &$docu_table_written) {
   global $verbose;
 
   $num_indicator = 20;
@@ -2722,7 +2722,7 @@ function getDocuCol(int $level, string $col, $col_comment, string $data_type, st
   return "$col | $col_comment";
 }
 
-function getDocuFileHeader(IExportFormat $exporter, array $table_meta, string $transaction_date, string $table_schema, array $filter, string $export_file_path_name): array {
+function getDocuFileHeader(IExporter $exporter, array $table_meta, string $transaction_date, string $table_schema, array $filter, string $export_file_path_name): array {
 
   $is_public_export = !empty($filter['hist']) && !empty($filter['unpubl']);
 
@@ -2764,7 +2764,7 @@ function getDocuFileHeader(IExportFormat $exporter, array $table_meta, string $t
   return $docu;
 }
 
-function getDocuFileFooter(IExportFormat $exporter, array $table_meta, string $transaction_date, string $table_schema, array $filter, string $export_file_path_name): array {
+function getDocuFileFooter(IExporter $exporter, array $table_meta, string $transaction_date, string $table_schema, array $filter, string $export_file_path_name): array {
   return [''];
 }
 
