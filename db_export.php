@@ -2792,9 +2792,9 @@ function getDocuFileHeader(IExportFormat $exporter, array $table_meta, string $t
     $docu[] = "";
     $docu[] = "Die Inhalte von Lobbywatch.ch sind lizenziert unter einer Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 International Lizenz. (https://creativecommons.org/licenses/by-sa/4.0/deed.de)";
     $docu[] = "";
-    $docu[] = "Data are licensed unter CC BY-SA";
+    $docu[] = "Data are licensed as CC BY-SA";
   } else {
-    $docu[] = "Diese Daten dürfen ohne Einwilligung des Lobbywatch-Vorstandes nicht veröffentlicht oder weitergegeben werden.";
+    $docu[] = "Dieser Datensatz dürfen ohne Einwilligung des Lobbywatch-Vorstandes nicht veröffentlicht oder weitergegeben werden.";
   }
   $docu[] = "";
 
