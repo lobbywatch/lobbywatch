@@ -550,6 +550,7 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED || $PG_CHANGED); then
 
     if $test ; then
       to="test@lobbywatch.ch"
+      subject="$subject [TEST]"
     else
       to=$MAIL_TO
     fi
