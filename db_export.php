@@ -1024,7 +1024,7 @@ class JsonExporter extends AggregatedExporter {
     return [ $wrap ? "\"$table\":[" : '[' ];
   }
   function formatRow(array $row, array $data_types, int $level, string $table_key, string $table, array $table_meta): string {
-    return json_encode($row, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+    return json_encode($row, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK | JSON_THROW_ON_ERROR);
   }
   function getTableFooter(string $table, array $table_meta, bool $wrap, bool $last): array {
     return ["$this->eol]" . (!$last ? ',' : '')];
@@ -1288,7 +1288,7 @@ class ArangoDBJsonlExporter extends JsonlExporter {
     }
 
     // return parent::formatRow($row, $data_types, $level, $table_key, $table, $table_meta);
-    return json_encode($row, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES /*| JSON_NUMERIC_CHECK*/);
+    return json_encode($row, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR /*| JSON_NUMERIC_CHECK*/);
   }
 
 }
@@ -1505,7 +1505,7 @@ class GraphMLExporter extends XmlExporter {
       // $xml->title->addCData('Site Title');
       // $xml->title->addAttribute('lang', 'en');
 
-      $xml_data->addChild("data", /*($isJson ? '<![CDATA[' : '') .*/ htmlspecialchars(is_array($value) ? json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK) : (string) $value, ENT_XML1) /*. ($isJson ? ']]>' : '')*/)
+      $xml_data->addChild("data", /*($isJson ? '<![CDATA[' : '') .*/ htmlspecialchars(is_array($value) ? json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK | JSON_THROW_ON_ERROR) : (string) $value, ENT_XML1) /*. ($isJson ? ']]>' : '')*/)
         ->addAttribute("key", htmlspecialchars($col, ENT_XML1));
 
       if ($type == 'edge') {

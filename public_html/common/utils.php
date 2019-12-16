@@ -132,7 +132,7 @@ function dj($msg, $text = null, $with_script_tags = true) {
   } else if (is_bool($msg)) {
     $msg = $msg ? 'true' : 'false';
   }
-  $js_code = 'console.log(' . json_encode((is_string($text) ? $text . ' => ' : '') . $msg, JSON_HEX_TAG) .
+  $js_code = 'console.log(' . json_encode((is_string($text) ? $text . ' => ' : '') . $msg, JSON_HEX_TAG | JSON_THROW_ON_ERROR) .
 ');';
   if ($with_script_tags) {
     $js_code = '<script>' . $js_code . '</script>';
@@ -1356,7 +1356,7 @@ function cut($str, $maxLength = 20) {
   if (!isset($str)) {
     $s = 'NULL';
   } elseif (is_array($str) || is_object($str)) {
-    $s = json_encode($str, JSON_UNESCAPED_UNICODE);
+    $s = json_encode($str, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
   } else {
     $s = $str;
   }
@@ -2596,9 +2596,13 @@ global $errors;
   } elseif ((!empty($db_val) && is_int($db_val)) || starts_with($val, 'STR_TO_DATE(')) {
     $update[$field] = "$field = $val";
   } elseif (isset($val) && (is_array($val) || is_object($val))) {
-    $update[$field] = "$field = '" . escape_string(json_encode($val, JSON_UNESCAPED_UNICODE)) . "'";
-    if (json_last_error() != 0) {
-      $errors[] = 'json_encode ERROR: ' . json_last_error() . ', ' . json_last_error_msg() . ", id=" . $parlamentarier_db_obj->id . " '" . $val . "'";
+    try {
+      $update[$field] = "$field = '" . escape_string(json_encode($val, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR)) . "'";
+      if (json_last_error() != 0) {
+        $errors[] = 'json_encode ERROR: ' . json_last_error() . ', ' . json_last_error_msg() . ", id=" . $parlamentarier_db_obj->id . " '" . $val . "'";
+      }
+    } catch (Exception $e) {
+      $errors[] = "json_encode ERROR: $e->getMessage() ($e->getCode()) $e->getFile() line $e->getLine(), id=$parlamentarier_db_obj->id ' $val ' exception: $e";
     }
   } else {
     $update[$field] = "$field = '" . escape_string($val) . "'";

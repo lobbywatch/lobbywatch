@@ -273,7 +273,7 @@ function syncKommissionen() {
     // }
 
     // var_dump($json);
-    $obj = json_decode($json);
+    $obj = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
     // var_dump($obj);
 
   //   $sql = "SELECT * FROM kommission kommission WHERE parlament_id = :kommission_parlament_id;";
@@ -302,7 +302,7 @@ function syncKommissionen() {
 
       $ws_parlament_url = "http://ws-old.parlament.ch/committees?ids=$kommission_ws->id&format=json&lang=fr&subcom=true&pageNumber=1";
       $json_fr = get_web_data($ws_parlament_url);
-      $obj_fr = json_decode($json_fr);
+      $obj_fr = json_decode($json_fr, false, 512, JSON_THROW_ON_ERROR);
       $kommission_fr = $obj_fr[0];
 
       $council = $kommission_ws->council;
@@ -439,7 +439,7 @@ function syncParlamentarier(string $img_path, bool $processRetired = true) {
     // }
 
     // var_dump($json);
-    $obj = json_decode($json);
+    $obj = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
 //     var_dump($obj);
 
     $hasMorePages = false;
@@ -603,12 +603,12 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   // The new services should be available end of 2018
   $ws_parlament_url = "http://ws-old.parlament.ch/councillors/$biografie_id?format=json&lang=de";
   $json = get_web_data($ws_parlament_url);
-  $parlamentarier_ws = json_decode($json);
+  $parlamentarier_ws = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
 
   $ws_parlament_url_odata = "https://ws.parlament.ch/odata.svc/PersonInterest?\$filter=" . urlencode("(Language eq 'DE') and (PersonNumber eq $biografie_id)") . "&\$orderby=SortOrder";
   // print("Url: $ws_parlament_url_odata");
   $json_odata = get_web_data($ws_parlament_url_odata);
-  $parlamentarier_ws_odata = json_decode($json_odata);
+  $parlamentarier_ws_odata = json_decode($json_odata, false, 512, JSON_THROW_ON_ERROR);
 
 //   print_r($parlamentarier_ws);
   //         var_dump($parlamentarier_ws);
@@ -857,7 +857,7 @@ function show_members(array $ids, $level = 1) {
     // }
 
     // var_dump($json);
-    $obj = json_decode($json);
+    $obj = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
 
     // https://stackoverflow.com/questions/2630013/invalid-argument-supplied-for-foreach
     // if (is_array($values) || is_object($values))
@@ -1584,7 +1584,7 @@ function getParlamentInteressenbindungenJsonOdata($concerns) {
 /** Converts a $json string to PHP datastructures (objects and arrays) */
 function decodeJson($json, $parlamentarier_db_obj) {
   global $errors;
-  $data = isset($json) ? json_decode($json) : null;
+  $data = isset($json) ? json_decode($json, false, 512, JSON_THROW_ON_ERROR) : null;
 
   if (json_last_error() != 0) {
     $errors[] = 'json_decode ERROR: ' . json_last_error() . ', ' . json_last_error_msg() . ", id=" . $parlamentarier_db_obj->id . " → '" . $json . "' / '" . $data . "'";
