@@ -124,11 +124,11 @@ if [ "$export_options" != "" ];then
     export_type="_$export_options"
 fi
 
-echo -e "$(date +%T) Start exporting..."
+echo -e "$(date '+%F %T') Start exporting..."
 
 $PHP -f db_export.php -- -c -s -m -v -g -j -o -l --arangodb -x -t -e=$export_options $all_data $test_parameter $param_schema $param_db $param_user_prefix
 
-echo -e "\n$(date +%T) Start packing..."
+echo -e "\n$(date '+%F %T') Start packing..."
 
 EXPORT=export
 MERKBLATT="docs/lobbywatch_daten_merkblatt.pdf"
@@ -477,6 +477,6 @@ fi
 
 END_OVERALL=$(date +%s)
 DIFF=$(( $END_OVERALL - $START_OVERALL ))
-echo -e "\n$(date +%T)" "Overall elapsed:" $(convertsecs $DIFF) "(${DIFF}s)"
+echo -e "\n$(date '+%F %T')" "Overall elapsed:" $(convertsecs $DIFF) "(${DIFF}s)"
 
 quit
