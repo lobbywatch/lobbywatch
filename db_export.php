@@ -83,6 +83,7 @@ const DOCU = "docu";
  * slow (optional): 0-3, indication of slowliness of this export, 0 fast, 3 very slow
  * transform_field (optional): array, field => transform function, [0..9] => transform function (called for all fields), transform_function($val, $key, $data_type, $exporter, $format, $level, $table_key, $table)
  * docu (optional): array, description of this dataset
+ * not_as_attribute (optional): array, fields that must not be exported as attributes (used for XML)
  * aggregated_tables (optional): array
  * - Key (tkey): string, name of the aggregated table, table name if no view or table are provided
  * - view (optional), string, see above
@@ -93,6 +94,7 @@ const DOCU = "docu";
  * - freigabe_datum (optional): string, see above
  * - order_by (optional): string, see above
  * - transform_field (optional): array, field => transform function, [0..9] => transform function (called for all fields), transform_function($val, $key, $data_type, $exporter, $format, $level, $table_key, $table)
+ * - not_as_attribute (optional): array, fields that must not be exported as attributes (used for XML)
  */
 
 // TODO use YAML for config https://symfony.com/doc/current/components/yaml.html
@@ -1306,10 +1308,11 @@ class SimpleXMLExtended extends SimpleXMLElement {
 
 class XmlExporter extends AggregatedExporter {
 
-  function __construct() {
+  function __construct(bool $as_attributes = true) {
     $this->format = 'xml';
     $this->fileSuffix = 'xml';
     $this->formatName = 'XML';
+    $this->as_attributes = $as_attributes;
   }
 
   function getFileHeader(bool $wrap, $transaction_date): array {
@@ -1320,7 +1323,9 @@ class XmlExporter extends AggregatedExporter {
     return ["<${table}_liste>"];
   }
   function formatRow(array $row, array $data_types, int $level, string $table_key, string $table, array $table_meta): string {
-    if (!empty($id_val = $row[$id = $table_meta['id'] ?? 'id'])) {
+    if ($this->as_attributes) {
+      $row = $this->convertToAttr($row);
+    } elseif (!empty($id_val = $row[$id = $table_meta['id'] ?? 'id'])) {
       $row['@' . $id] = $id_val;
     }
     return str_repeat("\t", $level) . $this->array2xml($table, $table, $row);
@@ -1330,6 +1335,24 @@ class XmlExporter extends AggregatedExporter {
   }
   function getFileFooter(bool $wrap): array {
     return [];
+  }
+
+  protected function convertToAttr(array $row): array {
+    $attr = [];
+    foreach($row as $key => $val) {
+      if (!is_numeric($key) && !is_array($val) && !in_array($key, $table_meta['not_as_attribute'] ?? ['notizen', 'beschreibung', 'beschreibung_de', 'beschreibung_fr', 'sachbereiche', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json'])) {
+        $attr["@$key"] = $val;
+      } elseif (!empty($val) && is_array($val) && isset($val[0]) && is_array($val[0])) { // array of data objects
+        foreach($val as $row_key => $inner_row) {
+          $attr[$key][$row_key] = $this->convertToAttr($inner_row);
+        }
+      } elseif (!empty($val) && is_array($val)) { // only 1 data object
+        $attr[$key] = $this->convertToAttr($val);
+      } else {
+        $attr[$key] = $val;
+      }
+    }
+    return $attr;
   }
 
   protected function array2xml(string $outer_name, string $inner_name, array $data, $file = false) {
@@ -1664,7 +1687,7 @@ function main() {
 //     var_dump($argv); //the arguments passed
   // :  -> mandatory parameter
   // :: -> optional parameter
-  $options = getopt('hv::n::cjaxgmosltp:e::1d:', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:', 'arangodb', 'slow::']);
+  $options = getopt('hv::n::cjaxXgmosltp:e::1d:', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:', 'arangodb', 'slow::']);
 
 //    var_dump($options);
 
@@ -1765,7 +1788,8 @@ Parameters:
 -j                  Export JSON to PATH
 -l                  Export JSONL to PATH
 -t                  Text format YAML and MD export to PATH
--x                  Export aggregated XML to PATH
+-x                  Export XML using attributes to PATH
+-X                  Export XML only as tags to PATH
 -s                  Export SQL to PATH
 -a                  Export csv, csv_neo4j, json, jsonl, xml, sql to PATH
 -e=LIST             Type of data to export, add this type of data -e=hist, -e=intern, -e=unpubl, -e=hist+unpubl+intern (default: filter at most)
@@ -1857,7 +1881,11 @@ Parameters:
   }
 
   if (isset($options['x'])) {
-    export(new XmlExporter(), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
+    export(new XmlExporter(true), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
+  }
+
+  if (isset($options['X'])) {
+    export(new XmlExporter(false), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
   }
 
   if (isset($options['t'])) {
