@@ -48,6 +48,7 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 // TODO PHPUnit for refactorings
 // TODO add flag, automatically prefix fields with table names instead of doing manually, "expand alias", (allow overruling)
 // TODO support docu_de, docu_fr
+// TODO XML -x (attributes) and -X (id attribute, otherwise only tags)
 
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
@@ -1319,6 +1320,9 @@ class XmlExporter extends AggregatedExporter {
     return ["<${table}_liste>"];
   }
   function formatRow(array $row, array $data_types, int $level, string $table_key, string $table, array $table_meta): string {
+    if (!empty($id_val = $row[$id = $table_meta['id'] ?? 'id'])) {
+      $row['@' . $id] = $id_val;
+    }
     return str_repeat("\t", $level) . $this->array2xml($table, $table, $row);
   }
   function getTableFooter(string $table, array $table_meta, bool $wrap, bool $last): array {
