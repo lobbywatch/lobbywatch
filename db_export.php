@@ -48,7 +48,6 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 // TODO PHPUnit for refactorings
 // TODO add flag, automatically prefix fields with table names instead of doing manually, "expand alias", (allow overruling)
 // TODO support docu_de, docu_fr
-// TODO XML -x (attributes) and -X (id attribute, otherwise only tags)
 
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
@@ -1385,7 +1384,6 @@ class XmlExporter extends AggregatedExporter {
         $subnode = $xml_data->addChild(isset($value[0]) && is_array($value[0]) ? "${key}_liste" : $key);
         $this->array2xmlObj($key, $value, $subnode);
       } elseif (utils_startsWith($key, '@')) {
-        // TODO use attributes
         $xml_data->addAttribute(mb_substr("$key", 1), htmlspecialchars("$value", ENT_XML1));
       } else {
         $xml_data->addChild("$key", htmlspecialchars("$value", ENT_XML1));
@@ -1475,11 +1473,9 @@ class GraphMLExporter extends XmlExporter {
       } else {
         continue;
       }
-      // $attributes[] = ['@id' => $col['col'], '@for' => $forMapping[$col['source']], '@attr.name' => $col['col'], '@attr.type' => $typeMapping[$col['type']]];
       $xml[] = "<key id=\"${col['col']}\" for=\"" . $forMapping[$col['source']] . "\" attr.name=\"${col['col']}\" attr.type=\"" . $typeMapping[$col['type']] . "\" />";
     }
     $xml[] = "<graph id=\"LobbywatchGraph\" edgedefault=\"directed\">";
-    // $this->array2xml('key', $attributes);
     return $xml;
   }
 
@@ -1500,7 +1496,6 @@ class GraphMLExporter extends XmlExporter {
     if ($type == 'node') {
       $label = ':' . ucfirst($table);
       $xml_data->addAttribute("id", htmlspecialchars("${table_key}_${row['id']}", ENT_XML1));
-      // $xml_data->addAttribute("labels", htmlspecialchars($label, ENT_XML1));
       $xml_data->addChild("data", htmlspecialchars($label, ENT_XML1))
         ->addAttribute("key", htmlspecialchars('labels', ENT_XML1));
     } elseif ($type == 'edge') {
@@ -1510,7 +1505,6 @@ class GraphMLExporter extends XmlExporter {
       $extra_val = $table_meta['name'] ?? null;
 
       $label = ($extra_val ? ($type_col ? str_replace(' ', '_', strtoupper($row[$type_col])) : $extra_val) : '');
-      // $xml_data->addAttribute("label", htmlspecialchars($label, ENT_XML1));
 
       $xml_data->addChild("data", htmlspecialchars($label, ENT_XML1))
         ->addAttribute("key", htmlspecialchars('label', ENT_XML1));
