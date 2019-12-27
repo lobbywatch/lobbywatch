@@ -17,6 +17,19 @@ LS='ls -Alh'
 ZIP='zip -j -9'
 ZIP_TREE='zip -9'
 
+EXPORT=export
+EXPORT_LOG=$EXPORT/db_export.txt
+MERKBLATT="docs/lobbywatch_daten_merkblatt.pdf"
+DATAMODEL="lobbywatch_datenmodell_simplified.pdf"
+DOCS="$MERKBLATT $DATAMODEL"
+DOCU=docu
+DOCU_MD="md"
+
+echo -e "Lobbywatch DB Export" > $EXPORT_LOG
+echo -e "====================" >> $EXPORT_LOG
+echo >> $EXPORT_LOG
+
+
 test_parameter=''
 export_options=''
 publish=false
@@ -129,13 +142,6 @@ echo -e "$(date '+%F %T') Start exporting..."
 $PHP -f db_export.php -- -c -s -m -v -g -j -o -l --arangodb -x -t -e=$export_options $all_data $test_parameter $param_schema $param_db $param_user_prefix
 
 echo -e "\n$(date '+%F %T') Start packing..."
-
-EXPORT=export
-MERKBLATT="docs/lobbywatch_daten_merkblatt.pdf"
-DATAMODEL="lobbywatch_datenmodell_simplified.pdf"
-DOCS="$MERKBLATT $DATAMODEL"
-DOCU=docu
-DOCU_MD="md"
 
 chmod 755 $EXPORT/*.sh
 
@@ -469,14 +475,16 @@ if $publish; then
     cp $archive $PUBLIC_EXPORTS_DIR
 fi
 
-if $publish; then
-    cp $DOCS $PUBLIC_EXPORTS_DIR
-    echo -e "\nPublished exports to $PUBLIC_EXPORTS_DIR:"
-    $LS $PUBLIC_EXPORTS_DIR
-fi
-
 END_OVERALL=$(date +%s)
 DIFF=$(( $END_OVERALL - $START_OVERALL ))
 echo -e "\n$(date '+%F %T')" "Overall elapsed:" $(convertsecs $DIFF) "(${DIFF}s)"
+echo -e "\n$(date '+%F %T')" "Overall elapsed:" $(convertsecs $DIFF) "(${DIFF}s)" >> $EXPORT_LOG
+
+if $publish; then
+    cp $DOCS $PUBLIC_EXPORTS_DIR
+    echo -e "\nPublished exports to $PUBLIC_EXPORTS_DIR:"
+    cp $EXPORT_LOG $PUBLIC_EXPORTS_DIR
+    $LS $PUBLIC_EXPORTS_DIR
+fi
 
 quit
