@@ -99,7 +99,7 @@ def get_parlamentarier_id(database, names, kanton_id, partei_id):
             query += " AND partei_id IS NULL"
 
         for description in ["NV", "NZV", "NNV", "NVV", "NNNV", "NS"]:
-            current_query = query + _generate_name_query(description, names)
+            current_query = query + _generate_name_query(description, names, False)
             cursor.execute(current_query)
             result = cursor.fetchall()
             if result and len(result) == 1:
@@ -120,7 +120,7 @@ def get_parlamentarier_id_by_name(database, names):
         """
 
         for description in ["VN", "VZN", "VVN", "VNN", "SN", "N"]:
-            current_query = query + _generate_name_query(description, names)
+            current_query = query + _generate_name_query(description, names, False)
             cursor.execute(current_query)
             result = cursor.fetchall()
             if result and len(result) == 1:
@@ -162,12 +162,12 @@ def get_person_id(database, names):
         WHERE 1=1 """
 
         for description in ["NV", "NZV", "NNV", "NVV", "NNNV", "NS"]:
-            current_query = query + _generate_name_query(description, names)
+            current_query = query + _generate_name_query(description, names, True)
             cursor.execute(current_query)
             result = cursor.fetchall()
             if result and len(result) > 1:
                 print(
-                    "\n\nDATA INTEGRITY FAILURE: There are multiple possibilities in the database for guest '{0}'. Aborting.".format(result))
+                    "\n\nDATA INTEGRITY FAILURE: There are multiple possibilities in the database for guest {0}: '{1}'. Aborting.".format(names, result))
                 sys.exit(1)
 
             if result and len(result) == 1:
@@ -412,14 +412,22 @@ def get_guests(conn, parlamentarier_id):
 # result:  vorname = "Markus"
 #          zweiter_vorname = "Alexander Michael"
 #          nachname = "von Meier"
-def _generate_name_query(pattern, names):
+def _generate_name_query(pattern, names, exact):
     vorname, zweiter_vorname, nachname = name_logic.parse_name_combination(
         names, pattern)
 
-    query = " AND vorname LIKE '{}%' AND nachname LIKE '{}%'".format(
-        vorname.replace("'", "''"), nachname.replace("'", "''"))
-    if zweiter_vorname:
-        query += " AND zweiter_vorname LIKE '{}%'".format(zweiter_vorname.replace("'", "''"))
+    # case Stefan vs Stefano Kunz (person_id 390 and 663)
+    # case Streiff vs Streiff-Feller (parlamentarier_id 195)
+    if exact:
+        query = " AND vorname = '{}' AND nachname = '{}'".format(
+            vorname.replace("'", "''"), nachname.replace("'", "''"))
+        if zweiter_vorname:
+            query += " AND zweiter_vorname = '{}'".format(zweiter_vorname.replace("'", "''"))
+    else:
+        query = " AND vorname LIKE '{}%' AND nachname LIKE '{}%'".format(
+            vorname.replace("'", "''"), nachname.replace("'", "''"))
+        if zweiter_vorname:
+            query += " AND zweiter_vorname LIKE '{}%'".format(zweiter_vorname.replace("'", "''"))
 
     return query
 
