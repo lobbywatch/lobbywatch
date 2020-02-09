@@ -9,7 +9,7 @@ def insert_zutrittsberechtigung(parlamentarier_id, person_id, funktion, date, pd
     query = "INSERT INTO `zutrittsberechtigung` (`parlamentarier_id`, `person_id`, `funktion`, `von`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`, `updated_by_import`) VALUES ({0}, {1}, '{2}', STR_TO_DATE('{3}', '%d.%m.%Y'), '{4}', '{5}', STR_TO_DATE('{6}', '%d.%m.%Y %T'), '{7}', STR_TO_DATE('{8}', '%d.%m.%Y %T'), STR_TO_DATE('{8}', '%d.%m.%Y %T'));\n".format(
             parlamentarier_id,
             person_id if person_id is not None else "(SELECT LAST_INSERT_ID())",
-            funktion,
+            _escape_string(funktion),
             _date_as_sql_string(date),
             "{0}/import/{1}: Erzeugt (PDF {2})".format(_date_as_sql_string(date), user, _datetime_as_sql_string(pdf_date)),
             "import",
