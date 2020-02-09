@@ -265,6 +265,7 @@ abort() {
 ' >&2
     echo "An error occurred on line $caller. Exiting..." >&2
     date -Iseconds >&2
+    beep
     exit 1
 }
 
