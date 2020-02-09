@@ -2822,7 +2822,7 @@ GROUP BY zutrittsberechtigung.id;";
       " . (!$for_email ?
           "', ', IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', " . _lobbywatch_bindungsart('zutrittsberechtigung', 'mandat', 'organisation') . ", CONCAT(mandat.beschreibung)),"
           . "IF(NOT mandat.hauptberuflich, '', CONCAT('<small class=\"desc\">, hauptberuflich</small>')),"
-          : ""
+          : "', ', IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', " . _lobbywatch_bindungsart('zutrittsberechtigung', 'mandat', 'organisation') . ", CONCAT(mandat.beschreibung)),"
         ) . "
       IF(mandat_jahr_grouped.jahr_grouped IS NULL OR TRIM(mandat_jahr_grouped.jahr_grouped) = '', '', CONCAT('<ul class=\"jahr\">', mandat_jahr_grouped.jahr_grouped, '</ul>')),
       IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(mandat.bis, '%Y'), '</s>'), ''))
