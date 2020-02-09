@@ -54,6 +54,12 @@ DATE_SHORT=`date +%Y%m%d`
 HUMAN_NOW=$(date +"%d.%m.%Y %H:%M");
 HUMAN_DATE=$(date +"%d.%m.%Y");
 
+# I could not find to write it directly in a boolean expression
+export envAbel=false
+if [[ "$HOSTNAME" =~ "abel" ]] && [[ "$USER" == "rkurmann" ]]; then
+  envAbel=true
+fi
+
 # Ref: http://stackoverflow.com/questions/12199631/convert-seconds-to-hours-minutes-seconds-in-bash
 convertsecs() {
  ((h=${1}/3600))

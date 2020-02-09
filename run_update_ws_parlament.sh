@@ -20,8 +20,12 @@
 enable_fail_onerror
 
 PHP=php
-#PHP=/usr/bin/php
-#PHP=/opt/lampp/bin/php
+# PHP=/usr/bin/php
+if $envAbel ; then
+  PHP="docker run -i --rm --name php74_execution --network=host -v $PWD:/usr/src/myapp -w /usr/src/myapp php74 php"
+  echo "Use docker PHP"
+fi
+
 db=lobbywatchtest
 env="local_${db}"
 ARCHIVE_PDF_DIR="web_scrapers/archive"
