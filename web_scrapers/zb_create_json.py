@@ -56,7 +56,7 @@ class Guest(Entity):
         return name.replace("Schürch Florence", "Schurch Florence")
 
     def remove_title(self, name):
-        return re.sub(r'(Herr|Frau|Monsieur|Madame|Dr.|Signor|Signora)', '', name).strip()
+        return re.sub(r'(Herr|Frau|Monsieur|Madame|Dr.|Signora?)', '', name).strip()
 
 # create a guest object from the passed csv row
 # taking name and function from the passed indexes of the row

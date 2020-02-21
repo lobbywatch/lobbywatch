@@ -3152,3 +3152,11 @@ CHANGE `parlamentarier_kommissionen` `parlamentarier_kommissionen` VARCHAR(100) 
 
 ALTER TABLE `person_log`
 CHANGE `parlamentarier_kommissionen` `parlamentarier_kommissionen` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/person Trigger])';
+
+-- 09.02.2020
+-- Clean up signor/signora
+
+SET @disable_triggers = 1;
+delete from zutrittsberechtigung where person_id IN (select id from person where nachname="signor" OR nachname="signora");
+delete from person where nachname="signor" OR nachname="signora";
+SET @disable_triggers = 0;
