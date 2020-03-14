@@ -1665,6 +1665,10 @@ function get_web_data_fgc_retry($url) {
   for ($i = 1; $i <= $num_retry; $i++) {
     $data = @file_get_contents($url, false, $context);
     // $http_response_header is automatically populated, see https://www.php.net/manual/en/reserved.variables.httpresponseheader.php
+    if (empty($http_response_header)) {
+      if ($verbose > 1) print("\$http_response_header is not set, retry $i\n");
+      return false;
+    }
     $code = get_http_code($http_response_header);
 //     print("Code: $code\n");
     if ($code == 200) {
