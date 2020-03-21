@@ -272,6 +272,7 @@ if ! $noparlam ; then
   if ! $automatic ; then
     askContinueYn "Run ws_parlament_fetcher.php for '$db' on '$HOSTNAME'?"
   fi
+  mkdir sql
   export P_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%dT%H%M%S"`.sql; $PHP -f ws_parlament_fetcher.php -- --db=$db -ps$kommissionen $download_images $processRetired $verbose_mode | tee $P_FILE
 
   if $verbose ; then
