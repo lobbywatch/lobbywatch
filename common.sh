@@ -130,7 +130,7 @@ wait_mysql() {
 checkLocalMySQLRunning() {
   wait_secs=15
 
-  if !$envAbel; then
+  if ! $envAbel; then
     return
   fi
 
