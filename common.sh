@@ -130,7 +130,11 @@ wait_mysql() {
 checkLocalMySQLRunning() {
   wait_secs=15
 
-  mysqladmin -h$HOST -u$DB_USER processlist >/dev/null 2>&1 && OK=true || OK=false
+  if !$envAbel; then
+    return
+  fi
+
+  mysqladmin -h$HOSTNAME -u$DB_USER processlist >/dev/null 2>&1 && OK=true || OK=false
   if $OK ; then
     # default MySQL is running, return
     return
@@ -141,7 +145,7 @@ checkLocalMySQLRunning() {
       "rkurmann" )
         # mysqlSock="/home/rkurmann/dev/web/mysql/mysql57/data/mysql.sock"
         # if [ ! -e "$mysqlSock" ]; then
-        $MYSQLADMIN -h$HOST -u$DB_USER processlist >/dev/null 2>&1 && OK=true || OK=false
+        $MYSQLADMIN -h$HOSTNAME -u$DB_USER processlist >/dev/null 2>&1 && OK=true || OK=false
         if ! $OK ; then
           askContinueYn "Docker $MYSQL_CONTAINER not running. Start?"
 
@@ -156,7 +160,7 @@ checkLocalMySQLRunning() {
         fi
         ;;
       "rkurmannXampp" )
-        $MYSQLADMIN -h$HOST -u$DB_USER processlist >/dev/null 2>&1 && OK=true || OK=false
+        $MYSQLADMIN -h$HOSTNAME -u$DB_USER processlist >/dev/null 2>&1 && OK=true || OK=false
         if ! $OK ; then
           askContinueYn "DB not running. Start?"
 
