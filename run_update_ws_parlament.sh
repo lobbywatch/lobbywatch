@@ -341,6 +341,7 @@ if ! $nozb ; then
   if ! $automatic ; then
     askContinueYn "Run zutrittsberechtigten (zb) python for '$db' on '$HOSTNAME'?"
   fi
+  mkdir backup archive
   echo "Writing zb.json..."
   python3 $zb_script_path/zb_create_json.py
   echo "Writing zb_delta.sql based on $db..."
@@ -371,6 +372,7 @@ if ! $nopg ; then
   if ! $automatic ; then
     askContinueYn "Run parlamentarische Gruppen (pg) python '$db' on '$HOSTNAME'?"
   fi
+  mkdir backup archive
   echo "Writing pg.json..."
   if $lastpdf ; then
     last_pg_pdf=$(ls -t web_scrapers/backup/*gruppen.pdf | head -1)
