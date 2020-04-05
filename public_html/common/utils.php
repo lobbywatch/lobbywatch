@@ -2895,6 +2895,7 @@ function get_parlamentarier_id_for_zutrittsberechtige_person($con, $id) {
   FROM zutrittsberechtigung zb
     JOIN v_parlamentarier_simple parlamentarier ON zb.parlamentarier_id = parlamentarier.id
   WHERE zb.person_id=:id
+  ORDER BY (CASE WHEN zb.bis IS NULL THEN 1 ELSE 0 END) DESC, zb.bis DESC
   ;";
 
   $obj = lobbywatch_forms_db_query($sql, array(':id' => $id))->fetch();
