@@ -1646,15 +1646,23 @@ function get_web_data($url) {
 }
 
 function get_object_from_json_url($url) {
-  $json = get_web_data($url);
-  try {
-    $obj = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
-    return $obj;
-  } catch (JsonException $e) {
-    var_dump($e->getTraceAsString());
-    print($obj);
-    exit(3);
+  $max_retry = 3;
+  for ($i = 0; $i < $max_retry; $i++) {
+    $json = get_web_data($url);
+    try {
+      $obj = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
+      return $obj;
+    } catch (JsonException $e) {
+      var_dump($e->getTraceAsString());
+      print($json);
+      sleep(1);
+      print("Retry...");
+    }
   }
+  print("Could not fetch json object from $url in $max_retry.");
+  print("Abort!");
+  exit(3);
+}
 }
 
 // $response = get_web_data('http://images.google.com/images?hl=en&q=' . urlencode ($query) . '&imgsz=' . $size . '&imgtype=' . $type . '&start=' . (($page - 1) * 21));
