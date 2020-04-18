@@ -259,7 +259,9 @@ function syncKommissionen() {
 
   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
     $ws_parlament_url = "http://ws-old.parlament.ch/committees?currentOnly=true&mainOnly=true&permanentOnly=true&format=json&lang=de&pageNumber=$page";
-    $json = get_web_data($ws_parlament_url);
+    // $json = get_web_data($ws_parlament_url);
+    // $obj = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
+    $obj = get_object_from_json_url($ws_parlament_url);
 
     // $handle = @fopen($url, "r");
     // if ($handle) {
@@ -273,7 +275,6 @@ function syncKommissionen() {
     // }
 
     // var_dump($json);
-    $obj = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
     // var_dump($obj);
 
   //   $sql = "SELECT * FROM kommission kommission WHERE parlament_id = :kommission_parlament_id;";
@@ -301,8 +302,9 @@ function syncKommissionen() {
       //         print_r($db_member);
 
       $ws_parlament_url = "http://ws-old.parlament.ch/committees?ids=$kommission_ws->id&format=json&lang=fr&subcom=true&pageNumber=1";
-      $json_fr = get_web_data($ws_parlament_url);
-      $obj_fr = json_decode($json_fr, false, 512, JSON_THROW_ON_ERROR);
+      // $json_fr = get_web_data($ws_parlament_url);
+      // $obj_fr = json_decode($json_fr, false, 512, JSON_THROW_ON_ERROR);
+      $obj_fr = get_object_from_json_url($ws_parlament_url);
       $kommission_fr = $obj_fr[0];
 
       $council = $kommission_ws->council;
@@ -425,7 +427,9 @@ function syncParlamentarier(string $img_path, bool $processRetired = true) {
   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
     $ws_parlament_url = "http://ws-old.parlament.ch/councillors/basicdetails?format=json&lang=de&pageNumber=$page";
 //     $ws_parlament_url = "http://ws-old.parlament.ch/councillors/historic?legislativePeriodFromFilter=50&format=json&lang=de&pageNumber=$page";
-    $json = get_web_data($ws_parlament_url);
+    // $json = get_web_data($ws_parlament_url);
+    // $obj = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
+    $obj = get_object_from_json_url($ws_parlament_url);
 
     // $handle = @fopen($url, "r");
     // if ($handle) {
@@ -439,7 +443,6 @@ function syncParlamentarier(string $img_path, bool $processRetired = true) {
     // }
 
     // var_dump($json);
-    $obj = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
 //     var_dump($obj);
 
     $hasMorePages = false;
@@ -602,13 +605,16 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   // TODO repeal and replace ws-old.parlament.ch, see https://www.parlament.ch/de/services/open-data-webservices
   // The new services should be available end of 2018
   $ws_parlament_url = "http://ws-old.parlament.ch/councillors/$biografie_id?format=json&lang=de";
-  $json = get_web_data($ws_parlament_url);
-  $parlamentarier_ws = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
+  // $json = get_web_data($ws_parlament_url);
+  // $parlamentarier_ws = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
+  $parlamentarier_ws = get_object_from_json_url($ws_parlament_url);
+
 
   $ws_parlament_url_odata = "https://ws.parlament.ch/odata.svc/PersonInterest?\$filter=" . urlencode("(Language eq 'DE') and (PersonNumber eq $biografie_id)") . "&\$orderby=SortOrder";
   // print("Url: $ws_parlament_url_odata");
-  $json_odata = get_web_data($ws_parlament_url_odata);
-  $parlamentarier_ws_odata = json_decode($json_odata, false, 512, JSON_THROW_ON_ERROR);
+  // $json_odata = get_web_data($ws_parlament_url_odata);
+  // $parlamentarier_ws_odata = json_decode($json_odata, false, 512, JSON_THROW_ON_ERROR);
+  $parlamentarier_ws_odata = get_object_from_json_url($ws_parlament_url_odata);
 
 //   print_r($parlamentarier_ws);
   //         var_dump($parlamentarier_ws);
@@ -843,7 +849,8 @@ function show_members(array $ids, $level = 1) {
 
   for($page = 1, $hasMorePages = true, $i = 0, $j = 0; $hasMorePages; $page++) {
     $ws_parlament_url = "http://ws-old.parlament.ch/committees?ids=$ids_str&format=json&lang=de&subcom=true&pageNumber=$page";
-    $json = get_web_data($ws_parlament_url);
+    // $json = get_web_data($ws_parlament_url);
+    // $obj = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
 
     // $handle = @fopen($url, "r");
     // if ($handle) {
@@ -857,7 +864,7 @@ function show_members(array $ids, $level = 1) {
     // }
 
     // var_dump($json);
-    $obj = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
+    $obj = get_object_from_json_url($ws_parlament_url);
 
     // https://stackoverflow.com/questions/2630013/invalid-argument-supplied-for-foreach
     // if (is_array($values) || is_object($values))
@@ -1636,6 +1643,18 @@ function get_web_data($url) {
   $data = get_web_data_fgc_retry($url);
 //   print_r($url . "→ " . $data);
   return $data;
+}
+
+function get_object_from_json_url($url) {
+  $json = get_web_data($url);
+  try {
+    $obj = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
+    return $obj;
+  } catch (JsonException $e) {
+    var_dump($e->getTraceAsString());
+    print($obj);
+    exit(3);
+  }
 }
 
 // $response = get_web_data('http://images.google.com/images?hl=en&q=' . urlencode ($query) . '&imgsz=' . $size . '&imgtype=' . $type . '&start=' . (($page - 1) * 21));
