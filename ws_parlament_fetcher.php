@@ -259,26 +259,7 @@ function syncKommissionen() {
 
   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
     $ws_parlament_url = "http://ws-old.parlament.ch/committees?currentOnly=true&mainOnly=true&permanentOnly=true&format=json&lang=de&pageNumber=$page";
-    // $json = get_web_data($ws_parlament_url);
-    // $obj = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
     $obj = get_object_from_json_url($ws_parlament_url);
-
-    // $handle = @fopen($url, "r");
-    // if ($handle) {
-    //     while (($buffer = fgets($handle, 4096)) !== false) {
-    //         echo $buffer;
-    //     }
-    //     if (!feof($handle)) {
-    //         echo "Error: unexpected fgets() fail\n";
-    //     }
-    //     fclose($handle);
-    // }
-
-    // var_dump($json);
-    // var_dump($obj);
-
-  //   $sql = "SELECT * FROM kommission kommission WHERE parlament_id = :kommission_parlament_id;";
-  //   $stmt = $db->prepare($sql);
 
   $hasMorePages = false;
     print("Page: $page\n");
@@ -288,22 +269,9 @@ function syncKommissionen() {
       }
       $i++;
 
-  //     if ($i > 2) {
-  //       print("Aborted i > x\n");
-  //       return;
-  //     }
-  //     $stmt->execute ( array(':kommission_parlament_id' => "$kommission->id") );
-  //     $res = $stmt->fetchAll(PDO::FETCH_CLASS);
-  //     $kommission_db = getKommissionId($kommission->id);
-  //     $ok = $kommission_db !== false;
-  //     print_r($kommission_db);
       $kommission_db = search_objects($kommissionen_db, 'parlament_id', $kommission_ws->id);
-      //         print("Search $member->id\n");
-      //         print_r($db_member);
 
       $ws_parlament_url = "http://ws-old.parlament.ch/committees?ids=$kommission_ws->id&format=json&lang=fr&subcom=true&pageNumber=1";
-      // $json_fr = get_web_data($ws_parlament_url);
-      // $obj_fr = json_decode($json_fr, false, 512, JSON_THROW_ON_ERROR);
       $obj_fr = get_object_from_json_url($ws_parlament_url);
       $kommission_fr = $obj_fr[0];
 
@@ -426,24 +394,7 @@ function syncParlamentarier(string $img_path, bool $processRetired = true) {
   echo "\n/*\nActive Parlamentarier on ws.parlament.ch $transaction_date\n";
   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
     $ws_parlament_url = "http://ws-old.parlament.ch/councillors/basicdetails?format=json&lang=de&pageNumber=$page";
-//     $ws_parlament_url = "http://ws-old.parlament.ch/councillors/historic?legislativePeriodFromFilter=50&format=json&lang=de&pageNumber=$page";
-    // $json = get_web_data($ws_parlament_url);
-    // $obj = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
     $obj = get_object_from_json_url($ws_parlament_url);
-
-    // $handle = @fopen($url, "r");
-    // if ($handle) {
-    //     while (($buffer = fgets($handle, 4096)) !== false) {
-    //         echo $buffer;
-    //     }
-    //     if (!feof($handle)) {
-    //         echo "Error: unexpected fgets() fail\n";
-    //     }
-    //     fclose($handle);
-    // }
-
-    // var_dump($json);
-//     var_dump($obj);
 
     $hasMorePages = false;
     print("Page: $page\n");
@@ -453,19 +404,8 @@ function syncParlamentarier(string $img_path, bool $processRetired = true) {
       }
       $i++;
 
-  //     if ($i > 2) {
-  //       print("Aborted i > x\n");
-  //       return;
-  //     }
-  //     $stmt->execute ( array(':kommission_parlament_id' => "$kommission->id") );
-  //     $res = $stmt->fetchAll(PDO::FETCH_CLASS);
-  //     $kommission_db = getKommissionId($kommission->id);
-  //     $ok = $kommission_db !== false;
-  //     print_r($kommission_db);
       $biografie_id = $parlamentarier_short_ws->id;
       $parlamentarier_db = search_objects($parlamentarier_list_db, 'parlament_biografie_id', $biografie_id);
-      //         print("Search $member->id\n");
-      //         print_r($db_member);
 
       $sign = '!';
       $update = array();
@@ -605,20 +545,11 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   // TODO repeal and replace ws-old.parlament.ch, see https://www.parlament.ch/de/services/open-data-webservices
   // The new services should be available end of 2018
   $ws_parlament_url = "http://ws-old.parlament.ch/councillors/$biografie_id?format=json&lang=de";
-  // $json = get_web_data($ws_parlament_url);
-  // $parlamentarier_ws = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
   $parlamentarier_ws = get_object_from_json_url($ws_parlament_url);
 
 
   $ws_parlament_url_odata = "https://ws.parlament.ch/odata.svc/PersonInterest?\$filter=" . urlencode("(Language eq 'DE') and (PersonNumber eq $biografie_id)") . "&\$orderby=SortOrder";
-  // print("Url: $ws_parlament_url_odata");
-  // $json_odata = get_web_data($ws_parlament_url_odata);
-  // $parlamentarier_ws_odata = json_decode($json_odata, false, 512, JSON_THROW_ON_ERROR);
   $parlamentarier_ws_odata = get_object_from_json_url($ws_parlament_url_odata);
-
-//   print_r($parlamentarier_ws);
-  //         var_dump($parlamentarier_ws);
-  //         exit(0);
 
   $different_db_values = false;
 
@@ -626,7 +557,6 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
 
   $field = 'kleinbild';
   $val = "$parlamentarier_ws->number.jpg";
-  //         if ($parlamentarier_db_obj->$field == 'leer.png') {
   if (empty($parlamentarier_db_obj->$field) || $parlamentarier_db_obj->$field != $val || $convert_images || $download_images) {
     $filename = "$val";
 
@@ -637,20 +567,9 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
    }
 
     if ($download_images || $id === NEW_ID) {
-      // http://stackoverflow.com/questions/9801471/download-image-from-url-using-php-code
-      //           $img = "$kleinbild_path/$filename";
-//       $url = "https://www.parlament.ch/SiteCollectionImages/profil/klein/$filename";
-//       $img = "$img_path/klein/$filename";
-//       file_put_contents($img, file_get_contents($url));
-
-//       $url = "https://www.parlament.ch/SiteCollectionImages/profil/gross/$filename";
-//       $img = "$img_path/mittel/$filename";
-//       file_put_contents($img, file_get_contents($url));
-
       $url = "https://www.parlament.ch/SiteCollectionImages/profil/original/$filename";
       $img = "$img_path/original/$filename";
       create_parent_dir_if_not_exists($img);
-//       $img_content = @file_get_contents($url);
       $img_content = @get_web_data($url);
       if ($img_content ==! FALSE) {
         file_put_contents($img, $img_content);
@@ -658,11 +577,6 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
         if ($verbose > 3) print("Warning: Image $url does not exist\n");
         $fields[] = "**originalImageMissing(download)** ";
       }
-
-      // Does not exist anymore
-//       $url = "http://www.parlament.ch/SiteCollectionImages/profil/225x225/$filename";
-//       $img = "$img_path/225x225/$filename";
-//       file_put_contents($img, file_get_contents($url));
 
       $url = "https://www.parlament.ch/SiteCollectionImages/profil/portrait-260/$filename";
       $img = "$img_path/portrait-260/$filename";
@@ -705,7 +619,6 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   // ----------------------------------------------------------
 
   // TODO Use max ID in membership
-//   print_r($parlamentarier_ws);
   $terminated = false;
   if (!$parlamentarier_ws->active && strtotime($parlamentarier_ws->councilMemberships[count($parlamentarier_ws->councilMemberships) - 1]->entryDate) < time()) {
     $different_db_values |= checkField('im_rat_bis', $parlamentarier_ws->active ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE /*FIELD_MODE_ONLY_NEW*/, 'getImRatBis');
@@ -849,30 +762,10 @@ function show_members(array $ids, $level = 1) {
 
   for($page = 1, $hasMorePages = true, $i = 0, $j = 0; $hasMorePages; $page++) {
     $ws_parlament_url = "http://ws-old.parlament.ch/committees?ids=$ids_str&format=json&lang=de&subcom=true&pageNumber=$page";
-    // $json = get_web_data($ws_parlament_url);
-    // $obj = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
-
-    // $handle = @fopen($url, "r");
-    // if ($handle) {
-    //     while (($buffer = fgets($handle, 4096)) !== false) {
-    //         echo $buffer;
-    //     }
-    //     if (!feof($handle)) {
-    //         echo "Error: unexpected fgets() fail\n";
-    //     }
-    //     fclose($handle);
-    // }
-
-    // var_dump($json);
     $obj = get_object_from_json_url($ws_parlament_url);
 
-    // https://stackoverflow.com/questions/2630013/invalid-argument-supplied-for-foreach
-    // if (is_array($values) || is_object($values))
-
-    // var_dump($obj);
 
     $hasMorePages = false;
-//     print("Mitgliederpage: $page\n");
     foreach($obj as $kommission) {
       if(property_exists($kommission, 'hasMorePages')) {
         $hasMorePages = $kommission->hasMorePages;
@@ -898,10 +791,7 @@ function show_members(array $ids, $level = 1) {
       foreach($kommission->members as $member) {
         $memberNames .= $member->lastName . ', ';
 
-//         print_r($db_members);
         $db_member = search_objects($db_members, 'parlament_biografie_id', $member->id);
-//         print("Search $member->id\n");
-//         print_r($db_member);
         $member_party = property_exists($member, 'party') ? $member->party : 'No party'; // Avoid missing party property missing problem
 
         if ($ok = ($n = count($db_member)) == 1) {
@@ -940,7 +830,6 @@ function show_members(array $ids, $level = 1) {
           $sign = '*';
           // Duplicate
           $k = 0;
-//           print_r($db_member);
           foreach($db_member as $db_member_obj) {
             $db_member_obj->status = 'OK';
             if ($k++ == 0) {
@@ -956,7 +845,6 @@ function show_members(array $ids, $level = 1) {
           $db_member_obj = $db_member[0];
 //           print(str_repeat("\t", $level) . "DUPLICATE $db_member_obj->name n=$n\n");
         } else {
-//           print_r($db_member);
           $parlamentarier_db = getParlamentarierId($member->id);
           $parlamentarier_db_ok = $parlamentarier_db !== false;
           $parlamentarier_by_name_db = getParlamentarierIdByName($member->lastName, $member->firstName);
@@ -1662,7 +1550,6 @@ function get_object_from_json_url($url) {
   print("Could not fetch json object from $url in $max_retry.");
   print("Abort!");
   exit(3);
-}
 }
 
 // $response = get_web_data('http://images.google.com/images?hl=en&q=' . urlencode ($query) . '&imgsz=' . $size . '&imgtype=' . $type . '&start=' . (($page - 1) * 21));
