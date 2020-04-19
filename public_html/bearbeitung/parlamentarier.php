@@ -39225,7 +39225,6 @@
                 ->setOptionsFor('sprache')
                 ->setOptionsFor('adresse_plz')
                 ->setOptionsFor('adresse_ort')
-                ->setOptionsFor('erfasst')
                 ->setOptionsFor('eingabe_abgeschlossen_visa')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
                 ->setOptionsFor('kontrolliert_visa')
@@ -41640,16 +41639,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for erfasst field
-            //
-            $column = new TextViewColumn('erfasst', 'erfasst', 'Erfasst', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden. NULL bedeutet Status unklar.');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
@@ -43237,17 +43226,6 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for erfasst field
-            //
-            $editor = new ComboBox('erfasst_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->addChoice('Ja', 'Ja');
-            $editor->addChoice('Nein', 'Nein');
-            $editColumn = new CustomEditColumn('Erfasst', 'erfasst', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
@@ -44253,17 +44231,6 @@
             $editor = new TextEdit('telephon_2_edit');
             $editor->SetMaxLength(25);
             $editColumn = new CustomEditColumn('Telephon 2', 'telephon_2', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for erfasst field
-            //
-            $editor = new ComboBox('erfasst_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->addChoice('Ja', 'Ja');
-            $editor->addChoice('Nein', 'Nein');
-            $editColumn = new CustomEditColumn('Erfasst', 'erfasst', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -45319,17 +45286,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for erfasst field
-            //
-            $editor = new ComboBox('erfasst_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->addChoice('Ja', 'Ja');
-            $editor->addChoice('Nein', 'Nein');
-            $editColumn = new CustomEditColumn('Erfasst', 'erfasst', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
@@ -45825,13 +45781,6 @@
             // View column for telephon_2 field
             //
             $column = new TextViewColumn('telephon_2', 'telephon_2', 'Telephon 2', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for erfasst field
-            //
-            $column = new TextViewColumn('erfasst', 'erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -46401,13 +46350,6 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for erfasst field
-            //
-            $column = new TextViewColumn('erfasst', 'erfasst', 'Erfasst', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
@@ -46960,13 +46902,6 @@
             // View column for telephon_2 field
             //
             $column = new TextViewColumn('telephon_2', 'telephon_2', 'Telephon 2', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for erfasst field
-            //
-            $column = new TextViewColumn('erfasst', 'erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             

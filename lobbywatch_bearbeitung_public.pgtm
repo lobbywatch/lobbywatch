@@ -7748,7 +7748,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_ort"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
-            <Column fieldName="erfasst"/>
+            <Column fieldName="erfasst" visible="false"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
             <Column fieldName="eingabe_abgeschlossen_datum"/>
@@ -7898,7 +7898,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_ort"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
-            <Column fieldName="erfasst"/>
+            <Column fieldName="erfasst" visible="false"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
             <Column fieldName="eingabe_abgeschlossen_datum"/>
@@ -7973,7 +7973,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_ort"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
-            <Column fieldName="erfasst"/>
+            <Column fieldName="erfasst" visible="false"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
             <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
@@ -8198,7 +8198,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_ort"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
-            <Column fieldName="erfasst"/>
+            <Column fieldName="erfasst" visible="false"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
             <Column fieldName="eingabe_abgeschlossen_datum"/>
@@ -8273,7 +8273,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_ort"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
-            <Column fieldName="erfasst"/>
+            <Column fieldName="erfasst" visible="false"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
             <Column fieldName="eingabe_abgeschlossen_datum"/>
@@ -8348,7 +8348,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_ort"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
-            <Column fieldName="erfasst"/>
+            <Column fieldName="erfasst" visible="false"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
             <Column fieldName="eingabe_abgeschlossen_datum"/>
@@ -8423,7 +8423,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_ort"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
-            <Column fieldName="erfasst"/>
+            <Column fieldName="erfasst" visible="false"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
             <Column fieldName="eingabe_abgeschlossen_datum"/>
