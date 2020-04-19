@@ -161,7 +161,7 @@
                                 <li>
                                     <a href="#" class="js-action" data-type="set-ehrenamtlich-selected" data-url="{$Page->getLink()}">
                                         <i class="pg-icon-set-ehrenamtlich-selected"></i>
-                                        Vergütung ehrenamtlich setzen{*$Captions->GetMessageString('DeleteSelected')*}
+                                        Vergütung ehrenamtlich (0) setzen{*$Captions->GetMessageString('DeleteSelected')*}
                                     </a>
                                 </li>
                             {/if}
@@ -174,7 +174,19 @@
                                 <li>
                                     <a href="#" class="js-action" data-type="set-zahlend-selected" data-url="{$Page->getLink()}">
                                         <i class="pg-icon-set-zahlend-selected"></i>
-                                        Bezahlendes Mitglied setzen{*$Captions->GetMessageString('DeleteSelected')*}
+                                        Bezahlendes Mitglied (0) setzen{*$Captions->GetMessageString('DeleteSelected')*}
+                                    </a>
+                                </li>
+                            {/if}
+
+                            {if $DataGrid.ActionsPanel.BezahltSelectedButton}
+                                {if $DataGrid.AllowDeleteSelected && !($DataGrid.ActionsPanel.EhrenamtlichSelectedButton || $DataGrid.ActionsPanel.ZahlendSelectedButton)}
+                                    <li class="divider"></li>
+                                {/if}
+                                <li>
+                                    <a href="#" class="js-action" data-type="set-bezahlt-selected" data-url="{$Page->getLink()}">
+                                        <i class="pg-icon-set-bezahlt-selected"></i>
+                                        Bezahlt (1) setzen{*$Captions->GetMessageString('DeleteSelected')*}
                                     </a>
                                 </li>
                             {/if}

@@ -914,6 +914,7 @@ class Grid {
             OPERATION_CLEAR_IMRATBIS_SELECTED => 'ClearImRatBisSelectedGridState', // Afterburner
             OPERATION_SET_EHRENAMTLICH_SELECTED => 'SetEhrenamtlichSelectedGridState', // Afterburner
             OPERATION_SET_ZAHLEND_SELECTED => 'SetZahlendSelectedGridState', // Afterburner
+            OPERATION_SET_BEZAHLT_SELECTED => 'SetBezahltSelectedGridState', // Afterburner
             OPERATION_CREATE_VERGUETUNGSTRANSPARENZLISTE => 'CreateVerguetungstransparenzliste', // Afterburner
         );
 
@@ -1165,6 +1166,12 @@ class Grid {
     }
 
     function GetAllowEhrenamtlichSelected() { // Afterburner
+      $columns = $this->GetEditColumns(); // Afterburner
+      $datasetName = preg_replace('/[`]/i', '', $this->GetDataset()->GetName()); // Afterburner
+      return $this->GetAllowDeleteSelected() && ($datasetName == "interessenbindung" || $datasetName == "mandat"); // Afterburner
+    }
+
+    function GetAllowBezahltSelected() { // Afterburner
       $columns = $this->GetEditColumns(); // Afterburner
       $datasetName = preg_replace('/[`]/i', '', $this->GetDataset()->GetName()); // Afterburner
       return $this->GetAllowDeleteSelected() && ($datasetName == "interessenbindung" || $datasetName == "mandat"); // Afterburner
@@ -1990,6 +1997,7 @@ class Grid {
                 'ReleaseSelectedButton' => $this->GetAllowReleaseSelected(), // Afterburner
                 'ImRatBisSelectedButton' => $this->GetAllowImRatBisSelected(), // Afterburner
                 'EhrenamtlichSelectedButton' => $this->GetAllowEhrenamtlichSelected(), // Afterburner
+                'BezahltSelectedButton' => $this->GetAllowBezahltSelected(), // Afterburner
                 'ZahlendSelectedButton' => $this->GetAllowZahlendSelected(), // Afterburner
                 'CreateVerguetungstransparenzListButton' => $this->GetAllowCreateVerguetungstransparenzliste(), // Afterburner
 

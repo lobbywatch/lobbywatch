@@ -44,9 +44,11 @@ define([
 //                case 'delete':
 //                    return this._delete($el.data('url'));
               case 'set-ehrenamtlich-selected':
-                return this._op_text('setehrenamtlichsel', 'Ehrenamtlich | ', '&quot;Ehrenamtlich&quot; für das aktuelle Jahr bei ' + nRows + ' Einträgen setzen?<small><br><br>Bitte Beschreibung und Quelle eingeben:<br>Format: Beschreibung | Quelle | URL<br>Beschreibung leer = "Ehrenamtlich"<br>Quelle oder URL leer = nichts</small>', url);
+                return this._op_text('setehrenamtlichsel', 'Ehrenamtlich | ', '&quot;Ehrenamtlich&quot; (0) für das aktuelle Jahr bei ' + nRows + ' Einträgen setzen?<small><br><br>Bitte Beschreibung und Quelle eingeben:<br>Format: Beschreibung | Quelle | URL<br>Beschreibung leer = "Ehrenamtlich"<br>Quelle oder URL leer = nichts<br>Alles leer = Abbruch</small>', url);
+              case 'set-bezahlt-selected':
+                return this._op_text('setbezahltsel', 'Bezahlt | ', '&quot;Bezahlt&quot; (1) für das aktuelle Jahr bei ' + nRows + ' Einträgen setzen?<small><br><br>Bitte Beschreibung und Quelle eingeben:<br>Format: Beschreibung | Quelle | URL<br>Beschreibung leer = "Bezahlt"<br>Quelle oder URL leer = nichts<br>Alles leer = Abbruch</small>', url);
               case 'set-zahlend-selected':
-                return this._op_text('setzahlendsel', 'Bezahlendes Mitglied | ', '&quot;Bezahlendes Mitglied&quot; für das aktuelle Jahr bei ' + nRows + ' Einträgen setzen?<small><br><br>Bitte Beschreibung und Quelle eingeben:<br>Format: Beschreibung | Quelle | URL<br>Beschreibung leer = "Bezahlendes Mitglied"<br>Quelle oder URL leer = nichts</small>', url);
+                return this._op_text('setzahlendsel', 'Bezahlendes Mitglied | ', '&quot;Bezahlendes Mitglied&quot; (0) für das aktuelle Jahr bei ' + nRows + ' Einträgen setzen?<small><br><br>Bitte Beschreibung und Quelle eingeben:<br>Format: Beschreibung | Quelle | URL<br>Beschreibung leer = "Bezahlendes Mitglied"<br>Quelle oder URL leer = nichts<br>Alles leer = Abbruch</small>', url);
               case 'set-imratbis-selected':
                   return this._op_date('setimratbissel', '&quot;Im Rat bis&quot; bei ' + nRows + ' Parlamentarieren setzen?<small><br><br>Der Zugang der Gäste erlischt. Das Bis-Datum der Zutrittsberechtigten wird ebenfalls gesetzt.<br><br>Bitte &quot;Im Rat bis&quot; (TT.MM.JJJJ) eingeben (leer = heute):</small>', url);
               case 'clear-imratbis-selected':
@@ -97,7 +99,7 @@ define([
         var selectionData = self.selection.getData();
         // https://stackoverflow.com/questions/16789706/multiple-inputs-in-a-bootbox
         bootbox.prompt({
-            title: text, 
+            title: text,
             value: val,
             callback: function(input) {
                 if (input) {
@@ -119,7 +121,7 @@ define([
             }
         });
       },
-      
+
       _op_confirm: function (op, text, url) {
         var self = this;
         var selectionData = self.selection.getData();
@@ -143,21 +145,21 @@ define([
             text2: text2,
             text3: text3,
         };
-        
+
         _.each(selectionData, function (keys, i) {
           formData['rec' + i] = null;
-          
+
         _.each(keys, function (value, pk) {
             formData['rec' + i + '_pk' + pk] = value;
           });
-          
+
           // Remove selection
           self.selection.remove(keys);
         });
-        
+
         this.buildForm(url, formData).submit();
       },
-      
+
       // Copied from pgui.selection-handler.js
       buildForm: function(url, data) {
         var $form = $('<form>').hide()
@@ -170,7 +172,7 @@ define([
 
         return $form.appendTo($('body'));
       },
-      
+
       // Ref: http://snipplr.com/view/13666/
       isDateValid: function(date) {
         //(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.(19|20)\d\d
