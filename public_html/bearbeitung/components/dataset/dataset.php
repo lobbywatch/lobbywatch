@@ -1073,6 +1073,10 @@ abstract class Dataset implements IFilterable, IDataset {
         $this->GetSelectCommand()->ClearAllFilters();
     }
 
+    public function ClearFieldFilters() {
+        $this->GetSelectCommand()->ClearFieldFilters();
+    }
+
     public function AddCompositeFieldFilter($filterLinkType, $fieldNames, $fieldFilters) {
         $this->GetSelectCommand()->AddCompositeFieldFilter(
             $filterLinkType, $fieldNames, $fieldFilters);

@@ -1,4 +1,4 @@
-<label class="control-label"{if not $isViewForm} for="{$editorId}"{/if} data-column="{$ColumnViewData.FieldName}">
+<label class="control-label"{if not $isViewForm} for="{$EditorId}"{/if} data-column="{$ColumnViewData.FieldName}">
     {$Col->getCaption()}
 
     {if not $isViewForm}

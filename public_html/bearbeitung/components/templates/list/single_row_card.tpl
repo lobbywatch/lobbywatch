@@ -15,7 +15,7 @@
 
                 {if $DataGrid.AllowSelect}
                     <div class="row-selection pull-left">
-                        <input id="record_{$DataGrid.InternalId}_{$Row.PrimaryKeys|@implode:'_'|@escape}" type="checkbox" name="rec{$smarty.foreach.RowsGrid.index}" data-value="{to_json value=$Row.PrimaryKeys escape=true}" />
+                        <input id="record_{$DataGrid.InternalId}_{'_'|@implode:$Row.PrimaryKeys|@escape}" type="checkbox" name="rec{$smarty.foreach.RowsGrid.index}" data-value="{to_json value=$Row.PrimaryKeys escape=true}" />
                     </div>
                 {/if}
 

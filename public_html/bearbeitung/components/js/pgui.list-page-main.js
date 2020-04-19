@@ -59,16 +59,16 @@ define([
 
         pageSettings($body);
 
-        if ($('table.table.fixed-header').length > 0) {
+        var $tableToFixHeader = $('table.table.fixed-header');
+        if ($tableToFixHeader.length > 0) {
             var $navbar = $('.navbar');
-            var $el = $('table.table');
             var marginTop = 0;
 
             if ($navbar.hasClass('navbar-fixed-top')) {
                 marginTop += $navbar.outerHeight();
             }
 
-            $el.stickyTableHeaders({
+            $tableToFixHeader.stickyTableHeaders({
                 selector: 'thead:first',
                 marginTop: marginTop
             });

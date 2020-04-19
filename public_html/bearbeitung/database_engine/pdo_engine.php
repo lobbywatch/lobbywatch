@@ -221,7 +221,11 @@ class PDODataReader extends EngDataReader
 
     public function GetFieldValueByName($fieldName)
     {
-        return $this->GetActualFieldValue($fieldName, $this->lastFetchedRow[$fieldName]);
+        if ($this->lastFetchedRow) {
+            return $this->GetActualFieldValue($fieldName, $this->lastFetchedRow[$fieldName]);
+        } else {
+            return null;
+        }
     }
 
     protected function LastError()

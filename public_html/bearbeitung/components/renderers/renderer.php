@@ -139,7 +139,7 @@ abstract class Renderer
     {
         $customValue = $this->GetCustomRenderedViewColumn($column, $rowValues);
         if (isset($customValue)) {
-            return $column->GetGrid()->GetPage()->RenderText($customValue);
+            return $customValue;
         }
 
         return $this->Render($column);
@@ -442,12 +442,7 @@ abstract class Renderer
         $this->result = $this->getWrappedViewColumnValue($column, sprintf(
             '%s%s%s',
             $prefix,
-            number_format(
-                (double) $column->GetValue(),
-                $column->GetNumberAfterDecimal(),
-                $column->GetDecimalSeparator(),
-                $column->GetThousandsSeparator()
-            ),
+            $column->getFormattedValue(),
             $suffix
         ));
     }
@@ -495,7 +490,8 @@ abstract class Renderer
      */
     public function RenderDownloadDataViewColumn(DownloadDataColumn $column)
     {
-        if (is_null($column->GetValue())) {
+        $value = $column->GetValue();
+        if ($value == null) {
             $this->result = $this->GetNullValuePresentation($column);
             return;
         }

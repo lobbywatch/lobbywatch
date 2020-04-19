@@ -39,6 +39,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Tabellenstand');
+            $this->SetMenuLabel('<span class="view">Tabellenstand</span>');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $selectQuery = 'SELECT tn as table_name, n as name, ne as anzahl_eintraege, lv as last_visa, ld as last_updated, lid as last_updated_id
             FROM (SELECT * FROM (
             (SELECT \'branche\' tn, \'Branche\' n, (select count(*) from `branche`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `branche` t ORDER BY t.`updated_date` DESC LIMIT 1)
@@ -78,7 +83,7 @@
                 array(
                     new StringField('table_name', false, true),
                     new StringField('name'),
-                    new StringField('anzahl_eintraege'),
+                    new IntegerField('anzahl_eintraege'),
                     new StringField('last_visa'),
                     new DateTimeField('last_updated'),
                     new IntegerField('last_updated_id')
@@ -984,10 +989,6 @@
     try
     {
         $Page = new q_last_updated_tablesPage("q_last_updated_tables", "tabellenstand.php", GetCurrentUserPermissionSetForDataSource("q_last_updated_tables"), 'UTF-8');
-        $Page->SetTitle('Tabellenstand');
-        $Page->SetMenuLabel('<span class="view">Tabellenstand</span>');
-        $Page->SetHeader(GetPagesHeader());
-        $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("q_last_updated_tables"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

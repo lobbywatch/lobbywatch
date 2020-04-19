@@ -46,6 +46,11 @@ class FilterBuilder extends AbstractFilter
         return $this;
     }
 
+    /** @param string   $columnName */
+    public function removeColumn($columnName) {
+        unset($this->columns[$columnName]);
+    }
+
     /**
      * @return FilterColumn[]
      */

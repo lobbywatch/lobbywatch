@@ -55,7 +55,7 @@ class PageNavigatorPage {
     }
 
     function GetHint() {
-        return $this->renderText ? $this->page->RenderText($this->hint) : $this->hint;
+        return $this->hint;
     }
 
     function GetPage() {

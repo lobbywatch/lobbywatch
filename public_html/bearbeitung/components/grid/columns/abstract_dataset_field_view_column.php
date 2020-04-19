@@ -318,7 +318,7 @@ abstract class AbstractDatasetFieldViewColumn extends AbstractViewColumn
     }
 
     public function getDataNameAttributeValue() {
-        return $this->getFieldName().'_'.implode($this->GetDataset()->GetPrimaryKeyValues(), '_');
+        return $this->getFieldName().'_'.implode('_', $this->GetDataset()->GetPrimaryKeyValues());
     }
 
     public function setLookupRecordModalViewHandlerName($value) {

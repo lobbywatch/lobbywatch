@@ -31,7 +31,9 @@ define([
             this.$count = $container.find('.js-count');
             this.selection = selection;
             this.grid = grid;
-            var $allCheckbox = $selectionHeader.find('input[type=checkbox]');
+            if ($selectionHeader !== undefined) {
+                var $allCheckbox = $selectionHeader.find('input[type=checkbox]');
+            }
             this.setCheckboxes($allCheckbox || $(), $checkboxes || $());
 
             this.$actions.on('click', this._handleAction.bind(this));
@@ -39,9 +41,6 @@ define([
             this._handleChange(this.selection.getData());
 
             this._initSelectionFilters($selectionHeader);
-            grid.container.find('.js-reset-selection-filter').on('click', function() {
-                location.href = $.query.remove('keys').set('selection_filter', '');
-            });
         },
 
         setCheckboxes: function ($allCheckbox, $checkboxes) {
@@ -220,6 +219,9 @@ define([
         },
 
         _initSelectionFilters: function($selectionHeader) {
+            if ($selectionHeader === undefined) {
+                return;
+            }
             var self = this;
             var contentHtml = $('#selection-filters-content').html();
             var $selectionFiltersLink = $selectionHeader.find('a.selection-filters');

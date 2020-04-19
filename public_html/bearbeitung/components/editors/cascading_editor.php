@@ -288,7 +288,7 @@ abstract class CascadingEditor extends CustomEditor {
         $parentIdValue = '';
         foreach($reversedLevels as $level) {
             $dataset = $level->getDataset();
-            $dataset->ClearAllFilters();
+            $dataset->ClearFieldFilters();
 
             if ($isFirstLevel) {
                 $dataset->AddFieldFilter(

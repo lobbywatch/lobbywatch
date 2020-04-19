@@ -122,11 +122,11 @@ class PermissionSet implements IPermissionSet
 
     public function __toString()
     {
-        return 'View: ' . $this->HasViewGrant() ? 'true' : 'false' . '; ' .
-            'Edit: ' . $this->HasEditGrant() ? 'true' : 'false' . '; ' .
-            'Add: ' . $this->HasAddGrant() ? 'true' : 'false' . '; ' .
-            'Delete: ' . $this->HasDeleteGrant() ? 'true' : 'false' . '; '.
-            'Admin: ' . $this->HasAdminGrant() ? 'true' : 'false' . '; ';
+        return 'View: ' . ($this->HasViewGrant() ? 'true' : 'false') . '; ' .
+            'Edit: ' . ($this->HasEditGrant() ? 'true' : 'false') . '; ' .
+            'Add: ' . ($this->HasAddGrant() ? 'true' : 'false') . '; ' .
+            'Delete: ' . ($this->HasDeleteGrant() ? 'true' : 'false') . '; '.
+            'Admin: ' . ($this->HasAdminGrant() ? 'true' : 'false') . '; ';
     }
 }
 

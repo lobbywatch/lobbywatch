@@ -109,7 +109,7 @@
     </table>
     <script id="{$DataGrid.Id}_row_template" type="text/html">
         <tr>
-            <td class="pg-inline-edit-container" colspan="<%=getColumnCount()%>">
+            <td class="pg-inline-edit-container">
                 <div class="col-md-10 col-md-offset-1 js-inline-edit-container pg-inline-edit-container-loading">
                     <img src="components/assets/img/loading.gif">
                 </div>

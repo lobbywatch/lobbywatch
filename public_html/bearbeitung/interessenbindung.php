@@ -40,6 +40,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Interessenbindungsvergütung');
+            $this->SetMenuLabel('Interessenbindungsvergütung');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -172,10 +177,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_interessenbindung_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_interessenbindung_interessenbindung_jahr_interessenbindung_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('interessenbindung_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_interessenbindung_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_interessenbindung_interessenbindung_jahr_interessenbindung_id_search');
             
             $text_editor = new TextEdit('interessenbindung_id');
             
@@ -703,7 +708,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridinteressenbindung.interessenbindung_jahr_beschreibung_handler_list');
+            $column->SetFullTextWindowHandlerName('interessenbindung_interessenbindung_jahr_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Beschreibung der Vergütung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.');
             $column->SetFixedWidth(null);
@@ -717,7 +722,7 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridinteressenbindung.interessenbindung_jahr_quelle_url_handler_list');
+            $column->SetFullTextWindowHandlerName('interessenbindung_interessenbindung_jahr_quelle_url_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('URL der Quelle; zum Beleg');
             $column->SetFixedWidth(null);
@@ -729,7 +734,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridinteressenbindung.interessenbindung_jahr_quelle_handler_list');
+            $column->SetFullTextWindowHandlerName('interessenbindung_interessenbindung_jahr_quelle_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen');
             $column->SetFixedWidth(null);
@@ -741,7 +746,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridinteressenbindung.interessenbindung_jahr_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('interessenbindung_interessenbindung_jahr_notizen_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
             $column->SetFixedWidth(null);
@@ -910,7 +915,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridinteressenbindung.interessenbindung_jahr_beschreibung_handler_view');
+            $column->SetFullTextWindowHandlerName('interessenbindung_interessenbindung_jahr_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -921,7 +926,7 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridinteressenbindung.interessenbindung_jahr_quelle_url_handler_view');
+            $column->SetFullTextWindowHandlerName('interessenbindung_interessenbindung_jahr_quelle_url_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -930,7 +935,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridinteressenbindung.interessenbindung_jahr_quelle_handler_view');
+            $column->SetFullTextWindowHandlerName('interessenbindung_interessenbindung_jahr_quelle_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -939,7 +944,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridinteressenbindung.interessenbindung_jahr_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('interessenbindung_interessenbindung_jahr_notizen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1286,7 +1291,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Interessenbindung', 'interessenbindung_id', 'interessenbindung_id_anzeige_name', 'multi_edit_interessenbindung_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Interessenbindung', 'interessenbindung_id', 'interessenbindung_id_anzeige_name', 'multi_edit_interessenbindung_interessenbindung_jahr_interessenbindung_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1645,7 +1650,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridinteressenbindung.interessenbindung_jahr_beschreibung_handler_print');
+            $column->SetFullTextWindowHandlerName('interessenbindung_interessenbindung_jahr_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1656,7 +1661,7 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridinteressenbindung.interessenbindung_jahr_quelle_url_handler_print');
+            $column->SetFullTextWindowHandlerName('interessenbindung_interessenbindung_jahr_quelle_url_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1665,7 +1670,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridinteressenbindung.interessenbindung_jahr_quelle_handler_print');
+            $column->SetFullTextWindowHandlerName('interessenbindung_interessenbindung_jahr_quelle_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1674,7 +1679,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridinteressenbindung.interessenbindung_jahr_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('interessenbindung_interessenbindung_jahr_notizen_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1804,7 +1809,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridinteressenbindung.interessenbindung_jahr_beschreibung_handler_export');
+            $column->SetFullTextWindowHandlerName('interessenbindung_interessenbindung_jahr_beschreibung_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1815,7 +1820,7 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridinteressenbindung.interessenbindung_jahr_quelle_url_handler_export');
+            $column->SetFullTextWindowHandlerName('interessenbindung_interessenbindung_jahr_quelle_url_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1824,7 +1829,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridinteressenbindung.interessenbindung_jahr_quelle_handler_export');
+            $column->SetFullTextWindowHandlerName('interessenbindung_interessenbindung_jahr_quelle_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1833,7 +1838,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridinteressenbindung.interessenbindung_jahr_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('interessenbindung_interessenbindung_jahr_notizen_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1963,7 +1968,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridinteressenbindung.interessenbindung_jahr_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('interessenbindung_interessenbindung_jahr_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1974,7 +1979,7 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridinteressenbindung.interessenbindung_jahr_quelle_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('interessenbindung_interessenbindung_jahr_quelle_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1990,7 +1995,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridinteressenbindung.interessenbindung_jahr_quelle_handler_compare');
+            $column->SetFullTextWindowHandlerName('interessenbindung_interessenbindung_jahr_quelle_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1999,7 +2004,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridinteressenbindung.interessenbindung_jahr_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('interessenbindung_interessenbindung_jahr_notizen_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -2188,7 +2193,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridinteressenbindung.interessenbindung_jahr_beschreibung_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_interessenbindung_jahr_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2198,7 +2203,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridinteressenbindung.interessenbindung_jahr_quelle_url_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_interessenbindung_jahr_quelle_url_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2206,7 +2211,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridinteressenbindung.interessenbindung_jahr_quelle_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_interessenbindung_jahr_quelle_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2214,7 +2219,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridinteressenbindung.interessenbindung_jahr_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_interessenbindung_jahr_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2222,7 +2227,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridinteressenbindung.interessenbindung_jahr_beschreibung_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_interessenbindung_jahr_beschreibung_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2232,7 +2237,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridinteressenbindung.interessenbindung_jahr_quelle_url_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_interessenbindung_jahr_quelle_url_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2240,7 +2245,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridinteressenbindung.interessenbindung_jahr_quelle_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_interessenbindung_jahr_quelle_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2248,7 +2253,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridinteressenbindung.interessenbindung_jahr_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_interessenbindung_jahr_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2256,7 +2261,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridinteressenbindung.interessenbindung_jahr_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_interessenbindung_jahr_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2266,7 +2271,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridinteressenbindung.interessenbindung_jahr_quelle_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_interessenbindung_jahr_quelle_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2274,7 +2279,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridinteressenbindung.interessenbindung_jahr_quelle_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_interessenbindung_jahr_quelle_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2282,7 +2287,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridinteressenbindung.interessenbindung_jahr_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_interessenbindung_jahr_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -2336,7 +2341,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessenbindung_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessenbindung_interessenbindung_jahr_interessenbindung_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2344,7 +2349,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridinteressenbindung.interessenbindung_jahr_beschreibung_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_interessenbindung_jahr_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2354,7 +2359,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridinteressenbindung.interessenbindung_jahr_quelle_url_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_interessenbindung_jahr_quelle_url_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2362,7 +2367,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridinteressenbindung.interessenbindung_jahr_quelle_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_interessenbindung_jahr_quelle_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2370,7 +2375,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridinteressenbindung.interessenbindung_jahr_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_interessenbindung_jahr_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -2424,7 +2429,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_interessenbindung_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_interessenbindung_interessenbindung_jahr_interessenbindung_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -2579,6 +2584,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Interessenbindung');
+            $this->SetMenuLabel('<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbindungen von NR/SR</span>');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -2758,10 +2768,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_parlamentarier_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_interessenbindung_parlamentarier_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('parlamentarier_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_interessenbindung_parlamentarier_id_search');
             
             $text_editor = new TextEdit('parlamentarier_id');
             
@@ -2793,10 +2803,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_organisation_id_searchable_name_search');
+            $main_editor->SetHandlerName('filter_builder_interessenbindung_organisation_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('organisation_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_organisation_id_searchable_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_interessenbindung_organisation_id_search');
             
             $text_editor = new TextEdit('organisation_id');
             
@@ -3654,7 +3664,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_beschreibung_handler_list');
+            $column->SetFullTextWindowHandlerName('interessenbindung_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.');
@@ -3667,7 +3677,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_beschreibung_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('interessenbindung_beschreibung_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Französische Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.');
             $column->SetFixedWidth(null);
@@ -3681,7 +3691,7 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_quelle_url_handler_list');
+            $column->SetFullTextWindowHandlerName('interessenbindung_quelle_url_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('URL der Quelle; zum Beleg');
             $column->SetFixedWidth(null);
@@ -3693,7 +3703,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_quelle_handler_list');
+            $column->SetFullTextWindowHandlerName('interessenbindung_quelle_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen');
             $column->SetFixedWidth(null);
@@ -3705,7 +3715,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('interessenbindung_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
@@ -3943,7 +3953,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_beschreibung_handler_view');
+            $column->SetFullTextWindowHandlerName('interessenbindung_beschreibung_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -3953,7 +3963,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_beschreibung_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('interessenbindung_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3964,7 +3974,7 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_quelle_url_handler_view');
+            $column->SetFullTextWindowHandlerName('interessenbindung_quelle_url_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3973,7 +3983,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_quelle_handler_view');
+            $column->SetFullTextWindowHandlerName('interessenbindung_quelle_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3982,7 +3992,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('interessenbindung_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -4196,7 +4206,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'edit_parlamentarier_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'edit_interessenbindung_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4274,7 +4284,7 @@
                 )
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_searchable_name', 'edit_organisation_id_searchable_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
+            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_searchable_name', 'edit_interessenbindung_organisation_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4672,7 +4682,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'multi_edit_parlamentarier_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'multi_edit_interessenbindung_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4750,7 +4760,7 @@
                 )
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_searchable_name', 'multi_edit_organisation_id_searchable_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
+            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_searchable_name', 'multi_edit_interessenbindung_organisation_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -5157,7 +5167,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'insert_parlamentarier_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'insert_interessenbindung_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -5235,7 +5245,7 @@
                 )
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_searchable_name', 'insert_organisation_id_searchable_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
+            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_searchable_name', 'insert_interessenbindung_organisation_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -5537,7 +5547,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_beschreibung_handler_print');
+            $column->SetFullTextWindowHandlerName('interessenbindung_beschreibung_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -5547,7 +5557,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_beschreibung_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('interessenbindung_beschreibung_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -5558,7 +5568,7 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_quelle_url_handler_print');
+            $column->SetFullTextWindowHandlerName('interessenbindung_quelle_url_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -5567,7 +5577,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_quelle_handler_print');
+            $column->SetFullTextWindowHandlerName('interessenbindung_quelle_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -5576,7 +5586,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('interessenbindung_notizen_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -5772,7 +5782,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_beschreibung_handler_export');
+            $column->SetFullTextWindowHandlerName('interessenbindung_beschreibung_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -5782,7 +5792,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_beschreibung_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('interessenbindung_beschreibung_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -5793,7 +5803,7 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_quelle_url_handler_export');
+            $column->SetFullTextWindowHandlerName('interessenbindung_quelle_url_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -5802,7 +5812,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_quelle_handler_export');
+            $column->SetFullTextWindowHandlerName('interessenbindung_quelle_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -5811,7 +5821,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('interessenbindung_notizen_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -6007,7 +6017,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('interessenbindung_beschreibung_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -6017,7 +6027,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_beschreibung_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('interessenbindung_beschreibung_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -6028,7 +6038,7 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_quelle_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('interessenbindung_quelle_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -6037,7 +6047,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_quelle_handler_compare');
+            $column->SetFullTextWindowHandlerName('interessenbindung_quelle_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -6046,7 +6056,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('interessenbindungGrid_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('interessenbindung_notizen_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -6307,10 +6317,6 @@
         protected function doRegisterHandlers() {
             $detailPage = new interessenbindung_interessenbindung_jahrPage('interessenbindung_interessenbindung_jahr', $this, array('interessenbindung_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('interessenbindung.interessenbindung_jahr'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('interessenbindung.interessenbindung_jahr'));
-            $detailPage->SetTitle('Interessenbindungsvergütung');
-            $detailPage->SetMenuLabel('Interessenbindungsvergütung');
-            $detailPage->SetHeader(GetPagesHeader());
-            $detailPage->SetFooter(GetPagesFooter());
             $detailPage->SetHttpHandlerName('interessenbindung_interessenbindung_jahr_handler');
             $handler = new PageHTTPHandler('interessenbindung_interessenbindung_jahr_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
@@ -6321,7 +6327,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_beschreibung_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6329,7 +6335,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_beschreibung_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_beschreibung_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6339,7 +6345,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_quelle_url_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_quelle_url_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6347,7 +6353,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_quelle_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_quelle_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6356,7 +6362,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6365,7 +6371,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_beschreibung_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_beschreibung_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6373,7 +6379,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_beschreibung_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_beschreibung_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6383,7 +6389,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_quelle_url_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_quelle_url_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6391,7 +6397,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_quelle_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_quelle_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6400,7 +6406,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6409,7 +6415,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6417,7 +6423,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_beschreibung_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_beschreibung_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6427,7 +6433,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_quelle_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_quelle_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6435,7 +6441,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_quelle_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_quelle_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6444,7 +6450,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6550,7 +6556,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_interessenbindung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6619,7 +6625,7 @@
                 )
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_organisation_id_searchable_name_search', 'id', 'searchable_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_interessenbindung_organisation_id_search', 'id', 'searchable_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6725,7 +6731,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessenbindung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6794,7 +6800,7 @@
                 )
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_organisation_id_searchable_name_search', 'id', 'searchable_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessenbindung_organisation_id_search', 'id', 'searchable_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6803,7 +6809,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_beschreibung_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6811,7 +6817,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_beschreibung_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6821,7 +6827,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_quelle_url_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_quelle_url_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6829,7 +6835,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_quelle_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_quelle_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6838,7 +6844,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindung_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6944,7 +6950,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_interessenbindung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7013,7 +7019,7 @@
                 )
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_organisation_id_searchable_name_search', 'id', 'searchable_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_interessenbindung_organisation_id_search', 'id', 'searchable_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7119,7 +7125,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_interessenbindung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7188,7 +7194,7 @@
                 )
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_organisation_id_searchable_name_search', 'id', 'searchable_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_interessenbindung_organisation_id_search', 'id', 'searchable_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -7339,10 +7345,6 @@
     try
     {
         $Page = new interessenbindungPage("interessenbindung", "interessenbindung.php", GetCurrentUserPermissionSetForDataSource("interessenbindung"), 'UTF-8');
-        $Page->SetTitle('Interessenbindung');
-        $Page->SetMenuLabel('<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbindungen von NR/SR</span>');
-        $Page->SetHeader(GetPagesHeader());
-        $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("interessenbindung"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

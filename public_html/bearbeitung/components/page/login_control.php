@@ -96,6 +96,7 @@ class LoginControl {
         $this->userIdentityStorage->ClearUserIdentity();
     }
 
+    /** @return EngConnection */
     private function getAuxiliaryConnection() {
         $connection = $this->connectionFactory->CreateConnection(GetConnectionOptions());
         try {
@@ -110,6 +111,16 @@ class LoginControl {
     private function DoOnAfterLogin($userName, &$canLogin, &$errorMessage) {
         $connection = $this->getAuxiliaryConnection();
         $this->page->OnAfterLogin->Fire(array($userName, $connection, &$canLogin, &$errorMessage));
+        $connection->Disconnect();
+    }
+
+    private function DoOnAfterFailedLoginAttempt($userName) {
+        $errorMessage = '';
+        $connection = $this->getAuxiliaryConnection();
+        $this->page->OnAfterFailedLoginAttempt->Fire(array($userName, $connection, &$errorMessage));
+        if (!empty($errorMessage)) {
+            $this->errorMessage = $errorMessage;
+        }
         $connection->Disconnect();
     }
 
@@ -152,7 +163,7 @@ class LoginControl {
         if ($this->getSelfRegistrationEnabled() && !$this->checkUserAccountVerified($username)) {
             return;
         }
-        if ($this->checkUserIdentity($username, $password, $this->errorMessage)) {
+        if ($this->checkUserIdentity($username, $password)) {
             $this->SaveUserIdentity($username, $password, $saveIdentity);
 
             $canLogin = true;
@@ -167,19 +178,20 @@ class LoginControl {
             header('Location: ' . $this->GetUrlToRedirectAfterLogin());
             exit;
         } else {
+            $this->DoOnAfterFailedLoginAttempt($username);
             $this->lastSaveidentity = $saveIdentity;
         }
     }
 
-    public function checkUserIdentity($username, $password, &$errorMessage) {
+    public function checkUserIdentity($username, $password) {
         try {
             $result = $this->userAuthentication->checkUserIdentity($username, $password);
         } catch (Exception $e) {
-            $errorMessage = $e->getMessage();
+            $this->errorMessage = $e->getMessage();
             return false;
         }
         if (!$result) {
-            $errorMessage = $this->captions->GetMessageString('UsernamePasswordWasInvalid');
+            $this->errorMessage = $this->captions->GetMessageString('UsernamePasswordWasInvalid');
         }
         return $result;
     }

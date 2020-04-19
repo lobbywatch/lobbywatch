@@ -75,7 +75,7 @@ class QuickFilter extends AbstractFilter
         } else {
             $this->filterComponent = new FilterGroup(FilterGroupOperator::OPERATOR_OR);
         }
-        if (!empty($this->value)) {
+        if (isset($this->value) && ($this->value != '')) {
             foreach ($this->columns as $column) {
                 if (count($this->selectedFieldNames) == 0 || in_array($column->getFieldName(), $this->selectedFieldNames)) {
                     $this->filterComponent->insertChild(new FilterCondition(

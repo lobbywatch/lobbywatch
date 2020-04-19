@@ -41,7 +41,7 @@ define(['underscore', 'jquery.magnific-popup'], function (_) {
                 return acc;
             }, [])
             .each(function (columnName) {
-                $container.find('a.gallery-item[data-name=' + columnName + ']').magnificPopup({
+                $container.find('a.gallery-item[data-name="' + columnName + '"]').magnificPopup({
                     type: 'image',
                     gallery: {
                         enabled: true,

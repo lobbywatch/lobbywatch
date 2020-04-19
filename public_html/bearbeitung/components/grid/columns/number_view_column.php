@@ -40,4 +40,13 @@ class NumberViewColumn extends TextViewColumn
     {
         $renderer->RenderNumberViewColumn($this);
     }
+
+    public function getFormattedValue() {
+        return number_format(
+            (double) $this->GetValue(),
+            $this->GetNumberAfterDecimal(),
+            $this->GetDecimalSeparator(),
+            $this->GetThousandsSeparator()
+        );
+    }
 }

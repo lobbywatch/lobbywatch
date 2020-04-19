@@ -15,6 +15,9 @@ define([
                 for (var i = 0; i < this.levels.length; i++) {
                     if (this.levels[i].rootElement.attr('data-id') == $level.attr('data-id')) {
                         this._addLevelValue(this.levels[i], $insertButton, primaryKey, record[$insertButton.data('display-field-name')]);
+                        if (i == this.levels.length - 1) {
+                            this.doChanged();
+                        }
                     }
                 }
             }.bind(this));
@@ -68,6 +71,10 @@ define([
                 })();
             }
 
+            $levels.eq($levels.length - 1).on("change", function () {
+                self.doChanged();
+            });
+
         },
 
         _addLevelValue: function(level, $insertButton, value, displayValue) {
@@ -79,13 +86,6 @@ define([
             level.doChanged();
         },
 
-        getValue: function() {
-        },
-
-        setValue: function(value) {
-
-        },
-
         updateNestedInsertLink: function(parentLevel, level, $insertButton) {
             if (parentLevel.getValue() && ($insertButton.length > 0)) {
                 var url = jQuery.query.load($insertButton.data('content-link'))
@@ -94,6 +94,14 @@ define([
                     .toString();
                 $insertButton.data('content-link', url);
             }
+        },
+
+        _getMainControl: function() {
+            return this.rootElement.find("[data-editor-main]");
+        },
+
+        getValue: function() {
+            return this._getMainControl().val();
         }
 
     });

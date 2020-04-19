@@ -39,6 +39,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Zutrittsberechtigung');
+            $this->SetMenuLabel('<span class="relation" title="Zutrittsberechtigungen für Gäse ins Bundeshaus">Zutrittsberechtigung</span>');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -195,10 +200,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_parlamentarier_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_zutrittsberechtigung_parlamentarier_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('parlamentarier_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_zutrittsberechtigung_parlamentarier_id_search');
             
             $text_editor = new TextEdit('parlamentarier_id');
             
@@ -230,10 +235,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_person_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_zutrittsberechtigung_person_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('person_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_person_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_zutrittsberechtigung_person_id_search');
             
             $text_editor = new TextEdit('person_id');
             
@@ -791,7 +796,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Deklarierte Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_funktion_handler_list');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_funktion_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Deklarierte Funktion der zutrittsberechtigen Person bei den Parlamentsdiensten.');
             $column->SetFixedWidth(null);
@@ -803,7 +808,7 @@
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Deklarierte Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_funktion_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_funktion_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Deklarierte Funktion der zutrittsberechtigen Person auf französisch.');
             $column->SetFixedWidth(null);
@@ -837,7 +842,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
@@ -1022,7 +1027,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Deklarierte Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_funktion_handler_view');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_funktion_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1031,7 +1036,7 @@
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Deklarierte Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_funktion_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_funktion_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1056,7 +1061,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1270,7 +1275,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'edit_parlamentarier_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'edit_zutrittsberechtigung_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1341,7 +1346,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'edit_person_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'edit_zutrittsberechtigung_person_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1654,7 +1659,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'multi_edit_parlamentarier_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'multi_edit_zutrittsberechtigung_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1725,7 +1730,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'multi_edit_person_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'multi_edit_zutrittsberechtigung_person_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2038,7 +2043,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'insert_parlamentarier_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'insert_zutrittsberechtigung_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2109,7 +2114,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'insert_person_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'insert_zutrittsberechtigung_person_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2273,7 +2278,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_funktion_handler_print');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_funktion_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -2282,7 +2287,7 @@
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_funktion_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_funktion_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -2307,7 +2312,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_notizen_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -2450,7 +2455,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_funktion_handler_export');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_funktion_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -2459,7 +2464,7 @@
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_funktion_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_funktion_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -2484,7 +2489,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_notizen_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -2627,7 +2632,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Deklarierte Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_funktion_handler_compare');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_funktion_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -2636,7 +2641,7 @@
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Deklarierte Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_funktion_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_funktion_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -2661,7 +2666,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_notizen_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -2895,7 +2900,7 @@
             //
             $column = new TextViewColumn('funktion', 'funktion', 'Deklarierte Funktion', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_funktion_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_funktion_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2903,7 +2908,7 @@
             //
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Deklarierte Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_funktion_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_funktion_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2912,7 +2917,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2920,7 +2925,7 @@
             //
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_funktion_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_funktion_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2928,7 +2933,7 @@
             //
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_funktion_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_funktion_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2937,7 +2942,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2945,7 +2950,7 @@
             //
             $column = new TextViewColumn('funktion', 'funktion', 'Deklarierte Funktion', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_funktion_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_funktion_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2953,7 +2958,7 @@
             //
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Deklarierte Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_funktion_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_funktion_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2962,7 +2967,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -3068,7 +3073,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_zutrittsberechtigung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -3130,7 +3135,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_person_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_zutrittsberechtigung_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -3236,7 +3241,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_zutrittsberechtigung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -3298,7 +3303,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_zutrittsberechtigung_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -3306,7 +3311,7 @@
             //
             $column = new TextViewColumn('funktion', 'funktion', 'Deklarierte Funktion', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_funktion_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_funktion_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -3314,7 +3319,7 @@
             //
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Deklarierte Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_funktion_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_funktion_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -3323,7 +3328,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -3429,7 +3434,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_zutrittsberechtigung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -3491,7 +3496,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_person_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_zutrittsberechtigung_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -3597,7 +3602,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_zutrittsberechtigung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -3659,7 +3664,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_person_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_zutrittsberechtigung_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -3810,10 +3815,6 @@
     try
     {
         $Page = new zutrittsberechtigungPage("zutrittsberechtigung", "zutrittsberechtigung.php", GetCurrentUserPermissionSetForDataSource("zutrittsberechtigung"), 'UTF-8');
-        $Page->SetTitle('Zutrittsberechtigung');
-        $Page->SetMenuLabel('<span class="relation" title="Zutrittsberechtigungen für Gäse ins Bundeshaus">Zutrittsberechtigung</span>');
-        $Page->SetHeader(GetPagesHeader());
-        $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("zutrittsberechtigung"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

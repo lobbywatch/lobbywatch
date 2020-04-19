@@ -218,46 +218,6 @@ abstract class AbstractViewColumn extends ViewColumnGroup implements ColumnInter
 
     #endregion
 
-    private function GetTotalValueAsHtml($value)
-    {
-        $result = $value;
-        if (is_numeric($value)) {
-            $result = number_format((double)$value, 2);
-        }
-
-        return $result;
-    }
-
-    private function GetCustomTotalPresentation($originalValue)
-    {
-        $aggregate = $this->GetGrid()->GetAggregateFor($this)->AsString();
-        $result = '';
-        $handled = false;
-        $this->GetGrid()->OnCustomRenderTotal->Fire(
-            array($originalValue, $aggregate, $this->GetName(), &$result, &$handled)
-        );
-        if ($handled) {
-            return $result;
-        } else {
-            return null;
-        }
-    }
-
-    public function GetTotalPresentationData($totalValue)
-    {
-        $result = array();
-        $result['IsEmpty'] = !isset($totalValue);
-
-        if (isset($totalValue)) {
-            $result['Value'] = $this->GetTotalValueAsHtml($totalValue);
-            $result['Aggregate'] = $this->GetGrid()->GetAggregateFor($this)->AsString();
-            $result['UserHTML'] = $this->GetCustomTotalPresentation($totalValue);
-            $result['CustomValue'] = $result['UserHTML'] != null;
-        }
-
-        return $result;
-    }
-
     public function getViewData()
     {
         return array();

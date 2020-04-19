@@ -170,11 +170,22 @@ abstract class BaseSelectCommand extends EngCommand implements IFilterable {
     }
 
     public final function ClearAllFilters() {
-        $this->fieldFilters = array();
-        $this->compositeFieldFilters = array();
-        $this->customConditions = array();
+        $this->ClearFieldFilters();
+        $this->ClearCompositeFieldFilters();
+        $this->ClearCustomConditions();
     }
 
+    public function ClearFieldFilters() {
+        $this->fieldFilters = array();
+    }
+
+    public function ClearCompositeFieldFilters() {
+        $this->compositeFieldFilters = array();
+    }
+
+    public function ClearCustomConditions() {
+        $this->customConditions = array();
+    }
     #endregion
 
     /**

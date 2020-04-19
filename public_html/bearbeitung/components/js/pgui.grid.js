@@ -118,7 +118,9 @@ define([
         },
 
         getRowTemplate: function () {
-            return $(_.template($('#' + this.getId() + '_row_template').html())(this));
+            var $rowTemplate = $(_.template($('#' + this.getId() + '_row_template').html())(this));
+            $rowTemplate.find('td.pg-inline-edit-container').attr('colspan', this.getColumnCount());
+            return $rowTemplate;
         },
 
         getColumnCount: function() {
@@ -301,6 +303,10 @@ define([
                 })
                 .on('click', '.js-reset-filter', function (e) {
                     getFilterByEvent(e).reset().submit();
+                    e.preventDefault();
+                })
+                .on('click', '.js-reset-selection-filter', function (e) {
+                    location.href = $.query.remove('keys').set('selection_filter', '');
                     e.preventDefault();
                 })
             ;

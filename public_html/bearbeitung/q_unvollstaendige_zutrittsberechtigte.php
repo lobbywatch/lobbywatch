@@ -39,6 +39,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Unvollständige Zutrittsberechtigte');
+            $this->SetMenuLabel('<span class="view">Unvollständige Zutrittsberechtigte</span>');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $selectQuery = 'select zutrittsberechtigung.*, parlamentarier.kommissionen from
             v_zutrittsberechtigung_simple_compat zutrittsberechtigung
             LEFT JOIN v_parlamentarier parlamentarier
@@ -63,7 +68,7 @@
                     new StringField('name'),
                     new StringField('name_de'),
                     new StringField('name_fr'),
-                    new IntegerField('id', true, true, true),
+                    new IntegerField('id', true, true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
@@ -101,12 +106,12 @@
                     new DateTimeField('created_date_person'),
                     new StringField('updated_visa_person'),
                     new DateTimeField('updated_date_person'),
-                    new StringField('published_person'),
-                    new StringField('created_date_unix_person'),
-                    new StringField('updated_date_unix_person'),
-                    new StringField('eingabe_abgeschlossen_datum_unix_person'),
-                    new StringField('kontrolliert_datum_unix_person'),
-                    new StringField('freigabe_datum_unix_person'),
+                    new IntegerField('published_person'),
+                    new IntegerField('created_date_unix_person'),
+                    new IntegerField('updated_date_unix_person'),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix_person'),
+                    new IntegerField('kontrolliert_datum_unix_person'),
+                    new IntegerField('freigabe_datum_unix_person'),
                     new IntegerField('parlamentarier_id', true),
                     new IntegerField('person_id', true),
                     new IntegerField('zutrittsberechtigung_id'),
@@ -124,14 +129,14 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new StringField('published'),
-                    new StringField('bis_unix'),
-                    new StringField('von_unix'),
-                    new StringField('created_date_unix'),
-                    new StringField('updated_date_unix'),
-                    new StringField('eingabe_abgeschlossen_datum_unix'),
-                    new StringField('kontrolliert_datum_unix'),
-                    new StringField('freigabe_datum_unix'),
+                    new IntegerField('published'),
+                    new IntegerField('bis_unix'),
+                    new IntegerField('von_unix'),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix'),
                     new StringField('kommissionen')
                 )
             );
@@ -354,10 +359,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_parlamentarier_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_q_unvollstaendige_zutrittsberechtigte_parlamentarier_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('parlamentarier_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_q_unvollstaendige_zutrittsberechtigte_parlamentarier_id_search');
             
             $text_editor = new TextEdit('parlamentarier_id');
             
@@ -533,10 +538,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_beruf_interessengruppe_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_q_unvollstaendige_zutrittsberechtigte_beruf_interessengruppe_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('beruf_interessengruppe_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_beruf_interessengruppe_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_q_unvollstaendige_zutrittsberechtigte_beruf_interessengruppe_id_search');
             
             $text_editor = new TextEdit('beruf_interessengruppe_id');
             
@@ -568,10 +573,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_partei_id_abkuerzung_search');
+            $main_editor->SetHandlerName('filter_builder_q_unvollstaendige_zutrittsberechtigte_partei_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('partei_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_partei_id_abkuerzung_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_q_unvollstaendige_zutrittsberechtigte_partei_id_search');
             
             $text_editor = new TextEdit('partei_id');
             
@@ -7158,7 +7163,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_q_unvollstaendige_zutrittsberechtigte_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7202,7 +7207,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_beruf_interessengruppe_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_q_unvollstaendige_zutrittsberechtigte_beruf_interessengruppe_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7259,7 +7264,7 @@
                 )
             );
             $lookupDataset->setOrderByField('abkuerzung', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_partei_id_abkuerzung_search', 'id', 'abkuerzung', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_q_unvollstaendige_zutrittsberechtigte_partei_id_search', 'id', 'abkuerzung', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -7410,10 +7415,6 @@
     try
     {
         $Page = new q_unvollstaendige_zutrittsberechtigtePage("q_unvollstaendige_zutrittsberechtigte", "q_unvollstaendige_zutrittsberechtigte.php", GetCurrentUserPermissionSetForDataSource("q_unvollstaendige_zutrittsberechtigte"), 'UTF-8');
-        $Page->SetTitle('Unvollständige Zutrittsberechtigte');
-        $Page->SetMenuLabel('<span class="view">Unvollständige Zutrittsberechtigte</span>');
-        $Page->SetHeader(GetPagesHeader());
-        $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("q_unvollstaendige_zutrittsberechtigte"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

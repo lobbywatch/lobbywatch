@@ -40,6 +40,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Parlamentarier in Kommission');
+            $this->SetMenuLabel('Parlamentarier in Kommission');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -251,10 +256,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_parlamentarier_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_kommission_v_in_kommission_parlamentarier_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('parlamentarier_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_kommission_v_in_kommission_parlamentarier_id_search');
             
             $text_editor = new TextEdit('parlamentarier_id');
             
@@ -286,10 +291,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_kommission_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_kommission_v_in_kommission_kommission_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('kommission_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_kommission_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_kommission_v_in_kommission_kommission_id_search');
             
             $text_editor = new TextEdit('kommission_id');
             
@@ -1076,7 +1081,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
@@ -1257,7 +1262,7 @@
             $column = new TextViewColumn('kommission_name_de', 'kommission_name_de', 'Kommission Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_name_de_handler_list');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_kommission_name_de_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -1279,7 +1284,7 @@
             $column = new TextViewColumn('kommission_name_fr', 'kommission_name_fr', 'Kommission Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_name_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_kommission_name_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -1301,7 +1306,7 @@
             $column = new TextViewColumn('kommission_name_mixed', 'kommission_name_mixed', 'Kommission Name Mixed', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_name_mixed_handler_list');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_kommission_name_mixed_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -1398,7 +1403,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1528,7 +1533,7 @@
             $column = new TextViewColumn('kommission_name_de', 'kommission_name_de', 'Kommission Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_name_de_handler_view');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_kommission_name_de_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1544,7 +1549,7 @@
             $column = new TextViewColumn('kommission_name_fr', 'kommission_name_fr', 'Kommission Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_name_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_kommission_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1560,7 +1565,7 @@
             $column = new TextViewColumn('kommission_name_mixed', 'kommission_name_mixed', 'Kommission Name Mixed', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_name_mixed_handler_view');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_kommission_name_mixed_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3035,7 +3040,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_notizen_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -3165,7 +3170,7 @@
             $column = new TextViewColumn('kommission_name_de', 'kommission_name_de', 'Kommission Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_name_de_handler_print');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_kommission_name_de_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -3181,7 +3186,7 @@
             $column = new TextViewColumn('kommission_name_fr', 'kommission_name_fr', 'Kommission Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_name_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_kommission_name_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -3197,7 +3202,7 @@
             $column = new TextViewColumn('kommission_name_mixed', 'kommission_name_mixed', 'Kommission Name Mixed', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_name_mixed_handler_print');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_kommission_name_mixed_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -3285,7 +3290,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_notizen_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -3415,7 +3420,7 @@
             $column = new TextViewColumn('kommission_name_de', 'kommission_name_de', 'Kommission Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_name_de_handler_export');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_kommission_name_de_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -3431,7 +3436,7 @@
             $column = new TextViewColumn('kommission_name_fr', 'kommission_name_fr', 'Kommission Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_name_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_kommission_name_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -3447,7 +3452,7 @@
             $column = new TextViewColumn('kommission_name_mixed', 'kommission_name_mixed', 'Kommission Name Mixed', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_name_mixed_handler_export');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_kommission_name_mixed_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -3535,7 +3540,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_notizen_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -3634,7 +3639,7 @@
             $column = new TextViewColumn('kommission_name', 'kommission_name', 'Kommission Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_kommission_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -3657,7 +3662,7 @@
             $column = new TextViewColumn('kommission_beschreibung', 'kommission_beschreibung', 'Kommission Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_kommission_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -3666,7 +3671,7 @@
             $column = new TextViewColumn('kommission_sachbereiche', 'kommission_sachbereiche', 'Kommission Sachbereiche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_sachbereiche_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_kommission_sachbereiche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -3682,7 +3687,7 @@
             $column = new TextViewColumn('kommission_parlament_url', 'kommission_parlament_url', 'Kommission Parlament Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_parlament_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_kommission_parlament_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -3785,7 +3790,7 @@
             $column = new TextViewColumn('kommission_name_de', 'kommission_name_de', 'Kommission Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_name_de_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_kommission_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -3801,7 +3806,7 @@
             $column = new TextViewColumn('kommission_name_fr', 'kommission_name_fr', 'Kommission Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_name_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_kommission_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -3817,7 +3822,7 @@
             $column = new TextViewColumn('kommission_name_mixed', 'kommission_name_mixed', 'Kommission Name Mixed', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.v_in_kommission_kommission_name_mixed_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_v_in_kommission_kommission_name_mixed_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -3937,7 +3942,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.v_in_kommission_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_v_in_kommission_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -3945,7 +3950,7 @@
             //
             $column = new TextViewColumn('kommission_name_de', 'kommission_name_de', 'Kommission Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.v_in_kommission_kommission_name_de_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_v_in_kommission_kommission_name_de_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -3953,7 +3958,7 @@
             //
             $column = new TextViewColumn('kommission_name_fr', 'kommission_name_fr', 'Kommission Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.v_in_kommission_kommission_name_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_v_in_kommission_kommission_name_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -3961,7 +3966,7 @@
             //
             $column = new TextViewColumn('kommission_name_mixed', 'kommission_name_mixed', 'Kommission Name Mixed', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.v_in_kommission_kommission_name_mixed_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_v_in_kommission_kommission_name_mixed_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -3970,7 +3975,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.v_in_kommission_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_v_in_kommission_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -3978,7 +3983,7 @@
             //
             $column = new TextViewColumn('kommission_name_de', 'kommission_name_de', 'Kommission Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.v_in_kommission_kommission_name_de_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_v_in_kommission_kommission_name_de_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -3986,7 +3991,7 @@
             //
             $column = new TextViewColumn('kommission_name_fr', 'kommission_name_fr', 'Kommission Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.v_in_kommission_kommission_name_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_v_in_kommission_kommission_name_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -3994,7 +3999,7 @@
             //
             $column = new TextViewColumn('kommission_name_mixed', 'kommission_name_mixed', 'Kommission Name Mixed', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.v_in_kommission_kommission_name_mixed_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_v_in_kommission_kommission_name_mixed_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -4003,7 +4008,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.v_in_kommission_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_v_in_kommission_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -4011,7 +4016,7 @@
             //
             $column = new TextViewColumn('kommission_name', 'kommission_name', 'Kommission Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.v_in_kommission_kommission_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_v_in_kommission_kommission_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -4019,7 +4024,7 @@
             //
             $column = new TextViewColumn('kommission_beschreibung', 'kommission_beschreibung', 'Kommission Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.v_in_kommission_kommission_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_v_in_kommission_kommission_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -4027,7 +4032,7 @@
             //
             $column = new TextViewColumn('kommission_sachbereiche', 'kommission_sachbereiche', 'Kommission Sachbereiche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.v_in_kommission_kommission_sachbereiche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_v_in_kommission_kommission_sachbereiche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -4035,7 +4040,7 @@
             //
             $column = new TextViewColumn('kommission_parlament_url', 'kommission_parlament_url', 'Kommission Parlament Url', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.v_in_kommission_kommission_parlament_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_v_in_kommission_kommission_parlament_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -4043,7 +4048,7 @@
             //
             $column = new TextViewColumn('kommission_name_de', 'kommission_name_de', 'Kommission Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.v_in_kommission_kommission_name_de_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_v_in_kommission_kommission_name_de_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -4051,7 +4056,7 @@
             //
             $column = new TextViewColumn('kommission_name_fr', 'kommission_name_fr', 'Kommission Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.v_in_kommission_kommission_name_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_v_in_kommission_kommission_name_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -4059,7 +4064,7 @@
             //
             $column = new TextViewColumn('kommission_name_mixed', 'kommission_name_mixed', 'Kommission Name Mixed', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.v_in_kommission_kommission_name_mixed_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_v_in_kommission_kommission_name_mixed_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -4165,7 +4170,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission_v_in_kommission_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -4226,7 +4231,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission_v_in_kommission_kommission_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -4235,7 +4240,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.v_in_kommission_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_v_in_kommission_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -4243,7 +4248,7 @@
             //
             $column = new TextViewColumn('kommission_name_de', 'kommission_name_de', 'Kommission Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.v_in_kommission_kommission_name_de_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_v_in_kommission_kommission_name_de_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -4251,7 +4256,7 @@
             //
             $column = new TextViewColumn('kommission_name_fr', 'kommission_name_fr', 'Kommission Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.v_in_kommission_kommission_name_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_v_in_kommission_kommission_name_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -4259,7 +4264,7 @@
             //
             $column = new TextViewColumn('kommission_name_mixed', 'kommission_name_mixed', 'Kommission Name Mixed', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.v_in_kommission_kommission_name_mixed_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_v_in_kommission_kommission_name_mixed_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -4416,6 +4421,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Branche');
+            $this->SetMenuLabel('Branche');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -4603,10 +4613,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_kommission_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_kommission_branche_kommission_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('kommission_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_kommission_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_kommission_branche_kommission_id_search');
             
             $text_editor = new TextEdit('kommission_id');
             
@@ -4965,10 +4975,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_kommission2_id_abkuerzung_search');
+            $main_editor->SetHandlerName('filter_builder_kommission_branche_kommission2_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('kommission2_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_kommission2_id_abkuerzung_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_kommission_branche_kommission2_id_search');
             
             $text_editor = new TextEdit('kommission2_id');
             
@@ -5093,7 +5103,7 @@
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_name_handler_list');
+            $column->SetFullTextWindowHandlerName('kommission_branche_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Name der Branche, z.B. Gesundheit, Energie');
             $column->SetFixedWidth(null);
@@ -5117,7 +5127,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_beschreibung_handler_list');
+            $column->SetFullTextWindowHandlerName('kommission_branche_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Beschreibung der Branche');
@@ -5130,7 +5140,7 @@
             $column = new TextViewColumn('angaben', 'angaben', 'Angaben', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_angaben_handler_list');
+            $column->SetFullTextWindowHandlerName('kommission_branche_angaben_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Angaben zur Branche');
             $column->SetFixedWidth(null);
@@ -5142,7 +5152,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('kommission_branche_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
@@ -5260,7 +5270,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_name_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('kommission_branche_name_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Französischer Name der Branche, z.B. Gesundheit, Energie');
             $column->SetFixedWidth(null);
@@ -5292,7 +5302,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_beschreibung_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('kommission_branche_beschreibung_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Französische Beschreibung der Branche');
             $column->SetFixedWidth(null);
@@ -5304,7 +5314,7 @@
             $column = new TextViewColumn('angaben_fr', 'angaben_fr', 'Angaben Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_angaben_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('kommission_branche_angaben_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Angaben zur Branche auf Französisch');
             $column->SetFixedWidth(null);
@@ -5326,7 +5336,7 @@
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_name_handler_view');
+            $column->SetFullTextWindowHandlerName('kommission_branche_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -5344,7 +5354,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_beschreibung_handler_view');
+            $column->SetFullTextWindowHandlerName('kommission_branche_beschreibung_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -5354,7 +5364,7 @@
             $column = new TextViewColumn('angaben', 'angaben', 'Angaben', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_angaben_handler_view');
+            $column->SetFullTextWindowHandlerName('kommission_branche_angaben_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -5363,7 +5373,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('kommission_branche_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -5448,7 +5458,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_name_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('kommission_branche_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -5471,7 +5481,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_beschreibung_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('kommission_branche_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -5480,7 +5490,7 @@
             $column = new TextViewColumn('angaben_fr', 'angaben_fr', 'Angaben Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_angaben_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('kommission_branche_angaben_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -5754,7 +5764,7 @@
                 )
             );
             $lookupDataset->setOrderByField('abkuerzung', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Kommission2 Id', 'kommission2_id', 'kommission2_id_abkuerzung', 'edit_kommission2_id_abkuerzung_search', $editor, $this->dataset, $lookupDataset, 'id', 'abkuerzung', '');
+            $editColumn = new DynamicLookupEditColumn('Kommission2 Id', 'kommission2_id', 'kommission2_id_abkuerzung', 'edit_kommission_branche_kommission2_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'abkuerzung', '');
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -6123,7 +6133,7 @@
                 )
             );
             $lookupDataset->setOrderByField('abkuerzung', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Kommission2 Id', 'kommission2_id', 'kommission2_id_abkuerzung', 'multi_edit_kommission2_id_abkuerzung_search', $editor, $this->dataset, $lookupDataset, 'id', 'abkuerzung', '');
+            $editColumn = new DynamicLookupEditColumn('Kommission2 Id', 'kommission2_id', 'kommission2_id_abkuerzung', 'multi_edit_kommission_branche_kommission2_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'abkuerzung', '');
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -6417,7 +6427,7 @@
                 )
             );
             $lookupDataset->setOrderByField('abkuerzung', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Kommission2 Id', 'kommission2_id', 'kommission2_id_abkuerzung', 'insert_kommission2_id_abkuerzung_search', $editor, $this->dataset, $lookupDataset, 'id', 'abkuerzung', '');
+            $editColumn = new DynamicLookupEditColumn('Kommission2 Id', 'kommission2_id', 'kommission2_id_abkuerzung', 'insert_kommission_branche_kommission2_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'abkuerzung', '');
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -6473,7 +6483,7 @@
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_name_handler_print');
+            $column->SetFullTextWindowHandlerName('kommission_branche_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -6491,7 +6501,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_beschreibung_handler_print');
+            $column->SetFullTextWindowHandlerName('kommission_branche_beschreibung_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -6501,7 +6511,7 @@
             $column = new TextViewColumn('angaben', 'angaben', 'Angaben', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_angaben_handler_print');
+            $column->SetFullTextWindowHandlerName('kommission_branche_angaben_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -6510,7 +6520,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('kommission_branche_notizen_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -6595,7 +6605,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_name_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('kommission_branche_name_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -6618,7 +6628,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_beschreibung_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('kommission_branche_beschreibung_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -6627,7 +6637,7 @@
             $column = new TextViewColumn('angaben_fr', 'angaben_fr', 'Angaben Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_angaben_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('kommission_branche_angaben_fr_handler_print');
             $grid->AddPrintColumn($column);
         }
     
@@ -6646,7 +6656,7 @@
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_name_handler_export');
+            $column->SetFullTextWindowHandlerName('kommission_branche_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -6664,7 +6674,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_beschreibung_handler_export');
+            $column->SetFullTextWindowHandlerName('kommission_branche_beschreibung_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -6674,7 +6684,7 @@
             $column = new TextViewColumn('angaben', 'angaben', 'Angaben', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_angaben_handler_export');
+            $column->SetFullTextWindowHandlerName('kommission_branche_angaben_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -6683,7 +6693,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('kommission_branche_notizen_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -6768,7 +6778,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_name_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('kommission_branche_name_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -6791,7 +6801,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_beschreibung_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('kommission_branche_beschreibung_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -6800,7 +6810,7 @@
             $column = new TextViewColumn('angaben_fr', 'angaben_fr', 'Angaben Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_angaben_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('kommission_branche_angaben_fr_handler_export');
             $grid->AddExportColumn($column);
         }
     
@@ -6819,7 +6829,7 @@
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_branche_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -6837,7 +6847,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_branche_beschreibung_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -6847,7 +6857,7 @@
             $column = new TextViewColumn('angaben', 'angaben', 'Angaben', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_angaben_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_branche_angaben_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -6856,7 +6866,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_branche_notizen_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -6948,7 +6958,7 @@
             $column = new TextViewColumn('symbol_abs', 'symbol_abs', 'Symbol Abs', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_symbol_abs_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_branche_symbol_abs_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -6957,7 +6967,7 @@
             $column = new TextViewColumn('symbol_rel', 'symbol_rel', 'Symbol Rel', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_symbol_rel_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_branche_symbol_rel_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -6966,7 +6976,7 @@
             $column = new TextViewColumn('symbol_klein_rel', 'symbol_klein_rel', 'Symbol Klein Rel', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_symbol_klein_rel_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_branche_symbol_klein_rel_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -6975,7 +6985,7 @@
             $column = new TextViewColumn('symbol_dateiname_wo_ext', 'symbol_dateiname_wo_ext', 'Symbol Dateiname Wo Ext', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_symbol_dateiname_wo_ext_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_branche_symbol_dateiname_wo_ext_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -6991,7 +7001,7 @@
             $column = new TextViewColumn('symbol_dateiname', 'symbol_dateiname', 'Symbol Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_symbol_dateiname_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_branche_symbol_dateiname_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7000,7 +7010,7 @@
             $column = new TextViewColumn('symbol_mime_type', 'symbol_mime_type', 'Symbol Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_symbol_mime_type_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_branche_symbol_mime_type_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7009,7 +7019,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_name_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_branche_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7032,7 +7042,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_beschreibung_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_branche_beschreibung_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7041,7 +7051,7 @@
             $column = new TextViewColumn('angaben_fr', 'angaben_fr', 'Angaben Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridkommission.branche_angaben_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_branche_angaben_fr_handler_compare');
             $grid->AddCompareColumn($column);
         }
     
@@ -7137,7 +7147,7 @@
             //
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7146,7 +7156,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_beschreibung_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7154,7 +7164,7 @@
             //
             $column = new TextViewColumn('angaben', 'angaben', 'Angaben', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_angaben_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_angaben_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7163,7 +7173,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7171,7 +7181,7 @@
             //
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_name_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_name_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7179,7 +7189,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_beschreibung_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_beschreibung_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7187,7 +7197,7 @@
             //
             $column = new TextViewColumn('angaben_fr', 'angaben_fr', 'Angaben Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_angaben_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_angaben_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7195,7 +7205,7 @@
             //
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7204,7 +7214,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_beschreibung_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_beschreibung_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7212,7 +7222,7 @@
             //
             $column = new TextViewColumn('angaben', 'angaben', 'Angaben', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_angaben_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_angaben_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7221,7 +7231,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7229,7 +7239,7 @@
             //
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_name_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_name_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7237,7 +7247,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_beschreibung_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_beschreibung_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7245,7 +7255,7 @@
             //
             $column = new TextViewColumn('angaben_fr', 'angaben_fr', 'Angaben Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_angaben_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_angaben_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7253,7 +7263,7 @@
             //
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7262,7 +7272,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7270,7 +7280,7 @@
             //
             $column = new TextViewColumn('angaben', 'angaben', 'Angaben', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_angaben_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_angaben_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7279,7 +7289,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7287,7 +7297,7 @@
             //
             $column = new TextViewColumn('symbol_abs', 'symbol_abs', 'Symbol Abs', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_symbol_abs_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_symbol_abs_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7295,7 +7305,7 @@
             //
             $column = new TextViewColumn('symbol_rel', 'symbol_rel', 'Symbol Rel', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_symbol_rel_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_symbol_rel_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7303,7 +7313,7 @@
             //
             $column = new TextViewColumn('symbol_klein_rel', 'symbol_klein_rel', 'Symbol Klein Rel', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_symbol_klein_rel_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_symbol_klein_rel_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7311,7 +7321,7 @@
             //
             $column = new TextViewColumn('symbol_dateiname_wo_ext', 'symbol_dateiname_wo_ext', 'Symbol Dateiname Wo Ext', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_symbol_dateiname_wo_ext_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_symbol_dateiname_wo_ext_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7319,7 +7329,7 @@
             //
             $column = new TextViewColumn('symbol_dateiname', 'symbol_dateiname', 'Symbol Dateiname', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_symbol_dateiname_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_symbol_dateiname_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7327,7 +7337,7 @@
             //
             $column = new TextViewColumn('symbol_mime_type', 'symbol_mime_type', 'Symbol Mime Type', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_symbol_mime_type_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_symbol_mime_type_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7335,7 +7345,7 @@
             //
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_name_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_name_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7343,7 +7353,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_beschreibung_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_beschreibung_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7351,7 +7361,7 @@
             //
             $column = new TextViewColumn('angaben_fr', 'angaben_fr', 'Angaben Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_angaben_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_angaben_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7398,7 +7408,7 @@
                 )
             );
             $lookupDataset->setOrderByField('abkuerzung', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_kommission2_id_abkuerzung_search', 'id', 'abkuerzung', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_kommission_branche_kommission2_id_search', 'id', 'abkuerzung', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7459,7 +7469,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission_branche_kommission_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7520,7 +7530,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission_branche_kommission_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7581,7 +7591,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission_branche_kommission_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7642,7 +7652,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission_branche_kommission_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7689,7 +7699,7 @@
                 )
             );
             $lookupDataset->setOrderByField('abkuerzung', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission2_id_abkuerzung_search', 'id', 'abkuerzung', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission_branche_kommission2_id_search', 'id', 'abkuerzung', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7697,7 +7707,7 @@
             //
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7706,7 +7716,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_beschreibung_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7714,7 +7724,7 @@
             //
             $column = new TextViewColumn('angaben', 'angaben', 'Angaben', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_angaben_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_angaben_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7723,7 +7733,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7731,7 +7741,7 @@
             //
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_name_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_name_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7739,7 +7749,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_beschreibung_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7747,7 +7757,7 @@
             //
             $column = new TextViewColumn('angaben_fr', 'angaben_fr', 'Angaben Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridkommission.branche_angaben_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_branche_angaben_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7794,7 +7804,7 @@
                 )
             );
             $lookupDataset->setOrderByField('abkuerzung', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_kommission2_id_abkuerzung_search', 'id', 'abkuerzung', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_kommission_branche_kommission2_id_search', 'id', 'abkuerzung', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7841,7 +7851,7 @@
                 )
             );
             $lookupDataset->setOrderByField('abkuerzung', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_kommission2_id_abkuerzung_search', 'id', 'abkuerzung', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_kommission_branche_kommission2_id_search', 'id', 'abkuerzung', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -7995,6 +8005,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Kommission');
+            $this->SetMenuLabel('<span class="entity">Kommission</span>');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -8358,10 +8373,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_rat_id_abkuerzung_mixed_search');
+            $main_editor->SetHandlerName('filter_builder_kommission_rat_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('rat_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_rat_id_abkuerzung_mixed_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_kommission_rat_id_search');
             
             $text_editor = new TextEdit('rat_id');
             
@@ -8393,10 +8408,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_mutter_kommission_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_kommission_mutter_kommission_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('mutter_kommission_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_mutter_kommission_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_kommission_mutter_kommission_id_search');
             
             $text_editor = new TextEdit('mutter_kommission_id');
             
@@ -8542,10 +8557,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_zweitrat_kommission_id_anzeige_name_mixed_search');
+            $main_editor->SetHandlerName('filter_builder_kommission_zweitrat_kommission_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('zweitrat_kommission_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_zweitrat_kommission_id_anzeige_name_mixed_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_kommission_zweitrat_kommission_id_search');
             
             $text_editor = new TextEdit('zweitrat_kommission_id');
             
@@ -9069,7 +9084,7 @@
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_name_handler_list');
+            $column->SetFullTextWindowHandlerName('kommission_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Ausgeschriebener Name der Kommission');
             $column->SetFixedWidth(null);
@@ -9081,7 +9096,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_name_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('kommission_name_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Ausgeschriebener französischer Name der Kommission');
             $column->SetFixedWidth(null);
@@ -9135,7 +9150,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_beschreibung_handler_list');
+            $column->SetFullTextWindowHandlerName('kommission_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Beschreibung der Kommission');
@@ -9148,7 +9163,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_beschreibung_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('kommission_beschreibung_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Französische Beschreibung der Kommission');
             $column->SetFixedWidth(null);
@@ -9160,7 +9175,7 @@
             $column = new TextViewColumn('sachbereiche', 'sachbereiche', 'Sachbereiche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_sachbereiche_handler_list');
+            $column->SetFullTextWindowHandlerName('kommission_sachbereiche_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Liste der Sachbereiche der Kommission, abgetrennt durch ";".');
@@ -9173,7 +9188,7 @@
             $column = new TextViewColumn('sachbereiche_fr', 'sachbereiche_fr', 'Sachbereiche Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_sachbereiche_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('kommission_sachbereiche_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Liste der Sachbereiche der Kommission auf französisch, abgetrennt durch ";".');
             $column->SetFixedWidth(null);
@@ -9231,7 +9246,7 @@
             $column->setHrefTemplate('%parlament_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_parlament_url_handler_list');
+            $column->SetFullTextWindowHandlerName('kommission_parlament_url_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Link zur Seite auf Parlament.ch');
             $column->SetFixedWidth(null);
@@ -9283,7 +9298,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('kommission_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
@@ -9430,7 +9445,7 @@
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_name_handler_view');
+            $column->SetFullTextWindowHandlerName('kommission_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -9439,7 +9454,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_name_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('kommission_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -9478,7 +9493,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_beschreibung_handler_view');
+            $column->SetFullTextWindowHandlerName('kommission_beschreibung_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -9488,7 +9503,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_beschreibung_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('kommission_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -9497,7 +9512,7 @@
             $column = new TextViewColumn('sachbereiche', 'sachbereiche', 'Sachbereiche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_sachbereiche_handler_view');
+            $column->SetFullTextWindowHandlerName('kommission_sachbereiche_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -9507,7 +9522,7 @@
             $column = new TextViewColumn('sachbereiche_fr', 'sachbereiche_fr', 'Sachbereiche Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_sachbereiche_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('kommission_sachbereiche_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -9550,7 +9565,7 @@
             $column->setHrefTemplate('%parlament_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_parlament_url_handler_view');
+            $column->SetFullTextWindowHandlerName('kommission_parlament_url_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -9587,7 +9602,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('kommission_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -11194,7 +11209,7 @@
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_name_handler_print');
+            $column->SetFullTextWindowHandlerName('kommission_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -11203,7 +11218,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_name_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('kommission_name_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -11242,7 +11257,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_beschreibung_handler_print');
+            $column->SetFullTextWindowHandlerName('kommission_beschreibung_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -11252,7 +11267,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_beschreibung_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('kommission_beschreibung_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -11261,7 +11276,7 @@
             $column = new TextViewColumn('sachbereiche', 'sachbereiche', 'Sachbereiche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_sachbereiche_handler_print');
+            $column->SetFullTextWindowHandlerName('kommission_sachbereiche_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -11271,7 +11286,7 @@
             $column = new TextViewColumn('sachbereiche_fr', 'sachbereiche_fr', 'Sachbereiche Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_sachbereiche_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('kommission_sachbereiche_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -11314,7 +11329,7 @@
             $column->setHrefTemplate('%parlament_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_parlament_url_handler_print');
+            $column->SetFullTextWindowHandlerName('kommission_parlament_url_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -11351,7 +11366,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('kommission_notizen_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -11465,7 +11480,7 @@
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_name_handler_export');
+            $column->SetFullTextWindowHandlerName('kommission_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -11474,7 +11489,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_name_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('kommission_name_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -11513,7 +11528,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_beschreibung_handler_export');
+            $column->SetFullTextWindowHandlerName('kommission_beschreibung_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -11523,7 +11538,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_beschreibung_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('kommission_beschreibung_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -11532,7 +11547,7 @@
             $column = new TextViewColumn('sachbereiche', 'sachbereiche', 'Sachbereiche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_sachbereiche_handler_export');
+            $column->SetFullTextWindowHandlerName('kommission_sachbereiche_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -11542,7 +11557,7 @@
             $column = new TextViewColumn('sachbereiche_fr', 'sachbereiche_fr', 'Sachbereiche Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_sachbereiche_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('kommission_sachbereiche_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -11585,7 +11600,7 @@
             $column->setHrefTemplate('%parlament_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_parlament_url_handler_export');
+            $column->SetFullTextWindowHandlerName('kommission_parlament_url_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -11622,7 +11637,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('kommission_notizen_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -11736,7 +11751,7 @@
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -11745,7 +11760,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_name_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -11784,7 +11799,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_beschreibung_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -11794,7 +11809,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_beschreibung_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_beschreibung_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -11803,7 +11818,7 @@
             $column = new TextViewColumn('sachbereiche', 'sachbereiche', 'Sachbereiche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_sachbereiche_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_sachbereiche_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -11813,7 +11828,7 @@
             $column = new TextViewColumn('sachbereiche_fr', 'sachbereiche_fr', 'Sachbereiche Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_sachbereiche_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_sachbereiche_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -11870,7 +11885,7 @@
             $column->setHrefTemplate('%parlament_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_parlament_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_parlament_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -11907,7 +11922,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommissionGrid_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('kommission_notizen_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -12126,20 +12141,12 @@
         protected function doRegisterHandlers() {
             $detailPage = new kommission_v_in_kommissionPage('kommission_v_in_kommission', $this, array('kommission_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('kommission.v_in_kommission'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('kommission.v_in_kommission'));
-            $detailPage->SetTitle('Parlamentarier in Kommission');
-            $detailPage->SetMenuLabel('Parlamentarier in Kommission');
-            $detailPage->SetHeader(GetPagesHeader());
-            $detailPage->SetFooter(GetPagesFooter());
             $detailPage->SetHttpHandlerName('kommission_v_in_kommission_handler');
             $handler = new PageHTTPHandler('kommission_v_in_kommission_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $detailPage = new kommission_branchePage('kommission_branche', $this, array('kommission_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('kommission.branche'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('kommission.branche'));
-            $detailPage->SetTitle('Branche');
-            $detailPage->SetMenuLabel('Branche');
-            $detailPage->SetHeader(GetPagesHeader());
-            $detailPage->SetFooter(GetPagesFooter());
             $detailPage->SetHttpHandlerName('kommission_branche_handler');
             $handler = new PageHTTPHandler('kommission_branche_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
@@ -12149,7 +12156,7 @@
             //
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12157,7 +12164,7 @@
             //
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_name_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_name_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12166,7 +12173,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_beschreibung_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12174,7 +12181,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_beschreibung_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_beschreibung_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12183,7 +12190,7 @@
             $column = new TextViewColumn('sachbereiche', 'sachbereiche', 'Sachbereiche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_sachbereiche_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_sachbereiche_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12191,7 +12198,7 @@
             //
             $column = new TextViewColumn('sachbereiche_fr', 'sachbereiche_fr', 'Sachbereiche Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_sachbereiche_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_sachbereiche_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12201,7 +12208,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%parlament_url%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_parlament_url_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_parlament_url_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12210,7 +12217,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12218,7 +12225,7 @@
             //
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12226,7 +12233,7 @@
             //
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_name_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_name_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12235,7 +12242,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_beschreibung_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_beschreibung_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12243,7 +12250,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_beschreibung_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_beschreibung_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12252,7 +12259,7 @@
             $column = new TextViewColumn('sachbereiche', 'sachbereiche', 'Sachbereiche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_sachbereiche_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_sachbereiche_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12260,7 +12267,7 @@
             //
             $column = new TextViewColumn('sachbereiche_fr', 'sachbereiche_fr', 'Sachbereiche Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_sachbereiche_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_sachbereiche_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12270,7 +12277,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%parlament_url%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_parlament_url_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_parlament_url_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12279,7 +12286,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12287,7 +12294,7 @@
             //
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12295,7 +12302,7 @@
             //
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_name_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_name_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12304,7 +12311,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12312,7 +12319,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_beschreibung_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_beschreibung_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12321,7 +12328,7 @@
             $column = new TextViewColumn('sachbereiche', 'sachbereiche', 'Sachbereiche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_sachbereiche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_sachbereiche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12329,7 +12336,7 @@
             //
             $column = new TextViewColumn('sachbereiche_fr', 'sachbereiche_fr', 'Sachbereiche Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_sachbereiche_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_sachbereiche_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12339,7 +12346,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%parlament_url%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_parlament_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_parlament_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12348,7 +12355,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -12405,7 +12412,7 @@
                 )
             );
             $lookupDataset->setOrderByField('abkuerzung_mixed', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_rat_id_abkuerzung_mixed_search', 'id', 'abkuerzung_mixed', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission_rat_id_search', 'id', 'abkuerzung_mixed', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -12466,7 +12473,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_mutter_kommission_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission_mutter_kommission_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -12527,7 +12534,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_mutter_kommission_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission_mutter_kommission_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -12588,7 +12595,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_mutter_kommission_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission_mutter_kommission_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -12649,7 +12656,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_mutter_kommission_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission_mutter_kommission_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -12710,7 +12717,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_mutter_kommission_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission_mutter_kommission_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -12771,7 +12778,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name_mixed', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_zweitrat_kommission_id_anzeige_name_mixed_search', 'id', 'anzeige_name_mixed', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission_zweitrat_kommission_id_search', 'id', 'anzeige_name_mixed', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12779,7 +12786,7 @@
             //
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12787,7 +12794,7 @@
             //
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_name_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_name_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12796,7 +12803,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_beschreibung_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12804,7 +12811,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_beschreibung_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12813,7 +12820,7 @@
             $column = new TextViewColumn('sachbereiche', 'sachbereiche', 'Sachbereiche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_sachbereiche_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_sachbereiche_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12821,7 +12828,7 @@
             //
             $column = new TextViewColumn('sachbereiche_fr', 'sachbereiche_fr', 'Sachbereiche Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_sachbereiche_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_sachbereiche_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12831,7 +12838,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%parlament_url%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_parlament_url_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_parlament_url_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12840,7 +12847,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -12991,10 +12998,6 @@
     try
     {
         $Page = new kommissionPage("kommission", "kommission.php", GetCurrentUserPermissionSetForDataSource("kommission"), 'UTF-8');
-        $Page->SetTitle('Kommission');
-        $Page->SetMenuLabel('<span class="entity">Kommission</span>');
-        $Page->SetHeader(GetPagesHeader());
-        $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("kommission"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

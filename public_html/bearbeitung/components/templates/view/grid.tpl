@@ -10,7 +10,7 @@
             <div class="clearfix"></div>
 
             <div class="form-static {if $Grid.FormLayout->isHorizontal()}form-horizontal col-lg-8{else}col-md-8 col-md-offset-2{/if}">
-                {include file='custom_templates/forms/form_fields.tpl' isViewForm=true}
+                {include file='forms/form_fields.tpl' isViewForm=true}
             </div>
         </div>
 

@@ -39,6 +39,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Unvollständige Organisationen');
+            $this->SetMenuLabel('<span class="view">Unvollständige Organisationen</span>');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $selectQuery = 'select * from organisation where
             rechtsform is null OR rechtsform = \'\' OR
             interessengruppe_id = null';
@@ -51,7 +56,7 @@
               $selectQuery, $insertQuery, $updateQuery, $deleteQuery, 'q_unvollstaendige_organisationen');
             $this->dataset->addFields(
                 array(
-                    new IntegerField('id', true, true, true),
+                    new IntegerField('id', true, true),
                     new StringField('name_de', true),
                     new StringField('name_fr'),
                     new StringField('name_it'),
@@ -533,10 +538,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_land_id_continent_search');
+            $main_editor->SetHandlerName('filter_builder_q_unvollstaendige_organisationen_land_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('land_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_land_id_continent_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_q_unvollstaendige_organisationen_land_id_search');
             
             $text_editor = new TextEdit('land_id');
             
@@ -568,10 +573,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_interessenraum_id_name_search');
+            $main_editor->SetHandlerName('filter_builder_q_unvollstaendige_organisationen_interessenraum_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('interessenraum_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_interessenraum_id_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_q_unvollstaendige_organisationen_interessenraum_id_search');
             
             $text_editor = new TextEdit('interessenraum_id');
             
@@ -758,10 +763,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_interessengruppe_id_name_search');
+            $main_editor->SetHandlerName('filter_builder_q_unvollstaendige_organisationen_interessengruppe_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('interessengruppe_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_interessengruppe_id_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_q_unvollstaendige_organisationen_interessengruppe_id_search');
             
             $text_editor = new TextEdit('interessengruppe_id');
             
@@ -793,10 +798,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_interessengruppe2_id_name_search');
+            $main_editor->SetHandlerName('filter_builder_q_unvollstaendige_organisationen_interessengruppe2_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('interessengruppe2_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_interessengruppe2_id_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_q_unvollstaendige_organisationen_interessengruppe2_id_search');
             
             $text_editor = new TextEdit('interessengruppe2_id');
             
@@ -828,10 +833,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_interessengruppe3_id_name_search');
+            $main_editor->SetHandlerName('filter_builder_q_unvollstaendige_organisationen_interessengruppe3_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('interessengruppe3_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_interessengruppe3_id_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_q_unvollstaendige_organisationen_interessengruppe3_id_search');
             
             $text_editor = new TextEdit('interessengruppe3_id');
             
@@ -1573,7 +1578,7 @@
             $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationenGrid_interessengruppe_id_name_handler_list');
+            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe_id_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -1585,7 +1590,7 @@
             $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_name', 'Interessengruppe2 Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationenGrid_interessengruppe2_id_name_handler_list');
+            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe2_id_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -1597,7 +1602,7 @@
             $column = new TextViewColumn('interessengruppe3_id', 'interessengruppe3_id_name', 'Interessengruppe3 Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationenGrid_interessengruppe3_id_name_handler_list');
+            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe3_id_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -1980,7 +1985,7 @@
             $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationenGrid_interessengruppe_id_name_handler_view');
+            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe_id_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1989,7 +1994,7 @@
             $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_name', 'Interessengruppe2 Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationenGrid_interessengruppe2_id_name_handler_view');
+            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe2_id_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1998,7 +2003,7 @@
             $column = new TextViewColumn('interessengruppe3_id', 'interessengruppe3_id_name', 'Interessengruppe3 Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationenGrid_interessengruppe3_id_name_handler_view');
+            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe3_id_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2329,7 +2334,7 @@
                 )
             );
             $lookupDataset->setOrderByField('continent', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Land Id', 'land_id', 'land_id_continent', 'edit_land_id_continent_search', $editor, $this->dataset, $lookupDataset, 'id', 'continent', '');
+            $editColumn = new DynamicLookupEditColumn('Land Id', 'land_id', 'land_id_continent', 'edit_q_unvollstaendige_organisationen_land_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'continent', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2367,7 +2372,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Interessenraum Id', 'interessenraum_id', 'interessenraum_id_name', 'edit_interessenraum_id_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
+            $editColumn = new DynamicLookupEditColumn('Interessenraum Id', 'interessenraum_id', 'interessenraum_id_name', 'edit_q_unvollstaendige_organisationen_interessenraum_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2481,7 +2486,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Interessengruppe Id', 'interessengruppe_id', 'interessengruppe_id_name', 'edit_interessengruppe_id_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
+            $editColumn = new DynamicLookupEditColumn('Interessengruppe Id', 'interessengruppe_id', 'interessengruppe_id_name', 'edit_q_unvollstaendige_organisationen_interessengruppe_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2521,7 +2526,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Interessengruppe2 Id', 'interessengruppe2_id', 'interessengruppe2_id_name', 'edit_interessengruppe2_id_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
+            $editColumn = new DynamicLookupEditColumn('Interessengruppe2 Id', 'interessengruppe2_id', 'interessengruppe2_id_name', 'edit_q_unvollstaendige_organisationen_interessengruppe2_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2561,7 +2566,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Interessengruppe3 Id', 'interessengruppe3_id', 'interessengruppe3_id_name', 'edit_interessengruppe3_id_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
+            $editColumn = new DynamicLookupEditColumn('Interessengruppe3 Id', 'interessengruppe3_id', 'interessengruppe3_id_name', 'edit_q_unvollstaendige_organisationen_interessengruppe3_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2952,7 +2957,7 @@
                 )
             );
             $lookupDataset->setOrderByField('continent', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Land Id', 'land_id', 'land_id_continent', 'multi_edit_land_id_continent_search', $editor, $this->dataset, $lookupDataset, 'id', 'continent', '');
+            $editColumn = new DynamicLookupEditColumn('Land Id', 'land_id', 'land_id_continent', 'multi_edit_q_unvollstaendige_organisationen_land_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'continent', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2990,7 +2995,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Interessenraum Id', 'interessenraum_id', 'interessenraum_id_name', 'multi_edit_interessenraum_id_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
+            $editColumn = new DynamicLookupEditColumn('Interessenraum Id', 'interessenraum_id', 'interessenraum_id_name', 'multi_edit_q_unvollstaendige_organisationen_interessenraum_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3104,7 +3109,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Interessengruppe Id', 'interessengruppe_id', 'interessengruppe_id_name', 'multi_edit_interessengruppe_id_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
+            $editColumn = new DynamicLookupEditColumn('Interessengruppe Id', 'interessengruppe_id', 'interessengruppe_id_name', 'multi_edit_q_unvollstaendige_organisationen_interessengruppe_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3144,7 +3149,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Interessengruppe2 Id', 'interessengruppe2_id', 'interessengruppe2_id_name', 'multi_edit_interessengruppe2_id_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
+            $editColumn = new DynamicLookupEditColumn('Interessengruppe2 Id', 'interessengruppe2_id', 'interessengruppe2_id_name', 'multi_edit_q_unvollstaendige_organisationen_interessengruppe2_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3184,7 +3189,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Interessengruppe3 Id', 'interessengruppe3_id', 'interessengruppe3_id_name', 'multi_edit_interessengruppe3_id_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
+            $editColumn = new DynamicLookupEditColumn('Interessengruppe3 Id', 'interessengruppe3_id', 'interessengruppe3_id_name', 'multi_edit_q_unvollstaendige_organisationen_interessengruppe3_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3575,7 +3580,7 @@
                 )
             );
             $lookupDataset->setOrderByField('continent', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Land Id', 'land_id', 'land_id_continent', 'insert_land_id_continent_search', $editor, $this->dataset, $lookupDataset, 'id', 'continent', '');
+            $editColumn = new DynamicLookupEditColumn('Land Id', 'land_id', 'land_id_continent', 'insert_q_unvollstaendige_organisationen_land_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'continent', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3613,7 +3618,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Interessenraum Id', 'interessenraum_id', 'interessenraum_id_name', 'insert_interessenraum_id_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
+            $editColumn = new DynamicLookupEditColumn('Interessenraum Id', 'interessenraum_id', 'interessenraum_id_name', 'insert_q_unvollstaendige_organisationen_interessenraum_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3727,7 +3732,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Interessengruppe Id', 'interessengruppe_id', 'interessengruppe_id_name', 'insert_interessengruppe_id_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
+            $editColumn = new DynamicLookupEditColumn('Interessengruppe Id', 'interessengruppe_id', 'interessengruppe_id_name', 'insert_q_unvollstaendige_organisationen_interessengruppe_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3767,7 +3772,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Interessengruppe2 Id', 'interessengruppe2_id', 'interessengruppe2_id_name', 'insert_interessengruppe2_id_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
+            $editColumn = new DynamicLookupEditColumn('Interessengruppe2 Id', 'interessengruppe2_id', 'interessengruppe2_id_name', 'insert_q_unvollstaendige_organisationen_interessengruppe2_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3807,7 +3812,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Interessengruppe3 Id', 'interessengruppe3_id', 'interessengruppe3_id_name', 'insert_interessengruppe3_id_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
+            $editColumn = new DynamicLookupEditColumn('Interessengruppe3 Id', 'interessengruppe3_id', 'interessengruppe3_id_name', 'insert_q_unvollstaendige_organisationen_interessengruppe3_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4187,7 +4192,7 @@
             $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationenGrid_interessengruppe_id_name_handler_print');
+            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe_id_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -4196,7 +4201,7 @@
             $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_name', 'Interessengruppe2 Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationenGrid_interessengruppe2_id_name_handler_print');
+            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe2_id_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -4205,7 +4210,7 @@
             $column = new TextViewColumn('interessengruppe3_id', 'interessengruppe3_id_name', 'Interessengruppe3 Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationenGrid_interessengruppe3_id_name_handler_print');
+            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe3_id_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -4519,7 +4524,7 @@
             $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationenGrid_interessengruppe_id_name_handler_export');
+            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe_id_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -4528,7 +4533,7 @@
             $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_name', 'Interessengruppe2 Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationenGrid_interessengruppe2_id_name_handler_export');
+            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe2_id_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -4537,7 +4542,7 @@
             $column = new TextViewColumn('interessengruppe3_id', 'interessengruppe3_id_name', 'Interessengruppe3 Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationenGrid_interessengruppe3_id_name_handler_export');
+            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe3_id_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -4851,7 +4856,7 @@
             $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationenGrid_interessengruppe_id_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe_id_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -4860,7 +4865,7 @@
             $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_name', 'Interessengruppe2 Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationenGrid_interessengruppe2_id_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe2_id_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -4869,7 +4874,7 @@
             $column = new TextViewColumn('interessengruppe3_id', 'interessengruppe3_id_name', 'Interessengruppe3 Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationenGrid_interessengruppe3_id_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe3_id_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -5142,7 +5147,7 @@
             //
             $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationenGrid_interessengruppe_id_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe_id_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5150,7 +5155,7 @@
             //
             $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_name', 'Interessengruppe2 Id', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationenGrid_interessengruppe2_id_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe2_id_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5158,7 +5163,7 @@
             //
             $column = new TextViewColumn('interessengruppe3_id', 'interessengruppe3_id_name', 'Interessengruppe3 Id', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationenGrid_interessengruppe3_id_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe3_id_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5166,7 +5171,7 @@
             //
             $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationenGrid_interessengruppe_id_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe_id_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5174,7 +5179,7 @@
             //
             $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_name', 'Interessengruppe2 Id', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationenGrid_interessengruppe2_id_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe2_id_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5182,7 +5187,7 @@
             //
             $column = new TextViewColumn('interessengruppe3_id', 'interessengruppe3_id_name', 'Interessengruppe3 Id', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationenGrid_interessengruppe3_id_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe3_id_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5190,7 +5195,7 @@
             //
             $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationenGrid_interessengruppe_id_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe_id_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5198,7 +5203,7 @@
             //
             $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_name', 'Interessengruppe2 Id', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationenGrid_interessengruppe2_id_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe2_id_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5206,7 +5211,7 @@
             //
             $column = new TextViewColumn('interessengruppe3_id', 'interessengruppe3_id_name', 'Interessengruppe3 Id', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationenGrid_interessengruppe3_id_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe3_id_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5245,7 +5250,7 @@
                 )
             );
             $lookupDataset->setOrderByField('continent', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_land_id_continent_search', 'id', 'continent', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_q_unvollstaendige_organisationen_land_id_search', 'id', 'continent', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5274,7 +5279,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_interessenraum_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_q_unvollstaendige_organisationen_interessenraum_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5305,7 +5310,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_interessengruppe_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_q_unvollstaendige_organisationen_interessengruppe_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5336,7 +5341,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_interessengruppe2_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_q_unvollstaendige_organisationen_interessengruppe2_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5367,7 +5372,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_interessengruppe3_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_q_unvollstaendige_organisationen_interessengruppe3_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5406,7 +5411,7 @@
                 )
             );
             $lookupDataset->setOrderByField('continent', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_land_id_continent_search', 'id', 'continent', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_q_unvollstaendige_organisationen_land_id_search', 'id', 'continent', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5435,7 +5440,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessenraum_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_q_unvollstaendige_organisationen_interessenraum_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5466,7 +5471,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessengruppe_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_q_unvollstaendige_organisationen_interessengruppe_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5497,7 +5502,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessengruppe2_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_q_unvollstaendige_organisationen_interessengruppe2_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5528,7 +5533,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessengruppe3_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_q_unvollstaendige_organisationen_interessengruppe3_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5536,7 +5541,7 @@
             //
             $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationenGrid_interessengruppe_id_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe_id_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5544,7 +5549,7 @@
             //
             $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_name', 'Interessengruppe2 Id', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationenGrid_interessengruppe2_id_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe2_id_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5552,7 +5557,7 @@
             //
             $column = new TextViewColumn('interessengruppe3_id', 'interessengruppe3_id_name', 'Interessengruppe3 Id', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationenGrid_interessengruppe3_id_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe3_id_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5591,7 +5596,7 @@
                 )
             );
             $lookupDataset->setOrderByField('continent', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_land_id_continent_search', 'id', 'continent', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_q_unvollstaendige_organisationen_land_id_search', 'id', 'continent', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5620,7 +5625,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_interessenraum_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_q_unvollstaendige_organisationen_interessenraum_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5651,7 +5656,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_interessengruppe_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_q_unvollstaendige_organisationen_interessengruppe_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5682,7 +5687,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_interessengruppe2_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_q_unvollstaendige_organisationen_interessengruppe2_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5713,7 +5718,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_interessengruppe3_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_q_unvollstaendige_organisationen_interessengruppe3_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5752,7 +5757,7 @@
                 )
             );
             $lookupDataset->setOrderByField('continent', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_land_id_continent_search', 'id', 'continent', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_q_unvollstaendige_organisationen_land_id_search', 'id', 'continent', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5781,7 +5786,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_interessenraum_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_q_unvollstaendige_organisationen_interessenraum_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5812,7 +5817,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_interessengruppe_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_q_unvollstaendige_organisationen_interessengruppe_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5843,7 +5848,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_interessengruppe2_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_q_unvollstaendige_organisationen_interessengruppe2_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5874,7 +5879,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_interessengruppe3_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_q_unvollstaendige_organisationen_interessengruppe3_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -6025,10 +6030,6 @@
     try
     {
         $Page = new q_unvollstaendige_organisationenPage("q_unvollstaendige_organisationen", "q_unvollstaendige_organisationen.php", GetCurrentUserPermissionSetForDataSource("q_unvollstaendige_organisationen"), 'UTF-8');
-        $Page->SetTitle('Unvollständige Organisationen');
-        $Page->SetMenuLabel('<span class="view">Unvollständige Organisationen</span>');
-        $Page->SetHeader(GetPagesHeader());
-        $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("q_unvollstaendige_organisationen"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

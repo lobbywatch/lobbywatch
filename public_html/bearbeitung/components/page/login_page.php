@@ -8,13 +8,12 @@ class LoginPage extends CommonPage
 {
     private $loginControl;
     private $renderer;
-    private $header;
-    private $footer;
     private $pageFileName;
     private $inactivityTimeoutExpired;
 
     #region Events
     public $OnAfterLogin;
+    public $OnAfterFailedLoginAttempt;
     public $OnBeforeLogout;
     #endregion
 
@@ -38,6 +37,7 @@ class LoginPage extends CommonPage
         $this->pageFileName = $pageFileName;
         $this->captions = $captions;
         $this->OnAfterLogin = new Event();
+        $this->OnAfterFailedLoginAttempt = new Event();
         $this->OnBeforeLogout = new Event();
         $this->renderer = new ViewAllRenderer($this->captions);
         $this->inactivityTimeoutExpired = false;
@@ -68,22 +68,6 @@ class LoginPage extends CommonPage
         return 'Login';
     }
 
-    public function SetHeader($value) {
-        $this->header = $value;
-    }
-
-    public function GetHeader() {
-        return $this->RenderText($this->header);
-    }
-
-    public function SetFooter($value) {
-        $this->footer = $value;
-    }
-
-    public function GetFooter() {
-        return $this->RenderText($this->footer);
-    }
-
     public function BeginRender() {
         $this->loginControl->ProcessMessages();
         $this->inactivityTimeoutExpired = GetApplication()->GetSuperGlobals()->IsGetValueSet('inactivity_timeout_expired');
@@ -93,8 +77,7 @@ class LoginPage extends CommonPage
         echo $this->renderer->Render($this);
     }
 
-    public function getType()
-    {
+    public function getType() {
         return PageType::Login;
     }
 

@@ -39,6 +39,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Unvollständige Parlamentarier');
+            $this->SetMenuLabel('<span class="view">Unvollständige Parlamentarier</span>');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $selectQuery = 'select * from parlamentarier where
             geschlecht is null OR
             geburtstag is null OR
@@ -56,7 +61,7 @@
               $selectQuery, $insertQuery, $updateQuery, $deleteQuery, 'q_unvollstaendige_parlamentarier');
             $this->dataset->addFields(
                 array(
-                    new IntegerField('id', true, true, true),
+                    new IntegerField('id', true, true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
@@ -4537,10 +4542,6 @@
     try
     {
         $Page = new q_unvollstaendige_parlamentarierPage("q_unvollstaendige_parlamentarier", "q_unvollstaendige_parlamentarier.php", GetCurrentUserPermissionSetForDataSource("q_unvollstaendige_parlamentarier"), 'UTF-8');
-        $Page->SetTitle('Unvollständige Parlamentarier');
-        $Page->SetMenuLabel('<span class="view">Unvollständige Parlamentarier</span>');
-        $Page->SetHeader(GetPagesHeader());
-        $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("q_unvollstaendige_parlamentarier"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

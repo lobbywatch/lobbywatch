@@ -283,6 +283,7 @@ abstract class Page extends CommonPage implements IVariableContainer
     public function FillVariablesValues(&$values) {
         $values['PAGE_SHORT_CAPTION'] = $this->GetMenuLabel();
         $values['PAGE_CAPTION'] = $this->GetTitle();
+        $values['PAGE_ID'] = $this->GetPageId();
         $values['PAGE_CSV_EXPORT_LINK'] = $this->GetExportToCsvLink();
         $values['PAGE_XLS_EXPORT_LINK'] = $this->GetExportToExcelLink();
         $values['PAGE_PDF_EXPORT_LINK'] = $this->GetExportToPdfLink();
@@ -902,6 +903,22 @@ abstract class Page extends CommonPage implements IVariableContainer
         return $this->charts;
     }
 
+    /**
+     * @param string $chartId
+     * @return Chart || null
+     */
+    public function getChartById($chartId) {
+        foreach ($this->getCharts() as $position => $chartsInfo) {
+            foreach ($chartsInfo as $chartInfo) {
+                $chart = $chartInfo['chart'];
+                if ($chart->getId() == $chartId) {
+                    return $chart;
+                }
+            }
+        }
+        return null;
+    }
+
     public function hasCharts()
     {
         return 0 < count($this->charts[ChartPosition::BEFORE_GRID])
@@ -1092,7 +1109,7 @@ abstract class Page extends CommonPage implements IVariableContainer
     public function SetMessage($value)
     { $this->message = $value; }
     public function GetMessage()
-    { return $this->RenderText($this->message); }
+    { return $this->message; }
 
     #region Options
 

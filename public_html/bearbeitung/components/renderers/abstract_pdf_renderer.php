@@ -66,8 +66,11 @@ abstract class AbstractPdfRenderer extends AbstractExportRenderer
         $mpdf = createMPDF($configParams);
         $mpdf->charset_in = $Page->GetContentEncoding();
 
-        $stylesheet = FileUtils::ReadAllText('components/assets/css/pdf.css') .
-            FileUtils::ReadAllText('components/assets/css/user_pdf.css');
+        $stylesheet = FileUtils::ReadAllText('components/assets/css/pdf.css');
+        $userCss = 'components/assets/css/user_pdf.css';
+        if (FileUtils::FileExists($userCss)) {
+            $stylesheet .= FileUtils::ReadAllText($userCss);
+        }
 
         $mpdf->WriteHTML($stylesheet, 1);
 

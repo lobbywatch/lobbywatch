@@ -39,6 +39,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Tabellenstand');
+            $this->SetMenuLabel('<span class="view">Tabellenstand</span>');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -867,10 +872,6 @@
     try
     {
         $Page = new v_last_updated_tablesPage("v_last_updated_tables", "last_updated_tables.php", GetCurrentUserPermissionSetForDataSource("v_last_updated_tables"), 'UTF-8');
-        $Page->SetTitle('Tabellenstand');
-        $Page->SetMenuLabel('<span class="view">Tabellenstand</span>');
-        $Page->SetHeader(GetPagesHeader());
-        $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("v_last_updated_tables"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

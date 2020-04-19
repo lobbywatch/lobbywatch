@@ -73,6 +73,7 @@ class HomePage extends CommonPage
                 'Name' => GetApplication()->GetCurrentUser(),
                 'Id' => GetApplication()->GetCurrentUserId(),
             ),
+            'CanChangeOwnPassword' => GetApplication()->GetUserAuthentication()->canUserChangeOwnPassword(),
             'isAdminPanelVisible' => GetApplication()->HasAdminPanelForCurrentUser(),
         );
     }

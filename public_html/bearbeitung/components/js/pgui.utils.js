@@ -80,7 +80,8 @@ define([
 
             return $('<div/>', {
                 class: 'modal fade',
-                tabIndex: '-1'
+                tabIndex: '-1',
+                'data-backdrop': 'static'
             }).append(loadingContent).appendTo($('body'));
         },
         replaceRow: function($oldRow, $newRow) {

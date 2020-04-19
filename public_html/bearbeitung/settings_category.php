@@ -40,6 +40,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Settings');
+            $this->SetMenuLabel('<s>Settings</s>');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -221,10 +226,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_category_id_name_search');
+            $main_editor->SetHandlerName('filter_builder_settings_category_settings_category_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('category_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_category_id_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_settings_category_settings_category_id_search');
             
             $text_editor = new TextEdit('category_id');
             
@@ -401,7 +406,7 @@
             $column = new TextViewColumn('key_name', 'key_name', 'Key Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_key_name_handler_list');
+            $column->SetFullTextWindowHandlerName('settings_category_settings_key_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Schlüsselname der Einstellung. NICHT VERÄNDERN. Wird vom Programm vorgegeben');
             $column->SetFixedWidth(null);
@@ -413,7 +418,7 @@
             $column = new TextViewColumn('value', 'value', 'Value', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_value_handler_list');
+            $column->SetFullTextWindowHandlerName('settings_category_settings_value_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Wert der Einstellung. Dieser Wert ist nach den Bedürfnissen anzupassen.');
             $column->SetFixedWidth(null);
@@ -425,7 +430,7 @@
             $column = new TextViewColumn('description', 'description', 'Description', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_description_handler_list');
+            $column->SetFullTextWindowHandlerName('settings_category_settings_description_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Hinweise zur Bedeutung dieser Einstellung. Welche Werte sind möglich');
             $column->SetFixedWidth(null);
@@ -447,7 +452,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('settings_category_settings_notizen_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
             $column->SetFixedWidth(null);
@@ -511,7 +516,7 @@
             $column = new TextViewColumn('key_name', 'key_name', 'Key Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_key_name_handler_view');
+            $column->SetFullTextWindowHandlerName('settings_category_settings_key_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -520,7 +525,7 @@
             $column = new TextViewColumn('value', 'value', 'Value', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_value_handler_view');
+            $column->SetFullTextWindowHandlerName('settings_category_settings_value_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -529,7 +534,7 @@
             $column = new TextViewColumn('description', 'description', 'Description', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_description_handler_view');
+            $column->SetFullTextWindowHandlerName('settings_category_settings_description_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -545,7 +550,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('settings_category_settings_notizen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -931,7 +936,7 @@
             $column = new TextViewColumn('key_name', 'key_name', 'Key Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_key_name_handler_print');
+            $column->SetFullTextWindowHandlerName('settings_category_settings_key_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -940,7 +945,7 @@
             $column = new TextViewColumn('value', 'value', 'Value', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_value_handler_print');
+            $column->SetFullTextWindowHandlerName('settings_category_settings_value_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -949,7 +954,7 @@
             $column = new TextViewColumn('description', 'description', 'Description', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_description_handler_print');
+            $column->SetFullTextWindowHandlerName('settings_category_settings_description_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -965,7 +970,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('settings_category_settings_notizen_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1014,7 +1019,7 @@
             $column = new TextViewColumn('key_name', 'key_name', 'Key Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_key_name_handler_export');
+            $column->SetFullTextWindowHandlerName('settings_category_settings_key_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1023,7 +1028,7 @@
             $column = new TextViewColumn('value', 'value', 'Value', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_value_handler_export');
+            $column->SetFullTextWindowHandlerName('settings_category_settings_value_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1032,7 +1037,7 @@
             $column = new TextViewColumn('description', 'description', 'Description', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_description_handler_export');
+            $column->SetFullTextWindowHandlerName('settings_category_settings_description_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1048,7 +1053,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('settings_category_settings_notizen_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1097,7 +1102,7 @@
             $column = new TextViewColumn('key_name', 'key_name', 'Key Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_key_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('settings_category_settings_key_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1106,7 +1111,7 @@
             $column = new TextViewColumn('value', 'value', 'Value', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_value_handler_compare');
+            $column->SetFullTextWindowHandlerName('settings_category_settings_value_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1115,7 +1120,7 @@
             $column = new TextViewColumn('description', 'description', 'Description', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_description_handler_compare');
+            $column->SetFullTextWindowHandlerName('settings_category_settings_description_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1131,7 +1136,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('settings_category_settings_notizen_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1257,7 +1262,7 @@
             //
             $column = new TextViewColumn('key_name', 'key_name', 'Key Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridsettings_category.settings_key_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_settings_key_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1265,7 +1270,7 @@
             //
             $column = new TextViewColumn('value', 'value', 'Value', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridsettings_category.settings_value_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_settings_value_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1273,7 +1278,7 @@
             //
             $column = new TextViewColumn('description', 'description', 'Description', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridsettings_category.settings_description_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_settings_description_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1281,7 +1286,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridsettings_category.settings_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_settings_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1289,7 +1294,7 @@
             //
             $column = new TextViewColumn('key_name', 'key_name', 'Key Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridsettings_category.settings_key_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_settings_key_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1297,7 +1302,7 @@
             //
             $column = new TextViewColumn('value', 'value', 'Value', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridsettings_category.settings_value_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_settings_value_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1305,7 +1310,7 @@
             //
             $column = new TextViewColumn('description', 'description', 'Description', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridsettings_category.settings_description_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_settings_description_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1313,7 +1318,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridsettings_category.settings_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_settings_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1321,7 +1326,7 @@
             //
             $column = new TextViewColumn('key_name', 'key_name', 'Key Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridsettings_category.settings_key_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_settings_key_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1329,7 +1334,7 @@
             //
             $column = new TextViewColumn('value', 'value', 'Value', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridsettings_category.settings_value_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_settings_value_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1337,7 +1342,7 @@
             //
             $column = new TextViewColumn('description', 'description', 'Description', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridsettings_category.settings_description_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_settings_description_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1345,7 +1350,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridsettings_category.settings_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_settings_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -1365,7 +1370,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_category_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_settings_category_settings_category_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -1385,7 +1390,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_category_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_settings_category_settings_category_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1393,7 +1398,7 @@
             //
             $column = new TextViewColumn('key_name', 'key_name', 'Key Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridsettings_category.settings_key_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_settings_key_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1401,7 +1406,7 @@
             //
             $column = new TextViewColumn('value', 'value', 'Value', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridsettings_category.settings_value_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_settings_value_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1409,7 +1414,7 @@
             //
             $column = new TextViewColumn('description', 'description', 'Description', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridsettings_category.settings_description_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_settings_description_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1417,7 +1422,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridsettings_category.settings_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_settings_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -1571,6 +1576,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Settings Category');
+            $this->SetMenuLabel('<span class="settings">Settings Category</span>');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -1910,7 +1920,7 @@
             $column = new TextViewColumn('description', 'description', 'Description', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('settings_categoryGrid_description_handler_list');
+            $column->SetFullTextWindowHandlerName('settings_category_description_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Beschreibung der Settingskategorie');
@@ -1923,7 +1933,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('settings_categoryGrid_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('settings_category_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
@@ -1995,7 +2005,7 @@
             $column = new TextViewColumn('description', 'description', 'Description', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('settings_categoryGrid_description_handler_view');
+            $column->SetFullTextWindowHandlerName('settings_category_description_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -2005,7 +2015,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('settings_categoryGrid_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('settings_category_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -2299,7 +2309,7 @@
             $column = new TextViewColumn('description', 'description', 'Description', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('settings_categoryGrid_description_handler_print');
+            $column->SetFullTextWindowHandlerName('settings_category_description_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -2309,7 +2319,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('settings_categoryGrid_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('settings_category_notizen_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -2366,7 +2376,7 @@
             $column = new TextViewColumn('description', 'description', 'Description', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('settings_categoryGrid_description_handler_export');
+            $column->SetFullTextWindowHandlerName('settings_category_description_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -2376,7 +2386,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('settings_categoryGrid_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('settings_category_notizen_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -2433,7 +2443,7 @@
             $column = new TextViewColumn('description', 'description', 'Description', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('settings_categoryGrid_description_handler_compare');
+            $column->SetFullTextWindowHandlerName('settings_category_description_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -2443,7 +2453,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('settings_categoryGrid_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('settings_category_notizen_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -2606,10 +2616,6 @@
         protected function doRegisterHandlers() {
             $detailPage = new settings_category_settingsPage('settings_category_settings', $this, array('category_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('settings_category.settings'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('settings_category.settings'));
-            $detailPage->SetTitle('Settings');
-            $detailPage->SetMenuLabel('<s>Settings</s>');
-            $detailPage->SetHeader(GetPagesHeader());
-            $detailPage->SetFooter(GetPagesFooter());
             $detailPage->SetHttpHandlerName('settings_category_settings_handler');
             $handler = new PageHTTPHandler('settings_category_settings_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
@@ -2620,7 +2626,7 @@
             $column = new TextViewColumn('description', 'description', 'Description', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_categoryGrid_description_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_description_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2629,7 +2635,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_categoryGrid_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2638,7 +2644,7 @@
             $column = new TextViewColumn('description', 'description', 'Description', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_categoryGrid_description_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_description_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2647,7 +2653,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_categoryGrid_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2656,7 +2662,7 @@
             $column = new TextViewColumn('description', 'description', 'Description', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_categoryGrid_description_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_description_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2665,7 +2671,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_categoryGrid_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2674,7 +2680,7 @@
             $column = new TextViewColumn('description', 'description', 'Description', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_categoryGrid_description_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_description_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2683,7 +2689,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_categoryGrid_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_category_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -2834,10 +2840,6 @@
     try
     {
         $Page = new settings_categoryPage("settings_category", "settings_category.php", GetCurrentUserPermissionSetForDataSource("settings_category"), 'UTF-8');
-        $Page->SetTitle('Settings Category');
-        $Page->SetMenuLabel('<span class="settings">Settings Category</span>');
-        $Page->SetHeader(GetPagesHeader());
-        $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("settings_category"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

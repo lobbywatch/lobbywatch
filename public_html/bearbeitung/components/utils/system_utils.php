@@ -1,7 +1,6 @@
 <?php
 
 include_once dirname(__FILE__) . '/string_utils.php';
-include_once dirname(__FILE__) . '/../../libs/JSON.php';
 
 class SMReflection
 {
@@ -53,25 +52,11 @@ class SystemUtils
 
     public static function ToJSON($value)
     {
-        if (function_exists('json_encode'))
-        {
-            return json_encode($value);
-        }
-        else
-        {
-            $jsonConverter = new Services_JSON();
-            return $jsonConverter->encode($value);
-        }
+	return json_encode($value);
     }
 
     public static function FromJSON($json, $assoc = false)
     {
-        if (!function_exists('json_decode')) {
-            $jsonConverter = new Services_JSON($assoc ? SERVICES_JSON_LOOSE_TYPE : 0);
-
-            return $jsonConverter->decode($json);
-        }
-
         return json_decode($json, $assoc);
     }
 

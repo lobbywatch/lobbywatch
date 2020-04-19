@@ -40,6 +40,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Mandatsvergütung');
+            $this->SetMenuLabel('Mandatsvergütung');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -658,7 +663,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridmandat.mandat_jahr_beschreibung_handler_list');
+            $column->SetFullTextWindowHandlerName('mandat_mandat_jahr_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Beschreibung der Verfgütung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.');
             $column->SetFixedWidth(null);
@@ -672,7 +677,7 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridmandat.mandat_jahr_quelle_url_handler_list');
+            $column->SetFullTextWindowHandlerName('mandat_mandat_jahr_quelle_url_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('URL der Quelle; zum Beleg');
             $column->SetFixedWidth(null);
@@ -684,7 +689,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridmandat.mandat_jahr_quelle_handler_list');
+            $column->SetFullTextWindowHandlerName('mandat_mandat_jahr_quelle_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen');
             $column->SetFixedWidth(null);
@@ -696,7 +701,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridmandat.mandat_jahr_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('mandat_mandat_jahr_notizen_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
             $column->SetFixedWidth(null);
@@ -865,7 +870,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridmandat.mandat_jahr_beschreibung_handler_view');
+            $column->SetFullTextWindowHandlerName('mandat_mandat_jahr_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -876,7 +881,7 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridmandat.mandat_jahr_quelle_url_handler_view');
+            $column->SetFullTextWindowHandlerName('mandat_mandat_jahr_quelle_url_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -885,7 +890,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridmandat.mandat_jahr_quelle_handler_view');
+            $column->SetFullTextWindowHandlerName('mandat_mandat_jahr_quelle_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -894,7 +899,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridmandat.mandat_jahr_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('mandat_mandat_jahr_notizen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1236,7 +1241,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Mandat', 'mandat_id', 'mandat_id_anzeige_name', 'multi_edit_mandat_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Mandat', 'mandat_id', 'mandat_id_anzeige_name', 'multi_edit_mandat_mandat_jahr_mandat_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1595,7 +1600,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridmandat.mandat_jahr_beschreibung_handler_print');
+            $column->SetFullTextWindowHandlerName('mandat_mandat_jahr_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1606,7 +1611,7 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridmandat.mandat_jahr_quelle_url_handler_print');
+            $column->SetFullTextWindowHandlerName('mandat_mandat_jahr_quelle_url_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1615,7 +1620,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridmandat.mandat_jahr_quelle_handler_print');
+            $column->SetFullTextWindowHandlerName('mandat_mandat_jahr_quelle_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1624,7 +1629,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridmandat.mandat_jahr_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('mandat_mandat_jahr_notizen_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1754,7 +1759,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridmandat.mandat_jahr_beschreibung_handler_export');
+            $column->SetFullTextWindowHandlerName('mandat_mandat_jahr_beschreibung_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1765,7 +1770,7 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridmandat.mandat_jahr_quelle_url_handler_export');
+            $column->SetFullTextWindowHandlerName('mandat_mandat_jahr_quelle_url_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1774,7 +1779,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridmandat.mandat_jahr_quelle_handler_export');
+            $column->SetFullTextWindowHandlerName('mandat_mandat_jahr_quelle_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1783,7 +1788,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridmandat.mandat_jahr_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('mandat_mandat_jahr_notizen_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1913,7 +1918,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridmandat.mandat_jahr_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('mandat_mandat_jahr_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1924,7 +1929,7 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridmandat.mandat_jahr_quelle_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('mandat_mandat_jahr_quelle_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1940,7 +1945,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridmandat.mandat_jahr_quelle_handler_compare');
+            $column->SetFullTextWindowHandlerName('mandat_mandat_jahr_quelle_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1949,7 +1954,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridmandat.mandat_jahr_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('mandat_mandat_jahr_notizen_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -2138,7 +2143,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridmandat.mandat_jahr_beschreibung_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_mandat_jahr_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2148,7 +2153,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridmandat.mandat_jahr_quelle_url_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_mandat_jahr_quelle_url_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2156,7 +2161,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridmandat.mandat_jahr_quelle_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_mandat_jahr_quelle_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2164,7 +2169,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridmandat.mandat_jahr_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_mandat_jahr_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2172,7 +2177,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridmandat.mandat_jahr_beschreibung_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_mandat_jahr_beschreibung_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2182,7 +2187,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridmandat.mandat_jahr_quelle_url_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_mandat_jahr_quelle_url_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2190,7 +2195,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridmandat.mandat_jahr_quelle_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_mandat_jahr_quelle_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2198,7 +2203,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridmandat.mandat_jahr_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_mandat_jahr_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2206,7 +2211,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridmandat.mandat_jahr_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_mandat_jahr_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2216,7 +2221,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridmandat.mandat_jahr_quelle_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_mandat_jahr_quelle_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2224,7 +2229,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridmandat.mandat_jahr_quelle_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_mandat_jahr_quelle_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2232,7 +2237,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridmandat.mandat_jahr_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_mandat_jahr_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2240,7 +2245,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridmandat.mandat_jahr_beschreibung_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_mandat_jahr_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2250,7 +2255,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridmandat.mandat_jahr_quelle_url_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_mandat_jahr_quelle_url_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2258,7 +2263,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridmandat.mandat_jahr_quelle_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_mandat_jahr_quelle_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2266,7 +2271,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridmandat.mandat_jahr_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_mandat_jahr_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -2315,7 +2320,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_mandat_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_mandat_mandat_jahr_mandat_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -2470,6 +2475,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Mandat');
+            $this->SetMenuLabel('<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Personen</span>');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -2633,10 +2643,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_person_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_mandat_person_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('person_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_person_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_mandat_person_id_search');
             
             $text_editor = new TextEdit('person_id');
             
@@ -2668,10 +2678,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_organisation_id_searchable_name_search');
+            $main_editor->SetHandlerName('filter_builder_mandat_organisation_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('organisation_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_organisation_id_searchable_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_mandat_organisation_id_search');
             
             $text_editor = new TextEdit('organisation_id');
             
@@ -3376,7 +3386,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_beschreibung_handler_list');
+            $column->SetFullTextWindowHandlerName('mandat_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Umschreibung des Mandates. Beschreibung wird nicht ausgewertet, jedoch in den Resultaten angezeigt.');
             $column->SetFixedWidth(null);
@@ -3388,7 +3398,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_beschreibung_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('mandat_beschreibung_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Französische Bezeichung des Mandates. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.');
             $column->SetFixedWidth(null);
@@ -3402,7 +3412,7 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_quelle_url_handler_list');
+            $column->SetFullTextWindowHandlerName('mandat_quelle_url_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('URL der Quelle; zum Beleg');
             $column->SetFixedWidth(null);
@@ -3414,7 +3424,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_quelle_handler_list');
+            $column->SetFullTextWindowHandlerName('mandat_quelle_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen');
             $column->SetFixedWidth(null);
@@ -3426,7 +3436,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('mandat_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
@@ -3632,7 +3642,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_beschreibung_handler_view');
+            $column->SetFullTextWindowHandlerName('mandat_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3641,7 +3651,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_beschreibung_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('mandat_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3652,7 +3662,7 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_quelle_url_handler_view');
+            $column->SetFullTextWindowHandlerName('mandat_quelle_url_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3661,7 +3671,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_quelle_handler_view');
+            $column->SetFullTextWindowHandlerName('mandat_quelle_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3670,7 +3680,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('mandat_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -3832,7 +3842,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'edit_person_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'edit_mandat_person_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3910,7 +3920,7 @@
                 )
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_searchable_name', 'edit_organisation_id_searchable_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
+            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_searchable_name', 'edit_mandat_organisation_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4219,7 +4229,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'multi_edit_person_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'multi_edit_mandat_person_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4297,7 +4307,7 @@
                 )
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_searchable_name', 'multi_edit_organisation_id_searchable_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
+            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_searchable_name', 'multi_edit_mandat_organisation_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4615,7 +4625,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'insert_person_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'insert_mandat_person_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4693,7 +4703,7 @@
                 )
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_searchable_name', 'insert_organisation_id_searchable_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
+            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_searchable_name', 'insert_mandat_organisation_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4929,7 +4939,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_beschreibung_handler_print');
+            $column->SetFullTextWindowHandlerName('mandat_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -4938,7 +4948,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_beschreibung_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('mandat_beschreibung_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -4949,7 +4959,7 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_quelle_url_handler_print');
+            $column->SetFullTextWindowHandlerName('mandat_quelle_url_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -4958,7 +4968,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_quelle_handler_print');
+            $column->SetFullTextWindowHandlerName('mandat_quelle_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -4967,7 +4977,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('mandat_notizen_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -5134,7 +5144,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_beschreibung_handler_export');
+            $column->SetFullTextWindowHandlerName('mandat_beschreibung_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -5143,7 +5153,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_beschreibung_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('mandat_beschreibung_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -5154,7 +5164,7 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_quelle_url_handler_export');
+            $column->SetFullTextWindowHandlerName('mandat_quelle_url_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -5163,7 +5173,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_quelle_handler_export');
+            $column->SetFullTextWindowHandlerName('mandat_quelle_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -5172,7 +5182,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('mandat_notizen_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -5339,7 +5349,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('mandat_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -5348,7 +5358,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_beschreibung_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('mandat_beschreibung_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -5359,7 +5369,7 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_quelle_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('mandat_quelle_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -5375,7 +5385,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_quelle_handler_compare');
+            $column->SetFullTextWindowHandlerName('mandat_quelle_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -5384,7 +5394,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mandatGrid_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('mandat_notizen_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -5633,10 +5643,6 @@
         protected function doRegisterHandlers() {
             $detailPage = new mandat_mandat_jahrPage('mandat_mandat_jahr', $this, array('mandat_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('mandat.mandat_jahr'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('mandat.mandat_jahr'));
-            $detailPage->SetTitle('Mandatsvergütung');
-            $detailPage->SetMenuLabel('Mandatsvergütung');
-            $detailPage->SetHeader(GetPagesHeader());
-            $detailPage->SetFooter(GetPagesFooter());
             $detailPage->SetHttpHandlerName('mandat_mandat_jahr_handler');
             $handler = new PageHTTPHandler('mandat_mandat_jahr_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
@@ -5646,7 +5652,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatGrid_beschreibung_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5654,7 +5660,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatGrid_beschreibung_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_beschreibung_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5664,7 +5670,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatGrid_quelle_url_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_quelle_url_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5672,7 +5678,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatGrid_quelle_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_quelle_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5681,7 +5687,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatGrid_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5689,7 +5695,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatGrid_beschreibung_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_beschreibung_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5697,7 +5703,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatGrid_beschreibung_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_beschreibung_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5707,7 +5713,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatGrid_quelle_url_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_quelle_url_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5715,7 +5721,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatGrid_quelle_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_quelle_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5724,7 +5730,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatGrid_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5732,7 +5738,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatGrid_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5740,7 +5746,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatGrid_beschreibung_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_beschreibung_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5750,7 +5756,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatGrid_quelle_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_quelle_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5758,7 +5764,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatGrid_quelle_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_quelle_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -5767,7 +5773,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatGrid_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5829,7 +5835,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_person_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_mandat_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5898,7 +5904,7 @@
                 )
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_organisation_id_searchable_name_search', 'id', 'searchable_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_mandat_organisation_id_search', 'id', 'searchable_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5960,7 +5966,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_mandat_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6029,7 +6035,7 @@
                 )
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_organisation_id_searchable_name_search', 'id', 'searchable_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_mandat_organisation_id_search', 'id', 'searchable_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6037,7 +6043,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatGrid_beschreibung_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6045,7 +6051,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatGrid_beschreibung_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6055,7 +6061,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatGrid_quelle_url_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_quelle_url_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6063,7 +6069,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatGrid_quelle_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_quelle_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6072,7 +6078,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatGrid_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandat_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6134,7 +6140,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_person_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_mandat_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6203,7 +6209,7 @@
                 )
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_organisation_id_searchable_name_search', 'id', 'searchable_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_mandat_organisation_id_search', 'id', 'searchable_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6265,7 +6271,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_person_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_mandat_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6334,7 +6340,7 @@
                 )
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_organisation_id_searchable_name_search', 'id', 'searchable_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_mandat_organisation_id_search', 'id', 'searchable_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -6485,10 +6491,6 @@
     try
     {
         $Page = new mandatPage("mandat", "mandat.php", GetCurrentUserPermissionSetForDataSource("mandat"), 'UTF-8');
-        $Page->SetTitle('Mandat');
-        $Page->SetMenuLabel('<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Personen</span>');
-        $Page->SetHeader(GetPagesHeader());
-        $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("mandat"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

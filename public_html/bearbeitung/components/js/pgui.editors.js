@@ -75,6 +75,7 @@ define([
         init: function (context) {
             this.context = context;
             this.editors = {};
+            this.calculateControlValuesIntervalId = -1;
         },
 
         captureEditors: function (readyCallback) {
@@ -122,6 +123,7 @@ define([
         },
 
         destroy: function () {
+            clearInterval(this.calculateControlValuesIntervalId);
             _.each(this.editors, function (editor) {
                 editor.destroy();
             });
@@ -163,7 +165,7 @@ define([
                 if (_.isFunction(calculateControlValuesCallback)) {
                     try {
                         calculateControlValuesCallback(editors);
-                        setInterval(
+                        editorsController.calculateControlValuesIntervalId = setInterval(
                             function () {
                                 calculateControlValuesCallback(editors);
                             }, 1000);

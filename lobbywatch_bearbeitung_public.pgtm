@@ -1,4 +1,4 @@
-<Project version="18.3.0.3" edition="pro" localizationFileName="public_html\bearbeitung\components\lang.en.lobbywatch.php" phpDriver="2" outputPath="public_html\bearbeitung" copySystemFiles="true" generateModifiedDataOnly="true" outputFilesExtension="php" colorSchemeName="default-compact">
+<Project version="18.3.0.14" edition="pro" localizationFileName="public_html\bearbeitung\components\lang.en.lobbywatch.php" phpDriver="2" outputPath="public_html\bearbeitung" copySystemFiles="true" generateModifiedDataOnly="true" outputFilesExtension="php" colorSchemeName="default-compact">
   <ConnectionOptions host="localhost" port="3306" login="" password="hidden" database="" client_encoding="utf8" allow_old_password="false">
     <ssh_secure secure="false" port="22" authentication_mode="0"/>
     <http_tunnel tunneling="false" url="">
@@ -35866,18 +35866,688 @@ $edit_header_message
 
 $edit_general_hint        </BeforeGridText>
         <DetailedDescription/>
-        <ColumnPresentations/>
+        <ColumnPresentations>
+          <ColumnPresentation fieldName="id" caption="Id" showColumnFilter="false" selectedFilterOperators="1573119">
+            <ViewProperties type="text">
+              <Format type="number" thousandSeparator="'"/>
+            </ViewProperties>
+            <EditProperties type="spinEdit" maxValue="100" minValue="0" useConstraints="false" step="1"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="name_de" caption="Name De" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="name_fr" caption="Name Fr" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="name_it" caption="Name It" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="uid" caption="Uid" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="ort" caption="Ort" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="abkuerzung_de" caption="Abkuerzung De" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="alias_namen_de" caption="Alias Namen De" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="abkuerzung_fr" caption="Abkuerzung Fr" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="alias_namen_fr" caption="Alias Namen Fr" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="abkuerzung_it" caption="Abkuerzung It" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="alias_namen_it" caption="Alias Namen It" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="land_id" caption="Land Id" selectedFilterOperators="1589247">
+            <Lookup tableName="country" linkFieldName="id" displayFieldName="continent" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <ViewProperties type="text"/>
+            <EditProperties type="dynamicCombobox"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenraum_id" caption="Interessenraum Id" selectedFilterOperators="1589247">
+            <Lookup tableName="interessenraum" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <ViewProperties type="text"/>
+            <EditProperties type="dynamicCombobox"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="rechtsform" caption="Rechtsform" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="comboBox">
+              <Values>
+                <Value name="AG" caption="AG"/>
+                <Value name="GmbH" caption="GmbH"/>
+                <Value name="Stiftung" caption="Stiftung"/>
+                <Value name="Verein" caption="Verein"/>
+                <Value name="Informelle Gruppe" caption="Informelle Gruppe"/>
+                <Value name="Parlamentarische Gruppe" caption="Parlamentarische Gruppe"/>
+                <Value name="Oeffentlich-rechtlich" caption="Oeffentlich-rechtlich"/>
+                <Value name="Einzelunternehmen" caption="Einzelunternehmen"/>
+                <Value name="KG" caption="KG"/>
+                <Value name="Genossenschaft" caption="Genossenschaft"/>
+                <Value name="Staatlich" caption="Staatlich"/>
+                <Value name="Ausserparlamentarische Kommission" caption="Ausserparlamentarische Kommission"/>
+                <Value name="Einfache Gesellschaft" caption="Einfache Gesellschaft"/>
+              </Values>
+            </EditProperties>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="rechtsform_zefix" caption="Rechtsform Zefix" showColumnFilter="false" selectedFilterOperators="1573119">
+            <ViewProperties type="text">
+              <Format type="number" thousandSeparator="'"/>
+            </ViewProperties>
+            <EditProperties type="spinEdit" maxValue="100" minValue="0" useConstraints="false" step="1"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="typ" caption="Typ" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="checkBoxGroup" displayMode="0">
+              <Values>
+                <Value name="EinzelOrganisation" caption="EinzelOrganisation"/>
+                <Value name="DachOrganisation" caption="DachOrganisation"/>
+                <Value name="MitgliedsOrganisation" caption="MitgliedsOrganisation"/>
+                <Value name="LeistungsErbringer" caption="LeistungsErbringer"/>
+                <Value name="dezidierteLobby" caption="dezidierteLobby"/>
+                <Value name="Gemeinnuetzig" caption="Gemeinnuetzig"/>
+                <Value name="Gewinnorientiert" caption="Gewinnorientiert"/>
+              </Values>
+            </EditProperties>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="vernehmlassung" caption="Vernehmlassung" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="comboBox">
+              <Values>
+                <Value name="immer" caption="immer"/>
+                <Value name="punktuell" caption="punktuell"/>
+                <Value name="nie" caption="nie"/>
+              </Values>
+            </EditProperties>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessengruppe_id" caption="Interessengruppe Id" selectedFilterOperators="1589247">
+            <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="dynamicCombobox"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessengruppe2_id" caption="Interessengruppe2 Id" selectedFilterOperators="1589247">
+            <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="dynamicCombobox"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessengruppe3_id" caption="Interessengruppe3 Id" selectedFilterOperators="1589247">
+            <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="dynamicCombobox"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="ALT_branche_id" caption="ALT Branche Id" showColumnFilter="false" selectedFilterOperators="1573119">
+            <ViewProperties type="text">
+              <Format type="number" thousandSeparator="'"/>
+            </ViewProperties>
+            <EditProperties type="spinEdit" maxValue="100" minValue="0" useConstraints="false" step="1"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="homepage" caption="Homepage" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="handelsregister_url" caption="Handelsregister Url" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="twitter_name" caption="Twitter Name" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="beschreibung_fr" caption="Beschreibung Fr" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="sekretariat" caption="Sekretariat" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="adresse_strasse" caption="Adresse Strasse" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="adresse_zusatz" caption="Adresse Zusatz" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="adresse_plz" caption="Adresse Plz" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="notizen" caption="Notizen" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="updated_by_import" caption="Updated By Import" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="kontrolliert_visa" caption="Kontrolliert Visa" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="kontrolliert_datum" caption="Kontrolliert Datum" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="freigabe_visa" caption="Freigabe Visa" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="freigabe_datum" caption="Freigabe Datum" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="created_date" caption="Created Date" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+        </ColumnPresentations>
         <Columns>
-          <List/>
-          <View/>
-          <Edit/>
-          <Insert/>
-          <QuickFilter/>
-          <FilterBuilder/>
-          <Print/>
-          <Export/>
-          <Compare/>
-          <MultiEdit/>
+          <List>
+            <Column fieldName="id"/>
+            <Column fieldName="name_de"/>
+            <Column fieldName="name_fr"/>
+            <Column fieldName="name_it"/>
+            <Column fieldName="uid"/>
+            <Column fieldName="ort"/>
+            <Column fieldName="abkuerzung_de"/>
+            <Column fieldName="alias_namen_de"/>
+            <Column fieldName="abkuerzung_fr"/>
+            <Column fieldName="alias_namen_fr"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="land_id"/>
+            <Column fieldName="interessenraum_id"/>
+            <Column fieldName="rechtsform"/>
+            <Column fieldName="rechtsform_handelsregister"/>
+            <Column fieldName="rechtsform_zefix"/>
+            <Column fieldName="typ"/>
+            <Column fieldName="vernehmlassung"/>
+            <Column fieldName="interessengruppe_id"/>
+            <Column fieldName="interessengruppe2_id"/>
+            <Column fieldName="interessengruppe3_id"/>
+            <Column fieldName="ALT_branche_id"/>
+            <Column fieldName="homepage"/>
+            <Column fieldName="handelsregister_url"/>
+            <Column fieldName="twitter_name"/>
+            <Column fieldName="beschreibung"/>
+            <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="adresse_strasse"/>
+            <Column fieldName="adresse_zusatz"/>
+            <Column fieldName="adresse_plz"/>
+            <Column fieldName="notizen"/>
+            <Column fieldName="updated_by_import"/>
+            <Column fieldName="eingabe_abgeschlossen_visa"/>
+            <Column fieldName="eingabe_abgeschlossen_datum"/>
+            <Column fieldName="kontrolliert_visa"/>
+            <Column fieldName="kontrolliert_datum"/>
+            <Column fieldName="freigabe_visa"/>
+            <Column fieldName="freigabe_datum"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
+          </List>
+          <View>
+            <Column fieldName="id"/>
+            <Column fieldName="name_de"/>
+            <Column fieldName="name_fr"/>
+            <Column fieldName="name_it"/>
+            <Column fieldName="uid"/>
+            <Column fieldName="ort"/>
+            <Column fieldName="abkuerzung_de"/>
+            <Column fieldName="alias_namen_de"/>
+            <Column fieldName="abkuerzung_fr"/>
+            <Column fieldName="alias_namen_fr"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="land_id"/>
+            <Column fieldName="interessenraum_id"/>
+            <Column fieldName="rechtsform"/>
+            <Column fieldName="rechtsform_handelsregister"/>
+            <Column fieldName="rechtsform_zefix"/>
+            <Column fieldName="typ"/>
+            <Column fieldName="vernehmlassung"/>
+            <Column fieldName="interessengruppe_id"/>
+            <Column fieldName="interessengruppe2_id"/>
+            <Column fieldName="interessengruppe3_id"/>
+            <Column fieldName="ALT_branche_id"/>
+            <Column fieldName="homepage"/>
+            <Column fieldName="handelsregister_url"/>
+            <Column fieldName="twitter_name"/>
+            <Column fieldName="beschreibung"/>
+            <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="adresse_strasse"/>
+            <Column fieldName="adresse_zusatz"/>
+            <Column fieldName="adresse_plz"/>
+            <Column fieldName="notizen"/>
+            <Column fieldName="updated_by_import"/>
+            <Column fieldName="eingabe_abgeschlossen_visa"/>
+            <Column fieldName="eingabe_abgeschlossen_datum"/>
+            <Column fieldName="kontrolliert_visa"/>
+            <Column fieldName="kontrolliert_datum"/>
+            <Column fieldName="freigabe_visa"/>
+            <Column fieldName="freigabe_datum"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
+          </View>
+          <Edit>
+            <Column fieldName="id"/>
+            <Column fieldName="name_de"/>
+            <Column fieldName="name_fr"/>
+            <Column fieldName="name_it"/>
+            <Column fieldName="uid"/>
+            <Column fieldName="ort"/>
+            <Column fieldName="abkuerzung_de"/>
+            <Column fieldName="alias_namen_de"/>
+            <Column fieldName="abkuerzung_fr"/>
+            <Column fieldName="alias_namen_fr"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="land_id"/>
+            <Column fieldName="interessenraum_id"/>
+            <Column fieldName="rechtsform"/>
+            <Column fieldName="rechtsform_handelsregister"/>
+            <Column fieldName="rechtsform_zefix"/>
+            <Column fieldName="typ"/>
+            <Column fieldName="vernehmlassung"/>
+            <Column fieldName="interessengruppe_id"/>
+            <Column fieldName="interessengruppe2_id"/>
+            <Column fieldName="interessengruppe3_id"/>
+            <Column fieldName="ALT_branche_id"/>
+            <Column fieldName="homepage"/>
+            <Column fieldName="handelsregister_url"/>
+            <Column fieldName="twitter_name"/>
+            <Column fieldName="beschreibung"/>
+            <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="adresse_strasse"/>
+            <Column fieldName="adresse_zusatz"/>
+            <Column fieldName="adresse_plz"/>
+            <Column fieldName="notizen"/>
+            <Column fieldName="updated_by_import"/>
+            <Column fieldName="eingabe_abgeschlossen_visa"/>
+            <Column fieldName="eingabe_abgeschlossen_datum"/>
+            <Column fieldName="kontrolliert_visa"/>
+            <Column fieldName="kontrolliert_datum"/>
+            <Column fieldName="freigabe_visa"/>
+            <Column fieldName="freigabe_datum"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
+          </Edit>
+          <Insert>
+            <Column fieldName="id"/>
+            <Column fieldName="name_de"/>
+            <Column fieldName="name_fr"/>
+            <Column fieldName="name_it"/>
+            <Column fieldName="uid"/>
+            <Column fieldName="ort"/>
+            <Column fieldName="abkuerzung_de"/>
+            <Column fieldName="alias_namen_de"/>
+            <Column fieldName="abkuerzung_fr"/>
+            <Column fieldName="alias_namen_fr"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="land_id"/>
+            <Column fieldName="interessenraum_id"/>
+            <Column fieldName="rechtsform"/>
+            <Column fieldName="rechtsform_handelsregister"/>
+            <Column fieldName="rechtsform_zefix"/>
+            <Column fieldName="typ"/>
+            <Column fieldName="vernehmlassung"/>
+            <Column fieldName="interessengruppe_id"/>
+            <Column fieldName="interessengruppe2_id"/>
+            <Column fieldName="interessengruppe3_id"/>
+            <Column fieldName="ALT_branche_id"/>
+            <Column fieldName="homepage"/>
+            <Column fieldName="handelsregister_url"/>
+            <Column fieldName="twitter_name"/>
+            <Column fieldName="beschreibung"/>
+            <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="adresse_strasse"/>
+            <Column fieldName="adresse_zusatz"/>
+            <Column fieldName="adresse_plz"/>
+            <Column fieldName="notizen"/>
+            <Column fieldName="updated_by_import"/>
+            <Column fieldName="eingabe_abgeschlossen_visa"/>
+            <Column fieldName="eingabe_abgeschlossen_datum"/>
+            <Column fieldName="kontrolliert_visa"/>
+            <Column fieldName="kontrolliert_datum"/>
+            <Column fieldName="freigabe_visa"/>
+            <Column fieldName="freigabe_datum"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
+          </Insert>
+          <QuickFilter>
+            <Column fieldName="id"/>
+            <Column fieldName="name_de"/>
+            <Column fieldName="name_fr"/>
+            <Column fieldName="name_it"/>
+            <Column fieldName="uid"/>
+            <Column fieldName="ort"/>
+            <Column fieldName="abkuerzung_de"/>
+            <Column fieldName="alias_namen_de"/>
+            <Column fieldName="abkuerzung_fr"/>
+            <Column fieldName="alias_namen_fr"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="land_id"/>
+            <Column fieldName="interessenraum_id"/>
+            <Column fieldName="rechtsform"/>
+            <Column fieldName="rechtsform_handelsregister"/>
+            <Column fieldName="rechtsform_zefix"/>
+            <Column fieldName="typ"/>
+            <Column fieldName="vernehmlassung"/>
+            <Column fieldName="interessengruppe_id"/>
+            <Column fieldName="interessengruppe2_id"/>
+            <Column fieldName="interessengruppe3_id"/>
+            <Column fieldName="ALT_branche_id"/>
+            <Column fieldName="homepage"/>
+            <Column fieldName="handelsregister_url"/>
+            <Column fieldName="twitter_name"/>
+            <Column fieldName="beschreibung"/>
+            <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="adresse_strasse"/>
+            <Column fieldName="adresse_zusatz"/>
+            <Column fieldName="adresse_plz"/>
+            <Column fieldName="notizen"/>
+            <Column fieldName="updated_by_import"/>
+            <Column fieldName="eingabe_abgeschlossen_visa"/>
+            <Column fieldName="eingabe_abgeschlossen_datum"/>
+            <Column fieldName="kontrolliert_visa"/>
+            <Column fieldName="kontrolliert_datum"/>
+            <Column fieldName="freigabe_visa"/>
+            <Column fieldName="freigabe_datum"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
+          </QuickFilter>
+          <FilterBuilder>
+            <Column fieldName="id"/>
+            <Column fieldName="name_de"/>
+            <Column fieldName="name_fr"/>
+            <Column fieldName="name_it"/>
+            <Column fieldName="uid"/>
+            <Column fieldName="ort"/>
+            <Column fieldName="abkuerzung_de"/>
+            <Column fieldName="alias_namen_de"/>
+            <Column fieldName="abkuerzung_fr"/>
+            <Column fieldName="alias_namen_fr"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="land_id"/>
+            <Column fieldName="interessenraum_id"/>
+            <Column fieldName="rechtsform"/>
+            <Column fieldName="rechtsform_handelsregister"/>
+            <Column fieldName="rechtsform_zefix"/>
+            <Column fieldName="typ"/>
+            <Column fieldName="vernehmlassung"/>
+            <Column fieldName="interessengruppe_id"/>
+            <Column fieldName="interessengruppe2_id"/>
+            <Column fieldName="interessengruppe3_id"/>
+            <Column fieldName="ALT_branche_id"/>
+            <Column fieldName="homepage"/>
+            <Column fieldName="handelsregister_url"/>
+            <Column fieldName="twitter_name"/>
+            <Column fieldName="beschreibung"/>
+            <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="adresse_strasse"/>
+            <Column fieldName="adresse_zusatz"/>
+            <Column fieldName="adresse_plz"/>
+            <Column fieldName="notizen"/>
+            <Column fieldName="updated_by_import"/>
+            <Column fieldName="eingabe_abgeschlossen_visa"/>
+            <Column fieldName="eingabe_abgeschlossen_datum"/>
+            <Column fieldName="kontrolliert_visa"/>
+            <Column fieldName="kontrolliert_datum"/>
+            <Column fieldName="freigabe_visa"/>
+            <Column fieldName="freigabe_datum"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
+          </FilterBuilder>
+          <Print>
+            <Column fieldName="id"/>
+            <Column fieldName="name_de"/>
+            <Column fieldName="name_fr"/>
+            <Column fieldName="name_it"/>
+            <Column fieldName="uid"/>
+            <Column fieldName="ort"/>
+            <Column fieldName="abkuerzung_de"/>
+            <Column fieldName="alias_namen_de"/>
+            <Column fieldName="abkuerzung_fr"/>
+            <Column fieldName="alias_namen_fr"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="land_id"/>
+            <Column fieldName="interessenraum_id"/>
+            <Column fieldName="rechtsform"/>
+            <Column fieldName="rechtsform_handelsregister"/>
+            <Column fieldName="rechtsform_zefix"/>
+            <Column fieldName="typ"/>
+            <Column fieldName="vernehmlassung"/>
+            <Column fieldName="interessengruppe_id"/>
+            <Column fieldName="interessengruppe2_id"/>
+            <Column fieldName="interessengruppe3_id"/>
+            <Column fieldName="ALT_branche_id"/>
+            <Column fieldName="homepage"/>
+            <Column fieldName="handelsregister_url"/>
+            <Column fieldName="twitter_name"/>
+            <Column fieldName="beschreibung"/>
+            <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="adresse_strasse"/>
+            <Column fieldName="adresse_zusatz"/>
+            <Column fieldName="adresse_plz"/>
+            <Column fieldName="notizen"/>
+            <Column fieldName="updated_by_import"/>
+            <Column fieldName="eingabe_abgeschlossen_visa"/>
+            <Column fieldName="eingabe_abgeschlossen_datum"/>
+            <Column fieldName="kontrolliert_visa"/>
+            <Column fieldName="kontrolliert_datum"/>
+            <Column fieldName="freigabe_visa"/>
+            <Column fieldName="freigabe_datum"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
+          </Print>
+          <Export>
+            <Column fieldName="id"/>
+            <Column fieldName="name_de"/>
+            <Column fieldName="name_fr"/>
+            <Column fieldName="name_it"/>
+            <Column fieldName="uid"/>
+            <Column fieldName="ort"/>
+            <Column fieldName="abkuerzung_de"/>
+            <Column fieldName="alias_namen_de"/>
+            <Column fieldName="abkuerzung_fr"/>
+            <Column fieldName="alias_namen_fr"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="land_id"/>
+            <Column fieldName="interessenraum_id"/>
+            <Column fieldName="rechtsform"/>
+            <Column fieldName="rechtsform_handelsregister"/>
+            <Column fieldName="rechtsform_zefix"/>
+            <Column fieldName="typ"/>
+            <Column fieldName="vernehmlassung"/>
+            <Column fieldName="interessengruppe_id"/>
+            <Column fieldName="interessengruppe2_id"/>
+            <Column fieldName="interessengruppe3_id"/>
+            <Column fieldName="ALT_branche_id"/>
+            <Column fieldName="homepage"/>
+            <Column fieldName="handelsregister_url"/>
+            <Column fieldName="twitter_name"/>
+            <Column fieldName="beschreibung"/>
+            <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="adresse_strasse"/>
+            <Column fieldName="adresse_zusatz"/>
+            <Column fieldName="adresse_plz"/>
+            <Column fieldName="notizen"/>
+            <Column fieldName="updated_by_import"/>
+            <Column fieldName="eingabe_abgeschlossen_visa"/>
+            <Column fieldName="eingabe_abgeschlossen_datum"/>
+            <Column fieldName="kontrolliert_visa"/>
+            <Column fieldName="kontrolliert_datum"/>
+            <Column fieldName="freigabe_visa"/>
+            <Column fieldName="freigabe_datum"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
+          </Export>
+          <Compare>
+            <Column fieldName="id"/>
+            <Column fieldName="name_de"/>
+            <Column fieldName="name_fr"/>
+            <Column fieldName="name_it"/>
+            <Column fieldName="uid"/>
+            <Column fieldName="ort"/>
+            <Column fieldName="abkuerzung_de"/>
+            <Column fieldName="alias_namen_de"/>
+            <Column fieldName="abkuerzung_fr"/>
+            <Column fieldName="alias_namen_fr"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="land_id"/>
+            <Column fieldName="interessenraum_id"/>
+            <Column fieldName="rechtsform"/>
+            <Column fieldName="rechtsform_handelsregister"/>
+            <Column fieldName="rechtsform_zefix"/>
+            <Column fieldName="typ"/>
+            <Column fieldName="vernehmlassung"/>
+            <Column fieldName="interessengruppe_id"/>
+            <Column fieldName="interessengruppe2_id"/>
+            <Column fieldName="interessengruppe3_id"/>
+            <Column fieldName="ALT_branche_id"/>
+            <Column fieldName="homepage"/>
+            <Column fieldName="handelsregister_url"/>
+            <Column fieldName="twitter_name"/>
+            <Column fieldName="beschreibung"/>
+            <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="adresse_strasse"/>
+            <Column fieldName="adresse_zusatz"/>
+            <Column fieldName="adresse_plz"/>
+            <Column fieldName="notizen"/>
+            <Column fieldName="updated_by_import"/>
+            <Column fieldName="eingabe_abgeschlossen_visa"/>
+            <Column fieldName="eingabe_abgeschlossen_datum"/>
+            <Column fieldName="kontrolliert_visa"/>
+            <Column fieldName="kontrolliert_datum"/>
+            <Column fieldName="freigabe_visa"/>
+            <Column fieldName="freigabe_datum"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
+          </Compare>
+          <MultiEdit>
+            <Column fieldName="id"/>
+            <Column fieldName="name_de"/>
+            <Column fieldName="name_fr"/>
+            <Column fieldName="name_it"/>
+            <Column fieldName="uid"/>
+            <Column fieldName="ort"/>
+            <Column fieldName="abkuerzung_de"/>
+            <Column fieldName="alias_namen_de"/>
+            <Column fieldName="abkuerzung_fr"/>
+            <Column fieldName="alias_namen_fr"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="land_id"/>
+            <Column fieldName="interessenraum_id"/>
+            <Column fieldName="rechtsform"/>
+            <Column fieldName="rechtsform_handelsregister"/>
+            <Column fieldName="rechtsform_zefix"/>
+            <Column fieldName="typ"/>
+            <Column fieldName="vernehmlassung"/>
+            <Column fieldName="interessengruppe_id"/>
+            <Column fieldName="interessengruppe2_id"/>
+            <Column fieldName="interessengruppe3_id"/>
+            <Column fieldName="ALT_branche_id"/>
+            <Column fieldName="homepage"/>
+            <Column fieldName="handelsregister_url"/>
+            <Column fieldName="twitter_name"/>
+            <Column fieldName="beschreibung"/>
+            <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="adresse_strasse"/>
+            <Column fieldName="adresse_zusatz"/>
+            <Column fieldName="adresse_plz"/>
+            <Column fieldName="notizen"/>
+            <Column fieldName="updated_by_import"/>
+            <Column fieldName="eingabe_abgeschlossen_visa"/>
+            <Column fieldName="eingabe_abgeschlossen_datum"/>
+            <Column fieldName="kontrolliert_visa"/>
+            <Column fieldName="kontrolliert_datum"/>
+            <Column fieldName="freigabe_visa"/>
+            <Column fieldName="freigabe_datum"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
+          </MultiEdit>
         </Columns>
         <Details/>
         <EventHandlers>

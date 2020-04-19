@@ -40,6 +40,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Parlamentarier Anhang');
+            $this->SetMenuLabel('Parlamentarier Anhang');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -159,10 +164,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_parlamentarier_id_nachname_search');
+            $main_editor->SetHandlerName('filter_builder_parlamentarier_parlamentarier_anhang_parlamentarier_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('parlamentarier_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_id_nachname_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_parlamentarier_anhang_parlamentarier_id_search');
             
             $text_editor = new TextEdit('parlamentarier_id');
             
@@ -498,7 +503,7 @@
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_anhang_dateiname_voll_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_anhang_dateiname_voll_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Dateiname inkl. Erweiterung');
             $column->SetFixedWidth(null);
@@ -510,7 +515,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_anhang_beschreibung_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_anhang_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Beschreibung des Anhangs');
             $column->SetFixedWidth(null);
@@ -588,7 +593,7 @@
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_anhang_dateiname_voll_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_anhang_dateiname_voll_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -597,7 +602,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_anhang_beschreibung_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_anhang_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -613,7 +618,7 @@
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_anhang_mime_type_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_anhang_mime_type_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1254,7 +1259,7 @@
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_anhang_dateiname_voll_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_anhang_dateiname_voll_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1263,7 +1268,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_anhang_beschreibung_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_anhang_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1279,7 +1284,7 @@
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_anhang_mime_type_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_anhang_mime_type_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1349,7 +1354,7 @@
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_anhang_dateiname_voll_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_anhang_dateiname_voll_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1358,7 +1363,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_anhang_beschreibung_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_anhang_beschreibung_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1374,7 +1379,7 @@
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_anhang_mime_type_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_anhang_mime_type_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1437,7 +1442,7 @@
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_anhang_dateiname_voll_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_anhang_dateiname_voll_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1446,7 +1451,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_anhang_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_anhang_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1492,7 +1497,7 @@
             $column = new TextViewColumn('dateiname', 'dateiname', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_anhang_dateiname_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_anhang_dateiname_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1508,7 +1513,7 @@
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_anhang_mime_type_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_anhang_mime_type_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1625,7 +1630,7 @@
             //
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.parlamentarier_anhang_dateiname_voll_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlamentarier_anhang_dateiname_voll_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1633,7 +1638,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.parlamentarier_anhang_beschreibung_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlamentarier_anhang_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $handler = new PrivateFileDownloadHTTPHandler($this->dataset, 'datei', 'datei_handler', '%mime_type%', '%datei%', true);
@@ -1644,7 +1649,7 @@
             //
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.parlamentarier_anhang_dateiname_voll_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlamentarier_anhang_dateiname_voll_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1652,7 +1657,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.parlamentarier_anhang_beschreibung_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlamentarier_anhang_beschreibung_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1660,7 +1665,7 @@
             //
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.parlamentarier_anhang_mime_type_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlamentarier_anhang_mime_type_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $handler = new PrivateFileDownloadHTTPHandler($this->dataset, 'datei', 'datei_handler', '%mime_type%', '%datei%', true);
@@ -1671,7 +1676,7 @@
             //
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.parlamentarier_anhang_dateiname_voll_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlamentarier_anhang_dateiname_voll_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1679,7 +1684,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.parlamentarier_anhang_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlamentarier_anhang_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1687,7 +1692,7 @@
             //
             $column = new TextViewColumn('dateiname', 'dateiname', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.parlamentarier_anhang_dateiname_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlamentarier_anhang_dateiname_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1695,7 +1700,7 @@
             //
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.parlamentarier_anhang_mime_type_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlamentarier_anhang_mime_type_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -1780,7 +1785,7 @@
                 )
             );
             $lookupDataset->setOrderByField('nachname', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_id_nachname_search', 'id', 'nachname', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_parlamentarier_anhang_parlamentarier_id_search', 'id', 'nachname', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -1865,7 +1870,7 @@
                 )
             );
             $lookupDataset->setOrderByField('nachname', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_id_nachname_search', 'id', 'nachname', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_parlamentarier_anhang_parlamentarier_id_search', 'id', 'nachname', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $handler = new PrivateFileDownloadHTTPHandler($this->dataset, 'datei', 'datei_handler', '%mime_type%', '%datei%', true);
@@ -1876,7 +1881,7 @@
             //
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.parlamentarier_anhang_dateiname_voll_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlamentarier_anhang_dateiname_voll_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1884,7 +1889,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.parlamentarier_anhang_beschreibung_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlamentarier_anhang_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1892,7 +1897,7 @@
             //
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.parlamentarier_anhang_mime_type_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlamentarier_anhang_mime_type_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -2049,6 +2054,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Parlamentarier Vergütungstransparenz');
+            $this->SetMenuLabel('Parlamentarier Vergütungstransparenz');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -2167,10 +2177,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_parlamentarier_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_parlamentarier_parlamentarier_transparenz_parlamentarier_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('parlamentarier_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_parlamentarier_transparenz_parlamentarier_id_search');
             
             $text_editor = new TextEdit('parlamentarier_id');
             
@@ -2552,7 +2562,7 @@
             $column = new TextViewColumn('parlamentarier_id', 'parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Fremdschlüssel des Parlamentariers');
             $column->SetFixedWidth(null);
@@ -2585,7 +2595,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_transparenz_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_transparenz_notizen_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
             $column->SetFixedWidth(null);
@@ -2715,7 +2725,7 @@
             $column = new TextViewColumn('parlamentarier_id', 'parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2739,7 +2749,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_transparenz_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_transparenz_notizen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2986,7 +2996,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'edit_parlamentarier_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'edit_parlamentarier_parlamentarier_transparenz_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -3303,7 +3313,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'multi_edit_parlamentarier_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'multi_edit_parlamentarier_parlamentarier_transparenz_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -3620,7 +3630,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'insert_parlamentarier_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'insert_parlamentarier_parlamentarier_transparenz_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -3730,7 +3740,7 @@
             $column = new TextViewColumn('parlamentarier_id', 'parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -3754,7 +3764,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_transparenz_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_transparenz_notizen_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -3851,7 +3861,7 @@
             $column = new TextViewColumn('parlamentarier_id', 'parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -3875,7 +3885,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_transparenz_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_transparenz_notizen_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -3962,7 +3972,7 @@
             $column = new TextViewColumn('parlamentarier_id', 'parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -3986,7 +3996,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.parlamentarier_transparenz_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlamentarier_transparenz_notizen_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -4164,7 +4174,7 @@
             //
             $column = new TextViewColumn('parlamentarier_id', 'parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -4172,7 +4182,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.parlamentarier_transparenz_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlamentarier_transparenz_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -4180,7 +4190,7 @@
             //
             $column = new TextViewColumn('parlamentarier_id', 'parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -4188,7 +4198,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.parlamentarier_transparenz_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlamentarier_transparenz_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -4196,7 +4206,7 @@
             //
             $column = new TextViewColumn('parlamentarier_id', 'parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -4204,7 +4214,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.parlamentarier_transparenz_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlamentarier_transparenz_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -4367,7 +4377,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_parlamentarier_parlamentarier_transparenz_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -4530,7 +4540,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_parlamentarier_transparenz_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -4538,7 +4548,7 @@
             //
             $column = new TextViewColumn('parlamentarier_id', 'parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -4546,7 +4556,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.parlamentarier_transparenz_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlamentarier_transparenz_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -4709,7 +4719,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_parlamentarier_parlamentarier_transparenz_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -4872,7 +4882,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_parlamentarier_parlamentarier_transparenz_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -5029,6 +5039,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Organisation Parlamentarier Beide Indirekt');
+            $this->SetMenuLabel('Organisation Parlamentarier Beide Indirekt');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -5207,10 +5222,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_connector_organisation_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_parlamentarier_v_organisation_parlamentarier_beide_indirekt_connector_organisation_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('connector_organisation_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_connector_organisation_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_v_organisation_parlamentarier_beide_indirekt_connector_organisation_id_search');
             
             $text_editor = new TextEdit('connector_organisation_id');
             
@@ -5242,10 +5257,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_person_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_parlamentarier_v_organisation_parlamentarier_beide_indirekt_person_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('person_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_person_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_v_organisation_parlamentarier_beide_indirekt_person_id_search');
             
             $text_editor = new TextEdit('person_id');
             
@@ -5344,10 +5359,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_parlamentarier_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_parlamentarier_v_organisation_parlamentarier_beide_indirekt_parlamentarier_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('parlamentarier_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_v_organisation_parlamentarier_beide_indirekt_parlamentarier_id_search');
             
             $text_editor = new TextEdit('parlamentarier_id');
             
@@ -5673,7 +5688,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -5810,7 +5825,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -5927,7 +5942,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Organisation', 'connector_organisation_id', 'connector_organisation_id_anzeige_name', 'edit_connector_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Organisation', 'connector_organisation_id', 'connector_organisation_id_anzeige_name', 'edit_parlamentarier_v_organisation_parlamentarier_beide_indirekt_connector_organisation_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -5998,7 +6013,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'edit_person_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'edit_parlamentarier_v_organisation_parlamentarier_beide_indirekt_person_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -6140,7 +6155,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'edit_parlamentarier_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'edit_parlamentarier_v_organisation_parlamentarier_beide_indirekt_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -6308,7 +6323,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Organisation', 'connector_organisation_id', 'connector_organisation_id_anzeige_name', 'multi_edit_connector_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Organisation', 'connector_organisation_id', 'connector_organisation_id_anzeige_name', 'multi_edit_parlamentarier_v_organisation_parlamentarier_beide_indirekt_connector_organisation_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -6379,7 +6394,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'multi_edit_person_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'multi_edit_parlamentarier_v_organisation_parlamentarier_beide_indirekt_person_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -6521,7 +6536,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'multi_edit_parlamentarier_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'multi_edit_parlamentarier_v_organisation_parlamentarier_beide_indirekt_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -6775,7 +6790,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Organisation', 'connector_organisation_id', 'connector_organisation_id_anzeige_name', 'insert_connector_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Organisation', 'connector_organisation_id', 'connector_organisation_id_anzeige_name', 'insert_parlamentarier_v_organisation_parlamentarier_beide_indirekt_connector_organisation_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -6846,7 +6861,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'insert_person_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'insert_parlamentarier_v_organisation_parlamentarier_beide_indirekt_person_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -6988,7 +7003,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'insert_parlamentarier_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'insert_parlamentarier_v_organisation_parlamentarier_beide_indirekt_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7173,7 +7188,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -7301,7 +7316,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -7394,7 +7409,7 @@
             $column = new TextViewColumn('parlamentarier_name', 'parlamentarier_name', 'Parlamentarier Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_organisation_parlamentarier_beide_indirekt_parlamentarier_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_organisation_parlamentarier_beide_indirekt_parlamentarier_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7445,7 +7460,7 @@
             $column = new TextViewColumn('zutrittsberechtigter', 'zutrittsberechtigter', 'Zutrittsberechtigter', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_organisation_parlamentarier_beide_indirekt_zutrittsberechtigter_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_organisation_parlamentarier_beide_indirekt_zutrittsberechtigter_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7497,7 +7512,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7610,7 +7625,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7618,7 +7633,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7626,7 +7641,7 @@
             //
             $column = new TextViewColumn('parlamentarier_name', 'parlamentarier_name', 'Parlamentarier Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_organisation_parlamentarier_beide_indirekt_parlamentarier_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_organisation_parlamentarier_beide_indirekt_parlamentarier_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7634,7 +7649,7 @@
             //
             $column = new TextViewColumn('zutrittsberechtigter', 'zutrittsberechtigter', 'Zutrittsberechtigter', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_organisation_parlamentarier_beide_indirekt_zutrittsberechtigter_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_organisation_parlamentarier_beide_indirekt_zutrittsberechtigter_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7642,7 +7657,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7711,7 +7726,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_connector_organisation_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_parlamentarier_v_organisation_parlamentarier_beide_indirekt_connector_organisation_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7773,7 +7788,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_person_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_parlamentarier_v_organisation_parlamentarier_beide_indirekt_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7879,7 +7894,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_parlamentarier_v_organisation_parlamentarier_beide_indirekt_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7948,7 +7963,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_connector_organisation_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_v_organisation_parlamentarier_beide_indirekt_connector_organisation_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -8010,7 +8025,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_v_organisation_parlamentarier_beide_indirekt_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -8116,7 +8131,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_v_organisation_parlamentarier_beide_indirekt_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8124,7 +8139,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -8193,7 +8208,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_connector_organisation_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_parlamentarier_v_organisation_parlamentarier_beide_indirekt_connector_organisation_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -8255,7 +8270,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_person_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_parlamentarier_v_organisation_parlamentarier_beide_indirekt_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -8361,7 +8376,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_parlamentarier_v_organisation_parlamentarier_beide_indirekt_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -8430,7 +8445,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_connector_organisation_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_parlamentarier_v_organisation_parlamentarier_beide_indirekt_connector_organisation_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -8492,7 +8507,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_person_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_parlamentarier_v_organisation_parlamentarier_beide_indirekt_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -8598,7 +8613,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_parlamentarier_v_organisation_parlamentarier_beide_indirekt_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -8755,6 +8770,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('In Kommission Liste');
+            $this->SetMenuLabel('In Kommission Liste');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -8971,10 +8991,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_kommission_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_parlamentarier_v_in_kommission_liste_kommission_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('kommission_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_kommission_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_v_in_kommission_liste_kommission_id_search');
             
             $text_editor = new TextEdit('kommission_id');
             
@@ -9508,7 +9528,7 @@
             $column->setHrefTemplate('kommission.php?operation=view&pk0=%kommission_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_name_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_in_kommission_liste_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -9542,7 +9562,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_in_kommission_liste_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
@@ -9727,7 +9747,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_name_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_in_kommission_liste_name_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -9779,7 +9799,7 @@
             $column->setHrefTemplate('kommission.php?operation=view&pk0=%kommission_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_name_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_in_kommission_liste_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -9804,7 +9824,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_in_kommission_liste_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -9938,7 +9958,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_name_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_in_kommission_liste_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10050,7 +10070,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Kommission', 'kommission_id', 'kommission_id_anzeige_name', 'edit_kommission_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Kommission', 'kommission_id', 'kommission_id_anzeige_name', 'edit_parlamentarier_v_in_kommission_liste_kommission_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -10351,7 +10371,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Kommission', 'kommission_id', 'kommission_id_anzeige_name', 'multi_edit_kommission_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Kommission', 'kommission_id', 'kommission_id_anzeige_name', 'multi_edit_parlamentarier_v_in_kommission_liste_kommission_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -10791,7 +10811,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Kommission', 'kommission_id', 'kommission_id_anzeige_name', 'insert_kommission_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Kommission', 'kommission_id', 'kommission_id_anzeige_name', 'insert_parlamentarier_v_in_kommission_liste_kommission_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -11029,7 +11049,7 @@
             $column->setHrefTemplate('kommission.php?operation=view&pk0=%kommission_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_name_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_in_kommission_liste_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -11054,7 +11074,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_in_kommission_liste_notizen_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -11188,7 +11208,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_name_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_in_kommission_liste_name_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -11231,7 +11251,7 @@
             $column->setHrefTemplate('kommission.php?operation=view&pk0=%kommission_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_name_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_in_kommission_liste_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -11256,7 +11276,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_in_kommission_liste_notizen_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -11390,7 +11410,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_name_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_in_kommission_liste_name_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -11433,7 +11453,7 @@
             $column->setHrefTemplate('kommission.php?operation=view&pk0=%kommission_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_in_kommission_liste_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -11458,7 +11478,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_in_kommission_liste_notizen_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -11582,7 +11602,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_in_kommission_liste_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -11591,7 +11611,7 @@
             $column = new TextViewColumn('sachbereiche', 'sachbereiche', 'Sachbereiche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_sachbereiche_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_in_kommission_liste_sachbereiche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -11607,7 +11627,7 @@
             $column = new TextViewColumn('parlament_url', 'parlament_url', 'Parlament Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_parlament_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_in_kommission_liste_parlament_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -11696,7 +11716,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_in_kommission_liste_name_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_in_kommission_liste_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -11814,7 +11834,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('kommission.php?operation=view&pk0=%kommission_id%');
             $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_in_kommission_liste_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_in_kommission_liste_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -11823,7 +11843,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_in_kommission_liste_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_in_kommission_liste_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -11831,7 +11851,7 @@
             //
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_in_kommission_liste_name_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_in_kommission_liste_name_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -11841,7 +11861,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('kommission.php?operation=view&pk0=%kommission_id%');
             $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_in_kommission_liste_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_in_kommission_liste_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -11850,7 +11870,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_in_kommission_liste_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_in_kommission_liste_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -11858,7 +11878,7 @@
             //
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_in_kommission_liste_name_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_in_kommission_liste_name_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -11868,7 +11888,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('kommission.php?operation=view&pk0=%kommission_id%');
             $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_in_kommission_liste_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_in_kommission_liste_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -11877,7 +11897,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_in_kommission_liste_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_in_kommission_liste_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -11885,7 +11905,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_in_kommission_liste_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_in_kommission_liste_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -11893,7 +11913,7 @@
             //
             $column = new TextViewColumn('sachbereiche', 'sachbereiche', 'Sachbereiche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_in_kommission_liste_sachbereiche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_in_kommission_liste_sachbereiche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -11901,7 +11921,7 @@
             //
             $column = new TextViewColumn('parlament_url', 'parlament_url', 'Parlament Url', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_in_kommission_liste_parlament_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_in_kommission_liste_parlament_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -11909,7 +11929,7 @@
             //
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_in_kommission_liste_name_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_in_kommission_liste_name_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -11970,7 +11990,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_kommission_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_parlamentarier_v_in_kommission_liste_kommission_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -12031,7 +12051,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kommission_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_v_in_kommission_liste_kommission_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12041,7 +12061,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('kommission.php?operation=view&pk0=%kommission_id%');
             $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_in_kommission_liste_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_in_kommission_liste_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12050,7 +12070,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_in_kommission_liste_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_in_kommission_liste_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12058,7 +12078,7 @@
             //
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_in_kommission_liste_name_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_in_kommission_liste_name_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -12119,7 +12139,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_kommission_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_parlamentarier_v_in_kommission_liste_kommission_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -12180,7 +12200,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_kommission_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_parlamentarier_v_in_kommission_liste_kommission_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -12337,6 +12357,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('<s>V Interessenbindung Liste Indirekt</s>');
+            $this->SetMenuLabel('<s>V Interessenbindung Liste Indirekt</s>');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -12780,10 +12805,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_organisation_id_name_search');
+            $main_editor->SetHandlerName('filter_builder_parlamentarier_v_interessenbindung_liste_indirekt_organisation_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('organisation_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_organisation_id_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_v_interessenbindung_liste_indirekt_organisation_id_search');
             
             $text_editor = new TextEdit('organisation_id');
             
@@ -13866,7 +13891,7 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -13898,7 +13923,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -13943,7 +13968,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_notizen_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -14112,7 +14137,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_de_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_de_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -14124,7 +14149,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -14175,7 +14200,7 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_anzeige_name_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_anzeige_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -14242,7 +14267,7 @@
             $column = new TextViewColumn('interessengruppe_fr', 'interessengruppe_fr', 'Interessengruppe Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -14254,7 +14279,7 @@
             $column = new TextViewColumn('interessengruppe2_fr', 'interessengruppe2_fr', 'Interessengruppe2 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe2_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe2_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -14266,7 +14291,7 @@
             $column = new TextViewColumn('interessengruppe3_fr', 'interessengruppe3_fr', 'Interessengruppe3 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe3_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe3_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -14304,7 +14329,7 @@
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_verguetung_beschreibung_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_verguetung_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -14316,7 +14341,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_beschreibung_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -14365,7 +14390,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -14377,7 +14402,7 @@
             $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -14389,7 +14414,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -14452,7 +14477,7 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14475,7 +14500,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14508,7 +14533,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_notizen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14643,7 +14668,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_de_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_de_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14652,7 +14677,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14691,7 +14716,7 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_anzeige_name_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_anzeige_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14740,7 +14765,7 @@
             $column = new TextViewColumn('interessengruppe_fr', 'interessengruppe_fr', 'Interessengruppe Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14749,7 +14774,7 @@
             $column = new TextViewColumn('interessengruppe2_fr', 'interessengruppe2_fr', 'Interessengruppe2 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe2_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe2_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14758,7 +14783,7 @@
             $column = new TextViewColumn('interessengruppe3_fr', 'interessengruppe3_fr', 'Interessengruppe3 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe3_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe3_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14787,7 +14812,7 @@
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_verguetung_beschreibung_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_verguetung_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14796,7 +14821,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14833,7 +14858,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14842,7 +14867,7 @@
             $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14851,7 +14876,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -17068,7 +17093,7 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -17091,7 +17116,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -17124,7 +17149,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_notizen_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -17259,7 +17284,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_de_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_de_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -17268,7 +17293,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -17307,7 +17332,7 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_anzeige_name_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_anzeige_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -17356,7 +17381,7 @@
             $column = new TextViewColumn('interessengruppe_fr', 'interessengruppe_fr', 'Interessengruppe Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -17365,7 +17390,7 @@
             $column = new TextViewColumn('interessengruppe2_fr', 'interessengruppe2_fr', 'Interessengruppe2 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe2_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe2_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -17374,7 +17399,7 @@
             $column = new TextViewColumn('interessengruppe3_fr', 'interessengruppe3_fr', 'Interessengruppe3 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe3_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe3_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -17403,7 +17428,7 @@
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_verguetung_beschreibung_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_verguetung_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -17412,7 +17437,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_beschreibung_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -17449,7 +17474,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -17458,7 +17483,7 @@
             $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -17467,7 +17492,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -17518,7 +17543,7 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -17541,7 +17566,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_beschreibung_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -17574,7 +17599,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_notizen_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -17709,7 +17734,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_de_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_de_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -17718,7 +17743,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -17757,7 +17782,7 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_anzeige_name_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_anzeige_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -17806,7 +17831,7 @@
             $column = new TextViewColumn('interessengruppe_fr', 'interessengruppe_fr', 'Interessengruppe Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -17815,7 +17840,7 @@
             $column = new TextViewColumn('interessengruppe2_fr', 'interessengruppe2_fr', 'Interessengruppe2 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe2_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe2_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -17824,7 +17849,7 @@
             $column = new TextViewColumn('interessengruppe3_fr', 'interessengruppe3_fr', 'Interessengruppe3 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe3_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe3_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -17853,7 +17878,7 @@
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_verguetung_beschreibung_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_verguetung_beschreibung_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -17862,7 +17887,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_beschreibung_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -17899,7 +17924,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -17908,7 +17933,7 @@
             $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -17917,7 +17942,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -17968,7 +17993,7 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -17991,7 +18016,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18024,7 +18049,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_notizen_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18145,7 +18170,7 @@
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18154,7 +18179,7 @@
             $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_name_de_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18163,7 +18188,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_name_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18172,7 +18197,7 @@
             $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_name_it_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_name_it_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18181,7 +18206,7 @@
             $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_ort_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_ort_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18211,7 +18236,7 @@
             $column = new TextViewColumn('typ', 'typ', 'Typ', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_typ_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_typ_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18248,7 +18273,7 @@
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_homepage_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_homepage_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18257,7 +18282,7 @@
             $column = new TextViewColumn('handelsregister_url', 'handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_handelsregister_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_handelsregister_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18273,7 +18298,7 @@
             $column = new TextViewColumn('organisation_beschreibung', 'organisation_beschreibung', 'Organisation Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_organisation_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18282,7 +18307,7 @@
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_adresse_strasse_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_adresse_strasse_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18291,7 +18316,7 @@
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_adresse_zusatz_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_adresse_zusatz_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18307,7 +18332,7 @@
             $column = new TextViewColumn('interessengruppe', 'interessengruppe', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18316,7 +18341,7 @@
             $column = new TextViewColumn('interessengruppe_branche', 'interessengruppe_branche', 'Interessengruppe Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe_branche_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18325,7 +18350,7 @@
             $column = new TextViewColumn('interessengruppe2', 'interessengruppe2', 'Interessengruppe2', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe2_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe2_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18334,7 +18359,7 @@
             $column = new TextViewColumn('interessengruppe2_branche', 'interessengruppe2_branche', 'Interessengruppe2 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe2_branche_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe2_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18343,7 +18368,7 @@
             $column = new TextViewColumn('interessengruppe3', 'interessengruppe3', 'Interessengruppe3', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe3_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe3_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18352,7 +18377,7 @@
             $column = new TextViewColumn('interessengruppe3_branche', 'interessengruppe3_branche', 'Interessengruppe3 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe3_branche_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe3_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18361,7 +18386,7 @@
             $column = new TextViewColumn('land', 'land', 'Land', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_land_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_land_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18426,7 +18451,7 @@
             $column = new TextViewColumn('geschaeftsbericht_url', 'geschaeftsbericht_url', 'Geschaeftsbericht Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_geschaeftsbericht_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_geschaeftsbericht_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18449,7 +18474,7 @@
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_quelle_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_quelle_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18465,7 +18490,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_quelle_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_quelle_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18523,7 +18548,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_de_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18532,7 +18557,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18571,7 +18596,7 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_anzeige_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_anzeige_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18620,7 +18645,7 @@
             $column = new TextViewColumn('interessengruppe_fr', 'interessengruppe_fr', 'Interessengruppe Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18629,7 +18654,7 @@
             $column = new TextViewColumn('interessengruppe2_fr', 'interessengruppe2_fr', 'Interessengruppe2 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe2_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe2_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18638,7 +18663,7 @@
             $column = new TextViewColumn('interessengruppe3_fr', 'interessengruppe3_fr', 'Interessengruppe3 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe3_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe3_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18667,7 +18692,7 @@
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_verguetung_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_verguetung_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18676,7 +18701,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_beschreibung_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18713,7 +18738,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18722,7 +18747,7 @@
             $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18731,7 +18756,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -18859,7 +18884,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -18867,7 +18892,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -18875,7 +18900,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -18883,7 +18908,7 @@
             //
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_de_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_de_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -18891,7 +18916,7 @@
             //
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -18899,7 +18924,7 @@
             //
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_anzeige_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_anzeige_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -18907,7 +18932,7 @@
             //
             $column = new TextViewColumn('interessengruppe_fr', 'interessengruppe_fr', 'Interessengruppe Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -18915,7 +18940,7 @@
             //
             $column = new TextViewColumn('interessengruppe2_fr', 'interessengruppe2_fr', 'Interessengruppe2 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe2_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe2_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -18923,7 +18948,7 @@
             //
             $column = new TextViewColumn('interessengruppe3_fr', 'interessengruppe3_fr', 'Interessengruppe3 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe3_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe3_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -18931,7 +18956,7 @@
             //
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_verguetung_beschreibung_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_verguetung_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -18939,7 +18964,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_beschreibung_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -18947,7 +18972,7 @@
             //
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -18955,7 +18980,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -18963,7 +18988,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -18973,7 +18998,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -18981,7 +19006,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_beschreibung_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -18989,7 +19014,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -18997,7 +19022,7 @@
             //
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_de_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_de_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19005,7 +19030,7 @@
             //
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19013,7 +19038,7 @@
             //
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_anzeige_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_anzeige_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19021,7 +19046,7 @@
             //
             $column = new TextViewColumn('interessengruppe_fr', 'interessengruppe_fr', 'Interessengruppe Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19029,7 +19054,7 @@
             //
             $column = new TextViewColumn('interessengruppe2_fr', 'interessengruppe2_fr', 'Interessengruppe2 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe2_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe2_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19037,7 +19062,7 @@
             //
             $column = new TextViewColumn('interessengruppe3_fr', 'interessengruppe3_fr', 'Interessengruppe3 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe3_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe3_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19045,7 +19070,7 @@
             //
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_verguetung_beschreibung_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_verguetung_beschreibung_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19053,7 +19078,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_beschreibung_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19061,7 +19086,7 @@
             //
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19069,7 +19094,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19077,7 +19102,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19087,7 +19112,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19095,7 +19120,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19103,7 +19128,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19111,7 +19136,7 @@
             //
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19119,7 +19144,7 @@
             //
             $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_name_de_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_name_de_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19127,7 +19152,7 @@
             //
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_name_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_name_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19135,7 +19160,7 @@
             //
             $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_name_it_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_name_it_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19143,7 +19168,7 @@
             //
             $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_ort_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_ort_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19151,7 +19176,7 @@
             //
             $column = new TextViewColumn('typ', 'typ', 'Typ', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_typ_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_typ_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19159,7 +19184,7 @@
             //
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_homepage_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_homepage_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19167,7 +19192,7 @@
             //
             $column = new TextViewColumn('handelsregister_url', 'handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_handelsregister_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_handelsregister_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19175,7 +19200,7 @@
             //
             $column = new TextViewColumn('organisation_beschreibung', 'organisation_beschreibung', 'Organisation Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_organisation_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19183,7 +19208,7 @@
             //
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_adresse_strasse_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_adresse_strasse_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19191,7 +19216,7 @@
             //
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_adresse_zusatz_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_adresse_zusatz_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19199,7 +19224,7 @@
             //
             $column = new TextViewColumn('interessengruppe', 'interessengruppe', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19207,7 +19232,7 @@
             //
             $column = new TextViewColumn('interessengruppe_branche', 'interessengruppe_branche', 'Interessengruppe Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe_branche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19215,7 +19240,7 @@
             //
             $column = new TextViewColumn('interessengruppe2', 'interessengruppe2', 'Interessengruppe2', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe2_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe2_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19223,7 +19248,7 @@
             //
             $column = new TextViewColumn('interessengruppe2_branche', 'interessengruppe2_branche', 'Interessengruppe2 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe2_branche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe2_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19231,7 +19256,7 @@
             //
             $column = new TextViewColumn('interessengruppe3', 'interessengruppe3', 'Interessengruppe3', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe3_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe3_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19239,7 +19264,7 @@
             //
             $column = new TextViewColumn('interessengruppe3_branche', 'interessengruppe3_branche', 'Interessengruppe3 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe3_branche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe3_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19247,7 +19272,7 @@
             //
             $column = new TextViewColumn('land', 'land', 'Land', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_land_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_land_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19255,7 +19280,7 @@
             //
             $column = new TextViewColumn('geschaeftsbericht_url', 'geschaeftsbericht_url', 'Geschaeftsbericht Url', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_geschaeftsbericht_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_geschaeftsbericht_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19263,7 +19288,7 @@
             //
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_quelle_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_quelle_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19271,7 +19296,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_quelle_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_quelle_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19279,7 +19304,7 @@
             //
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_de_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_de_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19287,7 +19312,7 @@
             //
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19295,7 +19320,7 @@
             //
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_anzeige_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_anzeige_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19303,7 +19328,7 @@
             //
             $column = new TextViewColumn('interessengruppe_fr', 'interessengruppe_fr', 'Interessengruppe Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19311,7 +19336,7 @@
             //
             $column = new TextViewColumn('interessengruppe2_fr', 'interessengruppe2_fr', 'Interessengruppe2 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe2_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe2_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19319,7 +19344,7 @@
             //
             $column = new TextViewColumn('interessengruppe3_fr', 'interessengruppe3_fr', 'Interessengruppe3 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe3_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe3_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19327,7 +19352,7 @@
             //
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_verguetung_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_verguetung_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19335,7 +19360,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_beschreibung_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19343,7 +19368,7 @@
             //
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19351,7 +19376,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19359,7 +19384,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -19428,7 +19453,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_organisation_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_v_interessenbindung_liste_indirekt_organisation_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19438,7 +19463,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19446,7 +19471,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19454,7 +19479,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19462,7 +19487,7 @@
             //
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_de_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_de_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19470,7 +19495,7 @@
             //
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_organisation_name_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_organisation_name_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19478,7 +19503,7 @@
             //
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_anzeige_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_anzeige_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19486,7 +19511,7 @@
             //
             $column = new TextViewColumn('interessengruppe_fr', 'interessengruppe_fr', 'Interessengruppe Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19494,7 +19519,7 @@
             //
             $column = new TextViewColumn('interessengruppe2_fr', 'interessengruppe2_fr', 'Interessengruppe2 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe2_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe2_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19502,7 +19527,7 @@
             //
             $column = new TextViewColumn('interessengruppe3_fr', 'interessengruppe3_fr', 'Interessengruppe3 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe3_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe3_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19510,7 +19535,7 @@
             //
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_verguetung_beschreibung_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_verguetung_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19518,7 +19543,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_beschreibung_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19526,7 +19551,7 @@
             //
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19534,7 +19559,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -19542,7 +19567,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_indirekt_interessengruppe1_branche_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -19699,6 +19724,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('<s>V Zutrittsberechtigung Mit Mandaten Indirekt</s>');
+            $this->SetMenuLabel('<s>V Zutrittsberechtigung Mit Mandaten Indirekt</s>');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -20108,10 +20138,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_person_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_person_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('person_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_person_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_person_id_search');
             
             $text_editor = new TextEdit('person_id');
             
@@ -20143,10 +20173,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_organisation_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('organisation_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_organisation_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_id_search');
             
             $text_editor = new TextEdit('organisation_id');
             
@@ -20856,7 +20886,7 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -20870,7 +20900,7 @@
             $column->setHrefTemplate('person.php?operation=view&pk0=%person_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_zutrittsberechtigung_name_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_zutrittsberechtigung_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -20882,7 +20912,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_funktion_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_funktion_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -20928,7 +20958,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
@@ -20963,7 +20993,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_notizen_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -21101,7 +21131,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_de_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_de_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -21113,7 +21143,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -21164,7 +21194,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -21202,7 +21232,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -21214,7 +21244,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -21277,7 +21307,7 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -21288,7 +21318,7 @@
             $column->setHrefTemplate('person.php?operation=view&pk0=%person_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_zutrittsberechtigung_name_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_zutrittsberechtigung_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -21297,7 +21327,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_funktion_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_funktion_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -21331,7 +21361,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -21357,7 +21387,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_notizen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -21456,7 +21486,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_de_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_de_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -21465,7 +21495,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -21504,7 +21534,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -21533,7 +21563,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -21542,7 +21572,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -23508,7 +23538,7 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -23519,7 +23549,7 @@
             $column->setHrefTemplate('person.php?operation=view&pk0=%person_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_zutrittsberechtigung_name_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_zutrittsberechtigung_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -23528,7 +23558,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_funktion_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_funktion_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -23576,7 +23606,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -23602,7 +23632,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_notizen_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -23701,7 +23731,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_de_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_de_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -23710,7 +23740,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -23749,7 +23779,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -23778,7 +23808,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -23787,7 +23817,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -23838,7 +23868,7 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -23849,7 +23879,7 @@
             $column->setHrefTemplate('person.php?operation=view&pk0=%person_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_zutrittsberechtigung_name_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_zutrittsberechtigung_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -23858,7 +23888,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_funktion_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_funktion_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -23906,7 +23936,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -23932,7 +23962,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_notizen_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -24031,7 +24061,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_de_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_de_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -24040,7 +24070,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -24079,7 +24109,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -24108,7 +24138,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -24117,7 +24147,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -24168,7 +24198,7 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24179,7 +24209,7 @@
             $column->setHrefTemplate('person.php?operation=view&pk0=%person_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_zutrittsberechtigung_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_zutrittsberechtigung_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24188,7 +24218,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_funktion_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_funktion_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24222,7 +24252,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -24248,7 +24278,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_notizen_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24347,7 +24377,7 @@
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24356,7 +24386,7 @@
             $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_name_de_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24365,7 +24395,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_name_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24374,7 +24404,7 @@
             $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_name_it_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_name_it_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24383,7 +24413,7 @@
             $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_ort_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_ort_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24413,7 +24443,7 @@
             $column = new TextViewColumn('typ', 'typ', 'Typ', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_typ_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_typ_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24450,7 +24480,7 @@
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_homepage_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_homepage_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24459,7 +24489,7 @@
             $column = new TextViewColumn('handelsregister_url', 'handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_handelsregister_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_handelsregister_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24475,7 +24505,7 @@
             $column = new TextViewColumn('organisation_beschreibung', 'organisation_beschreibung', 'Organisation Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24484,7 +24514,7 @@
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_adresse_strasse_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_adresse_strasse_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24493,7 +24523,7 @@
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_adresse_zusatz_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_adresse_zusatz_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24509,7 +24539,7 @@
             $column = new TextViewColumn('interessengruppe', 'interessengruppe', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24518,7 +24548,7 @@
             $column = new TextViewColumn('interessengruppe_branche', 'interessengruppe_branche', 'Interessengruppe Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe_branche_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24527,7 +24557,7 @@
             $column = new TextViewColumn('interessengruppe2', 'interessengruppe2', 'Interessengruppe2', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe2_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe2_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24536,7 +24566,7 @@
             $column = new TextViewColumn('interessengruppe2_branche', 'interessengruppe2_branche', 'Interessengruppe2 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe2_branche_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe2_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24545,7 +24575,7 @@
             $column = new TextViewColumn('interessengruppe3', 'interessengruppe3', 'Interessengruppe3', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe3_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe3_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24554,7 +24584,7 @@
             $column = new TextViewColumn('interessengruppe3_branche', 'interessengruppe3_branche', 'Interessengruppe3 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe3_branche_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe3_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24563,7 +24593,7 @@
             $column = new TextViewColumn('land', 'land', 'Land', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_land_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_land_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24628,7 +24658,7 @@
             $column = new TextViewColumn('geschaeftsbericht_url', 'geschaeftsbericht_url', 'Geschaeftsbericht Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_geschaeftsbericht_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_geschaeftsbericht_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24658,7 +24688,7 @@
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_quelle_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_quelle_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24674,7 +24704,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_quelle_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_quelle_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24732,7 +24762,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_de_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24741,7 +24771,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24780,7 +24810,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24809,7 +24839,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24818,7 +24848,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -24946,7 +24976,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -24956,7 +24986,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('person.php?operation=view&pk0=%person_id%');
             $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_zutrittsberechtigung_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_zutrittsberechtigung_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -24964,7 +24994,7 @@
             //
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_funktion_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_funktion_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -24973,7 +25003,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -24981,7 +25011,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -24989,7 +25019,7 @@
             //
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_de_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_de_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -24997,7 +25027,7 @@
             //
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25005,7 +25035,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25013,7 +25043,7 @@
             //
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25021,7 +25051,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25031,7 +25061,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25041,7 +25071,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('person.php?operation=view&pk0=%person_id%');
             $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_zutrittsberechtigung_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_zutrittsberechtigung_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25049,7 +25079,7 @@
             //
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_funktion_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_funktion_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25058,7 +25088,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25066,7 +25096,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25074,7 +25104,7 @@
             //
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_de_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_de_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25082,7 +25112,7 @@
             //
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25090,7 +25120,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25098,7 +25128,7 @@
             //
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25106,7 +25136,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25116,7 +25146,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25126,7 +25156,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('person.php?operation=view&pk0=%person_id%');
             $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_zutrittsberechtigung_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_zutrittsberechtigung_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25134,7 +25164,7 @@
             //
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_funktion_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_funktion_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25143,7 +25173,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25151,7 +25181,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25159,7 +25189,7 @@
             //
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25167,7 +25197,7 @@
             //
             $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_name_de_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_name_de_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25175,7 +25205,7 @@
             //
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_name_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_name_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25183,7 +25213,7 @@
             //
             $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_name_it_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_name_it_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25191,7 +25221,7 @@
             //
             $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_ort_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_ort_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25199,7 +25229,7 @@
             //
             $column = new TextViewColumn('typ', 'typ', 'Typ', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_typ_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_typ_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25207,7 +25237,7 @@
             //
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_homepage_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_homepage_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25215,7 +25245,7 @@
             //
             $column = new TextViewColumn('handelsregister_url', 'handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_handelsregister_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_handelsregister_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25223,7 +25253,7 @@
             //
             $column = new TextViewColumn('organisation_beschreibung', 'organisation_beschreibung', 'Organisation Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25231,7 +25261,7 @@
             //
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_adresse_strasse_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_adresse_strasse_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25239,7 +25269,7 @@
             //
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_adresse_zusatz_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_adresse_zusatz_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25247,7 +25277,7 @@
             //
             $column = new TextViewColumn('interessengruppe', 'interessengruppe', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25255,7 +25285,7 @@
             //
             $column = new TextViewColumn('interessengruppe_branche', 'interessengruppe_branche', 'Interessengruppe Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe_branche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25263,7 +25293,7 @@
             //
             $column = new TextViewColumn('interessengruppe2', 'interessengruppe2', 'Interessengruppe2', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe2_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe2_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25271,7 +25301,7 @@
             //
             $column = new TextViewColumn('interessengruppe2_branche', 'interessengruppe2_branche', 'Interessengruppe2 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe2_branche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe2_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25279,7 +25309,7 @@
             //
             $column = new TextViewColumn('interessengruppe3', 'interessengruppe3', 'Interessengruppe3', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe3_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe3_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25287,7 +25317,7 @@
             //
             $column = new TextViewColumn('interessengruppe3_branche', 'interessengruppe3_branche', 'Interessengruppe3 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe3_branche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe3_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25295,7 +25325,7 @@
             //
             $column = new TextViewColumn('land', 'land', 'Land', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_land_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_land_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25303,7 +25333,7 @@
             //
             $column = new TextViewColumn('geschaeftsbericht_url', 'geschaeftsbericht_url', 'Geschaeftsbericht Url', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_geschaeftsbericht_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_geschaeftsbericht_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25311,7 +25341,7 @@
             //
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_quelle_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_quelle_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25319,7 +25349,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_quelle_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_quelle_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25327,7 +25357,7 @@
             //
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_de_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_de_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25335,7 +25365,7 @@
             //
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25343,7 +25373,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25351,7 +25381,7 @@
             //
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25359,7 +25389,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -25421,7 +25451,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -25490,7 +25520,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_organisation_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25500,7 +25530,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25510,7 +25540,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('person.php?operation=view&pk0=%person_id%');
             $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_zutrittsberechtigung_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_zutrittsberechtigung_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25518,7 +25548,7 @@
             //
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_funktion_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_funktion_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25527,7 +25557,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25535,7 +25565,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25543,7 +25573,7 @@
             //
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_de_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_de_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25551,7 +25581,7 @@
             //
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_organisation_name_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25559,7 +25589,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25567,7 +25597,7 @@
             //
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -25575,7 +25605,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_interessengruppe1_branche_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -25732,6 +25762,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('<s>V Interessenbindung Liste</s>');
+            $this->SetMenuLabel('<s>V Interessenbindung Liste</s>');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -26173,10 +26208,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_organisation_id_name_search');
+            $main_editor->SetHandlerName('filter_builder_parlamentarier_v_interessenbindung_liste_organisation_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('organisation_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_organisation_id_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_v_interessenbindung_liste_organisation_id_search');
             
             $text_editor = new TextEdit('organisation_id');
             
@@ -27277,7 +27312,7 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_organisation_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -27309,7 +27344,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -27354,7 +27389,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_notizen_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -27523,7 +27558,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_de_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_organisation_name_de_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -27535,7 +27570,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_organisation_name_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -27586,7 +27621,7 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_anzeige_name_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_anzeige_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -27653,7 +27688,7 @@
             $column = new TextViewColumn('interessengruppe_fr', 'interessengruppe_fr', 'Interessengruppe Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -27665,7 +27700,7 @@
             $column = new TextViewColumn('interessengruppe2_fr', 'interessengruppe2_fr', 'Interessengruppe2 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe2_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe2_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -27677,7 +27712,7 @@
             $column = new TextViewColumn('interessengruppe3_fr', 'interessengruppe3_fr', 'Interessengruppe3 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe3_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe3_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -27715,7 +27750,7 @@
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_verguetung_beschreibung_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_verguetung_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -27727,7 +27762,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_beschreibung_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -27776,7 +27811,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe1_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -27788,7 +27823,7 @@
             $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe1_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -27800,7 +27835,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_branche_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe1_branche_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -27856,7 +27891,7 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_organisation_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -27879,7 +27914,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -27912,7 +27947,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_notizen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -28047,7 +28082,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_de_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_organisation_name_de_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -28056,7 +28091,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_organisation_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -28095,7 +28130,7 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_anzeige_name_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_anzeige_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -28144,7 +28179,7 @@
             $column = new TextViewColumn('interessengruppe_fr', 'interessengruppe_fr', 'Interessengruppe Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -28153,7 +28188,7 @@
             $column = new TextViewColumn('interessengruppe2_fr', 'interessengruppe2_fr', 'Interessengruppe2 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe2_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe2_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -28162,7 +28197,7 @@
             $column = new TextViewColumn('interessengruppe3_fr', 'interessengruppe3_fr', 'Interessengruppe3 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe3_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe3_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -28191,7 +28226,7 @@
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_verguetung_beschreibung_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_verguetung_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -28200,7 +28235,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -28237,7 +28272,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe1_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -28246,7 +28281,7 @@
             $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe1_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -28255,7 +28290,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_branche_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe1_branche_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -30481,7 +30516,7 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_organisation_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -30504,7 +30539,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -30537,7 +30572,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_notizen_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -30672,7 +30707,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_de_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_organisation_name_de_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -30681,7 +30716,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_organisation_name_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -30720,7 +30755,7 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_anzeige_name_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_anzeige_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -30769,7 +30804,7 @@
             $column = new TextViewColumn('interessengruppe_fr', 'interessengruppe_fr', 'Interessengruppe Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -30778,7 +30813,7 @@
             $column = new TextViewColumn('interessengruppe2_fr', 'interessengruppe2_fr', 'Interessengruppe2 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe2_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe2_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -30787,7 +30822,7 @@
             $column = new TextViewColumn('interessengruppe3_fr', 'interessengruppe3_fr', 'Interessengruppe3 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe3_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe3_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -30816,7 +30851,7 @@
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_verguetung_beschreibung_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_verguetung_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -30825,7 +30860,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_beschreibung_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -30862,7 +30897,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe1_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -30871,7 +30906,7 @@
             $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe1_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -30880,7 +30915,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_branche_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe1_branche_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -30924,7 +30959,7 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_organisation_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -30947,7 +30982,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_beschreibung_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -30980,7 +31015,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_notizen_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -31115,7 +31150,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_de_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_organisation_name_de_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -31124,7 +31159,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_organisation_name_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -31163,7 +31198,7 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_anzeige_name_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_anzeige_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -31212,7 +31247,7 @@
             $column = new TextViewColumn('interessengruppe_fr', 'interessengruppe_fr', 'Interessengruppe Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -31221,7 +31256,7 @@
             $column = new TextViewColumn('interessengruppe2_fr', 'interessengruppe2_fr', 'Interessengruppe2 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe2_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe2_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -31230,7 +31265,7 @@
             $column = new TextViewColumn('interessengruppe3_fr', 'interessengruppe3_fr', 'Interessengruppe3 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe3_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe3_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -31259,7 +31294,7 @@
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_verguetung_beschreibung_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_verguetung_beschreibung_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -31268,7 +31303,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_beschreibung_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -31305,7 +31340,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe1_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -31314,7 +31349,7 @@
             $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe1_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -31323,7 +31358,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_branche_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe1_branche_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -31367,7 +31402,7 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_organisation_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31390,7 +31425,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31423,7 +31458,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_notizen_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31544,7 +31579,7 @@
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31553,7 +31588,7 @@
             $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_name_de_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31562,7 +31597,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_name_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31571,7 +31606,7 @@
             $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_name_it_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_name_it_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31580,7 +31615,7 @@
             $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_ort_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_ort_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31645,7 +31680,7 @@
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_homepage_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_homepage_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31654,7 +31689,7 @@
             $column = new TextViewColumn('handelsregister_url', 'handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_handelsregister_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_handelsregister_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31670,7 +31705,7 @@
             $column = new TextViewColumn('organisation_beschreibung', 'organisation_beschreibung', 'Organisation Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_organisation_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_organisation_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31679,7 +31714,7 @@
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_adresse_strasse_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_adresse_strasse_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31688,7 +31723,7 @@
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_adresse_zusatz_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_adresse_zusatz_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31704,7 +31739,7 @@
             $column = new TextViewColumn('interessengruppe', 'interessengruppe', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31713,7 +31748,7 @@
             $column = new TextViewColumn('interessengruppe_branche', 'interessengruppe_branche', 'Interessengruppe Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe_branche_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31722,7 +31757,7 @@
             $column = new TextViewColumn('interessengruppe2', 'interessengruppe2', 'Interessengruppe2', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe2_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe2_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31731,7 +31766,7 @@
             $column = new TextViewColumn('interessengruppe2_branche', 'interessengruppe2_branche', 'Interessengruppe2 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe2_branche_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe2_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31740,7 +31775,7 @@
             $column = new TextViewColumn('interessengruppe3', 'interessengruppe3', 'Interessengruppe3', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe3_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe3_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31749,7 +31784,7 @@
             $column = new TextViewColumn('interessengruppe3_branche', 'interessengruppe3_branche', 'Interessengruppe3 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe3_branche_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe3_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31758,7 +31793,7 @@
             $column = new TextViewColumn('land', 'land', 'Land', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_land_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_land_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31823,7 +31858,7 @@
             $column = new TextViewColumn('geschaeftsbericht_url', 'geschaeftsbericht_url', 'Geschaeftsbericht Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_geschaeftsbericht_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_geschaeftsbericht_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31846,7 +31881,7 @@
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_quelle_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_quelle_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31862,7 +31897,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_quelle_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_quelle_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31920,7 +31955,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_de_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_organisation_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31929,7 +31964,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_organisation_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -31968,7 +32003,7 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_anzeige_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_anzeige_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -32017,7 +32052,7 @@
             $column = new TextViewColumn('interessengruppe_fr', 'interessengruppe_fr', 'Interessengruppe Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -32026,7 +32061,7 @@
             $column = new TextViewColumn('interessengruppe2_fr', 'interessengruppe2_fr', 'Interessengruppe2 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe2_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe2_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -32035,7 +32070,7 @@
             $column = new TextViewColumn('interessengruppe3_fr', 'interessengruppe3_fr', 'Interessengruppe3 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe3_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe3_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -32064,7 +32099,7 @@
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_verguetung_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_verguetung_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -32073,7 +32108,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_beschreibung_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -32110,7 +32145,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe1_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -32119,7 +32154,7 @@
             $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe1_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -32128,7 +32163,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_branche_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_interessenbindung_liste_interessengruppe1_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -32256,7 +32291,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_organisation_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32264,7 +32299,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32272,7 +32307,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32280,7 +32315,7 @@
             //
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_de_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_organisation_name_de_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32288,7 +32323,7 @@
             //
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_organisation_name_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32296,7 +32331,7 @@
             //
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_anzeige_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_anzeige_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32304,7 +32339,7 @@
             //
             $column = new TextViewColumn('interessengruppe_fr', 'interessengruppe_fr', 'Interessengruppe Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32312,7 +32347,7 @@
             //
             $column = new TextViewColumn('interessengruppe2_fr', 'interessengruppe2_fr', 'Interessengruppe2 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe2_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe2_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32320,7 +32355,7 @@
             //
             $column = new TextViewColumn('interessengruppe3_fr', 'interessengruppe3_fr', 'Interessengruppe3 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe3_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe3_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32328,7 +32363,7 @@
             //
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_verguetung_beschreibung_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_verguetung_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32336,7 +32371,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_beschreibung_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32344,7 +32379,7 @@
             //
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe1_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32352,7 +32387,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe1_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32360,7 +32395,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_branche_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe1_branche_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32370,7 +32405,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_organisation_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32378,7 +32413,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_beschreibung_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32386,7 +32421,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32394,7 +32429,7 @@
             //
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_de_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_organisation_name_de_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32402,7 +32437,7 @@
             //
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_organisation_name_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32410,7 +32445,7 @@
             //
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_anzeige_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_anzeige_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32418,7 +32453,7 @@
             //
             $column = new TextViewColumn('interessengruppe_fr', 'interessengruppe_fr', 'Interessengruppe Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32426,7 +32461,7 @@
             //
             $column = new TextViewColumn('interessengruppe2_fr', 'interessengruppe2_fr', 'Interessengruppe2 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe2_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe2_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32434,7 +32469,7 @@
             //
             $column = new TextViewColumn('interessengruppe3_fr', 'interessengruppe3_fr', 'Interessengruppe3 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe3_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe3_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32442,7 +32477,7 @@
             //
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_verguetung_beschreibung_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_verguetung_beschreibung_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32450,7 +32485,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_beschreibung_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32458,7 +32493,7 @@
             //
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe1_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32466,7 +32501,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe1_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32474,7 +32509,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_branche_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe1_branche_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32484,7 +32519,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_organisation_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32492,7 +32527,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32500,7 +32535,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32508,7 +32543,7 @@
             //
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32516,7 +32551,7 @@
             //
             $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_name_de_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_name_de_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32524,7 +32559,7 @@
             //
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_name_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_name_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32532,7 +32567,7 @@
             //
             $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_name_it_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_name_it_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32540,7 +32575,7 @@
             //
             $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_ort_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_ort_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32548,7 +32583,7 @@
             //
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_homepage_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_homepage_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32556,7 +32591,7 @@
             //
             $column = new TextViewColumn('handelsregister_url', 'handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_handelsregister_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_handelsregister_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32564,7 +32599,7 @@
             //
             $column = new TextViewColumn('organisation_beschreibung', 'organisation_beschreibung', 'Organisation Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_organisation_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_organisation_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32572,7 +32607,7 @@
             //
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_adresse_strasse_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_adresse_strasse_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32580,7 +32615,7 @@
             //
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_adresse_zusatz_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_adresse_zusatz_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32588,7 +32623,7 @@
             //
             $column = new TextViewColumn('interessengruppe', 'interessengruppe', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32596,7 +32631,7 @@
             //
             $column = new TextViewColumn('interessengruppe_branche', 'interessengruppe_branche', 'Interessengruppe Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe_branche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32604,7 +32639,7 @@
             //
             $column = new TextViewColumn('interessengruppe2', 'interessengruppe2', 'Interessengruppe2', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe2_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe2_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32612,7 +32647,7 @@
             //
             $column = new TextViewColumn('interessengruppe2_branche', 'interessengruppe2_branche', 'Interessengruppe2 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe2_branche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe2_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32620,7 +32655,7 @@
             //
             $column = new TextViewColumn('interessengruppe3', 'interessengruppe3', 'Interessengruppe3', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe3_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe3_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32628,7 +32663,7 @@
             //
             $column = new TextViewColumn('interessengruppe3_branche', 'interessengruppe3_branche', 'Interessengruppe3 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe3_branche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe3_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32636,7 +32671,7 @@
             //
             $column = new TextViewColumn('land', 'land', 'Land', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_land_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_land_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32644,7 +32679,7 @@
             //
             $column = new TextViewColumn('geschaeftsbericht_url', 'geschaeftsbericht_url', 'Geschaeftsbericht Url', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_geschaeftsbericht_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_geschaeftsbericht_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32652,7 +32687,7 @@
             //
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_quelle_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_quelle_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32660,7 +32695,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_quelle_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_quelle_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32668,7 +32703,7 @@
             //
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_de_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_organisation_name_de_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32676,7 +32711,7 @@
             //
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_organisation_name_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32684,7 +32719,7 @@
             //
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_anzeige_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_anzeige_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32692,7 +32727,7 @@
             //
             $column = new TextViewColumn('interessengruppe_fr', 'interessengruppe_fr', 'Interessengruppe Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32700,7 +32735,7 @@
             //
             $column = new TextViewColumn('interessengruppe2_fr', 'interessengruppe2_fr', 'Interessengruppe2 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe2_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe2_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32708,7 +32743,7 @@
             //
             $column = new TextViewColumn('interessengruppe3_fr', 'interessengruppe3_fr', 'Interessengruppe3 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe3_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe3_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32716,7 +32751,7 @@
             //
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_verguetung_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_verguetung_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32724,7 +32759,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_beschreibung_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32732,7 +32767,7 @@
             //
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe1_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32740,7 +32775,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe1_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32748,7 +32783,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_branche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe1_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -32817,7 +32852,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_organisation_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_v_interessenbindung_liste_organisation_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32827,7 +32862,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_organisation_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32835,7 +32870,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32843,7 +32878,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32851,7 +32886,7 @@
             //
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_de_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_organisation_name_de_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32859,7 +32894,7 @@
             //
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_organisation_name_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_organisation_name_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32867,7 +32902,7 @@
             //
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_anzeige_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_anzeige_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32875,7 +32910,7 @@
             //
             $column = new TextViewColumn('interessengruppe_fr', 'interessengruppe_fr', 'Interessengruppe Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32883,7 +32918,7 @@
             //
             $column = new TextViewColumn('interessengruppe2_fr', 'interessengruppe2_fr', 'Interessengruppe2 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe2_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe2_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32891,7 +32926,7 @@
             //
             $column = new TextViewColumn('interessengruppe3_fr', 'interessengruppe3_fr', 'Interessengruppe3 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe3_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe3_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32899,7 +32934,7 @@
             //
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_verguetung_beschreibung_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_verguetung_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32907,7 +32942,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_beschreibung_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32915,7 +32950,7 @@
             //
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe1_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32923,7 +32958,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_fr', 'interessengruppe1_fr', 'Interessengruppe1 Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe1_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -32931,7 +32966,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_interessenbindung_liste_interessengruppe1_branche_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_interessenbindung_liste_interessengruppe1_branche_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -33088,6 +33123,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('<s>V Zutrittsberechtigung Mit Mandaten</s>');
+            $this->SetMenuLabel('<s>V Zutrittsberechtigung Mit Mandaten</s>');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -33468,10 +33508,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_person_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_parlamentarier_v_zutrittsberechtigung_mit_mandaten_person_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('person_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_person_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_v_zutrittsberechtigung_mit_mandaten_person_id_search');
             
             $text_editor = new TextEdit('person_id');
             
@@ -34211,7 +34251,7 @@
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -34223,7 +34263,7 @@
             $column = new TextViewColumn('zutrittsberechtigung_name', 'zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_zutrittsberechtigung_name_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_zutrittsberechtigung_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -34235,7 +34275,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_funktion_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_funktion_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -34279,7 +34319,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -34313,7 +34353,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_notizen_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -34451,7 +34491,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_de_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_de_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -34463,7 +34503,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -34514,7 +34554,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -34552,7 +34592,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -34564,7 +34604,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -34618,7 +34658,7 @@
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -34627,7 +34667,7 @@
             $column = new TextViewColumn('zutrittsberechtigung_name', 'zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_zutrittsberechtigung_name_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_zutrittsberechtigung_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -34636,7 +34676,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_funktion_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_funktion_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -34675,7 +34715,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -34700,7 +34740,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_notizen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -34799,7 +34839,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_de_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_de_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -34808,7 +34848,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -34847,7 +34887,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -34876,7 +34916,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -34885,7 +34925,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -35033,7 +35073,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'edit_person_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'edit_parlamentarier_v_zutrittsberechtigung_mit_mandaten_person_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -35430,7 +35470,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'multi_edit_person_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'multi_edit_parlamentarier_v_zutrittsberechtigung_mit_mandaten_person_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -36325,7 +36365,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'insert_person_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'insert_parlamentarier_v_zutrittsberechtigung_mit_mandaten_person_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -36641,7 +36681,7 @@
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -36650,7 +36690,7 @@
             $column = new TextViewColumn('zutrittsberechtigung_name', 'zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_zutrittsberechtigung_name_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_zutrittsberechtigung_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -36659,7 +36699,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_funktion_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_funktion_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -36705,7 +36745,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -36730,7 +36770,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_notizen_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -36829,7 +36869,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_de_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_de_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -36838,7 +36878,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -36877,7 +36917,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -36906,7 +36946,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -36915,7 +36955,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -36957,7 +36997,7 @@
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -36966,7 +37006,7 @@
             $column = new TextViewColumn('zutrittsberechtigung_name', 'zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_zutrittsberechtigung_name_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_zutrittsberechtigung_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -36975,7 +37015,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_funktion_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_funktion_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -37021,7 +37061,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_beschreibung_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -37046,7 +37086,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_notizen_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -37145,7 +37185,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_de_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_de_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -37154,7 +37194,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -37193,7 +37233,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -37222,7 +37262,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -37231,7 +37271,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -37273,7 +37313,7 @@
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37282,7 +37322,7 @@
             $column = new TextViewColumn('zutrittsberechtigung_name', 'zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_zutrittsberechtigung_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_zutrittsberechtigung_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37291,7 +37331,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_funktion_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_funktion_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37323,7 +37363,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37348,7 +37388,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_notizen_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37447,7 +37487,7 @@
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37456,7 +37496,7 @@
             $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_name_de_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37465,7 +37505,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_name_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37474,7 +37514,7 @@
             $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_name_it_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_name_it_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37483,7 +37523,7 @@
             $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_ort_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_ort_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37548,7 +37588,7 @@
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_homepage_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_homepage_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37557,7 +37597,7 @@
             $column = new TextViewColumn('handelsregister_url', 'handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_handelsregister_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_handelsregister_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37573,7 +37613,7 @@
             $column = new TextViewColumn('organisation_beschreibung', 'organisation_beschreibung', 'Organisation Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37582,7 +37622,7 @@
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_adresse_strasse_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_adresse_strasse_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37591,7 +37631,7 @@
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_adresse_zusatz_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_adresse_zusatz_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37607,7 +37647,7 @@
             $column = new TextViewColumn('interessengruppe', 'interessengruppe', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37616,7 +37656,7 @@
             $column = new TextViewColumn('interessengruppe_branche', 'interessengruppe_branche', 'Interessengruppe Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe_branche_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37625,7 +37665,7 @@
             $column = new TextViewColumn('interessengruppe2', 'interessengruppe2', 'Interessengruppe2', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe2_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe2_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37634,7 +37674,7 @@
             $column = new TextViewColumn('interessengruppe2_branche', 'interessengruppe2_branche', 'Interessengruppe2 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe2_branche_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe2_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37643,7 +37683,7 @@
             $column = new TextViewColumn('interessengruppe3', 'interessengruppe3', 'Interessengruppe3', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe3_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe3_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37652,7 +37692,7 @@
             $column = new TextViewColumn('interessengruppe3_branche', 'interessengruppe3_branche', 'Interessengruppe3 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe3_branche_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe3_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37661,7 +37701,7 @@
             $column = new TextViewColumn('land', 'land', 'Land', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_land_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_land_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37726,7 +37766,7 @@
             $column = new TextViewColumn('geschaeftsbericht_url', 'geschaeftsbericht_url', 'Geschaeftsbericht Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_geschaeftsbericht_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_geschaeftsbericht_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37756,7 +37796,7 @@
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_quelle_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_quelle_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37772,7 +37812,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_quelle_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_quelle_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37830,7 +37870,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_de_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37839,7 +37879,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37878,7 +37918,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37907,7 +37947,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -37916,7 +37956,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -38042,7 +38082,7 @@
             //
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38050,7 +38090,7 @@
             //
             $column = new TextViewColumn('zutrittsberechtigung_name', 'zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_zutrittsberechtigung_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_zutrittsberechtigung_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38058,7 +38098,7 @@
             //
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_funktion_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_funktion_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38066,7 +38106,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38074,7 +38114,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38082,7 +38122,7 @@
             //
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_de_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_de_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38090,7 +38130,7 @@
             //
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38098,7 +38138,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38106,7 +38146,7 @@
             //
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38114,7 +38154,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38122,7 +38162,7 @@
             //
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38130,7 +38170,7 @@
             //
             $column = new TextViewColumn('zutrittsberechtigung_name', 'zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_zutrittsberechtigung_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_zutrittsberechtigung_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38138,7 +38178,7 @@
             //
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_funktion_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_funktion_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38146,7 +38186,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_beschreibung_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38154,7 +38194,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38162,7 +38202,7 @@
             //
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_de_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_de_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38170,7 +38210,7 @@
             //
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38178,7 +38218,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38186,7 +38226,7 @@
             //
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38194,7 +38234,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38202,7 +38242,7 @@
             //
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38210,7 +38250,7 @@
             //
             $column = new TextViewColumn('zutrittsberechtigung_name', 'zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_zutrittsberechtigung_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_zutrittsberechtigung_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38218,7 +38258,7 @@
             //
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_funktion_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_funktion_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38226,7 +38266,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38234,7 +38274,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38242,7 +38282,7 @@
             //
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38250,7 +38290,7 @@
             //
             $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_name_de_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_name_de_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38258,7 +38298,7 @@
             //
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_name_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_name_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38266,7 +38306,7 @@
             //
             $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_name_it_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_name_it_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38274,7 +38314,7 @@
             //
             $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_ort_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_ort_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38282,7 +38322,7 @@
             //
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_homepage_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_homepage_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38290,7 +38330,7 @@
             //
             $column = new TextViewColumn('handelsregister_url', 'handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_handelsregister_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_handelsregister_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38298,7 +38338,7 @@
             //
             $column = new TextViewColumn('organisation_beschreibung', 'organisation_beschreibung', 'Organisation Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38306,7 +38346,7 @@
             //
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_adresse_strasse_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_adresse_strasse_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38314,7 +38354,7 @@
             //
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_adresse_zusatz_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_adresse_zusatz_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38322,7 +38362,7 @@
             //
             $column = new TextViewColumn('interessengruppe', 'interessengruppe', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38330,7 +38370,7 @@
             //
             $column = new TextViewColumn('interessengruppe_branche', 'interessengruppe_branche', 'Interessengruppe Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe_branche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38338,7 +38378,7 @@
             //
             $column = new TextViewColumn('interessengruppe2', 'interessengruppe2', 'Interessengruppe2', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe2_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe2_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38346,7 +38386,7 @@
             //
             $column = new TextViewColumn('interessengruppe2_branche', 'interessengruppe2_branche', 'Interessengruppe2 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe2_branche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe2_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38354,7 +38394,7 @@
             //
             $column = new TextViewColumn('interessengruppe3', 'interessengruppe3', 'Interessengruppe3', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe3_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe3_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38362,7 +38402,7 @@
             //
             $column = new TextViewColumn('interessengruppe3_branche', 'interessengruppe3_branche', 'Interessengruppe3 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe3_branche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe3_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38370,7 +38410,7 @@
             //
             $column = new TextViewColumn('land', 'land', 'Land', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_land_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_land_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38378,7 +38418,7 @@
             //
             $column = new TextViewColumn('geschaeftsbericht_url', 'geschaeftsbericht_url', 'Geschaeftsbericht Url', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_geschaeftsbericht_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_geschaeftsbericht_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38386,7 +38426,7 @@
             //
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_quelle_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_quelle_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38394,7 +38434,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_quelle_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_quelle_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38402,7 +38442,7 @@
             //
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_de_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_de_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38410,7 +38450,7 @@
             //
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38418,7 +38458,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38426,7 +38466,7 @@
             //
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38434,7 +38474,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -38496,7 +38536,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_person_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_parlamentarier_v_zutrittsberechtigung_mit_mandaten_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -38558,7 +38598,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_v_zutrittsberechtigung_mit_mandaten_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38566,7 +38606,7 @@
             //
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38574,7 +38614,7 @@
             //
             $column = new TextViewColumn('zutrittsberechtigung_name', 'zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_zutrittsberechtigung_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_zutrittsberechtigung_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38582,7 +38622,7 @@
             //
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_funktion_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_funktion_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38590,7 +38630,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38598,7 +38638,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38606,7 +38646,7 @@
             //
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_de_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_de_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38614,7 +38654,7 @@
             //
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_organisation_name_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_organisation_name_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38622,7 +38662,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38630,7 +38670,7 @@
             //
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe1_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -38638,7 +38678,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridparlamentarier.v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_v_zutrittsberechtigung_mit_mandaten_interessengruppe1_branche_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -38700,7 +38740,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_person_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_parlamentarier_v_zutrittsberechtigung_mit_mandaten_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -38762,7 +38802,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_person_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_parlamentarier_v_zutrittsberechtigung_mit_mandaten_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -38916,6 +38956,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Parlamentarier');
+            $this->SetMenuLabel('<span class="entity important-entity">Parlamentarier</span>');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -39321,10 +39366,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_rat_id_abkuerzung_mixed_search');
+            $main_editor->SetHandlerName('filter_builder_parlamentarier_rat_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('rat_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_rat_id_abkuerzung_mixed_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_rat_id_search');
             
             $text_editor = new TextEdit('rat_id');
             
@@ -39356,10 +39401,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_kanton_id_abkuerzung_search');
+            $main_editor->SetHandlerName('filter_builder_parlamentarier_kanton_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('kanton_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_kanton_id_abkuerzung_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_kanton_id_search');
             
             $text_editor = new TextEdit('kanton_id');
             
@@ -39416,10 +39461,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_partei_id_abkuerzung_mixed_search');
+            $main_editor->SetHandlerName('filter_builder_parlamentarier_partei_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('partei_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_partei_id_abkuerzung_mixed_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_partei_id_search');
             
             $text_editor = new TextEdit('partei_id');
             
@@ -39486,10 +39531,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_fraktion_id_abkuerzung_search');
+            $main_editor->SetHandlerName('filter_builder_parlamentarier_fraktion_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('fraktion_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_fraktion_id_abkuerzung_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_fraktion_id_search');
             
             $text_editor = new TextEdit('fraktion_id');
             
@@ -39711,10 +39756,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_beruf_interessengruppe_id_anzeige_name_mixed_search');
+            $main_editor->SetHandlerName('filter_builder_parlamentarier_beruf_interessengruppe_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('beruf_interessengruppe_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_beruf_interessengruppe_id_anzeige_name_mixed_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_beruf_interessengruppe_id_search');
             
             $text_editor = new TextEdit('beruf_interessengruppe_id');
             
@@ -39932,10 +39977,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_militaerischer_grad_id_name_search');
+            $main_editor->SetHandlerName('filter_builder_parlamentarier_militaerischer_grad_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('militaerischer_grad_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_militaerischer_grad_id_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_militaerischer_grad_id_search');
             
             $text_editor = new TextEdit('militaerischer_grad_id');
             
@@ -41089,7 +41134,7 @@
             $column->setHrefTemplate('https://www.parlament.ch/de/biografie/name/%parlament_biografie_id%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_nachname_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_nachname_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Nachname des Parlamentariers. In der Übersicht zeigt der Link auf die Biographie des Parlamenteriers auf parlament.ch.');
             $column->SetFixedWidth(null);
@@ -41232,7 +41277,7 @@
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_beruf_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_beruf_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Beruf des Parlamentariers');
             $column->SetFixedWidth(null);
@@ -41244,7 +41289,7 @@
             $column = new TextViewColumn('beruf_fr', 'beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_beruf_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_beruf_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Beruf des Parlamentariers auf französisch');
             $column->SetFixedWidth(null);
@@ -41299,7 +41344,7 @@
             $column = new TextViewColumn('aemter', 'aemter', 'Ämter', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_aemter_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_aemter_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Politische Ämter (importiert von ws.parlament.ch mandate)');
             $column->SetFixedWidth(null);
@@ -41311,7 +41356,7 @@
             $column = new TextViewColumn('weitere_aemter', 'weitere_aemter', 'Weitere Ämter', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_weitere_aemter_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_weitere_aemter_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Zusätzliche Ämter (importiert von ws.parlament.ch additionalMandate)');
             $column->SetFixedWidth(null);
@@ -41387,7 +41432,7 @@
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_email_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_email_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('E-Mail-Adresse des Parlamentariers');
             $column->SetFixedWidth(null);
@@ -41401,7 +41446,7 @@
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_homepage_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Homepage des Parlamentariers');
             $column->SetFixedWidth(null);
@@ -41415,7 +41460,7 @@
             $column->setHrefTemplate('%homepage_2%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_homepage_2_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Zweite Homepage, importiert von ws.parlament.ch');
             $column->SetFixedWidth(null);
@@ -41449,7 +41494,7 @@
             $column = new TextViewColumn('parlament_interessenbindungen', 'parlament_interessenbindungen', 'Parlament Interessenbindungen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(1);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_parlament_interessenbindungen_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlament_interessenbindungen_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Importierte Interessenbindungen von ws.parlament.ch');
             $column->SetFixedWidth(null);
@@ -41486,7 +41531,7 @@
             $column->setHrefTemplate('%linkedin_profil_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_linkedin_profil_url_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_linkedin_profil_url_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('URL zum LinkedIn-Profil');
             $column->SetFixedWidth(null);
@@ -41500,7 +41545,7 @@
             $column->setHrefTemplate('https://www.xing.com/profile/%xing_profil_name%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_xing_profil_name_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_xing_profil_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link');
             $column->SetFixedWidth(null);
@@ -41514,7 +41559,7 @@
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_facebook_name_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_facebook_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt');
             $column->SetFixedWidth(null);
@@ -41526,7 +41571,7 @@
             $column = new TextViewColumn('wikipedia', 'wikipedia', 'Wikipedia', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_wikipedia_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_wikipedia_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Link zum Wkipedia-Eintrag des Parlamentariers');
             $column->SetFixedWidth(null);
@@ -41568,7 +41613,7 @@
             $column = new TextViewColumn('adresse_ort', 'adresse_ort', 'Adresse Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_adresse_ort_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_adresse_ort_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch');
             $column->SetFixedWidth(null);
@@ -41610,7 +41655,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
@@ -41785,7 +41830,7 @@
             $column->setHrefTemplate('https://www.parlament.ch/de/biografie/name/%parlament_biografie_id%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_nachname_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_nachname_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -41912,7 +41957,7 @@
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_beruf_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_beruf_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -41921,7 +41966,7 @@
             $column = new TextViewColumn('beruf_fr', 'beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_beruf_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_beruf_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -41961,7 +42006,7 @@
             $column = new TextViewColumn('aemter', 'aemter', 'Ämter', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_aemter_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_aemter_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -41970,7 +42015,7 @@
             $column = new TextViewColumn('weitere_aemter', 'weitere_aemter', 'Weitere Ämter', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_weitere_aemter_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_weitere_aemter_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -42025,7 +42070,7 @@
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_email_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_email_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -42036,7 +42081,7 @@
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_homepage_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -42047,7 +42092,7 @@
             $column->setHrefTemplate('%homepage_2%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_homepage_2_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -42072,7 +42117,7 @@
             $column = new TextViewColumn('parlament_interessenbindungen', 'parlament_interessenbindungen', 'Parlament Interessenbindungen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(1);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_parlament_interessenbindungen_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlament_interessenbindungen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -42100,7 +42145,7 @@
             $column->setHrefTemplate('%linkedin_profil_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_linkedin_profil_url_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_linkedin_profil_url_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -42111,7 +42156,7 @@
             $column->setHrefTemplate('https://www.xing.com/profile/%xing_profil_name%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_xing_profil_name_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_xing_profil_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -42122,7 +42167,7 @@
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_facebook_name_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_facebook_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -42131,7 +42176,7 @@
             $column = new TextViewColumn('wikipedia', 'wikipedia', 'Wikipedia', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_wikipedia_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_wikipedia_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -42154,7 +42199,7 @@
             $column = new TextViewColumn('adresse_firma', 'adresse_firma', 'Adresse Firma', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_adresse_firma_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_adresse_firma_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -42163,7 +42208,7 @@
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_adresse_strasse_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_adresse_strasse_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -42172,7 +42217,7 @@
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_adresse_zusatz_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_adresse_zusatz_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -42188,7 +42233,7 @@
             $column = new TextViewColumn('adresse_ort', 'adresse_ort', 'Adresse Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_adresse_ort_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_adresse_ort_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -42218,7 +42263,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -45363,7 +45408,7 @@
             $column->setHrefTemplate('https://www.parlament.ch/de/biografie/name/%parlament_biografie_id%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_nachname_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_nachname_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -45490,7 +45535,7 @@
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_beruf_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_beruf_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -45499,7 +45544,7 @@
             $column = new TextViewColumn('beruf_fr', 'beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_beruf_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_beruf_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -45539,7 +45584,7 @@
             $column = new TextViewColumn('aemter', 'aemter', 'Aemter', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_aemter_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_aemter_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -45548,7 +45593,7 @@
             $column = new TextViewColumn('weitere_aemter', 'weitere_aemter', 'Weitere Aemter', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_weitere_aemter_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_weitere_aemter_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -45603,7 +45648,7 @@
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_email_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_email_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -45614,7 +45659,7 @@
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_homepage_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -45625,7 +45670,7 @@
             $column->setHrefTemplate('%homepage_2%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_homepage_2_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -45650,7 +45695,7 @@
             $column = new TextViewColumn('parlament_interessenbindungen', 'parlament_interessenbindungen', 'Parlament Interessenbindungen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(1);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_parlament_interessenbindungen_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlament_interessenbindungen_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -45678,7 +45723,7 @@
             $column->setHrefTemplate('%linkedin_profil_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_linkedin_profil_url_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_linkedin_profil_url_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -45689,7 +45734,7 @@
             $column->setHrefTemplate('https://www.xing.com/profile/%xing_profil_name%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_xing_profil_name_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_xing_profil_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -45700,7 +45745,7 @@
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_facebook_name_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_facebook_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -45709,7 +45754,7 @@
             $column = new TextViewColumn('wikipedia', 'wikipedia', 'Wikipedia', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_wikipedia_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_wikipedia_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -45732,7 +45777,7 @@
             $column = new TextViewColumn('adresse_firma', 'adresse_firma', 'Adresse Firma', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_adresse_firma_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_adresse_firma_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -45741,7 +45786,7 @@
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_adresse_strasse_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_adresse_strasse_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -45750,7 +45795,7 @@
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_adresse_zusatz_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_adresse_zusatz_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -45766,7 +45811,7 @@
             $column = new TextViewColumn('adresse_ort', 'adresse_ort', 'Adresse Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_adresse_ort_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_adresse_ort_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -45796,7 +45841,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_notizen_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -45911,7 +45956,7 @@
             $column = new TextViewColumn('photo_dateiname_voll', 'photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_photo_dateiname_voll_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_photo_dateiname_voll_handler_print');
             $grid->AddPrintColumn($column);
         }
     
@@ -45935,7 +45980,7 @@
             $column->setHrefTemplate('https://www.parlament.ch/de/biografie/name/%parlament_biografie_id%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_nachname_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_nachname_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -46062,7 +46107,7 @@
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_beruf_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_beruf_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -46071,7 +46116,7 @@
             $column = new TextViewColumn('beruf_fr', 'beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_beruf_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_beruf_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -46111,7 +46156,7 @@
             $column = new TextViewColumn('aemter', 'aemter', 'Aemter', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_aemter_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_aemter_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -46120,7 +46165,7 @@
             $column = new TextViewColumn('weitere_aemter', 'weitere_aemter', 'Weitere Aemter', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_weitere_aemter_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_weitere_aemter_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -46175,7 +46220,7 @@
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_email_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_email_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -46186,7 +46231,7 @@
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_homepage_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -46197,7 +46242,7 @@
             $column->setHrefTemplate('%homepage_2%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_homepage_2_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -46222,7 +46267,7 @@
             $column = new TextViewColumn('parlament_interessenbindungen', 'parlament_interessenbindungen', 'Parlament Interessenbindungen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(1);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_parlament_interessenbindungen_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlament_interessenbindungen_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -46250,7 +46295,7 @@
             $column->setHrefTemplate('%linkedin_profil_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_linkedin_profil_url_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_linkedin_profil_url_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -46261,7 +46306,7 @@
             $column->setHrefTemplate('https://www.xing.com/profile/%xing_profil_name%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_xing_profil_name_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_xing_profil_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -46272,7 +46317,7 @@
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_facebook_name_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_facebook_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -46281,7 +46326,7 @@
             $column = new TextViewColumn('wikipedia', 'wikipedia', 'Wikipedia', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_wikipedia_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_wikipedia_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -46304,7 +46349,7 @@
             $column = new TextViewColumn('adresse_firma', 'adresse_firma', 'Adresse Firma', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_adresse_firma_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_adresse_firma_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -46313,7 +46358,7 @@
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_adresse_strasse_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_adresse_strasse_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -46322,7 +46367,7 @@
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_adresse_zusatz_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_adresse_zusatz_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -46338,7 +46383,7 @@
             $column = new TextViewColumn('adresse_ort', 'adresse_ort', 'Adresse Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_adresse_ort_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_adresse_ort_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -46368,7 +46413,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_notizen_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -46498,7 +46543,7 @@
             $column->setHrefTemplate('https://www.parlament.ch/de/biografie/name/%parlament_biografie_id%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_nachname_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_nachname_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -46625,7 +46670,7 @@
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_beruf_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_beruf_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -46634,7 +46679,7 @@
             $column = new TextViewColumn('beruf_fr', 'beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_beruf_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_beruf_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -46674,7 +46719,7 @@
             $column = new TextViewColumn('aemter', 'aemter', 'Ämter', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_aemter_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_aemter_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -46683,7 +46728,7 @@
             $column = new TextViewColumn('weitere_aemter', 'weitere_aemter', 'Weitere Ämter', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_weitere_aemter_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_weitere_aemter_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -46738,7 +46783,7 @@
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_email_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_email_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -46749,7 +46794,7 @@
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_homepage_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -46760,7 +46805,7 @@
             $column->setHrefTemplate('%homepage_2%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_homepage_2_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -46785,7 +46830,7 @@
             $column = new TextViewColumn('parlament_interessenbindungen', 'parlament_interessenbindungen', 'Parlament Interessenbindungen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(1);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_parlament_interessenbindungen_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_parlament_interessenbindungen_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -46813,7 +46858,7 @@
             $column->setHrefTemplate('%linkedin_profil_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_linkedin_profil_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_linkedin_profil_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -46824,7 +46869,7 @@
             $column->setHrefTemplate('https://www.xing.com/profile/%xing_profil_name%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_xing_profil_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_xing_profil_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -46835,7 +46880,7 @@
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_facebook_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_facebook_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -46844,7 +46889,7 @@
             $column = new TextViewColumn('wikipedia', 'wikipedia', 'Wikipedia', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_wikipedia_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_wikipedia_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -46867,7 +46912,7 @@
             $column = new TextViewColumn('adresse_firma', 'adresse_firma', 'Adresse Firma', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_adresse_firma_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_adresse_firma_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -46876,7 +46921,7 @@
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_adresse_strasse_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_adresse_strasse_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -46885,7 +46930,7 @@
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_adresse_zusatz_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_adresse_zusatz_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -46901,7 +46946,7 @@
             $column = new TextViewColumn('adresse_ort', 'adresse_ort', 'Adresse Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_adresse_ort_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_adresse_ort_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -46931,7 +46976,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_notizen_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -47046,7 +47091,7 @@
             $column = new TextViewColumn('photo_dateiname', 'photo_dateiname', 'Photo Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_photo_dateiname_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_photo_dateiname_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -47062,7 +47107,7 @@
             $column = new TextViewColumn('photo_dateiname_voll', 'photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_photo_dateiname_voll_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_photo_dateiname_voll_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -47071,7 +47116,7 @@
             $column = new TextViewColumn('photo_mime_type', 'photo_mime_type', 'Photo Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_photo_mime_type_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_photo_mime_type_handler_compare');
             $grid->AddCompareColumn($column);
         }
     
@@ -47237,80 +47282,48 @@
         protected function doRegisterHandlers() {
             $detailPage = new parlamentarier_parlamentarier_anhangPage('parlamentarier_parlamentarier_anhang', $this, array('parlamentarier_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('parlamentarier.parlamentarier_anhang'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.parlamentarier_anhang'));
-            $detailPage->SetTitle('Parlamentarier Anhang');
-            $detailPage->SetMenuLabel('Parlamentarier Anhang');
-            $detailPage->SetHeader(GetPagesHeader());
-            $detailPage->SetFooter(GetPagesFooter());
             $detailPage->SetHttpHandlerName('parlamentarier_parlamentarier_anhang_handler');
             $handler = new PageHTTPHandler('parlamentarier_parlamentarier_anhang_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $detailPage = new parlamentarier_parlamentarier_transparenzPage('parlamentarier_parlamentarier_transparenz', $this, array('parlamentarier_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('parlamentarier.parlamentarier_transparenz'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.parlamentarier_transparenz'));
-            $detailPage->SetTitle('Parlamentarier Vergütungstransparenz');
-            $detailPage->SetMenuLabel('Parlamentarier Vergütungstransparenz');
-            $detailPage->SetHeader(GetPagesHeader());
-            $detailPage->SetFooter(GetPagesFooter());
             $detailPage->SetHttpHandlerName('parlamentarier_parlamentarier_transparenz_handler');
             $handler = new PageHTTPHandler('parlamentarier_parlamentarier_transparenz_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $detailPage = new parlamentarier_v_organisation_parlamentarier_beide_indirektPage('parlamentarier_v_organisation_parlamentarier_beide_indirekt', $this, array('parlamentarier_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('parlamentarier.v_organisation_parlamentarier_beide_indirekt'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_organisation_parlamentarier_beide_indirekt'));
-            $detailPage->SetTitle('Organisation Parlamentarier Beide Indirekt');
-            $detailPage->SetMenuLabel('Organisation Parlamentarier Beide Indirekt');
-            $detailPage->SetHeader(GetPagesHeader());
-            $detailPage->SetFooter(GetPagesFooter());
             $detailPage->SetHttpHandlerName('parlamentarier_v_organisation_parlamentarier_beide_indirekt_handler');
             $handler = new PageHTTPHandler('parlamentarier_v_organisation_parlamentarier_beide_indirekt_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $detailPage = new parlamentarier_v_in_kommission_listePage('parlamentarier_v_in_kommission_liste', $this, array('parlamentarier_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('parlamentarier.v_in_kommission_liste'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_in_kommission_liste'));
-            $detailPage->SetTitle('In Kommission Liste');
-            $detailPage->SetMenuLabel('In Kommission Liste');
-            $detailPage->SetHeader(GetPagesHeader());
-            $detailPage->SetFooter(GetPagesFooter());
             $detailPage->SetHttpHandlerName('parlamentarier_v_in_kommission_liste_handler');
             $handler = new PageHTTPHandler('parlamentarier_v_in_kommission_liste_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $detailPage = new parlamentarier_v_interessenbindung_liste_indirektPage('parlamentarier_v_interessenbindung_liste_indirekt', $this, array('parlamentarier_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('parlamentarier.v_interessenbindung_liste_indirekt'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_interessenbindung_liste_indirekt'));
-            $detailPage->SetTitle('<s>V Interessenbindung Liste Indirekt</s>');
-            $detailPage->SetMenuLabel('<s>V Interessenbindung Liste Indirekt</s>');
-            $detailPage->SetHeader(GetPagesHeader());
-            $detailPage->SetFooter(GetPagesFooter());
             $detailPage->SetHttpHandlerName('parlamentarier_v_interessenbindung_liste_indirekt_handler');
             $handler = new PageHTTPHandler('parlamentarier_v_interessenbindung_liste_indirekt_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $detailPage = new parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirektPage('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt', $this, array('parlamentarier_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt'));
-            $detailPage->SetTitle('<s>V Zutrittsberechtigung Mit Mandaten Indirekt</s>');
-            $detailPage->SetMenuLabel('<s>V Zutrittsberechtigung Mit Mandaten Indirekt</s>');
-            $detailPage->SetHeader(GetPagesHeader());
-            $detailPage->SetFooter(GetPagesFooter());
             $detailPage->SetHttpHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_handler');
             $handler = new PageHTTPHandler('parlamentarier_v_zutrittsberechtigung_mit_mandaten_indirekt_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $detailPage = new parlamentarier_v_interessenbindung_listePage('parlamentarier_v_interessenbindung_liste', $this, array('parlamentarier_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('parlamentarier.v_interessenbindung_liste'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_interessenbindung_liste'));
-            $detailPage->SetTitle('<s>V Interessenbindung Liste</s>');
-            $detailPage->SetMenuLabel('<s>V Interessenbindung Liste</s>');
-            $detailPage->SetHeader(GetPagesHeader());
-            $detailPage->SetFooter(GetPagesFooter());
             $detailPage->SetHttpHandlerName('parlamentarier_v_interessenbindung_liste_handler');
             $handler = new PageHTTPHandler('parlamentarier_v_interessenbindung_liste_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $detailPage = new parlamentarier_v_zutrittsberechtigung_mit_mandatenPage('parlamentarier_v_zutrittsberechtigung_mit_mandaten', $this, array('parlamentarier_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten'));
-            $detailPage->SetTitle('<s>V Zutrittsberechtigung Mit Mandaten</s>');
-            $detailPage->SetMenuLabel('<s>V Zutrittsberechtigung Mit Mandaten</s>');
-            $detailPage->SetHeader(GetPagesHeader());
-            $detailPage->SetFooter(GetPagesFooter());
             $detailPage->SetHttpHandlerName('parlamentarier_v_zutrittsberechtigung_mit_mandaten_handler');
             $handler = new PageHTTPHandler('parlamentarier_v_zutrittsberechtigung_mit_mandaten_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
@@ -47323,7 +47336,7 @@
             $column->setBold(true);
             $column->setHrefTemplate('https://www.parlament.ch/de/biografie/name/%parlament_biografie_id%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_nachname_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_nachname_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47331,7 +47344,7 @@
             //
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_beruf_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_beruf_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47339,7 +47352,7 @@
             //
             $column = new TextViewColumn('beruf_fr', 'beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_beruf_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_beruf_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47347,7 +47360,7 @@
             //
             $column = new TextViewColumn('aemter', 'aemter', 'Ämter', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_aemter_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_aemter_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47355,7 +47368,7 @@
             //
             $column = new TextViewColumn('weitere_aemter', 'weitere_aemter', 'Weitere Ämter', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_weitere_aemter_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_weitere_aemter_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47365,7 +47378,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_email_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_email_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47375,7 +47388,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_homepage_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_homepage_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47385,7 +47398,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%homepage_2%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_homepage_2_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_homepage_2_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47393,7 +47406,7 @@
             //
             $column = new TextViewColumn('parlament_interessenbindungen', 'parlament_interessenbindungen', 'Parlament Interessenbindungen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_parlament_interessenbindungen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlament_interessenbindungen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47403,7 +47416,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%linkedin_profil_url%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_linkedin_profil_url_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_linkedin_profil_url_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47413,7 +47426,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('https://www.xing.com/profile/%xing_profil_name%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_xing_profil_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_xing_profil_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47423,7 +47436,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_facebook_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_facebook_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47431,7 +47444,7 @@
             //
             $column = new TextViewColumn('wikipedia', 'wikipedia', 'Wikipedia', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_wikipedia_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_wikipedia_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47439,7 +47452,7 @@
             //
             $column = new TextViewColumn('adresse_ort', 'adresse_ort', 'Adresse Ort', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_adresse_ort_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_adresse_ort_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47448,7 +47461,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47459,7 +47472,7 @@
             $column->setBold(true);
             $column->setHrefTemplate('https://www.parlament.ch/de/biografie/name/%parlament_biografie_id%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_nachname_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_nachname_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47467,7 +47480,7 @@
             //
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_beruf_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_beruf_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47475,7 +47488,7 @@
             //
             $column = new TextViewColumn('beruf_fr', 'beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_beruf_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_beruf_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47483,7 +47496,7 @@
             //
             $column = new TextViewColumn('aemter', 'aemter', 'Aemter', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_aemter_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_aemter_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47491,7 +47504,7 @@
             //
             $column = new TextViewColumn('weitere_aemter', 'weitere_aemter', 'Weitere Aemter', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_weitere_aemter_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_weitere_aemter_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47501,7 +47514,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_email_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_email_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47511,7 +47524,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_homepage_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_homepage_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47521,7 +47534,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%homepage_2%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_homepage_2_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_homepage_2_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47529,7 +47542,7 @@
             //
             $column = new TextViewColumn('parlament_interessenbindungen', 'parlament_interessenbindungen', 'Parlament Interessenbindungen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_parlament_interessenbindungen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlament_interessenbindungen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47539,7 +47552,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%linkedin_profil_url%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_linkedin_profil_url_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_linkedin_profil_url_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47549,7 +47562,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('https://www.xing.com/profile/%xing_profil_name%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_xing_profil_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_xing_profil_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47559,7 +47572,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_facebook_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_facebook_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47567,7 +47580,7 @@
             //
             $column = new TextViewColumn('wikipedia', 'wikipedia', 'Wikipedia', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_wikipedia_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_wikipedia_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47575,7 +47588,7 @@
             //
             $column = new TextViewColumn('adresse_firma', 'adresse_firma', 'Adresse Firma', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_adresse_firma_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_adresse_firma_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47583,7 +47596,7 @@
             //
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_adresse_strasse_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_adresse_strasse_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47591,7 +47604,7 @@
             //
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_adresse_zusatz_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_adresse_zusatz_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47599,7 +47612,7 @@
             //
             $column = new TextViewColumn('adresse_ort', 'adresse_ort', 'Adresse Ort', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_adresse_ort_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_adresse_ort_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47608,7 +47621,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47616,7 +47629,7 @@
             //
             $column = new TextViewColumn('photo_dateiname_voll', 'photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_photo_dateiname_voll_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_photo_dateiname_voll_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47627,7 +47640,7 @@
             $column->setBold(true);
             $column->setHrefTemplate('https://www.parlament.ch/de/biografie/name/%parlament_biografie_id%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_nachname_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_nachname_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47635,7 +47648,7 @@
             //
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_beruf_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_beruf_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47643,7 +47656,7 @@
             //
             $column = new TextViewColumn('beruf_fr', 'beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_beruf_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_beruf_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47651,7 +47664,7 @@
             //
             $column = new TextViewColumn('aemter', 'aemter', 'Ämter', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_aemter_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_aemter_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47659,7 +47672,7 @@
             //
             $column = new TextViewColumn('weitere_aemter', 'weitere_aemter', 'Weitere Ämter', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_weitere_aemter_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_weitere_aemter_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47669,7 +47682,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_email_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_email_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47679,7 +47692,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_homepage_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_homepage_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47689,7 +47702,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%homepage_2%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_homepage_2_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_homepage_2_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47697,7 +47710,7 @@
             //
             $column = new TextViewColumn('parlament_interessenbindungen', 'parlament_interessenbindungen', 'Parlament Interessenbindungen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_parlament_interessenbindungen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlament_interessenbindungen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47707,7 +47720,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%linkedin_profil_url%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_linkedin_profil_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_linkedin_profil_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47717,7 +47730,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('https://www.xing.com/profile/%xing_profil_name%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_xing_profil_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_xing_profil_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47727,7 +47740,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_facebook_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_facebook_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47735,7 +47748,7 @@
             //
             $column = new TextViewColumn('wikipedia', 'wikipedia', 'Wikipedia', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_wikipedia_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_wikipedia_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47743,7 +47756,7 @@
             //
             $column = new TextViewColumn('adresse_firma', 'adresse_firma', 'Adresse Firma', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_adresse_firma_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_adresse_firma_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47751,7 +47764,7 @@
             //
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_adresse_strasse_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_adresse_strasse_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47759,7 +47772,7 @@
             //
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_adresse_zusatz_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_adresse_zusatz_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47767,7 +47780,7 @@
             //
             $column = new TextViewColumn('adresse_ort', 'adresse_ort', 'Adresse Ort', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_adresse_ort_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_adresse_ort_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47776,7 +47789,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47784,7 +47797,7 @@
             //
             $column = new TextViewColumn('photo_dateiname', 'photo_dateiname', 'Photo Dateiname', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_photo_dateiname_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_photo_dateiname_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47792,7 +47805,7 @@
             //
             $column = new TextViewColumn('photo_dateiname_voll', 'photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_photo_dateiname_voll_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_photo_dateiname_voll_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -47800,7 +47813,7 @@
             //
             $column = new TextViewColumn('photo_mime_type', 'photo_mime_type', 'Photo Mime Type', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_photo_mime_type_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_photo_mime_type_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -47857,7 +47870,7 @@
                 )
             );
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'anzeigestufe > 0'));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_rat_id_abkuerzung_mixed_search', 'id', 'abkuerzung_mixed', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_rat_id_search', 'id', 'abkuerzung_mixed', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -47912,7 +47925,7 @@
                 )
             );
             $lookupDataset->setOrderByField('abkuerzung', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_kanton_id_abkuerzung_search', 'id', 'abkuerzung', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_kanton_id_search', 'id', 'abkuerzung', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -47969,7 +47982,7 @@
                 )
             );
             $lookupDataset->setOrderByField('abkuerzung_mixed', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_partei_id_abkuerzung_mixed_search', 'id', 'abkuerzung_mixed', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_partei_id_search', 'id', 'abkuerzung_mixed', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -48014,7 +48027,7 @@
                 )
             );
             $lookupDataset->setOrderByField('abkuerzung', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_fraktion_id_abkuerzung_search', 'id', 'abkuerzung', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_fraktion_id_search', 'id', 'abkuerzung', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -48058,7 +48071,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name_mixed', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_beruf_interessengruppe_id_anzeige_name_mixed_search', 'id', 'anzeige_name_mixed', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_beruf_interessengruppe_id_search', 'id', 'anzeige_name_mixed', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -48086,7 +48099,7 @@
                 )
             );
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'anzeigestufe > 0'));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_militaerischer_grad_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_militaerischer_grad_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -48114,7 +48127,7 @@
                 )
             );
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'anzeigestufe > 0'));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_militaerischer_grad_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_militaerischer_grad_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -48125,7 +48138,7 @@
             $column->setBold(true);
             $column->setHrefTemplate('https://www.parlament.ch/de/biografie/name/%parlament_biografie_id%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_nachname_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_nachname_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -48133,7 +48146,7 @@
             //
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_beruf_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_beruf_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -48141,7 +48154,7 @@
             //
             $column = new TextViewColumn('beruf_fr', 'beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_beruf_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_beruf_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -48149,7 +48162,7 @@
             //
             $column = new TextViewColumn('aemter', 'aemter', 'Ämter', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_aemter_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_aemter_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -48157,7 +48170,7 @@
             //
             $column = new TextViewColumn('weitere_aemter', 'weitere_aemter', 'Weitere Ämter', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_weitere_aemter_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_weitere_aemter_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -48167,7 +48180,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_email_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_email_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -48177,7 +48190,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_homepage_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_homepage_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -48187,7 +48200,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%homepage_2%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_homepage_2_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_homepage_2_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -48195,7 +48208,7 @@
             //
             $column = new TextViewColumn('parlament_interessenbindungen', 'parlament_interessenbindungen', 'Parlament Interessenbindungen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_parlament_interessenbindungen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_parlament_interessenbindungen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -48205,7 +48218,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%linkedin_profil_url%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_linkedin_profil_url_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_linkedin_profil_url_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -48215,7 +48228,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('https://www.xing.com/profile/%xing_profil_name%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_xing_profil_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_xing_profil_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -48225,7 +48238,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_facebook_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_facebook_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -48233,7 +48246,7 @@
             //
             $column = new TextViewColumn('wikipedia', 'wikipedia', 'Wikipedia', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_wikipedia_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_wikipedia_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -48241,7 +48254,7 @@
             //
             $column = new TextViewColumn('adresse_firma', 'adresse_firma', 'Adresse Firma', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_adresse_firma_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_adresse_firma_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -48249,7 +48262,7 @@
             //
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_adresse_strasse_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_adresse_strasse_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -48257,7 +48270,7 @@
             //
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_adresse_zusatz_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_adresse_zusatz_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -48265,7 +48278,7 @@
             //
             $column = new TextViewColumn('adresse_ort', 'adresse_ort', 'Adresse Ort', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_adresse_ort_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_adresse_ort_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -48274,7 +48287,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -48433,10 +48446,6 @@
     try
     {
         $Page = new parlamentarierPage("parlamentarier", "parlamentarier.php", GetCurrentUserPermissionSetForDataSource("parlamentarier"), 'UTF-8');
-        $Page->SetTitle('Parlamentarier');
-        $Page->SetMenuLabel('<span class="entity important-entity">Parlamentarier</span>');
-        $Page->SetHeader(GetPagesHeader());
-        $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("parlamentarier"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

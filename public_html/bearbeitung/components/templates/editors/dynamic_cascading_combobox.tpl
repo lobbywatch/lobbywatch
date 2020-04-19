@@ -30,7 +30,7 @@
                 data-url="{$LevelEditor->getDataURL()}"
                 {if $smarty.foreach.Editors.last}
                     data-multileveledit-main="true"
-                    {$Validators.InputAttributes}
+                    {$ViewData.Validators.InputAttributes}
                 {/if}
                 {if $LevelEditor->getFormatResult()}
                     data-format-result="{$LevelEditor->getFormatResult()|escape}"
@@ -40,9 +40,6 @@
                 {/if}
                 value="{$LevelEditor->getValue()}"
                 data-init-text="{$LevelEditor->getDisplayValue()}"
-                {if $smarty.foreach.Editors.last}
-                    {$ViewData.Validators.InputAttributes}
-                {/if}
             />
                 {include file='editors/nested_insert_button.tpl' NestedInsertFormLink=$LevelEditor->getNestedInsertFormLink() LookupDisplayFieldName=$LevelEditor->GetCaptionFieldName()}
             </div>

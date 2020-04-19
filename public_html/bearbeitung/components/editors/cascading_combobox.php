@@ -59,7 +59,7 @@ class CascadingCombobox extends CascadingEditor {
         $reversedLevels = array_reverse($this->getLevels());
         foreach($reversedLevels as $key => $level) {
             $dataset = $level->getDataset();
-            $dataset->ClearAllFilters();
+            $dataset->ClearFieldFilters();
             if (isset($reversedLevels[$key + 1]) && ($level->getForeignKey() != null)) {
                 $parentLevel = $reversedLevels[$key + 1];
                 $parentIdValue = $parentLevel->getValue();

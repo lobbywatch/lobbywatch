@@ -1842,6 +1842,16 @@ class Grid {
                 return $customTotalValue;
             }
 
+            if ($column instanceof NumberViewColumn) {
+                $totalValue = number_format(
+                    (double) $totalValue,
+                    $column->GetNumberAfterDecimal(),
+                    $column->GetDecimalSeparator(),
+                    $column->GetThousandsSeparator()
+                );
+
+            }
+
             return StringUtils::Format('%s = %s', $aggregate, $totalValue);
         }
         return '';
@@ -1852,7 +1862,7 @@ class Grid {
      * @return array|null
      */
     public function getTotalsViewData($columns) {
-        if ($this->HasTotals()) {
+        if (!$this->RequestFilterFromUser() and $this->HasTotals()) {
             $result = array();
             $totalValues = $this->GetTotalValues();
             foreach ($columns as $column) {
@@ -2181,7 +2191,7 @@ class Grid {
         if ($this->GetDataset()->Next()) {
             $primaryKeyMap = $this->GetDataset()->GetPrimaryKeyValuesMap();
             $titleReplacements = array();
-            foreach ($this->GetExportColumns() as $column) {
+            foreach ($this->GetExportColumns(true) as $column) {
                 $titleReplacements['%' . $this->GetColumnName($column) . '%'] = $column->getValue();
             }
 
@@ -2247,7 +2257,7 @@ class Grid {
                 'Title' => $this->resolveFormTitle(
                     $this->GetPage()->GetLocalizerCaptions()->GetMessageString('View'),
                     $this->GetPage()->GetViewFormTitle(),
-                    $this->getViewColumnsReplacements($this->GetSingleRecordViewColumns())
+                    $this->getViewColumnsReplacements($this->GetSingleRecordViewColumns(true))
                 ),
                 'CellEditUrls' => $cellEditUrls,
                 'PrimaryKeyMap' => $primaryKeyMap,

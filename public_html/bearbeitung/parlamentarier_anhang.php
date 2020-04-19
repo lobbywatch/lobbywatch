@@ -39,6 +39,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Parlamentarier Anhang');
+            $this->SetMenuLabel('Parlamentarier Anhang');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -160,10 +165,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_parlamentarier_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_parlamentarier_anhang_parlamentarier_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('parlamentarier_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_anhang_parlamentarier_id_search');
             
             $text_editor = new TextEdit('parlamentarier_id');
             
@@ -495,7 +500,7 @@
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_anhangGrid_dateiname_voll_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_anhang_dateiname_voll_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Dateiname inkl. Erweiterung');
             $column->SetFixedWidth(null);
@@ -507,7 +512,7 @@
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_anhangGrid_mime_type_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_anhang_mime_type_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('MIME Type der Datei');
             $column->SetFixedWidth(null);
@@ -529,7 +534,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_anhangGrid_beschreibung_handler_list');
+            $column->SetFullTextWindowHandlerName('parlamentarier_anhang_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Beschreibung des Anhangs');
             $column->SetFixedWidth(null);
@@ -616,7 +621,7 @@
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_anhangGrid_dateiname_voll_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_anhang_dateiname_voll_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -625,7 +630,7 @@
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_anhangGrid_mime_type_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_anhang_mime_type_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -641,7 +646,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_anhangGrid_beschreibung_handler_view');
+            $column->SetFullTextWindowHandlerName('parlamentarier_anhang_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1255,7 +1260,7 @@
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_anhangGrid_dateiname_voll_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_anhang_dateiname_voll_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1264,7 +1269,7 @@
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_anhangGrid_mime_type_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_anhang_mime_type_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1280,7 +1285,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_anhangGrid_beschreibung_handler_print');
+            $column->SetFullTextWindowHandlerName('parlamentarier_anhang_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1352,7 +1357,7 @@
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_anhangGrid_dateiname_voll_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_anhang_dateiname_voll_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1361,7 +1366,7 @@
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_anhangGrid_mime_type_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_anhang_mime_type_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1377,7 +1382,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_anhangGrid_beschreibung_handler_export');
+            $column->SetFullTextWindowHandlerName('parlamentarier_anhang_beschreibung_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1449,7 +1454,7 @@
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_anhangGrid_dateiname_voll_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_anhang_dateiname_voll_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1458,7 +1463,7 @@
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_anhangGrid_mime_type_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_anhang_mime_type_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1474,7 +1479,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_anhangGrid_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_anhang_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1513,7 +1518,7 @@
             $column = new TextViewColumn('dateiname', 'dateiname', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_anhangGrid_dateiname_handler_compare');
+            $column->SetFullTextWindowHandlerName('parlamentarier_anhang_dateiname_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1627,7 +1632,7 @@
             //
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhangGrid_dateiname_voll_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhang_dateiname_voll_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1635,7 +1640,7 @@
             //
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhangGrid_mime_type_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhang_mime_type_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1643,7 +1648,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhangGrid_beschreibung_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhang_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $handler = new PrivateFileDownloadHTTPHandler($this->dataset, 'datei', 'datei_handler', '%mime_type%', '%datei%', true);
@@ -1654,7 +1659,7 @@
             //
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhangGrid_dateiname_voll_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhang_dateiname_voll_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1662,7 +1667,7 @@
             //
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhangGrid_mime_type_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhang_mime_type_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1670,7 +1675,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhangGrid_beschreibung_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhang_beschreibung_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $handler = new PrivateFileDownloadHTTPHandler($this->dataset, 'datei', 'datei_handler', '%mime_type%', '%datei%', true);
@@ -1681,7 +1686,7 @@
             //
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhangGrid_dateiname_voll_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhang_dateiname_voll_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1689,7 +1694,7 @@
             //
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhangGrid_mime_type_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhang_mime_type_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1697,7 +1702,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhangGrid_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhang_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1705,7 +1710,7 @@
             //
             $column = new TextViewColumn('dateiname', 'dateiname', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhangGrid_dateiname_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhang_dateiname_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -1811,7 +1816,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_anhang_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -1917,7 +1922,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_anhang_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $handler = new PrivateFileDownloadHTTPHandler($this->dataset, 'datei', 'datei_handler', '%mime_type%', '%datei%', true);
@@ -1928,7 +1933,7 @@
             //
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhangGrid_dateiname_voll_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhang_dateiname_voll_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1936,7 +1941,7 @@
             //
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhangGrid_mime_type_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhang_mime_type_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1944,7 +1949,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhangGrid_beschreibung_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_anhang_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -2095,10 +2100,6 @@
     try
     {
         $Page = new parlamentarier_anhangPage("parlamentarier_anhang", "parlamentarier_anhang.php", GetCurrentUserPermissionSetForDataSource("parlamentarier_anhang"), 'UTF-8');
-        $Page->SetTitle('Parlamentarier Anhang');
-        $Page->SetMenuLabel('Parlamentarier Anhang');
-        $Page->SetHeader(GetPagesHeader());
-        $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("parlamentarier_anhang"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

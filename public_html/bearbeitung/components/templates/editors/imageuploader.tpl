@@ -17,7 +17,7 @@
     <div class="file-upload-control">
         <input
             {if $id}id="{$id}"{/if}
-            {$Validators.InputAttributes}
+            {$ViewData.Validators.InputAttributes}
             {if $Editor->GetLink()}data-has-file="true"{/if}
             data-editor="{$Editor->getEditorName()}"
             data-field-name="{$Editor->GetFieldName()}"

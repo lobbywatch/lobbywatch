@@ -40,6 +40,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Person Anhang');
+            $this->SetMenuLabel('Person Anhang');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -159,10 +164,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_person_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_person_person_anhang_person_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('person_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_person_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_person_person_anhang_person_id_search');
             
             $filterBuilder->addColumn(
                 $columns['person_id'],
@@ -490,7 +495,7 @@
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.person_anhang_dateiname_voll_handler_list');
+            $column->SetFullTextWindowHandlerName('person_person_anhang_dateiname_voll_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Dateiname inkl. Erweiterung');
             $column->SetFixedWidth(null);
@@ -502,7 +507,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.person_anhang_beschreibung_handler_list');
+            $column->SetFullTextWindowHandlerName('person_person_anhang_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Beschreibung des Anhangs');
             $column->SetFixedWidth(null);
@@ -580,7 +585,7 @@
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.person_anhang_dateiname_voll_handler_view');
+            $column->SetFullTextWindowHandlerName('person_person_anhang_dateiname_voll_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -589,7 +594,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.person_anhang_beschreibung_handler_view');
+            $column->SetFullTextWindowHandlerName('person_person_anhang_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -605,7 +610,7 @@
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.person_anhang_mime_type_handler_view');
+            $column->SetFullTextWindowHandlerName('person_person_anhang_mime_type_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1203,7 +1208,7 @@
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.person_anhang_dateiname_voll_handler_print');
+            $column->SetFullTextWindowHandlerName('person_person_anhang_dateiname_voll_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1212,7 +1217,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.person_anhang_beschreibung_handler_print');
+            $column->SetFullTextWindowHandlerName('person_person_anhang_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1228,7 +1233,7 @@
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.person_anhang_mime_type_handler_print');
+            $column->SetFullTextWindowHandlerName('person_person_anhang_mime_type_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1298,7 +1303,7 @@
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.person_anhang_dateiname_voll_handler_export');
+            $column->SetFullTextWindowHandlerName('person_person_anhang_dateiname_voll_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1307,7 +1312,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.person_anhang_beschreibung_handler_export');
+            $column->SetFullTextWindowHandlerName('person_person_anhang_beschreibung_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1323,7 +1328,7 @@
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.person_anhang_mime_type_handler_export');
+            $column->SetFullTextWindowHandlerName('person_person_anhang_mime_type_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1386,7 +1391,7 @@
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.person_anhang_dateiname_voll_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_person_anhang_dateiname_voll_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1395,7 +1400,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.person_anhang_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_person_anhang_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1441,7 +1446,7 @@
             $column = new TextViewColumn('dateiname', 'dateiname', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.person_anhang_dateiname_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_person_anhang_dateiname_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1457,7 +1462,7 @@
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.person_anhang_mime_type_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_person_anhang_mime_type_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1574,7 +1579,7 @@
             //
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.person_anhang_dateiname_voll_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_person_anhang_dateiname_voll_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1582,7 +1587,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.person_anhang_beschreibung_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_person_anhang_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $handler = new PrivateFileDownloadHTTPHandler($this->dataset, 'datei', 'datei_handler', '%mime_type%', '%datei%', true);
@@ -1593,7 +1598,7 @@
             //
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.person_anhang_dateiname_voll_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_person_anhang_dateiname_voll_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1601,7 +1606,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.person_anhang_beschreibung_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_person_anhang_beschreibung_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1609,7 +1614,7 @@
             //
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.person_anhang_mime_type_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_person_anhang_mime_type_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $handler = new PrivateFileDownloadHTTPHandler($this->dataset, 'datei', 'datei_handler', '%mime_type%', '%datei%', true);
@@ -1620,7 +1625,7 @@
             //
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.person_anhang_dateiname_voll_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_person_anhang_dateiname_voll_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1628,7 +1633,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.person_anhang_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_person_anhang_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1636,7 +1641,7 @@
             //
             $column = new TextViewColumn('dateiname', 'dateiname', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.person_anhang_dateiname_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_person_anhang_dateiname_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1644,7 +1649,7 @@
             //
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.person_anhang_mime_type_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_person_anhang_mime_type_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -1706,7 +1711,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_person_anhang_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -1768,7 +1773,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_person_anhang_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $handler = new PrivateFileDownloadHTTPHandler($this->dataset, 'datei', 'datei_handler', '%mime_type%', '%datei%', true);
@@ -1779,7 +1784,7 @@
             //
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.person_anhang_dateiname_voll_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_person_anhang_dateiname_voll_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1787,7 +1792,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.person_anhang_beschreibung_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_person_anhang_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1795,7 +1800,7 @@
             //
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.person_anhang_mime_type_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_person_anhang_mime_type_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -1952,6 +1957,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('<s>V Zutrittsberechtigung Mandate</s>');
+            $this->SetMenuLabel('<s>V Zutrittsberechtigung Mandate</s>');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -2252,10 +2262,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_parlamentarier_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_person_v_zutrittsberechtigung_mandate_parlamentarier_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('parlamentarier_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_person_v_zutrittsberechtigung_mandate_parlamentarier_id_search');
             
             $text_editor = new TextEdit('parlamentarier_id');
             
@@ -3312,7 +3322,7 @@
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_handler_list');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_organisation_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -3326,7 +3336,7 @@
             $column->setHrefTemplate('person.php?operation=view&pk0=%person_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_zutrittsberechtigung_name_handler_list');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_zutrittsberechtigung_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -3338,7 +3348,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_funktion_handler_list');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_funktion_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -3384,7 +3394,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_handler_list');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -3418,7 +3428,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_notizen_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -3556,7 +3566,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_de_handler_list');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_organisation_name_de_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -3568,7 +3578,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_organisation_name_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -3619,7 +3629,7 @@
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_funktion_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_funktion_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -3631,7 +3641,7 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_anzeige_name_handler_list');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_anzeige_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -3713,7 +3723,7 @@
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_list');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -3725,7 +3735,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_beschreibung_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -3763,7 +3773,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe1_handler_list');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_interessengruppe1_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -3775,7 +3785,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe1_branche_handler_list');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_interessengruppe1_branche_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -3838,7 +3848,7 @@
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_handler_view');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_organisation_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3849,7 +3859,7 @@
             $column->setHrefTemplate('person.php?operation=view&pk0=%person_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_zutrittsberechtigung_name_handler_view');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_zutrittsberechtigung_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3858,7 +3868,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_funktion_handler_view');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_funktion_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3892,7 +3902,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_handler_view');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3917,7 +3927,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_notizen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -4016,7 +4026,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_de_handler_view');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_organisation_name_de_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -4025,7 +4035,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_organisation_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -4064,7 +4074,7 @@
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_funktion_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_funktion_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -4073,7 +4083,7 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_anzeige_name_handler_view');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_anzeige_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -4134,7 +4144,7 @@
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_view');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -4143,7 +4153,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -4172,7 +4182,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe1_handler_view');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_interessengruppe1_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -4181,7 +4191,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe1_branche_handler_view');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_interessengruppe1_branche_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -6371,7 +6381,7 @@
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_handler_print');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_organisation_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -6382,7 +6392,7 @@
             $column->setHrefTemplate('person.php?operation=view&pk0=%person_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_zutrittsberechtigung_name_handler_print');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_zutrittsberechtigung_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -6391,7 +6401,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_funktion_handler_print');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_funktion_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -6432,7 +6442,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_handler_print');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -6457,7 +6467,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_notizen_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -6556,7 +6566,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_de_handler_print');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_organisation_name_de_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -6565,7 +6575,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_organisation_name_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -6604,7 +6614,7 @@
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_funktion_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_funktion_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -6613,7 +6623,7 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_anzeige_name_handler_print');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_anzeige_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -6674,7 +6684,7 @@
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_print');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -6683,7 +6693,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_beschreibung_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -6712,7 +6722,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe1_handler_print');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_interessengruppe1_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -6721,7 +6731,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe1_branche_handler_print');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_interessengruppe1_branche_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -6772,7 +6782,7 @@
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_handler_export');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_organisation_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -6783,7 +6793,7 @@
             $column->setHrefTemplate('person.php?operation=view&pk0=%person_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_zutrittsberechtigung_name_handler_export');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_zutrittsberechtigung_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -6792,7 +6802,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_funktion_handler_export');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_funktion_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -6833,7 +6843,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_handler_export');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_beschreibung_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -6858,7 +6868,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_notizen_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -6957,7 +6967,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_de_handler_export');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_organisation_name_de_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -6966,7 +6976,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_organisation_name_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -7005,7 +7015,7 @@
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_funktion_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_funktion_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -7014,7 +7024,7 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_anzeige_name_handler_export');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_anzeige_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -7075,7 +7085,7 @@
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_export');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -7084,7 +7094,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_beschreibung_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -7113,7 +7123,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe1_handler_export');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_interessengruppe1_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -7122,7 +7132,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe1_branche_handler_export');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_interessengruppe1_branche_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -7173,7 +7183,7 @@
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_organisation_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7184,7 +7194,7 @@
             $column->setHrefTemplate('person.php?operation=view&pk0=%person_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_zutrittsberechtigung_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_zutrittsberechtigung_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7193,7 +7203,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_funktion_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_funktion_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7227,7 +7237,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7252,7 +7262,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_notizen_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7351,7 +7361,7 @@
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7360,7 +7370,7 @@
             $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_name_de_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7369,7 +7379,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_name_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7378,7 +7388,7 @@
             $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_name_it_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_name_it_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7387,7 +7397,7 @@
             $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_ort_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_ort_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7452,7 +7462,7 @@
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_homepage_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_homepage_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7461,7 +7471,7 @@
             $column = new TextViewColumn('handelsregister_url', 'handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_handelsregister_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_handelsregister_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7477,7 +7487,7 @@
             $column = new TextViewColumn('organisation_beschreibung', 'organisation_beschreibung', 'Organisation Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_organisation_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_organisation_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7486,7 +7496,7 @@
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_adresse_strasse_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_adresse_strasse_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7495,7 +7505,7 @@
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_adresse_zusatz_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_adresse_zusatz_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7511,7 +7521,7 @@
             $column = new TextViewColumn('interessengruppe', 'interessengruppe', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_interessengruppe_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7520,7 +7530,7 @@
             $column = new TextViewColumn('interessengruppe_branche', 'interessengruppe_branche', 'Interessengruppe Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe_branche_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_interessengruppe_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7529,7 +7539,7 @@
             $column = new TextViewColumn('interessengruppe2', 'interessengruppe2', 'Interessengruppe2', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe2_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_interessengruppe2_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7538,7 +7548,7 @@
             $column = new TextViewColumn('interessengruppe2_branche', 'interessengruppe2_branche', 'Interessengruppe2 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe2_branche_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_interessengruppe2_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7547,7 +7557,7 @@
             $column = new TextViewColumn('interessengruppe3', 'interessengruppe3', 'Interessengruppe3', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe3_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_interessengruppe3_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7556,7 +7566,7 @@
             $column = new TextViewColumn('interessengruppe3_branche', 'interessengruppe3_branche', 'Interessengruppe3 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe3_branche_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_interessengruppe3_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7565,7 +7575,7 @@
             $column = new TextViewColumn('land', 'land', 'Land', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_land_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_land_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7630,7 +7640,7 @@
             $column = new TextViewColumn('geschaeftsbericht_url', 'geschaeftsbericht_url', 'Geschaeftsbericht Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_geschaeftsbericht_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_geschaeftsbericht_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7653,7 +7663,7 @@
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_quelle_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_quelle_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7669,7 +7679,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_quelle_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_quelle_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7727,7 +7737,7 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_de_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_organisation_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7736,7 +7746,7 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_organisation_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7775,7 +7785,7 @@
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_funktion_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_funktion_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7784,7 +7794,7 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_anzeige_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_anzeige_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7845,7 +7855,7 @@
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7854,7 +7864,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_beschreibung_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7883,7 +7893,7 @@
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe1_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_interessengruppe1_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7892,7 +7902,7 @@
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe1_branche_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_v_zutrittsberechtigung_mandate_interessengruppe1_branche_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -8018,7 +8028,7 @@
             //
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_organisation_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8028,7 +8038,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('person.php?operation=view&pk0=%person_id%');
             $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_zutrittsberechtigung_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_zutrittsberechtigung_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8036,7 +8046,7 @@
             //
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_funktion_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_funktion_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8044,7 +8054,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8052,7 +8062,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8060,7 +8070,7 @@
             //
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_de_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_organisation_name_de_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8068,7 +8078,7 @@
             //
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_organisation_name_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8076,7 +8086,7 @@
             //
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_funktion_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_funktion_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8084,7 +8094,7 @@
             //
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_anzeige_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_anzeige_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8092,7 +8102,7 @@
             //
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8100,7 +8110,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_beschreibung_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8108,7 +8118,7 @@
             //
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe1_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_interessengruppe1_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8116,7 +8126,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe1_branche_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_interessengruppe1_branche_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8124,7 +8134,7 @@
             //
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_organisation_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8134,7 +8144,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('person.php?operation=view&pk0=%person_id%');
             $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_zutrittsberechtigung_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_zutrittsberechtigung_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8142,7 +8152,7 @@
             //
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_funktion_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_funktion_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8150,7 +8160,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_beschreibung_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8158,7 +8168,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8166,7 +8176,7 @@
             //
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_de_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_organisation_name_de_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8174,7 +8184,7 @@
             //
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_organisation_name_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8182,7 +8192,7 @@
             //
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_funktion_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_funktion_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8190,7 +8200,7 @@
             //
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_anzeige_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_anzeige_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8198,7 +8208,7 @@
             //
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8206,7 +8216,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_beschreibung_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8214,7 +8224,7 @@
             //
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe1_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_interessengruppe1_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8222,7 +8232,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe1_branche_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_interessengruppe1_branche_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8230,7 +8240,7 @@
             //
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_organisation_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8240,7 +8250,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('person.php?operation=view&pk0=%person_id%');
             $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_zutrittsberechtigung_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_zutrittsberechtigung_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8248,7 +8258,7 @@
             //
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_funktion_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_funktion_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8256,7 +8266,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8264,7 +8274,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8272,7 +8282,7 @@
             //
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8280,7 +8290,7 @@
             //
             $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_name_de_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_name_de_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8288,7 +8298,7 @@
             //
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_name_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_name_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8296,7 +8306,7 @@
             //
             $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_name_it_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_name_it_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8304,7 +8314,7 @@
             //
             $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_ort_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_ort_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8312,7 +8322,7 @@
             //
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_homepage_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_homepage_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8320,7 +8330,7 @@
             //
             $column = new TextViewColumn('handelsregister_url', 'handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_handelsregister_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_handelsregister_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8328,7 +8338,7 @@
             //
             $column = new TextViewColumn('organisation_beschreibung', 'organisation_beschreibung', 'Organisation Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_organisation_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_organisation_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8336,7 +8346,7 @@
             //
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_adresse_strasse_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_adresse_strasse_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8344,7 +8354,7 @@
             //
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_adresse_zusatz_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_adresse_zusatz_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8352,7 +8362,7 @@
             //
             $column = new TextViewColumn('interessengruppe', 'interessengruppe', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_interessengruppe_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8360,7 +8370,7 @@
             //
             $column = new TextViewColumn('interessengruppe_branche', 'interessengruppe_branche', 'Interessengruppe Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe_branche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_interessengruppe_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8368,7 +8378,7 @@
             //
             $column = new TextViewColumn('interessengruppe2', 'interessengruppe2', 'Interessengruppe2', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe2_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_interessengruppe2_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8376,7 +8386,7 @@
             //
             $column = new TextViewColumn('interessengruppe2_branche', 'interessengruppe2_branche', 'Interessengruppe2 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe2_branche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_interessengruppe2_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8384,7 +8394,7 @@
             //
             $column = new TextViewColumn('interessengruppe3', 'interessengruppe3', 'Interessengruppe3', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe3_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_interessengruppe3_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8392,7 +8402,7 @@
             //
             $column = new TextViewColumn('interessengruppe3_branche', 'interessengruppe3_branche', 'Interessengruppe3 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe3_branche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_interessengruppe3_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8400,7 +8410,7 @@
             //
             $column = new TextViewColumn('land', 'land', 'Land', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_land_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_land_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8408,7 +8418,7 @@
             //
             $column = new TextViewColumn('geschaeftsbericht_url', 'geschaeftsbericht_url', 'Geschaeftsbericht Url', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_geschaeftsbericht_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_geschaeftsbericht_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8416,7 +8426,7 @@
             //
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_quelle_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_quelle_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8424,7 +8434,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_quelle_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_quelle_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8432,7 +8442,7 @@
             //
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_de_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_organisation_name_de_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8440,7 +8450,7 @@
             //
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_organisation_name_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8448,7 +8458,7 @@
             //
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_funktion_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_funktion_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8456,7 +8466,7 @@
             //
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_anzeige_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_anzeige_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8464,7 +8474,7 @@
             //
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8472,7 +8482,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_beschreibung_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8480,7 +8490,7 @@
             //
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe1_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_interessengruppe1_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8488,7 +8498,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe1_branche_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_interessengruppe1_branche_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -8594,7 +8604,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_v_zutrittsberechtigung_mandate_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -8700,7 +8710,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_v_zutrittsberechtigung_mandate_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -8806,7 +8816,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_v_zutrittsberechtigung_mandate_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -8912,7 +8922,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_v_zutrittsberechtigung_mandate_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8920,7 +8930,7 @@
             //
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_organisation_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8930,7 +8940,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('person.php?operation=view&pk0=%person_id%');
             $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_zutrittsberechtigung_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_zutrittsberechtigung_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8938,7 +8948,7 @@
             //
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_funktion_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_funktion_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8946,7 +8956,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8954,7 +8964,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8962,7 +8972,7 @@
             //
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_de_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_organisation_name_de_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8970,7 +8980,7 @@
             //
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_organisation_name_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_organisation_name_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8978,7 +8988,7 @@
             //
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_funktion_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_funktion_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8986,7 +8996,7 @@
             //
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_anzeige_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_anzeige_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -8994,7 +9004,7 @@
             //
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -9002,7 +9012,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -9010,7 +9020,7 @@
             //
             $column = new TextViewColumn('interessengruppe1', 'interessengruppe1', 'Interessengruppe1', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe1_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_interessengruppe1_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -9018,7 +9028,7 @@
             //
             $column = new TextViewColumn('interessengruppe1_branche', 'interessengruppe1_branche', 'Interessengruppe1 Branche', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_interessengruppe1_branche_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_v_zutrittsberechtigung_mandate_interessengruppe1_branche_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -9175,6 +9185,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('<s>Mandat</s>');
+            $this->SetMenuLabel('<s>Mandat</s>');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -9338,10 +9353,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_person_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_person_mandat_person_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('person_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_person_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_person_mandat_person_id_search');
             
             $text_editor = new TextEdit('person_id');
             
@@ -9373,10 +9388,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_organisation_id_anzeige_name_search');
+            $main_editor->SetHandlerName('filter_builder_person_mandat_organisation_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('organisation_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_organisation_id_anzeige_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_person_mandat_organisation_id_search');
             
             $text_editor = new TextEdit('organisation_id');
             
@@ -9964,7 +9979,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_beschreibung_handler_list');
+            $column->SetFullTextWindowHandlerName('person_mandat_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Umschreibung des Mandates. Beschreibung wird zur Auswertung wahrscheinlich nicht gebraucht.');
@@ -9999,7 +10014,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('person_mandat_notizen_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
             $column->SetFixedWidth(null);
@@ -10137,7 +10152,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_beschreibung_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('person_mandat_beschreibung_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Französische Bezeichung des Mandates. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.');
             $column->SetFixedWidth(null);
@@ -10204,7 +10219,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_beschreibung_handler_view');
+            $column->SetFullTextWindowHandlerName('person_mandat_beschreibung_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -10230,7 +10245,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('person_mandat_notizen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10329,7 +10344,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_beschreibung_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('person_mandat_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -11498,7 +11513,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_beschreibung_handler_print');
+            $column->SetFullTextWindowHandlerName('person_mandat_beschreibung_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -11524,7 +11539,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('person_mandat_notizen_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -11623,7 +11638,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_beschreibung_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('person_mandat_beschreibung_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -11684,7 +11699,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_beschreibung_handler_export');
+            $column->SetFullTextWindowHandlerName('person_mandat_beschreibung_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -11710,7 +11725,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('person_mandat_notizen_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -11809,7 +11824,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_beschreibung_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('person_mandat_beschreibung_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -11870,7 +11885,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_beschreibung_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_mandat_beschreibung_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -11896,7 +11911,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_mandat_notizen_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -11995,7 +12010,7 @@
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_quelle_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_mandat_quelle_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -12011,7 +12026,7 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_quelle_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_mandat_quelle_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -12020,7 +12035,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_beschreibung_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_mandat_beschreibung_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -12127,7 +12142,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_beschreibung_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_mandat_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12135,7 +12150,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_mandat_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12143,7 +12158,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_beschreibung_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_mandat_beschreibung_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12152,7 +12167,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_beschreibung_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_mandat_beschreibung_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12160,7 +12175,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_mandat_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12168,7 +12183,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_beschreibung_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_mandat_beschreibung_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12177,7 +12192,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_beschreibung_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_mandat_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12185,7 +12200,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_mandat_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12193,7 +12208,7 @@
             //
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_quelle_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_mandat_quelle_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12201,7 +12216,7 @@
             //
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_quelle_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_mandat_quelle_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12209,7 +12224,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_beschreibung_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_mandat_beschreibung_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -12271,7 +12286,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_mandat_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -12340,7 +12355,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_organisation_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_mandat_organisation_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12349,7 +12364,7 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_beschreibung_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_mandat_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12357,7 +12372,7 @@
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_mandat_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -12365,7 +12380,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_beschreibung_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_mandat_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -12519,6 +12534,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('Person');
+            $this->SetMenuLabel('<span class="entity important-entity">Person</span>');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -12940,10 +12960,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_beruf_interessengruppe_id_name_search');
+            $main_editor->SetHandlerName('filter_builder_person_beruf_interessengruppe_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('beruf_interessengruppe_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_beruf_interessengruppe_id_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_person_beruf_interessengruppe_id_search');
             
             $text_editor = new TextEdit('beruf_interessengruppe_id');
             
@@ -13000,10 +13020,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_partei_id_abkuerzung_mixed_search');
+            $main_editor->SetHandlerName('filter_builder_person_partei_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('partei_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_partei_id_abkuerzung_mixed_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_person_partei_id_search');
             
             $text_editor = new TextEdit('partei_id');
             
@@ -13807,7 +13827,7 @@
             $column->SetOrderable(true);
             $column->setBold(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_nachname_handler_list');
+            $column->SetFullTextWindowHandlerName('person_nachname_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Nachname der Person');
             $column->SetFixedWidth(null);
@@ -13861,7 +13881,7 @@
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_beruf_handler_list');
+            $column->SetFullTextWindowHandlerName('person_beruf_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Beruf des Zutrittsberechtigten');
             $column->SetFixedWidth(null);
@@ -13873,7 +13893,7 @@
             $column = new TextViewColumn('beruf_fr', 'beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_beruf_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('person_beruf_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Französische Bezeichnung des Beruf der Person');
             $column->SetFixedWidth(null);
@@ -13897,7 +13917,7 @@
             $column = new TextViewColumn('titel', 'titel', 'Titel', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_titel_handler_list');
+            $column->SetFullTextWindowHandlerName('person_titel_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Titel der Person, z.B. Lic. iur.');
             $column->SetFixedWidth(null);
@@ -13943,7 +13963,7 @@
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_email_handler_list');
+            $column->SetFullTextWindowHandlerName('person_email_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Kontakt E-Mail-Adresse der zutrittsberechtigen Person');
             $column->SetFixedWidth(null);
@@ -13957,7 +13977,7 @@
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_homepage_handler_list');
+            $column->SetFullTextWindowHandlerName('person_homepage_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Homepage der zutrittsberechtigen Person');
             $column->SetFixedWidth(null);
@@ -13983,7 +14003,7 @@
             $column->setHrefTemplate('%linkedin_profil_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_linkedin_profil_url_handler_list');
+            $column->SetFullTextWindowHandlerName('person_linkedin_profil_url_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('URL zum LinkedIn-Profil');
             $column->SetFixedWidth(null);
@@ -13997,7 +14017,7 @@
             $column->setHrefTemplate('https://www.xing.com/profile/%xing_profil_name%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_xing_profil_name_handler_list');
+            $column->SetFullTextWindowHandlerName('person_xing_profil_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link');
             $column->SetFixedWidth(null);
@@ -14011,7 +14031,7 @@
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_facebook_name_handler_list');
+            $column->SetFullTextWindowHandlerName('person_facebook_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt');
             $column->SetFixedWidth(null);
@@ -14043,7 +14063,7 @@
             $column = new TextViewColumn('beschreibung_de', 'beschreibung_de', 'Beschreibung De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_beschreibung_de_handler_list');
+            $column->SetFullTextWindowHandlerName('person_beschreibung_de_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Beschreibung der Person. Vor allem nützlich, wenn es sich um eine Person handelt, die nicht via Zutrittsberechtigung mit einem Parlamenatier verknüpft ist. Der Text ist öffentlich einsehbar.');
             $column->SetFixedWidth(null);
@@ -14055,7 +14075,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_beschreibung_fr_handler_list');
+            $column->SetFullTextWindowHandlerName('person_beschreibung_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Französische Beschreibung der Person. Der Text ist öffentlich einsehbar.');
             $column->SetFixedWidth(null);
@@ -14077,7 +14097,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('person_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
@@ -14261,7 +14281,7 @@
             $column->SetOrderable(true);
             $column->setBold(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_nachname_handler_view');
+            $column->SetFullTextWindowHandlerName('person_nachname_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14307,7 +14327,7 @@
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_beruf_handler_view');
+            $column->SetFullTextWindowHandlerName('person_beruf_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14316,7 +14336,7 @@
             $column = new TextViewColumn('beruf_fr', 'beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_beruf_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('person_beruf_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14334,7 +14354,7 @@
             $column = new TextViewColumn('titel', 'titel', 'Titel', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_titel_handler_view');
+            $column->SetFullTextWindowHandlerName('person_titel_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14368,7 +14388,7 @@
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_email_handler_view');
+            $column->SetFullTextWindowHandlerName('person_email_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14379,7 +14399,7 @@
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_homepage_handler_view');
+            $column->SetFullTextWindowHandlerName('person_homepage_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14399,7 +14419,7 @@
             $column->setHrefTemplate('%linkedin_profil_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_linkedin_profil_url_handler_view');
+            $column->SetFullTextWindowHandlerName('person_linkedin_profil_url_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14410,7 +14430,7 @@
             $column->setHrefTemplate('https://www.xing.com/profile/%xing_profil_name%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_xing_profil_name_handler_view');
+            $column->SetFullTextWindowHandlerName('person_xing_profil_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14421,7 +14441,7 @@
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_facebook_name_handler_view');
+            $column->SetFullTextWindowHandlerName('person_facebook_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14444,7 +14464,7 @@
             $column = new TextViewColumn('beschreibung_de', 'beschreibung_de', 'Beschreibung De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_beschreibung_de_handler_view');
+            $column->SetFullTextWindowHandlerName('person_beschreibung_de_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14453,7 +14473,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_beschreibung_fr_handler_view');
+            $column->SetFullTextWindowHandlerName('person_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14469,7 +14489,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('person_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -16154,7 +16174,7 @@
             $column->SetOrderable(true);
             $column->setBold(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_nachname_handler_print');
+            $column->SetFullTextWindowHandlerName('person_nachname_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -16200,7 +16220,7 @@
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_beruf_handler_print');
+            $column->SetFullTextWindowHandlerName('person_beruf_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -16209,7 +16229,7 @@
             $column = new TextViewColumn('beruf_fr', 'beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_beruf_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('person_beruf_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -16227,7 +16247,7 @@
             $column = new TextViewColumn('titel', 'titel', 'Titel', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_titel_handler_print');
+            $column->SetFullTextWindowHandlerName('person_titel_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -16261,7 +16281,7 @@
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_email_handler_print');
+            $column->SetFullTextWindowHandlerName('person_email_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -16272,7 +16292,7 @@
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_homepage_handler_print');
+            $column->SetFullTextWindowHandlerName('person_homepage_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -16292,7 +16312,7 @@
             $column->setHrefTemplate('%linkedin_profil_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_linkedin_profil_url_handler_print');
+            $column->SetFullTextWindowHandlerName('person_linkedin_profil_url_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -16303,7 +16323,7 @@
             $column->setHrefTemplate('https://www.xing.com/profile/%xing_profil_name%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_xing_profil_name_handler_print');
+            $column->SetFullTextWindowHandlerName('person_xing_profil_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -16314,7 +16334,7 @@
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_facebook_name_handler_print');
+            $column->SetFullTextWindowHandlerName('person_facebook_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -16337,7 +16357,7 @@
             $column = new TextViewColumn('beschreibung_de', 'beschreibung_de', 'Beschreibung De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_beschreibung_de_handler_print');
+            $column->SetFullTextWindowHandlerName('person_beschreibung_de_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -16346,7 +16366,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_beschreibung_fr_handler_print');
+            $column->SetFullTextWindowHandlerName('person_beschreibung_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -16362,7 +16382,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('person_notizen_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -16498,7 +16518,7 @@
             $column->SetOrderable(true);
             $column->setBold(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_nachname_handler_export');
+            $column->SetFullTextWindowHandlerName('person_nachname_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -16544,7 +16564,7 @@
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_beruf_handler_export');
+            $column->SetFullTextWindowHandlerName('person_beruf_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -16553,7 +16573,7 @@
             $column = new TextViewColumn('beruf_fr', 'beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_beruf_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('person_beruf_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -16571,7 +16591,7 @@
             $column = new TextViewColumn('titel', 'titel', 'Titel', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_titel_handler_export');
+            $column->SetFullTextWindowHandlerName('person_titel_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -16605,7 +16625,7 @@
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_email_handler_export');
+            $column->SetFullTextWindowHandlerName('person_email_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -16616,7 +16636,7 @@
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_homepage_handler_export');
+            $column->SetFullTextWindowHandlerName('person_homepage_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -16636,7 +16656,7 @@
             $column->setHrefTemplate('%linkedin_profil_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_linkedin_profil_url_handler_export');
+            $column->SetFullTextWindowHandlerName('person_linkedin_profil_url_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -16647,7 +16667,7 @@
             $column->setHrefTemplate('https://www.xing.com/profile/%xing_profil_name%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_xing_profil_name_handler_export');
+            $column->SetFullTextWindowHandlerName('person_xing_profil_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -16658,7 +16678,7 @@
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_facebook_name_handler_export');
+            $column->SetFullTextWindowHandlerName('person_facebook_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -16681,7 +16701,7 @@
             $column = new TextViewColumn('beschreibung_de', 'beschreibung_de', 'Beschreibung De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_beschreibung_de_handler_export');
+            $column->SetFullTextWindowHandlerName('person_beschreibung_de_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -16690,7 +16710,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_beschreibung_fr_handler_export');
+            $column->SetFullTextWindowHandlerName('person_beschreibung_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -16706,7 +16726,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('person_notizen_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -16842,7 +16862,7 @@
             $column->SetOrderable(true);
             $column->setBold(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_nachname_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_nachname_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -16888,7 +16908,7 @@
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_beruf_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_beruf_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -16897,7 +16917,7 @@
             $column = new TextViewColumn('beruf_fr', 'beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_beruf_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_beruf_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -16915,7 +16935,7 @@
             $column = new TextViewColumn('titel', 'titel', 'Titel', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_titel_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_titel_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -16949,7 +16969,7 @@
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_email_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_email_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -16960,7 +16980,7 @@
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_homepage_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_homepage_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -16980,7 +17000,7 @@
             $column->setHrefTemplate('%linkedin_profil_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_linkedin_profil_url_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_linkedin_profil_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -16991,7 +17011,7 @@
             $column->setHrefTemplate('https://www.xing.com/profile/%xing_profil_name%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_xing_profil_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_xing_profil_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -17002,7 +17022,7 @@
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_facebook_name_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_facebook_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -17025,7 +17045,7 @@
             $column = new TextViewColumn('beschreibung_de', 'beschreibung_de', 'Beschreibung De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_beschreibung_de_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_beschreibung_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -17034,7 +17054,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_beschreibung_fr_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_beschreibung_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -17050,7 +17070,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('personGrid_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('person_notizen_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -17317,30 +17337,18 @@
         protected function doRegisterHandlers() {
             $detailPage = new person_person_anhangPage('person_person_anhang', $this, array('person_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('person.person_anhang'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('person.person_anhang'));
-            $detailPage->SetTitle('Person Anhang');
-            $detailPage->SetMenuLabel('Person Anhang');
-            $detailPage->SetHeader(GetPagesHeader());
-            $detailPage->SetFooter(GetPagesFooter());
             $detailPage->SetHttpHandlerName('person_person_anhang_handler');
             $handler = new PageHTTPHandler('person_person_anhang_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $detailPage = new person_v_zutrittsberechtigung_mandatePage('person_v_zutrittsberechtigung_mandate', $this, array('person_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('person.v_zutrittsberechtigung_mandate'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('person.v_zutrittsberechtigung_mandate'));
-            $detailPage->SetTitle('<s>V Zutrittsberechtigung Mandate</s>');
-            $detailPage->SetMenuLabel('<s>V Zutrittsberechtigung Mandate</s>');
-            $detailPage->SetHeader(GetPagesHeader());
-            $detailPage->SetFooter(GetPagesFooter());
             $detailPage->SetHttpHandlerName('person_v_zutrittsberechtigung_mandate_handler');
             $handler = new PageHTTPHandler('person_v_zutrittsberechtigung_mandate_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $detailPage = new person_mandatPage('person_mandat', $this, array('person_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('person.mandat'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('person.mandat'));
-            $detailPage->SetTitle('<s>Mandat</s>');
-            $detailPage->SetMenuLabel('<s>Mandat</s>');
-            $detailPage->SetHeader(GetPagesHeader());
-            $detailPage->SetFooter(GetPagesFooter());
             $detailPage->SetHttpHandlerName('person_mandat_handler');
             $handler = new PageHTTPHandler('person_mandat_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
@@ -17351,7 +17359,7 @@
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->setBold(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_nachname_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_nachname_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17359,7 +17367,7 @@
             //
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beruf_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_beruf_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17367,7 +17375,7 @@
             //
             $column = new TextViewColumn('beruf_fr', 'beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beruf_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_beruf_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17375,7 +17383,7 @@
             //
             $column = new TextViewColumn('titel', 'titel', 'Titel', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_titel_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_titel_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17385,7 +17393,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_email_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_email_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17395,7 +17403,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_homepage_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_homepage_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17405,7 +17413,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%linkedin_profil_url%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_linkedin_profil_url_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_linkedin_profil_url_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17415,7 +17423,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('https://www.xing.com/profile/%xing_profil_name%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_xing_profil_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_xing_profil_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17425,7 +17433,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_facebook_name_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_facebook_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17433,7 +17441,7 @@
             //
             $column = new TextViewColumn('beschreibung_de', 'beschreibung_de', 'Beschreibung De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beschreibung_de_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_beschreibung_de_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17441,7 +17449,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beschreibung_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_beschreibung_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17450,7 +17458,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17459,7 +17467,7 @@
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->setBold(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_nachname_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_nachname_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17467,7 +17475,7 @@
             //
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beruf_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_beruf_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17475,7 +17483,7 @@
             //
             $column = new TextViewColumn('beruf_fr', 'beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beruf_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_beruf_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17483,7 +17491,7 @@
             //
             $column = new TextViewColumn('titel', 'titel', 'Titel', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_titel_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_titel_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17493,7 +17501,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_email_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_email_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17503,7 +17511,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_homepage_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_homepage_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17513,7 +17521,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%linkedin_profil_url%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_linkedin_profil_url_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_linkedin_profil_url_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17523,7 +17531,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('https://www.xing.com/profile/%xing_profil_name%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_xing_profil_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_xing_profil_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17533,7 +17541,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_facebook_name_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_facebook_name_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17541,7 +17549,7 @@
             //
             $column = new TextViewColumn('beschreibung_de', 'beschreibung_de', 'Beschreibung De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beschreibung_de_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_beschreibung_de_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17549,7 +17557,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beschreibung_fr_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_beschreibung_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17558,7 +17566,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17567,7 +17575,7 @@
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->setBold(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_nachname_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_nachname_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17575,7 +17583,7 @@
             //
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beruf_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_beruf_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17583,7 +17591,7 @@
             //
             $column = new TextViewColumn('beruf_fr', 'beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beruf_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_beruf_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17591,7 +17599,7 @@
             //
             $column = new TextViewColumn('titel', 'titel', 'Titel', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_titel_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_titel_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17601,7 +17609,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_email_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_email_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17611,7 +17619,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_homepage_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_homepage_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17621,7 +17629,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%linkedin_profil_url%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_linkedin_profil_url_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_linkedin_profil_url_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17631,7 +17639,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('https://www.xing.com/profile/%xing_profil_name%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_xing_profil_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_xing_profil_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17641,7 +17649,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_facebook_name_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_facebook_name_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17649,7 +17657,7 @@
             //
             $column = new TextViewColumn('beschreibung_de', 'beschreibung_de', 'Beschreibung De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beschreibung_de_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_beschreibung_de_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17657,7 +17665,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beschreibung_fr_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_beschreibung_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17666,7 +17674,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -17710,7 +17718,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_beruf_interessengruppe_id_name_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_beruf_interessengruppe_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -17767,7 +17775,7 @@
                 )
             );
             $lookupDataset->setOrderByField('abkuerzung_mixed', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_partei_id_abkuerzung_mixed_search', 'id', 'abkuerzung_mixed', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_partei_id_search', 'id', 'abkuerzung_mixed', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17776,7 +17784,7 @@
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->setBold(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_nachname_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_nachname_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17784,7 +17792,7 @@
             //
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beruf_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_beruf_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17792,7 +17800,7 @@
             //
             $column = new TextViewColumn('beruf_fr', 'beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beruf_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_beruf_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17800,7 +17808,7 @@
             //
             $column = new TextViewColumn('titel', 'titel', 'Titel', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_titel_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_titel_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17810,7 +17818,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_email_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_email_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17820,7 +17828,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_homepage_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_homepage_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17830,7 +17838,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('%linkedin_profil_url%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_linkedin_profil_url_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_linkedin_profil_url_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17840,7 +17848,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('https://www.xing.com/profile/%xing_profil_name%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_xing_profil_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_xing_profil_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17850,7 +17858,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_facebook_name_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_facebook_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17858,7 +17866,7 @@
             //
             $column = new TextViewColumn('beschreibung_de', 'beschreibung_de', 'Beschreibung De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beschreibung_de_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_beschreibung_de_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17866,7 +17874,7 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beschreibung_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -17875,7 +17883,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -18026,10 +18034,6 @@
     try
     {
         $Page = new personPage("person", "person.php", GetCurrentUserPermissionSetForDataSource("person"), 'UTF-8');
-        $Page->SetTitle('Person');
-        $Page->SetMenuLabel('<span class="entity important-entity">Person</span>');
-        $Page->SetHeader(GetPagesHeader());
-        $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("person"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

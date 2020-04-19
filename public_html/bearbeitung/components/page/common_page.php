@@ -109,7 +109,7 @@ abstract class CommonPage
 
     public function GetHeader()
     {
-        return $this->RenderText($this->header);
+        return $this->header;
     }
 
     public function SetHeader($value)
@@ -119,19 +119,13 @@ abstract class CommonPage
 
     public function GetFooter()
     {
-        return $this->RenderText($this->footer);
+        return $this->footer;
     }
 
     public function SetFooter($value)
     {
         $this->footer = $value;
     }
-
-    public function RenderText($text)
-    {
-        return $text;
-    }
-
 
     /**
      * @return Captions

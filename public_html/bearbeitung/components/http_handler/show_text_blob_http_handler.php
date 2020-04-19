@@ -8,38 +8,33 @@ class ShowTextBlobHandler extends AbstractHTTPHandler
     private $dataset;
     /** @var Page */
     private $parentPage;
-
     /** @var AbstractViewColumn */
     private $column;
 
-    public function __construct($dataset, $parentPage, $name, $column)
-    {
+    public function __construct($dataset, $parentPage, $name, $column) {
         parent::__construct($name);
         $this->dataset = $dataset;
         $this->parentPage = $parentPage;
         $this->column = $column;
     }
 
-    public function Render(Renderer $renderer)
-    {
+    public function Render(Renderer $renderer) {
         echo $renderer->Render($this);
     }
 
-    public function Accept(Renderer $renderer)
-    {
+    public function Accept(Renderer $renderer) {
         $renderer->RenderTextBlobViewer($this);
     }
 
-    public function GetParentPage()
-    { return $this->parentPage; }
-
-    public function GetCaption()
-    {
-        return $this->parentPage->RenderText($this->column->GetCaption());
+    public function GetParentPage() {
+        return $this->parentPage;
     }
 
-    public function GetValue(Renderer $renderer)
-    {
+    public function GetCaption() {
+        return $this->column->GetCaption();
+    }
+
+    public function GetValue(Renderer $renderer) {
         $result = '';
         $primaryKeyValues = array ( );
         ExtractPrimaryKeyValues($primaryKeyValues, METHOD_GET);

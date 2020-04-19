@@ -83,7 +83,7 @@ define(['pgui.form_collection', 'pgui.utils', 'jquery.query'], function (FormCol
                 var containers = [];
                 for (var i = 0; i < count; i++) {
                     var $container = createContainer(grid);
-                    grid.container.find('.pg-row-list').prepend($container);
+                    grid.container.find('.pg-row-list:first').prepend($container);
                     containers.push($container);
                 }
 

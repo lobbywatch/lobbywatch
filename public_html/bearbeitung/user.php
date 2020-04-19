@@ -39,6 +39,11 @@
     {
         protected function DoBeforeCreate()
         {
+            $this->SetTitle('User');
+            $this->SetMenuLabel('<span class="settings">User</span>');
+            $this->SetHeader(GetPagesHeader());
+            $this->SetFooter(GetPagesFooter());
+    
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -539,7 +544,7 @@
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_nachname_handler_list');
+            $column->SetFullTextWindowHandlerName('user_nachname_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Nachname des Benutzers');
             $column->SetFixedWidth(null);
@@ -563,7 +568,7 @@
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_email_handler_list');
+            $column->SetFullTextWindowHandlerName('user_email_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('E-Mail-Adresse des Benutzers');
             $column->SetFixedWidth(null);
@@ -630,7 +635,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_notizen_handler_list');
+            $column->SetFullTextWindowHandlerName('user_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
@@ -702,7 +707,7 @@
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_nachname_handler_view');
+            $column->SetFullTextWindowHandlerName('user_nachname_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -720,7 +725,7 @@
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_email_handler_view');
+            $column->SetFullTextWindowHandlerName('user_email_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -769,7 +774,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_notizen_handler_view');
+            $column->SetFullTextWindowHandlerName('user_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1220,7 +1225,7 @@
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_nachname_handler_print');
+            $column->SetFullTextWindowHandlerName('user_nachname_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1238,7 +1243,7 @@
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_email_handler_print');
+            $column->SetFullTextWindowHandlerName('user_email_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1287,7 +1292,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_notizen_handler_print');
+            $column->SetFullTextWindowHandlerName('user_notizen_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -1344,7 +1349,7 @@
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_nachname_handler_export');
+            $column->SetFullTextWindowHandlerName('user_nachname_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1362,7 +1367,7 @@
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_email_handler_export');
+            $column->SetFullTextWindowHandlerName('user_email_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1411,7 +1416,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_notizen_handler_export');
+            $column->SetFullTextWindowHandlerName('user_notizen_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -1468,7 +1473,7 @@
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_nachname_handler_compare');
+            $column->SetFullTextWindowHandlerName('user_nachname_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1486,7 +1491,7 @@
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_email_handler_compare');
+            $column->SetFullTextWindowHandlerName('user_email_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1535,7 +1540,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_notizen_handler_compare');
+            $column->SetFullTextWindowHandlerName('user_notizen_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -1665,7 +1670,7 @@
             //
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_nachname_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'user_nachname_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1675,7 +1680,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_email_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'user_email_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1684,7 +1689,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_notizen_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'user_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1692,7 +1697,7 @@
             //
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_nachname_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'user_nachname_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1702,7 +1707,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_email_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'user_email_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1711,7 +1716,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_notizen_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'user_notizen_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1719,7 +1724,7 @@
             //
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_nachname_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'user_nachname_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1729,7 +1734,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_email_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'user_email_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1738,7 +1743,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_notizen_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'user_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1746,7 +1751,7 @@
             //
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_nachname_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'user_nachname_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1756,7 +1761,7 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_email_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'user_email_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1765,7 +1770,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_notizen_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'user_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -1916,10 +1921,6 @@
     try
     {
         $Page = new userPage("user", "user.php", GetCurrentUserPermissionSetForDataSource("user"), 'UTF-8');
-        $Page->SetTitle('User');
-        $Page->SetMenuLabel('<span class="settings">User</span>');
-        $Page->SetHeader(GetPagesHeader());
-        $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("user"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

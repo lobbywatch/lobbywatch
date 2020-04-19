@@ -12,21 +12,27 @@
     {include file='common/messages.tpl' type='success' dismissable=true messages=$Grid.Messages displayTime=$Grid.MessageDisplayTime}
 
     {if $ShowErrorsOnTop}
-    <div class="row">
-        <div class="col-md-12 form-error-container form-error-container-top"></div>
-    </div>
+        <div class="row">
+            <div class="col-md-12 form-error-container form-error-container-top"></div>
+        </div>
     {/if}
 
-    {include file='custom_templates/forms/form_fields.tpl' isViewForm=false}
+    {if $isMultiEditOperation}
+        {include file='forms/fields_to_be_updated.tpl'}
+    {/if}
+
+    {include file='forms/form_fields.tpl' isViewForm=false}
+
+    {include file='custom_templates/forms/form_footer.tpl'}
 
     {if $flashMessages}
         <input type="hidden" name="flash_messages" value="1" />
     {/if}
 
     {if $ShowErrorsAtBottom}
-    <div class="row">
-        <div class="col-md-12 form-error-container form-error-container-bottom"></div>
-    </div>
+        <div class="row">
+            <div class="col-md-12 form-error-container form-error-container-bottom"></div>
+        </div>
     {/if}
 
     {include file='forms/form_scripts.tpl'}

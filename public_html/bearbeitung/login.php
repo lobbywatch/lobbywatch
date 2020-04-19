@@ -23,11 +23,15 @@ function GetConnectionOptions() {
     return $result;
 }
 
-function OnAfterLogin($userName, $connection, &$canLogin, &$errorMessage) {
+function OnAfterLogin($userName, EngConnection $connection, &$canLogin, &$errorMessage) {
     defaultOnAfterLogin($userName, $connection);
 }
 
-function OnBeforeLogout($userName, $connection) {
+function OnAfterFailedLoginAttempt($userName, EngConnection $connection, &$errorMessage) {
+
+}
+
+function OnBeforeLogout($userName, EngConnection $connection) {
 
 }
 
@@ -43,6 +47,7 @@ $page = new LoginPage(
 
 
 $page->OnAfterLogin->AddListener('OnAfterLogin');
+$page->OnAfterFailedLoginAttempt->AddListener('OnAfterFailedLoginAttempt');
 $page->OnBeforeLogout->AddListener('OnBeforeLogout');
 $page->OnGetCustomTemplate->AddListener('Global_GetCustomTemplateHandler');
 $page->OnCustomHTMLHeader->AddListener('Global_CustomHTMLHeaderHandler');

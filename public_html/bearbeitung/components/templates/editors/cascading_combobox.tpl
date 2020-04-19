@@ -18,7 +18,7 @@
                     data-url="{$LevelEditor->getDataURL()}"
                     {if $smarty.foreach.Editors.last}
                     data-editor-main="true"
-                    {$Validators.InputAttributes}
+                    {$ViewData.Validators.InputAttributes}
                     {/if}
                     value="{$LevelEditor->getValue()}">
                     <option value="">{$Captions->GetMessageString('PleaseSelect')}</option>

@@ -24,6 +24,11 @@ class Chart
     /**
      * @var string
      */
+    private $sql;
+
+    /**
+     * @var string
+     */
     private $title;
 
     /**
@@ -237,4 +242,19 @@ class Chart
 
         return $conn->fetchAll($finalSql);
     }
+
+    /**
+     * @return string
+     */
+    public function getSql() {
+        return $this->sql;
+    }
+
+    /**
+     * @param string $sql
+     */
+    public function setSql($sql) {
+        $this->sql = $sql;
+    }
+
 }
