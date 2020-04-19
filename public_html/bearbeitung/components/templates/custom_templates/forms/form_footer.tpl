@@ -2,6 +2,8 @@
     <div class="row">
         <div class="{if $Grid.FormLayout->isHorizontal()}col-sm-9 col-sm-offset-3{else}col-md-12{/if}">
             <span class="required-mark">*</span> - {$Captions->GetMessageString('RequiredField')}
+            <br><span class="minimal-mark">(*)</span> - {$Captions->GetMessageString('MinimalField')}
+            <br><span class="minimal-mark"><sup>&lt;</sup></span> - {$Captions->GetMessageString('ImportedField')}
         </div>
     </div>
 
