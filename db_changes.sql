@@ -3160,3 +3160,10 @@ SET @disable_triggers = 1;
 delete from zutrittsberechtigung where person_id IN (select id from person where nachname="signor" OR nachname="signora");
 delete from person where nachname="signor" OR nachname="signora";
 SET @disable_triggers = 0;
+
+-- 25.04.2020
+-- Mirgrate bezahlendes Mitglied from verguetung 0 to -1
+
+SELECT count(*) FROM `interessenbindung_jahr` WHERE `beschreibung`='Bezahlendes Mitglied' and `verguetung`=0;
+
+UPDATE `interessenbindung_jahr` SET `verguetung`=-1 WHERE `beschreibung`='Bezahlendes Mitglied' AND `verguetung`=0;

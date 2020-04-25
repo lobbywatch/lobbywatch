@@ -230,7 +230,7 @@ class SetEhrenamtlichSelectedGridState extends AbstractCommitEditSelectedOperati
     $url = !empty($this->text3) && $this->text3 != 'null' && $this->text3 != 'undefined' ? "'{$this->text3}'" : 'NULL';
 
     // Quick and dirty solution to fill another table
-    $sql = "INSERT INTO ${table}_jahr (`${table}_id`, `jahr`, `verguetung`, `beschreibung`, `quelle_url`, `quelle_url_gueltig`, `quelle`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES ($id, $year, '0', $desc, $url, NULL, $src, NULL, '$this->userName', $sql_date, '$this->userName', $sql_date);"; // CURRENT_TIMESTAMP
+    $sql = "INSERT INTO ${table}_jahr (`${table}_id`, `jahr`, `verguetung`, `beschreibung`, `quelle_url`, `quelle_url_gueltig`, `quelle`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES ($id, $year, 0, $desc, $url, NULL, $src, NULL, '$this->userName', $sql_date, '$this->userName', $sql_date);"; // CURRENT_TIMESTAMP
 //     df($sql, "SQL");
 
     $eng_con = getDBConnection();
@@ -251,7 +251,7 @@ class SetBezahltSelectedGridState extends AbstractCommitEditSelectedOperationVal
     $url = !empty($this->text3) && $this->text3 != 'null' && $this->text3 != 'undefined' ? "'{$this->text3}'" : 'NULL';
 
     // Quick and dirty solution to fill another table
-    $sql = "INSERT INTO ${table}_jahr (`${table}_id`, `jahr`, `verguetung`, `beschreibung`, `quelle_url`, `quelle_url_gueltig`, `quelle`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES ($id, $year, '1', $desc, $url, NULL, $src, NULL, '$this->userName', $sql_date, '$this->userName', $sql_date);"; // CURRENT_TIMESTAMP
+    $sql = "INSERT INTO ${table}_jahr (`${table}_id`, `jahr`, `verguetung`, `beschreibung`, `quelle_url`, `quelle_url_gueltig`, `quelle`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES ($id, $year, 1, $desc, $url, NULL, $src, NULL, '$this->userName', $sql_date, '$this->userName', $sql_date);"; // CURRENT_TIMESTAMP
 //     df($sql, "SQL");
 
     $eng_con = getDBConnection();
@@ -271,7 +271,7 @@ class SetZahlendSelectedGridState extends AbstractCommitEditSelectedOperationVal
     $url = !empty($this->text3) && $this->text3 != 'null' && $this->text3 != 'undefined' ? "'{$this->text3}'" : 'NULL';
 
     // Quick and dirty solution to fill another table
-    $sql = "INSERT INTO ${table}_jahr (`${table}_id`, `jahr`, `verguetung`, `beschreibung`, `quelle_url`, `quelle_url_gueltig`, `quelle`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES ($id, $year, '0', $desc, $url, NULL, $src, NULL, '$this->userName', $sql_date, '$this->userName', $sql_date);"; // CURRENT_TIMESTAMP
+    $sql = "INSERT INTO ${table}_jahr (`${table}_id`, `jahr`, `verguetung`, `beschreibung`, `quelle_url`, `quelle_url_gueltig`, `quelle`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES ($id, $year, -1, $desc, $url, NULL, $src, NULL, '$this->userName', $sql_date, '$this->userName', $sql_date);"; // CURRENT_TIMESTAMP
 //     df($sql, "SQL");
 
     $eng_con = getDBConnection();

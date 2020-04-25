@@ -12182,6 +12182,10 @@ thead .details .link-icon {
   background-image: url("../../../img/icons/fugue/money--arrow.png");
   background-position: 0;
 }
+.pg-icon-set-bezahlt-selected {
+  background-image: url("../../../img/icons/fugue/money-bag-dollar.png");
+  background-position: 0;
+}
 .pg-icon-set-imratbis-selected {
   background-image: url("../../../img/icons/fugue/calendar-day.png");
   background-position: 0;

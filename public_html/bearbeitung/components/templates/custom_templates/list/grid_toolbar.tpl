@@ -153,8 +153,21 @@
                                 <li><a href="#" class="js-action" data-type="delete" data-url="{$Page->getLink()}">{$Captions->GetMessageString('DeleteSelected')}</a></li>
                             {/if}
 
-                            {if $DataGrid.ActionsPanel.EhrenamtlichSelectedButton}
+                            {if $DataGrid.ActionsPanel.ZahlendSelectedButton}
                                 {if $DataGrid.AllowDeleteSelected}
+                                    <li class="divider"></li>
+                                {/if}
+
+                                <li>
+                                    <a href="#" class="js-action" data-type="set-zahlend-selected" data-url="{$Page->getLink()}">
+                                        <i class="pg-icon-set-zahlend-selected"></i>
+                                        Vergütung bezahlendes Mitglied (-1) setzen{*$Captions->GetMessageString('DeleteSelected')*}
+                                    </a>
+                                </li>
+                            {/if}
+
+                            {if $DataGrid.ActionsPanel.EhrenamtlichSelectedButton}
+                                {if $DataGrid.AllowDeleteSelected && !$DataGrid.ActionsPanel.ZahlendSelectedButton}
                                     <li class="divider"></li>
                                 {/if}
 
@@ -166,18 +179,6 @@
                                 </li>
                             {/if}
 
-                            {if $DataGrid.ActionsPanel.ZahlendSelectedButton}
-                                {if $DataGrid.AllowDeleteSelected && !$DataGrid.ActionsPanel.EhrenamtlichSelectedButton}
-                                    <li class="divider"></li>
-                                {/if}
-
-                                <li>
-                                    <a href="#" class="js-action" data-type="set-zahlend-selected" data-url="{$Page->getLink()}">
-                                        <i class="pg-icon-set-zahlend-selected"></i>
-                                        Bezahlendes Mitglied (0) setzen{*$Captions->GetMessageString('DeleteSelected')*}
-                                    </a>
-                                </li>
-                            {/if}
 
                             {if $DataGrid.ActionsPanel.BezahltSelectedButton}
                                 {if $DataGrid.AllowDeleteSelected && !($DataGrid.ActionsPanel.EhrenamtlichSelectedButton || $DataGrid.ActionsPanel.ZahlendSelectedButton)}
@@ -186,7 +187,7 @@
                                 <li>
                                     <a href="#" class="js-action" data-type="set-bezahlt-selected" data-url="{$Page->getLink()}">
                                         <i class="pg-icon-set-bezahlt-selected"></i>
-                                        Bezahlt (1) setzen{*$Captions->GetMessageString('DeleteSelected')*}
+                                        Vergütung bezahlt (1) setzen{*$Captions->GetMessageString('DeleteSelected')*}
                                     </a>
                                 </li>
                             {/if}
