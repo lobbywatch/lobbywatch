@@ -917,38 +917,8 @@ function _lobbywatch_data_table_interessengruppe_aggregated_id($id, $json = true
       $sql .= ' | ' . $organisationen['sql'];
       // $success = $success && $organisationen['success'];
 
-      $org_conditions = array_map(
-        function($org) { return "organisation_parlamentarier_beide_indirekt.connector_organisation_id = " . $org['id']; },
-        $organisationen['data']
-      );
-
-      $connections = _lobbywatch_data_table_flat_list(
-        'organisation_parlamentarier_beide_indirekt',
-        "(" . implode(" OR ", $org_conditions) . ")",
-        false
-      );
-
-      $aggregated['connections'] = $connections['data'];
-      $message .= ' | ' . $connections['message'];
-      $sql .= ' | ' . $connections['sql'];
-      // $success = $success && $connections['success'];
-
-      $parlamentarier_conditions = array_map(
-        function($con) { return "parlamentarier.id = " . $con['parlamentarier_id']; },
-        $connections['data']
-      );
-
-      $parlamentarier = _lobbywatch_data_table_flat_list(
-        'parlamentarier',
-        "(" . implode(" OR ", $parlamentarier_conditions) . ")",
-        false
-      );
-
-      $aggregated['parlamentarier'] = $parlamentarier['data'];
-      $message .= ' | ' . $parlamentarier['message'];
-      $sql .= ' | ' . $parlamentarier['sql'];
-      // $success = $success && $parlamentarier['success'];
-
+      $aggregated_parlamentarier = _lobbywatch_data_get_parlamentarier_from_organisation($organisationen['data']);
+      $aggregated = array_merge($aggregated, $aggregated_parlamentarier);
 
       $zwischen_organisationen_conditions = array_map(
         function($con) { return "organisation.id = " . $con['zwischen_organisation_id']; },
@@ -1019,6 +989,47 @@ function _lobbywatch_data_table_interessengruppe_aggregated_id($id, $json = true
   }
 }
 
+/**
+ * @param $orgs array of organisation having 'id'
+ */
+function _lobbywatch_data_get_parlamentarier_from_organisation($orgs) {
+
+  $aggregated = [];
+
+  $org_conditions = array_map(
+    function($org) { return "organisation_parlamentarier_beide_indirekt.connector_organisation_id = " . $org['id']; },
+    $orgs
+  );
+
+  $connections = _lobbywatch_data_table_flat_list(
+    'organisation_parlamentarier_beide_indirekt',
+    "(" . implode(" OR ", $org_conditions) . ")",
+    false
+  );
+
+  $aggregated['connections'] = $connections['data'];
+  $message .= ' | ' . $connections['message'];
+  $sql .= ' | ' . $connections['sql'];
+  // $success = $success && $connections['success'];
+
+  $parlamentarier_conditions = array_map(
+    function($con) { return "parlamentarier.id = " . $con['parlamentarier_id']; },
+    $connections['data']
+  );
+
+  $parlamentarier = _lobbywatch_data_table_flat_list(
+    'parlamentarier',
+    "(" . implode(" OR ", $parlamentarier_conditions) . ")",
+    false
+  );
+
+  $aggregated['parlamentarier'] = $parlamentarier['data'];
+  $message .= ' | ' . $parlamentarier['message'];
+  $sql .= ' | ' . $parlamentarier['sql'];
+
+  return $aggregated;
+}
+
 function _lobbywatch_data_table_branche_aggregated_id($id, $json = true) {
   global $show_sql;
   $success = true;
@@ -1038,6 +1049,7 @@ function _lobbywatch_data_table_branche_aggregated_id($id, $json = true) {
 
     // load aggregated data only if main object is there
     if ($success) {
+      // interessengruppe
       $interessengruppe = _lobbywatch_data_table_flat_list(
         'interessengruppe',
         "interessengruppe.branche_id = $id",
@@ -1060,6 +1072,7 @@ function _lobbywatch_data_table_branche_aggregated_id($id, $json = true) {
 //         $success = $success && $interessengruppe_aggr['success'];
 //       }
 //
+      // organisations
       $organisationen = _lobbywatch_data_table_flat_list(
         'organisation',
         "organisation.interessengruppe_branche_id = $id OR organisation.interessengruppe2_branche_id = $id OR organisation.interessengruppe3_branche_id = $id",
@@ -1070,6 +1083,10 @@ function _lobbywatch_data_table_branche_aggregated_id($id, $json = true) {
       $message .= ' | ' . $organisationen['message'];
       $sql .= ' | ' . $organisationen['sql'];
       $success = $success && $organisationen['success'];
+
+      // parlamentarier
+      $aggregated_parlamentarier = _lobbywatch_data_get_parlamentarier_from_organisation($organisationen['data']);
+      $aggregated = array_merge($aggregated, $aggregated_parlamentarier);
     }
 
     $count = $branche['count'];
