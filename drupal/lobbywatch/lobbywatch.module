@@ -102,9 +102,9 @@ class Constants {
    * table name => website alias
    */
   // public static $entities_web = array('branche' => 'branche', 'interessengruppe' => 'lobbygruppe', 'kommission' => 'kommission', 'organisation' => 'organisation', 'partei' => 'partei',);
-  public static $entities_web = array('interessengruppe' => 'lobbygruppe', 'organisation' => 'organisation',);
+  public static $entities_web = array('branche' => 'branche', 'interessengruppe' => 'lobbygruppe', 'organisation' => 'organisation',);
 
-  public static $entities_web_old = array('branche' => 'branche', 'kommission' => 'kommission', 'partei' => 'partei',);
+  public static $entities_web_old = array('kommission' => 'kommission', 'partei' => 'partei',);
 
   /** Parlamentarier, Zutrittsberechtigung
    * table name => website alias */
