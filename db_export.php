@@ -1785,7 +1785,7 @@ Parameters:
 -x                  Export XML using attributes to PATH
 -X                  Export XML only as tags to PATH
 -s                  Export SQL to PATH
--a                  Export csv, csv_neo4j, json, jsonl, xml, sql to PATH
+-a                  Export all formats to PATH
 -e=LIST             Type of data to export, add this type of data -e=hist, -e=intern, -e=unpubl, -e=hist+unpubl+intern (default: filter at most)
 --slow[=NUMBER]     Include slow exports, level 0 to 3, 0 no slow exports, 3 including slowest exports (default: 0, default of switch: 3)
 -p=PATH             Export path (default: export/)
