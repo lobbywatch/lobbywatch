@@ -247,7 +247,7 @@ if $publish; then
     cp $archive $PUBLIC_EXPORTS_DIR
 fi
 
-if !$basic_export; then
+if ! $basic_export; then
 
   format=csv
   type=neo4j
