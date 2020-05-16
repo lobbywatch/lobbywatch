@@ -4,6 +4,7 @@ SCRIPT_DIR=$(dirname `realpath "$0"`)
 
 test_param=""
 LOG="$SCRIPT_DIR/run_update_ws_parlament.sh.log"
+DB="lobbywatch"
 
 while test $# -gt 0; do
     case $1 in
@@ -19,6 +20,7 @@ while test $# -gt 0; do
         ;;
         -t|--test)
             test_param="-t"
+            DB="lobbywatchtest"
             shift
         ;;
         -v|--verbose)
@@ -39,7 +41,7 @@ cd $SCRIPT_DIR
 echo -e "\nCron run" >> $LOG
 date -Iseconds >> $LOG
 . ~/.keychain/$(hostname)-sh
-./run_update_ws_parlament.sh -a -v -d -f -G -l=lobbywatch $test_param >> $LOG
+./run_update_ws_parlament.sh -a -v -d -f -G -l=$DB $test_param >> $LOG
 echo "Cron end" >> $LOG
 date -Iseconds >> $LOG
 
