@@ -675,7 +675,7 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
       $show_data = true;
 
       $markup .= '<p><strong>' . lt("Siehe") . ' ' . l(lt('visualisierte Darstellung'), "https://lobbywatch.ch/$lang/daten/parlamentarier/$id/$url_name") . '</strong></p>';
-      
+
       if (!$active) {
         $markup .= /*i18n t*/ '<p class="message">' . lt('@name ist <strong>nicht mehr im Parlament</strong>.', array('@name' => $record['name'], '@bis' => $record['im_rat_bis_formatted'])) . '</p>';
         $show_data = false;
@@ -2278,4 +2278,25 @@ function _lobbywatch_get_workflow_state_SELECT_SQL($table, $only_if_admin = true
     $sql .= "$table.updated_visa, $table.created_visa, $table.eingabe_abgeschlossen_datum, $table.eingabe_abgeschlossen_datum_unix, $table.eingabe_abgeschlossen_visa, $table.freigabe_visa, $table.kontrolliert_datum, $table.kontrolliert_datum_unix, $table.kontrolliert_visa" . ($trailing_comma ? ', ' : ' ');
   }
   return $sql;
+}
+
+function _lobbywatch_non_public_exports_page() {
+  global $settings;
+  global $base_url;
+  $secret_dir = trim(file_get_contents($settings['file_secret_dir']));
+  $base_path = variable_get('file_public_path', conf_path() . '/files');
+  $secret_exports_dir = "$base_path/$secret_dir/non-public-exports";
+
+  $markup = "<p>Link to non public exports. The link changes each month.</p>";
+  $markup .= "<p><a href='/$secret_exports_dir'>$base_url/$secret_exports_dir</a></p>";
+
+  $build = array();
+  $build['lobbywatch_interessengruppe'] = array(
+    '#weight' => -5,
+    '#prefix' => '<div class="lobbywatch">',
+    '#markup' => $markup,
+    '#suffix' => '</div>',
+    );
+
+    return $build;
 }

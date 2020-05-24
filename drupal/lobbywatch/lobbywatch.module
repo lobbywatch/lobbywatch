@@ -351,6 +351,16 @@ function lobbywatch_menu() {
       'weight' => -20,
   );
 
+    $items['export/non-public'] = array(
+      'title' => 'Non Public Exports',
+      'title callback' => 'lt',
+      'page callback' => '_lobbywatch_non_public_exports_page',
+      'page arguments' => array('0'),
+      'access arguments' => array('access lobbywatch advanced content'),
+      'type' => MENU_CALLBACK,
+      'file' => 'lobbywatch.daten.inc',
+    );
+
   return $items;
 }
 

@@ -3,6 +3,8 @@
 # Call for production
 # ./run_db_export.sh -v -t -d=lobbywat_lobbywatch --user-prefix=reader_ -p
 
+# TODO update cron
+
 # Include common functions
 . common.sh
 
@@ -24,6 +26,9 @@ DATAMODEL="lobbywatch_datenmodell_simplified.pdf"
 DOCS="$MERKBLATT $DATAMODEL"
 DOCU=docu
 DOCU_MD="md"
+FILE_SECRET_DIR=".exports_secret_dir"
+FILE_SECRET_PUBLISH_DIR=".exports_secret_publish_dir"
+SECRET_DIR_PATTERN="__secret_dir__"
 
 echo -e "Lobbywatch DB Export" >$EXPORT_LOG
 echo -e "====================" >>$EXPORT_LOG
@@ -41,6 +46,8 @@ all_data='--slow'
 export_formats='-c -s -m -g -j -o -l --arangodb -x -t'
 basic_export=false
 refresh=false
+publish_to_secret_dir=false
+secret_dir=''
 
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 while test $# -gt 0; do
@@ -54,7 +61,8 @@ while test $# -gt 0; do
     echo "-e LIST                          Type of data to export, add this type of data -e hist, -e intern, -e unpubl, -e hist+unpubl+intern (default: filter at most)"
     echo "-t, --test                       Test mode: print DB views comments JSON (implies -n)"
     echo "-n, --limit                      Limit number of records"
-    echo "-p[=DIR], --publish[=DIR]        Publish exports to public folder (default: env LW_PUBLIC_EXPORTS_DIR='$LW_PUBLIC_EXPORTS_DIR'"
+    echo "-p[=DIR], --publish[=DIR]        Publish exports to public folder, $SECRET_DIR_PATTERN is substituted by the generated secret dir (default: env LW_PUBLIC_EXPORTS_DIR='$LW_PUBLIC_EXPORTS_DIR'"
+    echo "-s KEY                           Publish to a secret directory using KEY"
     echo "-r, --refresh                    Refresh views"
     echo "-b, --basic                      Export only basic formats (CSV, SQL, JSON, GraphML)"
     echo "-d=SCHEMA                        DB schema (default SCHEMA: lobbywatchtest)"
@@ -110,6 +118,15 @@ while test $# -gt 0; do
     shift
     shift
     ;;
+  -s)
+    publish_to_secret_dir=true
+    key=$2
+    # %Y: 4 digit year, %m: 2 digit month, %S: 2 digit seconds, %M: 2 digits minutes
+    sha_input="${key}_$(date +%Y-%m)"
+    secret_dir=$($PHP -r "print(rtrim(strtr(base64_encode(sha1('$sha_input', true)), '+/', '-_'), '='));")
+    shift
+    shift
+    ;;
   -v | --verbose)
     verbose=true
     if [[ $2 =~ ^-?[0-9]+$ ]]; then
@@ -143,6 +160,24 @@ if [[ "$publish_dir" == "" ]]; then
   else
     publish_dir=$LW_PUBLIC_EXPORTS_DIR
   fi
+fi
+
+base_secret_dir=${publish_dir%$SECRET_DIR_PATTERN*}
+publish_dir=${publish_dir/$SECRET_DIR_PATTERN/$secret_dir}
+
+if $publish && $publish_to_secret_dir; then
+  [ -f $FILE_SECRET_DIR ] && old_secret_dir=$(cat $FILE_SECRET_DIR) || old_secret_dir=''
+  [ -f $FILE_SECRET_PUBLISH_DIR ] && old_secret_export_dir=$(cat $FILE_SECRET_PUBLISH_DIR) || old_secret_export_dir=''
+
+  if [[ "$old_secret_dir" == "" ]]; then
+    echo "'$FILE_SECRET_DIR' does not exist"
+    abort
+  elif [[ "$old_secret_export_dir" != "$publish_dir" ]]; then
+    echo "Secret dir changed: mv $base_secret_dir$old_secret_dir $base_secret_dir$secret_dir"
+    mv "$base_secret_dir$old_secret_dir" "$base_secret_dir$secret_dir"
+  fi
+  echo "$secret_dir" >$FILE_SECRET_DIR
+  echo "$publish_dir" >$FILE_SECRET_PUBLISH_DIR
 fi
 
 export_type=''
