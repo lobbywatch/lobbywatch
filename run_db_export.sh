@@ -134,10 +134,9 @@ checkLocalMySQLRunning
 
 START_OVERALL=$(date +%s)
 
-if $refresh ; then
+if $refresh; then
   echo -e "$(date '+%F %T') Refresh DB..."
-  # TODO set local DB
-  ./deploy.sh -r -q
+  ./run_local_db_script.sh $db_schema db_views.sql
 fi
 
 if [[ "$LW_PUBLIC_EXPORTS_DIR" == "" ]]; then
