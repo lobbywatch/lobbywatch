@@ -23,22 +23,22 @@ SET SESSION sql_mode='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_
 
 -- PROCEDURES & FUNCTIONS
 
--- Not callable from triggers, dynamic SQL is not allowed in MySQL triggers
--- Run: CALL insertLog('branche', NEW.id);
-DROP PROCEDURE IF EXISTS addLog;
-delimiter //
-CREATE PROCEDURE addLog(table_name VARCHAR(100), id INT) MODIFIES SQL DATA
-COMMENT 'Insert a log record'
-BEGIN
-  DECLARE schema VARCHAR(50);
-  DECLARE sql VARCHAR(1000);
-  SELECT DATABASE() INTO schema;
-  SET @sql = CONCAT('INSERT INTO `', table_name, '_log` SELECT ', (SELECT GROUP_CONCAT(COLUMN_NAME) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = table_name AND TABLE_SCHEMA = @schema AND EXTRA NOT LIKE '%VIRTUAL%'), ' FROM `', table_name, '` WHERE id = ', id, ';');
-  PREPARE stmt FROM @sql;
-  EXECUTE stmt;
-END
-//
-delimiter ;
+-- -- Not callable from triggers, dynamic SQL is not allowed in MySQL triggers
+-- -- Run: CALL insertLog('branche', NEW.id);
+-- DROP PROCEDURE IF EXISTS addLog;
+-- delimiter //
+-- CREATE PROCEDURE addLog(table_name VARCHAR(100), id INT) MODIFIES SQL DATA
+-- COMMENT 'Insert a log record'
+-- BEGIN
+--   DECLARE schema VARCHAR(50);
+--   DECLARE sql VARCHAR(1000);
+--   SELECT DATABASE() INTO schema;
+--   SET @sql = CONCAT('INSERT INTO `', table_name, '_log` SELECT ', (SELECT GROUP_CONCAT(COLUMN_NAME) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = table_name AND TABLE_SCHEMA = @schema AND EXTRA NOT LIKE '%VIRTUAL%'), ' FROM `', table_name, '` WHERE id = ', id, ';');
+--   PREPARE stmt FROM @sql;
+--   EXECUTE stmt;
+-- END
+-- //
+-- delimiter ;
 
 
 -- Run: CALL takeSnapshot('roland', 'Initial');
