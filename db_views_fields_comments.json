@@ -34,6 +34,9 @@
   "v_mandat_medium_raw": {
     "__alias": "v_mandat_raw"
   },
+  "v_organisation_normalized_interessengruppe_raw": {
+    "__alias": "v_organisation_medium_raw"
+  },
   "v_organisation_medium_raw": {
     "branche_ALT": "Deprecated. Veraltetes Feld. Nicht mehr verwenden.",
     "branche_de_ALT": "Deprecated. Veraltetes Feld. Nicht mehr verwenden.",
