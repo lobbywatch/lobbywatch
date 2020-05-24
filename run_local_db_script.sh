@@ -21,10 +21,9 @@
 
 # deploy.sh -l=lobbywatchtest -s [file] is similar
 
-# Abort on errors
-set -e
-
 . common.sh
+
+enable_fail_onerror
 
 # Set defaut DB if no parameter given
 if [[ $1 ]]; then
@@ -62,5 +61,7 @@ checkLocalMySQLRunning
 
 # mode = cron | interactive | cronverbose
 if ! ./run_db_script.sh $db $username $script $mode ; then
-  exit 1
+  abort
 fi
+
+quit
