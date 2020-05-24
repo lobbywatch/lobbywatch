@@ -3,7 +3,7 @@
 # Call for production
 # ./run_db_export.sh -v -t -d=lobbywat_lobbywatch --user-prefix=reader_ -p
 
-# TODO update cron
+# TODO fix include_once version.php Problem
 
 # Include common functions
 . common.sh
@@ -541,6 +541,9 @@ if $publish; then
   echo -e "\nPublished exports to $publish_dir:"
   cp $EXPORT_LOG $publish_dir
   $LS $publish_dir
+
+  # Clean up histoised files as they consume a lot of memory
+  rm $EXPORT/202*hist.*.zip
 fi
 
 quit
