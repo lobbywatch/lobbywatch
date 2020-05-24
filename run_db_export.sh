@@ -51,7 +51,7 @@ while test $# -gt 0; do
     echo
     echo "Options:"
     echo "-e LIST                          Type of data to export, add this type of data -e hist, -e intern, -e unpubl, -e hist+unpubl+intern (default: filter at most)"
-    echo "-t, --test                       Test mode, currently the same as -n (implies -n)"
+    echo "-t, --test                       Test mode: print DB views comments JSON (implies -n)"
     echo "-n, --limit                      Limit number of records"
     echo "-p, --publish                    Publish exports to public folder"
     echo "-r, --refresh                    Refresh views"
@@ -89,7 +89,12 @@ while test $# -gt 0; do
     publish=true
     shift
     ;;
-  -n | --limit | -t | --test)
+  -t | --test)
+    test_parameter="-n --comments"
+    all_data=''
+    shift
+    ;;
+  -n | --limit)
     test_parameter="-n"
     all_data=''
     shift
