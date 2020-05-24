@@ -74,3 +74,4 @@ xdebug conditional breakpoint
 docs/lobbywatch_daten_merkblatt_v*.pdf
 exports/
 *.code-workspace
+lobbywatch_cleaned.sql

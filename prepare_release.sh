@@ -22,7 +22,7 @@ cat lobbywatch.sql \
 | perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' \
 | perl -p -e's/DEFINER=`.*?`@`localhost` //ig' \
 | perl -p -e's/^USE /SET collation_connection = '\''utf8mb4_unicode_ci'\'';\nUSE /ig' \
-> ../data/deploy_lobbywatch.sql;
+> lobbywatch_cleaned.sql
 
 cp -u lobbywatch_datenmodell.pdf public_html/
 cp -u lobbywatch_datenmodell_1page.pdf public_html/
