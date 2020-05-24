@@ -3,17 +3,6 @@ declare(strict_types=1);
 
 // Run: php -d memory_limit=256M -f db_export.php -- -c -f -v
 
-/*
-# ./deploy.sh -b -B -p
-# ./run_local_db_script.sh lobbywatchtest prod_bak/`cat prod_bak/last_dbdump_data.txt`
-
-./db_prod_to_local.sh lobbywatchtest
-export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php -- -a --ssl -v1 -s | tee $SYNC_FILE; less $SYNC_FILE
-./run_local_db_script.sh lobbywatchtest $SYNC_FILE
-./deploy.sh -r -s $SYNC_FILE
-./deploy.sh -p -r -s $SYNC_FILE
-*/
-
 // TODO optimize cartesian with freigabe
 // TODO explain, replace views with original tables, remove select fields
 // TODO refactor extract const from code, make const, use keyword const
@@ -56,11 +45,20 @@ ini_set('memory_limit','512M');
 
 global $intern_fields;
 
-$intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix', 'created_visa', 'updated_date', 'updated_date_unix', 'updated_visa', 'autorisiert_datum',  'autorisiert_datum_unix', 'autorisierung_verschickt_visa', 'autorisierung_verschickt_datum', 'eingabe_abgeschlossen_datum', 'kontrolliert_datum', 'autorisierung_verschickt_datum_unix', 'eingabe_abgeschlossen_datum_unix', 'kontrolliert_datum_unix', 'autorisiert_visa', 'eingabe_abgeschlossen_visa', 'kontrolliert_visa', 'symbol_abs', 'photo', 'ALT_kommission', 'ALT_parlam_verbindung', 'email', 'telephon_1', 'telephon_2', 'adresse_strasse', 'adresse_zusatz', 'anzahl_interessenbindungen', 'anzahl_hauptberufliche_interessenbindungen', 'anzahl_nicht_hauptberufliche_interessenbindungen', 'anzahl_abgelaufene_interessenbindungen', 'anzahl_interessenbindungen_alle', 'anzahl_erfasste_verguetungen', 'anzahl_erfasste_hauptberufliche_verguetungen', 'anzahl_erfasste_nicht_hauptberufliche_verguetungen', 'verguetungstransparenz_berechnet', 'verguetungstransparenz_berechnet_nicht_beruflich', 'verguetungstransparenz_berechnet_alle', 'parlamentarier_lobbyfaktor', 'ALT_branche_id'];
+$intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix', 'created_visa', 'updated_date', 'updated_date_unix', 'updated_visa', 'autorisiert_datum',  'autorisiert_datum_unix', 'autorisierung_verschickt_visa', 'autorisierung_verschickt_datum', 'eingabe_abgeschlossen_datum', 'kontrolliert_datum', 'autorisierung_verschickt_datum_unix', 'eingabe_abgeschlossen_datum_unix', 'kontrolliert_datum_unix', 'autorisiert_visa', 'eingabe_abgeschlossen_visa', 'kontrolliert_visa',
+'eingabe_abgeschlossen_datum_unix_person', 'kontrolliert_datum_unix_person', 'created_date_unix_person', 'updated_date_unix_person',
+'symbol_abs', 'photo', 'ALT_kommission', 'ALT_parlam_verbindung', 'email', 'telephon_1', 'telephon_2', 'adresse_strasse', 'adresse_zusatz', 'anzahl_interessenbindungen', 'anzahl_hauptberufliche_interessenbindungen', 'anzahl_nicht_hauptberufliche_interessenbindungen', 'anzahl_abgelaufene_interessenbindungen', 'anzahl_interessenbindungen_alle', 'anzahl_erfasste_verguetungen', 'anzahl_erfasste_hauptberufliche_verguetungen', 'anzahl_erfasste_nicht_hauptberufliche_verguetungen', 'verguetungstransparenz_berechnet', 'verguetungstransparenz_berechnet_nicht_beruflich', 'verguetungstransparenz_berechnet_alle', 'parlamentarier_lobbyfaktor',
+'lobbyfaktor', 'lobbyfaktor_max', 'lobbyfaktor_percent_max',
+'ALT_branche_id', 'branche_ALT', 'branche_de_ALT', 'branche_fr_ALT',];
+
 
 const EOL = "\n";
 
 const DOCU = "docu";
+
+const DB_VIEWS_COMMENTS_FILE = "db_views_fields_comments.json";
+global $db_views_comments;
+
 /**
  * Export tables/views configuration array.
  *
@@ -125,7 +123,7 @@ $aggregated_tables = [
       ],
     ],
     // TODO interessengruppen flach
-    'zutrittsberechtigungen' => ['view' => 'v_zutrittsberechtigung_raw', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
+    'zutrittsberechtigungen' => ['view' => 'v_zutrittsberechtigung_raw', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => ['anzahl_mandat_tief', 'anzahl_mandat_tief', 'anzahl_mandat_mittel', 'anzahl_mandat_hoch', 'lobbyfaktor', 'lobbyfaktor_max', 'lobbyfaktor_percent_max', 'anzahl_mandat_tief_max', 'anzahl_mandat_mittel_max', 'anzahl_mandat_hoch_max'],
     'aggregated_tables' => [
       'mandate' => ['view' => 'v_mandat_medium_raw', 'parent_id' => "person_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
         'aggregated_tables' => [
@@ -170,7 +168,7 @@ $aggregated_tables = [
       ],
     ],
     // TODO interessengruppen flach
-    'zutrittsberechtigungen' => ['view' => 'v_zutrittsberechtigung_raw', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
+    'zutrittsberechtigungen' => ['view' => 'v_zutrittsberechtigung_raw', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => ['anzahl_mandat_tief', 'anzahl_mandat_tief', 'anzahl_mandat_mittel', 'anzahl_mandat_hoch', 'lobbyfaktor', 'lobbyfaktor_max', 'lobbyfaktor_percent_max', 'anzahl_mandat_tief_max', 'anzahl_mandat_mittel_max', 'anzahl_mandat_hoch_max'],
       'aggregated_tables' => [
         'mandate' => ['view' => 'v_mandat_medium_raw', 'parent_id' => "person_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
           'aggregated_tables' => [
@@ -1670,7 +1668,21 @@ class MarkdownExporter extends AggregatedTextExporter {
 
 }
 
-main();
+function read_db_views_comments() {
+  global $db_views_comments;
+  try {
+    $db_views_comments = json_decode(file_get_contents(DB_VIEWS_COMMENTS_FILE), true, 512, JSON_THROW_ON_ERROR);
+  } catch (JsonException $e) {
+    print(sprintf("%s in JSON file\n", $e->getMessage()));
+    print($e->getTraceAsString());
+    exit(1);
+  }
+}
+
+function print_db_views_comments_json() {
+  global $db_views_comments;
+  print(json_encode($db_views_comments, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR) . "\n");
+}
 
 function main() {
   global $verbose;
@@ -1681,7 +1693,7 @@ function main() {
 //     var_dump($argv); //the arguments passed
   // :  -> mandatory parameter
   // :: -> optional parameter
-  $options = getopt('hv::n::cjaxXgmosltp:e::1d:', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:', 'arangodb', 'slow::']);
+  $options = getopt('hv::n::cjaxXgmosltp:e::1d:', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:', 'arangodb', 'slow::', 'comments']);
 
 //    var_dump($options);
 
@@ -1797,6 +1809,7 @@ Parameters:
 -d=SCHEMA           DB schema (default SCHEMA: lobbywatchtest)
 --user-prefix=USER  Prefix for db user in settings.php (default: reader_)
 --db=DB             DB name for settings.php
+--comments          Print JSON with comments for all fields, adds new uncomment fields
 -v[=LEVEL]          Verbose, optional level, 1 = default
 -h, --help          This help
 ");
@@ -1838,8 +1851,9 @@ Parameters:
   }
 
 
-
   $start_export = microtime(true);
+
+  read_db_views_comments();
 
   if (isset($options['c'])) {
     export(new CsvExporter($sep, $qe), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
@@ -1903,6 +1917,10 @@ Parameters:
     export(new YamlExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
     export(new MarkdownExporter(), $schema, $path, $filter, $eol, 'one_file', $records_limit, $db);
     export(new MarkdownExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
+  }
+
+  if (isset($options['comments'])) {
+    print_db_views_comments_json();
   }
 
   print(getMemory() . "\n");
@@ -2272,6 +2290,7 @@ function export_tables(IExporter $exporter, array $tables, int $parent_id = null
   global $verbose;
   global $intern_fields;
   global $transaction_date;
+  global $db_views_comments;
 
   $level_indent = str_repeat("\t", $level);
 
@@ -2370,7 +2389,16 @@ function export_tables(IExporter $exporter, array $tables, int $parent_id = null
           $skip_rows_for_empty_field[] = $skip_row_for_empty_field;
           if ($verbose > 4) print("$level_indent$header_field\n");
 
-          $docu_col = getDocuCol($level, $col, $col_comment, $data_type, $table, $table_meta);
+          $db_view = $db_views_comments[$table_name]['__alias'] ?? $table_name;
+          $db_view_comment = $db_views_comments[$db_view][$col] ?? $db_views_comments['*'][$col] ?? '';
+          $col_comment_enhanced = $db_view_comment ? ($col_comment ? $col_comment . ' ' . $db_view_comment : $db_view_comment) : $col_comment;
+
+          if (!$col_comment_enhanced) {
+            // print("********* $db_view.$col ($table_name): '$db_view_comment', '$col_comment_enhanced'\n");
+            $db_views_comments[$db_view][$col] = '';
+          }
+
+          $docu_col = getDocuCol($level, $col, $col_comment_enhanced, $data_type, $table, $table_meta);
           if (!empty($docu_col)) {
             $docu_cols[] = $docu_col;
           }
@@ -2379,7 +2407,6 @@ function export_tables(IExporter $exporter, array $tables, int $parent_id = null
         // Remove cols from create table statement
         if ($verbose > 3) print("${level_indent}Clean create: $col\n");
         $table_create_lines = array_filter($table_create_lines, function ($line) use ($col) {return strpos($line, "`$col`") === false;});
-        // print_r($table_create_lines);
       }
     }
 
@@ -2783,7 +2810,7 @@ function getDocuFileHeader(IExporter $exporter, array $table_meta, string $trans
     $docu[] = "";
     $docu[] = "Data are licensed as CC BY-SA";
   } else {
-    $docu[] = "Dieser Datensatz dürfen ohne Einwilligung des Lobbywatch-Vorstandes nicht veröffentlicht oder weitergegeben werden.";
+    $docu[] = "Diese Datensätze dürfen ohne Einwilligung von Lobbywatch nicht veröffentlicht oder weitergegeben werden.";
   }
   $docu[] = "";
 
@@ -2798,3 +2825,5 @@ function transform_sachbereiche($field, $format) {
   $str = str_replace("\r", '', str_replace("\n", '', $field));
   return explode(';', $str);
 }
+
+main();

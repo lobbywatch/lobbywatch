@@ -1,0 +1,112 @@
+{
+  "*": {
+    "name": "Name des Datensatzes. In der Regel ist der deutsche Name enthalten.",
+    "name_de": "Deutscher Name des Datensatzes.",
+    "name_fr": "Französicher Name des Datensatzes.",
+    "name_it": "Italienischer Name des Datensatzes.",
+    "anzeige_name": "Der Anzeigename ist eine Kombination anderer Namensfelder. Dieser Name enthält die relevanten Bestandteile zur Anzeige. In der Regel ist der deutsche Name enthalten.",
+    "anzeige_name_de": "Deutscher Anzeigename. Er ist eine Kombination anderer Namensfelder. Dieser Name enthält die relevanten Bestandteile zur Anzeige.",
+    "anzeige_name_fr": "Französischer Anzeigename. Er ist eine Kombination anderer Namensfelder. Dieser Name enthält die relevanten Bestandteile zur Anzeige.",
+    "anzeige_name_it": "Italienischer Anzeigename. Er ist eine Kombination anderer Namensfelder. Dieser Name enthält die relevanten Bestandteile zur Anzeige.",
+    "anzeige_name_mixed": "Anzeigename deutsch und französisch",
+    "anzeige_mixed": "Anzeigename aller Sprachen (deutsch, französich und italienisch), durch Semikolon ('; ') getrennt",
+    "anzeige_bimixed": "Anzeigename in den Sprachen deutsch und französich, durch Semikolon ('; ') getrennt",
+    "abkuerzung_mixed": "Abkürzung deutsch und französisch",
+    "bis_unix": "Bis-Datum als UNIX-Timestap (Sekunden seit 1.1.1970), siehe 'bis'",
+    "von_unix": "Von-Datum als UNIX-Timestap (Sekunden seit 1.1.1970), siehe 'von'",
+    "freigabe_datum_unix": "Publikationsdatum als UNIX-Timestap (Sekunden seit 1.1.1970), siehe 'freigabe_datum'",
+    "aktiv": "0/1: Ist der Datensatz zum Zeitpunkt des Exportes aktuell? , 1=aktiv, 0=abgelaufen/historisiert. Der Wert 'aktiv' wird vom 'von'- und 'bis'-Datum berechnet.",
+    "published": "0/1: Sind die Daten öffentlich? Wurden die Daten freigeben?",
+    "searchable_name": "Name, welcher für die Suche gebraucht wird.",
+    "refreshed_date": "Datum er letzten Aktualisierung der MV-Tabelle ('Materialized View')",
+    "id": "Technischer Schlüssel"
+  },
+  "v_interessenbindung_raw": {
+    "wirksamkeit": "'tief', 'mittel', 'hoch': Wirksamkeit der Interessenbindung, siehe https://lobbywatch.ch/de/seite/wirksamkeit. Die Wirksamkeit ist eines der primären Resultate von Lobbywach.",
+    "wirksamkeit_index": "Die Wirksamkeit als Zahl: 1=tief, 2=mittel, 3=hoch"
+  },
+  "v_interessenbindung_medium_raw": {
+    "__alias": "v_interessenbindung_raw"
+  },
+  "v_mandat_raw": {
+    "wirksamkeit": "'tief', 'mittel', 'hoch': Wirksamkeit des Mandates analog zur Wirksamkeit von Interessenbindungen, siehe https://lobbywatch.ch/de/seite/wirksamkeit, jedoch ohne Einbezug der Kommissionen."
+  },
+  "v_mandat_medium_raw": {
+    "__alias": "v_mandat_raw"
+  },
+  "v_organisation_medium_raw": {
+    "branche_ALT": "Deprecated. Veraltetes Feld. Nicht mehr verwenden.",
+    "branche_de_ALT": "Deprecated. Veraltetes Feld. Nicht mehr verwenden.",
+    "branche_fr_ALT": "Deprecated. Veraltetes Feld. Nicht mehr verwenden.",
+    "interessengruppe_branche_de": "Zugehörigkeit zur Branche aufgrund der Hauptlobbygruppe (interessengruppe1) der Organisation, deutsch",
+    "interessengruppe_branche_fr": "Zugehörigkeit zur Branche aufgrund der Hauptlobbygruppe (interessengruppe1) der Organisation (Franzöische Bezeichnung)",
+    "interessengruppe_branche": "Zugehörigkeit zur Branche aufgrund der Hauptlobbygruppe (interessengruppe1) der Organisation, deutsch",
+    "interessengruppe_de": "Zuteilung der Organisation zur Lobbygruppe (Hauptlobbygruppe der Organisation), deutsch",
+    "interessengruppe_fr": "Zuteilung der Organisation zur Lobbygruppe (Hauptlobbygruppe der Organisation), französisch",
+    "interessengruppe": "Zuteilung der Organisation zur Lobbygruppe (Hauptlobbygruppe der Organisation), deutsch",
+    "interessengruppe1_branche_de": "Zugehörigkeit zur Branche aufgrund der Hauptlobbygruppe (interessengruppe1) der Organisation, deutsch",
+    "interessengruppe1_branche_fr": "Zugehörigkeit zur Branche aufgrund der Hauptlobbygruppe (interessengruppe1) der Organisation (Franzöische Bezeichnung)",
+    "interessengruppe1_branche_kommission_abkuerzung_de": "Deutsches Kürzel der zugeordneten Kommission aufgrund der Branche der Hauptlobbygruppe (interessengruppe1) der Organisation. Das Kommissionskürzel ist ohne den Zusatz des Rates (-NR oder -SR).",
+    "interessengruppe1_branche_kommission_abkuerzung_fr": "Französisches Kürzel der zugeordneten Kommission aufgrund der Branche der Hauptlobbygruppe (interessengruppe1) der Organisation. Das Kommissionskürzel ist ohne den Zusatz des Rates (-CN oder -CE).",
+    "interessengruppe1_branche_kommission_abkuerzung": "Deutsches Kürzel der zugeordneten Kommission aufgrund der Branche der Organisation",
+    "interessengruppe1_branche_kommissionen_abkuerzung_de": "Deutsches Kürzel der zugeordneten Kommission aufgrund der Branche der Hauptlobbygruppe (interessengruppe1) der Organisation. Das Kommissionskürzel ist mit dem Zusatz des Rates (-NR oder -SR).",
+    "interessengruppe1_branche_kommissionen_abkuerzung_fr": "Französisches Kürzel der zugeordneten Kommission aufgrund der Branche der Hauptlobbygruppe (interessengruppe1) der Organisation. Das Kommissionskürzel ist mit dem Zusatz des Rates (-CN oder -CE).",
+    "interessengruppe1_branche_kommissionen_abkuerzung": "Deutsches Kürzel der zugeordneten Kommission aufgrund der Branche der Hauptlobbygruppe (interessengruppe1) der Organisation. Das Kommissionskürzel ist mit dem Zusatz des Rates (-NR oder -SR).",
+    "interessengruppe1_branche": "Zugehörigkeit zur Branche aufgrund der Hauptlobbygruppe (interessengruppe1) der Organisation, deutsch",
+    "interessengruppe1_de": "Zuteilung der Organisation zur Lobbygruppe (Hauptlobbygruppe der Organisation), deutsch",
+    "interessengruppe1_fr": "Zuteilung der Organisation zur Lobbygruppe (Hauptlobbygruppe der Organisation), französisch",
+    "interessengruppe1": "Zuteilung der Organisation zur Lobbygruppe (Hauptlobbygruppe der Organisation), deutsch",
+    "interessengruppe2_branche_de": "Zugehörigkeit zur Branche aufgrund der 2. Lobbygruppe (interessengruppe2) der Organisation, deutsch",
+    "interessengruppe2_branche_fr": "Zugehörigkeit zur Branche aufgrund der 2. Lobbygruppe (interessengruppe2) der Organisation, französisch",
+    "interessengruppe2_branche_kommission_abkuerzung_de": "Deutsches Kürzel der zugeordneten Kommission aufgrund der Branche der 2. zugeordneten Lobbygruppe der Organisation. Das Kommissionskürzel ist ohne den Zusatz des Rates (-NR oder -SR).",
+    "interessengruppe2_branche_kommission_abkuerzung_fr": "Französisches Kürzel der zugeordneten Kommission aufgrund der Branche der 2. zugeordneten Lobbygruppe der Organisation. Das Kommissionskürzel ist ohne den Zusatz des Rates (-CN oder -CE).",
+    "interessengruppe2_branche_kommission_abkuerzung": "Deutsches Kürzel der zugeordneten Kommission aufgrund der Branche der 2. zugeordneten Lobbygruppe der Organisation. Das Kommissionskürzel ist ohne den Zusatz des Rates (-NR oder -SR).",
+    "interessengruppe2_branche_kommissionen_abkuerzung_de": "Deutsches Kürzel der zugeordneten Kommission aufgrund der Branche der 2. zugeordneten Lobbygruppe der Organisation. Das Kommissionskürzel ist mit dem Zusatz des Rates (-NR oder -SR).",
+    "interessengruppe2_branche_kommissionen_abkuerzung_fr": "Französisches Kürzel der zugeordneten Kommission aufgrund der Branche der 2. zugeordneten Lobbygruppe der Organisation. Das Kommissionskürzel ist mit dem Zusatz des Rates (-CN oder -CE).",
+    "interessengruppe2_branche_kommissionen_abkuerzung": "Deutsches Kürzel der zugeordneten Kommission aufgrund der Branche der 2. zugeordneten Lobbygruppe der Organisation. Das Kommissionskürzel ist mit dem Zusatz des Rates (-NR oder -SR).",
+    "interessengruppe2_branche": "Zugehörigkeit zur Branche aufgrund der 2. Lobbygruppe (interessengruppe2) der Organisation, deutsch",
+    "interessengruppe2_de": "Zuteilung der Organisation zu einer 2. Lobbygruppe, deutsch",
+    "interessengruppe2_fr": "Zuteilung der Organisation zu einer 2. Lobbygruppe, französisch",
+    "interessengruppe2": "Zuteilung der Organisation zu einer 2. Lobbygruppe, deutsch",
+    "interessengruppe3_branche_de": "Zugehörigkeit zur Branche aufgrund der 3. Lobbygruppe (interessengruppe3) der Organisation, deutsch",
+    "interessengruppe3_branche_fr": "Zugehörigkeit zur Branche aufgrund der 3. Lobbygruppe (interessengruppe3) der Organisation, französisch",
+    "interessengruppe3_branche_kommission_abkuerzung_de": "Deutsches Kürzel der zugeordneten Kommission aufgrund der Branche der 3. zugeordneten Lobbygruppe der Organisation. Das Kommissionskürzel ist ohne den Zusatz des Rates (-NR oder -SR).",
+    "interessengruppe3_branche_kommission_abkuerzung_fr": "Französisches Kürzel der zugeordneten Kommission aufgrund der Branche der 3. zugeordneten Lobbygruppe der Organisation. Das Kommissionskürzel ist ohne den Zusatz des Rates (-CN oder -CE).",
+    "interessengruppe3_branche_kommission_abkuerzung": "Deutsches Kürzel der zugeordneten Kommission aufgrund der Branche der 3. zugeordneten Lobbygruppe der Organisation. Das Kommissionskürzel ist ohne den Zusatz des Rates (-NR oder -SR).",
+    "interessengruppe3_branche_kommissionen_abkuerzung_de": "Deutsches Kürzel der zugeordneten Kommission aufgrund der Branche der 3. zugeordneten Lobbygruppe der Organisation. Das Kommissionskürzel ist mit dem Zusatz des Rates (-NR oder -SR).",
+    "interessengruppe3_branche_kommissionen_abkuerzung_fr": "Französisches Kürzel der zugeordneten Kommission aufgrund der Branche der 2. zugeordneten Lobbygruppe der Organisation. Das Kommissionskürzel ist mit dem Zusatz des Rates (-CN oder -CE).",
+    "interessengruppe3_branche_kommissionen_abkuerzung": "Deutsches Kürzel der zugeordneten Kommission aufgrund der Branche der 2. zugeordneten Lobbygruppe der Organisation. Das Kommissionskürzel ist mit dem Zusatz des Rates (-NR oder -SR).",
+    "interessengruppe3_branche": "Zugehörigkeit zur Branche aufgrund der 3. Lobbygruppe (interessengruppe3) der Organisation, deutsch",
+    "interessengruppe3_de": "Zuteilung der Organisation zu einer 3. Lobbygruppe, deutsch",
+    "interessengruppe3_fr": "Zuteilung der Organisation zu einer 3. Lobbygruppe, französisch",
+    "interessengruppe3": "Zuteilung der Organisation zu einer 3. Lobbygruppe, deutsch",
+    "lobbyeinfluss": "Experimentelles Feld. 'tief', 'mittel', 'hoch', 'sehr hoch': Wirksamkeit der Organistion, siehe https://lobbywatch.ch/de/seite/wirksamkeit."
+  },
+  "v_organisation_simple": {
+    "__alias": "v_organisation_medium_raw"
+  },
+  "v_parlamentarier_medium_raw": {
+    "geburtstag_unix": "Datum als UNIX-Timestap (Sekunden seit 1.1.1970), siehe geburtstag",
+    "im_rat_seit_unix": "Datum als UNIX-Timestap (Sekunden seit 1.1.1970), siehe im_rat_seit",
+    "im_rat_bis_unix": "Datum als UNIX-Timestap (Sekunden seit 1.1.1970), siehe im_rat_bis",
+    "vertretene_bevoelkerung": "Brechnetes Feld. Nationalrat: Kantonsbevölkerung / Anzahl Nationalräte des Kantons, Ständerat: Kantonsbevölkerung / Anzahl Ständeräte des Kantons",
+    "kommissionen_namen": "Deutsche Namen der Kommissionen in welcher der Parlamentarier Einsitz hat. Die Kommssionen sind durch Semikolon ('; ') getrennt.",
+    "kommissionen_namen_de": "Französische Namen der Kommissionen in welcher der Parlamentarier Einsitz hat. Die Kommssionen sind durch Semikolon ('; ') getrennt.",
+    "kommissionen_namen_fr": "Deutsche Namen der Kommissionen in welcher der Parlamentarier Einsitz hat. Die Kommssionen sind durch Semikolon ('; ') getrennt.",
+    "kommissionen_abkuerzung": "Deutsche Kürzel der Kommissionen in welcher der Parlamentarier Einsitz hat. Die Kommssionen sind durch Komma (', ') getrennt.",
+    "kommissionen_abkuerzung_de": "Deutsche Kürzel der Kommissionen in welcher der Parlamentarier Einsitz hat. Die Kommssionen sind durch Komma (', ') getrennt.",
+    "kommissionen_abkuerzung_fr": "Französische Kürzel der Kommissionen in welcher der Parlamentarier Einsitz hat. Die Kommssionen sind durch Komma (', ') getrennt.",
+    "kommissionen_anzahl": "Anzahl der Kommissionen in welcher der Parlamentarier Einsitz hat.",
+    "titel_de": "Deutscher Titel der Person, z.B. Dr.",
+    "titel_fr": "Französischer Titel der Person, z.B. Dr."
+  },
+  "v_parlamentarier_simple": {
+    "__alias": "v_parlamentarier_medium_raw"
+  },
+  "v_zutrittsberechtigung_raw": {
+    "published_person": "Veröffentlichkeitstatus der Person",
+    "freigabe_datum_unix_person": "Datum als UNIX-Timestap (Sekunden seit 1.1.1970)",
+    "parlamentarier_name": "Name des Parlamentariers, der den Zutrittsbadge gegeben hat.",
+    "parlamentarier_freigabe_datum_unix": "Datum als UNIX-Timestap (Sekunden seit 1.1.1970)"
+  }
+}
