@@ -34,6 +34,7 @@ test_parameter=''
 export_options=''
 publish=false
 param_schema=''
+db_schema='lobbywatchtest'
 param_db=''
 param_user_prefix=''
 all_data='--slow'
@@ -51,12 +52,11 @@ while test $# -gt 0; do
             echo
             echo "Options:"
             echo "-e LIST                          Type of data to export, add this type of data -e hist, -e intern, -e unpubl, -e hist+unpubl+intern (default: filter at most)"
-            echo "-t, --test                       Test mode (implies -n)"
+    echo "-t, --test                       Test mode, currently the same as -n (implies -n)"
             echo "-n, --limit                      Limit number of records"
             echo "-p, --publish                    Publish exports to public folder"
             echo "-r, --refresh                    Refresh views"
-            echo "-b, --basic                      Export only basic formats (CSV, SQL, GraphML)"
-            echo "-a, --automatic                  Automatic"
+    echo "-b, --basic                      Export only basic formats (CSV, SQL, JSON, GraphML)"
             echo "-d=SCHEMA                        DB schema (default SCHEMA: lobbywatchtest)"
             echo "--user-prefix=USER               Prefix for db user in settings.php (default: reader_)"
             echo "--db=DB                          DB name for settings.php"
@@ -65,7 +65,8 @@ while test $# -gt 0; do
             quit
         ;;
         -d=*)
-            param_schema="-d=${1#*=}"
+    db_schema="${1#*=}"
+    param_schema="-d=$db_schema"
             shift
         ;;
         --user-prefix=*)
@@ -80,8 +81,7 @@ while test $# -gt 0; do
             refresh=true
             shift
         ;;
-        -b|--basic)
-            export_formats='-c -s -m'
+    export_formats='-c -s -m -j'
             basic_export=true
             shift
         ;;
