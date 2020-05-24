@@ -243,6 +243,21 @@ $ZIP_TREE $archive_with_date       $EXPORT/$DOCU/*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
+  cp $archive $PUBLIC_EXPORTS_DIR
+fi
+
+format=json
+type=aggregated
+base_name=lobbywatch_export_$type
+echo -e "\nPack $base_name.$format"
+archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
+archive=$EXPORT/$base_name$export_type.$format.zip
+[ -f "$archive_with_date" ] && rm $archive_with_date
+$ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
+$ZIP_TREE $archive_with_date $EXPORT/$DOCU/$type*.$format.$DOCU_MD
+cp $archive_with_date $archive
+$LS $archive_with_date $archive
+if $publish; then
     cp $archive $PUBLIC_EXPORTS_DIR
 fi
 
@@ -296,20 +311,9 @@ if ! $basic_export; then
       cp $archive $PUBLIC_EXPORTS_DIR
   fi
 
-  format=json
-  type=aggregated
-  base_name=lobbywatch_export_$type
-  echo -e "\nPack $base_name.$format"
-  archive_with_date=$EXPORT/${DATE_SHORT}_$base_name$export_type.$format.zip
-  archive=$EXPORT/$base_name$export_type.$format.zip
-  [ -f "$archive_with_date" ] && rm $archive_with_date
-  $ZIP $archive_with_date $DOCS $EXPORT/$type*.$format
-  $ZIP_TREE $archive_with_date       $EXPORT/$DOCU/$type*.$format.$DOCU_MD
-  cp $archive_with_date $archive
-  $LS $archive_with_date $archive
-  if $publish; then
-      cp $archive $PUBLIC_EXPORTS_DIR
-  fi
+  # Aggreagted json is basic exports, see above
+  # format=json
+  # type=aggregated
 
   format=json
   type=all
