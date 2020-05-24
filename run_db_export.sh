@@ -135,7 +135,7 @@ START_OVERALL=$(date +%s)
 
 if $refresh; then
   echo -e "$(date '+%F %T') Refresh DB '$db_schema' ..."
-  ./run_local_db_script.sh $db_schema db_views.sql
+  ./run_db_script.sh $db_schema lobbywat_script db_views.sql cronverbose
 fi
 
 if [[ "$LW_PUBLIC_EXPORTS_DIR" == "" ]]; then
