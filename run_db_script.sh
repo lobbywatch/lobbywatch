@@ -23,6 +23,57 @@
 # Abort on errors
 # set -e
 
+######### COPIED from common.sh: BEGIN
+
+# _alarm 400 200
+# http://unix.stackexchange.com/questions/1974/how-do-i-make-my-pc-speaker-beep
+_alarm() {
+# play -n synth 0.400 sin 200 > /dev/null 2> /dev/null
+  play -n synth 0.${2} sin $1 > /dev/null 2> /dev/null || true
+#   ( \speaker-test --frequency $1 --test sine > /dev/null ) > /dev/null 2> /dev/null &
+#   pid=$!
+#   \sleep 0.${2}s
+#   \kill -9 $pid > /dev/null 2> /dev/null
+}
+
+beep() {
+  _alarm 400 200
+}
+
+# https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
+abort() {
+  line=$1
+  caller=$(caller)
+    echo '
+***************
+*** ABORTED ***
+***************
+' >&2
+    echo "An error occurred on line $caller. Exiting..." >&2
+    date -Iseconds >&2
+    beep
+    exit 1
+}
+
+#quit or trap 'abort' 0 must be called, for sucessful exit
+enable_fail_onerror() {
+  # Abort on errors
+  # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
+  trap 'abort $LINENO' ERR
+  # https://sipb.mit.edu/doc/safe-shell/
+  set -e -o pipefail
+  # set -u
+}
+
+quit() {
+  trap : 0
+  exit 0
+}
+
+######### COPIED from common.sh: END
+
+enable_fail_onerror
+
 db=$1
 username=$2
 # script=db_check.sql
@@ -201,7 +252,7 @@ if (($OK != 0)); then
 
   echo "less $logfile"
 
-  exit 1
+  abort
 else
   if [[ "$script" == "dbdump" || "$script" == "dbdump_data" || "$script" == "dbdump_struct" ]] ; then
     if [[ "$script" == "dbdump_data" ]] ; then
@@ -238,3 +289,5 @@ else
     echo -e "\n${greenBold}OK${reset}"
   fi
 fi
+
+quit
