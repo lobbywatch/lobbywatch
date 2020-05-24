@@ -32,6 +32,7 @@ echo >>$EXPORT_LOG
 test_parameter=''
 export_options=''
 publish=false
+publish_dir=''
 param_schema=''
 db_schema='lobbywatchtest'
 param_db=''
@@ -53,7 +54,7 @@ while test $# -gt 0; do
     echo "-e LIST                          Type of data to export, add this type of data -e hist, -e intern, -e unpubl, -e hist+unpubl+intern (default: filter at most)"
     echo "-t, --test                       Test mode: print DB views comments JSON (implies -n)"
     echo "-n, --limit                      Limit number of records"
-    echo "-p, --publish                    Publish exports to public folder"
+    echo "-p[=DIR], --publish[=DIR]        Publish exports to public folder (default: env LW_PUBLIC_EXPORTS_DIR='$LW_PUBLIC_EXPORTS_DIR'"
     echo "-r, --refresh                    Refresh views"
     echo "-b, --basic                      Export only basic formats (CSV, SQL, JSON, GraphML)"
     echo "-d=SCHEMA                        DB schema (default SCHEMA: lobbywatchtest)"
@@ -89,6 +90,11 @@ while test $# -gt 0; do
     publish=true
     shift
     ;;
+  -p=* | --publish=*)
+    publish_dir="${1#*=}"
+    publish=true
+    shift
+    ;;
   -t | --test)
     test_parameter="-n --comments"
     all_data=''
@@ -115,14 +121,6 @@ while test $# -gt 0; do
     fi
     shift
     ;;
-  # -l=*|--local=*)
-  #     db="${1#*=}"
-  #     if [[ $db == "" ]]; then
-  #         db="lobbywatchtest"
-  #     fi
-  #     env="local_${db}"
-  #     shift
-  # ;;
   *)
     break
     ;;
@@ -138,11 +136,13 @@ if $refresh; then
   ./run_db_script.sh $db_schema lobbywat_script db_views.sql cronverbose
 fi
 
-if [[ "$LW_PUBLIC_EXPORTS_DIR" == "" ]]; then
-  echo -e "\nERROR: LW_PUBLIC_EXPORTS_DIR environment variable is not set"
-  abort
-else
-  PUBLIC_EXPORTS_DIR=$LW_PUBLIC_EXPORTS_DIR
+if [[ "$publish_dir" == "" ]]; then
+  if [[ "$LW_PUBLIC_EXPORTS_DIR" == "" ]]; then
+    echo -e "\nERROR: LW_PUBLIC_EXPORTS_DIR environment variable is not set"
+    abort
+  else
+    publish_dir=$LW_PUBLIC_EXPORTS_DIR
+  fi
 fi
 
 export_type=''
@@ -170,7 +170,7 @@ $ZIP_TREE $archive_with_date $EXPORT/$DOCU/*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
-  cp $archive $PUBLIC_EXPORTS_DIR
+  cp $archive $publish_dir
 fi
 
 format=csv
@@ -185,7 +185,7 @@ $ZIP_TREE $archive_with_date $EXPORT/$DOCU/$type*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
-  cp $archive $PUBLIC_EXPORTS_DIR
+  cp $archive $publish_dir
 fi
 
 format=csv
@@ -200,7 +200,7 @@ $ZIP_TREE $archive_with_date $EXPORT/$DOCU/cartesian_essential_parlamentarier_in
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
-  cp $archive $PUBLIC_EXPORTS_DIR
+  cp $archive $publish_dir
 fi
 
 format=csv
@@ -214,7 +214,7 @@ $ZIP_TREE $archive_with_date $EXPORT/$DOCU/cartesian_parlamentarier_verguetungst
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
-  cp $archive $PUBLIC_EXPORTS_DIR
+  cp $archive $publish_dir
 fi
 
 format=sql
@@ -228,7 +228,7 @@ $ZIP_TREE $archive_with_date $EXPORT/$DOCU/*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
-  cp $archive $PUBLIC_EXPORTS_DIR
+  cp $archive $publish_dir
 fi
 
 format=graphml
@@ -242,7 +242,7 @@ $ZIP_TREE $archive_with_date $EXPORT/$DOCU/*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
-  cp $archive $PUBLIC_EXPORTS_DIR
+  cp $archive $publish_dir
 fi
 
 format=json
@@ -257,7 +257,7 @@ $ZIP_TREE $archive_with_date $EXPORT/$DOCU/$type*.$format.$DOCU_MD
 cp $archive_with_date $archive
 $LS $archive_with_date $archive
 if $publish; then
-  cp $archive $PUBLIC_EXPORTS_DIR
+  cp $archive $publish_dir
 fi
 
 if ! $basic_export; then
@@ -275,7 +275,7 @@ if ! $basic_export; then
   cp $archive_with_date $archive
   $LS $archive_with_date $archive
   if $publish; then
-    cp $archive $PUBLIC_EXPORTS_DIR
+    cp $archive $publish_dir
   fi
 
   format=json
@@ -291,7 +291,7 @@ if ! $basic_export; then
   cp $archive_with_date $archive
   $LS $archive_with_date $archive
   if $publish; then
-    cp $archive $PUBLIC_EXPORTS_DIR
+    cp $archive $publish_dir
   fi
 
   format=jsonl
@@ -307,7 +307,7 @@ if ! $basic_export; then
   cp $archive_with_date $archive
   $LS $archive_with_date $archive
   if $publish; then
-    cp $archive $PUBLIC_EXPORTS_DIR
+    cp $archive $publish_dir
   fi
 
   # Aggreagted json is basic exports, see above
@@ -326,7 +326,7 @@ if ! $basic_export; then
   cp $archive_with_date $archive
   $LS $archive_with_date $archive
   if $publish; then
-    cp $archive $PUBLIC_EXPORTS_DIR
+    cp $archive $publish_dir
   fi
 
   format=json
@@ -341,7 +341,7 @@ if ! $basic_export; then
   cp $archive_with_date $archive
   $LS $archive_with_date $archive
   if $publish; then
-    cp $archive $PUBLIC_EXPORTS_DIR
+    cp $archive $publish_dir
   fi
 
   format=jsonl
@@ -356,7 +356,7 @@ if ! $basic_export; then
   cp $archive_with_date $archive
   $LS $archive_with_date $archive
   if $publish; then
-    cp $archive $PUBLIC_EXPORTS_DIR
+    cp $archive $publish_dir
   fi
 
   format=xml
@@ -371,7 +371,7 @@ if ! $basic_export; then
   cp $archive_with_date $archive
   $LS $archive_with_date $archive
   if $publish; then
-    cp $archive $PUBLIC_EXPORTS_DIR
+    cp $archive $publish_dir
   fi
 
   format=xml
@@ -386,7 +386,7 @@ if ! $basic_export; then
   cp $archive_with_date $archive
   $LS $archive_with_date $archive
   if $publish; then
-    cp $archive $PUBLIC_EXPORTS_DIR
+    cp $archive $publish_dir
   fi
 
   format=xml
@@ -401,7 +401,7 @@ if ! $basic_export; then
   cp $archive_with_date $archive
   $LS $archive_with_date $archive
   if $publish; then
-    cp $archive $PUBLIC_EXPORTS_DIR
+    cp $archive $publish_dir
   fi
 
   format=yaml
@@ -416,7 +416,7 @@ if ! $basic_export; then
   cp $archive_with_date $archive
   $LS $archive_with_date $archive
   if $publish; then
-    cp $archive $PUBLIC_EXPORTS_DIR
+    cp $archive $publish_dir
   fi
 
   format=yaml
@@ -431,7 +431,7 @@ if ! $basic_export; then
   cp $archive_with_date $archive
   $LS $archive_with_date $archive
   if $publish; then
-    cp $archive $PUBLIC_EXPORTS_DIR
+    cp $archive $publish_dir
   fi
 
   format=yaml
@@ -446,7 +446,7 @@ if ! $basic_export; then
   cp $archive_with_date $archive
   $LS $archive_with_date $archive
   if $publish; then
-    cp $archive $PUBLIC_EXPORTS_DIR
+    cp $archive $publish_dir
   fi
 
   format=md
@@ -461,7 +461,7 @@ if ! $basic_export; then
   cp $archive_with_date $archive
   $LS $archive_with_date $archive
   if $publish; then
-    cp $archive $PUBLIC_EXPORTS_DIR
+    cp $archive $publish_dir
   fi
 
   format=md
@@ -476,7 +476,7 @@ if ! $basic_export; then
   cp $archive_with_date $archive
   $LS $archive_with_date $archive
   if $publish; then
-    cp $archive $PUBLIC_EXPORTS_DIR
+    cp $archive $publish_dir
   fi
 
   format=md
@@ -491,7 +491,7 @@ if ! $basic_export; then
   cp $archive_with_date $archive
   $LS $archive_with_date $archive
   if $publish; then
-    cp $archive $PUBLIC_EXPORTS_DIR
+    cp $archive $publish_dir
   fi
 
 fi
@@ -502,10 +502,10 @@ echo -e "\n$(date '+%F %T')" "Overall elapsed:" $(convertsecs $DIFF) "(${DIFF}s)
 echo -e "\n$(date '+%F %T')" "Overall elapsed:" $(convertsecs $DIFF) "(${DIFF}s)" >>$EXPORT_LOG
 
 if $publish; then
-  cp $DOCS $PUBLIC_EXPORTS_DIR
-  echo -e "\nPublished exports to $PUBLIC_EXPORTS_DIR:"
-  cp $EXPORT_LOG $PUBLIC_EXPORTS_DIR
-  $LS $PUBLIC_EXPORTS_DIR
+  cp $DOCS $publish_dir
+  echo -e "\nPublished exports to $publish_dir:"
+  cp $EXPORT_LOG $publish_dir
+  $LS $publish_dir
 fi
 
 quit
