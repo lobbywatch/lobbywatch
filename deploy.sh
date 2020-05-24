@@ -217,6 +217,9 @@ while test $# -gt 0; do
                         shift
                         ;;
                 -p|--production)
+                        env="PROD"
+                        shift
+                        ;;
                 -l|--local)
                         local_DB="lobbywatchtest"
                         env="local_${local_DB}"
@@ -268,7 +271,7 @@ if $rsync_delete ; then delete='--delete --dry-run'; fi
 
 echo -e "<?php\n\$maintenance_mode = $maintenance_mode;" > $public_dir/settings/maintenance_mode.php;
 
-if [[ "$env" = "production" ]] ; then
+if [[ "$env" = "PROD" ]] ; then
   env_suffix=
   env_dir=
   env_dir2=
@@ -507,7 +510,7 @@ if $run_sql ; then
 
   if $refresh_viws ; then
     START=$(date +%s)
-    if [[ "$env" = "production" ]] ; then
+    if [[ "$env" = "PROD" ]] ; then
       DURATION=$((2 * 60))
     else
       DURATION=$((1 * 60))
@@ -542,7 +545,7 @@ if $run_sql ; then
     include_db="--include run_db_script.sh --include sql --include prod_bak --include prod_bak/bak --include $sql_file"
   #   rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir$env_dir2
     rsync -avze "ssh -p $ssh_port $quiet" $progress $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
-    
+
     echo "## Run SQL file: $sql_file"
     #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -s" < $db_dir/deploy_load_db.sh
   #   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c ./deploy_load_db.sh"
