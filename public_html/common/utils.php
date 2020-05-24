@@ -1,6 +1,7 @@
 <?php
 
 require_once dirname(__FILE__) . '/simplediff.php';
+require_once dirname(__FILE__) . '/../custom/version.php';
 
 // https://developer.mozilla.org/en-US/docs/Tools/Web_Console/Console_messages#Server
 // https://craig.is/writing/chrome-logger
