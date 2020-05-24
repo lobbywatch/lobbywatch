@@ -95,6 +95,11 @@ MYSQL_CONTAINER=mysql57
 
 charset=utf8mb4
 
+if [[ "$script" == "" ]]; then
+  echo "Parameter script is empty"
+  abort
+fi
+
 docker exec -it $MYSQL_CONTAINER mysql --help >/dev/null 2>&1 && IS_DOCKER=true || IS_DOCKER=false
 if $IS_DOCKER && [ "$PORT" == "3306" ]; then
   if  [[ "$mode" != "cron" ]] ; then
