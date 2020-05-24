@@ -3,8 +3,6 @@
 # Call for production
 # ./run_db_export.sh -v -t -d=lobbywat_lobbywatch --user-prefix=reader_ -p
 
-# TODO fix include_once version.php Problem
-
 # Include common functions
 . common.sh
 
