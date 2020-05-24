@@ -3167,3 +3167,37 @@ SET @disable_triggers = 0;
 SELECT count(*) FROM `interessenbindung_jahr` WHERE `beschreibung`='Bezahlendes Mitglied' and `verguetung`=0;
 
 UPDATE `interessenbindung_jahr` SET `verguetung`=-1 WHERE `beschreibung`='Bezahlendes Mitglied' AND `verguetung`=0;
+
+-- 22.05.2020
+-- Fix typos in DB comments
+
+ALTER TABLE `in_kommission`
+  CHANGE `parlament_committee_function_name` `parlament_committee_function_name` VARCHAR(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'committeeFunctionName von ws.parlament.ch';
+ALTER TABLE `in_kommission_log`
+  CHANGE `parlament_committee_function_name` `parlament_committee_function_name` VARCHAR(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'committeeFunctionName von ws.parlament.ch';
+
+ALTER TABLE `interessenbindung`
+  CHANGE `quelle_url_gueltig` `quelle_url_gueltig` TINYINT(1) NULL DEFAULT NULL COMMENT 'Ist die Quell-URL noch gültig? Funktioniert er noch?',
+  CHANGE `funktion_im_gremium` `funktion_im_gremium` ENUM('praesident','vizepraesident','mitglied') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwaltungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
+  CHANGE `behoerden_vertreter` `behoerden_vertreter` ENUM('J','N') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Entstand diese Interessenbindung als Behördenvertreter von Amtes wegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von Amtes wegen Einsitz nimmt.';
+ALTER TABLE `interessenbindung_log`
+  CHANGE `quelle_url_gueltig` `quelle_url_gueltig` TINYINT(1) NULL DEFAULT NULL COMMENT 'Ist die Quell-URL noch gültig? Funktioniert er noch?',
+  CHANGE `funktion_im_gremium` `funktion_im_gremium` ENUM('praesident','vizepraesident','mitglied') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwaltungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
+  CHANGE `behoerden_vertreter` `behoerden_vertreter` ENUM('J','N') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Entstand diese Interessenbindung als Behördenvertreter von Amtes wegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von Amtes wegen Einsitz nimmt.';
+
+ALTER TABLE `mandat`
+  CHANGE `beschreibung` `beschreibung` VARCHAR(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Umschreibung des Mandates. Beschreibung wird nicht ausgewertet, jedoch in den Resultaten angezeigt.',
+  CHANGE `quelle_url_gueltig` `quelle_url_gueltig` TINYINT(1) NULL DEFAULT NULL COMMENT 'Ist die Quell-URL noch gültig? Funktioniert er noch?';
+ALTER TABLE `mandat_log`
+  CHANGE `beschreibung` `beschreibung` VARCHAR(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Umschreibung des Mandates. Beschreibung wird nicht ausgewertet, jedoch in den Resultaten angezeigt.',
+  CHANGE `quelle_url_gueltig` `quelle_url_gueltig` TINYINT(1) NULL DEFAULT NULL COMMENT 'Ist die Quell-URL noch gültig? Funktioniert er noch?';
+
+ALTER TABLE `parlamentarier`
+  CHANGE `wikipedia` `wikipedia` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag des Parlamentariers';
+ALTER TABLE `parlamentarier_log`
+  CHANGE `wikipedia` `wikipedia` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag des Parlamentariers';
+
+ALTER TABLE `person`
+  CHANGE `beruf_interessengruppe_id` `beruf_interessengruppe_id` INT(11) NULL DEFAULT NULL COMMENT 'Fremdschlüssel zur Interessengruppe für den Beruf';
+ALTER TABLE `person_log`
+  CHANGE `beruf_interessengruppe_id` `beruf_interessengruppe_id` INT(11) NULL DEFAULT NULL COMMENT 'Fremdschlüssel zur Interessengruppe für den Beruf';
