@@ -2284,11 +2284,21 @@ function _lobbywatch_non_public_exports_page() {
   global $settings;
   global $base_url;
   $secret_dir = trim(file_get_contents($settings['file_secret_dir']));
-  $base_path = variable_get('file_public_path', conf_path() . '/files');
-  $secret_exports_dir = "$base_path/$secret_dir/non-public-exports";
+  // $base_path = variable_get('file_public_path', conf_path() . '/files');
+  $secret_exports_dir = "$secret_dir/non-public-exports";
 
-  $markup = "<p>Link to non public exports. The link changes each month.</p>";
-  $markup .= "<p><a href='/$secret_exports_dir'>$base_url/$secret_exports_dir</a></p>";
+  $wrapper = file_stream_wrapper_get_instance_by_uri('public://');
+  $path_of_public = $wrapper->realpath();
+  $url_of_public = $wrapper->getExternalUrl();
+  $secret_exports_path = "$path_of_public/$secret_exports_dir";
+
+  $header = file_get_contents("$secret_exports_path/HEADER.html");
+  $export_info = file_get_contents("$secret_exports_path/db_export.txt");
+
+  $markup = "<p>Link to non public exports.</p>";
+  $markup .= "<p><a href='$url_of_public$secret_exports_dir'>$url_of_public$secret_exports_dir</a></p>";
+  $markup .= "$header";
+  $markup .= "<pre>$export_info</pre>";
 
   $build = array();
   $build['lobbywatch_interessengruppe'] = array(
