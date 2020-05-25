@@ -278,8 +278,8 @@ else
       delete_verbose='-print'
     fi
     # http://unix.stackexchange.com/questions/136804/cron-job-to-delete-files-older-than-3-days
-    find $BAK_DIR -name *.sql -type f -mtime +7 -delete $delete_verbose >>$logfile 2>&1
-    find $BAK_DIR -name *.sql.gz -type f -mtime +7 -delete $delete_verbose >>$logfile 2>&1
+    find $BAK_DIR -maxdepth 1 -name "*.sql" -type f -mtime +7 -delete $delete_verbose >>$logfile 2>&1
+    find $BAK_DIR -maxdepth 1 -name "*.sql.gz" -type f -mtime +7 -delete $delete_verbose >>$logfile 2>&1
     echo "File written: $written_dump_file" >>$logfile
     echo -e "" >>$logfile
   fi
