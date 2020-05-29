@@ -183,11 +183,11 @@ if $publish && $publish_to_secret_dir; then
   [ -f $file_secret_dir ] && old_secret_dir=$(cat $file_secret_dir) || old_secret_dir=''
   [ -f $file_secret_publish_dir ] && old_secret_export_dir=$(cat $file_secret_publish_dir) || old_secret_export_dir=''
 
-  if [[ "$old_secret_dir" == "" &&  ! $init_files ]]; then
+  if [[ "$old_secret_dir" == "" ]] && ! $init_files; then
     echo "'$file_secret_dir' does not exist"
     echo "Call with -i for init"
     abort
-  elif [[ "$old_secret_dir" == "" &&  $init_files ]]; then
+  elif [[ "$old_secret_dir" == "" ]] && $init_files; then
     echo "Init '$file_secret_dir' since it does not exist yet"
     mkdir -p "$publish_dir"
   elif [[ "$old_secret_export_dir" != "$publish_dir" ]]; then
