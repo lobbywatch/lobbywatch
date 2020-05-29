@@ -196,7 +196,8 @@ if $publish && $publish_to_secret_dir; then
       echo -e "mv $base_secret_dir$old_secret_dir -> $base_secret_dir$secret_dir"
       mv "$base_secret_dir$old_secret_dir" "$base_secret_dir$secret_dir"
     else
-      echo "Cannot rename publish dir"
+      echo -e "Cannot rename publish dir.\nMove manually:"
+      echo "mv -i $old_secret_export_dir $publish_dir"
       abort
     fi
   fi
