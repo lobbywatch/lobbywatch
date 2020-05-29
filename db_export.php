@@ -2393,12 +2393,13 @@ function export_tables(IExporter $exporter, array $tables, int $parent_id = null
           if ($verbose > 4) print("$level_indent$header_field\n");
 
           $db_view = $db_views_comments[$table_name]['__alias'] ?? $table_name;
-          $db_view_comment = $db_views_comments[$db_view][$col] ?? $db_views_comments['*'][$col] ?? '';
+          $comment_col = !starts_with($col, '(') || empty($alias) ? $col : $alias;
+          $db_view_comment = $db_views_comments[$db_view][$comment_col] ?? $db_views_comments['*'][$comment_col] ?? '';
           $col_comment_enhanced = $db_view_comment ? ($col_comment ? $col_comment . ' ' . $db_view_comment : $db_view_comment) : $col_comment;
 
           if (!$col_comment_enhanced) {
             // print("********* $db_view.$col ($table_name): '$db_view_comment', '$col_comment_enhanced'\n");
-            $db_views_comments[$db_view][$col] = '';
+            $db_views_comments[$db_view][$comment_col] = '';
           }
 
           $docu_col = getDocuCol($level, $col, $col_comment_enhanced, $data_type, $table, $table_meta);

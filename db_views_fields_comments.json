@@ -16,7 +16,7 @@
     "von_unix": "Von-Datum als UNIX-Timestap (Sekunden seit 1.1.1970), siehe 'von'",
     "freigabe_datum_unix": "Publikationsdatum als UNIX-Timestap (Sekunden seit 1.1.1970), siehe 'freigabe_datum'",
     "aktiv": "0/1: Ist der Datensatz zum Zeitpunkt des Exportes aktuell? , 1=aktiv, 0=abgelaufen/historisiert. Der Wert 'aktiv' wird vom 'von'- und 'bis'-Datum berechnet.",
-    "published": "0/1: Sind die Daten öffentlich? Wurden die Daten freigeben?",
+    "public": "0/1: Sind die Daten öffentlich? Wurden die Daten freigeben?",
     "searchable_name": "Name, welcher für die Suche gebraucht wird.",
     "refreshed_date": "Datum er letzten Aktualisierung der MV-Tabelle ('Materialized View')",
     "id": "Technischer Schlüssel"
