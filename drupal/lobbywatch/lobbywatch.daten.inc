@@ -2288,6 +2288,8 @@ function _lobbywatch_non_public_exports_page() {
   $path_of_public = $wrapper->realpath();
   $url_of_public = $wrapper->getExternalUrl();
 
+  $markup = '';
+
   $secret_dir = trim(file_get_contents($settings['file_secret_dir_hist']));
   $secret_exports_dir = "$secret_dir/non-public-hist-exports";
   $secret_exports_path = "$path_of_public/$secret_exports_dir";
@@ -2295,7 +2297,8 @@ function _lobbywatch_non_public_exports_page() {
   $header = file_get_contents("$secret_exports_path/HEADER.html");
   $export_info = file_get_contents("$secret_exports_path/db_export.txt");
 
-  $markup = "<p>Link to non public exports.</p>";
+  $markup .= "<p>Link to non public <i>historised</i> exports.</p>";
+  $markup .= "<p>Für Studienprojekte</p>";
   $markup .= "<p><a href='$url_of_public$secret_exports_dir'>$url_of_public$secret_exports_dir</a></p>";
   $markup .= "$header";
   $markup .= "<pre>$export_info</pre>";
@@ -2309,7 +2312,8 @@ function _lobbywatch_non_public_exports_page() {
   $header = file_get_contents("$secret_exports_path/HEADER.html");
   $export_info = file_get_contents("$secret_exports_path/db_export.txt");
 
-  $markup = "<p>Link to non public exports.</p>";
+  $markup .= "<p>Link to non public <i>historised and unpublished</i> exports.</p>";
+  $markup .= "<p>Für internen Gebrach.</p>";
   $markup .= "<p><a href='$url_of_public$secret_exports_dir'>$url_of_public$secret_exports_dir</a></p>";
   $markup .= "$header";
   $markup .= "<pre>$export_info</pre>";
