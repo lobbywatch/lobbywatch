@@ -191,8 +191,9 @@ if $publish && $publish_to_secret_dir; then
     echo "Init '$file_secret_dir' since it does not exist yet"
     mkdir -p "$publish_dir"
   elif [[ "$old_secret_export_dir" != "$publish_dir" ]]; then
-    echo -e "Secret dir changed from\n$base_secret_dir$old_secret_dir to\n$base_secret_dir$secret_dir"
+    echo -e "Publish dir path changed\n$old_secret_export_dir to\n$publish_dir"
     if [[ "$old_secret_dir" != "$secret_dir" ]]; then
+      echo -e "mv $base_secret_dir$old_secret_dir -> $base_secret_dir$secret_dir"
       mv "$base_secret_dir$old_secret_dir" "$base_secret_dir$secret_dir"
     else
       echo "Cannot rename publish dir"
