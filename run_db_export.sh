@@ -24,8 +24,8 @@ DATAMODEL="lobbywatch_datenmodell_simplified.pdf"
 DOCS="$MERKBLATT $DATAMODEL"
 DOCU=docu
 DOCU_MD="md"
-FILE_SECRET_DIR=".exports_secret_dir"
-FILE_SECRET_PUBLISH_DIR=".exports_secret_publish_dir"
+BASE_FILE_SECRET_DIR=".exports_secret_dir"
+BASE_FILE_SECRET_PUBLISH_DIR=".exports_secret_publish_dir"
 SECRET_DIR_PATTERN="__secret_dir__"
 
 echo -e "Lobbywatch DB Export" >$EXPORT_LOG
@@ -46,6 +46,7 @@ basic_export=false
 refresh=false
 publish_to_secret_dir=false
 secret_dir=''
+init_files=false
 
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 while test $# -gt 0; do
@@ -67,6 +68,7 @@ while test $# -gt 0; do
     echo "--user-prefix=USER               Prefix for db user in settings.php (default: reader_)"
     echo "--db=DB                          DB name for settings.php"
     echo "-v [LEVEL], --verbose [LEVEL]    Verbose mode (Default level=1)"
+    echo "-i, --init                       Init secret files"
     echo "-h, --help                       Show help"
     quit
     ;;
@@ -85,6 +87,10 @@ while test $# -gt 0; do
     ;;
   -r | --refresh)
     refresh=true
+    shift
+    ;;
+  -i | --init)
+    init_files=true
     shift
     ;;
   -b | --basic)
@@ -166,18 +172,22 @@ base_secret_dir=${publish_dir%$SECRET_DIR_PATTERN*}
 publish_dir=${publish_dir/$SECRET_DIR_PATTERN/$secret_dir}
 
 if $publish && $publish_to_secret_dir; then
-  [ -f $FILE_SECRET_DIR ] && old_secret_dir=$(cat $FILE_SECRET_DIR) || old_secret_dir=''
-  [ -f $FILE_SECRET_PUBLISH_DIR ] && old_secret_export_dir=$(cat $FILE_SECRET_PUBLISH_DIR) || old_secret_export_dir=''
+  file_secret_dir="${BASE_FILE_SECRET_DIR}_$export_options"
+  file_secret_publish_dir="${BASE_FILE_SECRET_PUBLISH_DIR}_$export_options"
+  [ -f $file_secret_dir ] && old_secret_dir=$(cat $file_secret_dir) || old_secret_dir=''
+  [ -f $file_secret_publish_dir ] && old_secret_export_dir=$(cat $file_secret_publish_dir) || old_secret_export_dir=''
 
-  if [[ "$old_secret_dir" == "" ]]; then
-    echo "'$FILE_SECRET_DIR' does not exist"
+  if [[ "$old_secret_dir" == "" &&  ! $init_files ]]; then
+    echo "'$file_secret_dir' does not exist"
     abort
+  elif [[ "$old_secret_dir" == "" &&  $init_files ]]; then
+    echo "Init '$file_secret_dir' since it does not exist yet"
   elif [[ "$old_secret_export_dir" != "$publish_dir" ]]; then
     echo "Secret dir changed: mv $base_secret_dir$old_secret_dir $base_secret_dir$secret_dir"
     mv "$base_secret_dir$old_secret_dir" "$base_secret_dir$secret_dir"
   fi
-  echo "$secret_dir" >$FILE_SECRET_DIR
-  echo "$publish_dir" >$FILE_SECRET_PUBLISH_DIR
+  echo "$secret_dir" >$file_secret_dir
+  echo "$publish_dir" >$file_secret_publish_dir
 fi
 
 export_type=''
@@ -542,8 +552,8 @@ if $publish; then
   cp $EXPORT_LOG $publish_dir
   $LS $publish_dir
 
-  # Clean up histoised files as they consume a lot of memory
-  rm $EXPORT/202*hist.*.zip
+  # Clean up historised files as they consume a lot of memory
+  rm $EXPORT/202*hist*.*.zip || echo "No historised files to delete"
 fi
 
 quit
