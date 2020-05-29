@@ -28,6 +28,7 @@ BASE_FILE_SECRET_DIR=".exports_secret_dir"
 BASE_FILE_SECRET_PUBLISH_DIR=".exports_secret_publish_dir"
 SECRET_DIR_PATTERN="__secret_dir__"
 
+mkdir -p $EXPORT
 echo -e "Lobbywatch DB Export" >$EXPORT_LOG
 echo -e "====================" >>$EXPORT_LOG
 echo >>$EXPORT_LOG
