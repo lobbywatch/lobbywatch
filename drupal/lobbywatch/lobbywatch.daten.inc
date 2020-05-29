@@ -2283,13 +2283,27 @@ function _lobbywatch_get_workflow_state_SELECT_SQL($table, $only_if_admin = true
 function _lobbywatch_non_public_exports_page() {
   global $settings;
   global $base_url;
-  $secret_dir = trim(file_get_contents($settings['file_secret_dir']));
   // $base_path = variable_get('file_public_path', conf_path() . '/files');
-  $secret_exports_dir = "$secret_dir/non-public-exports";
-
   $wrapper = file_stream_wrapper_get_instance_by_uri('public://');
   $path_of_public = $wrapper->realpath();
   $url_of_public = $wrapper->getExternalUrl();
+
+  $secret_dir = trim(file_get_contents($settings['file_secret_dir_hist']));
+  $secret_exports_dir = "$secret_dir/non-public-hist-exports";
+  $secret_exports_path = "$path_of_public/$secret_exports_dir";
+
+  $header = file_get_contents("$secret_exports_path/HEADER.html");
+  $export_info = file_get_contents("$secret_exports_path/db_export.txt");
+
+  $markup = "<p>Link to non public exports.</p>";
+  $markup .= "<p><a href='$url_of_public$secret_exports_dir'>$url_of_public$secret_exports_dir</a></p>";
+  $markup .= "$header";
+  $markup .= "<pre>$export_info</pre>";
+
+  $markup .= "<hr>";
+
+  $secret_dir = trim(file_get_contents($settings['file_secret_dir_hist+unpubl']));
+  $secret_exports_dir = "$secret_dir/non-public-hist-UNPUBLISHED-exports";
   $secret_exports_path = "$path_of_public/$secret_exports_dir";
 
   $header = file_get_contents("$secret_exports_path/HEADER.html");
