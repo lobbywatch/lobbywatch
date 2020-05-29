@@ -159,6 +159,11 @@ if $refresh; then
   ./run_db_script.sh $db_schema lobbywat_script db_views.sql cronverbose
 fi
 
+export_type=''
+if [ "$export_options" != "" ]; then
+  export_type="_$export_options"
+fi
+
 if [[ "$publish_dir" == "" ]]; then
   if [[ "$LW_PUBLIC_EXPORTS_DIR" == "" ]]; then
     echo -e "\nERROR: LW_PUBLIC_EXPORTS_DIR environment variable is not set"
@@ -172,27 +177,34 @@ base_secret_dir=${publish_dir%$SECRET_DIR_PATTERN*}
 publish_dir=${publish_dir/$SECRET_DIR_PATTERN/$secret_dir}
 
 if $publish && $publish_to_secret_dir; then
-  file_secret_dir="${BASE_FILE_SECRET_DIR}_$export_options"
-  file_secret_publish_dir="${BASE_FILE_SECRET_PUBLISH_DIR}_$export_options"
+  file_secret_dir="$BASE_FILE_SECRET_DIR$export_type"
+  file_secret_publish_dir="$BASE_FILE_SECRET_PUBLISH_DIR$export_type"
   [ -f $file_secret_dir ] && old_secret_dir=$(cat $file_secret_dir) || old_secret_dir=''
   [ -f $file_secret_publish_dir ] && old_secret_export_dir=$(cat $file_secret_publish_dir) || old_secret_export_dir=''
 
   if [[ "$old_secret_dir" == "" &&  ! $init_files ]]; then
     echo "'$file_secret_dir' does not exist"
+    echo "Call with -i for init"
     abort
   elif [[ "$old_secret_dir" == "" &&  $init_files ]]; then
     echo "Init '$file_secret_dir' since it does not exist yet"
+    mkdir -p "$publish_dir"
   elif [[ "$old_secret_export_dir" != "$publish_dir" ]]; then
-    echo "Secret dir changed: mv $base_secret_dir$old_secret_dir $base_secret_dir$secret_dir"
-    mv "$base_secret_dir$old_secret_dir" "$base_secret_dir$secret_dir"
+    echo -e "Secret dir changed from\n$base_secret_dir$old_secret_dir to\n$base_secret_dir$secret_dir"
+    if [[ "$old_secret_dir" != "$secret_dir" ]]; then
+      mv "$base_secret_dir$old_secret_dir" "$base_secret_dir$secret_dir"
+    else
+      echo "Cannot rename publish dir"
+      abort
+    fi
   fi
   echo "$secret_dir" >$file_secret_dir
   echo "$publish_dir" >$file_secret_publish_dir
 fi
 
-export_type=''
-if [ "$export_options" != "" ]; then
-  export_type="_$export_options"
+if [[ $publish && ! -d $publish_dir ]]; then
+  echo "Publish dir '$publish_dir' does not exist"
+  abort
 fi
 
 echo -e "$(date '+%F %T') Start exporting..."
