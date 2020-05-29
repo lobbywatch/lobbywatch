@@ -49,7 +49,8 @@ $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix
 'eingabe_abgeschlossen_datum_unix_person', 'kontrolliert_datum_unix_person', 'created_date_unix_person', 'updated_date_unix_person',
 'symbol_abs', 'photo', 'ALT_kommission', 'ALT_parlam_verbindung', 'email', 'telephon_1', 'telephon_2', 'adresse_strasse', 'adresse_zusatz', 'anzahl_interessenbindungen', 'anzahl_hauptberufliche_interessenbindungen', 'anzahl_nicht_hauptberufliche_interessenbindungen', 'anzahl_abgelaufene_interessenbindungen', 'anzahl_interessenbindungen_alle', 'anzahl_erfasste_verguetungen', 'anzahl_erfasste_hauptberufliche_verguetungen', 'anzahl_erfasste_nicht_hauptberufliche_verguetungen', 'verguetungstransparenz_berechnet', 'verguetungstransparenz_berechnet_nicht_beruflich', 'verguetungstransparenz_berechnet_alle', 'parlamentarier_lobbyfaktor',
 'lobbyfaktor', 'lobbyfaktor_max', 'lobbyfaktor_percent_max',
-'ALT_branche_id', 'branche_ALT', 'branche_de_ALT', 'branche_fr_ALT',];
+'ALT_branche_id', 'branche_ALT', 'branche_de_ALT', 'branche_fr_ALT',
+'published'];
 
 
 const EOL = "\n";
@@ -2167,7 +2168,8 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
     $unpubl_cols = !$filter['unpubl'] || !$filter['hist'] ? array_map(function($col) use ($query_table_alias, $alias_table_map, $exporter) {preg_match('/(([^.])\.)?(\S+)/i', $col, $matches, PREG_UNMATCHED_AS_NULL); $col_table_alias = $matches[2] ?? $query_table_alias; $col_field = $matches[3] ?? null; return ("$col_table_alias." ?? '') . ($col_field) . ' ' . $exporter->formatFieldAlias(getCleanQueryTableName($alias_table_map[$col_table_alias]), $col_field);}, $table_meta['unpubl_fields']) : [];
   }
 
-  $expression_cols = !$filter['unpubl'] && !($exporter instanceof SqlExporter) ? array_map(function($table, $alias) use ($filter, $table_meta, $exporter) { return ("(IFNULL($alias." .  ($table_meta['freigabe_date'] ?? 'freigabe_datum') . " <= NOW(), FALSE))") . ' ' . $exporter->formatFieldAlias(getCleanQueryTableName($table), 'published');}, array_keys($table_alias_map), $table_alias_map) : [];
+  // $expression_cols = !$filter['unpubl'] && !($exporter instanceof SqlExporter) ? array_map(function($table, $alias) use ($filter, $table_meta, $exporter) { return ("(IFNULL($alias." .  ($table_meta['freigabe_date'] ?? 'freigabe_datum') . " <= NOW(), FALSE))") . ' ' . $exporter->formatFieldAlias(getCleanQueryTableName($table), 'public');}, array_keys($table_alias_map), $table_alias_map) : [];
+  $expression_cols = !$filter['unpubl'] && !($exporter instanceof SqlExporter) ? ['(' . implode(' AND ', array_map(function($alias) use ($filter, $table_meta, $exporter) { return ("(IFNULL($alias." .  ($table_meta['freigabe_date'] ?? 'freigabe_datum') . " <= NOW(), FALSE))"); }, $table_alias_map)) . ') ' . "public"] : [];
 
   list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge(setTableAliasToCols($table_meta['select_cols'] ?? [], $query_table_alias, hasJoin($table_meta)), $table_meta['additional_join_cols'] ?? [], $aktiv_cols, $unpubl_cols, $expression_cols));
 
@@ -2236,7 +2238,7 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
   $expressions_filtered = getFilteredExpressionsSelect($alias_map);
   $expression_rows = [];
   if (!empty($expressions_filtered)) {
-    $expression_cols_cache_key = "$table_schema.$query_table_with_alias#" . implode(',', $expressions_filtered);
+    $expression_cols_cache_key = "$source.$table_key.$table_schema.$query_table_with_alias#" . implode(',', $expressions_filtered);
     if (empty($cached_cols[$expression_cols_cache_key])) {
       list($sql, $parent_id_col, $sql_select, $sql_from, $sql_join, $sql_where, $sql_order) = buildRowsSelect($table, $query_table_alias, $query_table_with_alias, $table_meta, array_map(function ($str, $alias) { return $str . ' ' . $alias;}, array_keys($expressions_filtered), $expressions_filtered), $filter, 0);
 
@@ -2331,7 +2333,7 @@ function export_tables(IExporter $exporter, array $tables, int $parent_id = null
     if ($verbose > 0 && $level < 2 || $verbose > 2) print("$level_indent$tkey [$formatName]\n");
 
     if (($table_meta['slow'] ?? 0) > $filter['slow']) {
-      if ($verbose > 0 && $level < 2 || $verbose > 2) print("${level_indent}Skip slow export (${table_meta['slow']})\n\n");
+      if ($verbose > 0 && $level < 2 || $verbose > 2) print("${level_indent}Skip slow export (${table_meta['slow']} > ${filter['slow']})\n\n");
       continue;
     }
 
@@ -2431,7 +2433,6 @@ function export_tables(IExporter $exporter, array $tables, int $parent_id = null
     }
 
     if (count(array_unique($export_header)) < count($export_header)) {
-      // print("\nERROR: duplicate col names!\n\n");
       print_r(array_count_values($export_header));
       throw new Exception('Duplicate col names');
     }
