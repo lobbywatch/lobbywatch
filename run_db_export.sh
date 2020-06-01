@@ -573,7 +573,7 @@ if $publish; then
   $LS $publish_dir
 
   # Clean up historised files as they consume a lot of memory
-  rm $EXPORT/202*hist*.*.zip || echo "No historised files to delete"
+  [ -f "$EXPORT/202*hist*.*.zip" ] && rm "$EXPORT/202*hist*.*.zip"
 fi
 
 quit
