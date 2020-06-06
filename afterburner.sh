@@ -46,42 +46,33 @@ echo -e "<?php\n\$build_date = '$NOW';\n\$build_date_short = '$NOW_SHORT';\n\$bu
 
 rm -rf $dir/templates_c/*
 
-#all_php_files='';
-
 # MIGR encoding problem with String.php
 if $clean ; then
-  all_php_files=`find $dir -name "*.php"`;
-  for file in $all_php_files
+  echo "Clean files..."
+  files=$(find $dir -name "*.php" && find $dir -name "*.js" && find $dir -name "*.tpl" && find $dir -name "*.css");
+  echo $(echo "$files" | wc -l) files
+  for file in $files
   do
-    if [[ $file == public_html/bearbeitung/libs/phpoffice/PHPExcel/Shared/String.php ]]; then
+    if [[ "$file" == "public_html/bearbeitung/libs/phpoffice/PHPExcel/Shared/String.php" ]]; then
      echo "Skip $file"
      continue
     fi
-    echo "Clean $file";
-    mv "$file" "$file.bak";
+    # echo "Clean $file";
+    file_bak="$file.bak"
+    mv "$file" "$file_bak";
     # Read file, process regex and write file
-    (cat "$file.bak"; echo -e "\n") |
+    (cat "$file_bak"; echo -e "\n") |
      dos2unix |
      perl -0 -p -e's/(\s*\?>\s*)$/\n/s' |
      perl -0 -p -e's/\s*$/\n/s' \
-    > "$file";
-  done
+    > "$file" \
+    && rm "$file_bak"
 
-  # files=`find $dir -name "*.js" && find $dir -name "*.tpl"`;
-  # for file in $files
-  # do
-  #   if [[ $file == public_html/bearbeitung/libs/phpoffice/PHPExcel/Shared/String.php ]]; then
-  #    echo "Skip $file"
-  #    continue
-  #   fi
-  #   echo "Clean $file";
-  #   mv "$file" "$file.bak";
-  #   # Read file, process regex and write file
-  #   (cat "$file.bak"; echo -e "\n") |
-  #    dos2unix |
-  #    perl -0 -p -e's/\s*$/\n/s' \
-  #   > "$file";
-  # done
+    # size=$(wc -c <$file)
+    # if (( size < 3 )); then
+    #   echo "Empty file: $file"
+    # fi
+  done
 fi
 
 for file in $dir/*.php
