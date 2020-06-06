@@ -26,4 +26,8 @@ done
 # winepath
 # exiftool -ProductVersion ~/.wine/drive_c/Program\ Files\ \(x86\)/SQL\ Maestro\ Group/PHP\ Generator\ for\ MySQL\ Professional\ 20.5.0.1/MyPHPGeneratorPro.exe
 
-wine "C:\Program Files (x86)\SQL Maestro Group\PHP Generator for MySQL Professional 20.5.0.1\MyPHPGeneratorPro.exe" "lobbywatch_bearbeitung_gen.pgtm" -output "public_html\bearbeitung" -generate
+dir="public_html/bearbeitung"
+
+[ -d "$dir/libs" ] && rm -r "$dir/libs"
+
+wine "C:\Program Files (x86)\SQL Maestro Group\PHP Generator for MySQL Professional 20.5.0.1\MyPHPGeneratorPro.exe" "lobbywatch_bearbeitung_gen.pgtm" -output "$(winepath -w $dir)" -generate
