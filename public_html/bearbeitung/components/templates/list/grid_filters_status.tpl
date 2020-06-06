@@ -25,4 +25,3 @@
         stringRepresentation=$DataGrid.ColumnFilter->toString($Captions)}
     </div>
 {/if}
-

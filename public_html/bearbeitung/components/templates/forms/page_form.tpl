@@ -22,5 +22,3 @@
 
     {include file='custom_templates/forms/actions_edit.tpl' top=false isHorizontal=$Grid.FormLayout->isHorizontal()}
 </div>
-
-

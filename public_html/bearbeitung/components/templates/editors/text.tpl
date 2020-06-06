@@ -23,4 +23,3 @@
 {/capture}
 
 {include file="editors/text_editor_wrapper.tpl" TextEditorContent=$TextEditorContent}
-

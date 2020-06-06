@@ -11,5 +11,3 @@
 
     {include file='forms/multi_upload_actions.tpl' top=false}
 </div>
-
-

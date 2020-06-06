@@ -26,4 +26,3 @@ function initInactivityTimeout(inactivityTimeout) {
         }
     }
 }
-

@@ -12,4 +12,3 @@ define([
         $('#self-change-password').click(function() {PhpGenChangePasswordDialog.open();});
     };
 });
-

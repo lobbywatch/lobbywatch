@@ -12,4 +12,3 @@
         {/strip}{/foreach}
     </ul>
 </div>
-
