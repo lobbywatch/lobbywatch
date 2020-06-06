@@ -550,7 +550,6 @@
             $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Fremdschlüssel des Parlamentariers');
             $column->SetFixedWidth(null);
@@ -583,7 +582,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_transparenz_notizen_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
             $column->SetFixedWidth(null);
@@ -715,7 +713,6 @@
             $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -739,7 +736,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_transparenz_notizen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1732,7 +1728,6 @@
             $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1756,7 +1751,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_transparenz_notizen_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1855,7 +1849,6 @@
             $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1879,7 +1872,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_transparenz_notizen_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1968,7 +1960,6 @@
             $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1992,7 +1983,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_transparenz_notizen_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -2173,60 +2163,6 @@
         }
     
         protected function doRegisterHandlers() {
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('parlamentarier_id', 'parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_transparenz_notizen_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('parlamentarier_id', 'parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_transparenz_notizen_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('parlamentarier_id', 'parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_transparenz_notizen_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -2551,24 +2487,6 @@
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_transparenz_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('parlamentarier_id', 'parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_transparenz_parlamentarier_id_anzeige_name_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_transparenz_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -3028,12 +2946,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -3044,7 +2962,7 @@
 
     try
     {
-        $Page = new parlamentarier_transparenzPage("parlamentarier_transparenz", "parlamentarier_transparenz.php", GetCurrentUserPermissionSetForDataSource("parlamentarier_transparenz"), 'UTF-8');
+        $Page = new parlamentarier_transparenzPage("parlamentarier_transparenz", "parlamentarier_transparenz.php", GetCurrentUserPermissionsForPage("parlamentarier_transparenz"), 'UTF-8');
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("parlamentarier_transparenz"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

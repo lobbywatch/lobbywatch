@@ -11,6 +11,8 @@ class PasswordRecoveryPage extends CommonPage
     private $userManager;
     /** @var Mailer */
     private $mailer;
+    /** @var  GoogleReCaptcha */
+    private $reCaptcha;
     /** @var Renderer */
     private $renderer;
 
@@ -25,12 +27,14 @@ class PasswordRecoveryPage extends CommonPage
     /**
      * @param TableBasedUserManager $userManager
      * @param Mailer $mailer
-    */
-    public function __construct($userManager, $mailer)
+     * @param GoogleReCaptcha $reCaptcha
+     */
+    public function __construct($userManager, $mailer, $reCaptcha)
     {
         parent::__construct('Recovering_password', 'UTF-8');
         $this->userManager = $userManager;
         $this->mailer = $mailer;
+        $this->reCaptcha = $reCaptcha;
         $this->renderer = new ViewAllRenderer($this->GetLocalizerCaptions());
         $this->OnPasswordResetRequest = new Event();
     }
@@ -67,11 +71,22 @@ class PasswordRecoveryPage extends CommonPage
                 'success' => true,
                 'message' => ''
             );
+            $this->processReCaptcha();
             $this->recoverPassword($accountName);
             $this->setSessionVariable(SecurityFeedback::Positive,  $this->GetLocalizerCaptions()->GetMessageString('RecoveringPasswordLinkSent'));
         } catch (Exception $e) {
             $this->response['success'] = false;
             $this->response['message'] = $e->getMessage();
+        }
+    }
+
+    /** @throw LogicException */
+    private function processReCaptcha() {
+        if ($this->reCaptcha) {
+            $reCaptchaResponse = $this->reCaptcha->verifyResponse();
+            if (!$reCaptchaResponse->IsSuccess()) {
+                throw new LogicException($reCaptchaResponse->getErrorMessage());
+            }
         }
     }
 
@@ -173,6 +188,11 @@ class PasswordRecoveryPage extends CommonPage
      */
     private function doAfterUserRequestedPasswordReset($username, $email) {
         $this->OnPasswordResetRequest->Fire(array($username, $email));
+    }
+
+    /** @return GoogleReCaptcha */
+    public function getReCaptcha() {
+        return $this->reCaptcha;
     }
 
 }

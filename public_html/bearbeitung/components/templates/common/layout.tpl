@@ -29,6 +29,8 @@
     {/literal}</script>
     {/if}
 
+    {include file='common/recaptcha.tpl'}
+
     <script type="text/javascript" src="components/js/require-config.js"></script>
     {if UseMinifiedJS()}
         <script type="text/javascript" src="components/js/libs/require.js"></script>

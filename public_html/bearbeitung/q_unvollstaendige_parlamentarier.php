@@ -4525,12 +4525,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -4541,7 +4541,7 @@
 
     try
     {
-        $Page = new q_unvollstaendige_parlamentarierPage("q_unvollstaendige_parlamentarier", "q_unvollstaendige_parlamentarier.php", GetCurrentUserPermissionSetForDataSource("q_unvollstaendige_parlamentarier"), 'UTF-8');
+        $Page = new q_unvollstaendige_parlamentarierPage("q_unvollstaendige_parlamentarier", "q_unvollstaendige_parlamentarier.php", GetCurrentUserPermissionsForPage("q_unvollstaendige_parlamentarier"), 'UTF-8');
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("q_unvollstaendige_parlamentarier"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

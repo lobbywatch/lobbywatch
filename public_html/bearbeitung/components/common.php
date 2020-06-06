@@ -15,7 +15,6 @@ include_once dirname(__FILE__) . '/http_handler/modal_grid_view_http_handler.php
 include_once dirname(__FILE__) . '/http_handler/modal_delete_http_handler.php';
 include_once dirname(__FILE__) . '/http_handler/multilevel_selection_http_handler.php';
 include_once dirname(__FILE__) . '/http_handler/page_http_handler.php';
-include_once dirname(__FILE__) . '/http_handler/show_text_blob_http_handler.php';
 include_once dirname(__FILE__) . '/http_handler/linked_images_http_handler.php';
 include_once dirname(__FILE__) . '/http_handler/autocomplete_dataset_based_http_handler.php';
 include_once dirname(__FILE__) . '/http_handler/autocomplete_function_based_http_handler.php';

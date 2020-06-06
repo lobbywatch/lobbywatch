@@ -436,4 +436,10 @@ return array(
 'SelectionFilter' => 'Selection filter',
 'ShowAll' => 'Show all',
 'PasswordAndConfirmationPasswordMustMatch' => 'Password and confirmation password must match',
+'RecaptchaMissingInputSecret' => 'reCAPTCHA: the secret parameter is missing',
+'RecaptchaInvalidInputSecret' => 'reCAPTCHA: the secret parameter is invalid or malformed',
+'RecaptchaMissingInputResponse' => 'Please solve the reCAPTCHA',
+'RecaptchaInvalidInputResponse' => 'reCAPTCHA: the response parameter is invalid or malformed',
+'RecaptchaBadRequest' => 'reCAPTCHA: the request is invalid or malformed',
+'RecaptchaTimeout' => 'reCAPTCHA: the response is no longer valid: either is too old or has been used previously',
 );

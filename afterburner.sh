@@ -9,7 +9,7 @@ PHP=/opt/lampp/bin/php
 
 # TODO use \ only where necessary http://stackoverflow.com/questions/1455988/commenting-in-bash-script
 
-clean="true";
+clean=true;
 # Ref: http://stackoverflow.com/questions/7069682/how-to-get-arguments-with-flags-in-bash-script
 for i in "$@" ; do
       case $i in
@@ -24,7 +24,7 @@ for i in "$@" ; do
                         ;;
                 -n|--noclean)
                         shift
-                        no_clean="false"
+                        no_clean=false
                         ;;
                 *)
                         break
@@ -46,11 +46,11 @@ echo -e "<?php\n\$build_date = '$NOW';\n\$build_date_short = '$NOW_SHORT';\n\$bu
 
 rm -rf $dir/templates_c/*
 
-all_php_files=`find $dir -name "*.php"`;
 #all_php_files='';
 
 # MIGR encoding problem with String.php
-if [[ "$clean" = "true" ]] ; then
+if $clean ; then
+  all_php_files=`find $dir -name "*.php"`;
   for file in $all_php_files
   do
     if [[ $file == public_html/bearbeitung/libs/phpoffice/PHPExcel/Shared/String.php ]]; then
@@ -66,6 +66,22 @@ if [[ "$clean" = "true" ]] ; then
      perl -0 -p -e's/\s*$/\n/s' \
     > "$file";
   done
+
+  # files=`find $dir -name "*.js" && find $dir -name "*.tpl"`;
+  # for file in $files
+  # do
+  #   if [[ $file == public_html/bearbeitung/libs/phpoffice/PHPExcel/Shared/String.php ]]; then
+  #    echo "Skip $file"
+  #    continue
+  #   fi
+  #   echo "Clean $file";
+  #   mv "$file" "$file.bak";
+  #   # Read file, process regex and write file
+  #   (cat "$file.bak"; echo -e "\n") |
+  #    dos2unix |
+  #    perl -0 -p -e's/\s*$/\n/s' \
+  #   > "$file";
+  # done
 fi
 
 for file in $dir/*.php
@@ -263,7 +279,7 @@ do
    perl -p -e's%('\''|")(forms/field_label.tpl)\1%\1custom_templates/\2\1%g' |
    perl -p -e's%('\''|")(forms/form_footer.tpl)\1%\1custom_templates/\2\1%g' |
    perl -p -e's%('\''|")(forms/actions_edit.tpl)\1%\1custom_templates/\2\1%g' |
-   perl -p -e's%('\''|")(list/grid_toolbar.tpl)\1%\1custom_templates/\2\1%g' |
+   perl -p -e's%('\''|")(list/grid_toolbar_selection_button.tpl)\1%\1custom_templates/\2\1%g' |
    perl -p -e's%('\''|")(list/grid_column_header.tpl)\1%\1custom_templates/\2\1%g' \
   > "$file";
 done

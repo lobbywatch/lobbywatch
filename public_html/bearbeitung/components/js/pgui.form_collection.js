@@ -185,7 +185,7 @@ define([
         },
 
         setLoading: function (isLoading) {
-            var $buttons = this.$formsContainer.find('.btn-toolbar button.btn-primary,.js-save,.js-cancel').prop('disabled', isLoading);
+            var $buttons = this.$formsContainer.find('.btn-toolbar button.btn-primary,.js-save,.js-cancel,.js-recaptcha').prop('disabled', isLoading);
 
             if (isLoading) {
                 $buttons.addClass('btn-loading');

@@ -20,7 +20,8 @@ define([
     'pgui.editors/dynamic_cascading_combobox',
     'pgui.editors/static_editor',
     'pgui.editors/multi_uploader',
-    'pgui.editors/autocomplete'
+    'pgui.editors/autocomplete',
+    'pgui.editors/signature'
 ], function (
     Class,
     events,
@@ -43,7 +44,8 @@ define([
     DynamicCascadingCombobox,
     StaticEditor,
     MultiUploader,
-    Autocomplete
+    Autocomplete,
+    Signature
 ) {
 
     var editorNames = {
@@ -68,7 +70,8 @@ define([
         dynamic_cascading_combobox: DynamicCascadingCombobox,
         static_editor: StaticEditor,
         multiuploader: MultiUploader,
-        autocomplete: Autocomplete
+        autocomplete: Autocomplete,
+        signature: Signature
     };
 
     var EditorsController = events.mixin(Class.extend({

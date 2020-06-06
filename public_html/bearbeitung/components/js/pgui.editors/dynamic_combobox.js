@@ -47,7 +47,7 @@ define([
                     results: function (data) {
                         return {
                             results: $.map(data, function (item) {
-                                return {id: item.id, text: item.value, fields: item.fields};
+                                return {id: item.id, text: item.value, formatted_value: item.formatted_value, fields: item.fields};
                             })
                         };
                     },
@@ -68,6 +68,7 @@ define([
                                 callback({
                                     id: item.id,
                                     text: item.value,
+                                    formatted_value: item.formatted_value,
                                     fields: item.fields
                                 });
                                 self.rootElement.trigger('select2-init');

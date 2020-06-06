@@ -170,11 +170,20 @@ abstract class Page extends CommonPage implements IVariableContainer
     private $exportListRecordAvailable = array();
     private $exportOneRecordAvailable = array('pdf', 'excel', 'word', 'xml', 'csv');
     private $exportSelectedRecordsAvailable = array('pdf', 'excel', 'word', 'xml', 'csv');
+
+    /** @var bool */
+    private $openPrintFormInNewTab = true;
+    /** @var bool */
+    private $openExportedPdfInNewTab = true;
+    /** @var bool */
+    private $displayChartsOnPrintForm = true;
     /** @var bool */
     private $showFormErrorsOnTop = false;
     /** @var bool */
     private $showFormErrorsAtBottom = true;
 
+    /** @var PageList */
+    private $pageList;
     private $visualEffectsEnabled;
     private $detailedDescription;
     private $description;
@@ -190,12 +199,12 @@ abstract class Page extends CommonPage implements IVariableContainer
     #region Events
     public $BeforePageRender;
     public $OnCustomHTMLHeader;
+    public $OnAddEnvironmentVariables;
     public $OnGetCustomTemplate;
     public $OnPrepareChart;
     public $OnGetCustomFormLayout;
     public $OnGetCustomColumnGroup;
     public $OnFileUpload;
-    public $OnGetCustomPagePermissions;
     public $OnGetCustomRecordPermissions;
     public $OnPageLoaded;
     public $OnGetCalculatedFieldValue;
@@ -204,7 +213,7 @@ abstract class Page extends CommonPage implements IVariableContainer
     /**
      * @param string $id
      * @param string $pageFileName
-     * @param PermissionSet $dataSourceSecurityInfo
+     * @param IPermissionSet $dataSourceSecurityInfo
      * @param string $contentEncoding
      */
     public function __construct($id, $pageFileName, $dataSourceSecurityInfo = null, $contentEncoding=null)
@@ -212,13 +221,13 @@ abstract class Page extends CommonPage implements IVariableContainer
         parent::__construct($id, $contentEncoding);
         $this->BeforePageRender = new Event();
         $this->OnCustomHTMLHeader = new Event();
+        $this->OnAddEnvironmentVariables = new Event();
         $this->OnGetCustomTemplate = new Event();
         $this->OnPrepareChart = new Event();
         $this->OnGetCustomFormLayout = new Event();
         $this->OnGetCustomColumnGroup = new Event();
         $this->OnGetCustomExportOptions = new Event();
         $this->OnFileUpload = new Event();
-        $this->OnGetCustomPagePermissions = new Event();
         $this->OnGetCustomRecordPermissions = new Event();
         $this->OnPageLoaded = new Event();
         $this->OnGetCalculatedFieldValue = new Event();
@@ -240,6 +249,8 @@ abstract class Page extends CommonPage implements IVariableContainer
         $this->message = null;
         $this->pageNavigatorStack = array();
 
+        $this->attachAddEnvironmentVariablesHandlers();
+
         $this->BeforeCreate();
 
         $this->CreateComponents();
@@ -248,6 +259,13 @@ abstract class Page extends CommonPage implements IVariableContainer
         $this->setupGridColumnGroup($this->grid);
 
         $this->Prepare();
+    }
+
+    private function attachAddEnvironmentVariablesHandlers() {
+        if (function_exists('Global_AddEnvironmentVariablesHandler')) {
+            $this->OnAddEnvironmentVariables->AddListener('Global_AddEnvironmentVariablesHandler');
+        }
+        $this->OnAddEnvironmentVariables->AddListener('OnAddEnvironmentVariablesHandler', $this);
     }
 
     #region ViewData
@@ -289,6 +307,8 @@ abstract class Page extends CommonPage implements IVariableContainer
         $values['PAGE_PDF_EXPORT_LINK'] = $this->GetExportToPdfLink();
         $values['PAGE_XML_EXPORT_LINK'] = $this->GetExportToXmlLink();
         $values['PAGE_WORD_EXPORT_LINK'] = $this->GetExportToWordLink();
+
+        $this->OnAddEnvironmentVariables->Fire(array($this, &$values));
     }
 
     public function GetAuthenticationViewData() {
@@ -403,8 +423,6 @@ abstract class Page extends CommonPage implements IVariableContainer
     }
 
     private function BeforeCreateGrid() {
-        $this->OnGetCustomPagePermissions->AddListener('Global_OnGetCustomPagePermissionsHandler');
-        $this->OnGetCustomPagePermissions->AddListener('OnGetCustomPagePermissionsHandler', $this);
         $this->OnGetCustomRecordPermissions->AddListener('OnGetCustomRecordPermissionsHandler', $this);
     }
 
@@ -537,10 +555,6 @@ abstract class Page extends CommonPage implements IVariableContainer
         $this->doGetCustomColumnGroup($columns, $columnGroup);
     }
 
-    public function OnGetCustomPagePermissionsHandler(Page $page, PermissionSet &$permissions, &$handled) {
-        $this->doGetCustomPagePermissions($page, $permissions, $handled);
-    }
-
     public function OnGetCustomRecordPermissionsHandler(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled) {
         $this->doGetCustomRecordPermissions($page, $usingCondition, $rowData, $allowEdit, $allowDelete, $mergeWithDefault, $handled);
     }
@@ -551,6 +565,10 @@ abstract class Page extends CommonPage implements IVariableContainer
 
     public function OnCalculateFieldsHandler($rowData, $fieldName, &$value) {
         $this->doCalculateFields($rowData, $fieldName, $value);
+    }
+
+    public function OnAddEnvironmentVariablesHandler(Page $page, &$variables) {
+        $this->doAddEnvironmentVariables($page, $variables);
     }
 
     protected function doCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled) {
@@ -619,9 +637,6 @@ abstract class Page extends CommonPage implements IVariableContainer
     protected function doGetCustomColumnGroup(FixedKeysArray $columns, ViewColumnGroup $columnGroup) {
     }
 
-    protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled) {
-    }
-
     protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled) {
     }
 
@@ -629,6 +644,9 @@ abstract class Page extends CommonPage implements IVariableContainer
     }
 
     protected function doCalculateFields($rowData, $fieldName, &$value) {
+    }
+
+    protected function doAddEnvironmentVariables(Page $page, &$variables) {
     }
 
     public function prepareColumnFilter(ColumnFilter $columnFilter) {
@@ -973,6 +991,7 @@ abstract class Page extends CommonPage implements IVariableContainer
                 'Caption' =>    $this->GetLocalizerCaptions()->GetMessageString('ExportTo' . ucfirst($export)),
                 'IconClass' => 'icon-export-' . $export,
                 'Href' =>       $this->getExportLink($export, $primaryKeyValues),
+                'Target' => ($export == 'pdf' ? $this->getExportToPdfLinkTarget() : '')
             );
         }
 
@@ -980,13 +999,15 @@ abstract class Page extends CommonPage implements IVariableContainer
             $result['print_page'] = array(
                 'Caption' =>   $this->GetLocalizerCaptions()->GetMessageString('PrintCurrentPage'),
                 'IconClass' => 'icon-print-page',
-                'Href' =>      $this->GetPrintCurrentPageLink()
+                'Href' =>      $this->GetPrintCurrentPageLink(),
+                'Target' => $this->getPrintLinkTarget(),
             );
 
             $result['print_all'] = array(
                 'Caption' =>   $this->GetLocalizerCaptions()->GetMessageString('PrintAllPages'),
                 'IconClass' => 'icon-print-page',
                 'Href' =>      $this->GetPrintAllLink(),
+                'Target' => $this->getPrintLinkTarget(),
                 'BeginNewGroup' => true
             );
         }
@@ -1003,27 +1024,18 @@ abstract class Page extends CommonPage implements IVariableContainer
         foreach ($this->exportSelectedRecordsAvailable as $export) {
             $result[$export] = array(
                 'Caption' =>    $this->GetLocalizerCaptions()->GetMessageString('ExportTo' . ucfirst($export)),
-                'Type' =>       $export
+                'Type' =>       $export,
+                'Target' => ($export == 'pdf' ? $this->getExportToPdfLinkTarget() : '')
             );
         }
         return $result;
     }
 
-    private function GetPageList()
-    {
-        return PageList::createForPage($this);
-    }
-
     public function GetReadyPageList() {
-        $pageList = $this->GetPageList();
+        $result = parent::GetReadyPageList();
+        $result->AddRssLinkForCurrentPage($this->GetRssLink());
 
-        if (!$pageList) {
-            return null;
-        }
-
-        $pageList->AddRssLinkForCurrentPage($this->GetRssLink());
-
-        return $pageList;
+        return $result;
     }
 
     public function GetForeignKeyFields()
@@ -1283,37 +1295,24 @@ abstract class Page extends CommonPage implements IVariableContainer
 
     #endregion
 
-    function IsCurrentUserLoggedIn()
-    {
+    function IsCurrentUserLoggedIn() {
         return GetApplication()->IsCurrentUserLoggedIn();
     }
 
     function IsLoggedInAsAdmin() {
-        $this->GetSecurityInfo()->HasAdminGrant();
+        return $this->GetSecurityInfo()->HasAdminGrant();
     }
 
     function GetCurrentUserId() {
         return GetApplication()->GetCurrentUserId();
     }
 
-    function GetCurrentUserName()
-    {
+    function GetCurrentUserName() {
         return GetApplication()->GetCurrentUser();
     }
 
     public function GetSecurityInfo() {
-        $handled = false;
-        $customSecurityInfo = new PermissionSet(
-            $this->securityInfo->HasViewGrant(),
-            $this->securityInfo->HasEditGrant(),
-            $this->securityInfo->HasAddGrant(),
-            $this->securityInfo->HasDeleteGrant(),
-            $this->securityInfo->HasAdminGrant()
-        );
-        $this->OnGetCustomPagePermissions->Fire(array($this, &$customSecurityInfo, &$handled));
-
-        $result = $handled ? $customSecurityInfo : $this->securityInfo;
-        return $result;
+        return $this->securityInfo;
     }
 
     /**
@@ -1862,13 +1861,13 @@ abstract class Page extends CommonPage implements IVariableContainer
 
         $groupName = null;
         $siblings = new Navigation($this);
-        foreach ($this->getPageList()->GetPagesViewData() as $page) {
+        foreach ($this->GetReadyPageList()->GetPagesViewData() as $page) {
             if ($page['Href'] === $url && $page['GroupName'] !== 'Default') {
                 $groupName = $page['GroupName'];
             }
         }
 
-        foreach ($this->getPageList()->GetPagesViewData() as $page) {
+        foreach ($this->GetReadyPageList()->GetPagesViewData() as $page) {
             if ($page['Href'] !== $url && $page['GroupName'] === $groupName) {
                 $siblings->append($page['Caption'], $page['Href']);
             }
@@ -1964,4 +1963,45 @@ abstract class Page extends CommonPage implements IVariableContainer
     public function setShowFormErrorsAtBottom($value) {
         $this->showFormErrorsAtBottom = $value;
     }
+
+    /** @return bool */
+    public function getOpenPrintFormInNewTab() {
+        return $this->openPrintFormInNewTab;
+    }
+
+    /** @param bool $value */
+    public function setOpenPrintFormInNewTab($value) {
+        $this->openPrintFormInNewTab = $value;
+    }
+
+    /** @return bool */
+    public function getOpenExportedPdfInNewTab() {
+        return $this->openExportedPdfInNewTab;
+    }
+
+    /** @param bool $value */
+    public function setOpenExportedPdfInNewTab($value) {
+        $this->openExportedPdfInNewTab = $value;
+    }
+
+    /** @return string */
+    public function getPrintLinkTarget() {
+        return ($this->openPrintFormInNewTab ? ' target="_blank"' : '');
+    }
+
+    /** @return string */
+    public function getExportToPdfLinkTarget() {
+        return ($this->openExportedPdfInNewTab ? ' target="_blank"' : '');
+    }
+
+    /** @return bool */
+    public function getDisplayChartsOnPrintForm() {
+        return $this->displayChartsOnPrintForm;
+    }
+
+    /** @param bool $value */
+    public function setDisplayChartsOnPrintForm($value) {
+        $this->displayChartsOnPrintForm = $value;
+    }
+
 }

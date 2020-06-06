@@ -796,7 +796,6 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Deklarierte Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_funktion_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Deklarierte Funktion der zutrittsberechtigen Person bei den Parlamentsdiensten.');
             $column->SetFixedWidth(null);
@@ -808,7 +807,6 @@
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Deklarierte Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_funktion_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Deklarierte Funktion der zutrittsberechtigen Person auf französisch.');
             $column->SetFixedWidth(null);
@@ -842,7 +840,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
@@ -1027,7 +1024,6 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Deklarierte Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_funktion_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1036,7 +1032,6 @@
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Deklarierte Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_funktion_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1061,7 +1056,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -2278,7 +2272,6 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_funktion_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -2287,7 +2280,6 @@
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_funktion_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -2312,7 +2304,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_notizen_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -2455,7 +2446,6 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_funktion_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -2464,7 +2454,6 @@
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_funktion_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -2489,7 +2478,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_notizen_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -2632,7 +2620,6 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Deklarierte Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_funktion_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -2641,7 +2628,6 @@
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Deklarierte Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_funktion_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -2666,7 +2652,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_notizen_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -2895,81 +2880,6 @@
         }
     
         protected function doRegisterHandlers() {
-            //
-            // View column for funktion field
-            //
-            $column = new TextViewColumn('funktion', 'funktion', 'Deklarierte Funktion', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_funktion_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for funktion_fr field
-            //
-            $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Deklarierte Funktion Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_funktion_fr_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_notizen_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for funktion field
-            //
-            $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_funktion_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for funktion_fr field
-            //
-            $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Funktion Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_funktion_fr_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_notizen_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for funktion field
-            //
-            $column = new TextViewColumn('funktion', 'funktion', 'Deklarierte Funktion', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_funktion_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for funktion_fr field
-            //
-            $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Deklarierte Funktion Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_funktion_fr_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_notizen_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -3304,31 +3214,6 @@
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_zutrittsberechtigung_person_id_search', 'id', 'anzeige_name', null, 20);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for funktion field
-            //
-            $column = new TextViewColumn('funktion', 'funktion', 'Deklarierte Funktion', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_funktion_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for funktion_fr field
-            //
-            $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Deklarierte Funktion Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_funktion_fr_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -3798,12 +3683,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -3814,7 +3699,7 @@
 
     try
     {
-        $Page = new zutrittsberechtigungPage("zutrittsberechtigung", "zutrittsberechtigung.php", GetCurrentUserPermissionSetForDataSource("zutrittsberechtigung"), 'UTF-8');
+        $Page = new zutrittsberechtigungPage("zutrittsberechtigung", "zutrittsberechtigung.php", GetCurrentUserPermissionsForPage("zutrittsberechtigung"), 'UTF-8');
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("zutrittsberechtigung"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

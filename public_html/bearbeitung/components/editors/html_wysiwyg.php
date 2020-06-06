@@ -3,10 +3,23 @@
 include_once dirname(__FILE__) . '/' . 'custom.php';
 include_once dirname(__FILE__) . '/' . '../utils/array_wrapper.php';
 
+class HTMLTemplate {
+    public $name;
+    public $html;
+
+    public function __construct($name, $html) {
+        $this->name = $name;
+        $this->html = $html;
+    }
+}
+
 class HtmlWysiwygEditor extends CustomEditor {
     private $value;
     private $columnCount;
     private $rowCount;
+
+    /** @var HTMLTemplate[] */
+    private $templates = array();
 
     public function GetValue() {
         return $this->value;
@@ -30,6 +43,39 @@ class HtmlWysiwygEditor extends CustomEditor {
 
     public function GetRowCount() {
         return $this->rowCount;
+    }
+
+    /**
+     * @param string $name
+     * @param string $html
+     *
+     * @return $this
+     */
+    public function addTemplate($name, $html) {
+        $this->templates[] = new HTMLTemplate($name, $html);
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function removeTemplate($name) {
+        foreach ($this->templates as $key => $template) {
+            if ($template->name == $name) {
+                unset($this->templates[$key]);
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * @return HTMLTemplate[]
+     */
+    public function getTemplates() {
+        return $this->templates;
     }
 
     public function extractValueFromArray(ArrayWrapper $arrayWrapper, &$valueChanged) {

@@ -412,7 +412,6 @@
             $column = new TextViewColumn('translation', 'translation', 'Translation', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('translation_target_translation_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Übersetzter Text; "-", wenn der lange Text genommen wird.');
             $column->SetFixedWidth(null);
@@ -490,7 +489,6 @@
             $column = new TextViewColumn('translation', 'translation', 'Translation', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('translation_target_translation_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -899,7 +897,6 @@
             $column = new TextViewColumn('translation', 'translation', 'Translation', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('translation_target_translation_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -962,7 +959,6 @@
             $column = new TextViewColumn('translation', 'translation', 'Translation', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('translation_target_translation_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1025,7 +1021,6 @@
             $column = new TextViewColumn('translation', 'translation', 'Translation', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('translation_target_translation_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1164,30 +1159,6 @@
         }
     
         protected function doRegisterHandlers() {
-            //
-            // View column for translation field
-            //
-            $column = new TextViewColumn('translation', 'translation', 'Translation', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'translation_target_translation_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for translation field
-            //
-            $column = new TextViewColumn('translation', 'translation', 'Translation', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'translation_target_translation_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for translation field
-            //
-            $column = new TextViewColumn('translation', 'translation', 'Translation', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'translation_target_translation_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -1232,14 +1203,6 @@
             );
             $lookupDataset->setOrderByField('source', 'ASC');
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_translation_target_translation_source_id_search', 'id', 'source', null, 20);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for translation field
-            //
-            $column = new TextViewColumn('translation', 'translation', 'Translation', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'translation_target_translation_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -1419,12 +1382,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -1435,7 +1398,7 @@
 
     try
     {
-        $Page = new translation_targetPage("translation_target", "translation_target.php", GetCurrentUserPermissionSetForDataSource("translation_target"), 'UTF-8');
+        $Page = new translation_targetPage("translation_target", "translation_target.php", GetCurrentUserPermissionsForPage("translation_target"), 'UTF-8');
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("translation_target"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

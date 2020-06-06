@@ -42,7 +42,9 @@ $page = new LoginPage(
     dirname(__FILE__),
     GetApplication()->GetUserAuthentication(),
     MyPDOConnectionFactory::getInstance(),
-    Captions::getInstance('UTF-8')
+    Captions::getInstance('UTF-8'),
+    GetReCaptcha('login'),
+    ''
 );
 
 

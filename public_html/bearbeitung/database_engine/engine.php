@@ -11,6 +11,12 @@ class SMSQLException extends Exception {
     }
 }
 
+class SMQueryReturnsNoRowsException extends Exception {
+    public function __construct($message) {
+        parent::__construct($message);
+    }
+}
+
 /** @var IEngConnection[] $connectionPool  */
 $connectionPool = array();
 
@@ -442,8 +448,12 @@ abstract class EngConnection implements IEngConnection {
         return false;
     }
 
-    private function raiseSQLExecutionException($sql) {
+    protected function raiseSQLExecutionException($sql) {
         throw new SMSQLException('Cannot execute SQL statement: ' /*. $sql . "\n"*/ . $this->LastError());
+    }
+
+    protected function raiseSQLStatementReturnsNoRowsException($sql) {
+        throw new SMQueryReturnsNoRowsException("SQL statement '$sql' returns no rows");
     }
 
     private function CheckDriverSupported() {

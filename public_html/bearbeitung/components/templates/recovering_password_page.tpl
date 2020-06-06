@@ -15,12 +15,24 @@
                            data-validation="required" data-required-error-message="Username is required">
                 </div>
 
+                {if $ReCaptcha && $ReCaptcha->isCheckboxCaptcha()}
+                    <div class="form-group">
+                        <div class="g-recaptcha" data-sitekey="{$ReCaptcha->getSiteKey()}"{if $ReCaptcha->getUseDarkColorTheme()} data-theme="dark"{/if}></div>
+                    </div>
+                {/if}
+
                 <div class="form-error-container">
                 </div>
 
                 <div class="form-group text-center">
-                    <button class="btn btn-primary js-save" data-action="open" data-url="login.php">{$Captions->GetMessageString('SendPasswordResetLink')}</button>
-                    &nbsp;<a href="login.php" class="btn btn-default">{$Captions->GetMessageString('Cancel')}</a>
+                    {if $ReCaptcha && $ReCaptcha->isInvisibleCaptcha()}
+                        <button id="submit-recaptcha" class="btn btn-primary js-recaptcha g-recaptcha" data-sitekey="{$ReCaptcha->getSiteKey()}" data-callback='onReCaptchaFormSubmit' data-expired-callback='onReCaptchaExpired' {if $ReCaptcha->getUseDarkColorTheme()} data-theme="dark"{/if}>{$Captions->GetMessageString('SendPasswordResetLink')}</button>
+                        <button id="submit-form" class="btn btn-primary js-save" data-action="open" data-url="login.php" style="display: none">{$Captions->GetMessageString('SendPasswordResetLink')}</button>
+                    {else}
+                        <button class="btn btn-primary js-save" data-action="open" data-url="login.php">{$Captions->GetMessageString('SendPasswordResetLink')}</button>
+                    {/if}
+                    &nbsp;
+                    <a href="login.php" class="btn btn-default">{$Captions->GetMessageString('Cancel')}</a>
                 </div>
             </form>
         </div>

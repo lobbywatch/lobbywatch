@@ -220,9 +220,9 @@ class PageList {
     const TYPE_SIDEBAR = 'type_sidebar';
     const TYPE_MENU = 'type_menu';
 
-    /**
-     * @var PageLink[]
-     */
+    /** @var CommonPage */
+    private $parentPage;
+    /** @var PageLink[] */
     private $pages;
     private $currentPageOptions;
     private $currentPageRss;
@@ -236,36 +236,32 @@ class PageList {
         $this->currentPageOptions = array();
         $this->currentPageRss = null;
         $this->groups = array();
+        if ($this->parentPage) {
+            $this->createMenu();
+        }
     }
 
-    /**
-     * @param CommonPage $page
-     *
-     * @return PageList
-     */
-    public static function createForPage(CommonPage $page)
-    {
-        $currentPageFilename = $page->GetPageFileName();
-        $pageList = new PageList($page);
+    private function createMenu() {
+        $currentPageFilename = $this->parentPage->GetPageFileName();
 
         $pageGroups = GetPageGroups();
         foreach ($pageGroups as $group) {
-            $pageList->addGroupEx(new PageGroup($group['caption'], $group['description']));
+            $this->addGroupEx(new PageGroup($group['caption'], $group['description']));
         }
 
         $pageInfos = GetPageInfos();
         foreach($pageInfos as $pageInfo) {
-            if (!GetCurrentUserPermissionSetForDataSource($pageInfo['name'])->HasViewGrant()) {
+            if (!GetCurrentUserPermissionsForPage($pageInfo['name'])->HasViewGrant()) {
                 continue;
             }
 
             $groupName = $pageInfo['group_name'];
-            if (!$pageList->hasGroup($groupName)) {
-                $pageList->AddGroup($groupName);
+            if (!$this->hasGroup($groupName)) {
+                $this->AddGroup($groupName);
             }
 
             $shortCaption = $pageInfo['short_caption'];
-            $pageList->AddPage(new PageLink(
+            $this->AddPage(new PageLink(
                 $pageInfo['caption'],
                 $pageInfo['filename'],
                 $shortCaption,
@@ -280,10 +276,8 @@ class PageList {
         }
 
         if (function_exists('Global_GetCustomPageList')) {
-            Global_GetCustomPageList($page, $pageList);
+            Global_GetCustomPageList($this->parentPage, $this);
         }
-
-        return $pageList;
     }
 
     /**

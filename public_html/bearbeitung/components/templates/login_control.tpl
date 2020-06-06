@@ -24,6 +24,12 @@
             <input placeholder="{$Captions->GetMessageString('Password')}" type="password" name="password" class="form-control" id="password">
         </div>
 
+        {if $ReCaptcha && $ReCaptcha->isCheckboxCaptcha()}
+            <div class="form-group">
+                <div class="g-recaptcha" data-sitekey="{$ReCaptcha->getSiteKey()}"{if $ReCaptcha->getUseDarkColorTheme()} data-theme="dark"{/if}></div>
+            </div>
+        {/if}
+
         <div class="form-group">
             <div class="checkbox">
                 <label>
@@ -40,8 +46,12 @@
         {/if}
 
         <div class="form-group text-center">
-            <button class="btn btn-primary" type="submit">{$Captions->GetMessageString('Login')}</button>
-
+            {if $ReCaptcha && $ReCaptcha->isInvisibleCaptcha()}
+                <button id="submit-recaptcha" class="btn btn-primary g-recaptcha" data-sitekey="{$ReCaptcha->getSiteKey()}" data-callback='onReCaptchaFormSubmit' data-expired-callback='onReCaptchaExpired'{if $ReCaptcha->getUseDarkColorTheme()} data-theme="dark"{/if}>{$Captions->GetMessageString('Login')}</button>
+                <button id="submit-form" class="btn btn-primary" type="submit" style="display: none">{$Captions->GetMessageString('Login')}</button>
+            {else}
+                <button class="btn btn-primary" type="submit">{$Captions->GetMessageString('Login')}</button>
+            {/if}
             {if $LoginControl->CanLoginAsGuest()}
                 &nbsp;<a href="{$LoginControl->GetLoginAsGuestLink()|escapeurl}" class="btn btn-default">{$Captions->GetMessageString('LoginAsGuest')}</a>
             {/if}

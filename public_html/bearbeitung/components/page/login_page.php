@@ -10,6 +10,9 @@ class LoginPage extends CommonPage
     private $renderer;
     private $pageFileName;
     private $inactivityTimeoutExpired;
+    /** @var AbstractUserAuthentication */
+    private $userAuthentication;
+    private $reCaptcha;
 
     #region Events
     public $OnAfterLogin;
@@ -17,12 +20,16 @@ class LoginPage extends CommonPage
     public $OnBeforeLogout;
     #endregion
 
-    public function __construct(
-        $mainPageUrl,
-        $pageFileName,
-        AbstractUserAuthentication $userAuthentication,
-        ConnectionFactory $connectionFactory,
-        Captions $captions)
+    /**
+     * @param string $mainPageUrl
+     * @param string $pageFileName
+     * @param AbstractUserAuthentication $userAuthentication
+     * @param ConnectionFactory $connectionFactory
+     * @param Captions $captions
+     * @param GoogleReCaptcha|null $reCaptcha
+     * @param string $startupPage
+     */
+    public function __construct($mainPageUrl, $pageFileName, $userAuthentication, $connectionFactory, $captions, $reCaptcha, $startupPage)
     {
         parent::__construct('login', 'UTF-8');
 
@@ -31,9 +38,12 @@ class LoginPage extends CommonPage
             $mainPageUrl,
             $userAuthentication,
             $connectionFactory,
-            $captions
+            $captions,
+            $reCaptcha,
+            $startupPage
         );
 
+        $this->userAuthentication = $userAuthentication;
         $this->pageFileName = $pageFileName;
         $this->captions = $captions;
         $this->OnAfterLogin = new Event();
@@ -41,6 +51,7 @@ class LoginPage extends CommonPage
         $this->OnBeforeLogout = new Event();
         $this->renderer = new ViewAllRenderer($this->captions);
         $this->inactivityTimeoutExpired = false;
+        $this->reCaptcha = $reCaptcha;
     }
 
     public function GetPageFileName()
@@ -88,4 +99,9 @@ class LoginPage extends CommonPage
     public function getInactivityTimeoutExpired() {
         return $this->inactivityTimeoutExpired;
     }
+
+    public function getReCaptcha() {
+        return $this->reCaptcha;
+    }
+
 }

@@ -37,14 +37,6 @@ class HomePage extends CommonPage
             : $this->selectedGroup;
     }
 
-    /**
-     * @return PageList
-     */
-    public function GetReadyPageList()
-    {
-        return PageList::createForPage($this);
-    }
-
     public function getSelectedGroup()
     {
         return $this->selectedGroup;

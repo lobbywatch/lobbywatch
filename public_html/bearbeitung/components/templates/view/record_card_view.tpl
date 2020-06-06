@@ -6,7 +6,7 @@
         </div>
         <div class="modal-body">
 
-            <div class="form-static{if $Grid.FormLayout->isHorizontal()} form-horizontal{/if}">
+            <div class="{if $Grid.FormLayout->isHorizontal()} form-horizontal{/if}">
                 <div class="row">
                     <div class="col-md-12 js-message-container"></div>
 

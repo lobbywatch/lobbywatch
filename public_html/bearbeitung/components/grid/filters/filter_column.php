@@ -109,4 +109,16 @@ class FilterColumn
         }
     }
 
+    /**
+     * @return boolean
+     */
+    public function typeIsDateTimeExactly()
+    {
+        if (!is_null($this->getFieldInfo())) {
+            return ($this->getFieldInfo()->FieldType == ftDateTime);
+        } else {
+            return false;
+        }
+    }
+
 }

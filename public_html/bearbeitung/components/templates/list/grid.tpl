@@ -9,7 +9,7 @@
         {if $DataGrid.ReloadPageAfterAjaxOperation}data-reload-page-after-ajax-operation="true"{/if}
         {$DataGrid.Attributes}>
 
-    {include file="custom_templates/list/grid_toolbar.tpl"}
+    {include file=$GridToolbarTemplate}
 
     {$GridContent}
 

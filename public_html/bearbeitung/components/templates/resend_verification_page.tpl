@@ -15,11 +15,22 @@
                            data-validation="required email" data-required-error-message="Email is required" data-email-error-message="Please enter a valid email address">
                 </div>
 
+                {if $ReCaptcha && $ReCaptcha->isCheckboxCaptcha()}
+                    <div class="form-group">
+                        <div class="g-recaptcha" data-sitekey="{$ReCaptcha->getSiteKey()}"{if $ReCaptcha->getUseDarkColorTheme()} data-theme="dark"{/if}></div>
+                    </div>
+                {/if}
+
                 <div class="form-error-container">
                 </div>
 
                 <div class="form-group text-center">
-                    <button class="btn btn-primary js-save" data-action="open" data-url="login.php">{$Captions->GetMessageString('Resend')}</button>
+                    {if $ReCaptcha && $ReCaptcha->isInvisibleCaptcha()}
+                        <button id="submit-recaptcha" class="btn btn-primary js-recaptcha g-recaptcha" data-sitekey="{$ReCaptcha->getSiteKey()}" data-callback='onReCaptchaFormSubmit' data-expired-callback='onReCaptchaExpired'{if $ReCaptcha->getUseDarkColorTheme()} data-theme="dark"{/if}>{$Captions->GetMessageString('Resend')}</button>
+                        <button id="submit-form" class="btn btn-primary js-save" data-action="open" data-url="login.php" style="display: none">{$Captions->GetMessageString('Resend')}</button>
+                    {else}
+                        <button class="btn btn-primary js-save" data-action="open" data-url="login.php">{$Captions->GetMessageString('Resend')}</button>
+                    {/if}
                     &nbsp;<a href="login.php" class="btn btn-default">{$Captions->GetMessageString('Cancel')}</a>
                 </div>
             </form>

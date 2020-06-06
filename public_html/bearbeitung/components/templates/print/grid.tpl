@@ -1,5 +1,4 @@
 <table class="wide text-center">
-
     <tr>
         {foreach item=Column from=$Columns}
             <td><b>{$Column->GetCaption()}</b></td>

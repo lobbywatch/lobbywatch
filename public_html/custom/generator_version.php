@@ -2,5 +2,5 @@
 /**
  * The PHP generator version.
 */
-const GENERATOR_VERSION = '18.3.0.14';
+const GENERATOR_VERSION = '20.5.0.2';
 $generator_version = GENERATOR_VERSION;

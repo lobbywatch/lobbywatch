@@ -14,6 +14,7 @@ require_once 'components/security/grant_manager/table_based_user_grant_manager.p
 require_once 'components/security/table_based_user_manager.php';
 
 include_once 'components/security/user_identity_storage/user_identity_session_storage.php';
+include_once 'components/security/recaptcha.php';
 
 require_once 'database_engine/mysql_engine.php';
 
@@ -132,6 +133,11 @@ function PasswordResetComplete($username, $email)
 
 }
 
+function VerifyPasswordStrength($password, &$result, &$passwordRuleMessage) 
+{
+
+}
+
 function CreatePasswordHasher()
 {
     $hasher = CreateHasher('Custom');
@@ -155,7 +161,13 @@ function CreateTableBasedGrantManager()
 
 function CreateTableBasedUserManager() {
     global $usersTableInfo;
-    return new TableBasedUserManager(MyPDOConnectionFactory::getInstance(), GetGlobalConnectionOptions(), $usersTableInfo, CreatePasswordHasher(), false);
+    $userManager = new TableBasedUserManager(MyPDOConnectionFactory::getInstance(), GetGlobalConnectionOptions(), $usersTableInfo, CreatePasswordHasher(), false);
+    $userManager->OnVerifyPasswordStrength->AddListener('VerifyPasswordStrength');
+    return $userManager;
+}
+
+function GetReCaptcha($formId) {
+    return null;
 }
 
 function SetUpUserAuthorization()

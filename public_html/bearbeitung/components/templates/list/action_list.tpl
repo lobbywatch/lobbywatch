@@ -11,7 +11,7 @@
 
             {if $Cell.Data.type == 'link'}
 
-                <a href="{$Cell.Data.link}" title="{$Cell.Data.caption}"{if $Cell.Data.useImage} class="link-icon"{/if}
+                <a href="{$Cell.Data.link}" title="{$Cell.Data.caption}"{$Cell.LinkTarget}{if $Cell.Data.useImage} class="link-icon"{/if}
                     {foreach from=$Cell.Data.additionalAttributes key=key item=value} {$key}="{$value}"{/foreach}>
 
                     {if $Cell.Data.useImage}

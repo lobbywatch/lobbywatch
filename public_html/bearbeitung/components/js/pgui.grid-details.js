@@ -97,6 +97,10 @@ define(['class', 'pgui.charts', 'underscore'], function (Class, charts, _) {
             }, this));
 
             charts.init(this.$container);
+        },
+
+        remove: function() {
+            this.$container.remove();
         }
     });
 

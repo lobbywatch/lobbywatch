@@ -1578,7 +1578,6 @@
             $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe_id_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -1590,7 +1589,6 @@
             $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_name', 'Interessengruppe2 Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe2_id_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -1602,7 +1600,6 @@
             $column = new TextViewColumn('interessengruppe3_id', 'interessengruppe3_id_name', 'Interessengruppe3 Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe3_id_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -1985,7 +1982,6 @@
             $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe_id_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1994,7 +1990,6 @@
             $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_name', 'Interessengruppe2 Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe2_id_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2003,7 +1998,6 @@
             $column = new TextViewColumn('interessengruppe3_id', 'interessengruppe3_id_name', 'Interessengruppe3 Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe3_id_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -4192,7 +4186,6 @@
             $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe_id_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -4201,7 +4194,6 @@
             $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_name', 'Interessengruppe2 Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe2_id_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -4210,7 +4202,6 @@
             $column = new TextViewColumn('interessengruppe3_id', 'interessengruppe3_id_name', 'Interessengruppe3 Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe3_id_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -4524,7 +4515,6 @@
             $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe_id_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -4533,7 +4523,6 @@
             $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_name', 'Interessengruppe2 Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe2_id_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -4542,7 +4531,6 @@
             $column = new TextViewColumn('interessengruppe3_id', 'interessengruppe3_id_name', 'Interessengruppe3 Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe3_id_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -4856,7 +4844,6 @@
             $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe_id_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -4865,7 +4852,6 @@
             $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_name', 'Interessengruppe2 Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe2_id_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -4874,7 +4860,6 @@
             $column = new TextViewColumn('interessengruppe3_id', 'interessengruppe3_id_name', 'Interessengruppe3 Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('q_unvollstaendige_organisationen_interessengruppe3_id_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -5142,78 +5127,6 @@
         }
     
         protected function doRegisterHandlers() {
-            //
-            // View column for name field
-            //
-            $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe_id_name_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_name', 'Interessengruppe2 Id', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe2_id_name_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id', 'interessengruppe3_id_name', 'Interessengruppe3 Id', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe3_id_name_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name field
-            //
-            $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe_id_name_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_name', 'Interessengruppe2 Id', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe2_id_name_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id', 'interessengruppe3_id_name', 'Interessengruppe3 Id', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe3_id_name_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name field
-            //
-            $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe_id_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_name', 'Interessengruppe2 Id', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe2_id_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id', 'interessengruppe3_id_name', 'Interessengruppe3 Id', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe3_id_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -5534,30 +5447,6 @@
             );
             $lookupDataset->setOrderByField('name', 'ASC');
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_q_unvollstaendige_organisationen_interessengruppe3_id_search', 'id', 'name', null, 20);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name field
-            //
-            $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe_id_name_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_name', 'Interessengruppe2 Id', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe2_id_name_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id', 'interessengruppe3_id_name', 'Interessengruppe3 Id', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'q_unvollstaendige_organisationen_interessengruppe3_id_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6013,12 +5902,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -6029,7 +5918,7 @@
 
     try
     {
-        $Page = new q_unvollstaendige_organisationenPage("q_unvollstaendige_organisationen", "q_unvollstaendige_organisationen.php", GetCurrentUserPermissionSetForDataSource("q_unvollstaendige_organisationen"), 'UTF-8');
+        $Page = new q_unvollstaendige_organisationenPage("q_unvollstaendige_organisationen", "q_unvollstaendige_organisationen.php", GetCurrentUserPermissionsForPage("q_unvollstaendige_organisationen"), 'UTF-8');
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("q_unvollstaendige_organisationen"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

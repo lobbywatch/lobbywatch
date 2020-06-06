@@ -41,6 +41,12 @@ abstract class AbstractPdfRenderer extends AbstractExportRenderer
             'size' => 'A4',
             'orientation' => 'P',
             'filename' => Path::ReplaceFileNameIllegalCharacters($Page->GetTitle() . ".pdf"),
+            'margin-left' => 10,
+            'margin-right' => 10,
+            'margin-top' => 10,
+            'margin-bottom' => 10,
+            'margin-header' => 5,
+            'margin-footer' => 5
         );
         $Page->GetCustomExportOptions(
             'pdf',
@@ -55,12 +61,12 @@ abstract class AbstractPdfRenderer extends AbstractExportRenderer
             'format' => $options['size'] . $orientationString,
             'default_font_size' => 8,
             'default_font' => '',
-            'margin_left' => 10,
-            'margin_right' => 10,
-            'margin_top' => 7,
-            'margin_bottom' => 7,
-            'margin_header' => 10,
-            'margin_footer' => 10
+            'margin_left' => $options['margin-left'],
+            'margin_right' => $options['margin-right'],
+            'margin_top' => $options['margin-top'],
+            'margin_bottom' => $options['margin-bottom'],
+            'margin_header' => $options['margin-header'],
+            'margin_footer' => $options['margin-footer']
         );
 
         $mpdf = createMPDF($configParams);
@@ -70,6 +76,18 @@ abstract class AbstractPdfRenderer extends AbstractExportRenderer
         $userCss = 'components/assets/css/user_pdf.css';
         if (FileUtils::FileExists($userCss)) {
             $stylesheet .= FileUtils::ReadAllText($userCss);
+        }
+
+        if (array_key_exists('header', $options)) {
+            $mpdf->SetHeader($options['header']);
+        } elseif (array_key_exists('html-header', $options)) {
+            $mpdf->SetHTMLHeader($options['html-header']);
+        }
+
+        if (array_key_exists('footer', $options)) {
+            $mpdf->SetFooter($options['footer']);
+        } elseif (array_key_exists('html-footer', $options)) {
+            $mpdf->SetHTMLFooter($options['html-footer']);
         }
 
         $mpdf->WriteHTML($stylesheet, 1);

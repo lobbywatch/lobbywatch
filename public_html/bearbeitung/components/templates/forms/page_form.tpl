@@ -13,7 +13,7 @@
     </div>
 
     {if $Grid.AllowAddMultipleRecords}
-        <div class="row" style="margin-top: 20px">
+        <div class="row form-add-another-record">
             <div class="{if $Grid.FormLayout->isHorizontal()}col-lg-8{else}col-md-8 col-md-offset-2{/if}">
                 <a href="#" class="js-form-add{if $Grid.FormLayout->isHorizontal()} col-md-offset-3{/if}"><span class="icon-plus"></span> {$Captions->GetMessageString('FormAdd')}</a>
             </div>

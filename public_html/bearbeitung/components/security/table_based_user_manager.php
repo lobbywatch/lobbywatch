@@ -23,7 +23,8 @@ class TableBasedUserManager implements IUserManager
     private $passwordHasher;
     /** @var boolean */
     private $emailBasedFeaturesEnabled;
-
+    /** @var Event */
+    public $OnVerifyPasswordStrength;
     /** @var string */
     private $usersTableName;
     private $userIdField;
@@ -45,6 +46,7 @@ class TableBasedUserManager implements IUserManager
         $this->connectionOptions = $connectionOptions;
         $this->passwordHasher = $passwordHasher;
         $this->emailBasedFeaturesEnabled = $emailBasedFeaturesEnabled;
+        $this->OnVerifyPasswordStrength = new Event();
 
         $this->usersTableName = $usersTableInfo['TableName'];
         $this->userIdField = $usersTableInfo['UserId'];
@@ -71,6 +73,8 @@ class TableBasedUserManager implements IUserManager
 
     /** @inheritdoc */
     public function addUser($name, $password) {
+        $this->verifyPasswordStrength($password);
+
         $usersDataset = $this->createUsersDataset();
         $usersDataset->Insert();
         $usersDataset->SetFieldValueByName($this->userNameField, $name);
@@ -80,8 +84,9 @@ class TableBasedUserManager implements IUserManager
     }
 
     /** @inheritdoc */
-    public function addUserEx($name, $password, $email, $token = null, $status = UserStatus::OK)
-    {
+    public function addUserEx($name, $password, $email, $token = null, $status = UserStatus::OK) {
+        $this->verifyPasswordStrength($password);
+
         $usersDataset = $this->createUsersDataset();
         $usersDataset->Insert();
         $usersDataset->SetFieldValueByName($this->userNameField, $name);
@@ -125,6 +130,8 @@ class TableBasedUserManager implements IUserManager
 
     /** @inheritdoc */
     public function changeUserPassword($id, $password) {
+        $this->verifyPasswordStrength($password);
+
         $usersDataset = $this->createUsersDataset();
         $usersDataset->SetSingleRecordState(array($id));
         $usersDataset->Open();
@@ -135,6 +142,23 @@ class TableBasedUserManager implements IUserManager
             $usersDataset->Post();
         } else {
             throw new Exception('User with user id = ' . $id . ' does not exist.');
+        }
+    }
+
+    /**
+     * @param string $password
+     * @throws Exception
+     */
+    private function verifyPasswordStrength($password) {
+        $result = true;
+        $passwordRule = '';
+        $this->OnVerifyPasswordStrength->Fire(array(
+            $password,
+            &$result,
+            &$passwordRule
+        ));
+        if (!$result) {
+            throw new Exception($passwordRule);
         }
     }
 
@@ -368,6 +392,8 @@ class TableBasedUserManager implements IUserManager
     }
 
     public function resetUserPassword($username, $password) {
+        $this->verifyPasswordStrength($password);
+
         $usersDataset = $this->createUsersDataset();
         $usersDataset->AddFieldFilter(
             $this->userNameField,

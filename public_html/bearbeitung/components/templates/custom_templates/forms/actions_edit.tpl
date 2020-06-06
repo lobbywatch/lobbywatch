@@ -54,4 +54,3 @@
   <!-- <button class="close" data-dismiss="alert"><i class="icon-remove"></i></button> -->
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 </div>
-

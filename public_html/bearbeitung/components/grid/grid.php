@@ -1793,7 +1793,8 @@ class Grid {
                 $actionsRowViewData[$operationName] = array(
                     'IconClass' => $operation->GetIconClassByOperationName(),
                     'OperationName' => $operationName,
-                    'Data' => $operation->GetValue()
+                    'Data' => $operation->GetValue(),
+                    'LinkTarget' => $this->getOperationLinkTarget($operationName)
                 );
             }
 
@@ -1965,6 +1966,7 @@ class Grid {
             'AllowDeleteSelected' => $this->GetAllowDeleteSelected(),
             'AllowCompare' => $this->GetAllowCompare(),
             'AllowPrintSelected' => $this->GetPage()->getAllowPrintSelectedRecords(),
+            'PrintLinkTarget' => $this->GetPage()->getPrintLinkTarget(),
             'MultiEditAllowed' => $this->getMultiEditAllowed(),
             'UseModalMultiEdit' => $this->getUseModalMultiEdit(),
             'AllowSelect' => $this->getAllowSelect(),
@@ -2261,6 +2263,7 @@ class Grid {
                 'EditUrl' => $this->GetEditCurrentRecordLink($primaryKeys),
                 'PrintOneRecord' => $this->GetPage()->GetPrintOneRecordAvailable(),
                 'PrintRecordLink' => $linkBuilder->GetLink(),
+                'PrintLinkTarget' => $this->GetPage()->getPrintLinkTarget(),
                 'ExportButtons' => $this->GetPage()->getExportOneRecordButtonsViewData($primaryKeys),
                 'Title' => $this->resolveFormTitle(
                     $this->GetPage()->GetLocalizerCaptions()->GetMessageString('View'),
@@ -2806,7 +2809,12 @@ class Grid {
     private function fillFormLayout(FormLayout $layout, $columns)
     {
         $columnNames = $layout->getColumnNames();
-        $group = $layout->addGroup();
+        if ($layout->tabsEnabled()) {
+            $tab = $layout->addTab('Default');
+            $group = $tab->addGroup();
+        } else {
+            $group = $layout->addGroup();
+        }
 
         foreach ($columns as $column) {
             if (!in_array($column->GetName(), $columnNames)) {
@@ -2975,4 +2983,13 @@ class Grid {
         $this->selectionFilterAllowed = $value;
     }
 
+    private function getOperationLinkTarget($operation) {
+        if ($operation == OPERATION_PRINT_ONE) {
+            return $this->GetPage()->getPrintLinkTarget();
+        } elseif ($operation == OPERATION_PDF_EXPORT_RECORD) {
+            return $this->GetPage()->getExportToPdfLinkTarget();
+        } else {
+            return '';
+        }
+    }
 }

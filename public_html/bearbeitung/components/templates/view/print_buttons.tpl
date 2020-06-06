@@ -10,7 +10,7 @@
             {foreach from=$pageTitleButtons item=printButton key=name}
                 {if $name == 'print_page' or $name == 'print_all'}
                     <li>
-                        <a href="{$printButton.Href|escapeurl}">
+                        <a href="{$printButton.Href|escapeurl}"{$printButton.Target}>
                             <i class="{$printButton.IconClass}"></i>
                             {$printButton.Caption}
                         </a>

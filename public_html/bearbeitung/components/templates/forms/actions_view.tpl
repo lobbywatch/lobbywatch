@@ -44,7 +44,7 @@
             <div class="btn-group">
                 <a class="btn btn-default"
                    href="{$Grid.PrintRecordLink|escapeurl}"
-                   title="{$Captions->GetMessageString('PrintOneRecord')}">
+                   title="{$Captions->GetMessageString('PrintOneRecord')}"{$Grid.PrintLinkTarget}>
                     <i class="icon-print-page"></i>
                     <span class="hidden-sm hidden-xs">{$Captions->GetMessageString('PrintOneRecord')}</span>
                 </a>

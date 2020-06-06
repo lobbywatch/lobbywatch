@@ -855,12 +855,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -871,7 +871,7 @@
 
     try
     {
-        $Page = new v_last_updated_tablesPage("v_last_updated_tables", "last_updated_tables.php", GetCurrentUserPermissionSetForDataSource("v_last_updated_tables"), 'UTF-8');
+        $Page = new v_last_updated_tablesPage("v_last_updated_tables", "last_updated_tables.php", GetCurrentUserPermissionsForPage("v_last_updated_tables"), 'UTF-8');
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("v_last_updated_tables"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

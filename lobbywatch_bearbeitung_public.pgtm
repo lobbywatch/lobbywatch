@@ -1,4 +1,4 @@
-<Project version="18.3.0.14" edition="pro" localizationFileName="public_html\bearbeitung\components\lang.en.lobbywatch.php" phpDriver="2" outputPath="public_html\bearbeitung" copySystemFiles="true" generateModifiedDataOnly="true" outputFilesExtension="php" colorSchemeName="default-compact">
+<Project version="20.5.0.2" edition="pro" localizationFileName="public_html\bearbeitung\components\lang.en.lobbywatch.php" phpDriver="2" outputPath="public_html\bearbeitung" copySystemFiles="true" generateModifiedDataOnly="true" outputFilesExtension="php" colorSchemeName="default-compact">
   <ConnectionOptions host="localhost" port="3306" login="" password="hidden" database="" client_encoding="utf8" allow_old_password="false">
     <ssh_secure secure="false" port="22" authentication_mode="0"/>
     <http_tunnel tunneling="false" url="">
@@ -357,7 +357,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%interessengruppe_id%" target="_self"/>
             <EditProperties type="dynamicCascadingCombobox">
               <Levels>
-                <Level caption="Branche" dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id"/>
+                <Level caption="Branche" dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id" sortingOrder="0"/>
               </Levels>
             </EditProperties>
           </ColumnPresentation>
@@ -403,7 +403,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%interessengruppe2_id%" target="_self"/>
             <EditProperties type="dynamicCascadingCombobox">
               <Levels>
-                <Level caption="Branche" dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id"/>
+                <Level caption="Branche" dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id" sortingOrder="0"/>
               </Levels>
             </EditProperties>
           </ColumnPresentation>
@@ -413,7 +413,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%interessengruppe3_id%" target="_self"/>
             <EditProperties type="dynamicCascadingCombobox">
               <Levels>
-                <Level caption="Branche" dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id"/>
+                <Level caption="Branche" dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id" sortingOrder="0"/>
               </Levels>
             </EditProperties>
           </ColumnPresentation>
@@ -7399,7 +7399,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Hyperlink template="interessengrupe.php?operation=view&amp;pk0=%beruf_interessengruppe_id%" target="_self"/>
             <EditProperties type="dynamicCascadingCombobox">
               <Levels>
-                <Level caption="Branche" dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id"/>
+                <Level caption="Branche" dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id" sortingOrder="0"/>
               </Levels>
             </EditProperties>
           </ColumnPresentation>
@@ -16456,7 +16456,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%beruf_interessengruppe_id%" target="_self"/>
             <EditProperties type="dynamicCascadingCombobox">
               <Levels>
-                <Level caption="Branche" dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id"/>
+                <Level caption="Branche" dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id" sortingOrder="0"/>
               </Levels>
             </EditProperties>
           </ColumnPresentation>

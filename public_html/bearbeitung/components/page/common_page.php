@@ -8,6 +8,9 @@ include_once dirname(__FILE__) . '/../captions.php';
  */
 abstract class CommonPage
 {
+    /** @var PageList */
+    private $pageList;
+
     private $header;
     private $footer;
     private $id;
@@ -170,4 +173,13 @@ abstract class CommonPage
     {
         return null;
     }
+
+    public function GetReadyPageList() {
+        if (!$this->pageList) {
+            $this->pageList = new PageList($this);
+        };
+
+        return $this->pageList;
+    }
+
 }

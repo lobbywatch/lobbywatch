@@ -26,7 +26,7 @@
             data: {}
         },
         quickFilter: {
-            columns: [],
+            columns: []
         }
     };
     {/literal}

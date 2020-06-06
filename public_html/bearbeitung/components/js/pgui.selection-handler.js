@@ -99,6 +99,7 @@ define([
         _handleAction: function (e) {
             var $el = $(e.currentTarget);
             var type = $el.data('type');
+            var openInNewTab = $el.attr('target') == '_blank';
             e.preventDefault();
 
             switch (type) {
@@ -107,9 +108,9 @@ define([
                 case 'compare-remove':
                     return this._compareRemove($el.attr('href'), $el.data('value'));
                 case 'print':
-                    return this._print($el.data('url'));
+                    return this._print($el.data('url'), openInNewTab);
                 case 'export':
-                    return this._export($el.data('url'), $el.data('export-type'));
+                    return this._export($el.data('url'), $el.data('export-type'), openInNewTab);
                 case 'update':
                     return this._update($el);
                 case 'delete':
@@ -159,12 +160,12 @@ define([
             location.href = url;
         },
 
-        _print: function (url) {
-            this._processSelectedRecords(url, 'print_selected');
+        _print: function (url, openInNewTab) {
+            this._processSelectedRecords(url, 'print_selected', openInNewTab);
         },
 
-        _export: function (url, exportType) {
-            this._processSelectedRecords(url, sprintf.sprintf('e%s_selected', exportType));
+        _export: function (url, exportType, openInNewTab) {
+            this._processSelectedRecords(url, sprintf.sprintf('e%s_selected', exportType), openInNewTab);
         },
 
         _update: function ($el) {
@@ -267,11 +268,16 @@ define([
             });
         },
 
-        _processSelectedRecords: function (url, operation) {
-            location.href = jQuery.query.load(url)
+        _processSelectedRecords: function (url, operation, openInNewTab) {
+            var resultUrl = jQuery.query.load(url)
                 .set('operation', operation)
                 .set('keys', this.selection.getData())
                 .toString();
+            if (openInNewTab) {
+                window.open(resultUrl, '_blank');
+            } else {
+                location.href = resultUrl;
+            }
         }
 
     });

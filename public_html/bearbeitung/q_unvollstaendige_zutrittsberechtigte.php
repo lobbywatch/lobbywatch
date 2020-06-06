@@ -7398,12 +7398,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -7414,7 +7414,7 @@
 
     try
     {
-        $Page = new q_unvollstaendige_zutrittsberechtigtePage("q_unvollstaendige_zutrittsberechtigte", "q_unvollstaendige_zutrittsberechtigte.php", GetCurrentUserPermissionSetForDataSource("q_unvollstaendige_zutrittsberechtigte"), 'UTF-8');
+        $Page = new q_unvollstaendige_zutrittsberechtigtePage("q_unvollstaendige_zutrittsberechtigte", "q_unvollstaendige_zutrittsberechtigte.php", GetCurrentUserPermissionsForPage("q_unvollstaendige_zutrittsberechtigte"), 'UTF-8');
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("q_unvollstaendige_zutrittsberechtigte"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

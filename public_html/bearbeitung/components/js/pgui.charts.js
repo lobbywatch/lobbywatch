@@ -39,7 +39,7 @@ define(['moment'], function (moment) {
         applyFormatters(chart.data.columns, table);
 
         return table;
-    };
+    }
 
 
     function applyFormatters(columns, table) {
@@ -50,7 +50,7 @@ define(['moment'], function (moment) {
         };
 
         $.each(columns, function (i, column) {
-            var Formatter = formatterClasses[transformType(column.type)]
+            var Formatter = formatterClasses[transformType(column.type)];
             if (!column.format || !Formatter) {
                 return;
             }
@@ -65,7 +65,7 @@ define(['moment'], function (moment) {
         type = type || 'string';
         switch (type.toLowerCase()) {
             case 'string':
-                return 'string'
+                return 'string';
             case 'date':
                 return 'date';
             case 'datetime':
@@ -135,9 +135,19 @@ define(['moment'], function (moment) {
 
         $.each(charts, function (i, chartConfig) {
             chartConfig.table = chartConfig.table || getTable(chartConfig);
+
             var $container = $('[data-id=' + chartConfig.id + ']');
             chartConfig.options = mergeStyles($container, chartConfig.type, chartConfig.options);
-            var chart = new google.visualization[chartConfig.type + 'Chart']($container.get(0));
+
+            if (chartConfig.type == 'TreeMap' && ('generateTooltip' in chartConfig)) {
+                window['chartData_' + chartConfig.id].dataTable = chartConfig.table;
+                chartConfig.options.generateTooltip = chartConfig.generateTooltip;
+            }
+            var chartClass = chartConfig.type;
+            if (!['Histogram', 'Gantt', 'Timeline', 'TreeMap'].includes(chartClass)) {
+                chartClass += 'Chart';
+            }
+            var chart = new google.visualization[chartClass]($container.get(0));
             chart.draw(chartConfig.table, chartConfig.options);
         });
     }

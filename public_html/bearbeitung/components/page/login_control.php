@@ -25,6 +25,10 @@ class LoginControl {
     private $securityFeedbackPositive = null;
     /** @var null|string */
     private $securityFeedbackNegative = null;
+    /** @var  GoogleReCaptcha|null */
+    private $reCaptcha;
+    /** @var string */
+    private $startupPage;
 
     /**
      * @param LoginPage $page
@@ -32,13 +36,10 @@ class LoginControl {
      * @param AbstractUserAuthentication $userAuthentication
      * @param ConnectionFactory $connectionFactory
      * @param Captions $captions
+     * @param GoogleReCaptcha|null $reCaptcha
+     * @param string $startupPage
      */
-    public function __construct(
-        LoginPage $page,
-        $urlToRedirectAfterLogin,
-        AbstractUserAuthentication $userAuthentication,
-        ConnectionFactory $connectionFactory,
-        Captions $captions)
+    public function __construct($page, $urlToRedirectAfterLogin, $userAuthentication, $connectionFactory, $captions, $reCaptcha, $startupPage)
     {
         $this->page = $page;
         $this->connectionFactory = $connectionFactory;
@@ -46,6 +47,8 @@ class LoginControl {
         $this->urlToRedirectAfterLogin = $urlToRedirectAfterLogin;
         $this->captions = $captions;
         $this->userIdentityStorage = $this->userAuthentication->getIdentityStorage();
+        $this->reCaptcha = $reCaptcha;
+        $this->startupPage = $startupPage;
     }
 
     public function getPage()
@@ -70,6 +73,9 @@ class LoginControl {
     }
 
     public function GetLoginAsGuestLink() {
+        if ($this->startupPage != '') {
+            return $this->startupPage;
+        }
         $pageInfos = GetPageInfos();
         foreach ($pageInfos as $pageInfo) {
             if (GetApplication()->GetUserPermissionSet('guest', $pageInfo['name'])->HasViewGrant()) {
@@ -135,9 +141,13 @@ class LoginControl {
             return GetApplication()->GetSuperGlobals()->GetGetValue('redirect');
         }
 
+        if ($this->startupPage != '') {
+            return $this->startupPage;
+        }
+
         $pageInfos = GetPageInfos();
         foreach ($pageInfos as $pageInfo) {
-            if (GetCurrentUserPermissionSetForDataSource($pageInfo['name'])->HasViewGrant()) {
+            if (GetCurrentUserPermissionsForPage($pageInfo['name'])->HasViewGrant()) {
                 return $pageInfo['filename'];
             }
         }
@@ -146,12 +156,26 @@ class LoginControl {
 
     public function ProcessMessages() {
         if (isset($_POST['username']) && isset($_POST['password'])) {
-            $this->processLogin($_POST['username'], $_POST['password'], isset($_POST['saveidentity']));
+            $recaptchaResponse = $this->processReCaptcha();
+            if ($recaptchaResponse->isSuccess()) {
+                $this->processLogin($_POST['username'], $_POST['password'], isset($_POST['saveidentity']));
+            } else {
+                $this->errorMessage = $recaptchaResponse->getErrorMessage();
+            }
         } elseif (isset($_GET[OPERATION_PARAMNAME]) && $_GET[OPERATION_PARAMNAME] == 'logout') {
             $this->processLogout();
         }
 
         $this->processSecurityFeedback();
+    }
+
+    /** @return GoogleReCaptchaResponse */
+    private function processReCaptcha() {
+        $result = new GoogleReCaptchaResponse();
+        if ($this->reCaptcha) {
+            $result = $this->reCaptcha->verifyResponse();
+        }
+        return $result;
     }
 
     /**
@@ -241,6 +265,10 @@ class LoginControl {
 
     private function unsetSessionVariable($name) {
         GetApplication()->UnSetSessionVariable($name);
+    }
+
+    public function getReCaptcha() {
+        return $this->reCaptcha;
     }
 
 }

@@ -47,11 +47,6 @@ class AdminPage extends CommonPage
         );
     }
 
-    public function GetReadyPageList()
-    {
-        return PageList::createForPage($this);
-    }
-
     public function Accept(Renderer $renderer)
     {
         $renderer->RenderAdminPage($this);

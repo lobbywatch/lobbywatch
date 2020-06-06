@@ -7,9 +7,7 @@ include_once dirname(__FILE__) . '/' . 'user_identity_storage/user_identity_stor
 
 class UserManagementRequestHandler
 {
-    /**
-     * @var RequestRouter
-     */
+    /** @var RequestRouter */
     private $router;
 
     /** @var TableBasedUserGrantManager */
@@ -18,27 +16,17 @@ class UserManagementRequestHandler
     /** @var AbstractUserAuthentication */
     private $userAuthentication;
 
-    /**
-     * @var SecureApplication
-     */
+    /** @var SecureApplication */
     private $app;
-
-    /**
-     * @var UserIdentityCookieStorage
-     */
-    private $userIdentityStorage;
 
     /** @var IUserManager */
     private $userManger;
 
     /**
-     * @param TableBasedUserGrantManager $tableBasedGrantsManager
+     * @param TableBasedUserGrantManager|null $tableBasedGrantsManager
      * @param IUserManager $userManager
      */
-    private function __construct(
-        TableBasedUserGrantManager $tableBasedGrantsManager,
-        IUserManager $userManager)
-    {
+    private function __construct($tableBasedGrantsManager, $userManager) {
         $this->tableBasedGrantsManager = $tableBasedGrantsManager;
         $this->router = $this->CreateAndConfigureRequestRouter();
         $this->app = GetApplication();
@@ -238,14 +226,10 @@ class UserManagementRequestHandler
 
     /**
      * @param array $parameters
-     * @param TableBasedUserGrantManager $tableBasedGrantsManager
+     * @param TableBasedUserGrantManager|null $tableBasedGrantsManager
      * @param IUserManager $userManager
      */
-    static public function HandleRequest(
-        $parameters,
-        TableBasedUserGrantManager $tableBasedGrantsManager,
-        IUserManager $userManager)
-    {
+    static public function HandleRequest($parameters, $tableBasedGrantsManager, $userManager) {
         $instance = new UserManagementRequestHandler(
             $tableBasedGrantsManager,
             $userManager

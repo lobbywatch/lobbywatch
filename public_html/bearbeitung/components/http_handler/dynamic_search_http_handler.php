@@ -80,7 +80,8 @@ class DynamicSearchHandler extends AbstractHTTPHandler
         while ($this->dataset->Next()) {
             $result[] = array(
                 'id' => $this->dataset->GetFieldValueByName($this->idField),
-                'value' => StringUtils::IsNullOrEmpty($this->captionTemplate)
+                'value' => $this->dataset->GetFieldValueByName($this->valueField),
+                'formatted_value' => StringUtils::IsNullOrEmpty($this->captionTemplate)
                     ? $this->dataset->GetFieldValueByName($this->valueField)
                     : DatasetUtils::FormatDatasetFieldsTemplate($this->dataset, $this->captionTemplate),
                 'fields' => $this->dataset->getFieldValues(true),

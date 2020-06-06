@@ -7127,7 +7127,7 @@ a.list-group-item-danger.active:focus {
   clear: both;
 }
 /**
- * Trumbowyg v2.1.0 - A lightweight WYSIWYG editor
+ * Trumbowyg v2.18.0 - A lightweight WYSIWYG editor
  * Default stylesheet for Trumbowyg editor
  * ------------------------
  * @link http://alex-d.github.io/Trumbowyg
@@ -7149,10 +7149,14 @@ a.list-group-item-danger.active:focus {
 }
 .trumbowyg-box *,
 .trumbowyg-box *::before,
-.trumbowyg-box *::after {
+.trumbowyg-box *::after,
+.trumbowyg-modal *,
+.trumbowyg-modal *::before,
+.trumbowyg-modal *::after {
   box-sizing: border-box;
 }
-.trumbowyg-box svg {
+.trumbowyg-box svg,
+.trumbowyg-modal svg {
   width: 17px;
   height: 100%;
   fill: #222222;
@@ -7185,13 +7189,21 @@ a.list-group-item-danger.active:focus {
   resize: none;
   outline: none;
   overflow: auto;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+.trumbowyg-editor.trumbowyg-autogrow-on-enter,
+.trumbowyg-textarea.trumbowyg-autogrow-on-enter {
+  transition: height 300ms ease-out;
 }
 .trumbowyg-box-blur .trumbowyg-editor *,
 .trumbowyg-box-blur .trumbowyg-editor::before {
   color: transparent !important;
   text-shadow: 0 0 7px #333333;
 }
-@media screen and (min-width: 0) {
+@media screen and (min-width: 0 \0) {
   .trumbowyg-box-blur .trumbowyg-editor *,
   .trumbowyg-box-blur .trumbowyg-editor::before {
     color: rgba(200, 200, 200, 0.6) !important;
@@ -7212,7 +7224,6 @@ a.list-group-item-danger.active:focus {
   display: block;
   overflow: auto;
   border: none;
-  white-space: normal;
   font-size: 14px;
   font-family: "Inconsolata", "Consolas", "Courier", "Courier New", sans-serif;
   line-height: 18px;
@@ -7235,29 +7246,24 @@ a.list-group-item-danger.active:focus {
   opacity: 0.8;
   background: none;
 }
-.trumbowyg-editor[contenteditable=true]:empty::before {
+.trumbowyg-editor[contenteditable=true]:empty:not(:focus)::before {
   content: attr(placeholder);
   color: #999999;
   pointer-events: none;
 }
 .trumbowyg-button-pane {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-flow: row wrap;
-  -ms-flex-flow: row wrap;
-  flex-flow: row wrap;
   width: 100%;
   min-height: 36px;
   background: #ecf0f1;
   border-bottom: 1px solid #d7e0e2;
   margin: 0;
   padding: 0 5px;
+  position: relative;
   list-style-type: none;
   line-height: 10px;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  overflow: hidden;
+  z-index: 11;
 }
 .trumbowyg-button-pane::after {
   content: " ";
@@ -7271,27 +7277,25 @@ a.list-group-item-danger.active:focus {
   background: #d7e0e2;
 }
 .trumbowyg-button-pane .trumbowyg-button-group {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-flow: row wrap;
-  -ms-flex-flow: row wrap;
-  flex-flow: row wrap;
+  display: inline-block;
 }
 .trumbowyg-button-pane .trumbowyg-button-group .trumbowyg-fullscreen-button svg {
   color: transparent;
 }
-.trumbowyg-button-pane .trumbowyg-button-group:not(:empty) + .trumbowyg-button-group::before {
+.trumbowyg-button-pane .trumbowyg-button-group::after {
   content: " ";
-  display: block;
+  display: inline-block;
   width: 1px;
   background: #d7e0e2;
   margin: 0 5px;
   height: 35px;
+  vertical-align: top;
+}
+.trumbowyg-button-pane .trumbowyg-button-group:last-child::after {
+  content: none;
 }
 .trumbowyg-button-pane button {
-  display: block;
+  display: inline-block;
   position: relative;
   width: 35px;
   height: 35px;
@@ -7301,10 +7305,19 @@ a.list-group-item-danger.active:focus {
   border: none;
   cursor: pointer;
   background: none;
-  -webkit-transition: background-color 150ms, opacity 150ms;
+  vertical-align: middle;
   transition: background-color 150ms, opacity 150ms;
 }
+.trumbowyg-button-pane button.trumbowyg-textual-button {
+  width: auto;
+  line-height: 35px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 .trumbowyg-button-pane.trumbowyg-disable button:not(.trumbowyg-not-disable):not(.trumbowyg-active),
+.trumbowyg-button-pane button.trumbowyg-disable,
 .trumbowyg-disabled .trumbowyg-button-pane button:not(.trumbowyg-not-disable):not(.trumbowyg-viewHTML-button) {
   opacity: 0.2;
   cursor: default;
@@ -7330,20 +7343,30 @@ a.list-group-item-danger.active:focus {
   border: 3px solid transparent;
   border-top-color: #555555;
 }
-.trumbowyg-button-pane .trumbowyg-right {
-  margin-left: auto;
+.trumbowyg-button-pane .trumbowyg-open-dropdown.trumbowyg-textual-button {
+  color: #222222;
+  padding-left: 10px !important;
+  padding-right: 18px !important;
 }
-.trumbowyg-button-pane .trumbowyg-right::before {
-  display: none !important;
+.trumbowyg-button-pane .trumbowyg-open-dropdown.trumbowyg-textual-button::after {
+  top: 17px;
+  right: 7px;
+}
+.trumbowyg-button-pane .trumbowyg-right {
+  float: right;
 }
 .trumbowyg-dropdown {
-  width: 200px;
+  max-width: 300px;
+  max-height: 250px;
+  overflow-y: auto;
+  overflow-x: hidden;
   border: 1px solid #ecf0f1;
   padding: 5px 0;
   border-top: none;
   background: white;
   margin-left: -1px;
   box-shadow: rgba(0, 0, 0, 0.1) 0 2px 3px;
+  z-index: 12;
 }
 .trumbowyg-dropdown button {
   display: block;
@@ -7352,13 +7375,12 @@ a.list-group-item-danger.active:focus {
   line-height: 35px;
   text-decoration: none;
   background: white;
-  padding: 0 10px;
+  padding: 0 20px 0 10px;
   color: #333333 !important;
   border: none;
   cursor: pointer;
   text-align: left;
   font-size: 15px;
-  -webkit-transition: all 150ms;
   transition: all 150ms;
 }
 .trumbowyg-dropdown button:hover,
@@ -7375,21 +7397,18 @@ a.list-group-item-danger.active:focus {
   position: absolute;
   top: 0;
   left: 50%;
-  -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
   max-width: 520px;
   width: 100%;
   height: 350px;
-  z-index: 11;
+  z-index: 12;
   overflow: hidden;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 .trumbowyg-modal-box {
   position: absolute;
   top: 0;
   left: 50%;
-  -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
   max-width: 500px;
   width: calc(80%);
@@ -7399,7 +7418,6 @@ a.list-group-item-danger.active:focus {
   text-align: center;
   font-size: 14px;
   box-shadow: rgba(0, 0, 0, 0.2) 0 2px 3px;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 .trumbowyg-modal-box .trumbowyg-modal-title {
@@ -7420,16 +7438,16 @@ a.list-group-item-danger.active:focus {
 }
 .trumbowyg-modal-box .trumbowyg-progress .trumbowyg-progress-bar {
   background: #2bc06a;
+  width: 0;
   height: 100%;
-  -webkit-transition: width 150ms linear;
   transition: width 150ms linear;
 }
 .trumbowyg-modal-box label {
   display: block;
   position: relative;
   margin: 15px 12px;
-  height: 27px;
-  line-height: 27px;
+  height: 29px;
+  line-height: 29px;
   overflow: hidden;
 }
 .trumbowyg-modal-box label .trumbowyg-input-infos {
@@ -7437,7 +7455,6 @@ a.list-group-item-danger.active:focus {
   text-align: left;
   height: 25px;
   line-height: 25px;
-  -webkit-transition: all 150ms;
   transition: all 150ms;
 }
 .trumbowyg-modal-box label .trumbowyg-input-infos span {
@@ -7470,7 +7487,6 @@ a.list-group-item-danger.active:focus {
   max-width: 330px;
   width: 70%;
   padding: 0 7px;
-  -webkit-transition: all 150ms;
   transition: all 150ms;
 }
 .trumbowyg-modal-box label input:hover,
@@ -7480,6 +7496,17 @@ a.list-group-item-danger.active:focus {
 }
 .trumbowyg-modal-box label input:focus {
   background: #fbfcfc;
+}
+.trumbowyg-modal-box label input[type="checkbox"] {
+  left: 6px;
+  top: 6px;
+  right: auto;
+  height: 16px;
+  width: 16px;
+}
+.trumbowyg-modal-box label input[type="checkbox"] + .trumbowyg-input-infos span {
+  width: auto;
+  padding-left: 25px;
 }
 .trumbowyg-modal-box .error {
   margin-top: 25px;
@@ -7502,7 +7529,6 @@ a.list-group-item-danger.active:focus {
   cursor: pointer;
   font-family: "Trebuchet MS", Helvetica, Verdana, sans-serif;
   font-size: 16px;
-  -webkit-transition: all 150ms;
   transition: all 150ms;
 }
 .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-submit {
@@ -7532,9 +7558,11 @@ a.list-group-item-danger.active:focus {
 .trumbowyg-overlay {
   position: absolute;
   background-color: rgba(255, 255, 255, 0.5);
+  height: 100%;
   width: 100%;
   left: 0;
   display: none;
+  top: 0;
   z-index: 10;
 }
 /**
@@ -7588,7 +7616,6 @@ body.trumbowyg-body-fullscreen {
   font-family: "Trebuchet MS", Helvetica, Verdana, sans-serif !important;
   font-size: 14px !important;
   line-height: 1.45em !important;
-  white-space: normal !important;
   color: #333333;
 }
 .trumbowyg-editor.trumbowyg-reset-css a {
@@ -7618,6 +7645,9 @@ body.trumbowyg-body-fullscreen {
   margin-left: 32px !important;
   font-style: italic !important;
   color: #555555;
+}
+.trumbowyg-editor.trumbowyg-reset-css ul {
+  list-style: disc;
 }
 .trumbowyg-editor.trumbowyg-reset-css ul,
 .trumbowyg-editor.trumbowyg-reset-css ol {
@@ -7686,7 +7716,7 @@ body.trumbowyg-body-fullscreen {
 .trumbowyg-dark .trumbowyg-box.trumbowyg-box-blur .trumbowyg-editor::before {
   text-shadow: 0 0 7px #cccccc;
 }
-@media screen and (min-width: 0) {
+@media screen and (min-width: 0 \0 ) {
   .trumbowyg-dark .trumbowyg-box.trumbowyg-box-blur .trumbowyg-editor *,
   .trumbowyg-dark .trumbowyg-box.trumbowyg-box-blur .trumbowyg-editor::before {
     color: rgba(20, 20, 20, 0.6) !important;
@@ -7709,13 +7739,13 @@ body.trumbowyg-body-fullscreen {
 .trumbowyg-dark .trumbowyg-button-pane::after {
   background: #343434;
 }
-.trumbowyg-dark .trumbowyg-button-pane .trumbowyg-button-group:not(:empty)::before {
+.trumbowyg-dark .trumbowyg-button-pane .trumbowyg-button-group:not(:empty)::after {
   background-color: #343434;
 }
 .trumbowyg-dark .trumbowyg-button-pane .trumbowyg-button-group:not(:empty) .trumbowyg-fullscreen-button svg {
   color: transparent;
 }
-.trumbowyg-dark .trumbowyg-button-pane.trumbowyg-disable .trumbowyg-button-group::before {
+.trumbowyg-dark .trumbowyg-button-pane.trumbowyg-disable .trumbowyg-button-group::after {
   background-color: #2a2a2a;
 }
 .trumbowyg-dark .trumbowyg-button-pane button:not(.trumbowyg-disable):hover,
@@ -7726,7 +7756,7 @@ body.trumbowyg-body-fullscreen {
 .trumbowyg-dark .trumbowyg-button-pane .trumbowyg-open-dropdown::after {
   border-top-color: white;
 }
-.trumbowyg-dark .trumbowyg-fullscreen .trumbowyg-button-group .trumbowyg-fullscreen-button svg {
+.trumbowyg-dark .trumbowyg-fullscreen .trumbowyg-button-pane .trumbowyg-button-group:not(:empty) .trumbowyg-fullscreen-button svg {
   color: #ecf0f1;
   fill: transparent;
 }
@@ -7808,8 +7838,8 @@ body.trumbowyg-body-fullscreen {
   background-color: rgba(15, 15, 15, 0.6);
 }
 /**
- * Trumbowyg v2.4.2 - A lightweight WYSIWYG editor
- * Colors plugin stylesheet for Trumbowyg editor
+ * Trumbowyg v2.18.0 - A lightweight WYSIWYG editor
+ * Trumbowyg plugin stylesheet
  * ------------------------
  * @link http://alex-d.github.io/Trumbowyg
  * @license MIT
@@ -7818,17 +7848,14 @@ body.trumbowyg-body-fullscreen {
  *         Website : alex-d.fr
  */
 
-.trumbowyg-dropdown-foreColor,
-.trumbowyg-dropdown-backColor {
-  width: 276px;
+.trumbowyg-dropdown-foreColor:not(.trumbowyg-dropdown--color-list),
+.trumbowyg-dropdown-backColor:not(.trumbowyg-dropdown--color-list) {
+  max-width: 276px;
   padding: 7px 5px;
+  overflow: initial;
 }
-.trumbowyg-dropdown-foreColor svg,
-.trumbowyg-dropdown-backColor svg {
-  display: none !important;
-}
-.trumbowyg-dropdown-foreColor button,
-.trumbowyg-dropdown-backColor button {
+.trumbowyg-dropdown-foreColor:not(.trumbowyg-dropdown--color-list) button,
+.trumbowyg-dropdown-backColor:not(.trumbowyg-dropdown--color-list) button {
   display: block;
   position: relative;
   float: left;
@@ -7839,11 +7866,72 @@ body.trumbowyg-body-fullscreen {
   padding: 0;
   margin: 2px;
 }
-.trumbowyg-dropdown-foreColor button:hover::after,
-.trumbowyg-dropdown-foreColor button:focus::after,
-.trumbowyg-dropdown-backColor button:hover::after,
-.trumbowyg-dropdown-backColor button:focus::after {
+.trumbowyg-dropdown-foreColor:not(.trumbowyg-dropdown--color-list) button:hover::after,
+.trumbowyg-dropdown-foreColor:not(.trumbowyg-dropdown--color-list) button:focus::after,
+.trumbowyg-dropdown-backColor:not(.trumbowyg-dropdown--color-list) button:hover::after,
+.trumbowyg-dropdown-backColor:not(.trumbowyg-dropdown--color-list) button:focus::after {
   content: " ";
+  display: block;
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 27px;
+  height: 27px;
+  background: inherit;
+  border: 1px solid white;
+  box-shadow: black 0 0 2px;
+  z-index: 10;
+}
+.trumbowyg-dropdown-backColor.trumbowyg-dropdown--color-list button:not(.trumbowyg-backColorRemove-dropdown-button) {
+  position: relative;
+  color: white !important;
+}
+.trumbowyg-dropdown-backColor.trumbowyg-dropdown--color-list button:not(.trumbowyg-backColorRemove-dropdown-button):hover::after,
+.trumbowyg-dropdown-backColor.trumbowyg-dropdown--color-list button:not(.trumbowyg-backColorRemove-dropdown-button):focus::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 13px;
+  left: 0;
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+  border-left-color: white;
+}
+/**
+ * Trumbowyg v2.18.0 - A lightweight WYSIWYG editor
+ * Trumbowyg plugin stylesheet
+ * ------------------------
+ * @link http://alex-d.github.io/Trumbowyg
+ * @license MIT
+ * @author Alexandre Demode (Alex-D)
+ *         Twitter : @AlexandreDemode
+ *         Website : alex-d.fr
+ */
+
+.trumbowyg-symbol-\&nbsp-dropdown-button {
+  display: none !important;
+}
+.trumbowyg-symbol-\&nbsp-dropdown-button + button {
+  clear: both;
+}
+.trumbowyg-dropdown-specialChars {
+  width: 248px;
+  padding: 5px 3px 3px;
+}
+.trumbowyg-dropdown-specialChars button {
+  display: block;
+  position: relative;
+  float: left;
+  height: 26px;
+  width: 26px;
+  padding: 0;
+  margin: 2px;
+  line-height: 24px;
+  text-align: center;
+}
+.trumbowyg-dropdown-specialChars button:hover::after,
+.trumbowyg-dropdown-specialChars button:focus::after {
   display: block;
   position: absolute;
   top: -5px;
@@ -7851,9 +7939,103 @@ body.trumbowyg-body-fullscreen {
   height: 27px;
   width: 27px;
   background: inherit;
-  border: 1px solid white;
   box-shadow: black 0 0 2px;
   z-index: 10;
+  background-color: transparent;
+}
+.trumbowyg .specialChars {
+  width: 22px;
+  height: 22px;
+  display: inline-block;
+}
+/**
+ * Trumbowyg v2.18.0 - A lightweight WYSIWYG editor
+ * Trumbowyg plugin stylesheet
+ * ------------------------
+ * @link http://alex-d.github.io/Trumbowyg
+ * @license MIT
+ * @author Alexandre Demode (Alex-D)
+ *         Twitter : @AlexandreDemode
+ *         Website : alex-d.fr
+ */
+
+.trumbowyg-editor table {
+  background-color: white;
+  width: 100%;
+}
+.trumbowyg-editor table td {
+  border: 1px dotted #e7eaec !important;
+  background-color: white;
+  color: #333333;
+  padding: 8px;
+}
+.trumbowyg-dropdown-table table {
+  margin: 10px;
+  display: inline-block;
+}
+.trumbowyg-dropdown-table table td {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  margin: 1px;
+  padding: 0;
+  background-color: white;
+  box-shadow: 0 0 0 1px #cecece inset;
+}
+.trumbowyg-dropdown-table table td.active {
+  background-color: #00b393;
+  box-shadow: none;
+  cursor: pointer;
+}
+.trumbowyg-dropdown-table .trumbowyg-table-size {
+  text-align: center;
+}
+/**
+ * Trumbowyg v2.18.0 - A lightweight WYSIWYG editor
+ * Trumbowyg plugin stylesheet
+ * ------------------------
+ * @link http://alex-d.github.io/Trumbowyg
+ * @license MIT
+ * @author Alexandre Demode (Alex-D)
+ *         Twitter : @AlexandreDemode
+ *         Website : alex-d.fr
+ */
+
+.trumbowyg-dropdown-emoji {
+  width: 265px;
+  padding: 7px 0 7px 5px;
+}
+.trumbowyg-dropdown-emoji svg {
+  display: none !important;
+}
+.trumbowyg-dropdown-emoji button {
+  display: block;
+  position: relative;
+  float: left;
+  height: 26px;
+  width: 26px;
+  padding: 0;
+  margin: 2px;
+  line-height: 24px;
+  text-align: center;
+}
+.trumbowyg-dropdown-emoji button:hover::after,
+.trumbowyg-dropdown-emoji button:focus::after {
+  display: block;
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  height: 27px;
+  width: 27px;
+  background: inherit;
+  box-shadow: black 0 0 2px;
+  z-index: 10;
+  background-color: transparent;
+}
+.trumbowyg .emoji {
+  width: 22px;
+  height: 22px;
+  display: inline-block;
 }
 /*!
  * bootstrap-fileinput v4.4.7
@@ -11053,7 +11235,7 @@ body {
   color: #e74c3c;
 }
 .pgui-login {
-  max-width: 334px;
+  max-width: 364px;
   min-width: 195px;
   padding: 21px 31.5px;
   margin: 1em auto;
@@ -11124,7 +11306,7 @@ table.pgui-cascading-editor tr td .select2-container {
 .form-horizontal .col-input {
   min-height: 45px;
 }
-.form-horizontal .form-collection-actions {
+.form-collection-actions {
   margin-bottom: 15px;
 }
 .input-checkbox {
@@ -11161,6 +11343,20 @@ table.pgui-cascading-editor tr td .select2-container {
 }
 #form-group-fields-to-be-updated .input-group-addon {
   cursor: pointer;
+}
+.form-add-another-record {
+  margin-top: 20px;
+}
+.form-tabs-container {
+  margin: 0 5px 20px 5px;
+}
+.signature-pad {
+  height: auto;
+  position: relative;
+}
+.signature-pad canvas {
+  border: 1px solid #f1f1f1;
+  border-radius: 4px;
 }
 @font-face {
   font-family: 'phpgenerator';

@@ -124,16 +124,6 @@ class AbstractPageNavigator {
     /** @var integer */
     private $currentPageNumber;
 
-    /** @var array */
-    private $ignorePageNavigationOperations = array(
-        OPERATION_PRINT_ALL
-        //, OPERATION_EXCEL_EXPORT
-        //, OPERATION_WORD_EXPORT
-        //, OPERATION_XML_EXPORT
-        //, OPERATION_CSV_EXPORT
-        //, OPERATION_PDF_EXPORT
-    );
-
     function __construct($name, $page, $dataset, $caption, $pageNavigatorList, $prefix = null) {
         $this->name = $name;
         $this->page = $page;
@@ -224,9 +214,7 @@ class AbstractPageNavigator {
             $this->ResetPageNumber();
         }
 
-        if (!in_array(GetOperation(), $this->ignorePageNavigationOperations)) {
-            $this->ApplyPageToDataset($this->currentPageNumber, $this->dataset);
-        }
+        $this->ApplyPageToDataset($this->currentPageNumber, $this->dataset);
     }
 
     public function BuildPages(LinkBuilder $linkBuilder) {

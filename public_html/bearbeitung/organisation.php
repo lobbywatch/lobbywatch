@@ -503,7 +503,6 @@
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_anhang_dateiname_voll_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Dateiname inkl. Erweiterung');
             $column->SetFixedWidth(null);
@@ -515,7 +514,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_anhang_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Beschreibung des Anhangs');
             $column->SetFixedWidth(null);
@@ -593,7 +591,6 @@
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_anhang_dateiname_voll_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -609,7 +606,6 @@
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_anhang_mime_type_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -618,7 +614,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_anhang_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1227,7 +1222,6 @@
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_anhang_dateiname_voll_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1243,7 +1237,6 @@
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_anhang_mime_type_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1252,7 +1245,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_anhang_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -1322,7 +1314,6 @@
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_anhang_dateiname_voll_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1338,7 +1329,6 @@
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_anhang_mime_type_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1347,7 +1337,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_anhang_beschreibung_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -1410,7 +1399,6 @@
             $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_anhang_dateiname_voll_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1419,7 +1407,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_anhang_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1465,7 +1452,6 @@
             $column = new TextViewColumn('dateiname', 'dateiname', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_anhang_dateiname_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1481,7 +1467,6 @@
             $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_anhang_mime_type_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -1598,82 +1583,10 @@
             $handler = new PrivateFileDownloadHTTPHandler($this->dataset, 'datei', 'datei_handler', '%mime_type%', '%datei%', true);
             GetApplication()->RegisterHTTPHandler($handler);
             
-            //
-            // View column for dateiname_voll field
-            //
-            $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_anhang_dateiname_voll_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_anhang_beschreibung_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
             $handler = new PrivateFileDownloadHTTPHandler($this->dataset, 'datei', 'datei_handler', '%mime_type%', '%datei%', true);
             GetApplication()->RegisterHTTPHandler($handler);
             
-            //
-            // View column for dateiname_voll field
-            //
-            $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_anhang_dateiname_voll_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for mime_type field
-            //
-            $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_anhang_mime_type_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_anhang_beschreibung_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
             $handler = new PrivateFileDownloadHTTPHandler($this->dataset, 'datei', 'datei_handler', '%mime_type%', '%datei%', true);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for dateiname_voll field
-            //
-            $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_anhang_dateiname_voll_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_anhang_beschreibung_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for dateiname field
-            //
-            $column = new TextViewColumn('dateiname', 'dateiname', 'Dateiname', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_anhang_dateiname_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for mime_type field
-            //
-            $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_anhang_mime_type_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -1815,30 +1728,6 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             $handler = new PrivateFileDownloadHTTPHandler($this->dataset, 'datei', 'datei_handler', '%mime_type%', '%datei%', true);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for dateiname_voll field
-            //
-            $column = new TextViewColumn('dateiname_voll', 'dateiname_voll', 'Dateiname Voll', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_anhang_dateiname_voll_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for mime_type field
-            //
-            $column = new TextViewColumn('mime_type', 'mime_type', 'Mime Type', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_anhang_mime_type_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_anhang_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -1972,12 +1861,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -2739,7 +2628,6 @@
             $column->setHrefTemplate('%geschaeftsbericht_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_jahr_geschaeftsbericht_url_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Link zum Geschäftsbericht');
             $column->SetFixedWidth(null);
@@ -2753,7 +2641,6 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_jahr_quelle_url_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('URL der Quelle');
             $column->SetFixedWidth(null);
@@ -2765,7 +2652,6 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_jahr_quelle_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen');
             $column->SetFixedWidth(null);
@@ -2777,7 +2663,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_jahr_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
@@ -2949,7 +2834,6 @@
             $column->setHrefTemplate('%geschaeftsbericht_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_jahr_geschaeftsbericht_url_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2960,7 +2844,6 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_jahr_quelle_url_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2969,7 +2852,6 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_jahr_quelle_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2978,7 +2860,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_jahr_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -3870,7 +3751,6 @@
             $column->setHrefTemplate('%geschaeftsbericht_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_jahr_geschaeftsbericht_url_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -3881,7 +3761,6 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_jahr_quelle_url_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -3890,7 +3769,6 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_jahr_quelle_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -3899,7 +3777,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_jahr_notizen_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -4045,7 +3922,6 @@
             $column->setHrefTemplate('%geschaeftsbericht_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_jahr_geschaeftsbericht_url_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -4056,7 +3932,6 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_jahr_quelle_url_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -4065,7 +3940,6 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_jahr_quelle_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -4074,7 +3948,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_jahr_notizen_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -4220,7 +4093,6 @@
             $column->setHrefTemplate('%geschaeftsbericht_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_jahr_geschaeftsbericht_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -4231,7 +4103,6 @@
             $column->setHrefTemplate('%quelle_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_jahr_quelle_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -4240,7 +4111,6 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_jahr_quelle_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -4249,7 +4119,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_organisation_jahr_notizen_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -4437,116 +4306,7 @@
         }
     
         protected function doRegisterHandlers() {
-            //
-            // View column for geschaeftsbericht_url field
-            //
-            $column = new TextViewColumn('geschaeftsbericht_url', 'geschaeftsbericht_url', 'Geschaeftsbericht Url', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('%geschaeftsbericht_url%');
-            $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_jahr_geschaeftsbericht_url_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
-            //
-            // View column for quelle_url field
-            //
-            $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('%quelle_url%');
-            $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_jahr_quelle_url_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for quelle field
-            //
-            $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_jahr_quelle_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_jahr_notizen_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for geschaeftsbericht_url field
-            //
-            $column = new TextViewColumn('geschaeftsbericht_url', 'geschaeftsbericht_url', 'Geschaeftsbericht Url', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('%geschaeftsbericht_url%');
-            $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_jahr_geschaeftsbericht_url_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for quelle_url field
-            //
-            $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('%quelle_url%');
-            $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_jahr_quelle_url_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for quelle field
-            //
-            $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_jahr_quelle_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_jahr_notizen_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for geschaeftsbericht_url field
-            //
-            $column = new TextViewColumn('geschaeftsbericht_url', 'geschaeftsbericht_url', 'Geschaeftsbericht Url', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('%geschaeftsbericht_url%');
-            $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_jahr_geschaeftsbericht_url_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for quelle_url field
-            //
-            $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('%quelle_url%');
-            $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_jahr_quelle_url_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for quelle field
-            //
-            $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_jahr_quelle_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_jahr_notizen_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -4615,43 +4375,6 @@
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_organisation_organisation_jahr_organisation_id_search', 'id', 'anzeige_name', null, 20);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for geschaeftsbericht_url field
-            //
-            $column = new TextViewColumn('geschaeftsbericht_url', 'geschaeftsbericht_url', 'Geschaeftsbericht Url', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('%geschaeftsbericht_url%');
-            $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_jahr_geschaeftsbericht_url_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for quelle_url field
-            //
-            $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('%quelle_url%');
-            $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_jahr_quelle_url_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for quelle field
-            //
-            $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_jahr_quelle_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_organisation_jahr_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -4785,12 +4508,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -5615,7 +5338,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -5782,7 +5504,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -7451,7 +7172,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -7609,7 +7329,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -7732,7 +7451,6 @@
             $column = new TextViewColumn('parlamentarier_name', 'parlamentarier_name', 'Parlamentarier Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beide_indirekt_parlamentarier_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7755,7 +7473,6 @@
             $column = new TextViewColumn('zutrittsberechtigter', 'zutrittsberechtigter', 'Zutrittsberechtigter', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beide_indirekt_zutrittsberechtigter_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7807,7 +7524,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -7915,45 +7631,7 @@
         }
     
         protected function doRegisterHandlers() {
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for parlamentarier_name field
-            //
-            $column = new TextViewColumn('parlamentarier_name', 'parlamentarier_name', 'Parlamentarier Name', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beide_indirekt_parlamentarier_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for zutrittsberechtigter field
-            //
-            $column = new TextViewColumn('zutrittsberechtigter', 'zutrittsberechtigter', 'Zutrittsberechtigter', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beide_indirekt_zutrittsberechtigter_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -8248,14 +7926,6 @@
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_organisation_v_organisation_parlamentarier_beide_indirekt_connector_organisation_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
         }
        
         protected function doCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
@@ -8388,12 +8058,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -8815,7 +8485,6 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -8860,7 +8529,6 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_de_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -8872,7 +8540,6 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -8884,7 +8551,6 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_anzeige_name_de_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -8896,7 +8562,6 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_anzeige_name_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -8920,7 +8585,6 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -8974,7 +8638,6 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_de_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -8983,7 +8646,6 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -8992,7 +8654,6 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_anzeige_name_de_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -9001,7 +8662,6 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_anzeige_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -9425,7 +9085,6 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -9479,7 +9138,6 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_de_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -9488,7 +9146,6 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -9497,7 +9154,6 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_anzeige_name_de_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -9506,7 +9162,6 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_anzeige_name_fr_handler_print');
             $grid->AddPrintColumn($column);
         }
     
@@ -9527,7 +9182,6 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -9581,7 +9235,6 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_de_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -9590,7 +9243,6 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -9599,7 +9251,6 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_anzeige_name_de_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -9608,7 +9259,6 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_anzeige_name_fr_handler_export');
             $grid->AddExportColumn($column);
         }
     
@@ -9629,7 +9279,6 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -9690,7 +9339,6 @@
             $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -9706,7 +9354,6 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_anzeige_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -9715,7 +9362,6 @@
             $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_ort_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -9724,7 +9370,6 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -9733,7 +9378,6 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -9742,7 +9386,6 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_anzeige_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -9751,7 +9394,6 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_anzeige_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
         }
     
@@ -9842,197 +9484,8 @@
         }
     
         protected function doRegisterHandlers() {
-            //
-            // View column for organisation_name field
-            //
-            $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
-            //
-            // View column for organisation_name_de field
-            //
-            $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_de_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
-            //
-            // View column for organisation_name_fr field
-            //
-            $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_fr_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_de field
-            //
-            $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_anzeige_name_de_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_fr field
-            //
-            $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_anzeige_name_fr_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name field
-            //
-            $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_de field
-            //
-            $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_de_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_fr field
-            //
-            $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_fr_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_de field
-            //
-            $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_anzeige_name_de_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_fr field
-            //
-            $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_anzeige_name_fr_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name field
-            //
-            $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_name_de_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_anzeige_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for ort field
-            //
-            $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_ort_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_de field
-            //
-            $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_de_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_fr field
-            //
-            $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_fr_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_de field
-            //
-            $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_anzeige_name_de_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_fr field
-            //
-            $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_anzeige_name_fr_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name field
-            //
-            $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_de field
-            //
-            $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_de_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_fr field
-            //
-            $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_organisation_name_fr_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_de field
-            //
-            $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_anzeige_name_de_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_fr field
-            //
-            $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_auftraggeber_fuer_anzeige_name_fr_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
         }
        
         protected function doCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
@@ -10165,12 +9618,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -10592,7 +10045,6 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%ziel_organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -10637,7 +10089,6 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_de_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -10649,7 +10100,6 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -10661,7 +10111,6 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_anzeige_name_de_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -10673,7 +10122,6 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_anzeige_name_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -10697,7 +10145,6 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%ziel_organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10751,7 +10198,6 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_de_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10760,7 +10206,6 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10769,7 +10214,6 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_anzeige_name_de_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10778,7 +10222,6 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_anzeige_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -11202,7 +10645,6 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%ziel_organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -11256,7 +10698,6 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_de_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -11265,7 +10706,6 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -11274,7 +10714,6 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_anzeige_name_de_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -11283,7 +10722,6 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_anzeige_name_fr_handler_print');
             $grid->AddPrintColumn($column);
         }
     
@@ -11304,7 +10742,6 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%ziel_organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -11358,7 +10795,6 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_de_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -11367,7 +10803,6 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -11376,7 +10811,6 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_anzeige_name_de_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -11385,7 +10819,6 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_anzeige_name_fr_handler_export');
             $grid->AddExportColumn($column);
         }
     
@@ -11406,7 +10839,6 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%ziel_organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -11467,7 +10899,6 @@
             $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -11483,7 +10914,6 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_anzeige_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -11492,7 +10922,6 @@
             $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_ort_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -11501,7 +10930,6 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -11510,7 +10938,6 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -11519,7 +10946,6 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_anzeige_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -11528,7 +10954,6 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_anzeige_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
         }
     
@@ -11619,197 +11044,8 @@
         }
     
         protected function doRegisterHandlers() {
-            //
-            // View column for organisation_name field
-            //
-            $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('organisation.php?operation=view&pk0=%ziel_organisation_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
-            //
-            // View column for organisation_name_de field
-            //
-            $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_de_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
-            //
-            // View column for organisation_name_fr field
-            //
-            $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_fr_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_de field
-            //
-            $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_anzeige_name_de_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_fr field
-            //
-            $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_anzeige_name_fr_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name field
-            //
-            $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('organisation.php?operation=view&pk0=%ziel_organisation_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_de field
-            //
-            $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_de_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_fr field
-            //
-            $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_fr_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_de field
-            //
-            $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_anzeige_name_de_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_fr field
-            //
-            $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_anzeige_name_fr_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name field
-            //
-            $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('organisation.php?operation=view&pk0=%ziel_organisation_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_name_de_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_anzeige_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for ort field
-            //
-            $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_ort_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_de field
-            //
-            $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_de_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_fr field
-            //
-            $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_fr_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_de field
-            //
-            $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_anzeige_name_de_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_fr field
-            //
-            $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_anzeige_name_fr_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name field
-            //
-            $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('organisation.php?operation=view&pk0=%ziel_organisation_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_de field
-            //
-            $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_de_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_fr field
-            //
-            $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_organisation_name_fr_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_de field
-            //
-            $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_anzeige_name_de_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_fr field
-            //
-            $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_arbeitet_fuer_anzeige_name_fr_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
         }
        
         protected function doCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
@@ -11942,12 +11178,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -12369,7 +11605,6 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%ziel_organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_organisation_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -12414,7 +11649,6 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_organisation_name_de_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -12426,7 +11660,6 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_organisation_name_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -12438,7 +11671,6 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_anzeige_name_de_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -12450,7 +11682,6 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_anzeige_name_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -12474,7 +11705,6 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%ziel_organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_organisation_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -12528,7 +11758,6 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_organisation_name_de_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -12537,7 +11766,6 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_organisation_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -12546,7 +11774,6 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_anzeige_name_de_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -12555,7 +11782,6 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_anzeige_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -12979,7 +12205,6 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%ziel_organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_organisation_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -13033,7 +12258,6 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_organisation_name_de_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -13042,7 +12266,6 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_organisation_name_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -13051,7 +12274,6 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_anzeige_name_de_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -13060,7 +12282,6 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_anzeige_name_fr_handler_print');
             $grid->AddPrintColumn($column);
         }
     
@@ -13081,7 +12302,6 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%ziel_organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_organisation_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -13135,7 +12355,6 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_organisation_name_de_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -13144,7 +12363,6 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_organisation_name_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -13153,7 +12371,6 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_anzeige_name_de_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -13162,7 +12379,6 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_anzeige_name_fr_handler_export');
             $grid->AddExportColumn($column);
         }
     
@@ -13183,7 +12399,6 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%ziel_organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_organisation_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -13244,7 +12459,6 @@
             $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -13260,7 +12474,6 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_anzeige_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -13269,7 +12482,6 @@
             $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_ort_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -13278,7 +12490,6 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_organisation_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -13287,7 +12498,6 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_organisation_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -13296,7 +12506,6 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_anzeige_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -13305,7 +12514,6 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglied_von_anzeige_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
         }
     
@@ -13396,197 +12604,8 @@
         }
     
         protected function doRegisterHandlers() {
-            //
-            // View column for organisation_name field
-            //
-            $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('organisation.php?operation=view&pk0=%ziel_organisation_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_organisation_name_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
-            //
-            // View column for organisation_name_de field
-            //
-            $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_organisation_name_de_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
-            //
-            // View column for organisation_name_fr field
-            //
-            $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_organisation_name_fr_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_de field
-            //
-            $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_anzeige_name_de_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_fr field
-            //
-            $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_anzeige_name_fr_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name field
-            //
-            $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('organisation.php?operation=view&pk0=%ziel_organisation_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_organisation_name_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_de field
-            //
-            $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_organisation_name_de_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_fr field
-            //
-            $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_organisation_name_fr_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_de field
-            //
-            $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_anzeige_name_de_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_fr field
-            //
-            $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_anzeige_name_fr_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name field
-            //
-            $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('organisation.php?operation=view&pk0=%ziel_organisation_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_organisation_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_name_de_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_anzeige_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for ort field
-            //
-            $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_ort_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_de field
-            //
-            $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_organisation_name_de_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_fr field
-            //
-            $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_organisation_name_fr_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_de field
-            //
-            $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_anzeige_name_de_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_fr field
-            //
-            $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_anzeige_name_fr_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name field
-            //
-            $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('organisation.php?operation=view&pk0=%ziel_organisation_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_organisation_name_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_de field
-            //
-            $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_organisation_name_de_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_fr field
-            //
-            $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_organisation_name_fr_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_de field
-            //
-            $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_anzeige_name_de_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_fr field
-            //
-            $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglied_von_anzeige_name_fr_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
         }
        
         protected function doCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
@@ -13719,12 +12738,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -14146,7 +13165,6 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_organisation_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -14191,7 +13209,6 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_organisation_name_de_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -14203,7 +13220,6 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_organisation_name_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -14215,7 +13231,6 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_anzeige_name_de_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -14227,7 +13242,6 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_anzeige_name_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -14251,7 +13265,6 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_organisation_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14305,7 +13318,6 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_organisation_name_de_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14314,7 +13326,6 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_organisation_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14323,7 +13334,6 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_anzeige_name_de_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14332,7 +13342,6 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_anzeige_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -14756,7 +13765,6 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_organisation_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -14810,7 +13818,6 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_organisation_name_de_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -14819,7 +13826,6 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_organisation_name_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -14828,7 +13834,6 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_anzeige_name_de_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -14837,7 +13842,6 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_anzeige_name_fr_handler_print');
             $grid->AddPrintColumn($column);
         }
     
@@ -14858,7 +13862,6 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_organisation_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -14912,7 +13915,6 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_organisation_name_de_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -14921,7 +13923,6 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_organisation_name_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -14930,7 +13931,6 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_anzeige_name_de_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -14939,7 +13939,6 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_anzeige_name_fr_handler_export');
             $grid->AddExportColumn($column);
         }
     
@@ -14960,7 +13959,6 @@
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_organisation_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -15021,7 +14019,6 @@
             $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -15037,7 +14034,6 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_anzeige_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -15046,7 +14042,6 @@
             $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_ort_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -15055,7 +14050,6 @@
             $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_organisation_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -15064,7 +14058,6 @@
             $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_organisation_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -15073,7 +14066,6 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_anzeige_name_de_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -15082,7 +14074,6 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_beziehung_mitglieder_anzeige_name_fr_handler_compare');
             $grid->AddCompareColumn($column);
         }
     
@@ -15173,197 +14164,8 @@
         }
     
         protected function doRegisterHandlers() {
-            //
-            // View column for organisation_name field
-            //
-            $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_organisation_name_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
-            //
-            // View column for organisation_name_de field
-            //
-            $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_organisation_name_de_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
-            //
-            // View column for organisation_name_fr field
-            //
-            $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_organisation_name_fr_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_de field
-            //
-            $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_anzeige_name_de_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_fr field
-            //
-            $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_anzeige_name_fr_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name field
-            //
-            $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_organisation_name_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_de field
-            //
-            $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_organisation_name_de_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_fr field
-            //
-            $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_organisation_name_fr_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_de field
-            //
-            $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_anzeige_name_de_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_fr field
-            //
-            $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_anzeige_name_fr_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name field
-            //
-            $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_organisation_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_name_de_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_anzeige_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for ort field
-            //
-            $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_ort_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_de field
-            //
-            $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_organisation_name_de_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_fr field
-            //
-            $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_organisation_name_fr_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_de field
-            //
-            $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_anzeige_name_de_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_fr field
-            //
-            $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_anzeige_name_fr_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name field
-            //
-            $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('organisation.php?operation=view&pk0=%organisation_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_organisation_name_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_de field
-            //
-            $column = new TextViewColumn('organisation_name_de', 'organisation_name_de', 'Organisation Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_organisation_name_de_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for organisation_name_fr field
-            //
-            $column = new TextViewColumn('organisation_name_fr', 'organisation_name_fr', 'Organisation Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_organisation_name_fr_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_de field
-            //
-            $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_anzeige_name_de_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for anzeige_name_fr field
-            //
-            $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_beziehung_mitglieder_anzeige_name_fr_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
         }
        
         protected function doCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
@@ -15496,12 +14298,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -16606,7 +15408,6 @@
             $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_parlamentarier_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -16628,7 +15429,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -16661,7 +15461,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_notizen_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -16852,7 +15651,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beschreibung_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -16926,7 +15724,6 @@
             $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_parlamentarier_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -16942,7 +15739,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -16966,7 +15762,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_notizen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -17117,7 +15912,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -19069,7 +17863,6 @@
             $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_parlamentarier_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -19085,7 +17878,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -19109,7 +17901,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_notizen_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -19260,7 +18051,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beschreibung_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -19319,7 +18109,6 @@
             $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_parlamentarier_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -19335,7 +18124,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beschreibung_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -19359,7 +18147,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_notizen_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -19510,7 +18297,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beschreibung_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -19569,7 +18355,6 @@
             $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_parlamentarier_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -19585,7 +18370,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -19609,7 +18393,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_notizen_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -19739,7 +18522,6 @@
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -19748,7 +18530,6 @@
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_nachname_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -19860,7 +18641,6 @@
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beruf_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -19912,7 +18692,6 @@
             $column = new TextViewColumn('photo', 'photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_photo_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -19921,7 +18700,6 @@
             $column = new TextViewColumn('photo_dateiname', 'photo_dateiname', 'Photo Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_photo_dateiname_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -19937,7 +18715,6 @@
             $column = new TextViewColumn('photo_dateiname_voll', 'photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_photo_dateiname_voll_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -19946,7 +18723,6 @@
             $column = new TextViewColumn('photo_mime_type', 'photo_mime_type', 'Photo Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_photo_mime_type_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -19955,7 +18731,6 @@
             $column = new TextViewColumn('kleinbild', 'kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_kleinbild_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -19971,7 +18746,6 @@
             $column = new TextViewColumn('email', 'email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_email_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -19980,7 +18754,6 @@
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_homepage_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -20003,7 +18776,6 @@
             $column = new TextViewColumn('linkedin_profil_url', 'linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_linkedin_profil_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -20012,7 +18784,6 @@
             $column = new TextViewColumn('xing_profil_name', 'xing_profil_name', 'Xing Profil Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_xing_profil_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -20021,7 +18792,6 @@
             $column = new TextViewColumn('facebook_name', 'facebook_name', 'Facebook Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_facebook_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -20037,7 +18807,6 @@
             $column = new TextViewColumn('adresse_firma', 'adresse_firma', 'Adresse Firma', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_adresse_firma_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -20046,7 +18815,6 @@
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_adresse_strasse_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -20055,7 +18823,6 @@
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_adresse_zusatz_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -20071,7 +18838,6 @@
             $column = new TextViewColumn('adresse_ort', 'adresse_ort', 'Adresse Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_adresse_ort_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -20108,7 +18874,6 @@
             $column = new TextViewColumn('kommissionen_namen', 'kommissionen_namen', 'Kommissionen Namen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_kommissionen_namen_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -20117,7 +18882,6 @@
             $column = new TextViewColumn('kommissionen_abkuerzung', 'kommissionen_abkuerzung', 'Kommissionen Abkuerzung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_kommissionen_abkuerzung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -20161,7 +18925,6 @@
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_quelle_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -20177,7 +18940,6 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_quelle_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -20242,7 +19004,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beschreibung_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -20371,275 +19132,7 @@
         }
     
         protected function doRegisterHandlers() {
-            //
-            // View column for parlamentarier_name field
-            //
-            $column = new TextViewColumn('parlamentarier_name', 'parlamentarier_name', 'Parlamentarier Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_parlamentarier_name_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beschreibung_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_notizen_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung_fr field
-            //
-            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beschreibung_fr_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for parlamentarier_name field
-            //
-            $column = new TextViewColumn('parlamentarier_name', 'parlamentarier_name', 'Parlamentarier Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_parlamentarier_name_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beschreibung_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_notizen_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung_fr field
-            //
-            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beschreibung_fr_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for parlamentarier_name field
-            //
-            $column = new TextViewColumn('parlamentarier_name', 'parlamentarier_name', 'Parlamentarier Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_parlamentarier_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beschreibung_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_notizen_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name field
-            //
-            $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for nachname field
-            //
-            $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_nachname_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beruf field
-            //
-            $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beruf_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for photo field
-            //
-            $column = new TextViewColumn('photo', 'photo', 'Photo', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_photo_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for photo_dateiname field
-            //
-            $column = new TextViewColumn('photo_dateiname', 'photo_dateiname', 'Photo Dateiname', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_photo_dateiname_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for photo_dateiname_voll field
-            //
-            $column = new TextViewColumn('photo_dateiname_voll', 'photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_photo_dateiname_voll_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for photo_mime_type field
-            //
-            $column = new TextViewColumn('photo_mime_type', 'photo_mime_type', 'Photo Mime Type', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_photo_mime_type_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for kleinbild field
-            //
-            $column = new TextViewColumn('kleinbild', 'kleinbild', 'Kleinbild', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_kleinbild_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for email field
-            //
-            $column = new TextViewColumn('email', 'email', 'Email', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_email_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for homepage field
-            //
-            $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_homepage_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for linkedin_profil_url field
-            //
-            $column = new TextViewColumn('linkedin_profil_url', 'linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_linkedin_profil_url_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for xing_profil_name field
-            //
-            $column = new TextViewColumn('xing_profil_name', 'xing_profil_name', 'Xing Profil Name', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_xing_profil_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for facebook_name field
-            //
-            $column = new TextViewColumn('facebook_name', 'facebook_name', 'Facebook Name', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_facebook_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for adresse_firma field
-            //
-            $column = new TextViewColumn('adresse_firma', 'adresse_firma', 'Adresse Firma', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_adresse_firma_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for adresse_strasse field
-            //
-            $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_adresse_strasse_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for adresse_zusatz field
-            //
-            $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_adresse_zusatz_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for adresse_ort field
-            //
-            $column = new TextViewColumn('adresse_ort', 'adresse_ort', 'Adresse Ort', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_adresse_ort_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for kommissionen_namen field
-            //
-            $column = new TextViewColumn('kommissionen_namen', 'kommissionen_namen', 'Kommissionen Namen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_kommissionen_namen_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for kommissionen_abkuerzung field
-            //
-            $column = new TextViewColumn('kommissionen_abkuerzung', 'kommissionen_abkuerzung', 'Kommissionen Abkuerzung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_kommissionen_abkuerzung_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for quelle_url field
-            //
-            $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_quelle_url_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for quelle field
-            //
-            $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_quelle_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung_fr field
-            //
-            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beschreibung_fr_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -20745,40 +19238,6 @@
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_organisation_v_organisation_parlamentarier_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for parlamentarier_name field
-            //
-            $column = new TextViewColumn('parlamentarier_name', 'parlamentarier_name', 'Parlamentarier Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_parlamentarier_name_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beschreibung_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_notizen_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung_fr field
-            //
-            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -20912,12 +19371,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -22005,7 +20464,6 @@
             $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_parlamentarier_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -22037,7 +20495,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -22070,7 +20527,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_notizen_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -22271,7 +20727,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_beschreibung_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -22345,7 +20800,6 @@
             $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_parlamentarier_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -22368,7 +20822,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -22392,7 +20845,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_notizen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -22550,7 +21002,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -24491,7 +22942,6 @@
             $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_parlamentarier_name_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -24514,7 +22964,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -24538,7 +22987,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_notizen_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -24696,7 +23144,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_beschreibung_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -24755,7 +23202,6 @@
             $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_parlamentarier_name_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -24778,7 +23224,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_beschreibung_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -24802,7 +23247,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_notizen_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -24960,7 +23404,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_beschreibung_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -25019,7 +23462,6 @@
             $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
             $column->setTarget('_self');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_parlamentarier_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25042,7 +23484,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25066,7 +23507,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_notizen_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25203,7 +23643,6 @@
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25212,7 +23651,6 @@
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_nachname_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25324,7 +23762,6 @@
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_beruf_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25376,7 +23813,6 @@
             $column = new TextViewColumn('photo', 'photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_photo_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25385,7 +23821,6 @@
             $column = new TextViewColumn('photo_dateiname', 'photo_dateiname', 'Photo Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_photo_dateiname_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25401,7 +23836,6 @@
             $column = new TextViewColumn('photo_dateiname_voll', 'photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_photo_dateiname_voll_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25410,7 +23844,6 @@
             $column = new TextViewColumn('photo_mime_type', 'photo_mime_type', 'Photo Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_photo_mime_type_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25419,7 +23852,6 @@
             $column = new TextViewColumn('kleinbild', 'kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_kleinbild_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25435,7 +23867,6 @@
             $column = new TextViewColumn('email', 'email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_email_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25444,7 +23875,6 @@
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_homepage_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25467,7 +23897,6 @@
             $column = new TextViewColumn('linkedin_profil_url', 'linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_linkedin_profil_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25476,7 +23905,6 @@
             $column = new TextViewColumn('xing_profil_name', 'xing_profil_name', 'Xing Profil Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_xing_profil_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25485,7 +23913,6 @@
             $column = new TextViewColumn('facebook_name', 'facebook_name', 'Facebook Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_facebook_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25501,7 +23928,6 @@
             $column = new TextViewColumn('adresse_firma', 'adresse_firma', 'Adresse Firma', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_adresse_firma_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25510,7 +23936,6 @@
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_adresse_strasse_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25519,7 +23944,6 @@
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_adresse_zusatz_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25535,7 +23959,6 @@
             $column = new TextViewColumn('adresse_ort', 'adresse_ort', 'Adresse Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_adresse_ort_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25572,7 +23995,6 @@
             $column = new TextViewColumn('kommissionen_namen', 'kommissionen_namen', 'Kommissionen Namen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_kommissionen_namen_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25581,7 +24003,6 @@
             $column = new TextViewColumn('kommissionen_abkuerzung', 'kommissionen_abkuerzung', 'Kommissionen Abkuerzung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_kommissionen_abkuerzung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25625,7 +24046,6 @@
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_quelle_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25641,7 +24061,6 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_quelle_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25706,7 +24125,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_indirekt_beschreibung_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -25835,275 +24253,7 @@
         }
     
         protected function doRegisterHandlers() {
-            //
-            // View column for parlamentarier_name field
-            //
-            $column = new TextViewColumn('parlamentarier_name', 'parlamentarier_name', 'Parlamentarier Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_parlamentarier_name_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_beschreibung_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_notizen_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung_fr field
-            //
-            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_beschreibung_fr_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for parlamentarier_name field
-            //
-            $column = new TextViewColumn('parlamentarier_name', 'parlamentarier_name', 'Parlamentarier Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_parlamentarier_name_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_beschreibung_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_notizen_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung_fr field
-            //
-            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_beschreibung_fr_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for parlamentarier_name field
-            //
-            $column = new TextViewColumn('parlamentarier_name', 'parlamentarier_name', 'Parlamentarier Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_parlamentarier_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_beschreibung_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_notizen_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name field
-            //
-            $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for nachname field
-            //
-            $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_nachname_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beruf field
-            //
-            $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_beruf_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for photo field
-            //
-            $column = new TextViewColumn('photo', 'photo', 'Photo', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_photo_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for photo_dateiname field
-            //
-            $column = new TextViewColumn('photo_dateiname', 'photo_dateiname', 'Photo Dateiname', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_photo_dateiname_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for photo_dateiname_voll field
-            //
-            $column = new TextViewColumn('photo_dateiname_voll', 'photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_photo_dateiname_voll_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for photo_mime_type field
-            //
-            $column = new TextViewColumn('photo_mime_type', 'photo_mime_type', 'Photo Mime Type', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_photo_mime_type_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for kleinbild field
-            //
-            $column = new TextViewColumn('kleinbild', 'kleinbild', 'Kleinbild', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_kleinbild_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for email field
-            //
-            $column = new TextViewColumn('email', 'email', 'Email', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_email_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for homepage field
-            //
-            $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_homepage_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for linkedin_profil_url field
-            //
-            $column = new TextViewColumn('linkedin_profil_url', 'linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_linkedin_profil_url_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for xing_profil_name field
-            //
-            $column = new TextViewColumn('xing_profil_name', 'xing_profil_name', 'Xing Profil Name', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_xing_profil_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for facebook_name field
-            //
-            $column = new TextViewColumn('facebook_name', 'facebook_name', 'Facebook Name', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_facebook_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for adresse_firma field
-            //
-            $column = new TextViewColumn('adresse_firma', 'adresse_firma', 'Adresse Firma', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_adresse_firma_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for adresse_strasse field
-            //
-            $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_adresse_strasse_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for adresse_zusatz field
-            //
-            $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_adresse_zusatz_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for adresse_ort field
-            //
-            $column = new TextViewColumn('adresse_ort', 'adresse_ort', 'Adresse Ort', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_adresse_ort_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for kommissionen_namen field
-            //
-            $column = new TextViewColumn('kommissionen_namen', 'kommissionen_namen', 'Kommissionen Namen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_kommissionen_namen_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for kommissionen_abkuerzung field
-            //
-            $column = new TextViewColumn('kommissionen_abkuerzung', 'kommissionen_abkuerzung', 'Kommissionen Abkuerzung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_kommissionen_abkuerzung_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for quelle_url field
-            //
-            $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_quelle_url_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for quelle field
-            //
-            $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_quelle_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung_fr field
-            //
-            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_beschreibung_fr_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -26209,40 +24359,6 @@
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_organisation_v_organisation_parlamentarier_indirekt_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for parlamentarier_name field
-            //
-            $column = new TextViewColumn('parlamentarier_name', 'parlamentarier_name', 'Parlamentarier Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
-            $column->setTarget('_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_parlamentarier_name_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_beschreibung_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_notizen_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung_fr field
-            //
-            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_indirekt_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -26376,12 +24492,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -26927,7 +25043,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beide_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -27024,7 +25139,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beide_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -28254,7 +26368,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beide_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
         }
     
@@ -28348,7 +26461,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beide_beschreibung_handler_export');
             $grid->AddExportColumn($column);
         }
     
@@ -28417,7 +26529,6 @@
             $column = new TextViewColumn('parlamentarier_name', 'parlamentarier_name', 'Parlamentarier Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beide_parlamentarier_name_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -28468,7 +26579,6 @@
             $column = new TextViewColumn('zutrittsberechtigter', 'zutrittsberechtigter', 'Zutrittsberechtigter', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beide_zutrittsberechtigter_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -28510,7 +26620,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_v_organisation_parlamentarier_beide_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
         }
     
@@ -28601,45 +26710,7 @@
         }
     
         protected function doRegisterHandlers() {
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beide_beschreibung_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beide_beschreibung_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for parlamentarier_name field
-            //
-            $column = new TextViewColumn('parlamentarier_name', 'parlamentarier_name', 'Parlamentarier Name', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beide_parlamentarier_name_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for zutrittsberechtigter field
-            //
-            $column = new TextViewColumn('zutrittsberechtigter', 'zutrittsberechtigter', 'Zutrittsberechtigter', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beide_zutrittsberechtigter_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beide_beschreibung_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -28877,14 +26948,6 @@
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_organisation_v_organisation_parlamentarier_beide_organisation_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_v_organisation_parlamentarier_beide_beschreibung_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
         }
        
         protected function doCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
@@ -29017,12 +27080,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -29961,7 +28024,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_interessenbindung_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Bezeichung der Interessenbindung. Möglichst kurz. Bezeichnung wird zur Auswertung wahrscheinlich nicht gebraucht.');
             $column->SetFixedWidth(null);
@@ -29994,7 +28056,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_interessenbindung_notizen_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
             $column->SetFixedWidth(null);
@@ -30163,7 +28224,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_interessenbindung_beschreibung_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Französische Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.');
             $column->SetFixedWidth(null);
@@ -30241,7 +28301,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_interessenbindung_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -30265,7 +28324,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_interessenbindung_notizen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -30386,7 +28444,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_interessenbindung_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -31821,7 +29878,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_interessenbindung_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -31845,7 +29901,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_interessenbindung_notizen_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -31966,7 +30021,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_interessenbindung_beschreibung_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -32035,7 +30089,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_interessenbindung_beschreibung_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -32059,7 +30112,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_interessenbindung_notizen_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -32180,7 +30232,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_interessenbindung_beschreibung_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -32249,7 +30300,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_interessenbindung_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -32273,7 +30323,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_interessenbindung_notizen_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -32394,7 +30443,6 @@
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_interessenbindung_quelle_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -32410,7 +30458,6 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_interessenbindung_quelle_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -32419,7 +30466,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_interessenbindung_beschreibung_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -32528,93 +30574,7 @@
         }
     
         protected function doRegisterHandlers() {
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_interessenbindung_beschreibung_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_interessenbindung_notizen_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung_fr field
-            //
-            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_interessenbindung_beschreibung_fr_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_interessenbindung_beschreibung_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_interessenbindung_notizen_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung_fr field
-            //
-            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_interessenbindung_beschreibung_fr_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_interessenbindung_beschreibung_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_interessenbindung_notizen_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for quelle_url field
-            //
-            $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_interessenbindung_quelle_url_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for quelle field
-            //
-            $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_interessenbindung_quelle_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung_fr field
-            //
-            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_interessenbindung_beschreibung_fr_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -32790,30 +30750,6 @@
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_organisation_interessenbindung_organisation_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_interessenbindung_beschreibung_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_interessenbindung_notizen_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung_fr field
-            //
-            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_interessenbindung_beschreibung_fr_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
         }
        
         protected function doCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
@@ -32946,12 +30882,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -33655,7 +31591,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_mandat_beschreibung_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Umschreibung des Mandates. Beschreibung wird zur Auswertung wahrscheinlich nicht gebraucht.');
             $column->SetFixedWidth(null);
@@ -33688,7 +31623,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_mandat_notizen_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
             $column->SetFixedWidth(null);
@@ -33827,7 +31761,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_mandat_beschreibung_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Französische Bezeichung des Mandates. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.');
             $column->SetFixedWidth(null);
@@ -33878,7 +31811,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_mandat_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -33902,7 +31834,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_mandat_notizen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -34002,7 +31933,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_mandat_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -34976,7 +32906,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_mandat_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -35000,7 +32929,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_mandat_notizen_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -35100,7 +33028,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_mandat_beschreibung_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -35145,7 +33072,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_mandat_beschreibung_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -35169,7 +33095,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_mandat_notizen_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -35269,7 +33194,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_mandat_beschreibung_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -35314,7 +33238,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_mandat_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -35338,7 +33261,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_mandat_notizen_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -35452,7 +33374,6 @@
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_mandat_quelle_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -35468,7 +33389,6 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_mandat_quelle_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -35477,7 +33397,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_mandat_beschreibung_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -35578,93 +33497,7 @@
         }
     
         protected function doRegisterHandlers() {
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_mandat_beschreibung_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_mandat_notizen_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung_fr field
-            //
-            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_mandat_beschreibung_fr_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_mandat_beschreibung_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_mandat_notizen_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung_fr field
-            //
-            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_mandat_beschreibung_fr_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_mandat_beschreibung_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_mandat_notizen_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for quelle_url field
-            //
-            $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_mandat_quelle_url_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for quelle field
-            //
-            $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_mandat_quelle_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung_fr field
-            //
-            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_mandat_beschreibung_fr_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -35733,30 +33566,6 @@
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_organisation_mandat_organisation_id_search', 'id', 'anzeige_name', null, 20);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_mandat_beschreibung_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_mandat_notizen_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung_fr field
-            //
-            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_mandat_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -35890,12 +33699,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -36503,6 +34312,8 @@
             $main_editor = new DynamicCombobox('land_id_edit', $this->CreateLinkBuilder());
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
+            $main_editor->setFormatSelection('return item.formatted_value;');
+            $main_editor->setFormatResult('return item.formatted_value;');
             $main_editor->SetAllowNullValue(false);
             $main_editor->SetHandlerName('filter_builder_organisation_land_id_search');
             
@@ -37367,7 +35178,7 @@
     
         protected function AddFieldColumns(Grid $grid, $withDetails = true)
         {
-            if (GetCurrentUserPermissionSetForDataSource('organisation.organisation_anhang')->HasViewGrant() && $withDetails)
+            if (GetCurrentUserPermissionsForPage('organisation.organisation_anhang')->HasViewGrant() && $withDetails)
             {
             //
             // View column for organisation_organisation_anhang detail
@@ -37377,7 +35188,7 @@
             $grid->AddViewColumn($column);
             }
             
-            if (GetCurrentUserPermissionSetForDataSource('organisation.organisation_jahr')->HasViewGrant() && $withDetails)
+            if (GetCurrentUserPermissionsForPage('organisation.organisation_jahr')->HasViewGrant() && $withDetails)
             {
             //
             // View column for organisation_organisation_jahr detail
@@ -37387,7 +35198,7 @@
             $grid->AddViewColumn($column);
             }
             
-            if (GetCurrentUserPermissionSetForDataSource('organisation.v_organisation_parlamentarier_beide_indirekt')->HasViewGrant() && $withDetails)
+            if (GetCurrentUserPermissionsForPage('organisation.v_organisation_parlamentarier_beide_indirekt')->HasViewGrant() && $withDetails)
             {
             //
             // View column for organisation_v_organisation_parlamentarier_beide_indirekt detail
@@ -37397,7 +35208,7 @@
             $grid->AddViewColumn($column);
             }
             
-            if (GetCurrentUserPermissionSetForDataSource('organisation.v_organisation_beziehung_auftraggeber_fuer')->HasViewGrant() && $withDetails)
+            if (GetCurrentUserPermissionsForPage('organisation.v_organisation_beziehung_auftraggeber_fuer')->HasViewGrant() && $withDetails)
             {
             //
             // View column for organisation_v_organisation_beziehung_auftraggeber_fuer detail
@@ -37407,7 +35218,7 @@
             $grid->AddViewColumn($column);
             }
             
-            if (GetCurrentUserPermissionSetForDataSource('organisation.v_organisation_beziehung_arbeitet_fuer')->HasViewGrant() && $withDetails)
+            if (GetCurrentUserPermissionsForPage('organisation.v_organisation_beziehung_arbeitet_fuer')->HasViewGrant() && $withDetails)
             {
             //
             // View column for organisation_v_organisation_beziehung_arbeitet_fuer detail
@@ -37417,7 +35228,7 @@
             $grid->AddViewColumn($column);
             }
             
-            if (GetCurrentUserPermissionSetForDataSource('organisation.v_organisation_beziehung_mitglied_von')->HasViewGrant() && $withDetails)
+            if (GetCurrentUserPermissionsForPage('organisation.v_organisation_beziehung_mitglied_von')->HasViewGrant() && $withDetails)
             {
             //
             // View column for organisation_v_organisation_beziehung_mitglied_von detail
@@ -37427,7 +35238,7 @@
             $grid->AddViewColumn($column);
             }
             
-            if (GetCurrentUserPermissionSetForDataSource('organisation.v_organisation_beziehung_mitglieder')->HasViewGrant() && $withDetails)
+            if (GetCurrentUserPermissionsForPage('organisation.v_organisation_beziehung_mitglieder')->HasViewGrant() && $withDetails)
             {
             //
             // View column for organisation_v_organisation_beziehung_mitglieder detail
@@ -37437,7 +35248,7 @@
             $grid->AddViewColumn($column);
             }
             
-            if (GetCurrentUserPermissionSetForDataSource('organisation.v_organisation_parlamentarier')->HasViewGrant() && $withDetails)
+            if (GetCurrentUserPermissionsForPage('organisation.v_organisation_parlamentarier')->HasViewGrant() && $withDetails)
             {
             //
             // View column for organisation_v_organisation_parlamentarier detail
@@ -37447,7 +35258,7 @@
             $grid->AddViewColumn($column);
             }
             
-            if (GetCurrentUserPermissionSetForDataSource('organisation.v_organisation_parlamentarier_indirekt')->HasViewGrant() && $withDetails)
+            if (GetCurrentUserPermissionsForPage('organisation.v_organisation_parlamentarier_indirekt')->HasViewGrant() && $withDetails)
             {
             //
             // View column for organisation_v_organisation_parlamentarier_indirekt detail
@@ -37457,7 +35268,7 @@
             $grid->AddViewColumn($column);
             }
             
-            if (GetCurrentUserPermissionSetForDataSource('organisation.v_organisation_parlamentarier_beide')->HasViewGrant() && $withDetails)
+            if (GetCurrentUserPermissionsForPage('organisation.v_organisation_parlamentarier_beide')->HasViewGrant() && $withDetails)
             {
             //
             // View column for organisation_v_organisation_parlamentarier_beide detail
@@ -37467,7 +35278,7 @@
             $grid->AddViewColumn($column);
             }
             
-            if (GetCurrentUserPermissionSetForDataSource('organisation.interessenbindung')->HasViewGrant() && $withDetails)
+            if (GetCurrentUserPermissionsForPage('organisation.interessenbindung')->HasViewGrant() && $withDetails)
             {
             //
             // View column for organisation_interessenbindung detail
@@ -37477,7 +35288,7 @@
             $grid->AddViewColumn($column);
             }
             
-            if (GetCurrentUserPermissionSetForDataSource('organisation.mandat')->HasViewGrant() && $withDetails)
+            if (GetCurrentUserPermissionsForPage('organisation.mandat')->HasViewGrant() && $withDetails)
             {
             //
             // View column for organisation_mandat detail
@@ -37519,7 +35330,6 @@
             $column->SetOrderable(true);
             $column->setBold(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_name_de_handler_list');
             $column->SetEscapeHTMLSpecialChars(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.');
@@ -37532,7 +35342,6 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_name_fr_handler_list');
             $column->SetEscapeHTMLSpecialChars(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Französischer Name');
@@ -37545,7 +35354,6 @@
             $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_name_it_handler_list');
             $column->SetEscapeHTMLSpecialChars(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Italienischer Name');
@@ -37590,7 +35398,6 @@
             $column = new TextViewColumn('alias_namen_de', 'alias_namen_de', 'Alias Namen De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_alias_namen_de_handler_list');
             $column->SetEscapeHTMLSpecialChars(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Strichpunkt-getrennte Aufzählung von alternative Namen (inoffizielle Bezeichnungen) für die Organisation; in der Suche wird auch bei diesen Begriffen gesucht.');
@@ -37603,7 +35410,6 @@
             $column = new TextViewColumn('alias_namen_fr', 'alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_alias_namen_fr_handler_list');
             $column->SetEscapeHTMLSpecialChars(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Französischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.');
@@ -37616,7 +35422,6 @@
             $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_alias_namen_it_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Italienischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternativen Namen für die Organisation; bei der Suche wird für ein einfacheres Finden auch in den Alias-Namen gesucht.');
             $column->SetFixedWidth(null);
@@ -37642,7 +35447,6 @@
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_homepage_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Link zur Webseite');
             $column->SetFixedWidth(null);
@@ -37654,7 +35458,6 @@
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_adresse_strasse_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Adresse der Organisation');
             $column->SetFixedWidth(null);
@@ -37666,7 +35469,6 @@
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_adresse_zusatz_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Adressezusatz, z.B. Postfach');
             $column->SetFixedWidth(null);
@@ -37688,7 +35490,6 @@
             $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_ort_handler_list');
             $column->SetEscapeHTMLSpecialChars(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Ort der Organisation');
@@ -37731,7 +35532,6 @@
             $column = new TextViewColumn('rechtsform_handelsregister', 'rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(4);
-            $column->SetFullTextWindowHandlerName('organisation_rechtsform_handelsregister_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Code der Rechtsform des Handelsregister, z.B. 0106 für AG');
             $column->SetFixedWidth(null);
@@ -37775,7 +35575,6 @@
             $column->setHrefTemplate('%handelsregister_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_handelsregister_url_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Wenn ein CHE-000.000.000 UID vorhanden ist, ist dieser Eintrag nicht nötig. Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.');
             $column->SetFixedWidth(null);
@@ -37799,7 +35598,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Beschreibung der Lobbyorganisation. Beispielsweise von der Webseite, falls es keinen besseren Text gibt Zweck gemäss Handelsregister oder Statuten.');
@@ -37812,7 +35610,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_beschreibung_fr_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Französische Beschreibung');
             $column->SetFixedWidth(null);
@@ -37824,7 +35621,6 @@
             $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_sekretariat_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->SetEscapeHTMLSpecialChars(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
@@ -37862,7 +35658,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
@@ -38014,7 +35809,6 @@
             $column->SetOrderable(true);
             $column->setBold(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_name_de_handler_view');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -38024,7 +35818,6 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_name_fr_handler_view');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -38034,7 +35827,6 @@
             $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_name_it_handler_view');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -38067,7 +35859,6 @@
             $column = new TextViewColumn('alias_namen_de', 'alias_namen_de', 'Alias Namen De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_alias_namen_de_handler_view');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -38077,7 +35868,6 @@
             $column = new TextViewColumn('alias_namen_fr', 'alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_alias_namen_fr_handler_view');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -38087,7 +35877,6 @@
             $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_alias_namen_it_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -38096,7 +35885,6 @@
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_adresse_strasse_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -38105,7 +35893,6 @@
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_adresse_zusatz_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -38121,7 +35908,6 @@
             $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_ort_handler_view');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -38152,7 +35938,6 @@
             $column = new TextViewColumn('rechtsform_handelsregister', 'rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(4);
-            $column->SetFullTextWindowHandlerName('organisation_rechtsform_handelsregister_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -38193,7 +35978,6 @@
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_homepage_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -38204,7 +35988,6 @@
             $column->setHrefTemplate('%handelsregister_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_handelsregister_url_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -38222,7 +36005,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_beschreibung_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -38232,7 +36014,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -38241,7 +36022,6 @@
             $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_sekretariat_handler_view');
             $column->SetReplaceLFByBR(true);
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddSingleRecordViewColumn($column);
@@ -38270,7 +36050,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -40710,7 +38489,6 @@
             $column->SetOrderable(true);
             $column->setBold(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_name_de_handler_print');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddPrintColumn($column);
             
@@ -40720,7 +38498,6 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_name_fr_handler_print');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddPrintColumn($column);
             
@@ -40730,7 +38507,6 @@
             $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_name_it_handler_print');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddPrintColumn($column);
             
@@ -40763,7 +38539,6 @@
             $column = new TextViewColumn('alias_namen_de', 'alias_namen_de', 'Alias Namen De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_alias_namen_de_handler_print');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddPrintColumn($column);
             
@@ -40773,7 +38548,6 @@
             $column = new TextViewColumn('alias_namen_fr', 'alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_alias_namen_fr_handler_print');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddPrintColumn($column);
             
@@ -40783,7 +38557,6 @@
             $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_alias_namen_it_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -40792,7 +38565,6 @@
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_adresse_strasse_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -40801,7 +38573,6 @@
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_adresse_zusatz_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -40817,7 +38588,6 @@
             $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_ort_handler_print');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddPrintColumn($column);
             
@@ -40848,7 +38618,6 @@
             $column = new TextViewColumn('rechtsform_handelsregister', 'rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(4);
-            $column->SetFullTextWindowHandlerName('organisation_rechtsform_handelsregister_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -40889,7 +38658,6 @@
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_homepage_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -40900,7 +38668,6 @@
             $column->setHrefTemplate('%handelsregister_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_handelsregister_url_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -40918,7 +38685,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_beschreibung_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -40928,7 +38694,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_beschreibung_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -40937,7 +38702,6 @@
             $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_sekretariat_handler_print');
             $column->SetReplaceLFByBR(true);
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddPrintColumn($column);
@@ -40966,7 +38730,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_notizen_handler_print');
             $column->SetReplaceLFByBR(true);
             $grid->AddPrintColumn($column);
             
@@ -41082,7 +38845,6 @@
             $column->SetOrderable(true);
             $column->setBold(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_name_de_handler_export');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddExportColumn($column);
             
@@ -41092,7 +38854,6 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_name_fr_handler_export');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddExportColumn($column);
             
@@ -41102,7 +38863,6 @@
             $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_name_it_handler_export');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddExportColumn($column);
             
@@ -41135,7 +38895,6 @@
             $column = new TextViewColumn('alias_namen_de', 'alias_namen_de', 'Alias Namen De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_alias_namen_de_handler_export');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddExportColumn($column);
             
@@ -41145,7 +38904,6 @@
             $column = new TextViewColumn('alias_namen_fr', 'alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_alias_namen_fr_handler_export');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddExportColumn($column);
             
@@ -41155,7 +38913,6 @@
             $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_alias_namen_it_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -41164,7 +38921,6 @@
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_adresse_strasse_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -41173,7 +38929,6 @@
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_adresse_zusatz_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -41189,7 +38944,6 @@
             $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_ort_handler_export');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddExportColumn($column);
             
@@ -41220,7 +38974,6 @@
             $column = new TextViewColumn('rechtsform_handelsregister', 'rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(4);
-            $column->SetFullTextWindowHandlerName('organisation_rechtsform_handelsregister_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -41261,7 +39014,6 @@
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_homepage_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -41272,7 +39024,6 @@
             $column->setHrefTemplate('%handelsregister_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_handelsregister_url_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -41290,7 +39041,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_beschreibung_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -41300,7 +39050,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_beschreibung_fr_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -41309,7 +39058,6 @@
             $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_sekretariat_handler_export');
             $column->SetReplaceLFByBR(true);
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddExportColumn($column);
@@ -41338,7 +39086,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_notizen_handler_export');
             $column->SetReplaceLFByBR(true);
             $grid->AddExportColumn($column);
             
@@ -41454,7 +39201,6 @@
             $column->SetOrderable(true);
             $column->setBold(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_name_de_handler_compare');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddCompareColumn($column);
             
@@ -41464,7 +39210,6 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_name_fr_handler_compare');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddCompareColumn($column);
             
@@ -41474,7 +39219,6 @@
             $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_name_it_handler_compare');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddCompareColumn($column);
             
@@ -41507,7 +39251,6 @@
             $column = new TextViewColumn('alias_namen_de', 'alias_namen_de', 'Alias Namen De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_alias_namen_de_handler_compare');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddCompareColumn($column);
             
@@ -41517,7 +39260,6 @@
             $column = new TextViewColumn('alias_namen_fr', 'alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_alias_namen_fr_handler_compare');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddCompareColumn($column);
             
@@ -41527,7 +39269,6 @@
             $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_alias_namen_it_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -41536,7 +39277,6 @@
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_adresse_strasse_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -41545,7 +39285,6 @@
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_adresse_zusatz_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -41561,7 +39300,6 @@
             $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_ort_handler_compare');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddCompareColumn($column);
             
@@ -41592,7 +39330,6 @@
             $column = new TextViewColumn('rechtsform_handelsregister', 'rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(4);
-            $column->SetFullTextWindowHandlerName('organisation_rechtsform_handelsregister_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -41633,7 +39370,6 @@
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_homepage_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -41644,7 +39380,6 @@
             $column->setHrefTemplate('%handelsregister_url%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_handelsregister_url_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -41662,7 +39397,6 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_beschreibung_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -41672,7 +39406,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_beschreibung_fr_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -41681,7 +39414,6 @@
             $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_sekretariat_handler_compare');
             $column->SetReplaceLFByBR(true);
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddCompareColumn($column);
@@ -41710,7 +39442,6 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_notizen_handler_compare');
             $column->SetReplaceLFByBR(true);
             $grid->AddCompareColumn($column);
             
@@ -41957,505 +39688,76 @@
         }
     
         protected function doRegisterHandlers() {
-            $detailPage = new organisation_organisation_anhangPage('organisation_organisation_anhang', $this, array('organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('organisation.organisation_anhang'), 'UTF-8');
+            $detailPage = new organisation_organisation_anhangPage('organisation_organisation_anhang', $this, array('organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('organisation.organisation_anhang'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('organisation.organisation_anhang'));
             $detailPage->SetHttpHandlerName('organisation_organisation_anhang_handler');
             $handler = new PageHTTPHandler('organisation_organisation_anhang_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
-            $detailPage = new organisation_organisation_jahrPage('organisation_organisation_jahr', $this, array('organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('organisation.organisation_jahr'), 'UTF-8');
+            $detailPage = new organisation_organisation_jahrPage('organisation_organisation_jahr', $this, array('organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('organisation.organisation_jahr'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('organisation.organisation_jahr'));
             $detailPage->SetHttpHandlerName('organisation_organisation_jahr_handler');
             $handler = new PageHTTPHandler('organisation_organisation_jahr_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
-            $detailPage = new organisation_v_organisation_parlamentarier_beide_indirektPage('organisation_v_organisation_parlamentarier_beide_indirekt', $this, array('connector_organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('organisation.v_organisation_parlamentarier_beide_indirekt'), 'UTF-8');
+            $detailPage = new organisation_v_organisation_parlamentarier_beide_indirektPage('organisation_v_organisation_parlamentarier_beide_indirekt', $this, array('connector_organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('organisation.v_organisation_parlamentarier_beide_indirekt'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('organisation.v_organisation_parlamentarier_beide_indirekt'));
             $detailPage->SetHttpHandlerName('organisation_v_organisation_parlamentarier_beide_indirekt_handler');
             $handler = new PageHTTPHandler('organisation_v_organisation_parlamentarier_beide_indirekt_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
-            $detailPage = new organisation_v_organisation_beziehung_auftraggeber_fuerPage('organisation_v_organisation_beziehung_auftraggeber_fuer', $this, array('ziel_organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('organisation.v_organisation_beziehung_auftraggeber_fuer'), 'UTF-8');
+            $detailPage = new organisation_v_organisation_beziehung_auftraggeber_fuerPage('organisation_v_organisation_beziehung_auftraggeber_fuer', $this, array('ziel_organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('organisation.v_organisation_beziehung_auftraggeber_fuer'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('organisation.v_organisation_beziehung_auftraggeber_fuer'));
             $detailPage->SetHttpHandlerName('organisation_v_organisation_beziehung_auftraggeber_fuer_handler');
             $handler = new PageHTTPHandler('organisation_v_organisation_beziehung_auftraggeber_fuer_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
-            $detailPage = new organisation_v_organisation_beziehung_arbeitet_fuerPage('organisation_v_organisation_beziehung_arbeitet_fuer', $this, array('organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('organisation.v_organisation_beziehung_arbeitet_fuer'), 'UTF-8');
+            $detailPage = new organisation_v_organisation_beziehung_arbeitet_fuerPage('organisation_v_organisation_beziehung_arbeitet_fuer', $this, array('organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('organisation.v_organisation_beziehung_arbeitet_fuer'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('organisation.v_organisation_beziehung_arbeitet_fuer'));
             $detailPage->SetHttpHandlerName('organisation_v_organisation_beziehung_arbeitet_fuer_handler');
             $handler = new PageHTTPHandler('organisation_v_organisation_beziehung_arbeitet_fuer_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
-            $detailPage = new organisation_v_organisation_beziehung_mitglied_vonPage('organisation_v_organisation_beziehung_mitglied_von', $this, array('organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('organisation.v_organisation_beziehung_mitglied_von'), 'UTF-8');
+            $detailPage = new organisation_v_organisation_beziehung_mitglied_vonPage('organisation_v_organisation_beziehung_mitglied_von', $this, array('organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('organisation.v_organisation_beziehung_mitglied_von'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('organisation.v_organisation_beziehung_mitglied_von'));
             $detailPage->SetHttpHandlerName('organisation_v_organisation_beziehung_mitglied_von_handler');
             $handler = new PageHTTPHandler('organisation_v_organisation_beziehung_mitglied_von_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
-            $detailPage = new organisation_v_organisation_beziehung_mitgliederPage('organisation_v_organisation_beziehung_mitglieder', $this, array('ziel_organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('organisation.v_organisation_beziehung_mitglieder'), 'UTF-8');
+            $detailPage = new organisation_v_organisation_beziehung_mitgliederPage('organisation_v_organisation_beziehung_mitglieder', $this, array('ziel_organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('organisation.v_organisation_beziehung_mitglieder'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('organisation.v_organisation_beziehung_mitglieder'));
             $detailPage->SetHttpHandlerName('organisation_v_organisation_beziehung_mitglieder_handler');
             $handler = new PageHTTPHandler('organisation_v_organisation_beziehung_mitglieder_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
-            $detailPage = new organisation_v_organisation_parlamentarierPage('organisation_v_organisation_parlamentarier', $this, array('organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('organisation.v_organisation_parlamentarier'), 'UTF-8');
+            $detailPage = new organisation_v_organisation_parlamentarierPage('organisation_v_organisation_parlamentarier', $this, array('organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('organisation.v_organisation_parlamentarier'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('organisation.v_organisation_parlamentarier'));
             $detailPage->SetHttpHandlerName('organisation_v_organisation_parlamentarier_handler');
             $handler = new PageHTTPHandler('organisation_v_organisation_parlamentarier_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
-            $detailPage = new organisation_v_organisation_parlamentarier_indirektPage('organisation_v_organisation_parlamentarier_indirekt', $this, array('connector_organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('organisation.v_organisation_parlamentarier_indirekt'), 'UTF-8');
+            $detailPage = new organisation_v_organisation_parlamentarier_indirektPage('organisation_v_organisation_parlamentarier_indirekt', $this, array('connector_organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('organisation.v_organisation_parlamentarier_indirekt'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('organisation.v_organisation_parlamentarier_indirekt'));
             $detailPage->SetHttpHandlerName('organisation_v_organisation_parlamentarier_indirekt_handler');
             $handler = new PageHTTPHandler('organisation_v_organisation_parlamentarier_indirekt_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
-            $detailPage = new organisation_v_organisation_parlamentarier_beidePage('organisation_v_organisation_parlamentarier_beide', $this, array('organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('organisation.v_organisation_parlamentarier_beide'), 'UTF-8');
+            $detailPage = new organisation_v_organisation_parlamentarier_beidePage('organisation_v_organisation_parlamentarier_beide', $this, array('organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('organisation.v_organisation_parlamentarier_beide'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('organisation.v_organisation_parlamentarier_beide'));
             $detailPage->SetHttpHandlerName('organisation_v_organisation_parlamentarier_beide_handler');
             $handler = new PageHTTPHandler('organisation_v_organisation_parlamentarier_beide_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
-            $detailPage = new organisation_interessenbindungPage('organisation_interessenbindung', $this, array('organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('organisation.interessenbindung'), 'UTF-8');
+            $detailPage = new organisation_interessenbindungPage('organisation_interessenbindung', $this, array('organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('organisation.interessenbindung'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('organisation.interessenbindung'));
             $detailPage->SetHttpHandlerName('organisation_interessenbindung_handler');
             $handler = new PageHTTPHandler('organisation_interessenbindung_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
-            $detailPage = new organisation_mandatPage('organisation_mandat', $this, array('organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('organisation.mandat'), 'UTF-8');
+            $detailPage = new organisation_mandatPage('organisation_mandat', $this, array('organisation_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('organisation.mandat'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('organisation.mandat'));
             $detailPage->SetHttpHandlerName('organisation_mandat_handler');
             $handler = new PageHTTPHandler('organisation_mandat_handler', $detailPage);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setBold(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_de_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_fr_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_it_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for alias_namen_de field
-            //
-            $column = new TextViewColumn('alias_namen_de', 'alias_namen_de', 'Alias Namen De', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_alias_namen_de_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for alias_namen_fr field
-            //
-            $column = new TextViewColumn('alias_namen_fr', 'alias_namen_fr', 'Alias Namen Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_alias_namen_fr_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for alias_namen_it field
-            //
-            $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_alias_namen_it_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for homepage field
-            //
-            $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('%homepage%');
-            $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_homepage_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for adresse_strasse field
-            //
-            $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_adresse_strasse_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for adresse_zusatz field
-            //
-            $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_adresse_zusatz_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for ort field
-            //
-            $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_ort_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for rechtsform_handelsregister field
-            //
-            $column = new TextViewColumn('rechtsform_handelsregister', 'rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_rechtsform_handelsregister_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for handelsregister_url field
-            //
-            $column = new TextViewColumn('handelsregister_url', 'handelsregister_url', 'Handelsregister Url', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('%handelsregister_url%');
-            $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_handelsregister_url_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_beschreibung_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung_fr field
-            //
-            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_beschreibung_fr_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for sekretariat field
-            //
-            $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_sekretariat_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_notizen_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setBold(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_de_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_fr_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_it_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for alias_namen_de field
-            //
-            $column = new TextViewColumn('alias_namen_de', 'alias_namen_de', 'Alias Namen De', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_alias_namen_de_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for alias_namen_fr field
-            //
-            $column = new TextViewColumn('alias_namen_fr', 'alias_namen_fr', 'Alias Namen Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_alias_namen_fr_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for alias_namen_it field
-            //
-            $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_alias_namen_it_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for adresse_strasse field
-            //
-            $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_adresse_strasse_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for adresse_zusatz field
-            //
-            $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_adresse_zusatz_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for ort field
-            //
-            $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_ort_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for rechtsform_handelsregister field
-            //
-            $column = new TextViewColumn('rechtsform_handelsregister', 'rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_rechtsform_handelsregister_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for homepage field
-            //
-            $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('%homepage%');
-            $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_homepage_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for handelsregister_url field
-            //
-            $column = new TextViewColumn('handelsregister_url', 'handelsregister_url', 'Handelsregister Url', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('%handelsregister_url%');
-            $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_handelsregister_url_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_beschreibung_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung_fr field
-            //
-            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_beschreibung_fr_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for sekretariat field
-            //
-            $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_sekretariat_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_notizen_handler_print', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setBold(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_de_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_fr_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_it_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for alias_namen_de field
-            //
-            $column = new TextViewColumn('alias_namen_de', 'alias_namen_de', 'Alias Namen De', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_alias_namen_de_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for alias_namen_fr field
-            //
-            $column = new TextViewColumn('alias_namen_fr', 'alias_namen_fr', 'Alias Namen Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_alias_namen_fr_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for alias_namen_it field
-            //
-            $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_alias_namen_it_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for adresse_strasse field
-            //
-            $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_adresse_strasse_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for adresse_zusatz field
-            //
-            $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_adresse_zusatz_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for ort field
-            //
-            $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_ort_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for rechtsform_handelsregister field
-            //
-            $column = new TextViewColumn('rechtsform_handelsregister', 'rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_rechtsform_handelsregister_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for homepage field
-            //
-            $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('%homepage%');
-            $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_homepage_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for handelsregister_url field
-            //
-            $column = new TextViewColumn('handelsregister_url', 'handelsregister_url', 'Handelsregister Url', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('%handelsregister_url%');
-            $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_handelsregister_url_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_beschreibung_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung_fr field
-            //
-            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_beschreibung_fr_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for sekretariat field
-            //
-            $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_sekretariat_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -42501,7 +39803,7 @@
             );
             $lookupDataset->setOrderByField('anzeige_name_mixed', 'ASC');
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'show_level > 50'));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_organisation_land_id_search', 'id', 'anzeige_name_mixed', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_organisation_land_id_search', 'id', 'anzeige_name_mixed', '%anzeige_name_mixed%', 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -42719,149 +40021,6 @@
             $lookupDataset->setOrderByField('anzeige_name_mixed', 'ASC');
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_organisation_interessengruppe3_id_search', 'id', 'anzeige_name_mixed', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setBold(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_de_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_fr_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_it_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for alias_namen_de field
-            //
-            $column = new TextViewColumn('alias_namen_de', 'alias_namen_de', 'Alias Namen De', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_alias_namen_de_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for alias_namen_fr field
-            //
-            $column = new TextViewColumn('alias_namen_fr', 'alias_namen_fr', 'Alias Namen Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_alias_namen_fr_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for alias_namen_it field
-            //
-            $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_alias_namen_it_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for adresse_strasse field
-            //
-            $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_adresse_strasse_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for adresse_zusatz field
-            //
-            $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_adresse_zusatz_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for ort field
-            //
-            $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_ort_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for rechtsform_handelsregister field
-            //
-            $column = new TextViewColumn('rechtsform_handelsregister', 'rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_rechtsform_handelsregister_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for homepage field
-            //
-            $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('%homepage%');
-            $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_homepage_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for handelsregister_url field
-            //
-            $column = new TextViewColumn('handelsregister_url', 'handelsregister_url', 'Handelsregister Url', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('%handelsregister_url%');
-            $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_handelsregister_url_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_beschreibung_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for beschreibung_fr field
-            //
-            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_beschreibung_fr_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for sekretariat field
-            //
-            $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_sekretariat_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_notizen_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
         }
        
         protected function doCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
@@ -42994,12 +40153,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -43010,7 +40169,7 @@
 
     try
     {
-        $Page = new organisationPage("organisation", "organisation.php", GetCurrentUserPermissionSetForDataSource("organisation"), 'UTF-8');
+        $Page = new organisationPage("organisation", "organisation.php", GetCurrentUserPermissionsForPage("organisation"), 'UTF-8');
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("organisation"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

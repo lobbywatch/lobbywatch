@@ -367,13 +367,19 @@ class MySqlIConnection extends EngConnection {
         return $result;
     }
 
-    protected function doExecScalarSQL($sql) {
+    public function ExecScalarSQL($sql) {
+        $this->logQuery($sql);
         if ($queryHandle = @mysqli_query($this->GetConnectionHandle(), $sql)) {
             $queryResult = @mysqli_fetch_array($queryHandle, MYSQLI_NUM);
             @mysqli_free_result($queryHandle);
-            return $queryResult[0];
+            if (isset($queryResult)) {
+                return $queryResult[0];
+            } else {
+                $this->raiseSQLStatementReturnsNoRowsException($sql);
+            }
+        } else {
+            $this->raiseSQLExecutionException($sql);
         }
-        return false;
     }
 
     protected function doExecQueryToArray($sql, &$array) {

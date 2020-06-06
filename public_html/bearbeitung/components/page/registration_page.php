@@ -12,6 +12,8 @@ class RegistrationPage extends CommonPage
     private $userManager;
     /** @var Mailer */
     private $mailer;
+    /** @var  GoogleReCaptcha */
+    private $reCaptcha;
 
     /** @var RegistrationForm */
     private $registrationForm;
@@ -25,13 +27,15 @@ class RegistrationPage extends CommonPage
     /**
      * @param TableBasedUserManager $userManager
      * @param Mailer $mailer
+     * @param GoogleReCaptcha $reCaptcha
      */
-    public function __construct($userManager, $mailer)
+    public function __construct($userManager, $mailer, $reCaptcha)
     {
         parent::__construct('Register', 'UTF-8');
 
         $this->userManager = $userManager;
         $this->mailer = $mailer;
+        $this->reCaptcha = $reCaptcha;
         $this->renderer = new ViewAllRenderer($this->GetLocalizerCaptions());
         $this->registrationForm = new RegistrationForm($this);
         $this->OnBeforeUserRegistration = new Event();
@@ -118,6 +122,11 @@ class RegistrationPage extends CommonPage
      */
     private function doAfterUserRegistration($username, $email) {
         $this->OnAfterUserRegistration->Fire(array($username, $email));
+    }
+
+    /** @return GoogleReCaptcha */
+    public function getReCaptcha() {
+        return $this->reCaptcha;
     }
 
 }

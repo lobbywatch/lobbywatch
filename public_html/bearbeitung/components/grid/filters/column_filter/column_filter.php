@@ -686,7 +686,11 @@ class ColumnFilter extends AbstractFilter
             $month = sprintf('%02d', $months[$object['month']]);
             $day = sprintf('%02d', $object['day']);
             $resultDate = sprintf('%s-%s-%s', $year, $month, $day);
-            $condition = FilterCondition::equals($resultDate)->setColumn($column);
+            if ($column->typeIsDateTimeExactly()) {
+                $condition = FilterCondition::dateEquals($resultDate)->setColumn($column);
+            } else {
+                $condition = FilterCondition::equals($resultDate)->setColumn($column);
+            }
             $root->insertChild($condition, sprintf('___day%s_month%s_year%s', $object['day'], $object['month'], $object['year']));
         }
     }

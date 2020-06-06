@@ -203,6 +203,8 @@ class ViewAllRenderer extends Renderer
             $template = $singleRowTemplate;
         }
 
+        $gridToolbarTemplate = $page->GetCustomTemplate(PagePart::GridToolbar, PageMode::ViewAll, 'list/grid_toolbar.tpl', $customParams);
+
         $this->DisplayTemplate(
             $template,
             array(
@@ -214,10 +216,12 @@ class ViewAllRenderer extends Renderer
                 array(
                     'isMasterGrid' => $grid->isMaster(),
                     'SingleRowTemplate' => $singleRowTemplate,
+                    'GridToolbarTemplate' => $gridToolbarTemplate,
                     'isInline' => $page->isInline(),
                     'HiddenValues' => $grid->GetHiddenValues(),
                     'Authentication' => $page->GetAuthenticationViewData(),
                     'Columns' => $grid->getViewColumnGroup()->getLeafs(),
+                    'GridViewMode' => $grid->getViewMode() === ViewMode::TABLE ? 'table' : 'card',
                     'CurrentViewMode' => $grid->getViewMode(),
                     'ViewModes' => ViewMode::getList(),
                 )

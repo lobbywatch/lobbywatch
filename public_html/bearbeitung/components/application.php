@@ -290,11 +290,6 @@ function GetApplication()
     return Application::Instance();
 }
 
-function GetCurrentUserPermissionSetForDataSource($dataSourceName)
-{
-    return GetApplication()->GetCurrentUserPermissionSet($dataSourceName);
-}
-
 function GetCurrentUserRecordPermissionsForDataSource($dataSourceName)
 {
     return GetApplication()->GetCurrentUserRecordPermissionsForDataSource($dataSourceName);

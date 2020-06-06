@@ -25,10 +25,19 @@ var require = {
         'mootools-core': 'libs/mootools-core',
         'jquery.tmpl': 'libs/jquery/jquery.tmpl',
         'knockout': 'libs/knockout',
-        'trumbowyg': 'libs/trumbowyg/trumbowyg.min',
+        'trumbowyg': 'libs/trumbowyg/trumbowyg',
         'trumbowyg.colors': 'libs/trumbowyg/plugins/colors/trumbowyg.colors.min',
+        'trumbowyg.specialchars': 'libs/trumbowyg/plugins/specialchars/trumbowyg.specialchars.min',
+        'trumbowyg.base64': 'libs/trumbowyg/plugins/base64/trumbowyg.base64.min',
+        'trumbowyg.fontfamily': 'libs/trumbowyg/plugins/fontfamily/trumbowyg.fontfamily.min',
+        'trumbowyg.fontsize': 'libs/trumbowyg/plugins/fontsize/trumbowyg.fontsize.min',
+        'trumbowyg.table': 'libs/trumbowyg/plugins/table/trumbowyg.table.min',
+        'trumbowyg.preformatted': 'libs/trumbowyg/plugins/preformatted/trumbowyg.preformatted.min',
+        'trumbowyg.history': 'libs/trumbowyg/plugins/history/trumbowyg.history.min',
+        'trumbowyg.template': 'libs/trumbowyg/plugins/template/trumbowyg.template',
         'bootstrap-file-input': 'libs/fileinput',
-        'jquery.autocomplete': 'libs/jquery/jquery.autocomplete'
+        'jquery.autocomplete': 'libs/jquery/jquery.autocomplete',
+        'signature_pad': 'libs/signature_pad'
     },
     shim: {
         'jquery.stickytableheaders': ['jquery'],
@@ -36,6 +45,15 @@ var require = {
         'knockout': ['jquery.tmpl'],
         'datepicker': ['moment'],
         'bootstrap': ['jquery'],
-        'trumbowyg.colors': ['trumbowyg']
+        'trumbowyg.colors': ['trumbowyg'],
+        'trumbowyg.specialchars': ['trumbowyg'],
+        'trumbowyg.base64': ['trumbowyg'],
+        'trumbowyg.fontfamily': ['trumbowyg'],
+        'trumbowyg.fontsize': ['trumbowyg'],
+        'trumbowyg.table': ['trumbowyg'],
+        'trumbowyg.preformatted': ['trumbowyg'],
+        'trumbowyg.emoji': ['trumbowyg'],
+        'trumbowyg.history': ['trumbowyg'],
+        'trumbowyg.template': ['trumbowyg']
     }
 };

@@ -972,12 +972,12 @@
     
         }
     
-        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
     
-        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
+        protected function doAddEnvironmentVariables(Page $page, &$variables)
         {
     
         }
@@ -988,7 +988,7 @@
 
     try
     {
-        $Page = new q_last_updated_tablesPage("q_last_updated_tables", "tabellenstand.php", GetCurrentUserPermissionSetForDataSource("q_last_updated_tables"), 'UTF-8');
+        $Page = new q_last_updated_tablesPage("q_last_updated_tables", "tabellenstand.php", GetCurrentUserPermissionsForPage("q_last_updated_tables"), 'UTF-8');
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("q_last_updated_tables"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 

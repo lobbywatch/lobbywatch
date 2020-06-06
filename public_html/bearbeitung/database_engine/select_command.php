@@ -331,6 +331,11 @@ class CustomSelectCommand extends BaseSelectCommand {
     }
 
     #endregion
+
+    public function setSql($sql) {
+        $this->sql = $sql;
+    }
+
 }
 
 class SelectCommand extends BaseSelectCommand {

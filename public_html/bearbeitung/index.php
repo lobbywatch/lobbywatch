@@ -21,7 +21,7 @@ SetUpUserAuthorization();
 
 try {
 
-    $page = new HomePage(GetCurrentUserPermissionSetForDataSource("index"), 'UTF-8');
+    $page = new HomePage(GetCurrentUserPermissionsForPage("index"), 'UTF-8');
     $page->SetHeader(GetPagesHeader());
     $page->SetFooter(GetPagesFooter());
     $page->setBanner(GetHomePageBanner());
