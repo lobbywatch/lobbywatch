@@ -1922,6 +1922,17 @@ thisTrigger: BEGIN
     updated_visa = CONCAT(NEW.updated_visa, '*'),
     updated_date = NEW.updated_date
     WHERE person.id = NEW.person_id AND (NEW.bis < NOW());
+
+    -- Remove parlamentarier info on old person
+    IF OLD.person_id <> NEW.person_id THEN
+      UPDATE person
+        SET
+        parlamentarier_kommissionen = NULL,
+        zutrittsberechtigung_von = NULL,
+        updated_visa = CONCAT(NEW.updated_visa, '*'),
+        updated_date = NEW.updated_date
+        WHERE person.id = OLD.person_id;
+    END IF;
 END
 //
 delimiter ;
