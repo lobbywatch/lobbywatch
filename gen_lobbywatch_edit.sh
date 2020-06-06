@@ -30,4 +30,8 @@ dir="public_html/bearbeitung"
 
 [ -d "$dir/libs" ] && rm -r "$dir/libs"
 
+phpgen_version=$(head -n1 lobbywatch_bearbeitung.pgtm | grep -oP 'version="\K(.+?)(?=")')
+
 wine "C:\Program Files (x86)\SQL Maestro Group\PHP Generator for MySQL Professional 20.5.0.1\MyPHPGeneratorPro.exe" "lobbywatch_bearbeitung_gen.pgtm" -output "$(winepath -w $dir)" -generate
+
+echo -e "<?php\nconst GENERATOR_VERSION = '$phpgen_version';\n\$generator_version = GENERATOR_VERSION;" >public_html/custom/generator_version.php
