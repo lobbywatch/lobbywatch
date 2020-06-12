@@ -174,7 +174,6 @@ try {
             ),
         ),
         'HideSideBarByDefault' => true,
-        'PageList' => getPageList()->GetViewData(),
         'Variables' => '',
       )
     );

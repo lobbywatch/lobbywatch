@@ -41,18 +41,6 @@ function setHTTPHeader() {
   header('Content-Type: text/html; charset=utf-8');
 }
 
-
-function getPageList() {
-  $page = new HomePage(GetCurrentUserPermissionSetForDataSource("index"), 'UTF-8');
-  $page->SetHeader(GetPagesHeader());
-  $page->SetFooter(GetPagesFooter());
-  $page->setBanner(GetHomePageBanner());
-  $page->SetShowPageList(false);
-  $page->OnGetCustomTemplate->AddListener('Global_GetCustomTemplateHandler');
-  $page->OnCustomHTMLHeader->AddListener('Global_CustomHTMLHeaderHandler');
-  return PageList::createForPage($page);
-}
-
 // Main
 
 SetUpUserAuthorization(GetApplication());
