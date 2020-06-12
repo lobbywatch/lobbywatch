@@ -2758,7 +2758,7 @@ function print_organisation_beziehung($record, $relation, $field_name_base, $tra
   $adminBool = $admin ? "1" : "0";
 
   $markup = '';
-  if ($record["${field_name_base}_0"]) {
+  if ($record["${field_name_base}_0"] ?? false) {
     $markup .= $record['organisation'] . " <b>$relation</b>"
     . '<ul>'
         . $record["${field_name_base}_0"]
