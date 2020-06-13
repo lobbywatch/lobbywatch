@@ -53,6 +53,7 @@ nomail=false
 noimageupload=false
 automatic=false
 test=false
+remote_test=true
 nosql=false
 kommissionen="k"
 verbose=false
@@ -93,7 +94,8 @@ while test $# -gt 0; do
                         echo "-G, --nopg                       Do not run parlamentarische Gruppen script"
                         echo "-a, --automatic                  Automatic"
                         echo "-M, --nomail                     No email notification"
-                        echo "-t, --test                       Test mode (no remote changes)"
+                        echo "-t, --test                       Test mode (no remote PROD changes)"
+                        echo "-T, --no-remote                  Test mode (no remote changes), implies -t"
                         echo "-v [LEVEL], --verbose [LEVEL]    Verbose mode (Default level=1)"
                         echo "-S, --nosql                      Do not execute SQL"
                         echo "-l[=DB], --local[=DB]            Local DB to use (Default: lobbywatchtest)"
@@ -161,6 +163,11 @@ while test $# -gt 0; do
                         ;;
                 -t|--test)
                         test=true
+                        shift
+                        ;;
+                -T|--no-remote)
+                        test=true
+                        remote_test=false
                         shift
                         ;;
                 -v|--verbose)
@@ -433,7 +440,7 @@ fi
 # Remote TEST
 ###############################################################################
 
-if ($import || ! $nobackup || $onlydownloadlastbak) ; then # && ! $test
+if ( ($import || ! $nobackup || $onlydownloadlastbak) && $remote_test) ; then # && ! $test
   if ! $automatic ; then
     askContinueYn "Import DB 'prod_bak/`cat $DUMP_FILE`' to REMOTE TEST?"
   fi
