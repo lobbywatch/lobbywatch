@@ -1,9 +1,13 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 
 // Call: echo "Body" | php -f mail_notification.php -- -sSubj -ttest@lobbywatch.ch sql/zb_delta_20170606.sql sql/ws_parlament_ch_sync_20170601.sql
 
-// require 'PHPMailerAutoload.php';
-require_once dirname(__FILE__) . '/vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
+require_once dirname(__FILE__) . '/vendor/phpmailer/phpmailer/src/Exception.php';
+require_once dirname(__FILE__) . '/vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require_once dirname(__FILE__) . '/vendor/phpmailer/phpmailer/src/SMTP.php';
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
 
