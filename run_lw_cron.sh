@@ -14,9 +14,9 @@ while test $# -gt 0; do
             echo "$0 [options]"
             echo
             echo "Options:"
-            echo "-v, --verbose                    Verbose mode"
-            echo "-t, --test                       Test mode"
-            quit
+            echo "-v, --verbose           Verbose mode (output to stdout)"
+            echo "-t, --test              Test mode (-t, lobbywatchtest)"
+            exit
         ;;
         -t|--test)
             test_param="-t"
