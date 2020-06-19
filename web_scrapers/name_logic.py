@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # string representation of all the names in a list of names
 def fullname(guest):
     return " ".join(guest["names"])

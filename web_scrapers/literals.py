@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 equivalent_functions = [("Persönlicher Mitarbeiter", "Collaborateur(rice) personnel(le)"),
                         ("Persönlicher Mitarbeiter",
                             "Persönliche/r Mitarbeiter/in"),

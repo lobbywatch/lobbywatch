@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import os
 
 from utils import _escape_string, _quote_str_or_NULL, _date_as_sql_string, _datetime_as_sql_string

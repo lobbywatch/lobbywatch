@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from PyPDF2 import PdfFileReader
 import re
 import requests

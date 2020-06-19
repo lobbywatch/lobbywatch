@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 class Summary:
     def __init__(self):
         self.rows = {}
