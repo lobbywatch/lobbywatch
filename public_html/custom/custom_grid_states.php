@@ -36,7 +36,10 @@ abstract class AbstractCommitEditSelectedOperationValuesGridState extends Commit
     protected abstract function DoOperation($rowValues);
 
     public function ProcessMessages() {
+        // TODO $primaryKeyValuesSet = ArrayWrapper::createPostWrapper()->getValue('keys', array());
         $primaryKeys = $this->getPrimaryKeys();
+
+        // TODO $this->getDataset()->applyFilterBasedOnPrimaryKeyValuesSet($primaryKeyValuesSet);
 
         $this->getSelectionOperationMetadata();
         $this->getSelectionOperationParametersFromPost();
