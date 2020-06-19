@@ -194,19 +194,19 @@ OR name_de LIKE 'Parlamentarische%{0}'
 OR (CHAR_LENGTH(name_de) > 8 AND LOWER(name_de) = LOWER(SUBSTR('{0}', 1, CHAR_LENGTH(name_de))))
 OR (CHAR_LENGTH('{0}') > 8 AND LOWER('{0}') = LOWER(SUBSTR(name_de, 1, CHAR_LENGTH('{0}')))))
 AND rechtsform='Parlamentarische Gruppe'
-        """.format(name_de.replace("'", "''"))
+        """.format(escape_SQL(name_de))
 
         if name_fr:
             query += """
 OR name_fr LIKE '{0}'
 OR name_fr LIKE 'Intergroupe parlementaire%{0}'
-            """.format(name_fr.replace("'", "''"))
+            """.format(escape_SQL(name_fr))
 
         if name_it:
             query += """
 OR name_it LIKE '{0}'
 OR name_it LIKE 'Intergruppo parlamentare%{0}'
-            """.format(name_it.replace("'", "''"))
+            """.format(escape_SQL(name_it))
 
         # Enable ase sensitive comparison for cases Parlamentarische Gruppe ...Sport vs Parlamentarische Gruppe ...Transport
         # query += " COLLATE utf8mb4_bin"
@@ -433,9 +433,9 @@ def _generate_name_query(pattern, names, exact):
     vorname, zweiter_vorname, nachname = name_logic.parse_name_combination(
         names, pattern)
 
-    vorname = vorname.replace("'", "''")
-    nachname = nachname.replace("'", "''")
-    zweiter_vorname = zweiter_vorname.replace("'", "''")
+    vorname = escape_SQL(vorname)
+    nachname = escape_SQL(nachname)
+    zweiter_vorname = escape_SQL(zweiter_vorname)
 
     # Problem Adèle Thorens-Goumaz vs Adèle Thorens Goumaz
 
