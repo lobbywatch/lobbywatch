@@ -75,3 +75,7 @@ docs/lobbywatch_daten_merkblatt_v*.pdf
 exports/
 *.code-workspace
 lobbywatch_cleaned.sql
+*.csv
+pg_data_initial.json
+pg_file-stripped_initial.pdf
+web_scrapers/logging_dev.properties

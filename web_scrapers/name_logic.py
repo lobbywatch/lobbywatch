@@ -74,11 +74,11 @@ def parse_name_combination(names, pattern):
     for name, value in zip(names, pattern):
         if value == "V":
             vorname += " " + name
-        if value == "Z":
+        elif value == "Z":
             zweiter_vorname += " " + name
-        if value == "N":
+        elif value == "N":
             nachname += " " + name
-        if value == "S":
+        elif value == "S":
             vorname += " %" + name
 
     return vorname.strip(), zweiter_vorname.strip(), nachname.strip()

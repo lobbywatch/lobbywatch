@@ -6,7 +6,9 @@ import subprocess
 import MySQLdb
 import sys
 import os
+import re
 import name_logic
+from utils import escape_SQL, _quote_str_or_NULL, _date_as_sql_string, _datetime_as_sql_string
 
 def get_script_path():
     return os.path.dirname(os.path.realpath(__file__))
@@ -111,7 +113,8 @@ def get_parlamentarier_id(database, names, kanton_id, partei_id):
     sys.exit(1)
 
 
-def get_parlamentarier_id_by_name(database, names):
+def get_parlamentarier_id_by_name(database, names, prename_first: bool):
+    name_patterns = ["VN", "VZN", "VVN", "VNN", "SN", "N"] if prename_first else ["NV", "NVZ", "NVV", "NNV", "NNVV", "NNNV", "NN", "SN", "N"]
     with database.cursor() as cursor:
         query = """
         SELECT id
@@ -119,7 +122,7 @@ def get_parlamentarier_id_by_name(database, names):
         WHERE 1=1
         """
 
-        for description in ["VN", "VZN", "VVN", "VNN", "SN", "N"]:
+        for description in name_patterns:
             current_query = query + _generate_name_query(description, names, False)
             cursor.execute(current_query)
             result = cursor.fetchall()
@@ -128,7 +131,7 @@ def get_parlamentarier_id_by_name(database, names):
                 return parlamentarier_id
 
         print(
-            "\n\nDATA INTEGRITY ERROR: Member of parliament '{0}' referenced in PDF is not in database.".format(names))
+            "\n\nDATA INTEGRITY ERROR: Member of parliament '{}' referenced in PDF is not in database.\n{}".format(names, current_query))
     return None
 
 
@@ -182,31 +185,41 @@ def get_organisation_id(database, name_de, name_fr, name_it):
     with database.cursor() as cursor:
         organisation_id = None
         query = """
-        SELECT id
-        FROM organisation
-        WHERE name_de LIKE '{0}%'
-        OR (CHAR_LENGTH(name_de) > 8 AND LOWER(name_de) = LOWER(SUBSTR('{0}', 1, CHAR_LENGTH(name_de))))
-        OR (CHAR_LENGTH('{0}') > 8 AND LOWER('{0}') = LOWER(SUBSTR(name_de, 1, CHAR_LENGTH('{0}'))))
+SELECT id
+FROM organisation
+WHERE (name_de LIKE '{0}%'
+OR name_de LIKE 'Parlamentarische Gruppe%{0}'
+OR CONCAT_WS(' ', name_de, abkuerzung_de) LIKE 'Parlamentarische Gruppe%{0}'
+OR name_de LIKE 'Parlamentarische%{0}'
+OR (CHAR_LENGTH(name_de) > 8 AND LOWER(name_de) = LOWER(SUBSTR('{0}', 1, CHAR_LENGTH(name_de))))
+OR (CHAR_LENGTH('{0}') > 8 AND LOWER('{0}') = LOWER(SUBSTR(name_de, 1, CHAR_LENGTH('{0}')))))
+AND rechtsform='Parlamentarische Gruppe'
         """.format(name_de.replace("'", "''"))
 
         if name_fr:
             query += """
-            OR name_fr LIKE '{}'
+OR name_fr LIKE '{0}'
+OR name_fr LIKE 'Intergroupe parlementaire%{0}'
             """.format(name_fr.replace("'", "''"))
 
         if name_it:
             query += """
-            OR name_it LIKE '{}'
+OR name_it LIKE '{0}'
+OR name_it LIKE 'Intergruppo parlamentare%{0}'
             """.format(name_it.replace("'", "''"))
 
+        # Enable ase sensitive comparison for cases Parlamentarische Gruppe ...Sport vs Parlamentarische Gruppe ...Transport
+        # query += " COLLATE utf8mb4_bin"
         query += ";"
 
         cursor.execute(query)
         result = cursor.fetchall()
-        if result and len(result) > 1:
-            print("\n\nDATA INTEGRITY FAILURE: There are multiple possibilities \
-in the database for organisation '{0}: {1}'.  Aborting.".format(name_de, result))
-            sys.exit(1)
+        assert len(result) <= 1, "DATA INTEGRITY FAILURE: There are multiple possibilities \
+in the database for organisation '{}: {}'.  Aborting.\n{}".format(name_de, result, query)
+        # if result and len(result) > 1:
+#             print("\n\nDATA INTEGRITY FAILURE: There are multiple possibilities \
+# in the database for organisation '{0}: {1}'.  Aborting.".format(name_de, result))
+#             sys.exit(1)
 
         if result and len(result) == 1:
             (organisation_id, ) = result[0]
@@ -328,25 +341,29 @@ def get_pg_interessenbindungen_managed_by_import(database):
 def get_interessenbindung_id(database, parlamentarier_id, organisation_id, stichdatum):
     with database.cursor() as cursor:
         query = """
-        SELECT id
+        SELECT id, art, funktion_im_gremium
         FROM interessenbindung
         WHERE parlamentarier_id = {}
         AND organisation_id = {}
         AND (bis IS NULL OR bis > '{}');
-        """.format(parlamentarier_id, organisation_id, stichdatum)
+        """.format(parlamentarier_id,
+                   organisation_id,
+                   stichdatum,
+                   )
 
         cursor.execute(query)
         result = cursor.fetchall()
         if result and len(result) > 1:
-            print("\n\nDATA INTEGRITY FAILURE: There are multiple interessenbindungen in the database for organisation '{0}' and parlamentarier '{1}'.  Aborting.".format(
-                organisation_id, parlamentarier_id))
+            # DONE find and fix problem in 2nd run
+            print("\n\nDATA INTEGRITY FAILURE: There are multiple interessenbindungen in the database for organisation '{}' and parlamentarier '{}'.  Aborting.\n{}".format(
+                organisation_id, parlamentarier_id, query))
             sys.exit(1)
 
         if result and len(result) == 1:
-            (interessenbindung_id, ) = result[0]
-            return interessenbindung_id
+            (interessenbindung_id, art, funktion_im_gremium, ) = result[0]
+            return interessenbindung_id, art, funktion_im_gremium
 
-    return None
+    return None, None, None
 
 
 # get all names for a person by person_id
@@ -416,18 +433,24 @@ def _generate_name_query(pattern, names, exact):
     vorname, zweiter_vorname, nachname = name_logic.parse_name_combination(
         names, pattern)
 
+    vorname = vorname.replace("'", "''")
+    nachname = nachname.replace("'", "''")
+    zweiter_vorname = zweiter_vorname.replace("'", "''")
+
+    # Problem Adèle Thorens-Goumaz vs Adèle Thorens Goumaz
+
     # case Stefan vs Stefano Kunz (person_id 390 and 663)
     # case Streiff vs Streiff-Feller (parlamentarier_id 195)
     if exact:
-        query = " AND vorname = '{}' AND nachname = '{}'".format(
-            vorname.replace("'", "''"), nachname.replace("'", "''"))
+        query = " AND vorname = '{}' AND (nachname = '{}' OR nachname = '{}' OR nachname = '{}')".format(
+            vorname, nachname, nachname.replace('-', ' '), re.sub(r'-.*', '', nachname))
         if zweiter_vorname:
-            query += " AND zweiter_vorname = '{}'".format(zweiter_vorname.replace("'", "''"))
+            query += " AND zweiter_vorname = '{}'".format(zweiter_vorname)
     else:
-        query = " AND vorname LIKE '{}%' AND nachname LIKE '{}%'".format(
-            vorname.replace("'", "''"), nachname.replace("'", "''"))
+        query = " AND vorname LIKE '{}%' AND (nachname LIKE '{}%' OR nachname LIKE '{}%' OR nachname LIKE '{}%')".format(
+            vorname, nachname, nachname.replace('-', ' '), re.sub(r'-.*', '', nachname))
         if zweiter_vorname:
-            query += " AND zweiter_vorname LIKE '{}%'".format(zweiter_vorname.replace("'", "''"))
+            query += " AND zweiter_vorname LIKE '{}%'".format(zweiter_vorname)
 
     return query
 

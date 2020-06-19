@@ -2,7 +2,11 @@
 
 import os
 
+from utils import _escape_string, _quote_str_or_NULL, _date_as_sql_string, _datetime_as_sql_string
+
 user = os.getenv('USER', 'auto')
+
+# TODO ensure no SQL injection
 
 # create new zutrittsberechtigung for a perlamentarier
 def insert_zutrittsberechtigung(parlamentarier_id, person_id, funktion, date, pdf_date):
@@ -191,13 +195,13 @@ def update_alias_organisation(organisation_id, alias, batch_time, pdf_date):
     return query
 
 def insert_interessenbindung_parlamentarische_gruppe(parlamentarier_id,
-                                                     organisation_id, stichdatum, beschreibung, date, pdf_date):
+                                                     organisation_id, stichdatum, praesidum: bool, beschreibung, funktion_im_gremium, date, pdf_date):
 
-    query = "INSERT INTO `interessenbindung` (`parlamentarier_id`, `organisation_id`, `art`, `funktion_im_gremium`, `beschreibung`,`deklarationstyp`, `status`, `behoerden_vertreter`, `von`, `created_visa`,`created_date`, `updated_visa`, `updated_by_import`, `notizen`, `eingabe_abgeschlossen_visa`, `eingabe_abgeschlossen_datum`, `freigabe_visa`, `freigabe_datum`) VALUES ({}, {}, '{}', '{}', '{}', '{}', '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y'), '{}',STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'));\n".format(
+    query = "INSERT INTO `interessenbindung` (`parlamentarier_id`, `organisation_id`, `art`, `funktion_im_gremium`, `beschreibung`,`deklarationstyp`, `status`, `behoerden_vertreter`, `von`, `created_visa`,`created_date`, `updated_visa`, `updated_by_import`, `notizen`, `eingabe_abgeschlossen_visa`, `eingabe_abgeschlossen_datum`, `freigabe_visa`, `freigabe_datum`) VALUES ({}, {}, '{}', {}, '{}', '{}', '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y'), '{}',STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'));\n".format(
         parlamentarier_id,
         organisation_id,
-        "vorstand",
-        "praesident",
+        "vorstand" if praesidum else "mitglied",
+        _quote_str_or_NULL(funktion_im_gremium),
         beschreibung,
         "deklarationspflichtig",
         "deklariert",
@@ -229,29 +233,6 @@ def end_interessenbindung(interessenbindung_id, stichdatum, batch_time, pdf_date
 
     return query
 
-
-# quote string variable with ' or if None return NULL
-def _quote_str_or_NULL(str):
-    return 'NULL' if str is None else "'" + str + "'"
-
-
-# simple esape function for input strings
-# real escaping not needed as we trust
-# input from parlament.ch to not have SQL injection attacks
-def _escape_string(string):
-    if string is None:
-        return None
-    result = string.replace("'", "''").replace('\n', '\\n')
-    return result
-
-
-# the current date formatted as a string MySQL can understand
-def _date_as_sql_string(date):
-    return "{0:02d}.{1:02d}.{2}".format(date.day, date.month, date.year)
-
-
-def _datetime_as_sql_string(date):
-    return "{0:02d}.{1:02d}.{2} {3:02d}:{4:02d}:{5:02d}".format(date.day, date.month, date.year, date.hour, date.minute, date.second)
 
 def start_transaction():
     return "\nSET autocommit = 0;\nSTART TRANSACTION;"

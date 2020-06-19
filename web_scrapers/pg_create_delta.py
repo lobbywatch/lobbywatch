@@ -10,9 +10,12 @@ import db
 import sql_statement_generator
 from pg_summary import Summary
 from utils import clean_whitespace
+import literals
+
+# TODO bereinigen: Wirtschafts - und währungspolitischer Arbeitskreis (WPA), id 1973, 5978
 
 
-WEB_URL_REGEX = r"""(?i)\b((?:https?:(?:/{1,3}|[a-z0-9%])|[a-z0-9.\-]+[.](?:com|net|org|edu|gov|mil|aero|asia|biz|cat|coop|info|int|jobs|mobi|museum|name|post|pro|tel|travel|xxx|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cs|cu|cv|cx|cy|cz|dd|de|dj|dk|dm|do|dz|ec|ee|eg|eh|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|Ja|sk|sl|sm|sn|so|sr|ss|st|su|sv|sx|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)/)(?:[^\s()<>{}\[\]]+|\([^\s()]*?\([^\s()]+\)[^\s()]*?\)|\([^\s]+?\))+(?:\([^\s()]*?\([^\s()]+\)[^\s()]*?\)|\([^\s]+?\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’])|(?:(?<!@)[a-z0-9]+(?:[.\-][a-z0-9]+)*[.](?:com|net|org|edu|gov|mil|aero|asia|biz|cat|coop|info|int|jobs|mobi|museum|name|post|pro|tel|travel|xxx|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cs|cu|cv|cx|cy|cz|dd|de|dj|dk|dm|do|dz|ec|ee|eg|eh|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|Ja|sk|sl|sm|sn|so|sr|ss|st|su|sv|sx|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)\b/?(?!@)))"""
+WEB_URL_REGEX = r"""(?i)\b((?:https?:(?:/{1,3}|[a-z0-9%])|[a-z0-9.\-]+[.](?:com|net|org|edu|gov|mil|aero|asia|biz|cat|coop|info|int|jobs|mobi|museum|name|post|pro|tel|travel|xxx|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cs|cu|cv|cx|cy|cz|dd|de|dj|dk|dm|do|dz|ec|ee|eg|eh|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|Ja|sk|sl|sm|sn|so|sr|ss|st|su|sv|sx|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw|swiss)/)(?:[^\s()<>{}\[\]]+|\([^\s()]*?\([^\s()]+\)[^\s()]*?\)|\([^\s]+?\))+(?:\([^\s()]*?\([^\s()]+\)[^\s()]*?\)|\([^\s]+?\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’])|(?:(?<!@)[a-z0-9]+(?:[.\-][a-z0-9]+)*[.](?:com|net|org|edu|gov|mil|aero|asia|biz|cat|coop|info|int|jobs|mobi|museum|name|post|pro|tel|travel|xxx|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cs|cu|cv|cx|cy|cz|dd|de|dj|dk|dm|do|dz|ec|ee|eg|eh|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|Ja|sk|sl|sm|sn|so|sr|ss|st|su|sv|sx|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw|swiss)\b/?(?!@)))"""
 
 def run():
     parser = ArgumentParser(description='Create SQL files for data differences')
@@ -62,15 +65,16 @@ def print_summary(summary, batch_time):
 
 # Often some small details in organisation naming can be ignored
 def normalize_organisation(name):
+    if name == None: return None
     return re.sub(r'\([^)]*\)', '', name).strip()
 
 
 def get_names(member):
-    member_name_cleand = re.sub(r'(Herr|Frau|Nationalratspräsidentin|Nationalratspräsident|Ständeratspräsidentin|Ständeratspräsident|Nationalrat|Nationalrätin|Ständerat|Ständerätin)', '', member).strip()
-    names = member_name_cleand.split(' ')
+    member_name_cleaned = re.sub(r'(NR|SR|CN|CE)', '', member).strip()
+    # member_name_cleaned = re.sub(r'(Herr|Frau|Nationalratspräsidentin|Nationalratspräsident|Ständeratspräsidentin|Ständeratspräsident|Nationalrat|Nationalrätin|Ständerat|Ständerätin|CN|CE|NR|SR|Monsieur le Conseiller national)', '', member).strip()
+    names = member_name_cleaned.split(' ')
     names = [re.sub(r'\([^)]*\)', '', name).strip() for name in names]
     return names
-
 
 def sync_data(conn, filename, batch_time):
     backup_filename = "{}-{:02d}-{:02d}-{}".format(
@@ -100,35 +104,73 @@ def sync_data(conn, filename, batch_time):
             name_de = normalize_organisation(group["name_de"])
             name_fr = normalize_organisation(group["name_fr"])
             name_it = normalize_organisation(group["name_it"])
-            members = group["praesidium"]
+            # members = [(m, 'praesidium') for m in group["praesidium"]]
+            # members += [(m, 'mitglied') for m in group["mitglieder"]]
+            members = group["praesidium"] + group["mitglieder"]
 
-            organisation_id = db.get_organisation_id(conn, name_de, name_fr, name_it)
+            # TODO handle change praesidium and mitglied
+
+            # Hack since there is a name clash with id 1846 with this id 1851
+            if name_de == 'Glasfasernetz Schweiz':
+                name_de = 'Parlamentarische Gruppe Glasfasernetz Schweiz'
+            elif name_de == 'Hauptstadtregion Schweiz':
+                name_de = 'Parlamentarische Gruppe Hauptstadtregion Schweiz'
+
+            # TODO remove after dev
+            if name_de == 'Gruppa parlamentara "lingua e cultura rumantscha"':
+                organisation_id = 5964
+            elif name_de == 'Print und Kommunikation':
+                organisation_id = 5348
+            elif name_de == 'Sexuelle Gesundheit und Rechte':
+                organisation_id = 890
+            elif name_de == 'Sport':
+                organisation_id = 1751
+            elif name_de == 'Nichtionisierende Strahlung, Umwelt und Gesundheit':
+                organisation_id = 5734
+            else:
+                organisation_id = db.get_organisation_id(conn, name_de, name_fr, name_it)
 
             if organisation_id:
                 handle_names(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date)
+            # TODO remove after dev
+            # elif name_de == 'Suisse - Solidarité internationale':
+            #     organisation_id = 3500
+            # elif name_de == 'Spirituosen und Prävention':
+            #     organisation_id = 6135
+            elif name_de in ['Für Behindertenfragen', 'Bergberufe', 'Bürgergemeinden und Korporationen', 'Kindes- und Erwachsenenschutz', 'Gutes Hören','Menschenhandel','Startups und Unternehmertum', 'TC Bundeshaus']:
+                pass
+            else:
+                print('INFO: Organisation "{}" not found in DB'.format(name_de))
 
             handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date)
+            handle_beschreibung(group, organisation_id, summary, conn, batch_time, pdf_date)
 
-            for member in members:
+
+            processed_parlamentarier_ids = []
+            for member, title in members:
                 names = get_names(member)
-                parlamentarier_id = db.get_parlamentarier_id_by_name(conn, names)
+                parlamentarier_id = db.get_parlamentarier_id_by_name(conn, names, title != None)
 
                 if not parlamentarier_id:
                     print("DATA INTEGRITY FAILURE: Parlamentarier '{}' of group '{}' not found in database.".format(member, name_de))
                     sys.exit(1)
+                elif parlamentarier_id in processed_parlamentarier_ids:
+                    print('-- INFO: Ignore duplicate member "{}" ({}) in PG "{}"'.format(member, parlamentarier_id, name_de))
+                    continue
+                else:
+                    processed_parlamentarier_ids.append(parlamentarier_id)
+
+                art = "vorstand" if title != None else "mitglied"
 
                 parlamentarier_dict = db.get_parlamentarier_dict(conn, parlamentarier_id)
-                geschlecht = parlamentarier_dict["geschlecht"]
-                beschreibung = ''
-                if len(members) > 1:
-                    if geschlecht == "M":
-                        beschreibung = "Co-Präsident"
-                    if geschlecht == "F":
-                        beschreibung = "Co-Präsidentin"
+                geschlecht = 0 if parlamentarier_dict["geschlecht"] == 'M' else 1
+                beschreibung = literals.president_mapping[title][geschlecht] if title != None else "Mitglied"
+                funktion_im_gremium = literals.president_mapping[title][2] if title != None else None
+                # TODO beschreibung_fr
 
                 interessenbindung_id = None
                 if parlamentarier_id and organisation_id:
-                    interessenbindung_id = db.get_interessenbindung_id(
+                    interessenbindung_id, db_art, db_funktion_im_gremium = db.get_interessenbindung_id(
                         conn, parlamentarier_id, organisation_id, stichdatum)
 
                 summary_row = summary.get_row(parlamentarier_id)
@@ -142,14 +184,17 @@ def sync_data(conn, filename, batch_time):
                         summary_row.neue_gruppe(organisation_id, name_de)
 
                     print(sql_statement_generator.insert_interessenbindung_parlamentarische_gruppe(
-                        parlamentarier_id, organisation_id, stichdatum, beschreibung, batch_time, pdf_date))
-
-
+                        parlamentarier_id, organisation_id, stichdatum, title != None, beschreibung, funktion_im_gremium, batch_time, pdf_date))
+                elif art != db_art or funktion_im_gremium != db_funktion_im_gremium:
+                    print(
+                        "\n-- Interessenbindungsart oder Funktion geändert zwischen '{}' und '{}': '{}', '{}'".format(name_de, member, art, funktion_im_gremium))
+                    print(sql_statement_generator.end_interessenbindung(interessenbindung_id, stichdatum, batch_time, pdf_date))
+                    print(sql_statement_generator.insert_interessenbindung_parlamentarische_gruppe(
+                        parlamentarier_id, organisation_id, stichdatum, title != None, beschreibung, funktion_im_gremium, batch_time, pdf_date))
                 else:
                     summary_row.gruppe_unveraendert(organisation_id, name_de)
 
     return(summary)
-
 
 def handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_date):
     ib_managed_by_import = db.get_pg_interessenbindungen_managed_by_import(conn)
@@ -160,7 +205,7 @@ def handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_da
                 name_de_norm = normalize_organisation(group["name_de"]).lower()
                 db_name_de_norm = normalize_organisation(org_name).lower()
                 if db_name_de_norm == name_de_norm or (name_de_norm.startswith(db_name_de_norm) and len(db_name_de_norm) > 8) or (db_name_de_norm.startswith(name_de_norm) and len(name_de_norm) > 8):
-                    members = group["praesidium"]
+                    members = group["praesidium"] + group["mitglieder"]
                     for member in members:
                         for nachname in parl_nachname.split('-'):
                             if nachname.strip() in member:
@@ -348,6 +393,9 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
             print(sql_statement_generator.update_alias_organisation(
                     organisation_id, alias, batch_time, pdf_date))
 
+def handle_beschreibung(group, organisation_id, summary, conn, batch_time, pdf_date):
+    # TODO implement
+    pass
 
 # main method
 if __name__ == "__main__":
