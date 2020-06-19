@@ -8,11 +8,10 @@ from shutil import copyfile
 from guess_language import guess_language
 from argparse import ArgumentParser
 from enum import Enum, auto
-import unicodedata as ud
 
 import literals
 import pdf_helpers
-from utils import clean_whitespace
+from utils import clean_whitespace, clean_str, replace_bullets
 
 class ReadingMode(Enum):
     TITLE = auto()
@@ -21,14 +20,6 @@ class ReadingMode(Enum):
     ZWECK = auto()
     ART_DER_AKTIVITAETEN = auto()
     MITGLIEDERLISTE = auto()
-
-
-# def extract_title(line):
-#     return line
-
-
-# def add_to_title(line):
-#     return line
 
 
 def is_president(line):
@@ -59,31 +50,6 @@ def extract_presidents(line):
 def is_sekretariat(line):
     return line.startswith('Sekretariat:') or line.startswith('Co-Sekretariat:') or line.startswith("Sekretariate:")
 
-
-# def is_konstituierung(line):
-#     return line.startswith('Konstituierung:')
-
-
-# def is_zweck(line):
-#     return line.startswith('Zweck:')
-
-
-# def is_art_der_aktivitaeten(line):
-#     return line.startswith('Art der ')
-
-
-# def is_mitgliederliste(line):
-#     return line.startswith('Mitgliederliste')
-
-
-# TODO refactor to utils
-def clean_str(str):
-    if str == None: return None
-    return re.sub(r'<[^<]+?>', '', re.sub(r'[«»“”„]', '"', re.sub(r"[–—]", "-", re.sub(r"[`''‘’‚]", "'", ud.normalize('NFC', str))))).strip()
-
-def replace_bullets(str):
-    if str == None: return None
-    return re.sub(r'^(-\s|•\s|)', '* ', str.strip()) if str.count('- ') <= 1 or str.count('- und ') > 0 else str.strip()
 
 def extract_sekretariat(line):
     if ':' in line and '://' not in line:
@@ -119,8 +85,6 @@ def read_groups(filename):
 
     for line in (clean_whitespace(clean_str(' '.join(row))) for row in rows if ''.join(row).strip() != ''):
 
-        # DONE strip tags
-        # DONE normalize quotes «» ...
         # TODO handle Worttrennung Entscheidungs- trägern
         if line == '' or line.startswith('Fortsetzung:') or line.lower() in ['folgt', 'vakant']:
             continue
@@ -206,22 +170,6 @@ def read_groups(filename):
 
     return groups
 
-# def clean_presidents(presidents_broken):
-#     presidents = []
-#     partial_president_name = ''
-#     for name in presidents_broken:
-#         if name in ['Herr', 'Frau', 'Herr Nationalratspräsident', 'Frau Nationalratspräsidentin', 'Herr Ständeratspräsident','Frau Ständeratspräsidentin', 'Herr Nationalrat', 'Frau Nationalrätin', 'Herr Ständerat', 'Frau Ständerätin']:
-#             partial_president_name = name
-#         elif partial_president_name != '':
-#             president_name = fix_parlamentarian_name_typos(partial_president_name + ' ' + name)
-#             presidents += [president_name]
-#             partial_president_name = ''
-#         else:
-#             president_name = fix_parlamentarian_name_typos(name)
-#             presidents += [president_name]
-
-#     return presidents
-
 # The PDF containing the co-presidents of the parlamentarische Gruppen
 # has spelling errors in certain names. Correct them here:
 def fix_parlamentarian_name_typos(name):
@@ -244,9 +192,6 @@ def normalize_namen(groups):
         # TODO handle bullet list (-, •) art_der_aktivitaeten
         new_groups.append((clean_whitespace(title_de), clean_whitespace(title_fr), clean_whitespace(title_it), members, sekretariat, konstituierung, zweck, art_der_aktivitaeten, mitgliederliste))
     return new_groups
-
-# def clean_title(title):
-#     return re.sub(r'\s+', ' ', title).strip()
 
 # write member of parliament and guests to json file
 def write_to_json(groups, archive_pdf_name, filename, url, creation_date, imported_date):
@@ -342,7 +287,6 @@ def scrape():
         copyfile(filename, script_path + "/backup/{}".format(backup_filename))
         os.remove(stripped_file_name)
         os.remove("pg_data.csv")
-
 
 
 #main method

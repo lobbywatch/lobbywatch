@@ -106,9 +106,7 @@ def sync_data(conn, filename, batch_time):
             # members += [(m, 'mitglied') for m in group["mitglieder"]]
             members = group["praesidium"] + group["mitglieder"]
 
-            # TODO handle change praesidium and mitglied
-
-            # Hack since there is a name clash with id 1846 with this id 1851
+            # TODO Hack since there is a name clash with id 1846 with this id 1851
             if name_de == 'Glasfasernetz Schweiz':
                 name_de = 'Parlamentarische Gruppe Glasfasernetz Schweiz'
             elif name_de == 'Hauptstadtregion Schweiz':
