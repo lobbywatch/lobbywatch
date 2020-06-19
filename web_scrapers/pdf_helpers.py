@@ -18,7 +18,7 @@ def extract_creation_date(filename):
     # Examle: D:20170508085336+02'00'
     raw_date = pdf_info['/CreationDate']
     #print(str(raw_date))
-    date_str = re.search('^D:(\d{14})', raw_date).group(1)
+    date_str = re.search(r'^D:(\d{14})', raw_date).group(1)
     #print(str(date_str))
     pdf_date = datetime.strptime(date_str, "%Y%m%d%H%M%S")
     #print(str(date))
