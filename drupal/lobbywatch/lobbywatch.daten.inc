@@ -2313,7 +2313,7 @@ function _lobbywatch_non_public_exports_page() {
   $export_info = file_get_contents("$secret_exports_path/db_export.txt");
 
   $markup .= "<p>Link to non public <i>historised and unpublished</i> exports.</p>";
-  $markup .= "<p>Für internen Gebrach.</p>";
+  $markup .= "<p>Für internen Gebrauch.</p>";
   $markup .= "<p><a href='$url_of_public$secret_exports_dir'>$url_of_public$secret_exports_dir</a></p>";
   $markup .= "$header";
   $markup .= "<pre>$export_info</pre>";
