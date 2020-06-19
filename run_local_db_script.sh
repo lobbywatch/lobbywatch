@@ -8,6 +8,7 @@
 # db: lobbywatch | lobbywatchtest
 # mode: cron | interactive | cronverbose
 # ./run_local_db_script.sh lobbywatchtest
+# ./run_local_db_script.sh lobbywatchtest prod_bak/`cat prod_bak/last_dbdump_data.txt`
 # ./run_local_db_script.sh lobbywatchtest db_procedures_triggers.sql
 # ./run_local_db_script.sh lobbywatchtest db_check.sql cron
 # ./run_local_db_script.sh lobbywatchtest db_fail.sql cron
