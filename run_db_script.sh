@@ -72,7 +72,7 @@ quit() {
 
 ######### COPIED from common.sh: END
 
-enable_fail_onerror
+# enable_fail_onerror
 
 db=$1
 username=$2
