@@ -143,7 +143,7 @@ checkLocalMySQLRunning() {
 
     case "$USER" in
       "rkurmann" )
-        # mysqlSock="/home/rkurmann/dev/web/mysql/mysql57/data/mysql.sock"
+        # mysqlSock="$HOME/dev/web/mysql/mysql57/data/mysql.sock"
         # if [ ! -e "$mysqlSock" ]; then
         $MYSQLADMIN -h$HOSTNAME -u$DB_USER processlist >/dev/null 2>&1 && OK=true || OK=false
         if ! $OK ; then

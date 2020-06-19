@@ -28,10 +28,6 @@
 
 require_once dirname(__FILE__) . '/../../../lobbywatch.ch/app/settings/settings.php';
 require_once dirname(__FILE__) . '/../../../lobbywatch.ch/app/common/utils.php';
-// require_once dirname(__FILE__) . '/../../../lobbywatch.ch/app/custom/custom.php';
-// require_once '/home/rkurmann/dev/web/lobbywatch/lobbydev/public_html/settings/settings.php';
-// require_once '/home/rkurmann/dev/web/lobbywatch/lobbydev/public_html/common/utils.php';
-// df(dirname(__FILE__), 'dirname(__FILE__)');
 
 global $lobbywatch_is_forms;
 $lobbywatch_is_forms = true;

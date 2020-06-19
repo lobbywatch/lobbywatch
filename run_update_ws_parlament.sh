@@ -8,10 +8,10 @@
 # ZB Test with DB import: ./run_update_ws_parlament.sh -i -P
 
 # crontab
-# 0 20 * * 5 (/bin/echo -e "\nCron run" && date -Iseconds && . ~/.keychain/$(hostname)-sh && cd /home/rkurmann/lobbywatch/lobbywatch && ./run_update_ws_parlament.sh -a -v -d -f; echo "Cron end" && date -Iseconds) >> /home/rkurmann/lobbywatch/lobbywatch/run_update_ws_parlament.sh.log
+# 0 20 * * 5 (/bin/echo -e "\nCron run" && date -Iseconds && . ~/.keychain/$(hostname)-sh && cd $HOME/lobbywatch/lobbywatch && ./run_update_ws_parlament.sh -a -v -d -f; echo "Cron end" && date -Iseconds) >> $HOME/lobbywatch/lobbywatch/run_update_ws_parlament.sh.log
 
 # run in background
-# nohup bash -c '(/bin/echo -e "\nCron run" && date -Iseconds && . ~/.keychain/$(hostname)-sh && cd /home/rkurmann/lobbywatch/lobbywatch && ./run_update_ws_parlament.sh -a -o -f -V -M -t -XS; echo "Cron end" && date -Iseconds)' &> /tmp/run_update_ws_parlament.sh.log &
+# nohup bash -c '(/bin/echo -e "\nCron run" && date -Iseconds && . ~/.keychain/$(hostname)-sh && cd $HOME/lobbywatch/lobbywatch && ./run_update_ws_parlament.sh -a -o -f -V -M -t -XS; echo "Cron end" && date -Iseconds)' &> /tmp/run_update_ws_parlament.sh.log &
 # [1] 14296
 
 # Include common functions
@@ -53,7 +53,7 @@ nomail=false
 noimageupload=false
 automatic=false
 test=false
-remote_test=true
+remote_op=true
 nosql=false
 kommissionen="k"
 verbose=false
@@ -167,7 +167,7 @@ while test $# -gt 0; do
                         ;;
                 -T|--no-remote)
                         test=true
-                        remote_test=false
+                        remote_op=false
                         shift
                         ;;
                 -v|--verbose)
@@ -384,7 +384,7 @@ if ! $nopg ; then
   if ! $automatic ; then
     askContinueYn "Run parlamentarische Gruppen (pg) python '$db' on '$HOSTNAME'?"
   fi
-  mkdir -p web_scrapers/webbackup web_scrapers/archive
+  mkdir -p web_scrapers/backup web_scrapers/archive
   echo "Writing pg.json..."
   if $lastpdf ; then
     last_pg_pdf=$(ls -t web_scrapers/backup/*gruppen.pdf | head -1)
@@ -440,7 +440,8 @@ fi
 # Remote TEST
 ###############################################################################
 
-if ( ($import || ! $nobackup || $onlydownloadlastbak) && $remote_test) ; then # && ! $test
+# https://stackoverflow.com/questions/14964805/groups-of-compound-conditions-in-bash-test
+if [[ ($import == true || $nobackup == false|| $onlydownloadlastbak == true) && $remote_op == true ]] ; then
   if ! $automatic ; then
     askContinueYn "Import DB 'prod_bak/`cat $DUMP_FILE`' to REMOTE TEST?"
   fi
@@ -455,7 +456,7 @@ if ( ($import || ! $nobackup || $onlydownloadlastbak) && $remote_test) ; then # 
 fi
 
 # Run parlam SQL in any case in order to set the imported data
-if ! $noparlam && ! $nosql ; then
+if ! $noparlam && ! $nosql && $remote_op; then
   if ! $automatic ; then
     askContinueYn "Run parlam SQL in REMOTE TEST?"
   fi
@@ -466,14 +467,14 @@ if ! $noparlam && ! $nosql ; then
   fi
 fi
 
-if ! $nozb && $ZB_CHANGED && ! $nosql ; then
+if ! $nozb && $ZB_CHANGED && ! $nosql && $remote_op; then
   if ! $automatic ; then
     askContinueYn "Run zb SQL in REMOTE TEST?"
   fi
   ./deploy.sh -q -s $ZB_DELTA_FILE
 fi
 
-if ! $nopg && $PG_CHANGED && ! $nosql ; then
+if ! $nopg && $PG_CHANGED && ! $nosql && $remote_op; then
   if ! $automatic ; then
     askContinueYn "Run pg SQL in REMOTE TEST?"
   fi
@@ -481,7 +482,7 @@ if ! $nopg && $PG_CHANGED && ! $nosql ; then
 fi
 
 # Run after import DB script for fixes
-if $enable_after_import_script && ! $nosql ; then
+if $enable_after_import_script && ! $nosql && $remote_op; then
   if ! $automatic ; then
       askContinueYn "Run $after_import_DB_script in REMOTE TEST $db?"
   fi
@@ -489,7 +490,7 @@ if $enable_after_import_script && ! $nosql ; then
 fi
 
 # Upload images of new paramentarier
-if $IMAGE_CHANGED && ! $noimageupload ; then
+if $IMAGE_CHANGED && ! $noimageupload && $remote_op; then
   if ! $automatic ; then
     askContinueYn "Upload images to REMOTE TEST?"
   fi
@@ -503,7 +504,7 @@ fi
 # boolean variable does not work as expected in bash
 # update_prod=! $test && ! $nosql && ! $onlydownloadlastbak && ! $import
 
-if ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import ; then
+if ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import && $remote_op; then
   echo "Remote PROD will not be updated"
   $test && echo 'Parameter test is set'
   $nosql && echo 'Parameter nosql is set'
@@ -511,7 +512,7 @@ if ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import ; then
   $import && echo 'Parameter import is set'
 fi
 
-if ! $noparlam && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import ; then
+if ! $noparlam && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import && $remote_op; then
   if ! $automatic ; then
     askContinueYn "Run parlam SQL in REMOTE PROD?"
   fi
@@ -522,14 +523,14 @@ if ! $noparlam && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import ; t
   fi
 fi
 
-if ! $nozb && $ZB_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import ; then
+if ! $nozb && $ZB_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import && $remote_op; then
   if ! $automatic ; then
     askContinueYn "Run zb SQL in REMOTE PROD?"
   fi
   ./deploy.sh -p -q -s $ZB_DELTA_FILE
 fi
 
-if ! $nopg && $PG_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import ; then
+if ! $nopg && $PG_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import && $remote_op; then
   if ! $automatic ; then
     askContinueYn "Run pg SQL in remote PROD?"
   fi
@@ -537,7 +538,7 @@ if ! $nopg && $PG_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && ! 
 fi
 
 # Run after import DB script for fixes
-if $enable_after_import_script && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import ; then
+if $enable_after_import_script && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import && $remote_op; then
   if ! $automatic ; then
       askContinueYn "Run $after_import_DB_script in REMOTE PROD $db?"
   fi
@@ -545,7 +546,7 @@ if $enable_after_import_script && ! $test && ! $nosql && ! $onlydownloadlastbak 
 fi
 
 # Upload images of new paramentarier
-if $IMAGE_CHANGED && ! $noimageupload && ! $test && ! $onlydownloadlastbak && ! $import ; then
+if $IMAGE_CHANGED && ! $noimageupload && ! $test && ! $onlydownloadlastbak && ! $import && $remote_op; then
   if ! $automatic ; then
     askContinueYn "Upload images to REMOTE PROD?"
   fi
