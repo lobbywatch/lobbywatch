@@ -31,7 +31,7 @@ def _datetime_as_sql_string(date):
 
 def clean_str(str):
     if str == None: return None
-    return re.sub(r'<[^<]+?>', '', re.sub(r'[«»“”„]', '"', re.sub(r"[–—]", "-", re.sub(r"[`''‘’‚]", "'", ud.normalize('NFC', str))))).strip()
+    return re.sub(r'<[^<]+?>', '', re.sub(r'[«»“”„]', '"', re.sub(r"[–—]", "-", re.sub(r"[`‘’‚]", "'", ud.normalize('NFC', str))))).strip()
 
 def replace_bullets(str):
     if str == None: return None
