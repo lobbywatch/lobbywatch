@@ -21,7 +21,7 @@ enable_fail_onerror
 
 PHP=php
 # PHP=/usr/bin/php
-if $envAbel ; then
+if [[ "$HOSTNAME" =~ "rpialch" || "$HOSTNAME" =~ "rpiw" ]]; then
   PHP="docker run -i --rm --name php74_execution --network=host -v $PWD:/usr/src/myapp -w /usr/src/myapp php74 php"
   echo "Use docker PHP"
 fi
