@@ -115,7 +115,7 @@ def get_parlamentarier_id_by_name(database, names, prename_first: bool):
     name_patterns = ["VN", "VZN", "VVN", "VNN", "SN", "N"] if prename_first else ["NV", "NVZ", "NVV", "NNV", "NNVV", "NNNV", "NN", "SN", "N"]
     with database.cursor() as cursor:
         query = """
-        SELECT id
+        SELECT id, im_rat_bis
         FROM parlamentarier
         WHERE 1=1
         """
@@ -125,12 +125,12 @@ def get_parlamentarier_id_by_name(database, names, prename_first: bool):
             cursor.execute(current_query)
             result = cursor.fetchall()
             if result and len(result) == 1:
-                (parlamentarier_id, ) = result[0]
-                return parlamentarier_id
+                (parlamentarier_id, bis, ) = result[0]
+                return parlamentarier_id, bis
 
         print(
             "\n\nDATA INTEGRITY ERROR: Member of parliament '{}' referenced in PDF is not in database.\n{}".format(names, current_query))
-    return None
+    return None, None
 
 
 # get a parlamentarier dict by parlamentarier_id
@@ -244,6 +244,24 @@ def get_organisation_sekretariat(database, organisation_id):
     return None
 
 
+def get_organisation_beschreibung(database, organisation_id):
+    with database.cursor() as cursor:
+        query = """
+        SELECT beschreibung
+        FROM organisation
+        WHERE id = '{}';
+        """.format(organisation_id)
+
+        cursor.execute(query)
+        result = cursor.fetchall()
+
+        if result and len(result) == 1:
+            (beschreibung, ) = result[0]
+            return beschreibung
+
+    return None
+
+
 def get_organisation_names(database, organisation_id):
     with database.cursor() as cursor:
         query = """
@@ -318,7 +336,7 @@ def get_organisation_alias(database, organisation_id):
 def get_pg_interessenbindungen_managed_by_import(database):
     with database.cursor() as cursor:
         query = """
-        SELECT ib.id, org.name_de, parl.vorname, parl.zweiter_vorname, parl.nachname, parl.id
+        SELECT ib.id, art, funktion_im_gremium, org.id, org.name_de, parl.vorname, parl.zweiter_vorname, parl.nachname, parl.id
         FROM interessenbindung ib
         INNER JOIN organisation org ON ib.organisation_id = org.id
         INNER JOIN parlamentarier parl ON ib.parlamentarier_id = parl.id

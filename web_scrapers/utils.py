@@ -1,7 +1,6 @@
 import re
 import unicodedata as ud
 
-
 def clean_whitespace(str):
     if str == None: return None
     return re.sub(r'\s+', ' ', str).strip()
@@ -17,9 +16,12 @@ def _quote_str_or_NULL(str):
 # simple esape function for input strings
 def _escape_string(string):
     if string is None: return None
-    result = string.replace("'", "''").replace('\n', '\\n').replace('\\', '\\\\')
+    result = string.replace('\\', '\\\\').replace("'", "''").replace('\n', '\\n')
     return result
 
+def escape_newlines(str):
+    if str is None: return None
+    return '\\n'.join(str.splitlines())
 
 # the current date formatted as a string MySQL can understand
 def _date_as_sql_string(date):

@@ -212,6 +212,7 @@ def scrape_pdf(url, filename):
         call(["qpdf", "--pages", pdf_name, "2-z", "--", pdf_name, stripped_file_name])
 
         print("parsing PDF...")
+        # TODO use tabule 1.0.3
         call(["java", "-Djava.util.logging.config.file=web_scrapers/logging.properties", "-jar", get_script_path() + "/tabula-0.9.2-jar-with-dependencies.jar",
             stripped_file_name, "--pages", "all", "-o", "zb_data.csv"])
 

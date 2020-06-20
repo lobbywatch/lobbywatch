@@ -85,7 +85,6 @@ def read_groups(filename):
 
     for line in (clean_whitespace(clean_str(' '.join(row))) for row in rows if ''.join(row).strip() != ''):
 
-        # TODO handle Worttrennung Entscheidungs- trägern
         if line == '' or line.startswith('Fortsetzung:') or line.lower() in ['folgt', 'vakant']:
             continue
         elif line.isdigit():
@@ -188,8 +187,6 @@ def normalize_namen(groups):
         if (title_it and not guess_language(title_it, ['de', 'fr', 'it']) in ['it', 'UNKNOWN']):
             print("Warning: title_it '{}' guess lanuage is guessed '{}'\n".format(title_it, guess_language(title_it, ['de', 'fr', 'it'])))
 
-        # TODO handle bullet list (-, •) zweck
-        # TODO handle bullet list (-, •) art_der_aktivitaeten
         new_groups.append((clean_whitespace(title_de), clean_whitespace(title_fr), clean_whitespace(title_it), members, sekretariat, konstituierung, zweck, art_der_aktivitaeten, mitgliederliste))
     return new_groups
 
@@ -258,13 +255,9 @@ def scrape():
         stripped_file_name = "pg_file-stripped.pdf"
         call(["qpdf", "--pages", pdf_name, "2-z", "--", pdf_name, stripped_file_name])
 
-        # TODO https://stackoverflow.com/questions/40045818/how-to-resolve-is-not-available-in-this-fonts-encoding
-        # TODO https://stackoverflow.com/questions/41313554/apache-pdfbox-can-i-set-font-other-than-those-present-in-pdtype1font
-
         print("parsing PDF...")
         tabula_path = script_path + "/tabula-1.0.3-jar-with-dependencies.jar"
-        # , "-i"
-        cmd = ["java", "-Djava.util.logging.config.file=web_scrapers/logging_dev.properties", "-jar", tabula_path, stripped_file_name, "-o", "pg_data.csv", "--pages", "all", "-t"]
+        cmd = ["java", "-Djava.util.logging.config.file=web_scrapers/logging.properties", "-jar", tabula_path, stripped_file_name, "-o", "pg_data.csv", "--pages", "all", "-t", "-i"]
         print(" ".join(cmd))
         call(cmd, stderr=None)
 

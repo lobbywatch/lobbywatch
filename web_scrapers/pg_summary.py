@@ -6,6 +6,8 @@ class Summary:
         self.websites_changed = 0
         self.aliases_added = 0
         self.aliases_changed = 0
+        self.beschreibungen_added = 0
+        self.beschreibungen_changed = 0
         self.sekretariats_added = 0
         self.sekretariats_changed = 0
         self.addresses_added = 0
@@ -39,6 +41,12 @@ class Summary:
 
     def alias_changed(self):
         self.aliases_changed += 1
+
+    def beschreibung_added(self):
+        self.beschreibungen_added += 1
+
+    def beschreibung_changed(self):
+        self.beschreibungen_changed += 1
 
     def name_added(self):
         self.names_added += 1
@@ -104,6 +112,12 @@ class Summary:
     def aliases_changed_count(self):
         return self.aliases_changed
 
+    def beschreibungen_added_count(self):
+        return self.beschreibungen_added
+
+    def beschreibungen_changed_count(self):
+        return self.beschreibungen_changed
+
     def organisation_added_count(self):
         return self.organisationen_added
 
@@ -120,7 +134,10 @@ class Summary:
             self.websites_added + \
             self.websites_changed + \
             self.aliases_added + \
-            self.aliases_changed > 0
+            self.aliases_changed + \
+            self.beschreibungen_added + \
+            self.beschreibungen_changed \
+            > 0
 
 
 class SummaryRow:

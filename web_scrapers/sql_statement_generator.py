@@ -4,8 +4,6 @@ from utils import _escape_string, _quote_str_or_NULL, _date_as_sql_string, _date
 
 user = os.getenv('USER', 'auto')
 
-# TODO ensure no SQL injection
-
 # create new zutrittsberechtigung for a perlamentarier
 def insert_zutrittsberechtigung(parlamentarier_id, person_id, funktion, date, pdf_date):
     query = "INSERT INTO `zutrittsberechtigung` (`parlamentarier_id`, `person_id`, `funktion`, `von`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`, `updated_by_import`) VALUES ({0}, {1}, '{2}', STR_TO_DATE('{3}', '%d.%m.%Y'), '{4}', '{5}', STR_TO_DATE('{6}', '%d.%m.%Y %T'), '{7}', STR_TO_DATE('{8}', '%d.%m.%Y %T'), STR_TO_DATE('{8}', '%d.%m.%Y %T'));\n".format(
@@ -70,13 +68,14 @@ def insert_person(guest, date, pdf_date):
 
 
 # insert a new organisation with the characteristics of a parlamentarische gruppe
-def insert_parlamentarische_gruppe(name_de, name_fr, name_it, sekretariat, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, homepage, alias, date, pdf_date):
-    query = """INSERT INTO `organisation` (`name_de`, `name_fr`, `name_it`, `sekretariat`, `adresse_strasse`, `adresse_zusatz`, `adresse_plz`, `ort`, `homepage`, `alias_namen_de`, `land_id`, `rechtsform`, `typ`, `vernehmlassung`, `created_visa`, `created_date`, `updated_visa`, `updated_by_import`, `notizen`, `eingabe_abgeschlossen_visa`, `eingabe_abgeschlossen_datum`) VALUES ('{}', {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, '{}', '{}', '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'));
+def insert_parlamentarische_gruppe(name_de, name_fr, name_it, beschreibung, sekretariat, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, homepage, alias, date, pdf_date):
+    query = """INSERT INTO `organisation` (`name_de`, `name_fr`, `name_it`, `beschreibung`, `sekretariat`, `adresse_strasse`, `adresse_zusatz`, `adresse_plz`, `ort`, `homepage`, `alias_namen_de`, `land_id`, `rechtsform`, `typ`, `vernehmlassung`, `created_visa`, `created_date`, `updated_visa`, `updated_by_import`, `notizen`, `eingabe_abgeschlossen_visa`, `eingabe_abgeschlossen_datum`) VALUES ('{}', {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, '{}', '{}', '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'));
 SET @last_parlamentarische_gruppe = LAST_INSERT_ID();
 """.format(
             _escape_string(name_de),
             "'" + _escape_string(name_fr) + "'" if name_fr else 'NULL',
             "'" + _escape_string(name_it) + "'" if name_it else 'NULL',
+            _quote_str_or_NULL(_escape_string(beschreibung)),
             _quote_str_or_NULL(_escape_string(sekretariat)),
             _quote_str_or_NULL(_escape_string(adresse_str)),
             _quote_str_or_NULL(_escape_string(adresse_zusatz)),
@@ -184,6 +183,18 @@ def update_alias_organisation(organisation_id, alias, batch_time, pdf_date):
     query = "UPDATE `organisation` SET `alias_namen_de` = {0}, `notizen` = CONCAT_WS('\\n\\n', '{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
         _quote_str_or_NULL(_escape_string(alias)),
         "{0}/import/{1}: Alias geändert (PDF {2})".format(
+            _date_as_sql_string(batch_time), user, _datetime_as_sql_string(pdf_date)),
+        "import",
+        _datetime_as_sql_string(batch_time),
+        organisation_id
+    )
+
+    return query
+
+def update_beschreibung_organisation(organisation_id, beschreibung, batch_time, pdf_date):
+    query = "UPDATE `organisation` SET `beschreibung` = {0}, `notizen` = CONCAT_WS('\\n\\n', '{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
+        _quote_str_or_NULL(_escape_string(beschreibung)),
+        "{0}/import/{1}: Beschreibung geändert (PDF {2})".format(
             _date_as_sql_string(batch_time), user, _datetime_as_sql_string(pdf_date)),
         "import",
         _datetime_as_sql_string(batch_time),

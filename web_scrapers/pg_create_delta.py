@@ -1,13 +1,13 @@
 import json
 import re
 import sys
-from datetime import datetime
+from datetime import datetime, date
 from argparse import ArgumentParser
 
 import db
 import sql_statement_generator
 from pg_summary import Summary
-from utils import clean_whitespace
+from utils import clean_whitespace, escape_newlines
 import literals
 
 # TODO bereinigen: Wirtschafts - und währungspolitischer Arbeitskreis (WPA), id 1973, 5978
@@ -52,6 +52,8 @@ def print_summary(summary, batch_time):
     print("Geänderte Namen DE/FR/IT: {}".format(summary.names_changed_count()))
     print("Hinzugefügte Alias: {}".format(summary.aliases_added_count()))
     print("Geänderte Alias: {}".format(summary.aliases_changed_count()))
+    print("Hinzugefügte Beschreibungen: {}".format(summary.beschreibungen_added_count()))
+    print("Geänderte Beschreibungen: {}".format(summary.beschreibungen_changed_count()))
 
     print("""*/""")
 
@@ -66,6 +68,32 @@ def normalize_organisation(name):
     if name == None: return None
     return re.sub(r'\([^)]*\)', '', name).strip()
 
+def get_organisation(group, conn):
+    name_de = normalize_organisation(group["name_de"])
+    name_fr = normalize_organisation(group["name_fr"])
+    name_it = normalize_organisation(group["name_it"])
+
+    # TODO Hack since there is a name clash with id 1846 with this id 1851
+    if name_de == 'Glasfasernetz Schweiz':
+        name_de = 'Parlamentarische Gruppe Glasfasernetz Schweiz'
+    elif name_de == 'Hauptstadtregion Schweiz':
+        name_de = 'Parlamentarische Gruppe Hauptstadtregion Schweiz'
+
+    # TODO remove after dev
+    if name_de == 'Gruppa parlamentara "lingua e cultura rumantscha"':
+        organisation_id = 5964
+    elif name_de == 'Print und Kommunikation':
+        organisation_id = 5348
+    elif name_de == 'Sexuelle Gesundheit und Rechte':
+        organisation_id = 890
+    elif name_de == 'Sport':
+        organisation_id = 1751
+    elif name_de == 'Nichtionisierende Strahlung, Umwelt und Gesundheit':
+        organisation_id = 5734
+    else:
+        organisation_id = db.get_organisation_id(conn, name_de, name_fr, name_it)
+
+    return organisation_id, name_de, name_fr, name_it
 
 def get_names(member):
     member_name_cleaned = re.sub(r'(NR|SR|CN|CE)', '', member).strip()
@@ -98,70 +126,46 @@ def sync_data(conn, filename, batch_time):
 
         handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_date)
 
+        print('-- Sync groups...')
+
         for group in content["data"]:
-            name_de = normalize_organisation(group["name_de"])
-            name_fr = normalize_organisation(group["name_fr"])
-            name_it = normalize_organisation(group["name_it"])
-            # members = [(m, 'praesidium') for m in group["praesidium"]]
-            # members += [(m, 'mitglied') for m in group["mitglieder"]]
             members = group["praesidium"] + group["mitglieder"]
 
-            # TODO Hack since there is a name clash with id 1846 with this id 1851
-            if name_de == 'Glasfasernetz Schweiz':
-                name_de = 'Parlamentarische Gruppe Glasfasernetz Schweiz'
-            elif name_de == 'Hauptstadtregion Schweiz':
-                name_de = 'Parlamentarische Gruppe Hauptstadtregion Schweiz'
-
-            # TODO remove after dev
-            if name_de == 'Gruppa parlamentara "lingua e cultura rumantscha"':
-                organisation_id = 5964
-            elif name_de == 'Print und Kommunikation':
-                organisation_id = 5348
-            elif name_de == 'Sexuelle Gesundheit und Rechte':
-                organisation_id = 890
-            elif name_de == 'Sport':
-                organisation_id = 1751
-            elif name_de == 'Nichtionisierende Strahlung, Umwelt und Gesundheit':
-                organisation_id = 5734
-            else:
-                organisation_id = db.get_organisation_id(conn, name_de, name_fr, name_it)
+            organisation_id, name_de, name_fr, name_it = get_organisation(group, conn)
 
             if organisation_id:
                 handle_names(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date)
             # TODO remove after dev
-            # elif name_de == 'Suisse - Solidarité internationale':
-            #     organisation_id = 3500
-            # elif name_de == 'Spirituosen und Prävention':
-            #     organisation_id = 6135
             elif name_de in ['Für Behindertenfragen', 'Bergberufe', 'Bürgergemeinden und Korporationen', 'Kindes- und Erwachsenenschutz', 'Gutes Hören','Menschenhandel','Startups und Unternehmertum', 'TC Bundeshaus']:
                 pass
             else:
                 print('INFO: Organisation "{}" not found in DB'.format(name_de))
 
-            handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date)
-            handle_beschreibung(group, organisation_id, summary, conn, batch_time, pdf_date)
-
+            handle_organisation(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date)
 
             processed_parlamentarier_ids = []
             for member, title in members:
                 names = get_names(member)
-                parlamentarier_id = db.get_parlamentarier_id_by_name(conn, names, title != None)
+                parlamentarier_id, parlamentarier_bis = db.get_parlamentarier_id_by_name(conn, names, title != None)
 
                 if not parlamentarier_id:
-                    print("DATA INTEGRITY FAILURE: Parlamentarier '{}' of group '{}' not found in database.".format(member, name_de))
+                    # print("DATA INTEGRITY FAILURE: Parlamentarier '{}' of group '{}' not found in database.".format(member, name_de))
                     sys.exit(1)
+                elif parlamentarier_bis and parlamentarier_bis < date.today():
+                    # print("-- INFO: Parlamentarier '{}' ({}) ist nicht mehr aktiv ('{}')".format(member, parlamentarier_id, parlamentarier_bis))
+                    continue
                 elif parlamentarier_id in processed_parlamentarier_ids:
                     print('-- INFO: Ignore duplicate member "{}" ({}) in PG "{}"'.format(member, parlamentarier_id, name_de))
                     continue
                 else:
                     processed_parlamentarier_ids.append(parlamentarier_id)
 
-                art = "vorstand" if title != None else "mitglied"
+                art = "vorstand" if title else "mitglied"
 
                 parlamentarier_dict = db.get_parlamentarier_dict(conn, parlamentarier_id)
                 geschlecht = 0 if parlamentarier_dict["geschlecht"] == 'M' else 1
-                beschreibung = literals.president_mapping[title][geschlecht] if title != None else "Mitglied"
-                funktion_im_gremium = literals.president_mapping[title][2] if title != None else None
+                beschreibung = literals.president_mapping[title][geschlecht] if title else "Mitglied"
+                funktion_im_gremium = literals.president_mapping[title][2] if title else None
                 # TODO beschreibung_fr
 
                 interessenbindung_id = None
@@ -193,19 +197,56 @@ def sync_data(conn, filename, batch_time):
     return(summary)
 
 def handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_date):
+    print('-- Check removed groups...')
     ib_managed_by_import = db.get_pg_interessenbindungen_managed_by_import(conn)
     if ib_managed_by_import:
-        for ib_id, org_name, parl_vorname, parl_zweiter_vorname, parl_nachname, parl_id in ib_managed_by_import:
+        parlamentarier_id_cache = {}
+        organisation_id_cache = {}
+        i = 0
+        lastprogress = -1
+        for ib_id, ib_art, ib_funktion_im_gremium, org_id, org_name, parl_vorname, parl_zweiter_vorname, parl_nachname, parl_id in ib_managed_by_import:
+            progress = 100 * i // len(ib_managed_by_import)
+            if progress % 25 == 0 and progress != lastprogress:
+                print('-- Progress {}%'.format(progress))
+                lastprogress = progress
+            i += 1
             present = False
             for group in content["data"]:
-                name_de_norm = normalize_organisation(group["name_de"]).lower()
-                db_name_de_norm = normalize_organisation(org_name).lower()
-                if db_name_de_norm == name_de_norm or (name_de_norm.startswith(db_name_de_norm) and len(db_name_de_norm) > 8) or (db_name_de_norm.startswith(name_de_norm) and len(name_de_norm) > 8):
+                org_key = group["name_de"]
+                if org_key in organisation_id_cache:
+                    organisation_id, name_de, name_fr, name_it = organisation_id_cache[org_key]
+                else:
+                    organisation_id, name_de, name_fr, name_it = get_organisation(group, conn)
+                    organisation_id_cache[org_key] = (organisation_id, name_de, name_fr, name_it)
+                if org_id == organisation_id:
                     members = group["praesidium"] + group["mitglieder"]
-                    for member in members:
-                        for nachname in parl_nachname.split('-'):
-                            if nachname.strip() in member:
-                                present = True
+                    processed_parlamentarier_ids = []
+                    for member, title in members:
+                        parl_key = (member, title)
+                        if parl_key in parlamentarier_id_cache:
+                            parlamentarier_id, parlamentarier_bis = parlamentarier_id_cache[parl_key]
+                        else:
+                            names = get_names(member)
+                            parlamentarier_id, parlamentarier_bis = db.get_parlamentarier_id_by_name(conn, names, title != None)
+                            parlamentarier_id_cache[parl_key] = (parlamentarier_id, parlamentarier_bis)
+
+                        if not parlamentarier_id:
+                            print("DATA INTEGRITY FAILURE: Parlamentarier '{}' of group '{}' not found in database.".format(member, name_de))
+                            sys.exit(1)
+                        elif parlamentarier_bis and parlamentarier_bis < date.today():
+                            print("-- INFO: Parlamentarier '{}' ({}) ist nicht mehr aktiv ('{}')".format(member, parlamentarier_id, parlamentarier_bis))
+                            continue
+                        elif parlamentarier_id in processed_parlamentarier_ids:
+                            print('-- INFO: Ignore duplicate member "{}" ({}) in PG "{}"'.format(member, parlamentarier_id, name_de))
+                            continue
+                        else:
+                            processed_parlamentarier_ids.append(parlamentarier_id)
+
+                        art = "vorstand" if title else "mitglied"
+                        funktion_im_gremium = literals.president_mapping[title][2] if title else None
+                        if parl_id == parlamentarier_id and ib_art == art and ib_funktion_im_gremium == funktion_im_gremium:
+                            present = True
+                            break
 
             if not present:
                 full_name = parl_vorname
@@ -248,7 +289,7 @@ def handle_names(group, name_de, name_fr, name_it, organisation_id, summary, con
 
 
 
-def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date):
+def handle_organisation(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date):
     sekretariat = "\n".join(group["sekretariat"])
     sekretariat_line = '; '.join(sekretariat.splitlines())
     sekretariat_list = "\n".join(group["sekretariat"]).replace('; ', '\n').replace(';', '\n').replace(', ', '\n').replace(',', '\n').splitlines()
@@ -316,12 +357,12 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
     else:
         homepage = None
 
-    sekretariat_line = '; '.join(sekretariat.splitlines())
+    beschreibung = get_beschreibung(name_de, group, organisation_id, summary, conn, batch_time, pdf_date)
 
     if not organisation_id:
         print("\n-- Neue parlamentarische Gruppe: '{}'".format(name_de))
         print(sql_statement_generator.insert_parlamentarische_gruppe(
-            name_de, name_fr, name_it, sekretariat, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, homepage, alias, batch_time, pdf_date))
+            name_de, name_fr, name_it, beschreibung, sekretariat, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, homepage, alias, batch_time, pdf_date))
         summary.organisation_added()
 
         organisation_id = '@last_parlamentarische_gruppe'
@@ -337,9 +378,9 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
         if db_sekretariat_line != sekretariat_line:
             if db_sekretariat:
                 summary.sekretariat_changed()
+                print("-- Sekretariat der Gruppe '{}' geändert".format(name_de))
                 print('-- Sekretariat alt: ' + db_sekretariat_line)
                 print('-- Sekretariat neu: ' + sekretariat_line)
-                print("-- Sekretariat der Gruppe '{}' geändert".format(name_de))
             else:
                 # Same code as in new organisation
                 summary.sekretariat_added()
@@ -366,7 +407,7 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
         if db_homepage != homepage:
             if db_homepage:
                 summary.website_changed()
-                print("-- Website der Gruppe '{}' geändert von '{}' zu '{}'".format(name_de, '\\n'.join(db_homepage.splitlines()), homepage))
+                print("-- Website der Gruppe '{}' geändert von '{}' zu '{}'".format(name_de, escape_newlines(db_homepage), escape_newlines(homepage)))
             else:
                 # Same code as in new organisation
                 summary.website_added()
@@ -380,7 +421,7 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
         if db_alias != alias:
             if db_alias:
                 summary.alias_changed()
-                print("-- Alias der Gruppe '{}' geändert von '{}' zu '{}'".format(name_de, '\\n'.join(db_alias.splitlines()), alias))
+                print("-- Alias der Gruppe '{}' geändert von '{}' zu '{}'".format(name_de, escape_newlines(db_alias), escape_newlines(alias)))
             else:
                 # Same code as in new organisation
                 summary.alias_added()
@@ -389,9 +430,57 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
             print(sql_statement_generator.update_alias_organisation(
                     organisation_id, alias, batch_time, pdf_date))
 
-def handle_beschreibung(group, organisation_id, summary, conn, batch_time, pdf_date):
-    # TODO implement
-    pass
+        db_beschreibung = db.get_organisation_beschreibung(conn, organisation_id)
+
+        if db_beschreibung != beschreibung:
+            if db_beschreibung:
+                summary.beschreibung_changed()
+                print("-- Beschreibung der Gruppe '{}' geändert".format(name_de))
+                print('-- Beschreibung alt: ' + escape_newlines(db_beschreibung))
+                print('-- Beschreibung neu: ' + escape_newlines(beschreibung))
+            else:
+                # Same code as in new organisation
+                summary.beschreibung_added()
+                print("-- Beschreibung der Gruppe '{}' hinzugefügt".format(name_de))
+            print(sql_statement_generator.update_beschreibung_organisation(
+                    organisation_id, beschreibung, batch_time, pdf_date))
+
+
+def get_beschreibung(name_de, group, organisation_id, summary, conn, batch_time, pdf_date):
+    zweck = join_respecting_lists_and_trennzeichen(group["zweck"]) if group["zweck"] != None else None
+    aktivitaeten = join_respecting_lists_and_trennzeichen(group["art_der_aktivitaeten"]) if group["art_der_aktivitaeten"] != None else None
+    gruendungsjahr = re.sub(r'.*(\d{4}).*', r'\g<1>', group["konstituierung"]) if group["konstituierung"] != None else None
+
+    beschreibung = []
+    if zweck:
+        beschreibung.append(zweck)
+    if aktivitaeten:
+        beschreibung.append('Aktivitäten:\n' + aktivitaeten)
+    if gruendungsjahr:
+        beschreibung.append('Gründung: ' + gruendungsjahr)
+
+    return '\n\n'.join(beschreibung)
+
+def join_respecting_lists_and_trennzeichen(list):
+    str = ''
+    fix_trennzeichen = False
+    for i, x in enumerate(list):
+        # (?<! ) = negative lookbehind assertion -> no space before -
+        if re.search(r'(?<! )-$', x):
+            # Jugend-\nverbände, Natuer-\nHeimatschutz
+            fix_trennzeichen = i == len(list) - 1 or (list[i + 1].split(' ')[0] not in ['und', 'oder'] and list[i + 1][0].islower())
+            str += re.sub('-$', '', x) if fix_trennzeichen else x
+        elif re.match(r'\* |\d+\. ', x): # re.match matches only from beginning
+            if i == 0:
+                str += x
+            else:
+                str += '\n' + x
+        elif x == '':
+            str += '\n'
+        else:
+            str += ' ' + x if not fix_trennzeichen else x
+            fix_trennzeichen = False
+    return str.strip()
 
 # main method
 if __name__ == "__main__":
