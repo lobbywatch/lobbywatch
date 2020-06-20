@@ -764,6 +764,9 @@ function clean_fields(/*$page,*/ &$rowData /*, &$cancel, &$message, $tableName*/
 //       df($value, "Check $name");
       // Normalize Unicode/UTF-8, e.g. a? ? ä, U+0061 U+0308 ? U+00E4
       $cleaned = Normalizer::normalize($value, Normalizer::FORM_C);
+      // replace typographic chars
+      $cleaned = preg_replace('/[«»“”„]/ui', '"', $cleaned);
+      $cleaned = preg_replace('/[`‘’‚]/ui', "'", $cleaned);
       $cleaned = trim($cleaned);
       $rowData[$name] = $cleaned;
     }
