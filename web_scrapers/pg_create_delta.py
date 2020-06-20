@@ -126,7 +126,7 @@ def sync_data(conn, filename, batch_time):
 
         handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_date)
 
-        print('-- Sync groups...')
+        print('-- Sync pgs...')
 
         for group in content["data"]:
             members = group["praesidium"] + group["mitglieder"]
@@ -149,10 +149,10 @@ def sync_data(conn, filename, batch_time):
                 parlamentarier_id, parlamentarier_bis = db.get_parlamentarier_id_by_name(conn, names, title != None)
 
                 if not parlamentarier_id:
-                    # print("DATA INTEGRITY FAILURE: Parlamentarier '{}' of group '{}' not found in database.".format(member, name_de))
+                    print("DATA INTEGRITY FAILURE: Parlamentarier '{}' of group '{}' not found in database.".format(member, name_de))
                     sys.exit(1)
                 elif parlamentarier_bis and parlamentarier_bis < date.today():
-                    # print("-- INFO: Parlamentarier '{}' ({}) ist nicht mehr aktiv ('{}')".format(member, parlamentarier_id, parlamentarier_bis))
+                    print("-- INFO: Parlamentarier '{}' ({}) ist nicht mehr aktiv ('{}')".format(member, parlamentarier_id, parlamentarier_bis))
                     continue
                 elif parlamentarier_id in processed_parlamentarier_ids:
                     print('-- INFO: Ignore duplicate member "{}" ({}) in PG "{}"'.format(member, parlamentarier_id, name_de))
@@ -176,7 +176,7 @@ def sync_data(conn, filename, batch_time):
                 summary_row = summary.get_row(parlamentarier_id)
                 if not interessenbindung_id:
                     print(
-                        "\n-- Neue Interessenbindung zwischen '{}' und '{}'".format(name_de, member))
+                        "\n-- Neue Interessenbindung zwischen '{}' und '{}' als {}".format(name_de, member, art))
                     if not organisation_id:
                         organisation_id = '@last_parlamentarische_gruppe'
                         summary_row.neue_gruppe("neu", name_de)
@@ -234,10 +234,10 @@ def handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_da
                             print("DATA INTEGRITY FAILURE: Parlamentarier '{}' of group '{}' not found in database.".format(member, name_de))
                             sys.exit(1)
                         elif parlamentarier_bis and parlamentarier_bis < date.today():
-                            print("-- INFO: Parlamentarier '{}' ({}) ist nicht mehr aktiv ('{}')".format(member, parlamentarier_id, parlamentarier_bis))
+                            # print("-- INFO: Parlamentarier '{}' ({}) ist nicht mehr aktiv ('{}')".format(member, parlamentarier_id, parlamentarier_bis))
                             continue
                         elif parlamentarier_id in processed_parlamentarier_ids:
-                            print('-- INFO: Ignore duplicate member "{}" ({}) in PG "{}"'.format(member, parlamentarier_id, name_de))
+                            # print('-- INFO: Ignore duplicate member "{}" ({}) in PG "{}"'.format(member, parlamentarier_id, name_de))
                             continue
                         else:
                             processed_parlamentarier_ids.append(parlamentarier_id)
@@ -258,6 +258,8 @@ def handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_da
 
                 summary_row = summary.get_row(parl_id)
                 summary_row.gruppe_beendet(ib_id, org_name)
+
+    print('-- Progress {}%'.format(100))
 
 
 def handle_names(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date):
