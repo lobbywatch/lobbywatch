@@ -194,6 +194,7 @@ def get_script_path():
 # download a pdf containing the guest lists of members of parlament in a table
 # then parse the file into json and save the json files to disk
 def scrape_pdf(url, filename):
+    script_path = get_script_path()
     try:
         print("\ndownloading " + url)
         raw_pdf_name = url.split("/")[-1]
@@ -212,9 +213,11 @@ def scrape_pdf(url, filename):
         call(["qpdf", "--pages", pdf_name, "2-z", "--", pdf_name, stripped_file_name])
 
         print("parsing PDF...")
-        # TODO use tabule 1.0.3
-        call(["java", "-Djava.util.logging.config.file=web_scrapers/logging.properties", "-jar", get_script_path() + "/tabula-0.9.2-jar-with-dependencies.jar",
-            stripped_file_name, "--pages", "all", "-o", "zb_data.csv"])
+        tabula_path = script_path + "/tabula-1.0.3-jar-with-dependencies.jar"
+        cmd = ["java", "-Djava.util.logging.config.file=web_scrapers/logging.properties", "-jar", tabula_path, stripped_file_name, "-o", "zb_data.csv", "--pages", "all", "-l", "-i"]
+        print(" ".join(cmd))
+        call(cmd, stderr=None)
+
 
         print("cleaning up parsed data...")
         guests = read_guests("zb_data.csv")
@@ -223,14 +226,14 @@ def scrape_pdf(url, filename):
         write_to_json(guests, archive_pdf_name, filename, url, creation_date, import_date)
 
         print("archiving...")
-        copyfile(pdf_name, get_script_path() + "/archive/{}".format(archive_pdf_name))
-        copyfile(filename, get_script_path() + "/archive/{}".format(archive_filename))
+        copyfile(pdf_name, script_path + "/archive/{}".format(archive_pdf_name))
+        copyfile(filename, script_path + "/archive/{}".format(archive_filename))
 
     finally:
         print("cleaning up...")
-        os.rename(pdf_name, get_script_path() + "/backup/{}".format(pdf_name))
+        os.rename(pdf_name, script_path + "/backup/{}".format(pdf_name))
         backup_filename = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, filename)
-        copyfile(filename, get_script_path() + "/backup/{}".format(backup_filename))
+        copyfile(filename, script_path + "/backup/{}".format(backup_filename))
         os.remove(stripped_file_name)
         os.remove("zb_data.csv")
 
