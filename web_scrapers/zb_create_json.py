@@ -5,7 +5,9 @@ import re
 from subprocess import call
 from datetime import datetime
 from shutil import copyfile
+from argparse import ArgumentParser
 
+from utils import clean_whitespace, clean_str
 import pdf_helpers
 
 def split_names(names):
@@ -193,14 +195,18 @@ def get_script_path():
 
 # download a pdf containing the guest lists of members of parlament in a table
 # then parse the file into json and save the json files to disk
-def scrape_pdf(url, filename):
+def scrape_pdf(url, local_pdf, filename):
     script_path = get_script_path()
     try:
-        print("\ndownloading " + url)
         raw_pdf_name = url.split("/")[-1]
         import_date = datetime.now().replace(microsecond=0)
         pdf_name = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, raw_pdf_name)
-        pdf_helpers.get_pdf_from_admin_ch(url, pdf_name)
+        if local_pdf is None:
+            print("\ndownloading " + url)
+            pdf_helpers.get_pdf_from_admin_ch(url, pdf_name)
+        else:
+            print("\ncopy local PDF " + local_pdf)
+            copyfile(local_pdf, pdf_name)
 
         print("\nextracting metadata...")
         creation_date = pdf_helpers.extract_creation_date(pdf_name)
@@ -217,7 +223,6 @@ def scrape_pdf(url, filename):
         cmd = ["java", "-Djava.util.logging.config.file=web_scrapers/logging.properties", "-jar", tabula_path, stripped_file_name, "-o", "zb_data.csv", "--pages", "all", "-l", "-i"]
         print(" ".join(cmd))
         call(cmd, stderr=None)
-
 
         print("cleaning up parsed data...")
         guests = read_guests("zb_data.csv")
@@ -240,16 +245,29 @@ def scrape_pdf(url, filename):
 # scrape the nationalrat and ständerat guest lists and write them to
 # structured JSON files
 def scrape():
+    parser = ArgumentParser(description='Scarpe Parlamentarische Gruppen PDF')
+    parser.add_argument("local_pdf_NR", metavar="file", nargs='?', help="local PDF file for NR to use", default=None)
+    parser.add_argument("local_pdf_SR", metavar="file", nargs='?', help="local PDF file for SR to use", default=None)
+    args = parser.parse_args()
+    local_pdf_nr = args.local_pdf_NR
+    local_pdf_sr = args.local_pdf_SR
+
+    if local_pdf_nr and not local_pdf_sr:
+        print('Error: local PDF files must be filled for NR and SR')
+        exit(1)
+
     root = "https://www.parlament.ch/centers/documents/de/"
 
     #scrape nationalrat
     scrape_pdf(root +
                "zutrittsberechtigte-nr.pdf",
+               local_pdf_nr,
                "zutrittsberechtigte-nr.json")
 
     #scrape ständerat
     scrape_pdf(root +
                "zutrittsberechtigte-sr.pdf",
+               local_pdf_sr,
                "zutrittsberechtigte-sr.json")
 
 

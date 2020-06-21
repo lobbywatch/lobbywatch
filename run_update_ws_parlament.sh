@@ -355,7 +355,15 @@ if ! $nozb ; then
   fi
   mkdir -p web_scrapers/backup web_scrapers/archive
   echo "Writing zb.json..."
-  python3 $zb_script_path/zb_create_json.py
+  if $lastpdf ; then
+    last_zb_pdf_nr=$(ls -t web_scrapers/backup/*zutrittsberechtigte-nr.pdf | head -1)
+    last_zb_pdf_sr=$(ls -t web_scrapers/backup/*zutrittsberechtigte-sr.pdf | head -1)
+    echo "Last PDFs $last_zb_pdf_nr $last_zb_pdf_sr"
+  else
+    last_zb_pdf_nr=''
+    last_zb_pdf_sr=''
+  fi
+  python3 $zb_script_path/zb_create_json.py $last_zb_pdf_nr $last_zb_pdf_sr
   echo "Writing zb_delta.sql based on $db..."
   export ZB_DELTA_FILE=sql/zb_delta_`date +"%Y%m%dT%H%M%S"`.sql; python3 $zb_script_path/zb_create_delta.py --db=$db | tee $ZB_DELTA_FILE
 
