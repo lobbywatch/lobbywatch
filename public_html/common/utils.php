@@ -3226,3 +3226,33 @@ function camelize($input, $separator = '_', $capitalizeFirstCharacter = true) {
 
   return $str;
 }
+
+function clean_str(string $str) {
+  $cleaned = Normalizer::normalize($str, Normalizer::FORM_C);
+  // replace typographic chars
+  $cleaned = preg_replace('/[«»“”„]/ui', '"', $cleaned);
+  $cleaned = preg_replace('/[`‘’‚]/ui', "'", $cleaned);
+  $cleaned = trim($cleaned);
+  return $cleaned;
+}
+
+/**
+ * Recursively cleaning data from JSON.
+ */
+function clean_recursive_obj_from_json($var) {
+  if (empty($var)) {
+    return $var;
+  } else if (is_array($var)) {
+    return array_map('clean_recursive_obj_from_json', $var);
+  } else if (is_object($var)) {
+    $obj = (object)[];
+    foreach($var as $key => $value) {
+      $obj->$key = clean_recursive_obj_from_json($value);
+    }
+    return $obj;
+  } else if (is_string($var)) {
+    return clean_str($var);
+} else {
+    return $var;
+  }
+}

@@ -20,6 +20,8 @@ export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlam
 
 // https://www.parlament.ch/centers/documents/de/kurzdokumentation-webservices-d.pdf
 
+// DONE clean inputs, use custom.php function
+
 // TODO Change to new ws, currently using http://ws-old.parlament.ch/
 // TODO multipage handling
 // TODO Datenquelle angeben
@@ -1536,13 +1538,14 @@ function get_web_data($url) {
 function get_object_from_json_url($url) {
   $max_retry = 3;
   for ($i = 0; $i < $max_retry; $i++) {
-    $json = get_web_data($url);
+    $json_str = get_web_data($url);
     try {
-      $obj = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
-      return $obj;
+      $obj = json_decode($json_str, false, 512, JSON_THROW_ON_ERROR);
+      $cleaned = clean_recursive_obj_from_json($obj);
+      return $cleaned;
     } catch (JsonException $e) {
       var_dump($e->getTraceAsString());
-      print($json);
+      print($json_str);
       sleep(1);
       print("Retry...");
     }

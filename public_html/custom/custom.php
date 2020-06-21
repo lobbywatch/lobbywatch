@@ -761,14 +761,15 @@ function clean_fields(/*$page,*/ &$rowData /*, &$cancel, &$message, $tableName*/
   // foreach($rowData as $name => &$value) Does not work!
   foreach($rowData as $name => $value) {
     if (is_string($value)) {
-//       df($value, "Check $name");
-      // Normalize Unicode/UTF-8, e.g. a? ? ä, U+0061 U+0308 ? U+00E4
-      $cleaned = Normalizer::normalize($value, Normalizer::FORM_C);
-      // replace typographic chars
-      $cleaned = preg_replace('/[«»“”„]/ui', '"', $cleaned);
-      $cleaned = preg_replace('/[`‘’‚]/ui', "'", $cleaned);
-      $cleaned = trim($cleaned);
-      $rowData[$name] = $cleaned;
+// //       df($value, "Check $name");
+//       // Normalize Unicode/UTF-8, e.g. a? ? ä, U+0061 U+0308 ? U+00E4
+//       $cleaned = Normalizer::normalize($value, Normalizer::FORM_C);
+//       // replace typographic chars
+//       $cleaned = preg_replace('/[«»“”„]/ui', '"', $cleaned);
+//       $cleaned = preg_replace('/[`‘’‚]/ui', "'", $cleaned);
+//       $cleaned = trim($cleaned);
+      // $rowData[$name] = $cleaned;
+      $rowData[$name] = clean_str($value);
     }
   }
 //   unset($value);
