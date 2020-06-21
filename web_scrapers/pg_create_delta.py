@@ -165,13 +165,13 @@ def sync_data(conn, filename, batch_time):
 
                 parlamentarier_dict = db.get_parlamentarier_dict(conn, parlamentarier_id)
                 geschlecht = 0 if parlamentarier_dict["geschlecht"] == 'M' else 1
-                beschreibung = literals.president_mapping[title][geschlecht] if title else "Mitglied"
-                funktion_im_gremium = literals.president_mapping[title][2] if title else None
-                # TODO beschreibung_fr
+                funktion_im_gremium = literals.president_mapping[title][0] if title else None
+                beschreibung = literals.president_mapping[title][1][geschlecht] if title else "Mitglied"
+                beschreibung_fr = literals.president_mapping[title][2][geschlecht] if title else "Membre"
 
                 interessenbindung_id = None
                 if parlamentarier_id and organisation_id:
-                    interessenbindung_id, db_art, db_funktion_im_gremium = db.get_interessenbindung_id(
+                    interessenbindung_id, db_art, db_funktion_im_gremium, db_beschreibung, db_beschreibung_fr = db.get_interessenbindung_id(
                         conn, parlamentarier_id, organisation_id, stichdatum)
 
                 summary_row = summary.get_row(parlamentarier_id)
@@ -185,13 +185,18 @@ def sync_data(conn, filename, batch_time):
                         summary_row.neue_gruppe(organisation_id, name_de)
 
                     print(sql_statement_generator.insert_interessenbindung_parlamentarische_gruppe(
-                        parlamentarier_id, organisation_id, stichdatum, title != None, beschreibung, funktion_im_gremium, batch_time, pdf_date))
+                        parlamentarier_id, organisation_id, stichdatum, title != None, beschreibung, beschreibung_fr, funktion_im_gremium, batch_time, pdf_date))
                 elif art != db_art or funktion_im_gremium != db_funktion_im_gremium:
                     print(
                         "\n-- Interessenbindungsart oder Funktion geändert zwischen '{}' und '{}': '{}', '{}'".format(name_de, member, art, funktion_im_gremium))
                     print(sql_statement_generator.end_interessenbindung(interessenbindung_id, stichdatum, batch_time, pdf_date))
                     print(sql_statement_generator.insert_interessenbindung_parlamentarische_gruppe(
-                        parlamentarier_id, organisation_id, stichdatum, title != None, beschreibung, funktion_im_gremium, batch_time, pdf_date))
+                        parlamentarier_id, organisation_id, stichdatum, title != None, beschreibung, beschreibung_fr, funktion_im_gremium, batch_time, pdf_date))
+                elif beschreibung != db_beschreibung or beschreibung_fr != db_beschreibung_fr:
+                    print(
+                        "\n-- Interessenbindungsbeschreibung geändert '{}': '{}' → '{}' / '{}' → '{}'".format(name_de, db_beschreibung, beschreibung,db_beschreibung_fr, beschreibung_fr))
+                    print(sql_statement_generator.update_beschreibung_interessenbindung(
+                        interessenbindung_id, beschreibung, beschreibung_fr, batch_time, pdf_date))
                 else:
                     summary_row.gruppe_unveraendert(organisation_id, name_de)
 
@@ -360,7 +365,7 @@ def handle_organisation(group, name_de, name_fr, name_it, organisation_id, summa
     else:
         homepage = None
 
-    beschreibung = get_beschreibung(name_de, group, organisation_id, summary, conn, batch_time, pdf_date)
+    beschreibung = get_pg_beschreibung(name_de, group, organisation_id, summary, conn, batch_time, pdf_date)
 
     if not organisation_id:
         print("\n-- Neue parlamentarische Gruppe: '{}'".format(name_de))
@@ -449,7 +454,7 @@ def handle_organisation(group, name_de, name_fr, name_it, organisation_id, summa
                     organisation_id, beschreibung, batch_time, pdf_date))
 
 
-def get_beschreibung(name_de, group, organisation_id, summary, conn, batch_time, pdf_date):
+def get_pg_beschreibung(name_de, group, organisation_id, summary, conn, batch_time, pdf_date):
     zweck = join_respecting_lists_and_trennzeichen(group["zweck"]) if group["zweck"] != None else None
     aktivitaeten = join_respecting_lists_and_trennzeichen(group["art_der_aktivitaeten"]) if group["art_der_aktivitaeten"] != None else None
     gruendungsjahr = re.sub(r'.*(\d{4}).*', r'\g<1>', group["konstituierung"]) if group["konstituierung"] != None else None

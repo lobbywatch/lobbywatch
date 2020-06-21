@@ -357,7 +357,7 @@ def get_pg_interessenbindungen_managed_by_import(database):
 def get_interessenbindung_id(database, parlamentarier_id, organisation_id, stichdatum):
     with database.cursor() as cursor:
         query = """
-        SELECT id, art, funktion_im_gremium
+        SELECT id, art, funktion_im_gremium, beschreibung, beschreibung_fr
         FROM interessenbindung
         WHERE parlamentarier_id = {}
         AND organisation_id = {}
@@ -376,10 +376,10 @@ def get_interessenbindung_id(database, parlamentarier_id, organisation_id, stich
             sys.exit(1)
 
         if result and len(result) == 1:
-            (interessenbindung_id, art, funktion_im_gremium, ) = result[0]
-            return interessenbindung_id, art, funktion_im_gremium
+            (interessenbindung_id, art, funktion_im_gremium, beschreibung, beschreibung_fr, ) = result[0]
+            return interessenbindung_id, art, funktion_im_gremium, beschreibung, beschreibung_fr
 
-    return None, None, None
+    return None, None, None, None, None
 
 
 # get all names for a person by person_id
