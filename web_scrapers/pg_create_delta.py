@@ -119,6 +119,7 @@ def sync_data(conn, filename, batch_time):
         content = json.load(data_file)
         pdf_date_str = content["metadata"]["pdf_creation_date"]
         archive_pdf_name = content["metadata"]["archive_pdf_name"]
+        url = content["metadata"]["url"]
         pdf_date = datetime.strptime(pdf_date_str, "%Y-%m-%d %H:%M:%S") # 2019-07-12 14:55:08
         stichdatum = pdf_date
         print("-- PDF creation date: {}".format(pdf_date))
@@ -185,18 +186,18 @@ def sync_data(conn, filename, batch_time):
                         summary_row.neue_gruppe(organisation_id, name_de)
 
                     print(sql_statement_generator.insert_interessenbindung_parlamentarische_gruppe(
-                        parlamentarier_id, organisation_id, stichdatum, title != None, beschreibung, beschreibung_fr, funktion_im_gremium, batch_time, pdf_date))
-                elif art != db_art or funktion_im_gremium != db_funktion_im_gremium:
+                        parlamentarier_id, organisation_id, stichdatum, title != None, beschreibung, beschreibung_fr, funktion_im_gremium, url, batch_time, pdf_date))
+                elif art != db_art: # Do not check funktion_im_gremium for change (simply update funktion_im_gremium)
                     print(
                         "\n-- Interessenbindungsart oder Funktion geändert zwischen '{}' und '{}': '{}', '{}'".format(name_de, member, art, funktion_im_gremium))
                     print(sql_statement_generator.end_interessenbindung(interessenbindung_id, stichdatum, batch_time, pdf_date))
                     print(sql_statement_generator.insert_interessenbindung_parlamentarische_gruppe(
-                        parlamentarier_id, organisation_id, stichdatum, title != None, beschreibung, beschreibung_fr, funktion_im_gremium, batch_time, pdf_date))
-                elif beschreibung != db_beschreibung or beschreibung_fr != db_beschreibung_fr:
+                        parlamentarier_id, organisation_id, stichdatum, title != None, beschreibung, beschreibung_fr, funktion_im_gremium, url, batch_time, pdf_date))
+                elif funktion_im_gremium != db_funktion_im_gremium or beschreibung != db_beschreibung or beschreibung_fr != db_beschreibung_fr:
                     print(
-                        "\n-- Interessenbindungsbeschreibung geändert '{}': '{}' → '{}' / '{}' → '{}'".format(name_de, db_beschreibung, beschreibung,db_beschreibung_fr, beschreibung_fr))
+                        "\n-- Interessenbindungsbeschreibung geändert '{}': '{}' → '{}' / '{}' → '{}' / '{}' → '{}'".format(name_de, db_funktion_im_gremium, funktion_im_gremium, db_beschreibung, beschreibung,db_beschreibung_fr, beschreibung_fr))
                     print(sql_statement_generator.update_beschreibung_interessenbindung(
-                        interessenbindung_id, beschreibung, beschreibung_fr, batch_time, pdf_date))
+                        interessenbindung_id, funktion_im_gremium, beschreibung, beschreibung_fr, url, batch_time, pdf_date))
                 else:
                     summary_row.gruppe_unveraendert(organisation_id, name_de)
 
@@ -249,8 +250,8 @@ def handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_da
                             processed_parlamentarier_ids.append(parlamentarier_id)
 
                         art = "vorstand" if title else "mitglied"
-                        funktion_im_gremium = literals.president_mapping[title][2] if title else None
-                        if parl_id == parlamentarier_id and ib_art == art and ib_funktion_im_gremium == funktion_im_gremium:
+                        # Do not check funktion_im_gremium
+                        if parl_id == parlamentarier_id and ib_art == art:
                             present = True
                             break
 

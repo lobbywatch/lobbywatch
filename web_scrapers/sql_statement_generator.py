@@ -203,23 +203,26 @@ def update_beschreibung_organisation(organisation_id, beschreibung, batch_time, 
 
     return query
 
-def update_beschreibung_interessenbindung(interessenbindung_id, beschreibung, beschreibung_fr, batch_time, pdf_date):
-    query = "UPDATE `interessenbindung` SET `beschreibung` = {0}, `beschreibung_fr` = {5}, `notizen` = CONCAT_WS('\\n\\n', '{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
+def update_beschreibung_interessenbindung(interessenbindung_id, funktion_im_gremium, beschreibung, beschreibung_fr, url, batch_time, pdf_date):
+    query = "UPDATE `interessenbindung` SET `funktion_im_gremium`={7}, `beschreibung` = {0}, `beschreibung_fr` = {5},`quelle` = '{8}',  `quelle_url` = {6}, `notizen` = CONCAT_WS('\\n\\n', '{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
         _quote_str_or_NULL(_escape_string(beschreibung)),
         "{0}/import/{1}: Beschreibung geändert (PDF {2})".format(
             _date_as_sql_string(batch_time), user, _datetime_as_sql_string(pdf_date)),
         "import",
         _datetime_as_sql_string(batch_time),
         interessenbindung_id,
-        _quote_str_or_NULL(_escape_string(beschreibung_fr))
+        _quote_str_or_NULL(_escape_string(beschreibung_fr)),
+        _quote_str_or_NULL(_escape_string(url)),
+        _quote_str_or_NULL(_escape_string(funktion_im_gremium)),
+        "PDF vom {}".format(_date_as_sql_string(pdf_date))
     )
 
     return query
 
 def insert_interessenbindung_parlamentarische_gruppe(parlamentarier_id,
-                                                     organisation_id, stichdatum, praesidum: bool, beschreibung, beschreibung_fr, funktion_im_gremium, date, pdf_date):
+                                                     organisation_id, stichdatum, praesidum: bool, beschreibung, beschreibung_fr, funktion_im_gremium, url, date, pdf_date):
 
-    query = "INSERT INTO `interessenbindung` (`parlamentarier_id`, `organisation_id`, `art`, `funktion_im_gremium`, `beschreibung`, `beschreibung_fr`,`deklarationstyp`, `status`, `behoerden_vertreter`, `von`, `created_visa`,`created_date`, `updated_visa`, `updated_by_import`, `notizen`, `eingabe_abgeschlossen_visa`, `eingabe_abgeschlossen_datum`, `freigabe_visa`, `freigabe_datum`) VALUES ({}, {}, '{}', {}, '{}', '{}', '{}', '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y'), '{}',STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'));\n".format(
+    query = "INSERT INTO `interessenbindung` (`parlamentarier_id`, `organisation_id`, `art`, `funktion_im_gremium`, `beschreibung`, `beschreibung_fr`,`deklarationstyp`, `status`, `behoerden_vertreter`, `quelle`, `quelle_url`, `von`, `created_visa`,`created_date`, `updated_visa`, `updated_by_import`, `notizen`, `eingabe_abgeschlossen_visa`, `eingabe_abgeschlossen_datum`, `freigabe_visa`, `freigabe_datum`) VALUES ({}, {}, '{}', {}, '{}', '{}', '{}', '{}', '{}', '{}', {}, STR_TO_DATE('{}', '%d.%m.%Y'), '{}',STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'));\n".format(
         parlamentarier_id,
         organisation_id,
         "vorstand" if praesidum else "mitglied",
@@ -229,6 +232,8 @@ def insert_interessenbindung_parlamentarische_gruppe(parlamentarier_id,
         "deklarationspflichtig",
         "deklariert",
         "N",
+        "PDF vom {}".format(_date_as_sql_string(pdf_date)),
+        _quote_str_or_NULL(_escape_string(url)),
         _date_as_sql_string(stichdatum),
         "import",
         _datetime_as_sql_string(date),
