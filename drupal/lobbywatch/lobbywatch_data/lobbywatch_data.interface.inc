@@ -278,7 +278,9 @@ function _lobbywatch_data_clean_records($result) {
   return $items;
 }
 
-function _lobbywatch_data_clean_fields($record) {
+function _lobbywatch_data_clean_fields($input_record) {
+
+  $record = $input_record;
 
   $updated_fields = array('updated_date', 'updated_date_unix', 'refreshed_date');
   if (!isset($_GET['includeConfidentialData']) || $_GET['includeConfidentialData'] != 1 || !user_access('access lobbywatch data confidential content')) {
@@ -304,9 +306,17 @@ function _lobbywatch_data_clean_fields($record) {
 
   foreach ($record as $key => $value) {
     // Clean intern fields
-    if (preg_match('/_(BAD|OLD)$/i', $key)) {
+    if (preg_match('/_(BAD|OLD|ALT)$/i', $key)) {
       unset($record[$key]);
+    } else if (is_string($value)) {
+      $clean = clean_str($value);
+      // TODO move list of strip_tags exception to general location
+      if (!in_array($key, ['parlament_interessenbindungen'], true)) {
+        $clean = strip_tags($clean);
+      }
+      $record[$key] = $clean;
     }
+
   }
 
 
