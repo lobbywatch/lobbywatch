@@ -311,8 +311,8 @@ def handle_organisation(group, name_de, name_fr, name_it, organisation_id, summa
             break
 
         m_str = re.search(r'(strasse|gasse|weg|rain|graben|gebäude\b|park|platz|zentrum|av\.|chemin|rue|quai|route|via|Technopôle|Bollwerk)|^\d{1,3} [a-z]+', line, re.IGNORECASE)
-        m_zusatz = re.search(r'(Postfach|Case postale|Casella postale|Botschaft|c/o|p\.a\.|Schweiz|Suisse|Swiss|Svizzera|Schweizer|Schweizerischer|Schweizerische|Herr|Frau|Monsieur|Madame|Dr\. | AG|\.ag| SA|GmbH|Sàrl|Ltd|Public|Swiss|Pro|relazioni|Repubblica|Cancelleria|Lia|Koalition|Forum|International|Institut|\bHaus\b|Stiftung|Verein|verband|vereinigung|forum|Gesellschaft|Association|Fédération|Sekretariat|sekretär|Geschäft|Vereinigung|Collaborateur|Bewegung|Minister|Direktor|präsident|Assistent|Délégation|Comité|national|Mesdames|Messieurs|industrie|Inclusion|organisation|Partner|Center|Netzwerk|[^.]com|Vauroux|furrerhugi|Burson|konferenz|bewegung|\.iur|rat|Leiter|Kommunikation)', line, re.IGNORECASE)
-        m_ort = re.search(r'(\d{4,5}) ([\w. ]+)', line, re.IGNORECASE)
+        m_zusatz = re.search(r'(Postfach|Case postale|Casella postale|Botschaft|c/o|p\.a\.|Schweiz|Suisse|Swiss|Svizzera|Schweizer|Schweizerischer|Schweizerische|Herr|Frau|Monsieur|Madame|Dr\. | AG|\.ag| SA|GmbH|Sàrl|Ltd|Public|Swiss|Pro|relazioni|Repubblica|Cancelleria|Lia|Koalition|Forum|International|Institut|\bHaus\b|Stiftung|Verein|verband|vereinigung|forum|Gesellschaft|Association|Fédération|Sekretariat|sekretär|Geschäft|Vereinigung|Collaborateur|Bewegung|Minister|Direktor|präsident|Assistent|Délégation|Comité|national|Mesdames|Messieurs|industrie|Inclusion|organisation|Partner|Center|Netzwerk|[^.]com|Vauroux|furrerhugi|Burson|konferenz|bewegung|\.iur|rat|Leiter|Kommunikation|Office)', line, re.IGNORECASE)
+        m_ort = re.search(r'(\d{4,5}) ([\w. ]+)', re.sub(r'\s*Tel.*', '', line), re.IGNORECASE)
         m_alias = re.findall(r'\b([A-Z]{3,5})\b', line)
         if m_str:
             adresse_str_list.append(line)
