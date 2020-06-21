@@ -143,19 +143,23 @@ class Summary:
 class SummaryRow:
     def __init__(self, parlamentarier_id):
         self.gruppen_neu = []
+        self.gruppen_veraendert = []
         self.gruppen_unveraendert = []
         self.gruppen_beendet = []
         self.parlamentarier_id = parlamentarier_id
         self.parlamentarier_name = ""
 
-    def neue_gruppe(self, gruppe_id, gruppe_name):
-        self.gruppen_neu.append((gruppe_name, gruppe_id))
+    def neue_gruppe(self, gruppe_id, gruppe_name, art):
+        self.gruppen_neu.append((gruppe_name, gruppe_id, art))
 
-    def gruppe_beendet(self, gruppe_id, gruppe_name):
-        self.gruppen_beendet.append((gruppe_name, gruppe_id))
+    def gruppe_beendet(self, gruppe_id, gruppe_name, art):
+        self.gruppen_beendet.append((gruppe_name, gruppe_id, art))
 
-    def gruppe_unveraendert(self, gruppe_id, gruppe_name):
-        self.gruppen_unveraendert.append((gruppe_name, gruppe_id))
+    def gruppe_unveraendert(self, gruppe_id, gruppe_name, art):
+        self.gruppen_unveraendert.append((gruppe_name, gruppe_id, art))
+
+    def gruppe_veraendert(self, gruppe_id, gruppe_name, art):
+        self.gruppen_veraendert.append((gruppe_name, gruppe_id, art))
 
     def has_changed(self):
         return len(self.gruppen_neu) > 0 or len(self.gruppen_beendet) > 0
@@ -171,12 +175,14 @@ class SummaryRow:
     def write(self, index):
         changed_symbol = "≠" if self.has_changed() else "="
         gruppen = []
-        for gruppe_name, gruppe_id in self.gruppen_beendet:
-            gruppen.append("- {} ({}) ".format(self.clean_gruppen_name(gruppe_name), gruppe_id))
-        for gruppe_name, gruppe_id in self.gruppen_neu:
-            gruppen.append("+ {} ({}) ".format(self.clean_gruppen_name(gruppe_name), gruppe_id))
-        for gruppe_name, gruppe_id in self.gruppen_unveraendert:
-            gruppen.append("= {} ({}) ".format(self.clean_gruppen_name(gruppe_name), gruppe_id))
+        for gruppe_name, gruppe_id, ib_art in self.gruppen_beendet:
+            gruppen.append("- {} {} ({}) ".format(ib_art[0].upper(), self.clean_gruppen_name(gruppe_name), gruppe_id))
+        for gruppe_name, gruppe_id, ib_art in self.gruppen_neu:
+            gruppen.append("+ {} {} ({}) ".format(ib_art[0].upper(), self.clean_gruppen_name(gruppe_name), gruppe_id))
+        for gruppe_name, gruppe_id, ib_art in self.gruppen_veraendert:
+            gruppen.append("≠ {} {} ({}) ".format(ib_art[0].upper(), self.clean_gruppen_name(gruppe_name), gruppe_id))
+        for gruppe_name, gruppe_id, ib_art in self.gruppen_unveraendert:
+            gruppen.append("= {} {} ({}) ".format(ib_art[0].upper(), self.clean_gruppen_name(gruppe_name), gruppe_id))
         lines = []
         lines.append("{:3d} | {} | {} | {} ‖ {}".format(
                     index,

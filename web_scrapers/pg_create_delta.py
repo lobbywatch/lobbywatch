@@ -181,9 +181,9 @@ def sync_data(conn, filename, batch_time):
                         "\n-- Neue Interessenbindung zwischen '{}' und '{}' als {}{}".format(name_de, member, art, '/' + funktion_im_gremium if funktion_im_gremium else ''))
                     if not organisation_id:
                         organisation_id = '@last_parlamentarische_gruppe'
-                        summary_row.neue_gruppe("neu", name_de)
+                        summary_row.neue_gruppe("neu", name_de, art)
                     else:
-                        summary_row.neue_gruppe(organisation_id, name_de)
+                        summary_row.neue_gruppe(organisation_id, name_de, art)
 
                     print(sql_statement_generator.insert_interessenbindung_parlamentarische_gruppe(
                         parlamentarier_id, organisation_id, stichdatum, title != None, beschreibung, beschreibung_fr, funktion_im_gremium, url, batch_time, pdf_date))
@@ -193,13 +193,15 @@ def sync_data(conn, filename, batch_time):
                     print(sql_statement_generator.end_interessenbindung(interessenbindung_id, stichdatum, batch_time, pdf_date))
                     print(sql_statement_generator.insert_interessenbindung_parlamentarische_gruppe(
                         parlamentarier_id, organisation_id, stichdatum, title != None, beschreibung, beschreibung_fr, funktion_im_gremium, url, batch_time, pdf_date))
+                    summary_row.gruppe_veraendert(organisation_id, name_de, art)
                 elif funktion_im_gremium != db_funktion_im_gremium or beschreibung != db_beschreibung or beschreibung_fr != db_beschreibung_fr:
                     print(
                         "\n-- Interessenbindungsbeschreibung geändert '{}': '{}' → '{}' / '{}' → '{}' / '{}' → '{}'".format(name_de, db_funktion_im_gremium, funktion_im_gremium, db_beschreibung, beschreibung,db_beschreibung_fr, beschreibung_fr))
                     print(sql_statement_generator.update_beschreibung_interessenbindung(
                         interessenbindung_id, funktion_im_gremium, beschreibung, beschreibung_fr, url, batch_time, pdf_date))
+                    summary_row.gruppe_veraendert(organisation_id, name_de, art)
                 else:
-                    summary_row.gruppe_unveraendert(organisation_id, name_de)
+                    summary_row.gruppe_unveraendert(organisation_id, name_de, art)
 
     return(summary)
 
@@ -264,7 +266,7 @@ def handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_da
                 print(sql_statement_generator.end_interessenbindung(ib_id, stichdatum, batch_time, pdf_date))
 
                 summary_row = summary.get_row(parl_id)
-                summary_row.gruppe_beendet(ib_id, org_name)
+                summary_row.gruppe_beendet(ib_id, org_name, ib_art)
 
     print('-- Progress {}%'.format(100))
 
