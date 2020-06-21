@@ -15,7 +15,7 @@ def split_names(names):
 class Entity:
     # remove invalid characters from cell entries
     def clean_string(self, s):
-        return s.replace("\n", " ")
+        return clean_str(s).replace("\n", " ")
 
 
 # represents a member of parliament
