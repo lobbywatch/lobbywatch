@@ -16,6 +16,7 @@ from utils import clean_whitespace, clean_str, replace_bullets
 class ReadingMode(Enum):
     TITLE = auto()
     PRESIDENTS = auto()
+    PRESIDENTS_SKIP_NEXT = auto()
     SEKRETARIAT = auto()
     ZWECK = auto()
     ART_DER_AKTIVITAETEN = auto()
@@ -23,15 +24,22 @@ class ReadingMode(Enum):
 
 
 def is_president(line):
-    return any(map(line.startswith, literals.president_mapping))
+    return any(map(line.startswith, literals.president_mapping)) or line.startswith('Co- ')
 
 def extract_president_title(line):
+    title = None
     if ':' in line:
         title = line.split(':')[0]
     else:
         # Clean in case of missing :
         for keyword in literals.president_mapping:
-            title = keyword
+            if keyword in line:
+                title = keyword
+                break
+
+    if not title:
+        print('No title found found in line "{}". Abort'.format(line))
+        exit(1)
 
     return title.strip()
 
@@ -83,7 +91,8 @@ def read_groups(filename):
     mitglieder = []
     president_titles = set()
 
-    for line in (clean_whitespace(clean_str(' '.join(row))) for row in rows if ''.join(row).strip() != ''):
+    lines = [clean_whitespace(clean_str(' '.join(row))) for row in rows if ''.join(row).strip() != '']
+    for i, line in enumerate(lines):
 
         if line == '' or line.startswith('Fortsetzung:') or line.lower() in ['folgt', 'vakant']:
             continue
@@ -92,6 +101,9 @@ def read_groups(filename):
             assert page + 1 != line, "Page numbers not succeding, current={}, new={}".format(page, line)
             page = int(line)
             continue
+
+        if i < len(lines) - 2:
+            next_line = lines[i + 1]
 
         if new_page:
             new_page = False
@@ -137,14 +149,19 @@ def read_groups(filename):
             sekretariat += extract_sekretariat(line)
 
         # avoid reading on second line, case separete Co-, second line PräsidentInnen (PG Mehrsprachigkeit CH)
-        elif is_president(line) and reading_mode != ReadingMode.PRESIDENTS:
-            reading_mode = ReadingMode.PRESIDENTS
-            president_title = extract_president_title(line)
+        elif is_president(line) and reading_mode != ReadingMode.PRESIDENTS_SKIP_NEXT:
+            if line.startswith('Co- '):
+                reading_mode = ReadingMode.PRESIDENTS_SKIP_NEXT
+                president_title = extract_president_title('Co-' + next_line)
+            else:
+                reading_mode = ReadingMode.PRESIDENTS
+                president_title = extract_president_title(line)
             president_titles.add(president_title)
             for president in extract_presidents(line):
                 presidents.append((fix_parlamentarian_name_typos(president), president_title))
 
-        elif reading_mode == ReadingMode.PRESIDENTS:
+        elif reading_mode == ReadingMode.PRESIDENTS or reading_mode == ReadingMode.PRESIDENTS_SKIP_NEXT:
+            reading_mode = ReadingMode.PRESIDENTS
             for president in extract_presidents(line):
                 presidents.append((fix_parlamentarian_name_typos(president), president_title))
 

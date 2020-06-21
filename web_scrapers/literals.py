@@ -16,18 +16,21 @@ equivalent_functions = [("Persönlicher Mitarbeiter", "Collaborateur(rice) perso
                         ("Gast", "Invité(e)"),
                         ("Persönlicher Mitarbeiter", "Collaborateur(rice) personnel(le)")]
 
+# Order is important! Keys which are prefixes of other keys must be after
 president_mapping = {'Co-Präsidenten': ('praesident', ('Co-Präsident', 'Co-Präsidentin'), ('Coprésident', 'Coprésidente')),
                      'Co-Präsident': ('praesident', ('Co-Präsident', 'Co-Präsidentin'), ('Coprésident', 'Coprésidente')),
-                     'Präsident': ('praesident', ('Präsident', 'Präsidentin'), ('Président', 'Présidente')),
+                     'Co-Präsidium': ('praesident', ('Co-Präsidium', 'Co-Präsidium'), ('Coprésident', 'Coprésidente')),
+                     'Co-Vize-Präsidium': ('praesident', ('Co-Vize-Präsidium', 'Co-Vize-Präsidium'), ('Co-vice-président', 'Co-vice-présidente')),
+                     'Co-Vizepräsidium': ('praesident', ('Co-Vizepräsidium', 'Co-Vizepräsidium'), ('Co-vice-président', 'Co-vice-présidente')),
+                     'Co-Präsidentin': ('praesident', ('Co-Präsident', 'Co-Präsidentin'), ('Coprésident', 'Coprésidente')),
+                     'Co-PräsidentInnen': ('praesident', ('Co-Präsident', 'Co-Präsidentin'), ('Coprésident', 'Coprésidente')),
                      'PräsidentInnen': ('praesident', ('Präsident', 'Präsidentin'), ('Président', 'Présidente')),
                      'Vizepräsidentin': ('vizepraesident', ('Vizepräsident', 'Vizepräsidentin'), ('Vice-président', 'Vice-présidente')),
                      'Vizepräsident': ('vizepraesident', ('Vizepräsident', 'Vizepräsidentin'), ('Vice-président', 'Vice-présidente')),
                      'Vize-Präsident': ('vizepraesident', ('Vize-Präsident', 'Vize-Präsidentin'), ('Vice-président', 'Vice-présidente')),
+                     'Vize-Präsidentin': ('vizepraesident', ('Vize-Präsident', 'Vize-Präsidentin'), ('Vice-président', 'Vice-présidente')),
                      'Präsidentin': ('praesident', ('Präsident', 'Präsidentin'), ('Président', 'Présidente')),
                      'Präsidium': ('praesident', ('Präsidium', 'Präsidium'), ('Président', 'Présidente')),
-                     'Co-Präsidium': ('praesident', ('Co-Präsidium', 'Co-Präsidium'), ('Coprésident', 'Coprésidente')),
-                     'Co-Präsidentin': ('praesident', ('Co-Präsident', 'Co-Präsidentin'), ('Coprésident', 'Coprésidente')),
                      'Präsident/in': ('praesident', ('Präsident', 'Präsidentin'), ('Président', 'Présidente')),
-                     'Co-PräsidentInnen': ('praesident', ('Co-Präsident', 'Co-Präsidentin'), ('Coprésident', 'Coprésidente')),
-                     'Co-': ('praesident', ('Co-Präsident', 'Co-Präsidentin'), ('Coprésident', 'Coprésidente')),
+                     'Präsident': ('praesident', ('Präsident', 'Präsidentin'), ('Président', 'Présidente')),
                      }

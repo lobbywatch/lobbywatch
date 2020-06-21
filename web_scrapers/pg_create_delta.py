@@ -163,8 +163,8 @@ def sync_data(conn, filename, batch_time):
 
                 art = "vorstand" if title else "mitglied"
 
-                parlamentarier_dict = db.get_parlamentarier_dict(conn, parlamentarier_id)
-                geschlecht = 0 if parlamentarier_dict["geschlecht"] == 'M' else 1
+                db_parlamentarier = db.get_parlamentarier_dict(conn, parlamentarier_id)
+                geschlecht = 0 if db_parlamentarier["geschlecht"] == 'M' else 1
                 funktion_im_gremium = literals.president_mapping[title][0] if title else None
                 beschreibung = literals.president_mapping[title][1][geschlecht] if title else "Mitglied"
                 beschreibung_fr = literals.president_mapping[title][2][geschlecht] if title else "Membre"
