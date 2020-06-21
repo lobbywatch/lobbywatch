@@ -11,7 +11,6 @@ from utils import clean_whitespace, escape_newlines
 import literals
 
 # TODO bereinigen: Wirtschafts - und währungspolitischer Arbeitskreis (WPA), id 1973, 5978
-# TODO switch back to master on rpialch
 
 
 WEB_URL_REGEX = r"""(?i)\b((?:https?:(?:/{1,3}|[a-z0-9%])|[a-z0-9.\-]+[.](?:com|net|org|edu|gov|mil|aero|asia|biz|cat|coop|info|int|jobs|mobi|museum|name|post|pro|tel|travel|xxx|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cs|cu|cv|cx|cy|cz|dd|de|dj|dk|dm|do|dz|ec|ee|eg|eh|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|Ja|sk|sl|sm|sn|so|sr|ss|st|su|sv|sx|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw|swiss)/)(?:[^\s()<>{}\[\]]+|\([^\s()]*?\([^\s()]+\)[^\s()]*?\)|\([^\s]+?\))+(?:\([^\s()]*?\([^\s()]+\)[^\s()]*?\)|\([^\s]+?\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’])|(?:(?<!@)[a-z0-9]+(?:[.\-][a-z0-9]+)*[.](?:com|net|org|edu|gov|mil|aero|asia|biz|cat|coop|info|int|jobs|mobi|museum|name|post|pro|tel|travel|xxx|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cs|cu|cv|cx|cy|cz|dd|de|dj|dk|dm|do|dz|ec|ee|eg|eh|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|Ja|sk|sl|sm|sn|so|sr|ss|st|su|sv|sx|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw|swiss)\b/?(?!@)))"""
@@ -211,14 +210,12 @@ def handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_da
     if ib_managed_by_import:
         parlamentarier_id_cache = {}
         organisation_id_cache = {}
-        i = 0
         lastprogress = -1
-        for ib_id, ib_art, ib_funktion_im_gremium, org_id, org_name, parl_vorname, parl_zweiter_vorname, parl_nachname, parl_id in ib_managed_by_import:
+        for i, (ib_id, ib_art, ib_funktion_im_gremium, org_id, org_name, parl_vorname, parl_zweiter_vorname, parl_nachname, parl_id) in enumerate(ib_managed_by_import):
             progress = 100 * i // len(ib_managed_by_import)
             if progress % 25 == 0 and progress != lastprogress:
                 print('-- Progress {}%'.format(progress))
                 lastprogress = progress
-            i += 1
             present = False
             for group in content["data"]:
                 org_key = group["name_de"]
@@ -262,7 +259,7 @@ def handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_da
                 if parl_zweiter_vorname:
                     full_name += " " + parl_zweiter_vorname
                 full_name += " " + parl_nachname
-                print("\n-- Interessenbindung zwischen Parlamentarier '{}' und Gruppe '{}' nicht mehr vorhanden".format(full_name, org_name))
+                print("\n-- Interessenbindung zwischen Parlamentarier '{}' und Gruppe '{}' als {}{} nicht mehr vorhanden".format(full_name, org_name,ib_art, '/' + ib_funktion_im_gremium if ib_funktion_im_gremium else ''))
                 print(sql_statement_generator.end_interessenbindung(ib_id, stichdatum, batch_time, pdf_date))
 
                 summary_row = summary.get_row(parl_id)
