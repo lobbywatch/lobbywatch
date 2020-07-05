@@ -3201,3 +3201,13 @@ ALTER TABLE `person`
   CHANGE `beruf_interessengruppe_id` `beruf_interessengruppe_id` INT(11) NULL DEFAULT NULL COMMENT 'Fremdschlüssel zur Interessengruppe für den Beruf';
 ALTER TABLE `person_log`
   CHANGE `beruf_interessengruppe_id` `beruf_interessengruppe_id` INT(11) NULL DEFAULT NULL COMMENT 'Fremdschlüssel zur Interessengruppe für den Beruf';
+
+-- 05.07.2020 pg2020 relax organisation unique name, include rechtsform
+
+ALTER TABLE `organisation`
+  DROP INDEX `organisation_name_de_unique`,
+  ADD UNIQUE `organisation_name_de_unique` (`name_de`, `rechtsform`) USING BTREE COMMENT 'Fachlicher unique constraint',
+  DROP INDEX `organisation_name_fr_unique`,
+  ADD UNIQUE `organisation_name_fr_unique` (`name_fr`, `rechtsform`) USING BTREE COMMENT 'Fachlicher unique constraint',
+  DROP INDEX `organisation_name_it_unique`,
+  ADD UNIQUE `organisation_name_it_unique` (`name_it`, `rechtsform`) USING BTREE COMMENT 'Fachlicher unique constraint';
