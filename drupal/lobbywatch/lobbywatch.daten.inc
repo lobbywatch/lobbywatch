@@ -667,7 +667,7 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
       } else {
         $vertretung = round($record['einwohner'] / $record['anzahl_nationalraete']);
       }
-      // RTODO security, check content
+      // TODO security, check content
       $parlamentarier_name = check_plain($record["parlamentarier_name"]);
       $active = $record['im_rat_bis'] == null || $record['im_rat_bis_unix'] > time();
       $unpublished_record = !$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time();
@@ -1138,7 +1138,7 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
       $markup .= '<p><strong>' . lt('Diese Organisation verfügt zurzeit über keine Verbindung ins Parlament.') .'</strong></p>';
     }
 
-    // RTODO weitere verbindungstypen hinzufügen
+    // TODO weitere verbindungstypen hinzufügen
 
     $markup .= _lobbywatch_get_workflow_state_line($record) .
     '</div>';
@@ -1369,7 +1369,7 @@ function _lobbywatch_kommission_id($id, $name = '') {
     . '<h3>' . lt('Sachbereiche') . '</h3>'
     . _lobbywatch_convert_semicolons_to_ul($record_active["sachbereiche$lang_suffix"])
 //     . '</ul>'
-    // RTODO präsidium
+    // TODO präsidium
     . '<h3>' . lt('Mitglieder der @kommission_abkuerzung des Ständerates', array('@kommission_abkuerzung' => $record_active["abkuerzung$lang_suffix"])) . '</h3>'
     . '<ul>'
     . $record_active['sr']
