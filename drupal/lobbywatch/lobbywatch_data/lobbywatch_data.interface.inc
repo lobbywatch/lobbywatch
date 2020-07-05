@@ -30,6 +30,8 @@ function _lobbywatch_data_table_flat_id($table, $id, $json = true) {
 
     $items = _lobbywatch_data_clean_records($result);
 
+    _lobbywatch_data_transformation($table, $items);
+
     $count = count($items);
     $success = $count == 1;
     $message .= count($items) . " record(s) found";
@@ -249,6 +251,7 @@ function _lobbywatch_data_handle_lang_fields(&$items) {
 //          df($lang_value, '$lang_value');
         unset($fields["${base_field_name}_fr"]);
         unset($fields["${base_field_name}_de"]);
+        unset($fields["${base_field_name}_it"]);
         $fields[$base_field_name] = $lang_value;
       }
     }
@@ -340,6 +343,31 @@ function _lobbywatch_data_check_intern_field($field) {
   return !user_access('access lobbywatch data confidential content') && in_array($field, Constants::$intern_fields);
 }
 
+function _lobbywatch_data_transformation($table, &$items) {
+  if (in_array($table, ['organisation', 'interessenbindung_liste'], true)) {
+    $lang = get_lang();
+
+    $pg_prefix = [
+      'de' => 'Parlamentarische Gruppe ',
+      'fr' => 'Intergroupe parlementaire ',
+      'it' => 'Intergruppo parlamentare ',
+    ];
+
+    // df($lang, '$lang');
+    // df($pg_prefix[$lang], 'prefix');
+    // df($items);
+
+    foreach($items as $item_key => $fields) {
+      foreach($fields as $key => $value) {
+        if ($fields['rechtsform'] === 'Parlamentarische Gruppe' && in_array($key, ['name', 'organisation_name'], true)) {
+          df('should replace');
+          $items[$item_key][$key] = $pg_prefix[$lang] . ($lang === 'de' ? $items[$item_key][$key] : lcfirst($items[$item_key][$key]));
+        }
+      }
+    }
+  }
+}
+
 function _lobbywatch_data_table_flat_list($table, $condition = '1', $json = true, $order_by = '') {
   global $show_sql;
   $success = true;
@@ -364,6 +392,8 @@ function _lobbywatch_data_table_flat_list($table, $condition = '1', $json = true
     $result = db_query($sql, array());
 
     $items = _lobbywatch_data_clean_records($result);
+
+    _lobbywatch_data_transformation($table, $items);
 
     $count = count($items);
     $success = $count > 0;
@@ -690,6 +720,7 @@ function _add_verguetungen(&$arr, $verguetungen, $ib_von, $im_rat_seit = null) {
 
 function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) {
   global $show_sql;
+  global $env;
   $success = true;
   $count = 0;
   $message = '';
@@ -700,6 +731,7 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
   try {
+    $message .= "$env";
     $parlamentarier = _lobbywatch_data_table_flat_id('parlamentarier', $id, false);
     $aggregated = $parlamentarier['data'];
     $message .= ' | ' . $parlamentarier['message'];
