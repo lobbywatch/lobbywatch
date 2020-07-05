@@ -73,17 +73,9 @@ def get_organisation(group, conn):
     name_fr = normalize_organisation(group["name_fr"])
     name_it = normalize_organisation(group["name_it"])
 
-    # TODO remove after dev
-    if name_de == 'Gruppa parlamentara "lingua e cultura rumantscha"':
-        organisation_id = 5964
-    elif name_de == 'Print und Kommunikation':
-        organisation_id = 5348
-    elif name_de == 'Sexuelle Gesundheit und Rechte':
-        organisation_id = 890
-    elif name_de == 'Sport':
+    # Workaround for multiple results for 'Sport'
+    if name_de == 'Sport':
         organisation_id = 1751
-    elif name_de == 'Nichtionisierende Strahlung, Umwelt und Gesundheit':
-        organisation_id = 5734
     else:
         organisation_id = db.get_organisation_id(conn, name_de, name_fr, name_it)
 
@@ -130,9 +122,6 @@ def sync_data(conn, filename, batch_time):
 
             if organisation_id:
                 handle_names(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date)
-            # TODO remove after dev
-            elif name_de in ['Für Behindertenfragen', 'Bergberufe', 'Bürgergemeinden und Korporationen', 'Kindes- und Erwachsenenschutz', 'Gutes Hören','Menschenhandel','Startups und Unternehmertum', 'TC Bundeshaus']:
-                pass
             else:
                 print('INFO: Organisation "{}" not found in DB'.format(name_de))
 
