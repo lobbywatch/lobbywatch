@@ -41,7 +41,7 @@ declare(strict_types=1);
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
 
-ini_set('memory_limit','512M');
+ini_set('memory_limit','1024M');
 
 global $intern_fields;
 
