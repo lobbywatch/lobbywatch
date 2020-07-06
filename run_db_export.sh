@@ -573,7 +573,8 @@ if $publish; then
   $LS $publish_dir
 
   # Clean up historised files as they consume a lot of memory
-  [ -f "$EXPORT/202*hist*.*.zip" ] && rm "$EXPORT/202*hist*.*.zip"
+  # https://stackoverflow.com/questions/6363441/check-if-a-file-exists-with-wildcard-in-shell-script
+  ls $EXPORT/202*hist*.*.zip 1> /dev/null 2>&1 && rm $EXPORT/202*hist*.*.zip
 fi
 
 quit
