@@ -3211,3 +3211,19 @@ ALTER TABLE `organisation`
   ADD UNIQUE `organisation_name_fr_unique` (`name_fr`, `rechtsform`) USING BTREE COMMENT 'Fachlicher unique constraint',
   DROP INDEX `organisation_name_it_unique`,
   ADD UNIQUE `organisation_name_it_unique` (`name_it`, `rechtsform`) USING BTREE COMMENT 'Fachlicher unique constraint';
+
+-- 17.07.2020
+
+SELECT id, nachname, vorname, zutrittsberechtigung_von FROM person
+WHERE (zutrittsberechtigung_von <> (SELECT anzeige_name FROM v_parlamentarier_simple parlamentarier INNER JOIN zutrittsberechtigung ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) WHERE person.id = zutrittsberechtigung.person_id))
+OR (zutrittsberechtigung_von IS NULL AND (SELECT anzeige_name FROM v_parlamentarier_simple parlamentarier INNER JOIN zutrittsberechtigung ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) WHERE person.id = zutrittsberechtigung.person_id) IS NOT NULL)
+OR (zutrittsberechtigung_von IS NOT NULL AND (SELECT anzeige_name FROM v_parlamentarier_simple parlamentarier INNER JOIN zutrittsberechtigung ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) WHERE person.id = zutrittsberechtigung.person_id) IS NULL);
+
+-- force update of person trigger fields which are wrong
+SET @disable_triggers = 1;
+UPDATE person
+SET zutrittsberechtigung_von = (SELECT anzeige_name FROM v_parlamentarier_simple parlamentarier INNER JOIN zutrittsberechtigung ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) WHERE person.id = zutrittsberechtigung.person_id)
+WHERE (zutrittsberechtigung_von <> (SELECT anzeige_name FROM v_parlamentarier_simple parlamentarier INNER JOIN zutrittsberechtigung ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) WHERE person.id = zutrittsberechtigung.person_id))
+OR (zutrittsberechtigung_von IS NULL AND (SELECT anzeige_name FROM v_parlamentarier_simple parlamentarier INNER JOIN zutrittsberechtigung ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) WHERE person.id = zutrittsberechtigung.person_id) IS NOT NULL)
+OR (zutrittsberechtigung_von IS NOT NULL AND (SELECT anzeige_name FROM v_parlamentarier_simple parlamentarier INNER JOIN zutrittsberechtigung ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) WHERE person.id = zutrittsberechtigung.person_id) IS NULL);
+SET @disable_triggers = NULL;
