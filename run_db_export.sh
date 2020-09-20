@@ -3,15 +3,17 @@
 # Call for production
 # ./run_db_export.sh -v -t -d=lobbywat_lobbywatch --user-prefix=reader_ -p
 
+# TODO do not pass secret on cmd line
+
 # Include common functions
 . common.sh
 
 enable_fail_onerror
 
 if [[ "$USER" == "lobbywat" ]]; then
-  PHP='php74'
+  PHP='php74 -d error_reporting=E_ALL'
 else
-  PHP='php'
+  PHP='php -d error_reporting=E_ALL'
 fi
 LS='ls -Alh'
 ZIP='zip -j -9'
@@ -62,8 +64,8 @@ while test $# -gt 0; do
     echo "-t, --test                       Test mode: print DB views comments JSON (implies -n)"
     echo "-n, --limit                      Limit number of records"
     echo "-p[=DIR], --publish[=DIR]        Publish exports to public folder, $SECRET_DIR_PATTERN is substituted by the generated secret dir (default: env LW_PUBLIC_EXPORTS_DIR='$LW_PUBLIC_EXPORTS_DIR'"
-    echo "-s KEY                           Publish to a secret directory using KEY, the key changes every Monday"
-    echo "-S KEY                           Publish to a secret directory using KEY, the key changes every day"
+    echo "-s FILE                          Publish to a secret directory using key from FILE, the secret changes every Monday"
+    echo "-S FILE                          Publish to a secret directory using key from FILE, the secret changes every day"
     echo "-r, --refresh                    Refresh views"
     echo "-b, --basic                      Export only basic formats (CSV, SQL, JSON, GraphML)"
     echo "-d=SCHEMA                        DB schema (default SCHEMA: lobbywatchtest)"
@@ -126,7 +128,7 @@ while test $# -gt 0; do
     ;;
   -s | -S)
     publish_to_secret_dir=true
-    key=$2
+    key=$(cat $2)
     # %Y: 4 digit year, %G: 4 digit year of ISO work week
     # %V     ISO week number, with Monday as first day of week (01..53)
     # %m: 2 digit month, %S: 2 digit seconds, %M: 2 digits minutes, %d: 2 digit day
