@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-// Run: php -d memory_limit=256M -f db_export.php -- -c -f -v
+// Run: php -d error_reporting=E_ALL -d memory_limit=256M -f db_export.php -- -c -f -v
 
 // TODO optimize cartesian with freigabe
 // TODO explain, replace views with original tables, remove select fields
@@ -2535,7 +2535,7 @@ function getRowsIterator(string $sql, array $ids_in_parent = null, int $parent_i
     return $rows;
   } else {
     if ($verbose > 2) print("Direct DB query: $sql\n");
-    $stmt_export = $db->query($sql);
+    $stmt_export = $db->query($sql); // Fatal error: Uncaught PDOException: SQLSTATE[HY000]: General error: 1615 Prepared statement needs to be re-prepared in /home/lobbywat/lobbydev/db_export.php:2538 --> something parallel in DB is happening
     $count = $db->query("SELECT FOUND_ROWS();")->fetchColumn();
     return $stmt_export;
   }
@@ -2725,7 +2725,11 @@ function export_rows(IExporter $exporter, string $id_alias, int $parent_id = nul
   // DONE return aggregated array here
   if (in_array($format, ['array', 'attribute_array'])) {
     if (isset($ids_in_parent) && count($ids_in_parent) === 1) {
+      if ($rows_count > 0) {
       return $rows_data[0];
+      } else {
+        return null;
+      }
     } else {
       return $rows_data;
     }
