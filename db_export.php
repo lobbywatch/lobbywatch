@@ -2535,9 +2535,21 @@ function getRowsIterator(string $sql, array $ids_in_parent = null, int $parent_i
     return $rows;
   } else {
     if ($verbose > 2) print("Direct DB query: $sql\n");
-    $stmt_export = $db->query($sql); // Fatal error: Uncaught PDOException: SQLSTATE[HY000]: General error: 1615 Prepared statement needs to be re-prepared in /home/lobbywat/lobbydev/db_export.php:2538 --> something parallel in DB is happening
-    $count = $db->query("SELECT FOUND_ROWS();")->fetchColumn();
-    return $stmt_export;
+    // Increase robustness for: Fatal error: Uncaught PDOException: SQLSTATE[HY000]: General error: 1615 Prepared statement needs to be re-prepared in /home/lobbywat/lobbydev/db_export.php:2538 --> something parallel in DB is happening
+    for ($i = 0; ; $i++) {
+      try {
+        $stmt_export = $db->query($sql);
+        $count = $db->query("SELECT FOUND_ROWS();")->fetchColumn();
+        return $stmt_export;
+      } catch (PDOException $e) {
+        if ($e->code === 1615 && $i < 1200) {
+          print(date("Y-m-d H:i:s") . " ($i) - SQLSTATE[HY000]: General error: 1615 Prepared statement needs to be re-prepared. Caused on direct DB query: $sql\n");
+          sleep(3);
+        } else {
+          throw $e;
+        }
+      }
+    }
   }
 }
 
