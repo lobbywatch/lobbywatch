@@ -70,8 +70,7 @@ class AdminPage extends CommonPage
         );
     }
 
-    public function GetShowPageList()
-    {
+    public function GetShowPageList() {
         return true;
     }
 
@@ -99,10 +98,6 @@ class AdminPage extends CommonPage
 
 $page = new AdminPage();
 $page->checkAccessPermitted();
-$page->setHeader(GetPagesHeader());
-$page->setFooter(GetPagesFooter());
-$page->OnGetCustomTemplate->AddListener('Global_GetCustomTemplateHandler');
-$page->OnCustomHTMLHeader->AddListener('Global_CustomHTMLHeaderHandler');
 
 $renderer = new ViewRenderer($page->GetLocalizerCaptions());
 echo $renderer->Render($page);

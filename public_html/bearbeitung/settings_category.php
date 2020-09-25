@@ -42,8 +42,6 @@
         {
             $this->SetTitle('Settings');
             $this->SetMenuLabel('<s>Settings</s>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -1432,8 +1430,6 @@
         {
             $this->SetTitle('Settings Category');
             $this->SetMenuLabel('<span class="settings">Settings Category</span>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),

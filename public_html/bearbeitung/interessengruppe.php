@@ -42,8 +42,6 @@
         {
             $this->SetTitle('Organisation');
             $this->SetMenuLabel('Organisation');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -5047,8 +5045,6 @@
         {
             $this->SetTitle('Parlamentarier');
             $this->SetMenuLabel('Parlamentarier');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -12625,8 +12621,6 @@
         {
             $this->SetTitle('Lobbygruppe');
             $this->SetMenuLabel('<span class="entity">Lobbygruppe</span>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),

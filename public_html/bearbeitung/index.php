@@ -22,12 +22,6 @@ SetUpUserAuthorization();
 try {
 
     $page = new HomePage(GetCurrentUserPermissionsForPage("index"), 'UTF-8');
-    $page->SetHeader(GetPagesHeader());
-    $page->SetFooter(GetPagesFooter());
-    $page->setBanner(GetHomePageBanner());
-    $page->SetShowPageList(false);
-    $page->OnGetCustomTemplate->AddListener('Global_GetCustomTemplateHandler');
-    $page->OnCustomHTMLHeader->AddListener('Global_CustomHTMLHeaderHandler');
     $renderer = new ViewRenderer($page->GetLocalizerCaptions());
     echo $renderer->Render($page);
 

@@ -41,8 +41,6 @@
         {
             $this->SetTitle('Tabellenstand');
             $this->SetMenuLabel('<span class="view">Tabellenstand</span>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $selectQuery = 'SELECT tn as table_name, n as name, ne as anzahl_eintraege, lv as last_visa, ld as last_updated, lid as last_updated_id
             FROM (SELECT * FROM (

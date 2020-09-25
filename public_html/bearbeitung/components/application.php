@@ -25,6 +25,9 @@ class Application extends SecureApplication implements IVariableContainer
 
     private $htmlFilter;
 
+    /** @var IVariableContainer */
+    private $variableContainer;
+
     public function __construct()
     {
         parent::__construct();
@@ -36,6 +39,26 @@ class Application extends SecureApplication implements IVariableContainer
     public function FillVariablesValues(&$values) {
         $values['CURRENT_USER_ID'] = $this->IsCurrentUserLoggedIn() ? $this->GetCurrentUserId() : '';
         $values['CURRENT_USER_NAME'] = $this->IsCurrentUserLoggedIn() ? $this->GetCurrentUser() : '';
+        if (function_exists('Global_AddEnvironmentVariablesHandler')) {
+            Global_AddEnvironmentVariablesHandler($values);
+        }
+    }
+
+    /**
+     * @return IVariableContainer
+     */
+    public function getVariableContainer() {
+        if (!isset($this->variableContainer))
+            $this->variableContainer = new CompositeVariableContainer(
+                $this, new ServerVariablesContainer(), new SystemFunctionsVariablesContainer()
+            );
+        return $this->variableContainer;
+    }
+
+    public function GetEnvVar($name) {
+        $variables = array();
+        $this->getVariableContainer()->FillVariablesValues($variables);
+        return $variables[$name];
     }
     #endregion
 

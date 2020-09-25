@@ -41,8 +41,6 @@
         {
             $this->SetTitle('Translation Target');
             $this->SetMenuLabel('<span class="settings">Translation Target</span>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),

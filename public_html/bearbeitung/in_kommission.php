@@ -41,8 +41,6 @@
         {
             $this->SetTitle('In Kommission');
             $this->SetMenuLabel('<span class="relation">In Kommission</span>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),

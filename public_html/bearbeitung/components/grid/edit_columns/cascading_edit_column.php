@@ -34,7 +34,15 @@ class CascadingEditColumn extends CustomEditColumn
     {
         if (in_array(GetOperation(), array(OPERATION_INSERT, OPERATION_EDIT, OPERATION_COPY)))
         {
-            $this->setControlValue($this->GetDataset()->GetFieldValueByName($this->GetFieldName()));
+            if (GetOperation() == OPERATION_INSERT) {
+                $insertValue = $this->GetInsertDefaultValue();
+                if (isset($insertValue))
+                    $this->setControlValue($insertValue);
+                else
+                    $this->setControlValue($this->GetDataset()->GetFieldValueByName($this->GetFieldName()));
+            } else {
+                $this->setControlValue($this->GetDataset()->GetFieldValueByName($this->GetFieldName()));
+            }
         }
     }
 }

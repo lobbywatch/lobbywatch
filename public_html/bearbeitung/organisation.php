@@ -42,8 +42,6 @@
         {
             $this->SetTitle('Organisation Anhang');
             $this->SetMenuLabel('Organisation Anhang');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -1886,8 +1884,6 @@
         {
             $this->SetTitle('Organisation Jahr');
             $this->SetMenuLabel('Organisation Jahr');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -4533,8 +4529,6 @@
         {
             $this->SetTitle('Organisation Parlamentarier Beide Indirekt');
             $this->SetMenuLabel('Organisation Parlamentarier Beide Indirekt');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -8083,8 +8077,6 @@
         {
             $this->SetTitle('Organisation Beziehung Auftraggeber Fuer');
             $this->SetMenuLabel('Organisation Beziehung Auftraggeber Fuer');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -9643,8 +9635,6 @@
         {
             $this->SetTitle('Organisation Beziehung Arbeitet Fuer');
             $this->SetMenuLabel('Organisation Beziehung Arbeitet Fuer');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -11203,8 +11193,6 @@
         {
             $this->SetTitle('Organisation Beziehung Mitglied Von');
             $this->SetMenuLabel('Organisation Beziehung Mitglied Von');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -12763,8 +12751,6 @@
         {
             $this->SetTitle('Organisation Beziehung Mitglieder');
             $this->SetMenuLabel('Organisation Beziehung Mitglieder');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -14323,8 +14309,6 @@
         {
             $this->SetTitle('<s>V Organisation Parlamentarier</s>');
             $this->SetMenuLabel('<s>V Organisation Parlamentarier</s>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -19396,8 +19380,6 @@
         {
             $this->SetTitle('<s>V Organisation Parlamentarier Indirekt</s>');
             $this->SetMenuLabel('<s>Organisation Parlamentarier Indirekt</s>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -24517,8 +24499,6 @@
         {
             $this->SetTitle('<s>V Organisation Parlamentarier Beide</s>');
             $this->SetMenuLabel('<s>V Organisation Parlamentarier Beide</s>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -27105,8 +27085,6 @@
         {
             $this->SetTitle('<s>Interessenbindung</s>');
             $this->SetMenuLabel('<s>Interessenbindung</s>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -30907,8 +30885,6 @@
         {
             $this->SetTitle('<s>Mandat</s>');
             $this->SetMenuLabel('<s>Mandat</s>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -33721,8 +33697,6 @@
         {
             $this->SetTitle('Organisation');
             $this->SetMenuLabel('<span class="entity important-entity">Organisation</span>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),

@@ -42,8 +42,6 @@
         {
             $this->SetTitle('Mandatsvergütung');
             $this->SetMenuLabel('Mandatsvergütung');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -2323,8 +2321,6 @@
         {
             $this->SetTitle('Mandat');
             $this->SetMenuLabel('<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Personen</span>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),

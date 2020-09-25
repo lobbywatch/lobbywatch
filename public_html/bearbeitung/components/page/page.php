@@ -198,9 +198,7 @@ abstract class Page extends CommonPage implements IVariableContainer
 
     #region Events
     public $BeforePageRender;
-    public $OnCustomHTMLHeader;
     public $OnAddEnvironmentVariables;
-    public $OnGetCustomTemplate;
     public $OnPrepareChart;
     public $OnGetCustomFormLayout;
     public $OnGetCustomColumnGroup;
@@ -220,9 +218,7 @@ abstract class Page extends CommonPage implements IVariableContainer
     {
         parent::__construct($id, $contentEncoding);
         $this->BeforePageRender = new Event();
-        $this->OnCustomHTMLHeader = new Event();
         $this->OnAddEnvironmentVariables = new Event();
-        $this->OnGetCustomTemplate = new Event();
         $this->OnPrepareChart = new Event();
         $this->OnGetCustomFormLayout = new Event();
         $this->OnGetCustomColumnGroup = new Event();
@@ -249,7 +245,7 @@ abstract class Page extends CommonPage implements IVariableContainer
         $this->message = null;
         $this->pageNavigatorStack = array();
 
-        $this->attachAddEnvironmentVariablesHandlers();
+        $this->attachAddEnvironmentVariablesHandler();
 
         $this->BeforeCreate();
 
@@ -261,10 +257,7 @@ abstract class Page extends CommonPage implements IVariableContainer
         $this->Prepare();
     }
 
-    private function attachAddEnvironmentVariablesHandlers() {
-        if (function_exists('Global_AddEnvironmentVariablesHandler')) {
-            $this->OnAddEnvironmentVariables->AddListener('Global_AddEnvironmentVariablesHandler');
-        }
+    private function attachAddEnvironmentVariablesHandler() {
         $this->OnAddEnvironmentVariables->AddListener('OnAddEnvironmentVariablesHandler', $this);
     }
 
@@ -380,13 +373,6 @@ abstract class Page extends CommonPage implements IVariableContainer
         $vars = array();
         $this->GetColumnVariableContainer()->FillVariablesValues($vars);
         return $vars[$name];
-    }
-
-    public function GetCustomPageHeader()
-    {
-        $result = '';
-        $this->OnCustomHTMLHeader->Fire(array(&$this, &$result));
-        return $result;
     }
 
     /**

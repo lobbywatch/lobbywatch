@@ -41,8 +41,6 @@
         {
             $this->SetTitle('Unvollständige Zutrittsberechtigte');
             $this->SetMenuLabel('<span class="view">Unvollständige Zutrittsberechtigte</span>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $selectQuery = 'select zutrittsberechtigung.*, parlamentarier.kommissionen from
             v_zutrittsberechtigung_simple_compat zutrittsberechtigung

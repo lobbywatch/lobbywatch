@@ -41,8 +41,6 @@
         {
             $this->SetTitle('Person Anhang');
             $this->SetMenuLabel('Person Anhang');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),

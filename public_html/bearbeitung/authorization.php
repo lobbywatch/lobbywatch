@@ -3,24 +3,17 @@
 
 
 
-require_once 'phpgen_settings.php';
-require_once 'components/application.php';
-require_once 'components/security/permission_set.php';
-require_once 'components/security/user_authentication/table_based_user_authentication.php';
-require_once 'components/security/grant_manager/user_grant_manager.php';
-require_once 'components/security/grant_manager/composite_grant_manager.php';
-require_once 'components/security/grant_manager/hard_coded_user_grant_manager.php';
-require_once 'components/security/grant_manager/table_based_user_grant_manager.php';
-require_once 'components/security/table_based_user_manager.php';
+include_once dirname(__FILE__) . '/' . 'phpgen_settings.php';
+include_once dirname(__FILE__) . '/' . 'components/application.php';
+include_once dirname(__FILE__) . '/' . 'components/security/permission_set.php';
+include_once dirname(__FILE__) . '/' . 'components/security/user_authentication/table_based_user_authentication.php';
+include_once dirname(__FILE__) . '/' . 'components/security/grant_manager/table_based_user_grant_manager.php';
+include_once dirname(__FILE__) . '/' . 'components/security/table_based_user_manager.php';
+include_once dirname(__FILE__) . '/' . 'components/security/user_identity_storage/user_identity_session_storage.php';
+include_once dirname(__FILE__) . '/' . 'components/security/recaptcha.php';
+include_once dirname(__FILE__) . '/' . 'database_engine/mysql_engine.php';
 
-include_once 'components/security/user_identity_storage/user_identity_session_storage.php';
-include_once 'components/security/recaptcha.php';
 
-require_once 'database_engine/mysql_engine.php';
-
-$grants = array();
-
-$appGrants = array();
 
 $dataSourceRecordPermissions = array();
 
@@ -113,22 +106,22 @@ function VerifyPassword($enteredPassword, $encryptedPassword, &$result)
     custom_OnVerifyPassword($enteredPassword, $encryptedPassword, $result);
 }
 
-function BeforeUserRegistration($username, $email, $password, &$allowRegistration, &$errorMessage)
+function BeforeUserRegistration($userName, $email, $password, &$allowRegistration, &$errorMessage)
 {
 
 }    
 
-function AfterUserRegistration($username, $email)
+function AfterUserRegistration($userName, $email)
 {
 
 }    
 
-function PasswordResetRequest($username, $email)
+function PasswordResetRequest($userName, $email)
 {
 
 }
 
-function PasswordResetComplete($username, $email)
+function PasswordResetComplete($userName, $email)
 {
 
 }
@@ -148,43 +141,40 @@ function CreatePasswordHasher()
     return $hasher;
 }
 
-function CreateTableBasedGrantManager()
+function CreateGrantManager() 
 {
     global $tableCaptions;
     global $usersTableInfo;
+    
     $userPermsTableInfo = array('TableName' => 'user_permission', 'UserId' => 'user_id', 'PageName' => 'page_name', 'Grant' => 'permission_name');
     
-    $tableBasedGrantManager = new TableBasedUserGrantManager(MyPDOConnectionFactory::getInstance(), GetGlobalConnectionOptions(),
+    return new TableBasedUserGrantManager(MyPDOConnectionFactory::getInstance(), GetGlobalConnectionOptions(),
         $usersTableInfo, $userPermsTableInfo, $tableCaptions, true);
-    return $tableBasedGrantManager;
 }
 
-function CreateTableBasedUserManager() {
+function CreateTableBasedUserManager() 
+{
     global $usersTableInfo;
-    $userManager = new TableBasedUserManager(MyPDOConnectionFactory::getInstance(), GetGlobalConnectionOptions(), $usersTableInfo, CreatePasswordHasher(), false);
+
+    $userManager = new TableBasedUserManager(MyPDOConnectionFactory::getInstance(), GetGlobalConnectionOptions(), 
+        $usersTableInfo, CreatePasswordHasher(), false);
     $userManager->OnVerifyPasswordStrength->AddListener('VerifyPasswordStrength');
+
     return $userManager;
 }
 
-function GetReCaptcha($formId) {
+function GetReCaptcha($formId) 
+{
     return null;
 }
 
-function SetUpUserAuthorization()
+function SetUpUserAuthorization() 
 {
-    global $grants;
-    global $appGrants;
     global $dataSourceRecordPermissions;
 
     $hasher = CreatePasswordHasher();
 
-    $hardCodedGrantManager = new HardCodedUserGrantManager($grants, $appGrants);
-    $tableBasedGrantManager = CreateTableBasedGrantManager();
-    $grantManager = new CompositeGrantManager();
-    $grantManager->AddGrantManager($hardCodedGrantManager);
-    if (!is_null($tableBasedGrantManager)) {
-        $grantManager->AddGrantManager($tableBasedGrantManager);
-    }
+    $grantManager = CreateGrantManager();
 
     $userAuthentication = new TableBasedUserAuthentication(new UserIdentitySessionStorage(), true, $hasher, CreateTableBasedUserManager(), true, false, false);
 

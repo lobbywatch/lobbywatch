@@ -42,8 +42,6 @@
         {
             $this->SetTitle('Parlamentarier Anhang');
             $this->SetMenuLabel('Parlamentarier Anhang');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -1945,8 +1943,6 @@
         {
             $this->SetTitle('Parlamentarier Vergütungstransparenz');
             $this->SetMenuLabel('Parlamentarier Vergütungstransparenz');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -4856,8 +4852,6 @@
         {
             $this->SetTitle('Organisation Parlamentarier Beide Indirekt');
             $this->SetMenuLabel('Organisation Parlamentarier Beide Indirekt');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -8532,8 +8526,6 @@
         {
             $this->SetTitle('In Kommission Liste');
             $this->SetMenuLabel('In Kommission Liste');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -11969,8 +11961,6 @@
         {
             $this->SetTitle('<s>V Interessenbindung Liste Indirekt</s>');
             $this->SetMenuLabel('<s>V Interessenbindung Liste Indirekt</s>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -18623,8 +18613,6 @@
         {
             $this->SetTitle('<s>V Zutrittsberechtigung Mit Mandaten Indirekt</s>');
             $this->SetMenuLabel('<s>V Zutrittsberechtigung Mit Mandaten Indirekt</s>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -24084,8 +24072,6 @@
         {
             $this->SetTitle('<s>V Interessenbindung Liste</s>');
             $this->SetMenuLabel('<s>V Interessenbindung Liste</s>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -30741,8 +30727,6 @@
         {
             $this->SetTitle('<s>V Zutrittsberechtigung Mit Mandaten</s>');
             $this->SetMenuLabel('<s>V Zutrittsberechtigung Mit Mandaten</s>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -36024,8 +36008,6 @@
         {
             $this->SetTitle('Parlamentarier');
             $this->SetMenuLabel('<span class="entity important-entity">Parlamentarier</span>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),

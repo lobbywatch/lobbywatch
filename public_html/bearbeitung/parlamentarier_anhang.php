@@ -41,8 +41,6 @@
         {
             $this->SetTitle('Parlamentarier Anhang');
             $this->SetMenuLabel('Parlamentarier Anhang');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),

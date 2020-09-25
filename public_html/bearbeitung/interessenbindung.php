@@ -42,8 +42,6 @@
         {
             $this->SetTitle('Interessenbindungsvergütung');
             $this->SetMenuLabel('Interessenbindungsvergütung');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -2432,8 +2430,6 @@
         {
             $this->SetTitle('Interessenbindung');
             $this->SetMenuLabel('<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbindungen von NR/SR</span>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),

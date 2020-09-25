@@ -41,8 +41,6 @@
         {
             $this->SetTitle('User');
             $this->SetMenuLabel('<span class="settings">User</span>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),

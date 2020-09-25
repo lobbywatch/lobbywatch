@@ -4,14 +4,7 @@ include_once dirname(__FILE__) . '/common_page.php';
 
 class HomePage extends CommonPage
 {
-    /**
-     * @var bool
-     */
-    public $showPageList = true;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     private $selectedGroup;
 
     /** @var string */
@@ -21,6 +14,10 @@ class HomePage extends CommonPage
     {
         parent::__construct('', $contentEncoding);
         $this->selectedGroup = ArrayWrapper::createGetWrapper()->getValue('group');
+
+        if (function_exists('GetHomePageBanner')) {
+            $this->banner = GetHomePageBanner();
+        }
     }
 
     /**
@@ -45,16 +42,6 @@ class HomePage extends CommonPage
     public function Accept(Renderer $renderer)
     {
         $renderer->RenderHomePage($this);
-    }
-
-    public function SetShowPageList($showPageList)
-    {
-        $this->showPageList = $showPageList;
-    }
-
-    public function GetShowPageList()
-    {
-        return $this->showPageList;
     }
 
     public function GetAuthenticationViewData() {

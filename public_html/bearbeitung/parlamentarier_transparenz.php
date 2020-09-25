@@ -41,8 +41,6 @@
         {
             $this->SetTitle('Parlamentarier Vergütungstransparenz');
             $this->SetMenuLabel('<span class="relation" title="Interessenbindungen der Parlamentarier">Parlamentarier Vergütungstransparenz</span>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),

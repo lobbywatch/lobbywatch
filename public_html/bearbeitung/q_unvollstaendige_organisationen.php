@@ -41,8 +41,6 @@
         {
             $this->SetTitle('Unvollständige Organisationen');
             $this->SetMenuLabel('<span class="view">Unvollständige Organisationen</span>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $selectQuery = 'select * from organisation where
             rechtsform is null OR rechtsform = \'\' OR

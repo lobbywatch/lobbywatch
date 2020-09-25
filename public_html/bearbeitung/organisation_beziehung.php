@@ -41,8 +41,6 @@
         {
             $this->SetTitle('Organisation Beziehung');
             $this->SetMenuLabel('<span class="relation">Organisation Beziehung</span>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),

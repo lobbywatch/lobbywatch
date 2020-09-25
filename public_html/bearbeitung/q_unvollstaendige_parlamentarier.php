@@ -41,8 +41,6 @@
         {
             $this->SetTitle('Unvollständige Parlamentarier');
             $this->SetMenuLabel('<span class="view">Unvollständige Parlamentarier</span>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $selectQuery = 'select * from parlamentarier where
             geschlecht is null OR

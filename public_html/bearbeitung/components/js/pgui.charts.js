@@ -26,7 +26,7 @@ define(['moment'], function (moment) {
             $.each(chart.data.columns, function (j, col) {
                 var value = rowData[j];
 
-                if (col.type === 'date' || col.type === 'datetime') {
+                if ((col.type === 'date' || col.type === 'datetime') && (value !== null)) {
                     value = moment(value).toDate();
                 }
 

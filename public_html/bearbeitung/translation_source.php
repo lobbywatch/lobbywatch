@@ -42,8 +42,6 @@
         {
             $this->SetTitle('Translation Target');
             $this->SetMenuLabel('Translation Target');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -1569,8 +1567,6 @@
         {
             $this->SetTitle('Translation Target');
             $this->SetMenuLabel('Translation Target');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -3093,8 +3089,6 @@
         {
             $this->SetTitle('Translation Source');
             $this->SetMenuLabel('<span class="settings">Translation Source</span>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),

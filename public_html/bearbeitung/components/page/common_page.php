@@ -39,10 +39,27 @@ abstract class CommonPage
         $this->id = $id;
         $this->contentEncoding = $contentEncoding;
 
+        if (function_exists('GetPagesHeader')) {
+            $this->header = GetPagesHeader();
+        }
+        if (function_exists('GetPagesFooter')) {
+            $this->footer = GetPagesFooter();
+        }
+
         $this->OnGetCustomTemplate = new Event();
         $this->OnCustomHTMLHeader = new Event();
+
+        $this->attachCommonEventListeners();
     }
 
+    private function attachCommonEventListeners() {
+        if (function_exists('Global_CustomHTMLHeaderHandler')) {
+            $this->OnCustomHTMLHeader->AddListener('Global_CustomHTMLHeaderHandler');
+        }
+        if (function_exists('Global_GetCustomTemplateHandler')) {
+            $this->OnGetCustomTemplate->AddListener('Global_GetCustomTemplateHandler');
+        }
+    }
     /**
      * @return CommonPageViewData
      */
@@ -180,6 +197,10 @@ abstract class CommonPage
         };
 
         return $this->pageList;
+    }
+
+    public function GetShowPageList() {
+        return false;
     }
 
 }

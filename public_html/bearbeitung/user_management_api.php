@@ -20,6 +20,6 @@ SetUpUserAuthorization();
 
 UserManagementRequestHandler::HandleRequest(
     $_GET,
-    CreateTableBasedGrantManager(),
+    CreateGrantManager(),
     CreateTableBasedUserManager()
 );

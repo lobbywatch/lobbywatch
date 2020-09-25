@@ -42,8 +42,6 @@
         {
             $this->SetTitle('Interessengruppe');
             $this->SetMenuLabel('Interessengruppe');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -2538,8 +2536,6 @@
         {
             $this->SetTitle('Branche');
             $this->SetMenuLabel('<span class="entity">Branche</span>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),

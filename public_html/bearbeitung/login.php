@@ -51,9 +51,5 @@ $page = new LoginPage(
 $page->OnAfterLogin->AddListener('OnAfterLogin');
 $page->OnAfterFailedLoginAttempt->AddListener('OnAfterFailedLoginAttempt');
 $page->OnBeforeLogout->AddListener('OnBeforeLogout');
-$page->OnGetCustomTemplate->AddListener('Global_GetCustomTemplateHandler');
-$page->OnCustomHTMLHeader->AddListener('Global_CustomHTMLHeaderHandler');
-$page->SetHeader(GetPagesHeader());
-$page->SetFooter(GetPagesFooter());
 $page->BeginRender();
 $page->EndRender();

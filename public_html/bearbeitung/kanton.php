@@ -42,8 +42,6 @@
         {
             $this->SetTitle('Kanton Jahr');
             $this->SetMenuLabel('Kanton Jahr');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -2722,8 +2720,6 @@
         {
             $this->SetTitle('Parlamentarier');
             $this->SetMenuLabel('<s>Parlamentarier</s>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -11068,8 +11064,6 @@
         {
             $this->SetTitle('Kanton');
             $this->SetMenuLabel('<span class="entity">Kanton</span>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),

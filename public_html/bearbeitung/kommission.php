@@ -42,8 +42,6 @@
         {
             $this->SetTitle('Parlamentarier in Kommission');
             $this->SetMenuLabel('Parlamentarier in Kommission');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -4237,8 +4235,6 @@
         {
             $this->SetTitle('Branche');
             $this->SetMenuLabel('Branche');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -7500,8 +7496,6 @@
         {
             $this->SetTitle('Kommission');
             $this->SetMenuLabel('<span class="entity">Kommission</span>');
-            $this->SetHeader(GetPagesHeader());
-            $this->SetFooter(GetPagesFooter());
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),

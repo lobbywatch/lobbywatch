@@ -115,8 +115,6 @@ function ApplyCommonPageSettings(Page $page, Grid $grid)
 {
     $page->SetShowUserAuthBar(true);
     $page->setShowNavigation(true);
-    $page->OnCustomHTMLHeader->AddListener('Global_CustomHTMLHeaderHandler');
-    $page->OnGetCustomTemplate->AddListener('Global_GetCustomTemplateHandler');
     $page->OnGetCustomExportOptions->AddListener('Global_OnGetCustomExportOptions');
     $page->getDataset()->OnGetFieldValue->AddListener('Global_OnGetFieldValue');
     $page->getDataset()->OnGetFieldValue->AddListener('OnGetFieldValue', $page);
@@ -130,7 +128,7 @@ function ApplyCommonPageSettings(Page $page, Grid $grid)
 
 function GetAnsiEncoding() { return 'windows-1252'; }
 
-function Global_AddEnvironmentVariablesHandler(Page $page, &$variables)
+function Global_AddEnvironmentVariablesHandler(&$variables)
 {
 
 }
