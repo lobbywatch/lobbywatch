@@ -47,6 +47,7 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'person.mandat' => '<span class="entity important-entity">Person</span>-><s>Mandat</s>',
 'interessenbindung' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbindungen von NR/SR</span>',
 'interessenbindung.interessenbindung_jahr' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbindungen von NR/SR</span>->Interessenbindungsvergütung',
+'interessenbindung_jahr' => 'Interessenbindungsvergütungen',
 'zutrittsberechtigung' => '<span class="relation" title="Zutrittsberechtigungen für Gäse ins Bundeshaus">Zutrittsberechtigung</span>',
 'mandat' => '<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Personen</span>',
 'mandat.mandat_jahr' => '<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Personen</span>->Mandatsvergütung',
