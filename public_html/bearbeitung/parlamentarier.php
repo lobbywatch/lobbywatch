@@ -40699,7 +40699,6 @@
             );
             
             $main_editor = new TextEdit('aemter_edit');
-            $main_editor->SetMaxLength(500);
             
             $filterBuilder->addColumn(
                 $columns['aemter'],
@@ -40724,7 +40723,6 @@
             );
             
             $main_editor = new TextEdit('weitere_aemter_edit');
-            $main_editor->SetMaxLength(500);
             
             $filterBuilder->addColumn(
                 $columns['weitere_aemter'],
@@ -43682,8 +43680,8 @@
             // Edit column for aemter field
             //
             $editor = new TextEdit('aemter_edit');
-            $editor->SetMaxLength(500);
             $editColumn = new CustomEditColumn('Ämter', 'aemter', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -43692,8 +43690,8 @@
             // Edit column for weitere_aemter field
             //
             $editor = new TextEdit('weitere_aemter_edit');
-            $editor->SetMaxLength(500);
             $editColumn = new CustomEditColumn('Weitere Ämter', 'weitere_aemter', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -44703,8 +44701,8 @@
             // Edit column for aemter field
             //
             $editor = new TextEdit('aemter_edit');
-            $editor->SetMaxLength(500);
             $editColumn = new CustomEditColumn('Ämter', 'aemter', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -44713,8 +44711,8 @@
             // Edit column for weitere_aemter field
             //
             $editor = new TextEdit('weitere_aemter_edit');
-            $editor->SetMaxLength(500);
             $editColumn = new CustomEditColumn('Weitere Ämter', 'weitere_aemter', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -45752,8 +45750,8 @@
             // Edit column for aemter field
             //
             $editor = new TextEdit('aemter_edit');
-            $editor->SetMaxLength(500);
             $editColumn = new CustomEditColumn('Ämter', 'aemter', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -45762,8 +45760,8 @@
             // Edit column for weitere_aemter field
             //
             $editor = new TextEdit('weitere_aemter_edit');
-            $editor->SetMaxLength(500);
             $editColumn = new CustomEditColumn('Weitere Ämter', 'weitere_aemter', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);

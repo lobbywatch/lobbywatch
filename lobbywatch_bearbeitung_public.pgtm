@@ -7421,13 +7421,13 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="aemter" caption="Ämter" headerHint="Politische Ämter (importiert von ws.parlament.ch mandate)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="aemter" caption="Ämter" headerHint="Politische Ämter (importiert von ws.parlament.ch mandate)" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
-            <EditProperties type="textBox" maxLength="500"/>
+            <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="weitere_aemter" caption="Weitere Ämter" headerHint="Zusätzliche Ämter (importiert von ws.parlament.ch additionalMandate)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="weitere_aemter" caption="Weitere Ämter" headerHint="Zusätzliche Ämter (importiert von ws.parlament.ch additionalMandate)" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
-            <EditProperties type="textBox" maxLength="500"/>
+            <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="zivilstand" caption="Zivilstand" headerHint="Zivilstand" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
