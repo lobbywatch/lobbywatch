@@ -3074,7 +3074,7 @@ function _lobbywatch_interessenbindung_verguetung_SQL($jahr) {
   WHEN interessenbindung_jahr_current.verguetung IS NULL
     OR interessenbindung_jahr_current.verguetung = 1 THEN CONCAT(" . lts('jährliche Entschädigung') . ", ' ', " . $jahr . ", ': CHF ________')
   WHEN interessenbindung_jahr_current.verguetung > 1 THEN CONCAT(" . lts('jährliche Entschädigung') . ", ': CHF ', FORMAT(interessenbindung_jahr_current.verguetung, 'C', 'de_CH'), '.-')
-  ELSE 'ERROR'
+  ELSE 'ERROR: Unbekannter Fall bei der Vergütung'
   END";
 }
 
