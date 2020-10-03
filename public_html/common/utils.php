@@ -2935,7 +2935,7 @@ function get_parlamentarier_lang($con, $id) {
       return $lang;
 }
 
-function get_parlamentarier($con, $id) {
+function get_parlamentarier($con, $id, $jahr) {
       $result = array();
       $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.name as parlamentarier_name2, parlamentarier.email, parlamentarier.geschlecht, parlamentarier.beruf, parlamentarier.beruf_fr, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.kontrolliert_datum, parlamentarier.freigabe_datum, parlamentarier.autorisierung_verschickt_datum, parlamentarier.autorisiert_datum, parlamentarier.kontrolliert_visa, parlamentarier.eingabe_abgeschlossen_visa, parlamentarier.im_rat_bis, parlamentarier.sitzplatz, parlamentarier.geburtstag, parlamentarier.im_rat_bis, parlamentarier.kleinbild, parlamentarier.parlament_biografie_id, parlamentarier.arbeitssprache, parlamentarier.aemter, parlamentarier.weitere_aemter, parlamentarier.parlament_interessenbindungen, parlamentarier.parlament_interessenbindungen_updated, DATE_FORMAT(parlament_interessenbindungen_updated, '%d.%m.%Y') as parlament_interessenbindungen_updated_formatted,
 GROUP_CONCAT(DISTINCT
@@ -2960,7 +2960,8 @@ GROUP_CONCAT(DISTINCT
     IF(interessenbindung.bis IS NULL OR interessenbindung.bis > NOW(), CONCAT('<li>', " . lobbywatch_lang_field('organisation.name_de') . ",
     IF(FALSE AND (organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = ''), '', CONCAT(', ', ". _lobbywatch_get_rechtsform_translation_SQL("organisation") . ")),
     IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ',
-    IF(" . lobbywatch_lang_field('interessenbindung.beschreibung') . " IS NULL OR TRIM(" . lobbywatch_lang_field('interessenbindung.beschreibung') . ") = '', " . _lobbywatch_bindungsart('parlamentarier', 'interessenbindung', 'organisation') . ", CONCAT(" . lobbywatch_lang_field('interessenbindung.beschreibung') . "))
+    IF(" . lobbywatch_lang_field('interessenbindung.beschreibung') . " IS NULL OR TRIM(" . lobbywatch_lang_field('interessenbindung.beschreibung') . ") = '', " . _lobbywatch_bindungsart('parlamentarier', 'interessenbindung', 'organisation') . ", CONCAT(" . lobbywatch_lang_field('interessenbindung.beschreibung') . "))"
+    . "," . _lobbywatch_interessenbindung_verguetung_SQL($jahr) ."
     ), '')
     ORDER BY organisation.anzeige_name
     SEPARATOR ' '
@@ -3024,11 +3025,13 @@ LEFT JOIN v_zutrittsberechtigung_simple_compat zutrittsberechtigung
   ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id -- AND zutrittsberechtigung.bis IS NULL
 LEFT JOIN v_in_kommission_liste in_kommission
   ON in_kommission.parlamentarier_id = parlamentarier.id -- AND interessenbindung.bis IS NULL
+LEFT JOIN interessenbindung_jahr interessenbindung_jahr_current
+  ON interessenbindung_jahr_current.interessenbindung_id = interessenbindung.id AND interessenbindung_jahr_current.jahr = $jahr
 WHERE
   parlamentarier.id=:id
 GROUP BY parlamentarier.id;";
 
-//         df($sql);
+        // df($sql);
         $result = array();
 //         $eng_con->ExecQueryToArray($sql, $result);
 //          df($eng_con->LastError(), 'last error');
@@ -3062,6 +3065,17 @@ GROUP BY parlamentarier.id;";
 
     $rowData = $result[0];
     return $rowData;
+}
+
+function _lobbywatch_interessenbindung_verguetung_SQL($jahr) {
+  return "', ', CASE
+  WHEN interessenbindung_jahr_current.verguetung < 0 THEN CONCAT(" . lts('bezahlendes Mitglied') . ", ': CHF 0.-')
+  WHEN interessenbindung_jahr_current.verguetung = 0 THEN CONCAT(" . lts('ehrenamtlich') . ", ': CHF 0.-')
+  WHEN interessenbindung_jahr_current.verguetung IS NULL
+    OR interessenbindung_jahr_current.verguetung = 1 THEN CONCAT(" . lts('jährliche Entschädigung') . ", ' ', " . $jahr . ", ': CHF ________')
+  WHEN interessenbindung_jahr_current.verguetung > 1 THEN CONCAT(" . lts('jährliche Entschädigung') . ", ': CHF ', FORMAT(interessenbindung_jahr_current.verguetung, 'C', 'de_CH'), '.-')
+  ELSE 'ERROR'
+  END";
 }
 
 // SELECT seq1.rowid, seq1.id, seq1.log_id, seq1.parlament_interessenbindungen_normalized, seq2.rowid, seq2.id, seq2.log_id, seq2.parlament_interessenbindungen_normalized FROM

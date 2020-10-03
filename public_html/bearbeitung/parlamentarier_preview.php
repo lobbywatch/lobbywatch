@@ -59,8 +59,9 @@ try {
     $lang = $parlamentarier_lang = get_parlamentarier_lang($con, $id);
     lobbywatch_set_language($lang);
     $lang_suffix = get_lang_suffix($lang);
+    $jahr = date("Y");
 
-    $rowData = get_parlamentarier($con, $id);
+    $rowData = get_parlamentarier($con, $id, $jahr);
     $lastLogRowData = get_parlamentarier_log_last_changed_parlament_interessenbindungen($con, $id);
 
     $reAuthorization = isset($rowData['autorisierung_verschickt_datum']);
