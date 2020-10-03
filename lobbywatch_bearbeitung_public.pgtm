@@ -20918,7 +20918,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="verguetung"/>
             <Column fieldName="beschreibung"/>
             <Column fieldName="quelle_url"/>
-            <Column fieldName="quelle_url_gueltig"/>
+            <Column fieldName="quelle_url_gueltig" visible="false"/>
             <Column fieldName="quelle"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>

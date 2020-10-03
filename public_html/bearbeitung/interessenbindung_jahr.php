@@ -1424,15 +1424,6 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
-            // Edit column for quelle_url_gueltig field
-            //
-            $editor = new TextEdit('quelle_url_gueltig_edit');
-            $editColumn = new CustomEditColumn('Quelle Url Gueltig', 'quelle_url_gueltig', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
             // Edit column for quelle field
             //
             $editor = new TextEdit('quelle_edit');
