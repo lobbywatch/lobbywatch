@@ -167,7 +167,8 @@ abstract class GridState
     protected function WriteChangesToDataset($oldValues, $newValues, Dataset $dataset) {
         foreach ($newValues as $fieldName => $fieldValue)
             if ($dataset->DoNotRewriteUnchangedValues()) {
-                if (!isset($oldValues[$fieldName]) || ($oldValues[$fieldName] != $fieldValue))
+                if (($oldValues[$fieldName] ?? null) != $fieldValue) // Processed by afterburner.sh
+                // if (!isset($oldValues[$fieldName]) || ($oldValues[$fieldName] != $fieldValue)) // Processed by afterburner.sh
                     $dataset->SetFieldValueByName($fieldName, $fieldValue);
             } else {
                 $dataset->SetFieldValueByName($fieldName, $fieldValue);
