@@ -1398,6 +1398,26 @@ function drawWorkflowStyles($table_name, $rowData, &$rowCellStyles, &$rowStyles,
 
 }
 
+// logTableExtendedDrawRow('interessenbindung_jahr_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);
+function logTableExtendedDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles, &$rowClasses, &$cellClasses) {
+  $logId = $rowData['log_id'];
+  $id = $rowData['id'];
+  $sql = "SELECT * FROM $table_name WHERE id = :id AND log_id < :log_id ORDER BY log_id DESC LIMIT 1;";
+  $options = array(
+      'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
+  );
+  // these many DB calls are not very efficient, it could be optimized if necessary
+  $prevRowData = lobbywatch_forms_db_query($sql, array(':id' => $id, ':log_id' => $logId), $options)->fetch();
+  if ($prevRowData) {
+    foreach ($rowData as $key => $value) {
+      if (!in_array($key, ['updated_date', 'updated_visa', 'action_date', 'log_id', 'snapshot_id', 'snapshot_id_beschreibung'])
+      && $value !== $prevRowData[$key]) {
+        $rowCellStyles[$key] = 'background-color: yellow;';
+      }
+    }
+  }
+}
+
 function zutrittsberechtigung_state($parlamentarier_id) {
   $zb_state = &php_static_cache(__FUNCTION__);
 
