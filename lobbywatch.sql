@@ -81,6 +81,17 @@ DELIMITER ;;
 CREATE TRIGGER `trg_branche_log_ins` AFTER INSERT ON `branche`
 FOR EACH ROW thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   INSERT INTO `branche_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `branche` WHERE id = NEW.id ;
 END ;;
@@ -2281,15 +2292,15 @@ CREATE TABLE `mv_interessenbindung` (
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Parlamentarier',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
   `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','finanziell','gesellschafter') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung',
-  `funktion_im_gremium` enum('praesident','vizepraesident','mitglied') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
+  `funktion_im_gremium` enum('praesident','vizepraesident','mitglied') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwaltungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
   `deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Ist diese Interessenbindung deklarationspflichtig? Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `status` enum('deklariert','nicht-deklariert') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'deklariert' COMMENT 'Status der Interessenbindung',
   `hauptberuflich` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)',
-  `behoerden_vertreter` enum('J','N') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Enstand diese Interessenbindung als Behoerdenvertreter von amteswegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von amteswegen einsitz nimmt.',
+  `behoerden_vertreter` enum('J','N') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Entstand diese Interessenbindung als Behördenvertreter von Amtes wegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von Amtes wegen Einsitz nimmt.',
   `beschreibung` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `beschreibung_fr` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Französische Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `quelle_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'URL der Quelle; zum Beleg',
-  `quelle_url_gueltig` tinyint(1) DEFAULT NULL COMMENT 'Ist Quell-URL noch gueltig? Funktioniert er noch?',
+  `quelle_url_gueltig` tinyint(1) DEFAULT NULL COMMENT 'Ist die Quell-URL noch gültig? Funktioniert er noch?',
   `quelle` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen',
   `von` date DEFAULT NULL COMMENT 'Beginn der Interessenbindung, leer (NULL) = unbekannt',
   `bis` date DEFAULT NULL COMMENT 'Ende der Interessenbindung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
@@ -2346,10 +2357,10 @@ CREATE TABLE `mv_mandat` (
   `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','finanziell','gesellschafter') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation',
   `funktion_im_gremium` enum('praesident','vizepraesident','mitglied') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
   `hauptberuflich` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Eigene Firma/Haupttätigkeit: Ist dieses Mandat hauptberuflich? (Hauptberufliche Mandate müssen nicht offengelegt werden.)',
-  `beschreibung` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Umschreibung des Mandates. Beschreibung wird nicht ausgwertet, jedoch in den Resultaten angezeigt.',
+  `beschreibung` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Umschreibung des Mandates. Beschreibung wird nicht ausgewertet, jedoch in den Resultaten angezeigt.',
   `beschreibung_fr` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Französische Bezeichung des Mandates. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `quelle_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'URL der Quelle; zum Beleg',
-  `quelle_url_gueltig` tinyint(1) DEFAULT NULL COMMENT 'Ist Quell-URL noch gueltig? Funktioniert er noch?',
+  `quelle_url_gueltig` tinyint(1) DEFAULT NULL COMMENT 'Ist die Quell-URL noch gültig? Funktioniert er noch?',
   `quelle` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen',
   `von` date DEFAULT NULL COMMENT 'Beginn des Mandates, leer (NULL) = unbekannt',
   `bis` date DEFAULT NULL COMMENT 'Ende des Mandates, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
@@ -2660,7 +2671,7 @@ CREATE TABLE `mv_parlamentarier` (
   `linkedin_profil_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'URL zum LinkedIn-Profil',
   `xing_profil_name` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link',
   `facebook_name` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt',
-  `wikipedia` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Link zum Wkipedia-Eintrag des Parlamentariers',
+  `wikipedia` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag des Parlamentariers',
   `sprache` enum('de','fr','it','sk','rm','tr') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Sprache des Parlamentariers, wird von ws.parlament.ch importiert',
   `arbeitssprache` enum('de','fr','it') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch',
   `adresse_firma` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch',
@@ -2862,7 +2873,7 @@ CREATE TABLE `mv_zutrittsberechtigung` (
   `parlamentarier_kommissionen_zutrittsberechtigung` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/zutrittsberechtigung Trigger])',
   `beruf` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Beruf der Person',
   `beruf_fr` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Französische Bezeichung des Beruf der Person',
-  `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremschlüssel zur Interessengruppe für den Beruf',
+  `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zur Interessengruppe für den Beruf',
   `partei_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Partei. Parteimitgliedschaft der zutrittsberechtigten Person.',
   `geschlecht` enum('M','F') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Geschlecht des Parlamentariers, M=Mann, F=Frau',
   `arbeitssprache` enum('de','fr','it') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Arbeitssprache des Zutrittsberechtigten',
@@ -3005,10 +3016,10 @@ CREATE TABLE `organisation` (
   `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `organisation_name_de_unique` (`name_de`) COMMENT 'Fachlicher unique constraint',
-  UNIQUE KEY `organisation_name_fr_unique` (`name_fr`) COMMENT 'Fachlicher unique constraint',
-  UNIQUE KEY `organisation_name_it_unique` (`name_it`) COMMENT 'Fachlicher unique constraint',
   UNIQUE KEY `uid_unique` (`uid`) COMMENT 'Fachlicher unique constraint',
+  UNIQUE KEY `organisation_name_de_unique` (`name_de`,`rechtsform`) USING BTREE COMMENT 'Fachlicher unique constraint',
+  UNIQUE KEY `organisation_name_fr_unique` (`name_fr`,`rechtsform`) USING BTREE COMMENT 'Fachlicher unique constraint',
+  UNIQUE KEY `organisation_name_it_unique` (`name_it`,`rechtsform`) USING BTREE COMMENT 'Fachlicher unique constraint',
   KEY `idx_lobbygroup` (`interessengruppe_id`),
   KEY `interessengruppe2_id` (`interessengruppe2_id`),
   KEY `interessengruppe3_id` (`interessengruppe3_id`),
@@ -5747,6 +5758,67 @@ CREATE TABLE `user_permission` (
 SET character_set_client = @saved_cs_client ;
 
 --
+-- Temporary table structure for view `uv_interessenbindung_jahr`
+--
+
+DROP TABLE IF EXISTS `uv_interessenbindung_jahr`;
+DROP VIEW IF EXISTS `uv_interessenbindung_jahr`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE VIEW `uv_interessenbindung_jahr` AS SELECT 
+ 1 AS `id`,
+ 1 AS `interessenbindung_id`,
+ 1 AS `jahr`,
+ 1 AS `verguetung`,
+ 1 AS `beschreibung`,
+ 1 AS `quelle_url`,
+ 1 AS `quelle_url_gueltig`,
+ 1 AS `quelle`,
+ 1 AS `notizen`,
+ 1 AS `eingabe_abgeschlossen_visa`,
+ 1 AS `eingabe_abgeschlossen_datum`,
+ 1 AS `kontrolliert_visa`,
+ 1 AS `kontrolliert_datum`,
+ 1 AS `autorisiert_visa`,
+ 1 AS `autorisiert_datum`,
+ 1 AS `freigabe_visa`,
+ 1 AS `freigabe_datum`,
+ 1 AS `created_visa`,
+ 1 AS `created_date`,
+ 1 AS `updated_visa`,
+ 1 AS `updated_date`,
+ 1 AS `interessenbindung_parlamentarier_id`,
+ 1 AS `interessenbindung_organisation_id`,
+ 1 AS `interessenbindung_art`,
+ 1 AS `interessenbindung_funktion_im_gremium`,
+ 1 AS `interessenbindung_deklarationstyp`,
+ 1 AS `interessenbindung_status`,
+ 1 AS `interessenbindung_hauptberuflich`,
+ 1 AS `interessenbindung_behoerden_vertreter`,
+ 1 AS `interessenbindung_beschreibung`,
+ 1 AS `interessenbindung_beschreibung_fr`,
+ 1 AS `interessenbindung_quelle_url`,
+ 1 AS `interessenbindung_quelle_url_gueltig`,
+ 1 AS `interessenbindung_quelle`,
+ 1 AS `interessenbindung_von`,
+ 1 AS `interessenbindung_bis`,
+ 1 AS `interessenbindung_notizen`,
+ 1 AS `interessenbindung_updated_by_import`,
+ 1 AS `interessenbindung_eingabe_abgeschlossen_visa`,
+ 1 AS `interessenbindung_eingabe_abgeschlossen_datum`,
+ 1 AS `interessenbindung_kontrolliert_visa`,
+ 1 AS `interessenbindung_kontrolliert_datum`,
+ 1 AS `interessenbindung_autorisiert_visa`,
+ 1 AS `interessenbindung_autorisiert_datum`,
+ 1 AS `interessenbindung_freigabe_visa`,
+ 1 AS `interessenbindung_freigabe_datum`,
+ 1 AS `interessenbindung_created_visa`,
+ 1 AS `interessenbindung_created_date`,
+ 1 AS `interessenbindung_updated_visa`,
+ 1 AS `interessenbindung_updated_date`;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Temporary table structure for view `v_branche`
 --
 
@@ -6312,6 +6384,23 @@ CREATE VIEW `v_interessenbindung_jahr` AS SELECT
  1 AS `eingabe_abgeschlossen_datum_unix`,
  1 AS `kontrolliert_datum_unix`,
  1 AS `freigabe_datum_unix`;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_interessenbindung_jahr_current`
+--
+
+DROP TABLE IF EXISTS `v_interessenbindung_jahr_current`;
+DROP VIEW IF EXISTS `v_interessenbindung_jahr_current`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE VIEW `v_interessenbindung_jahr_current` AS SELECT 
+ 1 AS `interessenbindung_id`,
+ 1 AS `verguetung`,
+ 1 AS `verguetung_jahr`,
+ 1 AS `verguetung_beschreibung`,
+ 1 AS `published`,
+ 1 AS `freigabe_datum`;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -11450,6 +11539,17 @@ thisTrigger: BEGIN
     updated_visa = CONCAT(NEW.updated_visa, '*'),
     updated_date = NEW.updated_date
     WHERE person.id = NEW.person_id AND (NEW.bis < NOW());
+
+    
+    IF OLD.person_id <> NEW.person_id THEN
+      UPDATE person
+        SET
+        parlamentarier_kommissionen = NULL,
+        zutrittsberechtigung_von = NULL,
+        updated_visa = CONCAT(NEW.updated_visa, '*'),
+        updated_date = NEW.updated_date
+        WHERE person.id = OLD.person_id;
+    END IF;
 END ;;
 DELIMITER ;
 SET sql_mode              = @saved_sql_mode  ;
@@ -11890,6 +11990,24 @@ SET collation_connection  = @saved_col_connection  ;
 USE `lobbywatch`;
 
 --
+-- Final view structure for view `uv_interessenbindung_jahr`
+--
+
+DROP VIEW IF EXISTS `uv_interessenbindung_jahr`;
+SET @saved_cs_client          = @@character_set_client ;
+SET @saved_cs_results         = @@character_set_results ;
+SET @saved_col_connection     = @@collation_connection ;
+SET character_set_client      = utf8mb4 ;
+SET character_set_results     = utf8mb4 ;
+SET collation_connection      = utf8mb4_unicode_ci ;
+CREATE  
+ 
+VIEW `uv_interessenbindung_jahr` AS select `interessenbindung_jahr`.`id` AS `id`,`interessenbindung_jahr`.`interessenbindung_id` AS `interessenbindung_id`,`interessenbindung_jahr`.`jahr` AS `jahr`,`interessenbindung_jahr`.`verguetung` AS `verguetung`,`interessenbindung_jahr`.`beschreibung` AS `beschreibung`,`interessenbindung_jahr`.`quelle_url` AS `quelle_url`,`interessenbindung_jahr`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung_jahr`.`quelle` AS `quelle`,`interessenbindung_jahr`.`notizen` AS `notizen`,`interessenbindung_jahr`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung_jahr`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung_jahr`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung_jahr`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung_jahr`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung_jahr`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung_jahr`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung_jahr`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung_jahr`.`created_visa` AS `created_visa`,`interessenbindung_jahr`.`created_date` AS `created_date`,`interessenbindung_jahr`.`updated_visa` AS `updated_visa`,`interessenbindung_jahr`.`updated_date` AS `updated_date`,`interessenbindung`.`parlamentarier_id` AS `interessenbindung_parlamentarier_id`,`interessenbindung`.`organisation_id` AS `interessenbindung_organisation_id`,`interessenbindung`.`art` AS `interessenbindung_art`,`interessenbindung`.`funktion_im_gremium` AS `interessenbindung_funktion_im_gremium`,`interessenbindung`.`deklarationstyp` AS `interessenbindung_deklarationstyp`,`interessenbindung`.`status` AS `interessenbindung_status`,`interessenbindung`.`hauptberuflich` AS `interessenbindung_hauptberuflich`,`interessenbindung`.`behoerden_vertreter` AS `interessenbindung_behoerden_vertreter`,`interessenbindung`.`beschreibung` AS `interessenbindung_beschreibung`,`interessenbindung`.`beschreibung_fr` AS `interessenbindung_beschreibung_fr`,`interessenbindung`.`quelle_url` AS `interessenbindung_quelle_url`,`interessenbindung`.`quelle_url_gueltig` AS `interessenbindung_quelle_url_gueltig`,`interessenbindung`.`quelle` AS `interessenbindung_quelle`,`interessenbindung`.`von` AS `interessenbindung_von`,`interessenbindung`.`bis` AS `interessenbindung_bis`,`interessenbindung`.`notizen` AS `interessenbindung_notizen`,`interessenbindung`.`updated_by_import` AS `interessenbindung_updated_by_import`,`interessenbindung`.`eingabe_abgeschlossen_visa` AS `interessenbindung_eingabe_abgeschlossen_visa`,`interessenbindung`.`eingabe_abgeschlossen_datum` AS `interessenbindung_eingabe_abgeschlossen_datum`,`interessenbindung`.`kontrolliert_visa` AS `interessenbindung_kontrolliert_visa`,`interessenbindung`.`kontrolliert_datum` AS `interessenbindung_kontrolliert_datum`,`interessenbindung`.`autorisiert_visa` AS `interessenbindung_autorisiert_visa`,`interessenbindung`.`autorisiert_datum` AS `interessenbindung_autorisiert_datum`,`interessenbindung`.`freigabe_visa` AS `interessenbindung_freigabe_visa`,`interessenbindung`.`freigabe_datum` AS `interessenbindung_freigabe_datum`,`interessenbindung`.`created_visa` AS `interessenbindung_created_visa`,`interessenbindung`.`created_date` AS `interessenbindung_created_date`,`interessenbindung`.`updated_visa` AS `interessenbindung_updated_visa`,`interessenbindung`.`updated_date` AS `interessenbindung_updated_date` from (`interessenbindung_jahr` join `interessenbindung` on((`interessenbindung_jahr`.`interessenbindung_id` = `interessenbindung`.`id`))) ;
+SET character_set_client      = @saved_cs_client ;
+SET character_set_results     = @saved_cs_results ;
+SET collation_connection      = @saved_col_connection ;
+
+--
 -- Final view structure for view `v_branche`
 --
 
@@ -12088,6 +12206,24 @@ SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
 
 --
+-- Final view structure for view `v_interessenbindung_jahr_current`
+--
+
+DROP VIEW IF EXISTS `v_interessenbindung_jahr_current`;
+SET @saved_cs_client          = @@character_set_client ;
+SET @saved_cs_results         = @@character_set_results ;
+SET @saved_col_connection     = @@collation_connection ;
+SET character_set_client      = utf8mb4 ;
+SET character_set_results     = utf8mb4 ;
+SET collation_connection      = utf8mb4_unicode_ci ;
+CREATE  
+ 
+VIEW `v_interessenbindung_jahr_current` AS select `interessenbindung`.`id` AS `interessenbindung_id`,`interessenbindung_jahr`.`verguetung` AS `verguetung`,`interessenbindung_jahr`.`jahr` AS `verguetung_jahr`,`interessenbindung_jahr`.`beschreibung` AS `verguetung_beschreibung`,`interessenbindung_jahr`.`published` AS `published`,`interessenbindung_jahr`.`freigabe_datum` AS `freigabe_datum` from (`v_interessenbindung_simple` `interessenbindung` left join `v_interessenbindung_jahr` `interessenbindung_jahr` on(((`interessenbindung`.`id` = `interessenbindung_jahr`.`interessenbindung_id`) and (`interessenbindung_jahr`.`jahr` = year(now()))))) ;
+SET character_set_client      = @saved_cs_client ;
+SET character_set_results     = @saved_cs_results ;
+SET collation_connection      = @saved_col_connection ;
+
+--
 -- Final view structure for view `v_interessenbindung_jahr_last`
 --
 
@@ -12118,7 +12254,7 @@ SET character_set_results     = utf8mb4 ;
 SET collation_connection      = utf8mb4_unicode_ci ;
 CREATE  
  
-VIEW `v_interessenbindung_jahr_max` AS select `interessenbindung_jahr`.`interessenbindung_id` AS `interessenbindung_id`,`interessenbindung_jahr`.`verguetung` AS `verguetung`,`interessenbindung_jahr`.`jahr` AS `verguetung_jahr`,`interessenbindung_jahr`.`beschreibung` AS `verguetung_beschreibung`,`interessenbindung_jahr`.`published` AS `published`,`interessenbindung_jahr`.`freigabe_datum` AS `freigabe_datum` from (`v_interessenbindung_simple` `interessenbindung` left join `v_interessenbindung_jahr` `interessenbindung_jahr` on(((`interessenbindung`.`id` = `interessenbindung_jahr`.`interessenbindung_id`) and (`interessenbindung_jahr`.`jahr` = (select max(`ijn`.`jahr`) from `v_interessenbindung_jahr` `ijn` where ((`ijn`.`interessenbindung_id` = `interessenbindung`.`id`) and (`ijn`.`freigabe_datum` <= now()))))))) ;
+VIEW `v_interessenbindung_jahr_max` AS select `interessenbindung`.`id` AS `interessenbindung_id`,`interessenbindung_jahr`.`verguetung` AS `verguetung`,`interessenbindung_jahr`.`jahr` AS `verguetung_jahr`,`interessenbindung_jahr`.`beschreibung` AS `verguetung_beschreibung`,`interessenbindung_jahr`.`published` AS `published`,`interessenbindung_jahr`.`freigabe_datum` AS `freigabe_datum` from (`v_interessenbindung_simple` `interessenbindung` left join `v_interessenbindung_jahr` `interessenbindung_jahr` on(((`interessenbindung`.`id` = `interessenbindung_jahr`.`interessenbindung_id`) and (`interessenbindung_jahr`.`jahr` = (select max(`ijn`.`jahr`) from `v_interessenbindung_jahr` `ijn` where ((`ijn`.`interessenbindung_id` = `interessenbindung`.`id`) and (`ijn`.`freigabe_datum` <= now()))))))) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -13986,4 +14122,4 @@ SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS ;
 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION ;
 SET SQL_NOTES=@OLD_SQL_NOTES ;
 
--- Dump completed on 2020-05-24  9:12:06
+-- Dump completed on 2020-10-03 12:46:47
