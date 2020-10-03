@@ -704,3 +704,7 @@ DELETE FROM `person` WHERE `nachname` IN ('Herr', 'Frau', 'Madame', 'Monsieur');
 
 DELETE FROM zutrittsberechtigung_log WHERE person_id IN (SELECT id FROM `person_log` WHERE `nachname` IN ('Herr', 'Frau', 'Madame', 'Monsieur'));
 DELETE FROM `person_log` WHERE `nachname` IN ('Herr', 'Frau', 'Madame', 'Monsieur');
+
+-- 03.10.2020 generate alias cols
+
+SELECT CONCAT('interessenbindung.', COLUMN_NAME, ' AS interessenbindung_', COLUMN_NAME, ',') FROM information_schema.COLUMNS WHERE `TABLE_NAME`='interessenbindung' and `TABLE_SCHEMA`='lobbywatch' ORDER BY ORDINAL_POSITION;

@@ -2309,7 +2309,7 @@
     
         protected function doCustomDefaultValues(&$values, &$handled) 
         {
-            $values['jahr'] = SMDateTime::now()->getYear();  
+            $values['jahr'] = SMDateTime::now()->getYear();
             $handled = true;
         }
     

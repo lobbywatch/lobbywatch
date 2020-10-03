@@ -529,6 +529,42 @@ IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(interessenbindung_jahr.created_date) as created_date_unix, UNIX_TIMESTAMP(interessenbindung_jahr.updated_date) as updated_date_unix, UNIX_TIMESTAMP(interessenbindung_jahr.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(interessenbindung_jahr.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(interessenbindung_jahr.freigabe_datum) as freigabe_datum_unix
 FROM `interessenbindung_jahr`;
 
+-- updatable view
+CREATE OR REPLACE VIEW `uv_interessenbindung_jahr` AS
+SELECT interessenbindung_jahr.*,
+-- interessenbindung.id AS interessenbindung_id, (duplicate)
+interessenbindung.parlamentarier_id AS interessenbindung_parlamentarier_id,
+interessenbindung.organisation_id AS interessenbindung_organisation_id,
+interessenbindung.art AS interessenbindung_art,
+interessenbindung.funktion_im_gremium AS interessenbindung_funktion_im_gremium,
+interessenbindung.deklarationstyp AS interessenbindung_deklarationstyp,
+interessenbindung.status AS interessenbindung_status,
+interessenbindung.hauptberuflich AS interessenbindung_hauptberuflich,
+interessenbindung.behoerden_vertreter AS interessenbindung_behoerden_vertreter,
+interessenbindung.beschreibung AS interessenbindung_beschreibung,
+interessenbindung.beschreibung_fr AS interessenbindung_beschreibung_fr,
+interessenbindung.quelle_url AS interessenbindung_quelle_url,
+interessenbindung.quelle_url_gueltig AS interessenbindung_quelle_url_gueltig,
+interessenbindung.quelle AS interessenbindung_quelle,
+interessenbindung.von AS interessenbindung_von,
+interessenbindung.bis AS interessenbindung_bis,
+interessenbindung.notizen AS interessenbindung_notizen,
+interessenbindung.updated_by_import AS interessenbindung_updated_by_import,
+interessenbindung.eingabe_abgeschlossen_visa AS interessenbindung_eingabe_abgeschlossen_visa,
+interessenbindung.eingabe_abgeschlossen_datum AS interessenbindung_eingabe_abgeschlossen_datum,
+interessenbindung.kontrolliert_visa AS interessenbindung_kontrolliert_visa,
+interessenbindung.kontrolliert_datum AS interessenbindung_kontrolliert_datum,
+interessenbindung.autorisiert_visa AS interessenbindung_autorisiert_visa,
+interessenbindung.autorisiert_datum AS interessenbindung_autorisiert_datum,
+interessenbindung.freigabe_visa AS interessenbindung_freigabe_visa,
+interessenbindung.freigabe_datum AS interessenbindung_freigabe_datum,
+interessenbindung.created_visa AS interessenbindung_created_visa,
+interessenbindung.created_date AS interessenbindung_created_date,
+interessenbindung.updated_visa AS interessenbindung_updated_visa,
+interessenbindung.updated_date AS interessenbindung_updated_date
+FROM `interessenbindung_jahr`
+JOIN interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id;
+
 CREATE OR REPLACE VIEW `v_mandat_jahr` AS
 SELECT mandat_jahr.*,
 IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
@@ -1383,7 +1419,7 @@ LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
 -- Much faster than v_interessenbindung_jahr_last
 -- Only verguetung
 CREATE OR REPLACE VIEW `v_interessenbindung_jahr_max` AS
-SELECT interessenbindung_jahr.interessenbindung_id
+SELECT interessenbindung.id AS interessenbindung_id
 , interessenbindung_jahr.verguetung
 , interessenbindung_jahr.jahr as verguetung_jahr
 , interessenbindung_jahr.beschreibung as verguetung_beschreibung
@@ -1397,6 +1433,17 @@ LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
     WHERE ijn.interessenbindung_id = interessenbindung.id
       AND ijn.freigabe_datum <= NOW()
   )
+;
+CREATE OR REPLACE VIEW `v_interessenbindung_jahr_current` AS
+SELECT interessenbindung.id AS interessenbindung_id
+, interessenbindung_jahr.verguetung
+, interessenbindung_jahr.jahr as verguetung_jahr
+, interessenbindung_jahr.beschreibung as verguetung_beschreibung
+, interessenbindung_jahr.published as published
+, interessenbindung_jahr.freigabe_datum as freigabe_datum
+FROM v_interessenbindung_simple interessenbindung
+LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
+  ON interessenbindung.id = interessenbindung_jahr.interessenbindung_id AND interessenbindung_jahr.jahr = YEAR(NOW())
 ;
 
 -- Interessenbindungstransparenz eines Parlamentariers

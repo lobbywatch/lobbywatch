@@ -114,7 +114,11 @@ UNION (SELECT 'settings_category' tn, 'Einstellungskategorien' n, (select count(
     <DataSource name="parlamentarier_anhang"/>
     <DataSource name="person_anhang"/>
     <DataSource name="parlamentarier_transparenz"/>
-    <DataSource name="interessenbindung_jahr"/>
+    <DataSource name="uv_interessenbindung_jahr">
+      <PrimaryKeyFields>
+        <Field name="id" isAutoInc="true"/>
+      </PrimaryKeyFields>
+    </DataSource>
   </DataSources>
   <Presentation disableMagicQuotesRuntime="false" showEnvironmentVariables="false" showExecutedQueries="false" showPHPErrorsAndWarnings="false">
     <Pages>
@@ -20547,7 +20551,7 @@ check_bis_date($page, $rowData, $cancel, $message, $tableName);                <
                 <CustomRenderColumnHandlerText enabled="true">
 customOnCustomRenderColumn('interessenbindung_jahr', $fieldName, $fieldData, $rowData, $customText, $handled);                </CustomRenderColumnHandlerText>
                 <OnCustomDefaultValues enabled="true">
-$values['jahr'] = SMDateTime::now()-&gt;getYear();  
+$values['jahr'] = SMDateTime::now()-&gt;getYear();
 $handled = true;                </OnCustomDefaultValues>
                 <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);                </OnGetCustomTemplate>
@@ -20592,7 +20596,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="interessenbindung_jahr" numberByDataSource="0" fileName="interessenbindung_jahr" caption="Interessenbindungsvergütungen" shortCaption="Interessenbindungsvergütungen" groupName="&lt;span class=&quot;releation-menu important-relation-menu&quot;&gt;Verbindungen&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
+      <Page type="table" tableName="uv_interessenbindung_jahr" numberByDataSource="0" fileName="interessenbindung_jahr" caption="Interessenbindungsvergütungen" shortCaption="Interessenbindungsvergütungen" groupName="&lt;span class=&quot;releation-menu important-relation-menu&quot;&gt;Verbindungen&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
         <DefaultSortedColumns>
           <Column fieldName="updated_date" orderType="1"/>
         </DefaultSortedColumns>
@@ -20634,11 +20638,11 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
           </ColumnPresentation>
           <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Beschreibung der Vergütung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt." canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
-            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+            <EditProperties type="textBox" maxLength="150"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="quelle_url" caption="Quelle Url" headerHint="URL der Quelle; zum Beleg" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
-            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+            <EditProperties type="textBox" maxLength="255"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" headerHint="Ist Quell-URL noch gueltig? Funktioniert er noch?" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
             <ViewProperties type="text">
@@ -20702,6 +20706,146 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_parlamentarier_id" caption=" Parlamentarier" canSetNull="true" enabled="false" selectedFilterOperators="1573119">
+            <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <ViewProperties type="text"/>
+            <EditProperties type="dynamicCombobox"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_organisation_id" caption="Organisation" canSetNull="true" enabled="false" selectedFilterOperators="1573119">
+            <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <ViewProperties type="text"/>
+            <EditProperties type="dynamicCombobox"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_art" caption="Interessenbindung Art" canSetNull="true" enabled="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="comboBox">
+              <Values>
+                <Value name="mitglied" caption="mitglied"/>
+                <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
+                <Value name="vorstand" caption="vorstand"/>
+                <Value name="taetig" caption="taetig"/>
+                <Value name="beirat" caption="beirat"/>
+                <Value name="finanziell" caption="finanziell"/>
+                <Value name="gesellschafter" caption="gesellschafter"/>
+              </Values>
+            </EditProperties>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_funktion_im_gremium" caption="Interessenbindung Funktion Im Gremium" canSetNull="true" readOnly="true" enabled="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_deklarationstyp" caption="Interessenbindung Deklarationstyp" canSetNull="true" enabled="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="comboBox">
+              <Values>
+                <Value name="deklarationspflichtig" caption="deklarationspflichtig"/>
+                <Value name="nicht deklarationspflicht" caption="nicht deklarationspflicht"/>
+              </Values>
+            </EditProperties>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_status" caption="Interessenbindung Status" canSetNull="true" enabled="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="comboBox">
+              <Values>
+                <Value name="deklariert" caption="deklariert"/>
+                <Value name="nicht-deklariert" caption="nicht-deklariert"/>
+              </Values>
+            </EditProperties>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_hauptberuflich" caption="Interessenbindung Hauptberuflich" canSetNull="true" enabled="false" selectedFilterOperators="1573119">
+            <ViewProperties type="checkBox" displayType="image"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_behoerden_vertreter" caption="Interessenbindung Behoerden Vertreter" canSetNull="true" enabled="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_beschreibung" caption="Interessenbindung Beschreibung" showColumnFilter="false" canSetNull="true" enabled="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_beschreibung_fr" caption="Interessenbindung Beschreibung Fr" showColumnFilter="false" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_quelle_url" caption="Interessenbindung Quelle Url" showColumnFilter="false" canSetNull="true" enabled="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_quelle_url_gueltig" caption="Interessenbindung Quelle Url Gueltig" showColumnFilter="false" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="1573119">
+            <ViewProperties type="text">
+              <Format type="number" thousandSeparator="'"/>
+            </ViewProperties>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_quelle" caption="Interessenbindung Quelle" showColumnFilter="false" canSetNull="true" enabled="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textBox" maxLength="80"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_von" caption="Interessenbindung Von" canSetNull="true" enabled="false" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_bis" caption="Interessenbindung Bis" canSetNull="true" enabled="false" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_notizen" caption="Interessenbindung Notizen" showColumnFilter="false" canSetNull="true" enabled="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_updated_by_import" caption="Interessenbindung Updated By Import" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_eingabe_abgeschlossen_visa" caption="Interessenbindung Eingabe Abgeschlossen Visa" showColumnFilter="false" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="10"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_eingabe_abgeschlossen_datum" caption="Interessenbindung Eingabe Abgeschlossen Datum" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_kontrolliert_visa" caption="Interessenbindung Kontrolliert Visa" showColumnFilter="false" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="10"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_kontrolliert_datum" caption="Interessenbindung Kontrolliert Datum" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_autorisiert_visa" caption="Interessenbindung Autorisiert Visa" showColumnFilter="false" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="10"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_autorisiert_datum" caption="Interessenbindung Autorisiert Datum" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_freigabe_visa" caption="Interessenbindung Freigabe Visa" showColumnFilter="false" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="10"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_freigabe_datum" caption="Interessenbindung Freigabe Datum" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_created_visa" caption="Interessenbindung Created Visa" showColumnFilter="false" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="10"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_created_date" caption="Interessenbindung Created Date" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_updated_visa" caption="Interessenbindung Updated Visa" showColumnFilter="false" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="10"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_updated_date" caption="Interessenbindung Updated Date" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -20726,6 +20870,35 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
+            <Column fieldName="interessenbindung_parlamentarier_id"/>
+            <Column fieldName="interessenbindung_organisation_id"/>
+            <Column fieldName="interessenbindung_art"/>
+            <Column fieldName="interessenbindung_funktion_im_gremium"/>
+            <Column fieldName="interessenbindung_deklarationstyp"/>
+            <Column fieldName="interessenbindung_status"/>
+            <Column fieldName="interessenbindung_hauptberuflich"/>
+            <Column fieldName="interessenbindung_behoerden_vertreter"/>
+            <Column fieldName="interessenbindung_beschreibung"/>
+            <Column fieldName="interessenbindung_beschreibung_fr" visible="false"/>
+            <Column fieldName="interessenbindung_quelle_url"/>
+            <Column fieldName="interessenbindung_quelle_url_gueltig" visible="false"/>
+            <Column fieldName="interessenbindung_quelle"/>
+            <Column fieldName="interessenbindung_von"/>
+            <Column fieldName="interessenbindung_bis"/>
+            <Column fieldName="interessenbindung_notizen"/>
+            <Column fieldName="interessenbindung_updated_by_import" visible="false"/>
+            <Column fieldName="interessenbindung_eingabe_abgeschlossen_visa" visible="false"/>
+            <Column fieldName="interessenbindung_eingabe_abgeschlossen_datum" visible="false"/>
+            <Column fieldName="interessenbindung_kontrolliert_visa" visible="false"/>
+            <Column fieldName="interessenbindung_kontrolliert_datum" visible="false"/>
+            <Column fieldName="interessenbindung_autorisiert_visa" visible="false"/>
+            <Column fieldName="interessenbindung_autorisiert_datum" visible="false"/>
+            <Column fieldName="interessenbindung_freigabe_visa" visible="false"/>
+            <Column fieldName="interessenbindung_freigabe_datum" visible="false"/>
+            <Column fieldName="interessenbindung_created_visa" visible="false"/>
+            <Column fieldName="interessenbindung_created_date" visible="false"/>
+            <Column fieldName="interessenbindung_updated_visa" visible="false"/>
+            <Column fieldName="interessenbindung_updated_date" visible="false"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -20749,6 +20922,35 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
+            <Column fieldName="interessenbindung_parlamentarier_id"/>
+            <Column fieldName="interessenbindung_organisation_id"/>
+            <Column fieldName="interessenbindung_art"/>
+            <Column fieldName="interessenbindung_funktion_im_gremium"/>
+            <Column fieldName="interessenbindung_deklarationstyp"/>
+            <Column fieldName="interessenbindung_status"/>
+            <Column fieldName="interessenbindung_hauptberuflich"/>
+            <Column fieldName="interessenbindung_behoerden_vertreter"/>
+            <Column fieldName="interessenbindung_beschreibung"/>
+            <Column fieldName="interessenbindung_beschreibung_fr" visible="false"/>
+            <Column fieldName="interessenbindung_quelle_url"/>
+            <Column fieldName="interessenbindung_quelle_url_gueltig" visible="false"/>
+            <Column fieldName="interessenbindung_quelle"/>
+            <Column fieldName="interessenbindung_von"/>
+            <Column fieldName="interessenbindung_bis"/>
+            <Column fieldName="interessenbindung_notizen"/>
+            <Column fieldName="interessenbindung_updated_by_import" visible="false"/>
+            <Column fieldName="interessenbindung_eingabe_abgeschlossen_visa" visible="false"/>
+            <Column fieldName="interessenbindung_eingabe_abgeschlossen_datum" visible="false"/>
+            <Column fieldName="interessenbindung_kontrolliert_visa" visible="false"/>
+            <Column fieldName="interessenbindung_kontrolliert_datum" visible="false"/>
+            <Column fieldName="interessenbindung_autorisiert_visa" visible="false"/>
+            <Column fieldName="interessenbindung_autorisiert_datum" visible="false"/>
+            <Column fieldName="interessenbindung_freigabe_visa" visible="false"/>
+            <Column fieldName="interessenbindung_freigabe_datum" visible="false"/>
+            <Column fieldName="interessenbindung_created_visa" visible="false"/>
+            <Column fieldName="interessenbindung_created_date" visible="false"/>
+            <Column fieldName="interessenbindung_updated_visa" visible="false"/>
+            <Column fieldName="interessenbindung_updated_date" visible="false"/>
           </View>
           <Edit>
             <Column fieldName="id" visible="false"/>
@@ -20772,6 +20974,35 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
+            <Column fieldName="interessenbindung_parlamentarier_id"/>
+            <Column fieldName="interessenbindung_organisation_id"/>
+            <Column fieldName="interessenbindung_art"/>
+            <Column fieldName="interessenbindung_funktion_im_gremium"/>
+            <Column fieldName="interessenbindung_deklarationstyp"/>
+            <Column fieldName="interessenbindung_status"/>
+            <Column fieldName="interessenbindung_hauptberuflich"/>
+            <Column fieldName="interessenbindung_behoerden_vertreter"/>
+            <Column fieldName="interessenbindung_beschreibung"/>
+            <Column fieldName="interessenbindung_beschreibung_fr" visible="false"/>
+            <Column fieldName="interessenbindung_quelle_url"/>
+            <Column fieldName="interessenbindung_quelle_url_gueltig" visible="false"/>
+            <Column fieldName="interessenbindung_quelle"/>
+            <Column fieldName="interessenbindung_von"/>
+            <Column fieldName="interessenbindung_bis"/>
+            <Column fieldName="interessenbindung_notizen"/>
+            <Column fieldName="interessenbindung_updated_by_import" visible="false"/>
+            <Column fieldName="interessenbindung_eingabe_abgeschlossen_visa" visible="false"/>
+            <Column fieldName="interessenbindung_eingabe_abgeschlossen_datum" visible="false"/>
+            <Column fieldName="interessenbindung_kontrolliert_visa" visible="false"/>
+            <Column fieldName="interessenbindung_kontrolliert_datum" visible="false"/>
+            <Column fieldName="interessenbindung_autorisiert_visa" visible="false"/>
+            <Column fieldName="interessenbindung_autorisiert_datum" visible="false"/>
+            <Column fieldName="interessenbindung_freigabe_visa" visible="false"/>
+            <Column fieldName="interessenbindung_freigabe_datum" visible="false"/>
+            <Column fieldName="interessenbindung_created_visa" visible="false"/>
+            <Column fieldName="interessenbindung_created_date" visible="false"/>
+            <Column fieldName="interessenbindung_updated_visa" visible="false"/>
+            <Column fieldName="interessenbindung_updated_date" visible="false"/>
           </Edit>
           <Insert>
             <Column fieldName="id" visible="false"/>
@@ -20795,6 +21026,35 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="created_date" visible="false"/>
             <Column fieldName="updated_visa" visible="false"/>
             <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="interessenbindung_parlamentarier_id" visible="false"/>
+            <Column fieldName="interessenbindung_organisation_id" visible="false"/>
+            <Column fieldName="interessenbindung_art" visible="false"/>
+            <Column fieldName="interessenbindung_funktion_im_gremium" visible="false"/>
+            <Column fieldName="interessenbindung_deklarationstyp" visible="false"/>
+            <Column fieldName="interessenbindung_status" visible="false"/>
+            <Column fieldName="interessenbindung_hauptberuflich" visible="false"/>
+            <Column fieldName="interessenbindung_behoerden_vertreter" visible="false"/>
+            <Column fieldName="interessenbindung_beschreibung" visible="false"/>
+            <Column fieldName="interessenbindung_beschreibung_fr" visible="false"/>
+            <Column fieldName="interessenbindung_quelle_url" visible="false"/>
+            <Column fieldName="interessenbindung_quelle_url_gueltig" visible="false"/>
+            <Column fieldName="interessenbindung_quelle" visible="false"/>
+            <Column fieldName="interessenbindung_von" visible="false"/>
+            <Column fieldName="interessenbindung_bis" visible="false"/>
+            <Column fieldName="interessenbindung_notizen" visible="false"/>
+            <Column fieldName="interessenbindung_updated_by_import" visible="false"/>
+            <Column fieldName="interessenbindung_eingabe_abgeschlossen_visa" visible="false"/>
+            <Column fieldName="interessenbindung_eingabe_abgeschlossen_datum" visible="false"/>
+            <Column fieldName="interessenbindung_kontrolliert_visa" visible="false"/>
+            <Column fieldName="interessenbindung_kontrolliert_datum" visible="false"/>
+            <Column fieldName="interessenbindung_autorisiert_visa" visible="false"/>
+            <Column fieldName="interessenbindung_autorisiert_datum" visible="false"/>
+            <Column fieldName="interessenbindung_freigabe_visa" visible="false"/>
+            <Column fieldName="interessenbindung_freigabe_datum" visible="false"/>
+            <Column fieldName="interessenbindung_created_visa" visible="false"/>
+            <Column fieldName="interessenbindung_created_date" visible="false"/>
+            <Column fieldName="interessenbindung_updated_visa" visible="false"/>
+            <Column fieldName="interessenbindung_updated_date" visible="false"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -20818,6 +21078,35 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="created_date" visible="false"/>
             <Column fieldName="updated_visa" visible="false"/>
             <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="interessenbindung_parlamentarier_id"/>
+            <Column fieldName="interessenbindung_organisation_id"/>
+            <Column fieldName="interessenbindung_art" visible="false"/>
+            <Column fieldName="interessenbindung_funktion_im_gremium" visible="false"/>
+            <Column fieldName="interessenbindung_deklarationstyp" visible="false"/>
+            <Column fieldName="interessenbindung_status" visible="false"/>
+            <Column fieldName="interessenbindung_hauptberuflich" visible="false"/>
+            <Column fieldName="interessenbindung_behoerden_vertreter" visible="false"/>
+            <Column fieldName="interessenbindung_beschreibung"/>
+            <Column fieldName="interessenbindung_beschreibung_fr" visible="false"/>
+            <Column fieldName="interessenbindung_quelle_url"/>
+            <Column fieldName="interessenbindung_quelle_url_gueltig" visible="false"/>
+            <Column fieldName="interessenbindung_quelle"/>
+            <Column fieldName="interessenbindung_von" visible="false"/>
+            <Column fieldName="interessenbindung_bis" visible="false"/>
+            <Column fieldName="interessenbindung_notizen"/>
+            <Column fieldName="interessenbindung_updated_by_import" visible="false"/>
+            <Column fieldName="interessenbindung_eingabe_abgeschlossen_visa" visible="false"/>
+            <Column fieldName="interessenbindung_eingabe_abgeschlossen_datum" visible="false"/>
+            <Column fieldName="interessenbindung_kontrolliert_visa" visible="false"/>
+            <Column fieldName="interessenbindung_kontrolliert_datum" visible="false"/>
+            <Column fieldName="interessenbindung_autorisiert_visa" visible="false"/>
+            <Column fieldName="interessenbindung_autorisiert_datum" visible="false"/>
+            <Column fieldName="interessenbindung_freigabe_visa" visible="false"/>
+            <Column fieldName="interessenbindung_freigabe_datum" visible="false"/>
+            <Column fieldName="interessenbindung_created_visa" visible="false"/>
+            <Column fieldName="interessenbindung_created_date" visible="false"/>
+            <Column fieldName="interessenbindung_updated_visa" visible="false"/>
+            <Column fieldName="interessenbindung_updated_date" visible="false"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -20841,6 +21130,35 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
+            <Column fieldName="interessenbindung_parlamentarier_id"/>
+            <Column fieldName="interessenbindung_organisation_id"/>
+            <Column fieldName="interessenbindung_art"/>
+            <Column fieldName="interessenbindung_funktion_im_gremium"/>
+            <Column fieldName="interessenbindung_deklarationstyp"/>
+            <Column fieldName="interessenbindung_status"/>
+            <Column fieldName="interessenbindung_hauptberuflich"/>
+            <Column fieldName="interessenbindung_behoerden_vertreter"/>
+            <Column fieldName="interessenbindung_beschreibung"/>
+            <Column fieldName="interessenbindung_beschreibung_fr" visible="false"/>
+            <Column fieldName="interessenbindung_quelle_url"/>
+            <Column fieldName="interessenbindung_quelle_url_gueltig" visible="false"/>
+            <Column fieldName="interessenbindung_quelle"/>
+            <Column fieldName="interessenbindung_von"/>
+            <Column fieldName="interessenbindung_bis"/>
+            <Column fieldName="interessenbindung_notizen"/>
+            <Column fieldName="interessenbindung_updated_by_import" visible="false"/>
+            <Column fieldName="interessenbindung_eingabe_abgeschlossen_visa" visible="false"/>
+            <Column fieldName="interessenbindung_eingabe_abgeschlossen_datum" visible="false"/>
+            <Column fieldName="interessenbindung_kontrolliert_visa" visible="false"/>
+            <Column fieldName="interessenbindung_kontrolliert_datum" visible="false"/>
+            <Column fieldName="interessenbindung_autorisiert_visa" visible="false"/>
+            <Column fieldName="interessenbindung_autorisiert_datum" visible="false"/>
+            <Column fieldName="interessenbindung_freigabe_visa" visible="false"/>
+            <Column fieldName="interessenbindung_freigabe_datum" visible="false"/>
+            <Column fieldName="interessenbindung_created_visa" visible="false"/>
+            <Column fieldName="interessenbindung_created_date" visible="false"/>
+            <Column fieldName="interessenbindung_updated_visa" visible="false"/>
+            <Column fieldName="interessenbindung_updated_date" visible="false"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -20864,6 +21182,35 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
+            <Column fieldName="interessenbindung_parlamentarier_id"/>
+            <Column fieldName="interessenbindung_organisation_id"/>
+            <Column fieldName="interessenbindung_art"/>
+            <Column fieldName="interessenbindung_funktion_im_gremium"/>
+            <Column fieldName="interessenbindung_deklarationstyp"/>
+            <Column fieldName="interessenbindung_status"/>
+            <Column fieldName="interessenbindung_hauptberuflich"/>
+            <Column fieldName="interessenbindung_behoerden_vertreter"/>
+            <Column fieldName="interessenbindung_beschreibung"/>
+            <Column fieldName="interessenbindung_beschreibung_fr" visible="false"/>
+            <Column fieldName="interessenbindung_quelle_url"/>
+            <Column fieldName="interessenbindung_quelle_url_gueltig" visible="false"/>
+            <Column fieldName="interessenbindung_quelle"/>
+            <Column fieldName="interessenbindung_von"/>
+            <Column fieldName="interessenbindung_bis"/>
+            <Column fieldName="interessenbindung_notizen"/>
+            <Column fieldName="interessenbindung_updated_by_import" visible="false"/>
+            <Column fieldName="interessenbindung_eingabe_abgeschlossen_visa" visible="false"/>
+            <Column fieldName="interessenbindung_eingabe_abgeschlossen_datum" visible="false"/>
+            <Column fieldName="interessenbindung_kontrolliert_visa" visible="false"/>
+            <Column fieldName="interessenbindung_kontrolliert_datum" visible="false"/>
+            <Column fieldName="interessenbindung_autorisiert_visa" visible="false"/>
+            <Column fieldName="interessenbindung_autorisiert_datum" visible="false"/>
+            <Column fieldName="interessenbindung_freigabe_visa" visible="false"/>
+            <Column fieldName="interessenbindung_freigabe_datum" visible="false"/>
+            <Column fieldName="interessenbindung_created_visa" visible="false"/>
+            <Column fieldName="interessenbindung_created_date" visible="false"/>
+            <Column fieldName="interessenbindung_updated_visa" visible="false"/>
+            <Column fieldName="interessenbindung_updated_date" visible="false"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -20887,6 +21234,35 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
+            <Column fieldName="interessenbindung_parlamentarier_id"/>
+            <Column fieldName="interessenbindung_organisation_id"/>
+            <Column fieldName="interessenbindung_art"/>
+            <Column fieldName="interessenbindung_funktion_im_gremium"/>
+            <Column fieldName="interessenbindung_deklarationstyp"/>
+            <Column fieldName="interessenbindung_status"/>
+            <Column fieldName="interessenbindung_hauptberuflich"/>
+            <Column fieldName="interessenbindung_behoerden_vertreter"/>
+            <Column fieldName="interessenbindung_beschreibung"/>
+            <Column fieldName="interessenbindung_beschreibung_fr" visible="false"/>
+            <Column fieldName="interessenbindung_quelle_url"/>
+            <Column fieldName="interessenbindung_quelle_url_gueltig" visible="false"/>
+            <Column fieldName="interessenbindung_quelle"/>
+            <Column fieldName="interessenbindung_von"/>
+            <Column fieldName="interessenbindung_bis"/>
+            <Column fieldName="interessenbindung_notizen"/>
+            <Column fieldName="interessenbindung_updated_by_import" visible="false"/>
+            <Column fieldName="interessenbindung_eingabe_abgeschlossen_visa" visible="false"/>
+            <Column fieldName="interessenbindung_eingabe_abgeschlossen_datum" visible="false"/>
+            <Column fieldName="interessenbindung_kontrolliert_visa" visible="false"/>
+            <Column fieldName="interessenbindung_kontrolliert_datum" visible="false"/>
+            <Column fieldName="interessenbindung_autorisiert_visa" visible="false"/>
+            <Column fieldName="interessenbindung_autorisiert_datum" visible="false"/>
+            <Column fieldName="interessenbindung_freigabe_visa" visible="false"/>
+            <Column fieldName="interessenbindung_freigabe_datum" visible="false"/>
+            <Column fieldName="interessenbindung_created_visa" visible="false"/>
+            <Column fieldName="interessenbindung_created_date" visible="false"/>
+            <Column fieldName="interessenbindung_updated_visa" visible="false"/>
+            <Column fieldName="interessenbindung_updated_date" visible="false"/>
           </Export>
           <Compare>
             <Column fieldName="id" visible="false"/>
@@ -20910,6 +21286,35 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
+            <Column fieldName="interessenbindung_parlamentarier_id"/>
+            <Column fieldName="interessenbindung_organisation_id"/>
+            <Column fieldName="interessenbindung_art"/>
+            <Column fieldName="interessenbindung_funktion_im_gremium"/>
+            <Column fieldName="interessenbindung_deklarationstyp"/>
+            <Column fieldName="interessenbindung_status"/>
+            <Column fieldName="interessenbindung_hauptberuflich"/>
+            <Column fieldName="interessenbindung_behoerden_vertreter"/>
+            <Column fieldName="interessenbindung_beschreibung"/>
+            <Column fieldName="interessenbindung_beschreibung_fr" visible="false"/>
+            <Column fieldName="interessenbindung_quelle_url"/>
+            <Column fieldName="interessenbindung_quelle_url_gueltig" visible="false"/>
+            <Column fieldName="interessenbindung_quelle"/>
+            <Column fieldName="interessenbindung_von"/>
+            <Column fieldName="interessenbindung_bis"/>
+            <Column fieldName="interessenbindung_notizen"/>
+            <Column fieldName="interessenbindung_updated_by_import" visible="false"/>
+            <Column fieldName="interessenbindung_eingabe_abgeschlossen_visa" visible="false"/>
+            <Column fieldName="interessenbindung_eingabe_abgeschlossen_datum" visible="false"/>
+            <Column fieldName="interessenbindung_kontrolliert_visa" visible="false"/>
+            <Column fieldName="interessenbindung_kontrolliert_datum" visible="false"/>
+            <Column fieldName="interessenbindung_autorisiert_visa" visible="false"/>
+            <Column fieldName="interessenbindung_autorisiert_datum" visible="false"/>
+            <Column fieldName="interessenbindung_freigabe_visa" visible="false"/>
+            <Column fieldName="interessenbindung_freigabe_datum" visible="false"/>
+            <Column fieldName="interessenbindung_created_visa" visible="false"/>
+            <Column fieldName="interessenbindung_created_date" visible="false"/>
+            <Column fieldName="interessenbindung_updated_visa" visible="false"/>
+            <Column fieldName="interessenbindung_updated_date" visible="false"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -20933,6 +21338,35 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
+            <Column fieldName="interessenbindung_parlamentarier_id" visible="false"/>
+            <Column fieldName="interessenbindung_organisation_id" visible="false"/>
+            <Column fieldName="interessenbindung_art" visible="false"/>
+            <Column fieldName="interessenbindung_funktion_im_gremium" visible="false"/>
+            <Column fieldName="interessenbindung_deklarationstyp" visible="false"/>
+            <Column fieldName="interessenbindung_status" visible="false"/>
+            <Column fieldName="interessenbindung_hauptberuflich" visible="false"/>
+            <Column fieldName="interessenbindung_behoerden_vertreter" visible="false"/>
+            <Column fieldName="interessenbindung_beschreibung" visible="false"/>
+            <Column fieldName="interessenbindung_beschreibung_fr" visible="false"/>
+            <Column fieldName="interessenbindung_quelle_url" visible="false"/>
+            <Column fieldName="interessenbindung_quelle_url_gueltig" visible="false"/>
+            <Column fieldName="interessenbindung_quelle" visible="false"/>
+            <Column fieldName="interessenbindung_von" visible="false"/>
+            <Column fieldName="interessenbindung_bis" visible="false"/>
+            <Column fieldName="interessenbindung_notizen" visible="false"/>
+            <Column fieldName="interessenbindung_updated_by_import" visible="false"/>
+            <Column fieldName="interessenbindung_eingabe_abgeschlossen_visa" visible="false"/>
+            <Column fieldName="interessenbindung_eingabe_abgeschlossen_datum" visible="false"/>
+            <Column fieldName="interessenbindung_kontrolliert_visa" visible="false"/>
+            <Column fieldName="interessenbindung_kontrolliert_datum" visible="false"/>
+            <Column fieldName="interessenbindung_autorisiert_visa" visible="false"/>
+            <Column fieldName="interessenbindung_autorisiert_datum" visible="false"/>
+            <Column fieldName="interessenbindung_freigabe_visa" visible="false"/>
+            <Column fieldName="interessenbindung_freigabe_datum" visible="false"/>
+            <Column fieldName="interessenbindung_created_visa" visible="false"/>
+            <Column fieldName="interessenbindung_created_date" visible="false"/>
+            <Column fieldName="interessenbindung_updated_visa" visible="false"/>
+            <Column fieldName="interessenbindung_updated_date" visible="false"/>
           </MultiEdit>
         </Columns>
         <Details/>
@@ -22106,7 +22540,7 @@ check_bis_date($page, $rowData, $cancel, $message, $tableName);                <
                 <CustomRenderColumnHandlerText enabled="true">
 customOnCustomRenderColumn('mandat_jahr', $fieldName, $fieldData, $rowData, $customText, $handled);                </CustomRenderColumnHandlerText>
                 <OnCustomDefaultValues enabled="true">
-$values['jahr'] = SMDateTime::now()-&gt;getYear();  
+$values['jahr'] = SMDateTime::now()-&gt;getYear();
 $handled = true;                </OnCustomDefaultValues>
                 <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);                </OnGetCustomTemplate>

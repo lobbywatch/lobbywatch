@@ -35,7 +35,7 @@
     
     
     
-    class interessenbindung_jahrPage extends Page
+    class uv_interessenbindung_jahrPage extends Page
     {
         protected function DoBeforeCreate()
         {
@@ -45,7 +45,7 @@
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
-                '`interessenbindung_jahr`');
+                '`uv_interessenbindung_jahr`');
             $this->dataset->addFields(
                 array(
                     new IntegerField('id', true, true, true),
@@ -68,10 +68,41 @@
                     new StringField('created_visa', true),
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true)
+                    new DateTimeField('updated_date', true),
+                    new IntegerField('interessenbindung_parlamentarier_id', true),
+                    new IntegerField('interessenbindung_organisation_id', true),
+                    new StringField('interessenbindung_art', true),
+                    new StringField('interessenbindung_funktion_im_gremium'),
+                    new StringField('interessenbindung_deklarationstyp', true),
+                    new StringField('interessenbindung_status', true),
+                    new IntegerField('interessenbindung_hauptberuflich', true),
+                    new StringField('interessenbindung_behoerden_vertreter'),
+                    new StringField('interessenbindung_beschreibung'),
+                    new StringField('interessenbindung_beschreibung_fr'),
+                    new StringField('interessenbindung_quelle_url'),
+                    new IntegerField('interessenbindung_quelle_url_gueltig'),
+                    new StringField('interessenbindung_quelle'),
+                    new DateField('interessenbindung_von'),
+                    new DateField('interessenbindung_bis'),
+                    new StringField('interessenbindung_notizen'),
+                    new DateTimeField('interessenbindung_updated_by_import'),
+                    new StringField('interessenbindung_eingabe_abgeschlossen_visa'),
+                    new DateTimeField('interessenbindung_eingabe_abgeschlossen_datum'),
+                    new StringField('interessenbindung_kontrolliert_visa'),
+                    new DateTimeField('interessenbindung_kontrolliert_datum'),
+                    new StringField('interessenbindung_autorisiert_visa'),
+                    new DateField('interessenbindung_autorisiert_datum'),
+                    new StringField('interessenbindung_freigabe_visa'),
+                    new DateTimeField('interessenbindung_freigabe_datum'),
+                    new StringField('interessenbindung_created_visa', true),
+                    new DateTimeField('interessenbindung_created_date', true),
+                    new StringField('interessenbindung_updated_visa'),
+                    new DateTimeField('interessenbindung_updated_date', true)
                 )
             );
             $this->dataset->AddLookupField('interessenbindung_id', 'v_interessenbindung', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'interessenbindung_id_anzeige_name', 'interessenbindung_id_anzeige_name_v_interessenbindung'), 'interessenbindung_id_anzeige_name_v_interessenbindung');
+            $this->dataset->AddLookupField('interessenbindung_parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'interessenbindung_parlamentarier_id_anzeige_name', 'interessenbindung_parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'interessenbindung_parlamentarier_id_anzeige_name_v_parlamentarier_simple');
+            $this->dataset->AddLookupField('interessenbindung_organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('anzeige_mixed', false, false, false, false, 'interessenbindung_organisation_id_anzeige_mixed', 'interessenbindung_organisation_id_anzeige_mixed_v_organisation_simple'), 'interessenbindung_organisation_id_anzeige_mixed_v_organisation_simple');
         }
     
         protected function DoPrepare() {
@@ -121,7 +152,36 @@
                 new FilterColumn($this->dataset, 'created_visa', 'created_visa', 'Created Visa'),
                 new FilterColumn($this->dataset, 'created_date', 'created_date', 'Created Date'),
                 new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', 'Updated Visa'),
-                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date')
+                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date'),
+                new FilterColumn($this->dataset, 'interessenbindung_parlamentarier_id', 'interessenbindung_parlamentarier_id_anzeige_name', ' Parlamentarier'),
+                new FilterColumn($this->dataset, 'interessenbindung_organisation_id', 'interessenbindung_organisation_id_anzeige_mixed', 'Organisation'),
+                new FilterColumn($this->dataset, 'interessenbindung_art', 'interessenbindung_art', 'Interessenbindung Art'),
+                new FilterColumn($this->dataset, 'interessenbindung_funktion_im_gremium', 'interessenbindung_funktion_im_gremium', 'Interessenbindung Funktion Im Gremium'),
+                new FilterColumn($this->dataset, 'interessenbindung_deklarationstyp', 'interessenbindung_deklarationstyp', 'Interessenbindung Deklarationstyp'),
+                new FilterColumn($this->dataset, 'interessenbindung_status', 'interessenbindung_status', 'Interessenbindung Status'),
+                new FilterColumn($this->dataset, 'interessenbindung_hauptberuflich', 'interessenbindung_hauptberuflich', 'Interessenbindung Hauptberuflich'),
+                new FilterColumn($this->dataset, 'interessenbindung_behoerden_vertreter', 'interessenbindung_behoerden_vertreter', 'Interessenbindung Behoerden Vertreter'),
+                new FilterColumn($this->dataset, 'interessenbindung_beschreibung', 'interessenbindung_beschreibung', 'Interessenbindung Beschreibung'),
+                new FilterColumn($this->dataset, 'interessenbindung_beschreibung_fr', 'interessenbindung_beschreibung_fr', 'Interessenbindung Beschreibung Fr'),
+                new FilterColumn($this->dataset, 'interessenbindung_quelle_url', 'interessenbindung_quelle_url', 'Interessenbindung Quelle Url'),
+                new FilterColumn($this->dataset, 'interessenbindung_quelle_url_gueltig', 'interessenbindung_quelle_url_gueltig', 'Interessenbindung Quelle Url Gueltig'),
+                new FilterColumn($this->dataset, 'interessenbindung_quelle', 'interessenbindung_quelle', 'Interessenbindung Quelle'),
+                new FilterColumn($this->dataset, 'interessenbindung_von', 'interessenbindung_von', 'Interessenbindung Von'),
+                new FilterColumn($this->dataset, 'interessenbindung_bis', 'interessenbindung_bis', 'Interessenbindung Bis'),
+                new FilterColumn($this->dataset, 'interessenbindung_notizen', 'interessenbindung_notizen', 'Interessenbindung Notizen'),
+                new FilterColumn($this->dataset, 'interessenbindung_updated_by_import', 'interessenbindung_updated_by_import', 'Interessenbindung Updated By Import'),
+                new FilterColumn($this->dataset, 'interessenbindung_eingabe_abgeschlossen_visa', 'interessenbindung_eingabe_abgeschlossen_visa', 'Interessenbindung Eingabe Abgeschlossen Visa'),
+                new FilterColumn($this->dataset, 'interessenbindung_eingabe_abgeschlossen_datum', 'interessenbindung_eingabe_abgeschlossen_datum', 'Interessenbindung Eingabe Abgeschlossen Datum'),
+                new FilterColumn($this->dataset, 'interessenbindung_kontrolliert_visa', 'interessenbindung_kontrolliert_visa', 'Interessenbindung Kontrolliert Visa'),
+                new FilterColumn($this->dataset, 'interessenbindung_kontrolliert_datum', 'interessenbindung_kontrolliert_datum', 'Interessenbindung Kontrolliert Datum'),
+                new FilterColumn($this->dataset, 'interessenbindung_autorisiert_visa', 'interessenbindung_autorisiert_visa', 'Interessenbindung Autorisiert Visa'),
+                new FilterColumn($this->dataset, 'interessenbindung_autorisiert_datum', 'interessenbindung_autorisiert_datum', 'Interessenbindung Autorisiert Datum'),
+                new FilterColumn($this->dataset, 'interessenbindung_freigabe_visa', 'interessenbindung_freigabe_visa', 'Interessenbindung Freigabe Visa'),
+                new FilterColumn($this->dataset, 'interessenbindung_freigabe_datum', 'interessenbindung_freigabe_datum', 'Interessenbindung Freigabe Datum'),
+                new FilterColumn($this->dataset, 'interessenbindung_created_visa', 'interessenbindung_created_visa', 'Interessenbindung Created Visa'),
+                new FilterColumn($this->dataset, 'interessenbindung_created_date', 'interessenbindung_created_date', 'Interessenbindung Created Date'),
+                new FilterColumn($this->dataset, 'interessenbindung_updated_visa', 'interessenbindung_updated_visa', 'Interessenbindung Updated Visa'),
+                new FilterColumn($this->dataset, 'interessenbindung_updated_date', 'interessenbindung_updated_date', 'Interessenbindung Updated Date')
             );
         }
     
@@ -135,7 +195,13 @@
                 ->addColumn($columns['beschreibung'])
                 ->addColumn($columns['quelle_url'])
                 ->addColumn($columns['quelle'])
-                ->addColumn($columns['notizen']);
+                ->addColumn($columns['notizen'])
+                ->addColumn($columns['interessenbindung_parlamentarier_id'])
+                ->addColumn($columns['interessenbindung_organisation_id'])
+                ->addColumn($columns['interessenbindung_beschreibung'])
+                ->addColumn($columns['interessenbindung_quelle_url'])
+                ->addColumn($columns['interessenbindung_quelle'])
+                ->addColumn($columns['interessenbindung_notizen']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -156,7 +222,17 @@
                 ->setOptionsFor('created_visa')
                 ->setOptionsFor('created_date')
                 ->setOptionsFor('updated_visa')
-                ->setOptionsFor('updated_date');
+                ->setOptionsFor('updated_date')
+                ->setOptionsFor('interessenbindung_parlamentarier_id')
+                ->setOptionsFor('interessenbindung_organisation_id')
+                ->setOptionsFor('interessenbindung_art')
+                ->setOptionsFor('interessenbindung_funktion_im_gremium')
+                ->setOptionsFor('interessenbindung_deklarationstyp')
+                ->setOptionsFor('interessenbindung_status')
+                ->setOptionsFor('interessenbindung_hauptberuflich')
+                ->setOptionsFor('interessenbindung_behoerden_vertreter')
+                ->setOptionsFor('interessenbindung_von')
+                ->setOptionsFor('interessenbindung_bis');
         }
     
         protected function setupFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
@@ -183,10 +259,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_interessenbindung_jahr_interessenbindung_id_search');
+            $main_editor->SetHandlerName('filter_builder_uv_interessenbindung_jahr_interessenbindung_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('interessenbindung_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_interessenbindung_jahr_interessenbindung_id_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_uv_interessenbindung_jahr_interessenbindung_id_search');
             
             $filterBuilder->addColumn(
                 $columns['interessenbindung_id'],
@@ -242,7 +318,8 @@
                 )
             );
             
-            $main_editor = new TextEdit('beschreibung');
+            $main_editor = new TextEdit('beschreibung_edit');
+            $main_editor->SetMaxLength(150);
             
             $filterBuilder->addColumn(
                 $columns['beschreibung'],
@@ -266,7 +343,8 @@
                 )
             );
             
-            $main_editor = new TextEdit('quelle_url');
+            $main_editor = new TextEdit('quelle_url_edit');
+            $main_editor->SetMaxLength(255);
             
             $filterBuilder->addColumn(
                 $columns['quelle_url'],
@@ -614,6 +692,372 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new DynamicCombobox('interessenbindung_parlamentarier_id_edit', $this->CreateLinkBuilder());
+            $main_editor->setAllowClear(true);
+            $main_editor->setMinimumInputLength(0);
+            $main_editor->SetAllowNullValue(false);
+            $main_editor->SetHandlerName('filter_builder_uv_interessenbindung_jahr_interessenbindung_parlamentarier_id_search');
+            
+            $multi_value_select_editor = new RemoteMultiValueSelect('interessenbindung_parlamentarier_id', $this->CreateLinkBuilder());
+            $multi_value_select_editor->SetHandlerName('filter_builder_uv_interessenbindung_jahr_interessenbindung_parlamentarier_id_search');
+            
+            $filterBuilder->addColumn(
+                $columns['interessenbindung_parlamentarier_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IN => $multi_value_select_editor,
+                    FilterConditionOperator::NOT_IN => $multi_value_select_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new DynamicCombobox('interessenbindung_organisation_id_edit', $this->CreateLinkBuilder());
+            $main_editor->setAllowClear(true);
+            $main_editor->setMinimumInputLength(0);
+            $main_editor->SetAllowNullValue(false);
+            $main_editor->SetHandlerName('filter_builder_uv_interessenbindung_jahr_interessenbindung_organisation_id_search');
+            
+            $multi_value_select_editor = new RemoteMultiValueSelect('interessenbindung_organisation_id', $this->CreateLinkBuilder());
+            $multi_value_select_editor->SetHandlerName('filter_builder_uv_interessenbindung_jahr_interessenbindung_organisation_id_search');
+            
+            $filterBuilder->addColumn(
+                $columns['interessenbindung_organisation_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IN => $multi_value_select_editor,
+                    FilterConditionOperator::NOT_IN => $multi_value_select_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new ComboBox('interessenbindung_art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $main_editor->addChoice('mitglied', 'mitglied');
+            $main_editor->addChoice('geschaeftsfuehrend', 'geschaeftsfuehrend');
+            $main_editor->addChoice('vorstand', 'vorstand');
+            $main_editor->addChoice('taetig', 'taetig');
+            $main_editor->addChoice('beirat', 'beirat');
+            $main_editor->addChoice('finanziell', 'finanziell');
+            $main_editor->addChoice('gesellschafter', 'gesellschafter');
+            $main_editor->SetAllowNullValue(false);
+            
+            $multi_value_select_editor = new MultiValueSelect('interessenbindung_art');
+            $multi_value_select_editor->setChoices($main_editor->getChoices());
+            
+            $text_editor = new TextEdit('interessenbindung_art');
+            
+            $filterBuilder->addColumn(
+                $columns['interessenbindung_art'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $text_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $text_editor,
+                    FilterConditionOperator::BEGINS_WITH => $text_editor,
+                    FilterConditionOperator::ENDS_WITH => $text_editor,
+                    FilterConditionOperator::IS_LIKE => $text_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $text_editor,
+                    FilterConditionOperator::IN => $multi_value_select_editor,
+                    FilterConditionOperator::NOT_IN => $multi_value_select_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessenbindung_funktion_im_gremium_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['interessenbindung_funktion_im_gremium'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new ComboBox('interessenbindung_deklarationstyp_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $main_editor->addChoice('deklarationspflichtig', 'deklarationspflichtig');
+            $main_editor->addChoice('nicht deklarationspflicht', 'nicht deklarationspflicht');
+            $main_editor->SetAllowNullValue(false);
+            
+            $multi_value_select_editor = new MultiValueSelect('interessenbindung_deklarationstyp');
+            $multi_value_select_editor->setChoices($main_editor->getChoices());
+            
+            $text_editor = new TextEdit('interessenbindung_deklarationstyp');
+            
+            $filterBuilder->addColumn(
+                $columns['interessenbindung_deklarationstyp'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $text_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $text_editor,
+                    FilterConditionOperator::BEGINS_WITH => $text_editor,
+                    FilterConditionOperator::ENDS_WITH => $text_editor,
+                    FilterConditionOperator::IS_LIKE => $text_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $text_editor,
+                    FilterConditionOperator::IN => $multi_value_select_editor,
+                    FilterConditionOperator::NOT_IN => $multi_value_select_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new ComboBox('interessenbindung_status_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $main_editor->addChoice('deklariert', 'deklariert');
+            $main_editor->addChoice('nicht-deklariert', 'nicht-deklariert');
+            $main_editor->SetAllowNullValue(false);
+            
+            $multi_value_select_editor = new MultiValueSelect('interessenbindung_status');
+            $multi_value_select_editor->setChoices($main_editor->getChoices());
+            
+            $text_editor = new TextEdit('interessenbindung_status');
+            
+            $filterBuilder->addColumn(
+                $columns['interessenbindung_status'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $text_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $text_editor,
+                    FilterConditionOperator::BEGINS_WITH => $text_editor,
+                    FilterConditionOperator::ENDS_WITH => $text_editor,
+                    FilterConditionOperator::IS_LIKE => $text_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $text_editor,
+                    FilterConditionOperator::IN => $multi_value_select_editor,
+                    FilterConditionOperator::NOT_IN => $multi_value_select_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessenbindung_hauptberuflich_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['interessenbindung_hauptberuflich'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessenbindung_behoerden_vertreter_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['interessenbindung_behoerden_vertreter'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessenbindung_beschreibung_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['interessenbindung_beschreibung'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessenbindung_quelle_url_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['interessenbindung_quelle_url'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessenbindung_quelle_edit');
+            $main_editor->SetMaxLength(80);
+            
+            $filterBuilder->addColumn(
+                $columns['interessenbindung_quelle'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new DateTimeEdit('interessenbindung_von_edit', false, 'd.m.Y');
+            
+            $filterBuilder->addColumn(
+                $columns['interessenbindung_von'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::DATE_EQUALS => $main_editor,
+                    FilterConditionOperator::DATE_DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::TODAY => null,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new DateTimeEdit('interessenbindung_bis_edit', false, 'd.m.Y');
+            
+            $filterBuilder->addColumn(
+                $columns['interessenbindung_bis'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::DATE_EQUALS => $main_editor,
+                    FilterConditionOperator::DATE_DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::TODAY => null,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessenbindung_notizen');
+            
+            $filterBuilder->addColumn(
+                $columns['interessenbindung_notizen'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -878,6 +1322,153 @@
             $column->SetDescription('Abgeändert am');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenbindung_parlamentarier_id', 'interessenbindung_parlamentarier_id_anzeige_name', ' Parlamentarier', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_mixed field
+            //
+            $column = new TextViewColumn('interessenbindung_organisation_id', 'interessenbindung_organisation_id_anzeige_mixed', 'Organisation', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessenbindung_art field
+            //
+            $column = new TextViewColumn('interessenbindung_art', 'interessenbindung_art', 'Interessenbindung Art', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessenbindung_funktion_im_gremium field
+            //
+            $column = new TextViewColumn('interessenbindung_funktion_im_gremium', 'interessenbindung_funktion_im_gremium', 'Interessenbindung Funktion Im Gremium', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessenbindung_deklarationstyp field
+            //
+            $column = new TextViewColumn('interessenbindung_deklarationstyp', 'interessenbindung_deklarationstyp', 'Interessenbindung Deklarationstyp', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessenbindung_status field
+            //
+            $column = new TextViewColumn('interessenbindung_status', 'interessenbindung_status', 'Interessenbindung Status', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessenbindung_hauptberuflich field
+            //
+            $column = new CheckboxViewColumn('interessenbindung_hauptberuflich', 'interessenbindung_hauptberuflich', 'Interessenbindung Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessenbindung_behoerden_vertreter field
+            //
+            $column = new TextViewColumn('interessenbindung_behoerden_vertreter', 'interessenbindung_behoerden_vertreter', 'Interessenbindung Behoerden Vertreter', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessenbindung_beschreibung field
+            //
+            $column = new TextViewColumn('interessenbindung_beschreibung', 'interessenbindung_beschreibung', 'Interessenbindung Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessenbindung_quelle_url field
+            //
+            $column = new TextViewColumn('interessenbindung_quelle_url', 'interessenbindung_quelle_url', 'Interessenbindung Quelle Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessenbindung_quelle field
+            //
+            $column = new TextViewColumn('interessenbindung_quelle', 'interessenbindung_quelle', 'Interessenbindung Quelle', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessenbindung_von field
+            //
+            $column = new DateTimeViewColumn('interessenbindung_von', 'interessenbindung_von', 'Interessenbindung Von', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessenbindung_bis field
+            //
+            $column = new DateTimeViewColumn('interessenbindung_bis', 'interessenbindung_bis', 'Interessenbindung Bis', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for interessenbindung_notizen field
+            //
+            $column = new TextViewColumn('interessenbindung_notizen', 'interessenbindung_notizen', 'Interessenbindung Notizen', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -1039,6 +1630,111 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenbindung_parlamentarier_id', 'interessenbindung_parlamentarier_id_anzeige_name', ' Parlamentarier', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for anzeige_mixed field
+            //
+            $column = new TextViewColumn('interessenbindung_organisation_id', 'interessenbindung_organisation_id_anzeige_mixed', 'Organisation', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessenbindung_art field
+            //
+            $column = new TextViewColumn('interessenbindung_art', 'interessenbindung_art', 'Interessenbindung Art', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessenbindung_funktion_im_gremium field
+            //
+            $column = new TextViewColumn('interessenbindung_funktion_im_gremium', 'interessenbindung_funktion_im_gremium', 'Interessenbindung Funktion Im Gremium', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessenbindung_deklarationstyp field
+            //
+            $column = new TextViewColumn('interessenbindung_deklarationstyp', 'interessenbindung_deklarationstyp', 'Interessenbindung Deklarationstyp', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessenbindung_status field
+            //
+            $column = new TextViewColumn('interessenbindung_status', 'interessenbindung_status', 'Interessenbindung Status', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessenbindung_hauptberuflich field
+            //
+            $column = new CheckboxViewColumn('interessenbindung_hauptberuflich', 'interessenbindung_hauptberuflich', 'Interessenbindung Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessenbindung_behoerden_vertreter field
+            //
+            $column = new TextViewColumn('interessenbindung_behoerden_vertreter', 'interessenbindung_behoerden_vertreter', 'Interessenbindung Behoerden Vertreter', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessenbindung_beschreibung field
+            //
+            $column = new TextViewColumn('interessenbindung_beschreibung', 'interessenbindung_beschreibung', 'Interessenbindung Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessenbindung_quelle_url field
+            //
+            $column = new TextViewColumn('interessenbindung_quelle_url', 'interessenbindung_quelle_url', 'Interessenbindung Quelle Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessenbindung_quelle field
+            //
+            $column = new TextViewColumn('interessenbindung_quelle', 'interessenbindung_quelle', 'Interessenbindung Quelle', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessenbindung_von field
+            //
+            $column = new DateTimeViewColumn('interessenbindung_von', 'interessenbindung_von', 'Interessenbindung Von', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessenbindung_bis field
+            //
+            $column = new DateTimeViewColumn('interessenbindung_bis', 'interessenbindung_bis', 'Interessenbindung Bis', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessenbindung_notizen field
+            //
+            $column = new TextViewColumn('interessenbindung_notizen', 'interessenbindung_notizen', 'Interessenbindung Notizen', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddSingleRecordViewColumn($column);
         }
     
         protected function AddEditColumns(Grid $grid)
@@ -1103,7 +1799,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Interessenbindung', 'interessenbindung_id', 'interessenbindung_id_anzeige_name', 'edit_interessenbindung_jahr_interessenbindung_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Interessenbindung', 'interessenbindung_id', 'interessenbindung_id_anzeige_name', 'edit_uv_interessenbindung_jahr_interessenbindung_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1142,7 +1838,8 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1151,7 +1848,8 @@
             //
             // Edit column for quelle_url field
             //
-            $editor = new TextAreaEdit('quelle_url_edit', 50, 8);
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1305,6 +2003,332 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessenbindung_parlamentarier_id field
+            //
+            $editor = new DynamicCombobox('interessenbindung_parlamentarier_id_edit', $this->CreateLinkBuilder());
+            $editor->setAllowClear(true);
+            $editor->setMinimumInputLength(0);
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_parlamentarier_simple`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('name'),
+                    new StringField('name_de'),
+                    new StringField('name_fr'),
+                    new IntegerField('id', true),
+                    new StringField('nachname', true),
+                    new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
+                    new StringField('zweiter_vorname'),
+                    new IntegerField('rat_id', true),
+                    new IntegerField('kanton_id', true),
+                    new StringField('kommissionen'),
+                    new IntegerField('partei_id'),
+                    new StringField('parteifunktion', true),
+                    new IntegerField('fraktion_id'),
+                    new StringField('fraktionsfunktion'),
+                    new DateField('im_rat_seit', true),
+                    new DateField('im_rat_bis'),
+                    new DateField('ratswechsel'),
+                    new DateField('ratsunterbruch_von'),
+                    new DateField('ratsunterbruch_bis'),
+                    new StringField('beruf'),
+                    new StringField('beruf_fr'),
+                    new IntegerField('beruf_interessengruppe_id'),
+                    new StringField('titel'),
+                    new StringField('aemter'),
+                    new StringField('weitere_aemter'),
+                    new StringField('zivilstand'),
+                    new IntegerField('anzahl_kinder'),
+                    new IntegerField('militaerischer_grad_id'),
+                    new StringField('geschlecht'),
+                    new DateField('geburtstag'),
+                    new StringField('photo'),
+                    new StringField('photo_dateiname'),
+                    new StringField('photo_dateierweiterung'),
+                    new StringField('photo_dateiname_voll'),
+                    new StringField('photo_mime_type'),
+                    new StringField('kleinbild'),
+                    new IntegerField('sitzplatz'),
+                    new StringField('email'),
+                    new StringField('homepage'),
+                    new StringField('homepage_2'),
+                    new IntegerField('parlament_biografie_id'),
+                    new IntegerField('parlament_number'),
+                    new StringField('parlament_interessenbindungen'),
+                    new StringField('parlament_interessenbindungen_json'),
+                    new DateTimeField('parlament_interessenbindungen_updated'),
+                    new StringField('twitter_name'),
+                    new StringField('linkedin_profil_url'),
+                    new StringField('xing_profil_name'),
+                    new StringField('facebook_name'),
+                    new StringField('wikipedia'),
+                    new StringField('sprache'),
+                    new StringField('arbeitssprache'),
+                    new StringField('adresse_firma'),
+                    new StringField('adresse_strasse'),
+                    new StringField('adresse_zusatz'),
+                    new StringField('adresse_plz'),
+                    new StringField('adresse_ort'),
+                    new StringField('telephon_1'),
+                    new StringField('telephon_2'),
+                    new StringField('erfasst'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('autorisierung_verschickt_visa'),
+                    new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisiert_visa'),
+                    new DateField('autorisiert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('beruf_de'),
+                    new DateField('von', true),
+                    new DateField('bis'),
+                    new IntegerField('aktiv'),
+                    new IntegerField('published', true),
+                    new IntegerField('geburtstag_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_bis_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix'),
+                    new IntegerField('von_unix', true),
+                    new IntegerField('bis_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
+            $editColumn = new DynamicLookupEditColumn(' Parlamentarier', 'interessenbindung_parlamentarier_id', 'interessenbindung_parlamentarier_id_anzeige_name', 'edit_uv_interessenbindung_jahr_interessenbindung_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn->setEnabled(false);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessenbindung_organisation_id field
+            //
+            $editor = new DynamicCombobox('interessenbindung_organisation_id_edit', $this->CreateLinkBuilder());
+            $editor->setAllowClear(true);
+            $editor->setMinimumInputLength(0);
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_organisation_simple`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_mixed'),
+                    new StringField('anzeige_bimixed'),
+                    new StringField('searchable_name'),
+                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('name'),
+                    new IntegerField('id', true),
+                    new StringField('name_de', true),
+                    new StringField('name_fr'),
+                    new StringField('name_it'),
+                    new StringField('uid'),
+                    new StringField('ort'),
+                    new StringField('abkuerzung_de'),
+                    new StringField('alias_namen_de'),
+                    new StringField('abkuerzung_fr'),
+                    new StringField('alias_namen_fr'),
+                    new StringField('abkuerzung_it'),
+                    new StringField('alias_namen_it'),
+                    new IntegerField('land_id'),
+                    new IntegerField('interessenraum_id'),
+                    new StringField('rechtsform'),
+                    new StringField('rechtsform_handelsregister'),
+                    new IntegerField('rechtsform_zefix'),
+                    new StringField('typ', true),
+                    new StringField('vernehmlassung', true),
+                    new IntegerField('interessengruppe_id'),
+                    new IntegerField('interessengruppe2_id'),
+                    new IntegerField('interessengruppe3_id'),
+                    new IntegerField('ALT_branche_id'),
+                    new StringField('homepage'),
+                    new StringField('handelsregister_url'),
+                    new StringField('twitter_name'),
+                    new StringField('beschreibung'),
+                    new StringField('beschreibung_fr'),
+                    new StringField('sekretariat'),
+                    new StringField('adresse_strasse'),
+                    new StringField('adresse_zusatz'),
+                    new StringField('adresse_plz'),
+                    new StringField('notizen'),
+                    new DateTimeField('updated_by_import'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_mixed', 'ASC');
+            $editColumn = new DynamicLookupEditColumn('Organisation', 'interessenbindung_organisation_id', 'interessenbindung_organisation_id_anzeige_mixed', 'edit_uv_interessenbindung_jahr_interessenbindung_organisation_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_mixed', '');
+            $editColumn->setEnabled(false);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessenbindung_art field
+            //
+            $editor = new ComboBox('interessenbindung_art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->addChoice('mitglied', 'mitglied');
+            $editor->addChoice('geschaeftsfuehrend', 'geschaeftsfuehrend');
+            $editor->addChoice('vorstand', 'vorstand');
+            $editor->addChoice('taetig', 'taetig');
+            $editor->addChoice('beirat', 'beirat');
+            $editor->addChoice('finanziell', 'finanziell');
+            $editor->addChoice('gesellschafter', 'gesellschafter');
+            $editColumn = new CustomEditColumn('Interessenbindung Art', 'interessenbindung_art', $editor, $this->dataset);
+            $editColumn->setEnabled(false);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessenbindung_funktion_im_gremium field
+            //
+            $editor = new TextEdit('interessenbindung_funktion_im_gremium_edit');
+            $editColumn = new CustomEditColumn('Interessenbindung Funktion Im Gremium', 'interessenbindung_funktion_im_gremium', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessenbindung_deklarationstyp field
+            //
+            $editor = new ComboBox('interessenbindung_deklarationstyp_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->addChoice('deklarationspflichtig', 'deklarationspflichtig');
+            $editor->addChoice('nicht deklarationspflicht', 'nicht deklarationspflicht');
+            $editColumn = new CustomEditColumn('Interessenbindung Deklarationstyp', 'interessenbindung_deklarationstyp', $editor, $this->dataset);
+            $editColumn->setEnabled(false);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessenbindung_status field
+            //
+            $editor = new ComboBox('interessenbindung_status_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->addChoice('deklariert', 'deklariert');
+            $editor->addChoice('nicht-deklariert', 'nicht-deklariert');
+            $editColumn = new CustomEditColumn('Interessenbindung Status', 'interessenbindung_status', $editor, $this->dataset);
+            $editColumn->setEnabled(false);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessenbindung_hauptberuflich field
+            //
+            $editor = new TextEdit('interessenbindung_hauptberuflich_edit');
+            $editColumn = new CustomEditColumn('Interessenbindung Hauptberuflich', 'interessenbindung_hauptberuflich', $editor, $this->dataset);
+            $editColumn->setEnabled(false);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessenbindung_behoerden_vertreter field
+            //
+            $editor = new TextEdit('interessenbindung_behoerden_vertreter_edit');
+            $editColumn = new CustomEditColumn('Interessenbindung Behoerden Vertreter', 'interessenbindung_behoerden_vertreter', $editor, $this->dataset);
+            $editColumn->setEnabled(false);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessenbindung_beschreibung field
+            //
+            $editor = new TextEdit('interessenbindung_beschreibung_edit');
+            $editColumn = new CustomEditColumn('Interessenbindung Beschreibung', 'interessenbindung_beschreibung', $editor, $this->dataset);
+            $editColumn->setEnabled(false);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessenbindung_quelle_url field
+            //
+            $editor = new TextEdit('interessenbindung_quelle_url_edit');
+            $editColumn = new CustomEditColumn('Interessenbindung Quelle Url', 'interessenbindung_quelle_url', $editor, $this->dataset);
+            $editColumn->setEnabled(false);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessenbindung_quelle field
+            //
+            $editor = new TextEdit('interessenbindung_quelle_edit');
+            $editor->SetMaxLength(80);
+            $editColumn = new CustomEditColumn('Interessenbindung Quelle', 'interessenbindung_quelle', $editor, $this->dataset);
+            $editColumn->setEnabled(false);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessenbindung_von field
+            //
+            $editor = new DateTimeEdit('interessenbindung_von_edit', false, 'd.m.Y');
+            $editColumn = new CustomEditColumn('Interessenbindung Von', 'interessenbindung_von', $editor, $this->dataset);
+            $editColumn->setEnabled(false);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessenbindung_bis field
+            //
+            $editor = new DateTimeEdit('interessenbindung_bis_edit', false, 'd.m.Y');
+            $editColumn = new CustomEditColumn('Interessenbindung Bis', 'interessenbindung_bis', $editor, $this->dataset);
+            $editColumn->setEnabled(false);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessenbindung_notizen field
+            //
+            $editor = new TextAreaEdit('interessenbindung_notizen_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Interessenbindung Notizen', 'interessenbindung_notizen', $editor, $this->dataset);
+            $editColumn->setEnabled(false);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
         }
     
         protected function AddMultiEditColumns(Grid $grid)
@@ -1369,7 +2393,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Interessenbindung', 'interessenbindung_id', 'interessenbindung_id_anzeige_name', 'multi_edit_interessenbindung_jahr_interessenbindung_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Interessenbindung', 'interessenbindung_id', 'interessenbindung_id_anzeige_name', 'multi_edit_uv_interessenbindung_jahr_interessenbindung_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1408,7 +2432,8 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1417,7 +2442,8 @@
             //
             // Edit column for quelle_url field
             //
-            $editor = new TextAreaEdit('quelle_url_edit', 50, 8);
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1635,7 +2661,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Interessenbindung', 'interessenbindung_id', 'interessenbindung_id_anzeige_name', 'insert_interessenbindung_jahr_interessenbindung_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Interessenbindung', 'interessenbindung_id', 'interessenbindung_id_anzeige_name', 'insert_uv_interessenbindung_jahr_interessenbindung_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1676,7 +2702,8 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1685,7 +2712,8 @@
             //
             // Edit column for quelle_url field
             //
-            $editor = new TextAreaEdit('quelle_url_edit', 50, 8);
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1877,6 +2905,111 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenbindung_parlamentarier_id', 'interessenbindung_parlamentarier_id_anzeige_name', ' Parlamentarier', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_mixed field
+            //
+            $column = new TextViewColumn('interessenbindung_organisation_id', 'interessenbindung_organisation_id_anzeige_mixed', 'Organisation', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessenbindung_art field
+            //
+            $column = new TextViewColumn('interessenbindung_art', 'interessenbindung_art', 'Interessenbindung Art', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessenbindung_funktion_im_gremium field
+            //
+            $column = new TextViewColumn('interessenbindung_funktion_im_gremium', 'interessenbindung_funktion_im_gremium', 'Interessenbindung Funktion Im Gremium', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessenbindung_deklarationstyp field
+            //
+            $column = new TextViewColumn('interessenbindung_deklarationstyp', 'interessenbindung_deklarationstyp', 'Interessenbindung Deklarationstyp', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessenbindung_status field
+            //
+            $column = new TextViewColumn('interessenbindung_status', 'interessenbindung_status', 'Interessenbindung Status', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessenbindung_hauptberuflich field
+            //
+            $column = new CheckboxViewColumn('interessenbindung_hauptberuflich', 'interessenbindung_hauptberuflich', 'Interessenbindung Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessenbindung_behoerden_vertreter field
+            //
+            $column = new TextViewColumn('interessenbindung_behoerden_vertreter', 'interessenbindung_behoerden_vertreter', 'Interessenbindung Behoerden Vertreter', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessenbindung_beschreibung field
+            //
+            $column = new TextViewColumn('interessenbindung_beschreibung', 'interessenbindung_beschreibung', 'Interessenbindung Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessenbindung_quelle_url field
+            //
+            $column = new TextViewColumn('interessenbindung_quelle_url', 'interessenbindung_quelle_url', 'Interessenbindung Quelle Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessenbindung_quelle field
+            //
+            $column = new TextViewColumn('interessenbindung_quelle', 'interessenbindung_quelle', 'Interessenbindung Quelle', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessenbindung_von field
+            //
+            $column = new DateTimeViewColumn('interessenbindung_von', 'interessenbindung_von', 'Interessenbindung Von', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessenbindung_bis field
+            //
+            $column = new DateTimeViewColumn('interessenbindung_bis', 'interessenbindung_bis', 'Interessenbindung Bis', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for interessenbindung_notizen field
+            //
+            $column = new TextViewColumn('interessenbindung_notizen', 'interessenbindung_notizen', 'Interessenbindung Notizen', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -2038,6 +3171,111 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenbindung_parlamentarier_id', 'interessenbindung_parlamentarier_id_anzeige_name', ' Parlamentarier', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for anzeige_mixed field
+            //
+            $column = new TextViewColumn('interessenbindung_organisation_id', 'interessenbindung_organisation_id_anzeige_mixed', 'Organisation', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessenbindung_art field
+            //
+            $column = new TextViewColumn('interessenbindung_art', 'interessenbindung_art', 'Interessenbindung Art', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessenbindung_funktion_im_gremium field
+            //
+            $column = new TextViewColumn('interessenbindung_funktion_im_gremium', 'interessenbindung_funktion_im_gremium', 'Interessenbindung Funktion Im Gremium', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessenbindung_deklarationstyp field
+            //
+            $column = new TextViewColumn('interessenbindung_deklarationstyp', 'interessenbindung_deklarationstyp', 'Interessenbindung Deklarationstyp', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessenbindung_status field
+            //
+            $column = new TextViewColumn('interessenbindung_status', 'interessenbindung_status', 'Interessenbindung Status', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessenbindung_hauptberuflich field
+            //
+            $column = new CheckboxViewColumn('interessenbindung_hauptberuflich', 'interessenbindung_hauptberuflich', 'Interessenbindung Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessenbindung_behoerden_vertreter field
+            //
+            $column = new TextViewColumn('interessenbindung_behoerden_vertreter', 'interessenbindung_behoerden_vertreter', 'Interessenbindung Behoerden Vertreter', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessenbindung_beschreibung field
+            //
+            $column = new TextViewColumn('interessenbindung_beschreibung', 'interessenbindung_beschreibung', 'Interessenbindung Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessenbindung_quelle_url field
+            //
+            $column = new TextViewColumn('interessenbindung_quelle_url', 'interessenbindung_quelle_url', 'Interessenbindung Quelle Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessenbindung_quelle field
+            //
+            $column = new TextViewColumn('interessenbindung_quelle', 'interessenbindung_quelle', 'Interessenbindung Quelle', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessenbindung_von field
+            //
+            $column = new DateTimeViewColumn('interessenbindung_von', 'interessenbindung_von', 'Interessenbindung Von', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessenbindung_bis field
+            //
+            $column = new DateTimeViewColumn('interessenbindung_bis', 'interessenbindung_bis', 'Interessenbindung Bis', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for interessenbindung_notizen field
+            //
+            $column = new TextViewColumn('interessenbindung_notizen', 'interessenbindung_notizen', 'Interessenbindung Notizen', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddExportColumn($column);
         }
     
         private function AddCompareColumns(Grid $grid)
@@ -2189,6 +3427,111 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenbindung_parlamentarier_id', 'interessenbindung_parlamentarier_id_anzeige_name', ' Parlamentarier', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for anzeige_mixed field
+            //
+            $column = new TextViewColumn('interessenbindung_organisation_id', 'interessenbindung_organisation_id_anzeige_mixed', 'Organisation', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessenbindung_art field
+            //
+            $column = new TextViewColumn('interessenbindung_art', 'interessenbindung_art', 'Interessenbindung Art', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessenbindung_funktion_im_gremium field
+            //
+            $column = new TextViewColumn('interessenbindung_funktion_im_gremium', 'interessenbindung_funktion_im_gremium', 'Interessenbindung Funktion Im Gremium', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessenbindung_deklarationstyp field
+            //
+            $column = new TextViewColumn('interessenbindung_deklarationstyp', 'interessenbindung_deklarationstyp', 'Interessenbindung Deklarationstyp', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessenbindung_status field
+            //
+            $column = new TextViewColumn('interessenbindung_status', 'interessenbindung_status', 'Interessenbindung Status', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessenbindung_hauptberuflich field
+            //
+            $column = new CheckboxViewColumn('interessenbindung_hauptberuflich', 'interessenbindung_hauptberuflich', 'Interessenbindung Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessenbindung_behoerden_vertreter field
+            //
+            $column = new TextViewColumn('interessenbindung_behoerden_vertreter', 'interessenbindung_behoerden_vertreter', 'Interessenbindung Behoerden Vertreter', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessenbindung_beschreibung field
+            //
+            $column = new TextViewColumn('interessenbindung_beschreibung', 'interessenbindung_beschreibung', 'Interessenbindung Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessenbindung_quelle_url field
+            //
+            $column = new TextViewColumn('interessenbindung_quelle_url', 'interessenbindung_quelle_url', 'Interessenbindung Quelle Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessenbindung_quelle field
+            //
+            $column = new TextViewColumn('interessenbindung_quelle', 'interessenbindung_quelle', 'Interessenbindung Quelle', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessenbindung_von field
+            //
+            $column = new DateTimeViewColumn('interessenbindung_von', 'interessenbindung_von', 'Interessenbindung Von', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessenbindung_bis field
+            //
+            $column = new DateTimeViewColumn('interessenbindung_bis', 'interessenbindung_bis', 'Interessenbindung Bis', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for interessenbindung_notizen field
+            //
+            $column = new TextViewColumn('interessenbindung_notizen', 'interessenbindung_notizen', 'Interessenbindung Notizen', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddCompareColumn($column);
         }
     
         private function AddCompareHeaderColumns(Grid $grid)
@@ -2339,7 +3682,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_interessenbindung_jahr_interessenbindung_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_uv_interessenbindung_jahr_interessenbindung_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -2396,7 +3739,182 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessenbindung_jahr_interessenbindung_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_uv_interessenbindung_jahr_interessenbindung_id_search', 'id', 'anzeige_name', null, 20);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_parlamentarier_simple`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('name'),
+                    new StringField('name_de'),
+                    new StringField('name_fr'),
+                    new IntegerField('id', true),
+                    new StringField('nachname', true),
+                    new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
+                    new StringField('zweiter_vorname'),
+                    new IntegerField('rat_id', true),
+                    new IntegerField('kanton_id', true),
+                    new StringField('kommissionen'),
+                    new IntegerField('partei_id'),
+                    new StringField('parteifunktion', true),
+                    new IntegerField('fraktion_id'),
+                    new StringField('fraktionsfunktion'),
+                    new DateField('im_rat_seit', true),
+                    new DateField('im_rat_bis'),
+                    new DateField('ratswechsel'),
+                    new DateField('ratsunterbruch_von'),
+                    new DateField('ratsunterbruch_bis'),
+                    new StringField('beruf'),
+                    new StringField('beruf_fr'),
+                    new IntegerField('beruf_interessengruppe_id'),
+                    new StringField('titel'),
+                    new StringField('aemter'),
+                    new StringField('weitere_aemter'),
+                    new StringField('zivilstand'),
+                    new IntegerField('anzahl_kinder'),
+                    new IntegerField('militaerischer_grad_id'),
+                    new StringField('geschlecht'),
+                    new DateField('geburtstag'),
+                    new StringField('photo'),
+                    new StringField('photo_dateiname'),
+                    new StringField('photo_dateierweiterung'),
+                    new StringField('photo_dateiname_voll'),
+                    new StringField('photo_mime_type'),
+                    new StringField('kleinbild'),
+                    new IntegerField('sitzplatz'),
+                    new StringField('email'),
+                    new StringField('homepage'),
+                    new StringField('homepage_2'),
+                    new IntegerField('parlament_biografie_id'),
+                    new IntegerField('parlament_number'),
+                    new StringField('parlament_interessenbindungen'),
+                    new StringField('parlament_interessenbindungen_json'),
+                    new DateTimeField('parlament_interessenbindungen_updated'),
+                    new StringField('twitter_name'),
+                    new StringField('linkedin_profil_url'),
+                    new StringField('xing_profil_name'),
+                    new StringField('facebook_name'),
+                    new StringField('wikipedia'),
+                    new StringField('sprache'),
+                    new StringField('arbeitssprache'),
+                    new StringField('adresse_firma'),
+                    new StringField('adresse_strasse'),
+                    new StringField('adresse_zusatz'),
+                    new StringField('adresse_plz'),
+                    new StringField('adresse_ort'),
+                    new StringField('telephon_1'),
+                    new StringField('telephon_2'),
+                    new StringField('erfasst'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('autorisierung_verschickt_visa'),
+                    new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisiert_visa'),
+                    new DateField('autorisiert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('beruf_de'),
+                    new DateField('von', true),
+                    new DateField('bis'),
+                    new IntegerField('aktiv'),
+                    new IntegerField('published', true),
+                    new IntegerField('geburtstag_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_bis_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix'),
+                    new IntegerField('von_unix', true),
+                    new IntegerField('bis_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_uv_interessenbindung_jahr_interessenbindung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_organisation_simple`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_mixed'),
+                    new StringField('anzeige_bimixed'),
+                    new StringField('searchable_name'),
+                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('name'),
+                    new IntegerField('id', true),
+                    new StringField('name_de', true),
+                    new StringField('name_fr'),
+                    new StringField('name_it'),
+                    new StringField('uid'),
+                    new StringField('ort'),
+                    new StringField('abkuerzung_de'),
+                    new StringField('alias_namen_de'),
+                    new StringField('abkuerzung_fr'),
+                    new StringField('alias_namen_fr'),
+                    new StringField('abkuerzung_it'),
+                    new StringField('alias_namen_it'),
+                    new IntegerField('land_id'),
+                    new IntegerField('interessenraum_id'),
+                    new StringField('rechtsform'),
+                    new StringField('rechtsform_handelsregister'),
+                    new IntegerField('rechtsform_zefix'),
+                    new StringField('typ', true),
+                    new StringField('vernehmlassung', true),
+                    new IntegerField('interessengruppe_id'),
+                    new IntegerField('interessengruppe2_id'),
+                    new IntegerField('interessengruppe3_id'),
+                    new IntegerField('ALT_branche_id'),
+                    new StringField('homepage'),
+                    new StringField('handelsregister_url'),
+                    new StringField('twitter_name'),
+                    new StringField('beschreibung'),
+                    new StringField('beschreibung_fr'),
+                    new StringField('sekretariat'),
+                    new StringField('adresse_strasse'),
+                    new StringField('adresse_zusatz'),
+                    new StringField('adresse_plz'),
+                    new StringField('notizen'),
+                    new DateTimeField('updated_by_import'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_mixed', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_uv_interessenbindung_jahr_interessenbindung_organisation_id_search', 'id', 'anzeige_mixed', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -2453,7 +3971,182 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_interessenbindung_jahr_interessenbindung_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_uv_interessenbindung_jahr_interessenbindung_id_search', 'id', 'anzeige_name', null, 20);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_parlamentarier_simple`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('name'),
+                    new StringField('name_de'),
+                    new StringField('name_fr'),
+                    new IntegerField('id', true),
+                    new StringField('nachname', true),
+                    new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
+                    new StringField('zweiter_vorname'),
+                    new IntegerField('rat_id', true),
+                    new IntegerField('kanton_id', true),
+                    new StringField('kommissionen'),
+                    new IntegerField('partei_id'),
+                    new StringField('parteifunktion', true),
+                    new IntegerField('fraktion_id'),
+                    new StringField('fraktionsfunktion'),
+                    new DateField('im_rat_seit', true),
+                    new DateField('im_rat_bis'),
+                    new DateField('ratswechsel'),
+                    new DateField('ratsunterbruch_von'),
+                    new DateField('ratsunterbruch_bis'),
+                    new StringField('beruf'),
+                    new StringField('beruf_fr'),
+                    new IntegerField('beruf_interessengruppe_id'),
+                    new StringField('titel'),
+                    new StringField('aemter'),
+                    new StringField('weitere_aemter'),
+                    new StringField('zivilstand'),
+                    new IntegerField('anzahl_kinder'),
+                    new IntegerField('militaerischer_grad_id'),
+                    new StringField('geschlecht'),
+                    new DateField('geburtstag'),
+                    new StringField('photo'),
+                    new StringField('photo_dateiname'),
+                    new StringField('photo_dateierweiterung'),
+                    new StringField('photo_dateiname_voll'),
+                    new StringField('photo_mime_type'),
+                    new StringField('kleinbild'),
+                    new IntegerField('sitzplatz'),
+                    new StringField('email'),
+                    new StringField('homepage'),
+                    new StringField('homepage_2'),
+                    new IntegerField('parlament_biografie_id'),
+                    new IntegerField('parlament_number'),
+                    new StringField('parlament_interessenbindungen'),
+                    new StringField('parlament_interessenbindungen_json'),
+                    new DateTimeField('parlament_interessenbindungen_updated'),
+                    new StringField('twitter_name'),
+                    new StringField('linkedin_profil_url'),
+                    new StringField('xing_profil_name'),
+                    new StringField('facebook_name'),
+                    new StringField('wikipedia'),
+                    new StringField('sprache'),
+                    new StringField('arbeitssprache'),
+                    new StringField('adresse_firma'),
+                    new StringField('adresse_strasse'),
+                    new StringField('adresse_zusatz'),
+                    new StringField('adresse_plz'),
+                    new StringField('adresse_ort'),
+                    new StringField('telephon_1'),
+                    new StringField('telephon_2'),
+                    new StringField('erfasst'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('autorisierung_verschickt_visa'),
+                    new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisiert_visa'),
+                    new DateField('autorisiert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('beruf_de'),
+                    new DateField('von', true),
+                    new DateField('bis'),
+                    new IntegerField('aktiv'),
+                    new IntegerField('published', true),
+                    new IntegerField('geburtstag_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_bis_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix'),
+                    new IntegerField('von_unix', true),
+                    new IntegerField('bis_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_uv_interessenbindung_jahr_interessenbindung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_organisation_simple`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_mixed'),
+                    new StringField('anzeige_bimixed'),
+                    new StringField('searchable_name'),
+                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('name'),
+                    new IntegerField('id', true),
+                    new StringField('name_de', true),
+                    new StringField('name_fr'),
+                    new StringField('name_it'),
+                    new StringField('uid'),
+                    new StringField('ort'),
+                    new StringField('abkuerzung_de'),
+                    new StringField('alias_namen_de'),
+                    new StringField('abkuerzung_fr'),
+                    new StringField('alias_namen_fr'),
+                    new StringField('abkuerzung_it'),
+                    new StringField('alias_namen_it'),
+                    new IntegerField('land_id'),
+                    new IntegerField('interessenraum_id'),
+                    new StringField('rechtsform'),
+                    new StringField('rechtsform_handelsregister'),
+                    new IntegerField('rechtsform_zefix'),
+                    new StringField('typ', true),
+                    new StringField('vernehmlassung', true),
+                    new IntegerField('interessengruppe_id'),
+                    new IntegerField('interessengruppe2_id'),
+                    new IntegerField('interessengruppe3_id'),
+                    new IntegerField('ALT_branche_id'),
+                    new StringField('homepage'),
+                    new StringField('handelsregister_url'),
+                    new StringField('twitter_name'),
+                    new StringField('beschreibung'),
+                    new StringField('beschreibung_fr'),
+                    new StringField('sekretariat'),
+                    new StringField('adresse_strasse'),
+                    new StringField('adresse_zusatz'),
+                    new StringField('adresse_plz'),
+                    new StringField('notizen'),
+                    new DateTimeField('updated_by_import'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_mixed', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_uv_interessenbindung_jahr_interessenbindung_organisation_id_search', 'id', 'anzeige_mixed', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -2510,7 +4203,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_interessenbindung_jahr_interessenbindung_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_uv_interessenbindung_jahr_interessenbindung_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -2660,8 +4353,8 @@
 
     try
     {
-        $Page = new interessenbindung_jahrPage("interessenbindung_jahr", "interessenbindung_jahr.php", GetCurrentUserPermissionsForPage("interessenbindung_jahr"), 'UTF-8');
-        $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("interessenbindung_jahr"));
+        $Page = new uv_interessenbindung_jahrPage("uv_interessenbindung_jahr", "interessenbindung_jahr.php", GetCurrentUserPermissionsForPage("uv_interessenbindung_jahr"), 'UTF-8');
+        $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("uv_interessenbindung_jahr"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 
         GetApplication()->Run();
