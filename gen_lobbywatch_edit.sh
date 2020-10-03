@@ -24,7 +24,7 @@ do
 done
 
 # winepath
-# exiftool -ProductVersion ~/.wine/drive_c/Program\ Files\ \(x86\)/SQL\ Maestro\ Group/PHP\ Generator\ for\ MySQL\ Professional\ 20.5.0.3/MyPHPGeneratorPro.exe
+# exiftool -ProductVersion ~/.wine/drive_c/Program\ Files\ \(x86\)/SQL\ Maestro\ Group/PHP\ Generator\ for\ MySQL\ Professional\ 20.5.0.3_20200925_20200925_20200925/MyPHPGeneratorPro.exe
 
 dir="public_html/bearbeitung"
 
