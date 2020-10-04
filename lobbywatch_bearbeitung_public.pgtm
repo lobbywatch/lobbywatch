@@ -21370,8 +21370,8 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
           </MultiEdit>
         </Columns>
         <Details>
-          <Detail caption="Interessenbindung Jahr Log">
-            <Page type="table" tableName="interessenbindung_jahr_log" numberByDataSource="0" fileName="" caption="Interessenbindung Jahr Log" shortCaption="Interessenbindung Jahr Log" allowAddMultipleRecords="false" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="0" editAbilityMode="0" multiEditAbility="0" includeAllFieldsForMultiEditByDefault="false" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
+          <Detail caption="Interessenbindungvergütungen Log">
+            <Page type="table" tableName="interessenbindung_jahr_log" numberByDataSource="0" fileName="" caption="Interessenbindungvergütungen Log" shortCaption="Interessenbindungvergütungen Log" allowAddMultipleRecords="false" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="0" editAbilityMode="0" multiEditAbility="0" includeAllFieldsForMultiEditByDefault="false" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
               <DefaultSortedColumns>
                 <Column fieldName="log_id" orderType="1"/>
               </DefaultSortedColumns>

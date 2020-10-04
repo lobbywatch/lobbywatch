@@ -40,8 +40,8 @@
     {
         protected function DoBeforeCreate()
         {
-            $this->SetTitle('Interessenbindung Jahr Log');
-            $this->SetMenuLabel('Interessenbindung Jahr Log');
+            $this->SetTitle('Interessenbindungvergütungen Log');
+            $this->SetMenuLabel('Interessenbindungvergütungen Log');
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -2441,7 +2441,7 @@
             //
             // View column for uv_interessenbindung_jahr_interessenbindung_jahr_log detail
             //
-            $column = new DetailColumn(array('id'), 'uv_interessenbindung_jahr.interessenbindung_jahr_log', 'uv_interessenbindung_jahr_interessenbindung_jahr_log_handler', $this->dataset, 'Interessenbindung Jahr Log');
+            $column = new DetailColumn(array('id'), 'uv_interessenbindung_jahr.interessenbindung_jahr_log', 'uv_interessenbindung_jahr_interessenbindung_jahr_log_handler', $this->dataset, 'Interessenbindungvergütungen Log');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $grid->AddViewColumn($column);
             }
