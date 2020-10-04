@@ -21370,8 +21370,8 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
           </MultiEdit>
         </Columns>
         <Details>
-          <Detail caption="Interessenbindungvergütungen Log">
-            <Page type="table" tableName="interessenbindung_jahr_log" numberByDataSource="0" fileName="" caption="Interessenbindungvergütungen Log" shortCaption="Interessenbindungvergütungen Log" allowAddMultipleRecords="false" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="0" editAbilityMode="0" multiEditAbility="0" includeAllFieldsForMultiEditByDefault="false" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
+          <Detail caption="Interessenbindungsvergütungen Log">
+            <Page type="table" tableName="interessenbindung_jahr_log" numberByDataSource="0" fileName="" caption="Interessenbindungsvergütungen Log" shortCaption="Interessenbindungsvergütungen Log" allowAddMultipleRecords="false" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="0" editAbilityMode="0" multiEditAbility="0" includeAllFieldsForMultiEditByDefault="false" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
               <DefaultSortedColumns>
                 <Column fieldName="log_id" orderType="1"/>
               </DefaultSortedColumns>
@@ -38461,7 +38461,275 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_date"/>
           </MultiEdit>
         </Columns>
-        <Details/>
+        <Details>
+          <Detail caption="Settings Log">
+            <Page type="table" tableName="settings_log" numberByDataSource="0" fileName="" caption="Settings Log" shortCaption="Settings Log" allowAddMultipleRecords="false" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="0" editAbilityMode="0" multiEditAbility="0" includeAllFieldsForMultiEditByDefault="false" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
+              <DefaultSortedColumns>
+                <Column fieldName="log_id" orderType="1"/>
+              </DefaultSortedColumns>
+              <BeforeGridText/>
+              <DetailedDescription/>
+              <ColumnPresentations>
+                <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Live-Daten" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="key_name" caption="Key Name" headerHint="Schlüsselname der Einstellung. NICHT VERÄNDERN. Wird vom Programm vorgegeben" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="100"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="value" caption="Value" headerHint="Wert der Einstellung. Dieser Wert ist nach den Bedürfnissen anzupassen." canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="description" caption="Description" headerHint="Hinweise zur Bedeutung dieser Einstellung. Welche Werte sind möglich" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="category_id" caption="Category Id" headerHint="Fremdschlüssel zur Settingskategorie" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="notizen" caption="Notizen" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="log_id" caption="Log Id" headerHint="Technischer Log-Schlüssel" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="action" caption="Action" headerHint="Aktionstyp" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="comboBox">
+                    <Values>
+                      <Value name="insert" caption="insert"/>
+                      <Value name="update" caption="update"/>
+                      <Value name="delete" caption="delete"/>
+                      <Value name="snapshot" caption="snapshot"/>
+                    </Values>
+                  </EditProperties>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="state" caption="State" headerHint="Status der Aktion" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="20"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="action_date" caption="Action Date" headerHint="Datum der Aktion" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="snapshot_id" caption="Snapshot Id" headerHint="Fremdschlüssel zu einem Snapshot" canSetNull="true" selectedFilterOperators="1589247">
+                  <Lookup tableName="snapshot" linkFieldName="id" displayFieldName="beschreibung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="dynamicCombobox"/>
+                </ColumnPresentation>
+              </ColumnPresentations>
+              <Columns>
+                <List>
+                  <Column fieldName="id"/>
+                  <Column fieldName="key_name"/>
+                  <Column fieldName="value"/>
+                  <Column fieldName="description"/>
+                  <Column fieldName="category_id"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </List>
+                <View>
+                  <Column fieldName="id"/>
+                  <Column fieldName="key_name"/>
+                  <Column fieldName="value"/>
+                  <Column fieldName="description"/>
+                  <Column fieldName="category_id"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </View>
+                <Edit>
+                  <Column fieldName="id" visible="false"/>
+                  <Column fieldName="key_name" visible="false"/>
+                  <Column fieldName="value" visible="false"/>
+                  <Column fieldName="description" visible="false"/>
+                  <Column fieldName="category_id" visible="false"/>
+                  <Column fieldName="notizen" visible="false"/>
+                  <Column fieldName="created_visa" visible="false"/>
+                  <Column fieldName="created_date" visible="false"/>
+                  <Column fieldName="updated_visa" visible="false"/>
+                  <Column fieldName="updated_date" visible="false"/>
+                  <Column fieldName="log_id" visible="false"/>
+                  <Column fieldName="action" visible="false"/>
+                  <Column fieldName="state" visible="false"/>
+                  <Column fieldName="action_date" visible="false"/>
+                  <Column fieldName="snapshot_id" visible="false"/>
+                </Edit>
+                <Insert>
+                  <Column fieldName="id" visible="false"/>
+                  <Column fieldName="key_name" visible="false"/>
+                  <Column fieldName="value" visible="false"/>
+                  <Column fieldName="description" visible="false"/>
+                  <Column fieldName="category_id" visible="false"/>
+                  <Column fieldName="notizen" visible="false"/>
+                  <Column fieldName="created_visa" visible="false"/>
+                  <Column fieldName="created_date" visible="false"/>
+                  <Column fieldName="updated_visa" visible="false"/>
+                  <Column fieldName="updated_date" visible="false"/>
+                  <Column fieldName="log_id" visible="false"/>
+                  <Column fieldName="action" visible="false"/>
+                  <Column fieldName="state" visible="false"/>
+                  <Column fieldName="action_date" visible="false"/>
+                  <Column fieldName="snapshot_id" visible="false"/>
+                </Insert>
+                <QuickFilter>
+                  <Column fieldName="id"/>
+                  <Column fieldName="key_name"/>
+                  <Column fieldName="value"/>
+                  <Column fieldName="description"/>
+                  <Column fieldName="category_id"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </QuickFilter>
+                <FilterBuilder>
+                  <Column fieldName="id"/>
+                  <Column fieldName="key_name"/>
+                  <Column fieldName="value"/>
+                  <Column fieldName="description"/>
+                  <Column fieldName="category_id"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </FilterBuilder>
+                <Print>
+                  <Column fieldName="id"/>
+                  <Column fieldName="key_name"/>
+                  <Column fieldName="value"/>
+                  <Column fieldName="description"/>
+                  <Column fieldName="category_id"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </Print>
+                <Export>
+                  <Column fieldName="id"/>
+                  <Column fieldName="key_name"/>
+                  <Column fieldName="value"/>
+                  <Column fieldName="description"/>
+                  <Column fieldName="category_id"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </Export>
+                <Compare>
+                  <Column fieldName="id"/>
+                  <Column fieldName="key_name"/>
+                  <Column fieldName="value"/>
+                  <Column fieldName="description"/>
+                  <Column fieldName="category_id"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id" visible="false"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </Compare>
+                <MultiEdit>
+                  <Column fieldName="id" visible="false"/>
+                  <Column fieldName="key_name" visible="false"/>
+                  <Column fieldName="value" visible="false"/>
+                  <Column fieldName="description" visible="false"/>
+                  <Column fieldName="category_id" visible="false"/>
+                  <Column fieldName="notizen" visible="false"/>
+                  <Column fieldName="created_visa" visible="false"/>
+                  <Column fieldName="created_date" visible="false"/>
+                  <Column fieldName="updated_visa" visible="false"/>
+                  <Column fieldName="updated_date" visible="false"/>
+                  <Column fieldName="log_id" visible="false"/>
+                  <Column fieldName="action" visible="false"/>
+                  <Column fieldName="state" visible="false"/>
+                  <Column fieldName="action_date" visible="false"/>
+                  <Column fieldName="snapshot_id" visible="false"/>
+                </MultiEdit>
+              </Columns>
+              <Details/>
+              <EventHandlers>
+                <CustomDrawRow enabled="true">
+logTableExtendedDrawRow('settings_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
+              </EventHandlers>
+              <RecordPermissions useRecordPermissions="false"/>
+              <PartitionNavigators/>
+            </Page>
+            <MasterForeignKeyColumnMap>
+              <FieldMap masterColumnName="id" foreginColumnName="id"/>
+            </MasterForeignKeyColumnMap>
+          </Detail>
+        </Details>
         <EventHandlers>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
