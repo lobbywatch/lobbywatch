@@ -105,7 +105,7 @@
                 new FilterColumn($this->dataset, 'id', 'id', 'Id'),
                 new FilterColumn($this->dataset, 'interessenbindung_id', 'interessenbindung_id_anzeige_name', 'Interessenbindung'),
                 new FilterColumn($this->dataset, 'jahr', 'jahr', 'Jahr'),
-                new FilterColumn($this->dataset, 'verguetung', 'verguetung', 'Verguetung'),
+                new FilterColumn($this->dataset, 'verguetung', 'verguetung', 'Vergütung CHF/Jahr'),
                 new FilterColumn($this->dataset, 'beschreibung', 'beschreibung', 'Beschreibung'),
                 new FilterColumn($this->dataset, 'quelle_url', 'quelle_url', 'Quelle Url'),
                 new FilterColumn($this->dataset, 'quelle_url_gueltig', 'quelle_url_gueltig', 'Quelle Url Gueltig'),
@@ -143,6 +143,8 @@
         {
             $columnFilter
                 ->setOptionsFor('interessenbindung_id')
+                ->setOptionsFor('jahr')
+                ->setOptionsFor('verguetung')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
                 ->setOptionsFor('kontrolliert_datum')
                 ->setOptionsFor('autorisiert_datum')
@@ -693,7 +695,7 @@
             //
             // View column for verguetung field
             //
-            $column = new TextViewColumn('verguetung', 'verguetung', 'Verguetung', $this->dataset);
+            $column = new TextViewColumn('verguetung', 'verguetung', 'Vergütung CHF/Jahr', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.');
@@ -899,7 +901,7 @@
             //
             // View column for verguetung field
             //
-            $column = new TextViewColumn('verguetung', 'verguetung', 'Verguetung', $this->dataset);
+            $column = new TextViewColumn('verguetung', 'verguetung', 'Vergütung CHF/Jahr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1047,7 +1049,7 @@
             //
             $editor = new TextEdit('verguetung_edit');
             $editor->SetSuffix('Fr./Jahr');
-            $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Vergütung CHF/Jahr', 'verguetung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $editColumn->GetCaption()));
@@ -1304,7 +1306,7 @@
             //
             $editor = new TextEdit('verguetung_edit');
             $editor->SetSuffix('Fr./Jahr');
-            $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Vergütung CHF/Jahr', 'verguetung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $editColumn->GetCaption()));
@@ -1507,7 +1509,7 @@
             //
             $editor = new TextEdit('verguetung_edit');
             $editor->SetSuffix('Fr./Jahr');
-            $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Vergütung CHF/Jahr', 'verguetung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $editColumn->GetCaption()));
@@ -1630,7 +1632,7 @@
             //
             // View column for verguetung field
             //
-            $column = new TextViewColumn('verguetung', 'verguetung', 'Verguetung', $this->dataset);
+            $column = new TextViewColumn('verguetung', 'verguetung', 'Vergütung CHF/Jahr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -1785,7 +1787,7 @@
             //
             // View column for verguetung field
             //
-            $column = new TextViewColumn('verguetung', 'verguetung', 'Verguetung', $this->dataset);
+            $column = new TextViewColumn('verguetung', 'verguetung', 'Vergütung CHF/Jahr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -1940,7 +1942,7 @@
             //
             // View column for verguetung field
             //
-            $column = new TextViewColumn('verguetung', 'verguetung', 'Verguetung', $this->dataset);
+            $column = new TextViewColumn('verguetung', 'verguetung', 'Vergütung CHF/Jahr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             

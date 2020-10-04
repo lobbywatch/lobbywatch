@@ -1544,7 +1544,9 @@
             $columnFilter
                 ->setOptionsFor('interessenbindung_id')
                 ->setOptionsFor('jahr')
+                ->setOptionsFor('verguetung')
                 ->setOptionsFor('beschreibung')
+                ->setOptionsFor('quelle_url')
                 ->setOptionsFor('quelle')
                 ->setOptionsFor('eingabe_abgeschlossen_visa')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')

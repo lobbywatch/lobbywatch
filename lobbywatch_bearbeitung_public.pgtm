@@ -20224,14 +20224,14 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="dynamicCombobox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="jahr" caption="Jahr" headerHint="Jahr auf welche sich die Werte beziehen" showColumnFilter="false" selectedFilterOperators="1573119">
+                <ColumnPresentation fieldName="jahr" caption="Jahr" headerHint="Jahr auf welche sich die Werte beziehen" selectedFilterOperators="1573119">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="0"/>
                   <Validators>
                     <DigitsClientValidatorInfo enabled="true"/>
                   </Validators>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="verguetung" caption="Verguetung" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion." showColumnFilter="false" selectedFilterOperators="1573119">
+                <ColumnPresentation fieldName="verguetung" caption="Vergütung CHF/Jahr" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion." selectedFilterOperators="1573119">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="0" suffix="Fr./Jahr"/>
                   <Validators>
@@ -21209,7 +21209,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
 -1 = bezahlendes Mitglied
 0 = ehrenamtlich
 1 = bezahlt
-&gt; 1 = Vergütung in CHF pro Jahr" totalFunction="2" showColumnFilter="false" defaultInsertValue="0" selectedFilterOperators="1573119">
+&gt; 1 = Vergütung in CHF pro Jahr" totalFunction="2" defaultInsertValue="0" selectedFilterOperators="1573119">
             <ViewProperties type="text">
               <Format type="number" thousandSeparator="'"/>
             </ViewProperties>
@@ -21222,7 +21222,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="150"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="quelle_url" caption="Quelle Url" headerHint="URL der Quelle; zum Beleg" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="quelle_url" caption="Quelle Url" headerHint="URL der Quelle; zum Beleg" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="255"/>
           </ColumnPresentation>
