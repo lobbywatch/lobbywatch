@@ -1411,7 +1411,7 @@ function logTableExtendedDrawRow($table_name, $rowData, &$rowCellStyles, &$rowSt
   if ($prevRowData) {
     foreach ($rowData as $key => $value) {
       if (array_key_exists($key, $prevRowData)
-      && !in_array($key, ['updated_date', 'updated_visa', 'action_date', 'log_id', 'snapshot_id'])
+      && !in_array($key, ['updated_date', 'updated_visa', 'action', 'action_date', 'log_id', 'snapshot_id'])
       && $value !== $prevRowData[$key]) {
         $rowCellStyles[$key] = 'background-color: yellow;';
       }
