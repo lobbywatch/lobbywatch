@@ -20563,6 +20563,588 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
               <FieldMap masterColumnName="id" foreginColumnName="interessenbindung_id"/>
             </MasterForeignKeyColumnMap>
           </Detail>
+          <Detail caption="Interessenbindung Log">
+            <Page type="table" tableName="interessenbindung_log" numberByDataSource="0" fileName="" caption="Interessenbindung Log" shortCaption="Interessenbindung Log" allowAddMultipleRecords="false" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="0" editAbilityMode="0" multiEditAbility="0" includeAllFieldsForMultiEditByDefault="false" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
+              <DefaultSortedColumns>
+                <Column fieldName="log_id" orderType="1"/>
+              </DefaultSortedColumns>
+              <BeforeGridText/>
+              <DetailedDescription/>
+              <ColumnPresentations>
+                <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Live-Daten" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="parlamentarier_id" caption="Parlamentarier Id" headerHint="Fremdschlüssel Parlamentarier" selectedFilterOperators="1573119">
+                  <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <ViewProperties type="text"/>
+                  <EditProperties type="dynamicCombobox"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="organisation_id" caption="Organisation Id" headerHint="Fremdschlüssel Organisation" selectedFilterOperators="1573119">
+                  <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <ViewProperties type="text"/>
+                  <EditProperties type="dynamicCombobox"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="art" caption="Art" headerHint="Art der Interessenbindung" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="comboBox">
+                    <Values>
+                      <Value name="mitglied" caption="mitglied"/>
+                      <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
+                      <Value name="vorstand" caption="vorstand"/>
+                      <Value name="taetig" caption="taetig"/>
+                      <Value name="beirat" caption="beirat"/>
+                      <Value name="finanziell" caption="finanziell"/>
+                      <Value name="gesellschafter" caption="gesellschafter"/>
+                    </Values>
+                  </EditProperties>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="funktion_im_gremium" caption="Funktion Im Gremium" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwaltungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO." canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="comboBox">
+                    <Values>
+                      <Value name="praesident" caption="praesident"/>
+                      <Value name="vizepraesident" caption="vizepraesident"/>
+                      <Value name="mitglied" caption="mitglied"/>
+                    </Values>
+                  </EditProperties>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="deklarationstyp" caption="Deklarationstyp" headerHint="Ist diese Interessenbindung deklarationspflichtig? Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt." selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="comboBox">
+                    <Values>
+                      <Value name="deklarationspflichtig" caption="deklarationspflichtig"/>
+                      <Value name="nicht deklarationspflicht" caption="nicht deklarationspflicht"/>
+                    </Values>
+                  </EditProperties>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="status" caption="Status" headerHint="Status der Interessenbindung" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="comboBox">
+                    <Values>
+                      <Value name="deklariert" caption="deklariert"/>
+                      <Value name="nicht-deklariert" caption="nicht-deklariert"/>
+                    </Values>
+                  </EditProperties>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="hauptberuflich" caption="Hauptberuflich" headerHint="Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="behoerden_vertreter" caption="Behoerden Vertreter" headerHint="Entstand diese Interessenbindung als Behördenvertreter von Amtes wegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von Amtes wegen Einsitz nimmt." canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="comboBox">
+                    <Values>
+                      <Value name="J" caption="J"/>
+                      <Value name="N" caption="N"/>
+                    </Values>
+                  </EditProperties>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="beschreibung_fr" caption="Beschreibung Fr" headerHint="Französische Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="quelle_url" caption="Quelle Url" headerHint="URL der Quelle; zum Beleg" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" headerHint="Ist die Quell-URL noch gültig? Funktioniert er noch?" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="quelle" caption="Quelle" headerHint="Quellenangabe, Format: &quot;[Publikation], DD.MM.YYYY&quot;, falls vorhanden bitte die URL im Feld &quot;Quelle URL&quot; auch hinzufügen" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="80"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="von" caption="Von" headerHint="Beginn der Interessenbindung, leer (NULL) = unbekannt" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="bis" caption="Bis" headerHint="Ende der Interessenbindung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="notizen" caption="Notizen" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="updated_by_import" caption="Updated By Import" headerHint="Datum, wann die Interessenbindung durch einen Import zu letzt aktualisiert wurde. Ein Datum bedeutet, dass die Interessenbindung unter der Kontrolle des Importprozesses." canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat." canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="kontrolliert_visa" caption="Kontrolliert Visa" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat." canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="kontrolliert_datum" caption="Kontrolliert Datum" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="autorisiert_visa" caption="Autorisiert Visa" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen." canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass der Eintrag vom Parlamentarier autorisiert wurde." canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="freigabe_visa" caption="Freigabe Visa" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="freigabe_datum" caption="Freigabe Datum" headerHint="Freigabedatum (Freigabe = Daten sind fertig)" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="log_id" caption="Log Id" headerHint="Technischer Log-Schlüssel" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="action" caption="Action" headerHint="Aktionstyp" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="comboBox">
+                    <Values>
+                      <Value name="insert" caption="insert"/>
+                      <Value name="update" caption="update"/>
+                      <Value name="delete" caption="delete"/>
+                      <Value name="snapshot" caption="snapshot"/>
+                    </Values>
+                  </EditProperties>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="state" caption="State" headerHint="Status der Aktion" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="20"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="action_date" caption="Action Date" headerHint="Datum der Aktion" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="snapshot_id" caption="Snapshot Id" headerHint="Fremdschlüssel zu einem Snapshot" canSetNull="true" selectedFilterOperators="1589247">
+                  <Lookup tableName="snapshot" linkFieldName="id" displayFieldName="beschreibung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="dynamicCombobox"/>
+                </ColumnPresentation>
+              </ColumnPresentations>
+              <Columns>
+                <List>
+                  <Column fieldName="id"/>
+                  <Column fieldName="parlamentarier_id"/>
+                  <Column fieldName="organisation_id"/>
+                  <Column fieldName="art"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="deklarationstyp"/>
+                  <Column fieldName="status"/>
+                  <Column fieldName="hauptberuflich"/>
+                  <Column fieldName="behoerden_vertreter"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="quelle_url"/>
+                  <Column fieldName="quelle_url_gueltig"/>
+                  <Column fieldName="quelle"/>
+                  <Column fieldName="von"/>
+                  <Column fieldName="bis"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="updated_by_import"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="autorisiert_visa"/>
+                  <Column fieldName="autorisiert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </List>
+                <View>
+                  <Column fieldName="id"/>
+                  <Column fieldName="parlamentarier_id"/>
+                  <Column fieldName="organisation_id"/>
+                  <Column fieldName="art"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="deklarationstyp"/>
+                  <Column fieldName="status"/>
+                  <Column fieldName="hauptberuflich"/>
+                  <Column fieldName="behoerden_vertreter"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="quelle_url"/>
+                  <Column fieldName="quelle_url_gueltig"/>
+                  <Column fieldName="quelle"/>
+                  <Column fieldName="von"/>
+                  <Column fieldName="bis"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="updated_by_import"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="autorisiert_visa"/>
+                  <Column fieldName="autorisiert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </View>
+                <Edit>
+                  <Column fieldName="id" visible="false"/>
+                  <Column fieldName="parlamentarier_id" visible="false"/>
+                  <Column fieldName="organisation_id" visible="false"/>
+                  <Column fieldName="art" visible="false"/>
+                  <Column fieldName="funktion_im_gremium" visible="false"/>
+                  <Column fieldName="deklarationstyp" visible="false"/>
+                  <Column fieldName="status" visible="false"/>
+                  <Column fieldName="hauptberuflich" visible="false"/>
+                  <Column fieldName="behoerden_vertreter" visible="false"/>
+                  <Column fieldName="beschreibung" visible="false"/>
+                  <Column fieldName="beschreibung_fr" visible="false"/>
+                  <Column fieldName="quelle_url" visible="false"/>
+                  <Column fieldName="quelle_url_gueltig" visible="false"/>
+                  <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="von" visible="false"/>
+                  <Column fieldName="bis" visible="false"/>
+                  <Column fieldName="notizen" visible="false"/>
+                  <Column fieldName="updated_by_import" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
+                  <Column fieldName="kontrolliert_visa" visible="false"/>
+                  <Column fieldName="kontrolliert_datum" visible="false"/>
+                  <Column fieldName="autorisiert_visa" visible="false"/>
+                  <Column fieldName="autorisiert_datum" visible="false"/>
+                  <Column fieldName="freigabe_visa" visible="false"/>
+                  <Column fieldName="freigabe_datum" visible="false"/>
+                  <Column fieldName="created_visa" visible="false"/>
+                  <Column fieldName="created_date" visible="false"/>
+                  <Column fieldName="updated_visa" visible="false"/>
+                  <Column fieldName="updated_date" visible="false"/>
+                  <Column fieldName="log_id" visible="false"/>
+                  <Column fieldName="action" visible="false"/>
+                  <Column fieldName="state" visible="false"/>
+                  <Column fieldName="action_date" visible="false"/>
+                  <Column fieldName="snapshot_id" visible="false"/>
+                </Edit>
+                <Insert>
+                  <Column fieldName="id" visible="false"/>
+                  <Column fieldName="parlamentarier_id" visible="false"/>
+                  <Column fieldName="organisation_id" visible="false"/>
+                  <Column fieldName="art" visible="false"/>
+                  <Column fieldName="funktion_im_gremium" visible="false"/>
+                  <Column fieldName="deklarationstyp" visible="false"/>
+                  <Column fieldName="status" visible="false"/>
+                  <Column fieldName="hauptberuflich" visible="false"/>
+                  <Column fieldName="behoerden_vertreter" visible="false"/>
+                  <Column fieldName="beschreibung" visible="false"/>
+                  <Column fieldName="beschreibung_fr" visible="false"/>
+                  <Column fieldName="quelle_url" visible="false"/>
+                  <Column fieldName="quelle_url_gueltig" visible="false"/>
+                  <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="von" visible="false"/>
+                  <Column fieldName="bis" visible="false"/>
+                  <Column fieldName="notizen" visible="false"/>
+                  <Column fieldName="updated_by_import" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
+                  <Column fieldName="kontrolliert_visa" visible="false"/>
+                  <Column fieldName="kontrolliert_datum" visible="false"/>
+                  <Column fieldName="autorisiert_visa" visible="false"/>
+                  <Column fieldName="autorisiert_datum" visible="false"/>
+                  <Column fieldName="freigabe_visa" visible="false"/>
+                  <Column fieldName="freigabe_datum" visible="false"/>
+                  <Column fieldName="created_visa" visible="false"/>
+                  <Column fieldName="created_date" visible="false"/>
+                  <Column fieldName="updated_visa" visible="false"/>
+                  <Column fieldName="updated_date" visible="false"/>
+                  <Column fieldName="log_id" visible="false"/>
+                  <Column fieldName="action" visible="false"/>
+                  <Column fieldName="state" visible="false"/>
+                  <Column fieldName="action_date" visible="false"/>
+                  <Column fieldName="snapshot_id" visible="false"/>
+                </Insert>
+                <QuickFilter>
+                  <Column fieldName="id"/>
+                  <Column fieldName="parlamentarier_id"/>
+                  <Column fieldName="organisation_id"/>
+                  <Column fieldName="art"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="deklarationstyp"/>
+                  <Column fieldName="status"/>
+                  <Column fieldName="hauptberuflich"/>
+                  <Column fieldName="behoerden_vertreter"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="quelle_url"/>
+                  <Column fieldName="quelle_url_gueltig"/>
+                  <Column fieldName="quelle"/>
+                  <Column fieldName="von"/>
+                  <Column fieldName="bis"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="updated_by_import"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="autorisiert_visa"/>
+                  <Column fieldName="autorisiert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </QuickFilter>
+                <FilterBuilder>
+                  <Column fieldName="id"/>
+                  <Column fieldName="parlamentarier_id"/>
+                  <Column fieldName="organisation_id"/>
+                  <Column fieldName="art"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="deklarationstyp"/>
+                  <Column fieldName="status"/>
+                  <Column fieldName="hauptberuflich"/>
+                  <Column fieldName="behoerden_vertreter"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="quelle_url"/>
+                  <Column fieldName="quelle_url_gueltig"/>
+                  <Column fieldName="quelle"/>
+                  <Column fieldName="von"/>
+                  <Column fieldName="bis"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="updated_by_import"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="autorisiert_visa"/>
+                  <Column fieldName="autorisiert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </FilterBuilder>
+                <Print>
+                  <Column fieldName="id"/>
+                  <Column fieldName="parlamentarier_id"/>
+                  <Column fieldName="organisation_id"/>
+                  <Column fieldName="art"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="deklarationstyp"/>
+                  <Column fieldName="status"/>
+                  <Column fieldName="hauptberuflich"/>
+                  <Column fieldName="behoerden_vertreter"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="quelle_url"/>
+                  <Column fieldName="quelle_url_gueltig"/>
+                  <Column fieldName="quelle"/>
+                  <Column fieldName="von"/>
+                  <Column fieldName="bis"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="updated_by_import"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="autorisiert_visa"/>
+                  <Column fieldName="autorisiert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </Print>
+                <Export>
+                  <Column fieldName="id"/>
+                  <Column fieldName="parlamentarier_id"/>
+                  <Column fieldName="organisation_id"/>
+                  <Column fieldName="art"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="deklarationstyp"/>
+                  <Column fieldName="status"/>
+                  <Column fieldName="hauptberuflich"/>
+                  <Column fieldName="behoerden_vertreter"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="quelle_url"/>
+                  <Column fieldName="quelle_url_gueltig"/>
+                  <Column fieldName="quelle"/>
+                  <Column fieldName="von"/>
+                  <Column fieldName="bis"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="updated_by_import"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="autorisiert_visa"/>
+                  <Column fieldName="autorisiert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </Export>
+                <Compare>
+                  <Column fieldName="id"/>
+                  <Column fieldName="parlamentarier_id"/>
+                  <Column fieldName="organisation_id"/>
+                  <Column fieldName="art"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="deklarationstyp"/>
+                  <Column fieldName="status"/>
+                  <Column fieldName="hauptberuflich"/>
+                  <Column fieldName="behoerden_vertreter"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="quelle_url"/>
+                  <Column fieldName="quelle_url_gueltig"/>
+                  <Column fieldName="quelle"/>
+                  <Column fieldName="von"/>
+                  <Column fieldName="bis"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="updated_by_import"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="autorisiert_visa"/>
+                  <Column fieldName="autorisiert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id" visible="false"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </Compare>
+                <MultiEdit>
+                  <Column fieldName="id" visible="false"/>
+                  <Column fieldName="parlamentarier_id" visible="false"/>
+                  <Column fieldName="organisation_id" visible="false"/>
+                  <Column fieldName="art" visible="false"/>
+                  <Column fieldName="funktion_im_gremium" visible="false"/>
+                  <Column fieldName="deklarationstyp" visible="false"/>
+                  <Column fieldName="status" visible="false"/>
+                  <Column fieldName="hauptberuflich" visible="false"/>
+                  <Column fieldName="behoerden_vertreter" visible="false"/>
+                  <Column fieldName="beschreibung" visible="false"/>
+                  <Column fieldName="beschreibung_fr" visible="false"/>
+                  <Column fieldName="quelle_url" visible="false"/>
+                  <Column fieldName="quelle_url_gueltig" visible="false"/>
+                  <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="von" visible="false"/>
+                  <Column fieldName="bis" visible="false"/>
+                  <Column fieldName="notizen" visible="false"/>
+                  <Column fieldName="updated_by_import" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
+                  <Column fieldName="kontrolliert_visa" visible="false"/>
+                  <Column fieldName="kontrolliert_datum" visible="false"/>
+                  <Column fieldName="autorisiert_visa" visible="false"/>
+                  <Column fieldName="autorisiert_datum" visible="false"/>
+                  <Column fieldName="freigabe_visa" visible="false"/>
+                  <Column fieldName="freigabe_datum" visible="false"/>
+                  <Column fieldName="created_visa" visible="false"/>
+                  <Column fieldName="created_date" visible="false"/>
+                  <Column fieldName="updated_visa" visible="false"/>
+                  <Column fieldName="updated_date" visible="false"/>
+                  <Column fieldName="log_id" visible="false"/>
+                  <Column fieldName="action" visible="false"/>
+                  <Column fieldName="state" visible="false"/>
+                  <Column fieldName="action_date" visible="false"/>
+                  <Column fieldName="snapshot_id" visible="false"/>
+                </MultiEdit>
+              </Columns>
+              <Details/>
+              <EventHandlers>
+                <CustomDrawRow enabled="true">
+logTableExtendedDrawRow('interessenbindung_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
+              </EventHandlers>
+              <RecordPermissions useRecordPermissions="false"/>
+              <PartitionNavigators/>
+            </Page>
+            <MasterForeignKeyColumnMap>
+              <FieldMap masterColumnName="id" foreginColumnName="id"/>
+            </MasterForeignKeyColumnMap>
+          </Detail>
         </Details>
         <EventHandlers>
           <CustomDrawRow enabled="true">
