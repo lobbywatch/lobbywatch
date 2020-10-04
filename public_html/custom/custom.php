@@ -1410,7 +1410,8 @@ function logTableExtendedDrawRow($table_name, $rowData, &$rowCellStyles, &$rowSt
   $prevRowData = lobbywatch_forms_db_query($sql, array(':id' => $id, ':log_id' => $logId), $options)->fetch();
   if ($prevRowData) {
     foreach ($rowData as $key => $value) {
-      if (!in_array($key, ['updated_date', 'updated_visa', 'action_date', 'log_id', 'snapshot_id', 'snapshot_id_beschreibung'])
+      if (array_key_exists($key, $prevRowData)
+      && !in_array($key, ['updated_date', 'updated_visa', 'action_date', 'log_id', 'snapshot_id'])
       && $value !== $prevRowData[$key]) {
         $rowCellStyles[$key] = 'background-color: yellow;';
       }
