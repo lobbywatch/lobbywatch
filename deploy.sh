@@ -303,12 +303,12 @@ if $upload_files ; then
   ./prepare_release.sh $env_suffix $env_dir $env_dir2
 
   echo "## Deploying DB forms via rsync"
-  cmd='rsync $verbose -avze "ssh -p $ssh_port $quiet" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir'
+  cmd='rsync $verbose -avzce "ssh -p $ssh_port $quiet" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir'
   if $verbose_mode ; then
-    # echo rsync $verbose -avze "ssh -p $ssh_port $quiet" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir
+    # echo rsync $verbose -avzce "ssh -p $ssh_port $quiet" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir
     echo "$cmd"
   fi
-  # rsync $verbose -avze "ssh -p $ssh_port $quiet" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir
+  # rsync $verbose -avzce "ssh -p $ssh_port $quiet" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir
   eval "$cmd"
 fi
 
@@ -332,7 +332,7 @@ if $backup_db ; then
 
     echo "## Upload run_db_script.sh"
     include_db="--include run_db_script.sh"
-    rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
+    rsync -avzce "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
 
     echo "## Backup DB structure"
     ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh $db_base_name$env_suffix $db_user dbdump_struct interactive\""
@@ -363,9 +363,9 @@ if $downloaddbbaks ; then
       minimal_db_sync=""
       last_db_sync_files='last_dbdump*.txt'
     fi
-    rsync $verbose -avze "ssh -p $ssh_port $quiet" $progress --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --exclude '*' $minimal_db_sync $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
+    rsync $verbose -avzce "ssh -p $ssh_port $quiet" $progress --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --exclude '*' $minimal_db_sync $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
     # Sync last db dump files separaty in order not to be blocked by minimal sync
-    rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include=$last_db_sync_files --exclude '*' $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
+    rsync $verbose -avzce "ssh -p $ssh_port $quiet" --include='bak/' --include=$last_db_sync_files --exclude '*' $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
 
     if ! $onlylastdb ; then
       echo "## Archive file of each month from prod_bak$env_dir2/bak to prod_bak$env_dir2/archive"
@@ -385,14 +385,14 @@ if $compare_db_structs ; then
 
   echo "## Upload run_db_script.sh"
   include_db="--include run_db_script.sh"
-  rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir
+  rsync -avzce "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir
 
   echo "## Backup DB structure remote lobbywatch"
   echo ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir; bash -c \"./run_db_script.sh $db_base_name $db_user dbdump_struct interactive\""
   ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir; bash -c \"./run_db_script.sh $db_base_name $db_user dbdump_struct interactive\""
   echo "## Download backup files to prod_bak"
-  echo rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --include='last_dbdump*.txt' --exclude '*' $dry_run $ssh_user:$remote_db_dir/ prod_bak/
-  rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --include='last_dbdump*.txt' --exclude '*' $dry_run $ssh_user:$remote_db_dir/ prod_bak/
+  echo rsync $verbose -avzce "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --include='last_dbdump*.txt' --exclude '*' $dry_run $ssh_user:$remote_db_dir/ prod_bak/
+  rsync $verbose -avzce "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --include='last_dbdump*.txt' --exclude '*' $dry_run $ssh_user:$remote_db_dir/ prod_bak/
   db1_struct=prod_bak/`cat prod_bak/last_dbdump_file.txt`
   db1_struct_tmp=/tmp/$db1_struct
   mkdir -p `dirname $db1_struct_tmp`
@@ -406,7 +406,7 @@ if $compare_db_structs ; then
   echo "## Backup DB structure remote lobbywatchtest"
   ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir; bash -c \"./run_db_script.sh ${db_base_name}test $db_user dbdump_struct interactive\""
   echo "## Download backup files to prod_bak"
-  rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --include='last_dbdump*.txt' --exclude '*' $dry_run $ssh_user:$remote_db_dir/ prod_bak/
+  rsync $verbose -avzce "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --include='last_dbdump*.txt' --exclude '*' $dry_run $ssh_user:$remote_db_dir/ prod_bak/
   db2_struct=prod_bak/`cat prod_bak/last_dbdump_file.txt`
   db2_struct_tmp=/tmp/$db2_struct
   mkdir -p `dirname $db2_struct_tmp`
@@ -450,7 +450,7 @@ if $compare_LP_db_structs ; then
 
   echo "## Upload run_db_script.sh"
   include_db="--include run_db_script.sh"
-  rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
+  rsync -avzce "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
 
   echo "## Backup DB structure remote '$db_base_name$env_suffix'"
   ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh $db_base_name$env_suffix $db_user dbdump_struct interactive\""
@@ -459,8 +459,8 @@ if $compare_LP_db_structs ; then
   minimal_db_sync="--files-from=:$remote_db_dir$env_dir2/$last_dbdump_struct_file"
   last_db_sync_files=$last_dbdump_struct_file
 
-  rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/dbdump*.sql' --exclude '*' $minimal_db_sync $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
-  rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include=$last_db_sync_files --exclude '*' $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
+  rsync $verbose -avzce "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/dbdump*.sql' --exclude '*' $minimal_db_sync $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
+  rsync $verbose -avzce "ssh -p $ssh_port $quiet" --include='bak/' --include=$last_db_sync_files --exclude '*' $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
 
   db2_struct=prod_bak$env_dir2/`cat prod_bak$env_dir2/$last_dbdump_struct_file`
   db2_struct_tmp=/tmp/remote/$db2_struct
@@ -485,7 +485,7 @@ fi
 # if $load_sql ; then
 #   echo "## Copy DB via Rsync"
 #   include_db="--include deploy_*"
-#   rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir$env_dir2
+#   rsync -avzce "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir$env_dir2
 #
 #   echo "## Run SQL script"
 #   #ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir; bash -s" < $db_dir/deploy_load_db.sh
@@ -543,8 +543,8 @@ if $run_sql ; then
   else
     echo "## Copy SQL files: $sql_file"
     include_db="--include run_db_script.sh --include sql --include prod_bak --include prod_bak/bak --include $sql_file"
-  #   rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir$env_dir2
-    rsync -avze "ssh -p $ssh_port $quiet" $progress $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
+  #   rsync -avzce "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir$env_dir2
+    rsync -avzce "ssh -p $ssh_port $quiet" $progress $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
 
     echo "## Run SQL file: $sql_file"
     #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -s" < $db_dir/deploy_load_db.sh
