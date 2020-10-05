@@ -1472,6 +1472,7 @@
                 new FilterColumn($this->dataset, 'jahr', 'jahr', 'Jahr'),
                 new FilterColumn($this->dataset, 'verguetung', 'verguetung', 'Vergütung CHF/J'),
                 new FilterColumn($this->dataset, 'beschreibung', 'beschreibung', 'Beschreibung'),
+                new FilterColumn($this->dataset, 'interessenbindung_hauptberuflich', 'interessenbindung_hauptberuflich', 'IB Haupt&shy;beruf'),
                 new FilterColumn($this->dataset, 'quelle_url', 'quelle_url', 'Quelle Url'),
                 new FilterColumn($this->dataset, 'quelle_url_gueltig', 'quelle_url_gueltig', 'Quelle Url Gueltig'),
                 new FilterColumn($this->dataset, 'quelle', 'quelle', 'Quelle'),
@@ -1490,20 +1491,19 @@
                 new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date'),
                 new FilterColumn($this->dataset, 'interessenbindung_parlamentarier_id', 'interessenbindung_parlamentarier_id_anzeige_name', ' Parlamentarier'),
                 new FilterColumn($this->dataset, 'interessenbindung_organisation_id', 'interessenbindung_organisation_id_anzeige_mixed', 'Organisation'),
-                new FilterColumn($this->dataset, 'interessenbindung_art', 'interessenbindung_art', 'Interessenbindung Art'),
-                new FilterColumn($this->dataset, 'interessenbindung_funktion_im_gremium', 'interessenbindung_funktion_im_gremium', 'Interessenbindung Funktion Im Gremium'),
-                new FilterColumn($this->dataset, 'interessenbindung_deklarationstyp', 'interessenbindung_deklarationstyp', 'Interessenbindung Deklarationstyp'),
-                new FilterColumn($this->dataset, 'interessenbindung_status', 'interessenbindung_status', 'Interessenbindung Status'),
-                new FilterColumn($this->dataset, 'interessenbindung_hauptberuflich', 'interessenbindung_hauptberuflich', 'Interessenbindung Hauptberuflich'),
-                new FilterColumn($this->dataset, 'interessenbindung_behoerden_vertreter', 'interessenbindung_behoerden_vertreter', 'Interessenbindung Behoerden Vertreter'),
-                new FilterColumn($this->dataset, 'interessenbindung_beschreibung', 'interessenbindung_beschreibung', 'Interessenbindung Beschreibung'),
-                new FilterColumn($this->dataset, 'interessenbindung_beschreibung_fr', 'interessenbindung_beschreibung_fr', 'Interessenbindung Beschreibung Fr'),
-                new FilterColumn($this->dataset, 'interessenbindung_quelle_url', 'interessenbindung_quelle_url', 'Interessenbindung Quelle Url'),
-                new FilterColumn($this->dataset, 'interessenbindung_quelle_url_gueltig', 'interessenbindung_quelle_url_gueltig', 'Interessenbindung Quelle Url Gueltig'),
-                new FilterColumn($this->dataset, 'interessenbindung_quelle', 'interessenbindung_quelle', 'Interessenbindung Quelle'),
-                new FilterColumn($this->dataset, 'interessenbindung_von', 'interessenbindung_von', 'Interessenbindung Von'),
-                new FilterColumn($this->dataset, 'interessenbindung_bis', 'interessenbindung_bis', 'Interessenbindung Bis'),
-                new FilterColumn($this->dataset, 'interessenbindung_notizen', 'interessenbindung_notizen', 'Interessenbindung Notizen'),
+                new FilterColumn($this->dataset, 'interessenbindung_art', 'interessenbindung_art', 'IB Art'),
+                new FilterColumn($this->dataset, 'interessenbindung_funktion_im_gremium', 'interessenbindung_funktion_im_gremium', 'IB Funktion Im Gremium'),
+                new FilterColumn($this->dataset, 'interessenbindung_deklarationstyp', 'interessenbindung_deklarationstyp', 'IB Deklarationstyp'),
+                new FilterColumn($this->dataset, 'interessenbindung_status', 'interessenbindung_status', 'IB  Status'),
+                new FilterColumn($this->dataset, 'interessenbindung_behoerden_vertreter', 'interessenbindung_behoerden_vertreter', 'IB Behoerden Vertreter'),
+                new FilterColumn($this->dataset, 'interessenbindung_beschreibung', 'interessenbindung_beschreibung', 'IB Beschreibung'),
+                new FilterColumn($this->dataset, 'interessenbindung_beschreibung_fr', 'interessenbindung_beschreibung_fr', 'IB Beschreibung Fr'),
+                new FilterColumn($this->dataset, 'interessenbindung_quelle_url', 'interessenbindung_quelle_url', 'IB Quelle Url'),
+                new FilterColumn($this->dataset, 'interessenbindung_quelle_url_gueltig', 'interessenbindung_quelle_url_gueltig', 'IB Quelle Url Gueltig'),
+                new FilterColumn($this->dataset, 'interessenbindung_quelle', 'interessenbindung_quelle', 'IB Quelle'),
+                new FilterColumn($this->dataset, 'interessenbindung_von', 'interessenbindung_von', 'IB Von'),
+                new FilterColumn($this->dataset, 'interessenbindung_bis', 'interessenbindung_bis', 'IB Bis'),
+                new FilterColumn($this->dataset, 'interessenbindung_notizen', 'interessenbindung_notizen', 'IB Notizen'),
                 new FilterColumn($this->dataset, 'interessenbindung_updated_by_import', 'interessenbindung_updated_by_import', 'Interessenbindung Updated By Import'),
                 new FilterColumn($this->dataset, 'interessenbindung_eingabe_abgeschlossen_visa', 'interessenbindung_eingabe_abgeschlossen_visa', 'Interessenbindung Eingabe Abgeschlossen Visa'),
                 new FilterColumn($this->dataset, 'interessenbindung_eingabe_abgeschlossen_datum', 'interessenbindung_eingabe_abgeschlossen_datum', 'Interessenbindung Eingabe Abgeschlossen Datum'),
@@ -1546,6 +1546,7 @@
                 ->setOptionsFor('jahr')
                 ->setOptionsFor('verguetung')
                 ->setOptionsFor('beschreibung')
+                ->setOptionsFor('interessenbindung_hauptberuflich')
                 ->setOptionsFor('quelle_url')
                 ->setOptionsFor('quelle')
                 ->setOptionsFor('eingabe_abgeschlossen_visa')
@@ -1566,7 +1567,6 @@
                 ->setOptionsFor('interessenbindung_funktion_im_gremium')
                 ->setOptionsFor('interessenbindung_deklarationstyp')
                 ->setOptionsFor('interessenbindung_status')
-                ->setOptionsFor('interessenbindung_hauptberuflich')
                 ->setOptionsFor('interessenbindung_behoerden_vertreter')
                 ->setOptionsFor('interessenbindung_von')
                 ->setOptionsFor('interessenbindung_bis');
@@ -1675,6 +1675,24 @@
                     FilterConditionOperator::ENDS_WITH => $main_editor,
                     FilterConditionOperator::IS_LIKE => $main_editor,
                     FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('interessenbindung_hauptberuflich_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['interessenbindung_hauptberuflich'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -2215,24 +2233,6 @@
                 )
             );
             
-            $main_editor = new TextEdit('interessenbindung_hauptberuflich_edit');
-            
-            $filterBuilder->addColumn(
-                $columns['interessenbindung_hauptberuflich'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
-            
             $main_editor = new TextEdit('interessenbindung_behoerden_vertreter_edit');
             
             $filterBuilder->addColumn(
@@ -2512,6 +2512,17 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for interessenbindung_hauptberuflich field
+            //
+            $column = new CheckboxViewColumn('interessenbindung_hauptberuflich', 'interessenbindung_hauptberuflich', 'IB Haupt&shy;beruf', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for quelle_url field
             //
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
@@ -2693,7 +2704,7 @@
             //
             // View column for interessenbindung_art field
             //
-            $column = new TextViewColumn('interessenbindung_art', 'interessenbindung_art', 'Interessenbindung Art', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_art', 'interessenbindung_art', 'IB Art', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
@@ -2703,7 +2714,7 @@
             //
             // View column for interessenbindung_funktion_im_gremium field
             //
-            $column = new TextViewColumn('interessenbindung_funktion_im_gremium', 'interessenbindung_funktion_im_gremium', 'Interessenbindung Funktion Im Gremium', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_funktion_im_gremium', 'interessenbindung_funktion_im_gremium', 'IB Funktion Im Gremium', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
@@ -2713,7 +2724,7 @@
             //
             // View column for interessenbindung_deklarationstyp field
             //
-            $column = new TextViewColumn('interessenbindung_deklarationstyp', 'interessenbindung_deklarationstyp', 'Interessenbindung Deklarationstyp', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_deklarationstyp', 'interessenbindung_deklarationstyp', 'IB Deklarationstyp', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
@@ -2723,19 +2734,8 @@
             //
             // View column for interessenbindung_status field
             //
-            $column = new TextViewColumn('interessenbindung_status', 'interessenbindung_status', 'Interessenbindung Status', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_status', 'interessenbindung_status', 'IB  Status', $this->dataset);
             $column->SetOrderable(true);
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for interessenbindung_hauptberuflich field
-            //
-            $column = new CheckboxViewColumn('interessenbindung_hauptberuflich', 'interessenbindung_hauptberuflich', 'Interessenbindung Hauptberuflich', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
             $column->SetFixedWidth(null);
@@ -2744,7 +2744,7 @@
             //
             // View column for interessenbindung_behoerden_vertreter field
             //
-            $column = new TextViewColumn('interessenbindung_behoerden_vertreter', 'interessenbindung_behoerden_vertreter', 'Interessenbindung Behoerden Vertreter', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_behoerden_vertreter', 'interessenbindung_behoerden_vertreter', 'IB Behoerden Vertreter', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
@@ -2754,7 +2754,7 @@
             //
             // View column for interessenbindung_beschreibung field
             //
-            $column = new TextViewColumn('interessenbindung_beschreibung', 'interessenbindung_beschreibung', 'Interessenbindung Beschreibung', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_beschreibung', 'interessenbindung_beschreibung', 'IB Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
@@ -2765,7 +2765,7 @@
             //
             // View column for interessenbindung_quelle_url field
             //
-            $column = new TextViewColumn('interessenbindung_quelle_url', 'interessenbindung_quelle_url', 'Interessenbindung Quelle Url', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_quelle_url', 'interessenbindung_quelle_url', 'IB Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
@@ -2776,7 +2776,7 @@
             //
             // View column for interessenbindung_quelle field
             //
-            $column = new TextViewColumn('interessenbindung_quelle', 'interessenbindung_quelle', 'Interessenbindung Quelle', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_quelle', 'interessenbindung_quelle', 'IB Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
@@ -2787,7 +2787,7 @@
             //
             // View column for interessenbindung_von field
             //
-            $column = new DateTimeViewColumn('interessenbindung_von', 'interessenbindung_von', 'Interessenbindung Von', $this->dataset);
+            $column = new DateTimeViewColumn('interessenbindung_von', 'interessenbindung_von', 'IB Von', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
@@ -2798,7 +2798,7 @@
             //
             // View column for interessenbindung_bis field
             //
-            $column = new DateTimeViewColumn('interessenbindung_bis', 'interessenbindung_bis', 'Interessenbindung Bis', $this->dataset);
+            $column = new DateTimeViewColumn('interessenbindung_bis', 'interessenbindung_bis', 'IB Bis', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
@@ -2809,7 +2809,7 @@
             //
             // View column for interessenbindung_notizen field
             //
-            $column = new TextViewColumn('interessenbindung_notizen', 'interessenbindung_notizen', 'Interessenbindung Notizen', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_notizen', 'interessenbindung_notizen', 'IB Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
@@ -2862,6 +2862,14 @@
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for interessenbindung_hauptberuflich field
+            //
+            $column = new CheckboxViewColumn('interessenbindung_hauptberuflich', 'interessenbindung_hauptberuflich', 'IB Haupt&shy;beruf', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2995,50 +3003,42 @@
             //
             // View column for interessenbindung_art field
             //
-            $column = new TextViewColumn('interessenbindung_art', 'interessenbindung_art', 'Interessenbindung Art', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_art', 'interessenbindung_art', 'IB Art', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
             // View column for interessenbindung_funktion_im_gremium field
             //
-            $column = new TextViewColumn('interessenbindung_funktion_im_gremium', 'interessenbindung_funktion_im_gremium', 'Interessenbindung Funktion Im Gremium', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_funktion_im_gremium', 'interessenbindung_funktion_im_gremium', 'IB Funktion Im Gremium', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
             // View column for interessenbindung_deklarationstyp field
             //
-            $column = new TextViewColumn('interessenbindung_deklarationstyp', 'interessenbindung_deklarationstyp', 'Interessenbindung Deklarationstyp', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_deklarationstyp', 'interessenbindung_deklarationstyp', 'IB Deklarationstyp', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
             // View column for interessenbindung_status field
             //
-            $column = new TextViewColumn('interessenbindung_status', 'interessenbindung_status', 'Interessenbindung Status', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_status', 'interessenbindung_status', 'IB  Status', $this->dataset);
             $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for interessenbindung_hauptberuflich field
-            //
-            $column = new CheckboxViewColumn('interessenbindung_hauptberuflich', 'interessenbindung_hauptberuflich', 'Interessenbindung Hauptberuflich', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $grid->AddSingleRecordViewColumn($column);
             
             //
             // View column for interessenbindung_behoerden_vertreter field
             //
-            $column = new TextViewColumn('interessenbindung_behoerden_vertreter', 'interessenbindung_behoerden_vertreter', 'Interessenbindung Behoerden Vertreter', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_behoerden_vertreter', 'interessenbindung_behoerden_vertreter', 'IB Behoerden Vertreter', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
             // View column for interessenbindung_beschreibung field
             //
-            $column = new TextViewColumn('interessenbindung_beschreibung', 'interessenbindung_beschreibung', 'Interessenbindung Beschreibung', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_beschreibung', 'interessenbindung_beschreibung', 'IB Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
@@ -3046,7 +3046,7 @@
             //
             // View column for interessenbindung_quelle_url field
             //
-            $column = new TextViewColumn('interessenbindung_quelle_url', 'interessenbindung_quelle_url', 'Interessenbindung Quelle Url', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_quelle_url', 'interessenbindung_quelle_url', 'IB Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
@@ -3054,7 +3054,7 @@
             //
             // View column for interessenbindung_quelle field
             //
-            $column = new TextViewColumn('interessenbindung_quelle', 'interessenbindung_quelle', 'Interessenbindung Quelle', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_quelle', 'interessenbindung_quelle', 'IB Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
@@ -3062,7 +3062,7 @@
             //
             // View column for interessenbindung_von field
             //
-            $column = new DateTimeViewColumn('interessenbindung_von', 'interessenbindung_von', 'Interessenbindung Von', $this->dataset);
+            $column = new DateTimeViewColumn('interessenbindung_von', 'interessenbindung_von', 'IB Von', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y');
             $grid->AddSingleRecordViewColumn($column);
@@ -3070,7 +3070,7 @@
             //
             // View column for interessenbindung_bis field
             //
-            $column = new DateTimeViewColumn('interessenbindung_bis', 'interessenbindung_bis', 'Interessenbindung Bis', $this->dataset);
+            $column = new DateTimeViewColumn('interessenbindung_bis', 'interessenbindung_bis', 'IB Bis', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y');
             $grid->AddSingleRecordViewColumn($column);
@@ -3078,7 +3078,7 @@
             //
             // View column for interessenbindung_notizen field
             //
-            $column = new TextViewColumn('interessenbindung_notizen', 'interessenbindung_notizen', 'Interessenbindung Notizen', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_notizen', 'interessenbindung_notizen', 'IB Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
@@ -3188,6 +3188,16 @@
             $editor = new TextEdit('beschreibung_edit');
             $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessenbindung_hauptberuflich field
+            //
+            $editor = new TextEdit('interessenbindung_hauptberuflich_edit');
+            $editColumn = new CustomEditColumn('IB Haupt&shy;beruf', 'interessenbindung_hauptberuflich', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3555,7 +3565,7 @@
             $editor->addChoice('beirat', 'beirat');
             $editor->addChoice('finanziell', 'finanziell');
             $editor->addChoice('gesellschafter', 'gesellschafter');
-            $editColumn = new CustomEditColumn('Interessenbindung Art', 'interessenbindung_art', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('IB Art', 'interessenbindung_art', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3565,7 +3575,7 @@
             // Edit column for interessenbindung_funktion_im_gremium field
             //
             $editor = new TextEdit('interessenbindung_funktion_im_gremium_edit');
-            $editColumn = new CustomEditColumn('Interessenbindung Funktion Im Gremium', 'interessenbindung_funktion_im_gremium', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('IB Funktion Im Gremium', 'interessenbindung_funktion_im_gremium', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3577,7 +3587,7 @@
             $editor = new ComboBox('interessenbindung_deklarationstyp_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->addChoice('deklarationspflichtig', 'deklarationspflichtig');
             $editor->addChoice('nicht deklarationspflicht', 'nicht deklarationspflicht');
-            $editColumn = new CustomEditColumn('Interessenbindung Deklarationstyp', 'interessenbindung_deklarationstyp', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('IB Deklarationstyp', 'interessenbindung_deklarationstyp', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3589,17 +3599,7 @@
             $editor = new ComboBox('interessenbindung_status_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->addChoice('deklariert', 'deklariert');
             $editor->addChoice('nicht-deklariert', 'nicht-deklariert');
-            $editColumn = new CustomEditColumn('Interessenbindung Status', 'interessenbindung_status', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for interessenbindung_hauptberuflich field
-            //
-            $editor = new TextEdit('interessenbindung_hauptberuflich_edit');
-            $editColumn = new CustomEditColumn('Interessenbindung Hauptberuflich', 'interessenbindung_hauptberuflich', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('IB  Status', 'interessenbindung_status', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3609,7 +3609,7 @@
             // Edit column for interessenbindung_behoerden_vertreter field
             //
             $editor = new TextEdit('interessenbindung_behoerden_vertreter_edit');
-            $editColumn = new CustomEditColumn('Interessenbindung Behoerden Vertreter', 'interessenbindung_behoerden_vertreter', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('IB Behoerden Vertreter', 'interessenbindung_behoerden_vertreter', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3619,7 +3619,7 @@
             // Edit column for interessenbindung_beschreibung field
             //
             $editor = new TextEdit('interessenbindung_beschreibung_edit');
-            $editColumn = new CustomEditColumn('Interessenbindung Beschreibung', 'interessenbindung_beschreibung', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('IB Beschreibung', 'interessenbindung_beschreibung', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3629,7 +3629,7 @@
             // Edit column for interessenbindung_quelle_url field
             //
             $editor = new TextEdit('interessenbindung_quelle_url_edit');
-            $editColumn = new CustomEditColumn('Interessenbindung Quelle Url', 'interessenbindung_quelle_url', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('IB Quelle Url', 'interessenbindung_quelle_url', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3640,7 +3640,7 @@
             //
             $editor = new TextEdit('interessenbindung_quelle_edit');
             $editor->SetMaxLength(80);
-            $editColumn = new CustomEditColumn('Interessenbindung Quelle', 'interessenbindung_quelle', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('IB Quelle', 'interessenbindung_quelle', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3650,7 +3650,7 @@
             // Edit column for interessenbindung_von field
             //
             $editor = new DateTimeEdit('interessenbindung_von_edit', false, 'd.m.Y');
-            $editColumn = new CustomEditColumn('Interessenbindung Von', 'interessenbindung_von', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('IB Von', 'interessenbindung_von', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3660,7 +3660,7 @@
             // Edit column for interessenbindung_bis field
             //
             $editor = new DateTimeEdit('interessenbindung_bis_edit', false, 'd.m.Y');
-            $editColumn = new CustomEditColumn('Interessenbindung Bis', 'interessenbindung_bis', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('IB Bis', 'interessenbindung_bis', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3670,7 +3670,7 @@
             // Edit column for interessenbindung_notizen field
             //
             $editor = new TextAreaEdit('interessenbindung_notizen_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Interessenbindung Notizen', 'interessenbindung_notizen', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('IB Notizen', 'interessenbindung_notizen', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4139,6 +4139,14 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for interessenbindung_hauptberuflich field
+            //
+            $column = new CheckboxViewColumn('interessenbindung_hauptberuflich', 'interessenbindung_hauptberuflich', 'IB Haupt&shy;beruf', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for quelle_url field
             //
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
@@ -4269,50 +4277,42 @@
             //
             // View column for interessenbindung_art field
             //
-            $column = new TextViewColumn('interessenbindung_art', 'interessenbindung_art', 'Interessenbindung Art', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_art', 'interessenbindung_art', 'IB Art', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
             // View column for interessenbindung_funktion_im_gremium field
             //
-            $column = new TextViewColumn('interessenbindung_funktion_im_gremium', 'interessenbindung_funktion_im_gremium', 'Interessenbindung Funktion Im Gremium', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_funktion_im_gremium', 'interessenbindung_funktion_im_gremium', 'IB Funktion Im Gremium', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
             // View column for interessenbindung_deklarationstyp field
             //
-            $column = new TextViewColumn('interessenbindung_deklarationstyp', 'interessenbindung_deklarationstyp', 'Interessenbindung Deklarationstyp', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_deklarationstyp', 'interessenbindung_deklarationstyp', 'IB Deklarationstyp', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
             // View column for interessenbindung_status field
             //
-            $column = new TextViewColumn('interessenbindung_status', 'interessenbindung_status', 'Interessenbindung Status', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_status', 'interessenbindung_status', 'IB  Status', $this->dataset);
             $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for interessenbindung_hauptberuflich field
-            //
-            $column = new CheckboxViewColumn('interessenbindung_hauptberuflich', 'interessenbindung_hauptberuflich', 'Interessenbindung Hauptberuflich', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $grid->AddPrintColumn($column);
             
             //
             // View column for interessenbindung_behoerden_vertreter field
             //
-            $column = new TextViewColumn('interessenbindung_behoerden_vertreter', 'interessenbindung_behoerden_vertreter', 'Interessenbindung Behoerden Vertreter', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_behoerden_vertreter', 'interessenbindung_behoerden_vertreter', 'IB Behoerden Vertreter', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
             // View column for interessenbindung_beschreibung field
             //
-            $column = new TextViewColumn('interessenbindung_beschreibung', 'interessenbindung_beschreibung', 'Interessenbindung Beschreibung', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_beschreibung', 'interessenbindung_beschreibung', 'IB Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddPrintColumn($column);
@@ -4320,7 +4320,7 @@
             //
             // View column for interessenbindung_quelle_url field
             //
-            $column = new TextViewColumn('interessenbindung_quelle_url', 'interessenbindung_quelle_url', 'Interessenbindung Quelle Url', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_quelle_url', 'interessenbindung_quelle_url', 'IB Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddPrintColumn($column);
@@ -4328,7 +4328,7 @@
             //
             // View column for interessenbindung_quelle field
             //
-            $column = new TextViewColumn('interessenbindung_quelle', 'interessenbindung_quelle', 'Interessenbindung Quelle', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_quelle', 'interessenbindung_quelle', 'IB Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddPrintColumn($column);
@@ -4336,7 +4336,7 @@
             //
             // View column for interessenbindung_von field
             //
-            $column = new DateTimeViewColumn('interessenbindung_von', 'interessenbindung_von', 'Interessenbindung Von', $this->dataset);
+            $column = new DateTimeViewColumn('interessenbindung_von', 'interessenbindung_von', 'IB Von', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y');
             $grid->AddPrintColumn($column);
@@ -4344,7 +4344,7 @@
             //
             // View column for interessenbindung_bis field
             //
-            $column = new DateTimeViewColumn('interessenbindung_bis', 'interessenbindung_bis', 'Interessenbindung Bis', $this->dataset);
+            $column = new DateTimeViewColumn('interessenbindung_bis', 'interessenbindung_bis', 'IB Bis', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y');
             $grid->AddPrintColumn($column);
@@ -4352,7 +4352,7 @@
             //
             // View column for interessenbindung_notizen field
             //
-            $column = new TextViewColumn('interessenbindung_notizen', 'interessenbindung_notizen', 'Interessenbindung Notizen', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_notizen', 'interessenbindung_notizen', 'IB Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddPrintColumn($column);
@@ -4405,6 +4405,14 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for interessenbindung_hauptberuflich field
+            //
+            $column = new CheckboxViewColumn('interessenbindung_hauptberuflich', 'interessenbindung_hauptberuflich', 'IB Haupt&shy;beruf', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for quelle_url field
             //
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
@@ -4535,50 +4543,42 @@
             //
             // View column for interessenbindung_art field
             //
-            $column = new TextViewColumn('interessenbindung_art', 'interessenbindung_art', 'Interessenbindung Art', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_art', 'interessenbindung_art', 'IB Art', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
             // View column for interessenbindung_funktion_im_gremium field
             //
-            $column = new TextViewColumn('interessenbindung_funktion_im_gremium', 'interessenbindung_funktion_im_gremium', 'Interessenbindung Funktion Im Gremium', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_funktion_im_gremium', 'interessenbindung_funktion_im_gremium', 'IB Funktion Im Gremium', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
             // View column for interessenbindung_deklarationstyp field
             //
-            $column = new TextViewColumn('interessenbindung_deklarationstyp', 'interessenbindung_deklarationstyp', 'Interessenbindung Deklarationstyp', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_deklarationstyp', 'interessenbindung_deklarationstyp', 'IB Deklarationstyp', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
             // View column for interessenbindung_status field
             //
-            $column = new TextViewColumn('interessenbindung_status', 'interessenbindung_status', 'Interessenbindung Status', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_status', 'interessenbindung_status', 'IB  Status', $this->dataset);
             $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for interessenbindung_hauptberuflich field
-            //
-            $column = new CheckboxViewColumn('interessenbindung_hauptberuflich', 'interessenbindung_hauptberuflich', 'Interessenbindung Hauptberuflich', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $grid->AddExportColumn($column);
             
             //
             // View column for interessenbindung_behoerden_vertreter field
             //
-            $column = new TextViewColumn('interessenbindung_behoerden_vertreter', 'interessenbindung_behoerden_vertreter', 'Interessenbindung Behoerden Vertreter', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_behoerden_vertreter', 'interessenbindung_behoerden_vertreter', 'IB Behoerden Vertreter', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
             // View column for interessenbindung_beschreibung field
             //
-            $column = new TextViewColumn('interessenbindung_beschreibung', 'interessenbindung_beschreibung', 'Interessenbindung Beschreibung', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_beschreibung', 'interessenbindung_beschreibung', 'IB Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddExportColumn($column);
@@ -4586,7 +4586,7 @@
             //
             // View column for interessenbindung_quelle_url field
             //
-            $column = new TextViewColumn('interessenbindung_quelle_url', 'interessenbindung_quelle_url', 'Interessenbindung Quelle Url', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_quelle_url', 'interessenbindung_quelle_url', 'IB Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddExportColumn($column);
@@ -4594,7 +4594,7 @@
             //
             // View column for interessenbindung_quelle field
             //
-            $column = new TextViewColumn('interessenbindung_quelle', 'interessenbindung_quelle', 'Interessenbindung Quelle', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_quelle', 'interessenbindung_quelle', 'IB Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddExportColumn($column);
@@ -4602,7 +4602,7 @@
             //
             // View column for interessenbindung_von field
             //
-            $column = new DateTimeViewColumn('interessenbindung_von', 'interessenbindung_von', 'Interessenbindung Von', $this->dataset);
+            $column = new DateTimeViewColumn('interessenbindung_von', 'interessenbindung_von', 'IB Von', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y');
             $grid->AddExportColumn($column);
@@ -4610,7 +4610,7 @@
             //
             // View column for interessenbindung_bis field
             //
-            $column = new DateTimeViewColumn('interessenbindung_bis', 'interessenbindung_bis', 'Interessenbindung Bis', $this->dataset);
+            $column = new DateTimeViewColumn('interessenbindung_bis', 'interessenbindung_bis', 'IB Bis', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y');
             $grid->AddExportColumn($column);
@@ -4618,7 +4618,7 @@
             //
             // View column for interessenbindung_notizen field
             //
-            $column = new TextViewColumn('interessenbindung_notizen', 'interessenbindung_notizen', 'Interessenbindung Notizen', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_notizen', 'interessenbindung_notizen', 'IB Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddExportColumn($column);
@@ -4661,6 +4661,14 @@
             $grid->AddCompareColumn($column);
             
             //
+            // View column for interessenbindung_hauptberuflich field
+            //
+            $column = new CheckboxViewColumn('interessenbindung_hauptberuflich', 'interessenbindung_hauptberuflich', 'IB Haupt&shy;beruf', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $grid->AddCompareColumn($column);
+            
+            //
             // View column for quelle_url field
             //
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
@@ -4791,50 +4799,42 @@
             //
             // View column for interessenbindung_art field
             //
-            $column = new TextViewColumn('interessenbindung_art', 'interessenbindung_art', 'Interessenbindung Art', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_art', 'interessenbindung_art', 'IB Art', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             
             //
             // View column for interessenbindung_funktion_im_gremium field
             //
-            $column = new TextViewColumn('interessenbindung_funktion_im_gremium', 'interessenbindung_funktion_im_gremium', 'Interessenbindung Funktion Im Gremium', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_funktion_im_gremium', 'interessenbindung_funktion_im_gremium', 'IB Funktion Im Gremium', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             
             //
             // View column for interessenbindung_deklarationstyp field
             //
-            $column = new TextViewColumn('interessenbindung_deklarationstyp', 'interessenbindung_deklarationstyp', 'Interessenbindung Deklarationstyp', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_deklarationstyp', 'interessenbindung_deklarationstyp', 'IB Deklarationstyp', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             
             //
             // View column for interessenbindung_status field
             //
-            $column = new TextViewColumn('interessenbindung_status', 'interessenbindung_status', 'Interessenbindung Status', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_status', 'interessenbindung_status', 'IB  Status', $this->dataset);
             $column->SetOrderable(true);
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for interessenbindung_hauptberuflich field
-            //
-            $column = new CheckboxViewColumn('interessenbindung_hauptberuflich', 'interessenbindung_hauptberuflich', 'Interessenbindung Hauptberuflich', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $grid->AddCompareColumn($column);
             
             //
             // View column for interessenbindung_behoerden_vertreter field
             //
-            $column = new TextViewColumn('interessenbindung_behoerden_vertreter', 'interessenbindung_behoerden_vertreter', 'Interessenbindung Behoerden Vertreter', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_behoerden_vertreter', 'interessenbindung_behoerden_vertreter', 'IB Behoerden Vertreter', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             
             //
             // View column for interessenbindung_beschreibung field
             //
-            $column = new TextViewColumn('interessenbindung_beschreibung', 'interessenbindung_beschreibung', 'Interessenbindung Beschreibung', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_beschreibung', 'interessenbindung_beschreibung', 'IB Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddCompareColumn($column);
@@ -4842,7 +4842,7 @@
             //
             // View column for interessenbindung_quelle_url field
             //
-            $column = new TextViewColumn('interessenbindung_quelle_url', 'interessenbindung_quelle_url', 'Interessenbindung Quelle Url', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_quelle_url', 'interessenbindung_quelle_url', 'IB Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddCompareColumn($column);
@@ -4850,7 +4850,7 @@
             //
             // View column for interessenbindung_quelle field
             //
-            $column = new TextViewColumn('interessenbindung_quelle', 'interessenbindung_quelle', 'Interessenbindung Quelle', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_quelle', 'interessenbindung_quelle', 'IB Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddCompareColumn($column);
@@ -4858,7 +4858,7 @@
             //
             // View column for interessenbindung_von field
             //
-            $column = new DateTimeViewColumn('interessenbindung_von', 'interessenbindung_von', 'Interessenbindung Von', $this->dataset);
+            $column = new DateTimeViewColumn('interessenbindung_von', 'interessenbindung_von', 'IB Von', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y');
             $grid->AddCompareColumn($column);
@@ -4866,7 +4866,7 @@
             //
             // View column for interessenbindung_bis field
             //
-            $column = new DateTimeViewColumn('interessenbindung_bis', 'interessenbindung_bis', 'Interessenbindung Bis', $this->dataset);
+            $column = new DateTimeViewColumn('interessenbindung_bis', 'interessenbindung_bis', 'IB Bis', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y');
             $grid->AddCompareColumn($column);
@@ -4874,7 +4874,7 @@
             //
             // View column for interessenbindung_notizen field
             //
-            $column = new TextViewColumn('interessenbindung_notizen', 'interessenbindung_notizen', 'Interessenbindung Notizen', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_notizen', 'interessenbindung_notizen', 'IB Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddCompareColumn($column);

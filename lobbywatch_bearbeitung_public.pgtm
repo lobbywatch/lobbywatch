@@ -21222,6 +21222,10 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="150"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="interessenbindung_hauptberuflich" caption="IB Haupt&amp;shy;beruf" canSetNull="true" readOnly="true" selectedFilterOperators="1573119">
+            <ViewProperties type="checkBox" displayType="image"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
           <ColumnPresentation fieldName="quelle_url" caption="Quelle Url" headerHint="URL der Quelle; zum Beleg" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="255"/>
@@ -21298,7 +21302,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <ViewProperties type="text"/>
             <EditProperties type="dynamicCombobox"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="interessenbindung_art" caption="Interessenbindung Art" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="interessenbindung_art" caption="IB Art" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
               <Values>
@@ -21312,11 +21316,11 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
               </Values>
             </EditProperties>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="interessenbindung_funktion_im_gremium" caption="Interessenbindung Funktion Im Gremium" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="interessenbindung_funktion_im_gremium" caption="IB Funktion Im Gremium" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="interessenbindung_deklarationstyp" caption="Interessenbindung Deklarationstyp" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="interessenbindung_deklarationstyp" caption="IB Deklarationstyp" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
               <Values>
@@ -21325,7 +21329,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
               </Values>
             </EditProperties>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="interessenbindung_status" caption="Interessenbindung Status" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="interessenbindung_status" caption="IB  Status" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
               <Values>
@@ -21334,45 +21338,41 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
               </Values>
             </EditProperties>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="interessenbindung_hauptberuflich" caption="Interessenbindung Hauptberuflich" canSetNull="true" readOnly="true" selectedFilterOperators="1573119">
-            <ViewProperties type="checkBox" displayType="image"/>
-            <EditProperties type="textBox" maxLength="0"/>
-          </ColumnPresentation>
-          <ColumnPresentation fieldName="interessenbindung_behoerden_vertreter" caption="Interessenbindung Behoerden Vertreter" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="interessenbindung_behoerden_vertreter" caption="IB Behoerden Vertreter" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="interessenbindung_beschreibung" caption="Interessenbindung Beschreibung" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="interessenbindung_beschreibung" caption="IB Beschreibung" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="interessenbindung_beschreibung_fr" caption="Interessenbindung Beschreibung Fr" showColumnFilter="false" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="interessenbindung_beschreibung_fr" caption="IB Beschreibung Fr" showColumnFilter="false" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="interessenbindung_quelle_url" caption="Interessenbindung Quelle Url" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="interessenbindung_quelle_url" caption="IB Quelle Url" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="interessenbindung_quelle_url_gueltig" caption="Interessenbindung Quelle Url Gueltig" showColumnFilter="false" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="interessenbindung_quelle_url_gueltig" caption="IB Quelle Url Gueltig" showColumnFilter="false" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="1573119">
             <ViewProperties type="text">
               <Format type="number" thousandSeparator="'"/>
             </ViewProperties>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="interessenbindung_quelle" caption="Interessenbindung Quelle" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="interessenbindung_quelle" caption="IB Quelle" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="80"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="interessenbindung_von" caption="Interessenbindung Von" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="interessenbindung_von" caption="IB Von" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="interessenbindung_bis" caption="Interessenbindung Bis" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="interessenbindung_bis" caption="IB Bis" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="interessenbindung_notizen" caption="Interessenbindung Notizen" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="interessenbindung_notizen" caption="IB Notizen" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
@@ -21436,6 +21436,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="jahr"/>
             <Column fieldName="verguetung"/>
             <Column fieldName="beschreibung"/>
+            <Column fieldName="interessenbindung_hauptberuflich"/>
             <Column fieldName="quelle_url"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
             <Column fieldName="quelle"/>
@@ -21458,7 +21459,6 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="interessenbindung_funktion_im_gremium"/>
             <Column fieldName="interessenbindung_deklarationstyp"/>
             <Column fieldName="interessenbindung_status"/>
-            <Column fieldName="interessenbindung_hauptberuflich"/>
             <Column fieldName="interessenbindung_behoerden_vertreter"/>
             <Column fieldName="interessenbindung_beschreibung"/>
             <Column fieldName="interessenbindung_beschreibung_fr" visible="false"/>
@@ -21488,6 +21488,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="jahr"/>
             <Column fieldName="verguetung"/>
             <Column fieldName="beschreibung"/>
+            <Column fieldName="interessenbindung_hauptberuflich"/>
             <Column fieldName="quelle_url"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
             <Column fieldName="quelle"/>
@@ -21510,7 +21511,6 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="interessenbindung_funktion_im_gremium"/>
             <Column fieldName="interessenbindung_deklarationstyp"/>
             <Column fieldName="interessenbindung_status"/>
-            <Column fieldName="interessenbindung_hauptberuflich"/>
             <Column fieldName="interessenbindung_behoerden_vertreter"/>
             <Column fieldName="interessenbindung_beschreibung"/>
             <Column fieldName="interessenbindung_beschreibung_fr" visible="false"/>
@@ -21540,6 +21540,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="jahr"/>
             <Column fieldName="verguetung"/>
             <Column fieldName="beschreibung"/>
+            <Column fieldName="interessenbindung_hauptberuflich"/>
             <Column fieldName="quelle_url"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
             <Column fieldName="quelle"/>
@@ -21562,7 +21563,6 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="interessenbindung_funktion_im_gremium"/>
             <Column fieldName="interessenbindung_deklarationstyp"/>
             <Column fieldName="interessenbindung_status"/>
-            <Column fieldName="interessenbindung_hauptberuflich"/>
             <Column fieldName="interessenbindung_behoerden_vertreter"/>
             <Column fieldName="interessenbindung_beschreibung"/>
             <Column fieldName="interessenbindung_beschreibung_fr" visible="false"/>
@@ -21592,6 +21592,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="jahr"/>
             <Column fieldName="verguetung"/>
             <Column fieldName="beschreibung"/>
+            <Column fieldName="interessenbindung_hauptberuflich" visible="false"/>
             <Column fieldName="quelle_url"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
             <Column fieldName="quelle"/>
@@ -21614,7 +21615,6 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="interessenbindung_funktion_im_gremium" visible="false"/>
             <Column fieldName="interessenbindung_deklarationstyp" visible="false"/>
             <Column fieldName="interessenbindung_status" visible="false"/>
-            <Column fieldName="interessenbindung_hauptberuflich" visible="false"/>
             <Column fieldName="interessenbindung_behoerden_vertreter" visible="false"/>
             <Column fieldName="interessenbindung_beschreibung" visible="false"/>
             <Column fieldName="interessenbindung_beschreibung_fr" visible="false"/>
@@ -21696,6 +21696,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="jahr"/>
             <Column fieldName="verguetung"/>
             <Column fieldName="beschreibung"/>
+            <Column fieldName="interessenbindung_hauptberuflich"/>
             <Column fieldName="quelle_url"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
             <Column fieldName="quelle"/>
@@ -21718,7 +21719,6 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="interessenbindung_funktion_im_gremium"/>
             <Column fieldName="interessenbindung_deklarationstyp"/>
             <Column fieldName="interessenbindung_status"/>
-            <Column fieldName="interessenbindung_hauptberuflich"/>
             <Column fieldName="interessenbindung_behoerden_vertreter"/>
             <Column fieldName="interessenbindung_beschreibung"/>
             <Column fieldName="interessenbindung_beschreibung_fr" visible="false"/>
@@ -21748,6 +21748,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="jahr"/>
             <Column fieldName="verguetung"/>
             <Column fieldName="beschreibung"/>
+            <Column fieldName="interessenbindung_hauptberuflich"/>
             <Column fieldName="quelle_url"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
             <Column fieldName="quelle"/>
@@ -21770,7 +21771,6 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="interessenbindung_funktion_im_gremium"/>
             <Column fieldName="interessenbindung_deklarationstyp"/>
             <Column fieldName="interessenbindung_status"/>
-            <Column fieldName="interessenbindung_hauptberuflich"/>
             <Column fieldName="interessenbindung_behoerden_vertreter"/>
             <Column fieldName="interessenbindung_beschreibung"/>
             <Column fieldName="interessenbindung_beschreibung_fr" visible="false"/>
@@ -21800,6 +21800,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="jahr"/>
             <Column fieldName="verguetung"/>
             <Column fieldName="beschreibung"/>
+            <Column fieldName="interessenbindung_hauptberuflich"/>
             <Column fieldName="quelle_url"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
             <Column fieldName="quelle"/>
@@ -21822,7 +21823,6 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="interessenbindung_funktion_im_gremium"/>
             <Column fieldName="interessenbindung_deklarationstyp"/>
             <Column fieldName="interessenbindung_status"/>
-            <Column fieldName="interessenbindung_hauptberuflich"/>
             <Column fieldName="interessenbindung_behoerden_vertreter"/>
             <Column fieldName="interessenbindung_beschreibung"/>
             <Column fieldName="interessenbindung_beschreibung_fr" visible="false"/>
@@ -21852,6 +21852,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="jahr"/>
             <Column fieldName="verguetung"/>
             <Column fieldName="beschreibung"/>
+            <Column fieldName="interessenbindung_hauptberuflich"/>
             <Column fieldName="quelle_url"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
             <Column fieldName="quelle"/>
@@ -21874,7 +21875,6 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="interessenbindung_funktion_im_gremium"/>
             <Column fieldName="interessenbindung_deklarationstyp"/>
             <Column fieldName="interessenbindung_status"/>
-            <Column fieldName="interessenbindung_hauptberuflich"/>
             <Column fieldName="interessenbindung_behoerden_vertreter"/>
             <Column fieldName="interessenbindung_beschreibung"/>
             <Column fieldName="interessenbindung_beschreibung_fr" visible="false"/>
@@ -21904,6 +21904,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="jahr"/>
             <Column fieldName="verguetung"/>
             <Column fieldName="beschreibung"/>
+            <Column fieldName="interessenbindung_hauptberuflich" visible="false"/>
             <Column fieldName="quelle_url"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
             <Column fieldName="quelle"/>
@@ -21926,7 +21927,6 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="interessenbindung_funktion_im_gremium" visible="false"/>
             <Column fieldName="interessenbindung_deklarationstyp" visible="false"/>
             <Column fieldName="interessenbindung_status" visible="false"/>
-            <Column fieldName="interessenbindung_hauptberuflich" visible="false"/>
             <Column fieldName="interessenbindung_behoerden_vertreter" visible="false"/>
             <Column fieldName="interessenbindung_beschreibung" visible="false"/>
             <Column fieldName="interessenbindung_beschreibung_fr" visible="false"/>
