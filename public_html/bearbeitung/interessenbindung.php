@@ -5491,10 +5491,18 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new IntegerField('verguetung', true),
-                    new IntegerField('verguetung_jahr', true),
+                    new IntegerField('verguetung'),
+                    new IntegerField('verguetung_jahr'),
                     new StringField('verguetung_beschreibung'),
-                    new DateTimeField('verguetung_freigabe_datum')
+                    new DateTimeField('verguetung_freigabe_datum'),
+                    new IntegerField('jahr_minus_1_verguetung'),
+                    new IntegerField('jahr_minus_1_verguetung_jahr'),
+                    new StringField('jahr_minus_1_verguetung_beschreibung'),
+                    new DateTimeField('jahr_minus_1_verguetung_freigabe_datum'),
+                    new IntegerField('jahr_minus_2_verguetung'),
+                    new IntegerField('jahr_minus_2_verguetung_jahr'),
+                    new StringField('jahr_minus_2_verguetung_beschreibung'),
+                    new DateTimeField('jahr_minus_2_verguetung_freigabe_datum')
                 )
             );
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
@@ -5544,7 +5552,9 @@
                 new FilterColumn($this->dataset, 'status', 'status', 'Status'),
                 new FilterColumn($this->dataset, 'hauptberuflich', 'hauptberuflich', 'Haupt&shy;beruflich'),
                 new FilterColumn($this->dataset, 'behoerden_vertreter', 'behoerden_vertreter', 'Behörden&shy;vertreter'),
-                new FilterColumn($this->dataset, 'verguetung', 'verguetung', 'Vergütung CHF/J (akt. Jahr)'),
+                new FilterColumn($this->dataset, 'jahr_minus_2_verguetung', 'jahr_minus_2_verguetung', 'Vergütung 2018 CHF/J'),
+                new FilterColumn($this->dataset, 'jahr_minus_1_verguetung', 'jahr_minus_1_verguetung', 'Vergütung 2019 CHF/J'),
+                new FilterColumn($this->dataset, 'verguetung', 'verguetung', 'Vergütung 2020 CHF/J'),
                 new FilterColumn($this->dataset, 'von', 'von', 'Von'),
                 new FilterColumn($this->dataset, 'bis', 'bis', 'Bis'),
                 new FilterColumn($this->dataset, 'beschreibung', 'beschreibung', 'Beschreibung'),
@@ -5568,7 +5578,13 @@
                 new FilterColumn($this->dataset, 'quelle_url_gueltig', 'quelle_url_gueltig', 'Quelle Url Gueltig'),
                 new FilterColumn($this->dataset, 'verguetung_jahr', 'verguetung_jahr', 'Verguetung Jahr'),
                 new FilterColumn($this->dataset, 'verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung'),
-                new FilterColumn($this->dataset, 'verguetung_freigabe_datum', 'verguetung_freigabe_datum', 'Verguetung Freigabe Datum')
+                new FilterColumn($this->dataset, 'verguetung_freigabe_datum', 'verguetung_freigabe_datum', 'Verguetung Freigabe Datum'),
+                new FilterColumn($this->dataset, 'jahr_minus_1_verguetung_jahr', 'jahr_minus_1_verguetung_jahr', 'Jahr Minus 1 Verguetung Jahr'),
+                new FilterColumn($this->dataset, 'jahr_minus_1_verguetung_beschreibung', 'jahr_minus_1_verguetung_beschreibung', 'Jahr Minus 1 Verguetung Beschreibung'),
+                new FilterColumn($this->dataset, 'jahr_minus_1_verguetung_freigabe_datum', 'jahr_minus_1_verguetung_freigabe_datum', 'Jahr Minus 1 Verguetung Freigabe Datum'),
+                new FilterColumn($this->dataset, 'jahr_minus_2_verguetung_jahr', 'jahr_minus_2_verguetung_jahr', 'Jahr Minus 2 Verguetung Jahr'),
+                new FilterColumn($this->dataset, 'jahr_minus_2_verguetung_beschreibung', 'jahr_minus_2_verguetung_beschreibung', 'Jahr Minus 2 Verguetung Beschreibung'),
+                new FilterColumn($this->dataset, 'jahr_minus_2_verguetung_freigabe_datum', 'jahr_minus_2_verguetung_freigabe_datum', 'Jahr Minus 2 Verguetung Freigabe Datum')
             );
         }
     
@@ -5582,6 +5598,8 @@
                 ->addColumn($columns['funktion_im_gremium'])
                 ->addColumn($columns['deklarationstyp'])
                 ->addColumn($columns['status'])
+                ->addColumn($columns['jahr_minus_2_verguetung'])
+                ->addColumn($columns['jahr_minus_1_verguetung'])
                 ->addColumn($columns['beschreibung'])
                 ->addColumn($columns['beschreibung_fr'])
                 ->addColumn($columns['quelle_url'])
@@ -5602,6 +5620,8 @@
                 ->setOptionsFor('status')
                 ->setOptionsFor('hauptberuflich')
                 ->setOptionsFor('behoerden_vertreter')
+                ->setOptionsFor('jahr_minus_2_verguetung')
+                ->setOptionsFor('jahr_minus_1_verguetung')
                 ->setOptionsFor('verguetung')
                 ->setOptionsFor('von')
                 ->setOptionsFor('bis')
@@ -5896,6 +5916,42 @@
                     FilterConditionOperator::IS_NOT_LIKE => $text_editor,
                     FilterConditionOperator::IN => $multi_value_select_editor,
                     FilterConditionOperator::NOT_IN => $multi_value_select_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('jahr_minus_2_verguetung_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['jahr_minus_2_verguetung'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('jahr_minus_1_verguetung_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['jahr_minus_1_verguetung'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -6541,9 +6597,43 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for jahr_minus_2_verguetung field
+            //
+            $column = new NumberViewColumn('jahr_minus_2_verguetung', 'jahr_minus_2_verguetung', 'Vergütung 2018 CHF/J', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.
+            -1 = bezahlendes Mitglied
+            0 = ehrenamtlich
+            1 = bezahlt
+            >1 = Vergütung in CHF pro Jahr');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for jahr_minus_1_verguetung field
+            //
+            $column = new NumberViewColumn('jahr_minus_1_verguetung', 'jahr_minus_1_verguetung', 'Vergütung 2019 CHF/J', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.
+            -1 = bezahlendes Mitglied
+            0 = ehrenamtlich
+            1 = bezahlt
+            >1 = Vergütung in CHF pro Jahr');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for verguetung field
             //
-            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung CHF/J (akt. Jahr)', $this->dataset);
+            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung 2020 CHF/J', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -6848,9 +6938,29 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for jahr_minus_2_verguetung field
+            //
+            $column = new NumberViewColumn('jahr_minus_2_verguetung', 'jahr_minus_2_verguetung', 'Vergütung 2018 CHF/J', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for jahr_minus_1_verguetung field
+            //
+            $column = new NumberViewColumn('jahr_minus_1_verguetung', 'jahr_minus_1_verguetung', 'Vergütung 2019 CHF/J', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for verguetung field
             //
-            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung CHF/J (akt. Jahr)', $this->dataset);
+            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung 2020 CHF/J', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -7281,6 +7391,26 @@
             $editor->addChoice('J', 'Ja / Oui');
             $editor->addChoice('N', 'Nein / Non');
             $editColumn = new CustomEditColumn('Behörden&shy;vertreter', 'behoerden_vertreter', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for jahr_minus_2_verguetung field
+            //
+            $editor = new TextEdit('jahr_minus_2_verguetung_edit');
+            $editColumn = new CustomEditColumn('Vergütung 2018 CHF/J', 'jahr_minus_2_verguetung', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for jahr_minus_1_verguetung field
+            //
+            $editor = new TextEdit('jahr_minus_1_verguetung_edit');
+            $editColumn = new CustomEditColumn('Vergütung 2019 CHF/J', 'jahr_minus_1_verguetung', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -7757,6 +7887,26 @@
             $editor->addChoice('J', 'Ja / Oui');
             $editor->addChoice('N', 'Nein / Non');
             $editColumn = new CustomEditColumn('Behörden&shy;vertreter', 'behoerden_vertreter', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for jahr_minus_2_verguetung field
+            //
+            $editor = new TextEdit('jahr_minus_2_verguetung_edit');
+            $editColumn = new CustomEditColumn('Vergütung 2018 CHF/J', 'jahr_minus_2_verguetung', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for jahr_minus_1_verguetung field
+            //
+            $editor = new TextEdit('jahr_minus_1_verguetung_edit');
+            $editColumn = new CustomEditColumn('Vergütung 2019 CHF/J', 'jahr_minus_1_verguetung', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -8247,6 +8397,26 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for jahr_minus_2_verguetung field
+            //
+            $editor = new TextEdit('jahr_minus_2_verguetung_edit');
+            $editColumn = new CustomEditColumn('Vergütung 2018 CHF/J', 'jahr_minus_2_verguetung', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for jahr_minus_1_verguetung field
+            //
+            $editor = new TextEdit('jahr_minus_1_verguetung_edit');
+            $editColumn = new CustomEditColumn('Vergütung 2019 CHF/J', 'jahr_minus_1_verguetung', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for von field
             //
             $editor = new DateTimeEdit('von_edit', false, 'd.m.Y');
@@ -8447,9 +8617,29 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for jahr_minus_2_verguetung field
+            //
+            $column = new NumberViewColumn('jahr_minus_2_verguetung', 'jahr_minus_2_verguetung', 'Vergütung 2018 CHF/J', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for jahr_minus_1_verguetung field
+            //
+            $column = new NumberViewColumn('jahr_minus_1_verguetung', 'jahr_minus_1_verguetung', 'Vergütung 2019 CHF/J', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for verguetung field
             //
-            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung CHF/J (akt. Jahr)', $this->dataset);
+            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung 2020 CHF/J', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -8687,9 +8877,29 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for jahr_minus_2_verguetung field
+            //
+            $column = new NumberViewColumn('jahr_minus_2_verguetung', 'jahr_minus_2_verguetung', 'Vergütung 2018 CHF/J', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for jahr_minus_1_verguetung field
+            //
+            $column = new NumberViewColumn('jahr_minus_1_verguetung', 'jahr_minus_1_verguetung', 'Vergütung 2019 CHF/J', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for verguetung field
             //
-            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung CHF/J (akt. Jahr)', $this->dataset);
+            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung 2020 CHF/J', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -8927,9 +9137,29 @@
             $grid->AddCompareColumn($column);
             
             //
+            // View column for jahr_minus_2_verguetung field
+            //
+            $column = new NumberViewColumn('jahr_minus_2_verguetung', 'jahr_minus_2_verguetung', 'Vergütung 2018 CHF/J', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for jahr_minus_1_verguetung field
+            //
+            $column = new NumberViewColumn('jahr_minus_1_verguetung', 'jahr_minus_1_verguetung', 'Vergütung 2019 CHF/J', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
             // View column for verguetung field
             //
-            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung CHF/J (akt. Jahr)', $this->dataset);
+            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung 2020 CHF/J', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');

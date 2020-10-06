@@ -19802,7 +19802,27 @@ $edit_general_hint        </BeforeGridText>
               </Values>
             </EditProperties>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="verguetung" caption="Vergütung CHF/J (akt. Jahr)" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.
+          <ColumnPresentation fieldName="jahr_minus_2_verguetung" caption="Vergütung {[[YEAR-2]]} CHF/J" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.
+-1 = bezahlendes Mitglied
+0 = ehrenamtlich
+1 = bezahlt
+&gt;1 = Vergütung in CHF pro Jahr" canSetNull="true" readOnly="true" selectedFilterOperators="1573119">
+            <ViewProperties type="text">
+              <Format type="number" thousandSeparator="'"/>
+            </ViewProperties>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="jahr_minus_1_verguetung" caption="Vergütung {[[YEAR-1]]} CHF/J" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.
+-1 = bezahlendes Mitglied
+0 = ehrenamtlich
+1 = bezahlt
+&gt;1 = Vergütung in CHF pro Jahr" canSetNull="true" readOnly="true" selectedFilterOperators="1573119">
+            <ViewProperties type="text">
+              <Format type="number" thousandSeparator="'"/>
+            </ViewProperties>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="verguetung" caption="Vergütung {[[YEAR]]} CHF/J" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.
 -1 = bezahlendes Mitglied
 0 = ehrenamtlich
 1 = bezahlt
@@ -19914,6 +19934,34 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="jahr_minus_1_verguetung_jahr" caption="Jahr Minus 1 Verguetung Jahr" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+            <ViewProperties type="text">
+              <Format type="number" thousandSeparator="'"/>
+            </ViewProperties>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="jahr_minus_1_verguetung_beschreibung" caption="Jahr Minus 1 Verguetung Beschreibung" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="jahr_minus_1_verguetung_freigabe_datum" caption="Jahr Minus 1 Verguetung Freigabe Datum" canSetNull="true" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="jahr_minus_2_verguetung_jahr" caption="Jahr Minus 2 Verguetung Jahr" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+            <ViewProperties type="text">
+              <Format type="number" thousandSeparator="'"/>
+            </ViewProperties>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="jahr_minus_2_verguetung_beschreibung" caption="Jahr Minus 2 Verguetung Beschreibung" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="jahr_minus_2_verguetung_freigabe_datum" caption="Jahr Minus 2 Verguetung Freigabe Datum" canSetNull="true" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -19926,6 +19974,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status"/>
             <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
+            <Column fieldName="jahr_minus_2_verguetung"/>
+            <Column fieldName="jahr_minus_1_verguetung"/>
             <Column fieldName="verguetung"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
@@ -19951,6 +20001,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="verguetung_jahr" visible="false"/>
             <Column fieldName="verguetung_beschreibung" visible="false"/>
             <Column fieldName="verguetung_freigabe_datum" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_jahr" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_beschreibung" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_freigabe_datum" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_jahr" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_beschreibung" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_freigabe_datum" visible="false"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -19962,6 +20018,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status"/>
             <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
+            <Column fieldName="jahr_minus_2_verguetung"/>
+            <Column fieldName="jahr_minus_1_verguetung"/>
             <Column fieldName="verguetung"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
@@ -19987,6 +20045,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="verguetung_jahr" visible="false"/>
             <Column fieldName="verguetung_beschreibung" visible="false"/>
             <Column fieldName="verguetung_freigabe_datum" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_jahr" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_beschreibung" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_freigabe_datum" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_jahr" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_beschreibung" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_freigabe_datum" visible="false"/>
           </View>
           <Edit>
             <Column fieldName="id" visible="false"/>
@@ -19998,6 +20062,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status"/>
             <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
+            <Column fieldName="jahr_minus_2_verguetung"/>
+            <Column fieldName="jahr_minus_1_verguetung"/>
             <Column fieldName="verguetung" visible="false"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
@@ -20023,6 +20089,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="verguetung_jahr" visible="false"/>
             <Column fieldName="verguetung_beschreibung" visible="false"/>
             <Column fieldName="verguetung_freigabe_datum" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_jahr" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_beschreibung" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_freigabe_datum" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_jahr" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_beschreibung" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_freigabe_datum" visible="false"/>
           </Edit>
           <Insert>
             <Column fieldName="id" visible="false"/>
@@ -20034,6 +20106,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status"/>
             <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
+            <Column fieldName="jahr_minus_2_verguetung"/>
+            <Column fieldName="jahr_minus_1_verguetung"/>
             <Column fieldName="verguetung" visible="false"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
@@ -20059,6 +20133,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="verguetung_jahr" visible="false"/>
             <Column fieldName="verguetung_beschreibung" visible="false"/>
             <Column fieldName="verguetung_freigabe_datum" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_jahr" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_beschreibung" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_freigabe_datum" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_jahr" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_beschreibung" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_freigabe_datum" visible="false"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -20095,6 +20175,14 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="verguetung_jahr" visible="false"/>
             <Column fieldName="verguetung_beschreibung" visible="false"/>
             <Column fieldName="verguetung_freigabe_datum" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung"/>
+            <Column fieldName="jahr_minus_1_verguetung_jahr" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_beschreibung" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_freigabe_datum" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung"/>
+            <Column fieldName="jahr_minus_2_verguetung_jahr" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_beschreibung" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_freigabe_datum" visible="false"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -20106,6 +20194,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status"/>
             <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
+            <Column fieldName="jahr_minus_2_verguetung"/>
+            <Column fieldName="jahr_minus_1_verguetung"/>
             <Column fieldName="verguetung"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
@@ -20131,6 +20221,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="verguetung_jahr" visible="false"/>
             <Column fieldName="verguetung_beschreibung" visible="false"/>
             <Column fieldName="verguetung_freigabe_datum" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_jahr" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_beschreibung" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_freigabe_datum" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_jahr" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_beschreibung" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_freigabe_datum" visible="false"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -20142,6 +20238,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status"/>
             <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
+            <Column fieldName="jahr_minus_2_verguetung"/>
+            <Column fieldName="jahr_minus_1_verguetung"/>
             <Column fieldName="verguetung"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
@@ -20167,6 +20265,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="verguetung_jahr" visible="false"/>
             <Column fieldName="verguetung_beschreibung" visible="false"/>
             <Column fieldName="verguetung_freigabe_datum" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_jahr" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_beschreibung" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_freigabe_datum" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_jahr" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_beschreibung" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_freigabe_datum" visible="false"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -20178,6 +20282,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status"/>
             <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
+            <Column fieldName="jahr_minus_2_verguetung"/>
+            <Column fieldName="jahr_minus_1_verguetung"/>
             <Column fieldName="verguetung"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
@@ -20203,6 +20309,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="verguetung_jahr" visible="false"/>
             <Column fieldName="verguetung_beschreibung" visible="false"/>
             <Column fieldName="verguetung_freigabe_datum" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_jahr" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_beschreibung" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_freigabe_datum" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_jahr" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_beschreibung" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_freigabe_datum" visible="false"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -20214,6 +20326,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status"/>
             <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
+            <Column fieldName="jahr_minus_2_verguetung"/>
+            <Column fieldName="jahr_minus_1_verguetung"/>
             <Column fieldName="verguetung"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
@@ -20239,6 +20353,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="verguetung_jahr" visible="false"/>
             <Column fieldName="verguetung_beschreibung" visible="false"/>
             <Column fieldName="verguetung_freigabe_datum" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_jahr" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_beschreibung" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_freigabe_datum" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_jahr" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_beschreibung" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_freigabe_datum" visible="false"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -20250,6 +20370,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status"/>
             <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
+            <Column fieldName="jahr_minus_2_verguetung"/>
+            <Column fieldName="jahr_minus_1_verguetung"/>
             <Column fieldName="verguetung" visible="false"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
@@ -20275,6 +20397,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="verguetung_jahr" visible="false"/>
             <Column fieldName="verguetung_beschreibung" visible="false"/>
             <Column fieldName="verguetung_freigabe_datum" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_jahr" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_beschreibung" visible="false"/>
+            <Column fieldName="jahr_minus_1_verguetung_freigabe_datum" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_jahr" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_beschreibung" visible="false"/>
+            <Column fieldName="jahr_minus_2_verguetung_freigabe_datum" visible="false"/>
           </MultiEdit>
         </Columns>
         <Details>
