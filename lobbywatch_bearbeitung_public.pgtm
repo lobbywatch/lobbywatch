@@ -17,7 +17,11 @@
     <DataSource name="organisation"/>
     <DataSource name="parlamentarier"/>
     <DataSource name="person"/>
-    <DataSource name="interessenbindung"/>
+    <DataSource name="uv_interessenbindung">
+      <PrimaryKeyFields>
+        <Field name="id" isAutoInc="true"/>
+      </PrimaryKeyFields>
+    </DataSource>
     <DataSource name="zutrittsberechtigung"/>
     <DataSource name="mandat"/>
     <DataSource name="in_kommission"/>
@@ -19708,7 +19712,7 @@ $condition = &quot;left(person.nachname, 1) = '$partitionKey'&quot;;            
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="interessenbindung" numberByDataSource="0" fileName="interessenbindung" caption="Interessenbindung" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Interessenbindungen der Parlamentarier&quot;&gt;Intereressenbindungen von NR/SR&lt;/span&gt;" viewFormCaptionTemplate="Interessenbindung &quot;%parlamentarier_id%&quot; - &quot;%organisation_id%&quot;" editFormCaptionTemplate="Edit Interessenbindung &quot;%parlamentarier_id%&quot; - &quot;%organisation_id%&quot;" insertFormCaption="Add new Interessenbindung" addSeveralRecordsAtATimeValues="2,3,4,5" groupName="&lt;span class=&quot;releation-menu important-relation-menu&quot;&gt;Verbindungen&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
+      <Page type="table" tableName="uv_interessenbindung" numberByDataSource="0" fileName="interessenbindung" caption="Interessenbindung" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Interessenbindungen der Parlamentarier&quot;&gt;Intereressenbindungen von NR/SR&lt;/span&gt;" viewFormCaptionTemplate="Interessenbindung &quot;%parlamentarier_id%&quot; - &quot;%organisation_id%&quot;" editFormCaptionTemplate="Edit Interessenbindung &quot;%parlamentarier_id%&quot; - &quot;%organisation_id%&quot;" insertFormCaption="Add new Interessenbindung" addSeveralRecordsAtATimeValues="2,3,4,5" groupName="&lt;span class=&quot;releation-menu important-relation-menu&quot;&gt;Verbindungen&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
         <DefaultSortedColumns>
           <Column fieldName="updated_date" orderType="1"/>
         </DefaultSortedColumns>
@@ -19785,11 +19789,11 @@ $edit_general_hint        </BeforeGridText>
               </Values>
             </EditProperties>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="hauptberuflich" caption="Hauptberuflich" headerHint="Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)" showColumnFilter="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="hauptberuflich" caption="Haupt&amp;shy;beruflich" headerHint="Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)" selectedFilterOperators="1573119">
             <ViewProperties type="checkBox" displayType="image"/>
             <EditProperties type="checkBox"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="behoerden_vertreter" caption="Behördenvertreter" headerHint="Entstand diese Interessenbindung als Behoerdenvertreter von amteswegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von amteswegen einsitz nimmt." canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="behoerden_vertreter" caption="Behörden&amp;shy;vertreter" headerHint="Entstand diese Interessenbindung als Behoerdenvertreter von amteswegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von amteswegen einsitz nimmt." canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
               <Values>
@@ -19797,6 +19801,16 @@ $edit_general_hint        </BeforeGridText>
                 <Value name="N" caption="Nein / Non"/>
               </Values>
             </EditProperties>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="verguetung" caption="Vergütung CHF/J (akt. Jahr)" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.
+-1 = bezahlendes Mitglied
+0 = ehrenamtlich
+1 = bezahlt
+&gt;1 = Vergütung in CHF pro Jahr" canSetNull="true" readOnly="true" selectedFilterOperators="1573119">
+            <ViewProperties type="text">
+              <Format type="number" thousandSeparator="'"/>
+            </ViewProperties>
+            <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="von" caption="Von" headerHint="Beginn der Interessenbindung, leer (NULL) = unbekannt" canSetNull="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
@@ -19886,6 +19900,20 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="verguetung_jahr" caption="Verguetung Jahr" showColumnFilter="false" selectedFilterOperators="1573119">
+            <ViewProperties type="text">
+              <Format type="number" thousandSeparator="'"/>
+            </ViewProperties>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="verguetung_beschreibung" caption="Verguetung Beschreibung" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="verguetung_freigabe_datum" caption="Verguetung Freigabe Datum" canSetNull="true" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -19898,6 +19926,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status"/>
             <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
+            <Column fieldName="verguetung"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
             <Column fieldName="beschreibung"/>
@@ -19919,6 +19948,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="verguetung_jahr" visible="false"/>
+            <Column fieldName="verguetung_beschreibung" visible="false"/>
+            <Column fieldName="verguetung_freigabe_datum" visible="false"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -19930,6 +19962,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status"/>
             <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
+            <Column fieldName="verguetung"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
             <Column fieldName="beschreibung"/>
@@ -19951,6 +19984,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="verguetung_jahr" visible="false"/>
+            <Column fieldName="verguetung_beschreibung" visible="false"/>
+            <Column fieldName="verguetung_freigabe_datum" visible="false"/>
           </View>
           <Edit>
             <Column fieldName="id" visible="false"/>
@@ -19962,6 +19998,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status"/>
             <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
+            <Column fieldName="verguetung" visible="false"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
             <Column fieldName="beschreibung"/>
@@ -19983,6 +20020,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="verguetung_jahr" visible="false"/>
+            <Column fieldName="verguetung_beschreibung" visible="false"/>
+            <Column fieldName="verguetung_freigabe_datum" visible="false"/>
           </Edit>
           <Insert>
             <Column fieldName="id" visible="false"/>
@@ -19994,6 +20034,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status"/>
             <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
+            <Column fieldName="verguetung" visible="false"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
             <Column fieldName="beschreibung"/>
@@ -20015,6 +20056,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="verguetung_jahr" visible="false"/>
+            <Column fieldName="verguetung_beschreibung" visible="false"/>
+            <Column fieldName="verguetung_freigabe_datum" visible="false"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -20047,6 +20091,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="beschreibung_fr"/>
             <Column fieldName="updated_by_import"/>
             <Column fieldName="hauptberuflich" visible="false"/>
+            <Column fieldName="verguetung" visible="false"/>
+            <Column fieldName="verguetung_jahr" visible="false"/>
+            <Column fieldName="verguetung_beschreibung" visible="false"/>
+            <Column fieldName="verguetung_freigabe_datum" visible="false"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -20058,6 +20106,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status"/>
             <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
+            <Column fieldName="verguetung"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
             <Column fieldName="beschreibung"/>
@@ -20079,6 +20128,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="verguetung_jahr" visible="false"/>
+            <Column fieldName="verguetung_beschreibung" visible="false"/>
+            <Column fieldName="verguetung_freigabe_datum" visible="false"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -20090,6 +20142,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status"/>
             <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
+            <Column fieldName="verguetung"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
             <Column fieldName="beschreibung"/>
@@ -20111,6 +20164,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="verguetung_jahr" visible="false"/>
+            <Column fieldName="verguetung_beschreibung" visible="false"/>
+            <Column fieldName="verguetung_freigabe_datum" visible="false"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -20122,6 +20178,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status"/>
             <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
+            <Column fieldName="verguetung"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
             <Column fieldName="beschreibung"/>
@@ -20143,6 +20200,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="verguetung_jahr" visible="false"/>
+            <Column fieldName="verguetung_beschreibung" visible="false"/>
+            <Column fieldName="verguetung_freigabe_datum" visible="false"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -20154,6 +20214,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status"/>
             <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
+            <Column fieldName="verguetung"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
             <Column fieldName="beschreibung"/>
@@ -20175,6 +20236,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig"/>
+            <Column fieldName="verguetung_jahr" visible="false"/>
+            <Column fieldName="verguetung_beschreibung" visible="false"/>
+            <Column fieldName="verguetung_freigabe_datum" visible="false"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -20186,6 +20250,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status"/>
             <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
+            <Column fieldName="verguetung" visible="false"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
             <Column fieldName="beschreibung"/>
@@ -20207,6 +20272,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig"/>
+            <Column fieldName="verguetung_jahr" visible="false"/>
+            <Column fieldName="verguetung_beschreibung" visible="false"/>
+            <Column fieldName="verguetung_freigabe_datum" visible="false"/>
           </MultiEdit>
         </Columns>
         <Details>

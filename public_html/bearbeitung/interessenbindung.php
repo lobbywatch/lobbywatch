@@ -36,7 +36,7 @@
     
     
     
-    class interessenbindung_interessenbindung_jahrPage extends DetailPage
+    class uv_interessenbindung_interessenbindung_jahrPage extends DetailPage
     {
         protected function DoBeforeCreate()
         {
@@ -177,10 +177,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_interessenbindung_interessenbindung_jahr_interessenbindung_id_search');
+            $main_editor->SetHandlerName('filter_builder_uv_interessenbindung_interessenbindung_jahr_interessenbindung_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('interessenbindung_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_interessenbindung_interessenbindung_jahr_interessenbindung_id_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_uv_interessenbindung_interessenbindung_jahr_interessenbindung_id_search');
             
             $text_editor = new TextEdit('interessenbindung_id');
             
@@ -1283,7 +1283,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Interessenbindung', 'interessenbindung_id', 'interessenbindung_id_anzeige_name', 'multi_edit_interessenbindung_interessenbindung_jahr_interessenbindung_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Interessenbindung', 'interessenbindung_id', 'interessenbindung_id_anzeige_name', 'multi_edit_uv_interessenbindung_interessenbindung_jahr_interessenbindung_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2221,7 +2221,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessenbindung_interessenbindung_jahr_interessenbindung_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_uv_interessenbindung_interessenbindung_jahr_interessenbindung_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -2275,7 +2275,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_interessenbindung_interessenbindung_jahr_interessenbindung_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_uv_interessenbindung_interessenbindung_jahr_interessenbindung_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -2429,7 +2429,7 @@
     
     
     
-    class interessenbindung_interessenbindung_logPage extends DetailPage
+    class uv_interessenbindung_interessenbindung_logPage extends DetailPage
     {
         protected function DoBeforeCreate()
         {
@@ -2644,10 +2644,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_interessenbindung_interessenbindung_log_parlamentarier_id_search');
+            $main_editor->SetHandlerName('filter_builder_uv_interessenbindung_interessenbindung_log_parlamentarier_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('parlamentarier_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_interessenbindung_interessenbindung_log_parlamentarier_id_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_uv_interessenbindung_interessenbindung_log_parlamentarier_id_search');
             
             $filterBuilder->addColumn(
                 $columns['parlamentarier_id'],
@@ -2671,10 +2671,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_interessenbindung_interessenbindung_log_organisation_id_search');
+            $main_editor->SetHandlerName('filter_builder_uv_interessenbindung_interessenbindung_log_organisation_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('organisation_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_interessenbindung_interessenbindung_log_organisation_id_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_uv_interessenbindung_interessenbindung_log_organisation_id_search');
             
             $filterBuilder->addColumn(
                 $columns['organisation_id'],
@@ -3470,10 +3470,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_interessenbindung_interessenbindung_log_snapshot_id_search');
+            $main_editor->SetHandlerName('filter_builder_uv_interessenbindung_interessenbindung_log_snapshot_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('snapshot_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_interessenbindung_interessenbindung_log_snapshot_id_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_uv_interessenbindung_interessenbindung_log_snapshot_id_search');
             
             $text_editor = new TextEdit('snapshot_id');
             
@@ -5210,7 +5210,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessenbindung_interessenbindung_log_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_uv_interessenbindung_interessenbindung_log_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5279,7 +5279,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessenbindung_interessenbindung_log_organisation_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_uv_interessenbindung_interessenbindung_log_organisation_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5298,7 +5298,7 @@
                 )
             );
             $lookupDataset->setOrderByField('beschreibung', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessenbindung_interessenbindung_log_snapshot_id_search', 'id', 'beschreibung', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_uv_interessenbindung_interessenbindung_log_snapshot_id_search', 'id', 'beschreibung', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -5448,7 +5448,7 @@
     
     
     
-    class interessenbindungPage extends Page
+    class uv_interessenbindungPage extends Page
     {
         protected function DoBeforeCreate()
         {
@@ -5458,7 +5458,7 @@
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
-                '`interessenbindung`');
+                '`uv_interessenbindung`');
             $this->dataset->addFields(
                 array(
                     new IntegerField('id', true, true, true),
@@ -5490,7 +5490,11 @@
                     new StringField('created_visa', true),
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true)
+                    new DateTimeField('updated_date', true),
+                    new IntegerField('verguetung', true),
+                    new IntegerField('verguetung_jahr', true),
+                    new StringField('verguetung_beschreibung'),
+                    new DateTimeField('verguetung_freigabe_datum')
                 )
             );
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
@@ -5538,8 +5542,9 @@
                 new FilterColumn($this->dataset, 'funktion_im_gremium', 'funktion_im_gremium', 'Funktion im Gremium'),
                 new FilterColumn($this->dataset, 'deklarationstyp', 'deklarationstyp', 'Deklarationstyp'),
                 new FilterColumn($this->dataset, 'status', 'status', 'Status'),
-                new FilterColumn($this->dataset, 'hauptberuflich', 'hauptberuflich', 'Hauptberuflich'),
-                new FilterColumn($this->dataset, 'behoerden_vertreter', 'behoerden_vertreter', 'Behördenvertreter'),
+                new FilterColumn($this->dataset, 'hauptberuflich', 'hauptberuflich', 'Haupt&shy;beruflich'),
+                new FilterColumn($this->dataset, 'behoerden_vertreter', 'behoerden_vertreter', 'Behörden&shy;vertreter'),
+                new FilterColumn($this->dataset, 'verguetung', 'verguetung', 'Vergütung CHF/J (akt. Jahr)'),
                 new FilterColumn($this->dataset, 'von', 'von', 'Von'),
                 new FilterColumn($this->dataset, 'bis', 'bis', 'Bis'),
                 new FilterColumn($this->dataset, 'beschreibung', 'beschreibung', 'Beschreibung'),
@@ -5560,7 +5565,10 @@
                 new FilterColumn($this->dataset, 'created_date', 'created_date', 'Created Date'),
                 new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', 'Updated Visa'),
                 new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date'),
-                new FilterColumn($this->dataset, 'quelle_url_gueltig', 'quelle_url_gueltig', 'Quelle Url Gueltig')
+                new FilterColumn($this->dataset, 'quelle_url_gueltig', 'quelle_url_gueltig', 'Quelle Url Gueltig'),
+                new FilterColumn($this->dataset, 'verguetung_jahr', 'verguetung_jahr', 'Verguetung Jahr'),
+                new FilterColumn($this->dataset, 'verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung'),
+                new FilterColumn($this->dataset, 'verguetung_freigabe_datum', 'verguetung_freigabe_datum', 'Verguetung Freigabe Datum')
             );
         }
     
@@ -5592,7 +5600,9 @@
                 ->setOptionsFor('funktion_im_gremium')
                 ->setOptionsFor('deklarationstyp')
                 ->setOptionsFor('status')
+                ->setOptionsFor('hauptberuflich')
                 ->setOptionsFor('behoerden_vertreter')
+                ->setOptionsFor('verguetung')
                 ->setOptionsFor('von')
                 ->setOptionsFor('bis')
                 ->setOptionsFor('updated_by_import')
@@ -5634,10 +5644,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_interessenbindung_parlamentarier_id_search');
+            $main_editor->SetHandlerName('filter_builder_uv_interessenbindung_parlamentarier_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('parlamentarier_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_interessenbindung_parlamentarier_id_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_uv_interessenbindung_parlamentarier_id_search');
             
             $text_editor = new TextEdit('parlamentarier_id');
             
@@ -5669,10 +5679,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_interessenbindung_organisation_id_search');
+            $main_editor->SetHandlerName('filter_builder_uv_interessenbindung_organisation_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('organisation_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_interessenbindung_organisation_id_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_uv_interessenbindung_organisation_id_search');
             
             $text_editor = new TextEdit('organisation_id');
             
@@ -5886,6 +5896,24 @@
                     FilterConditionOperator::IS_NOT_LIKE => $text_editor,
                     FilterConditionOperator::IN => $multi_value_select_editor,
                     FilterConditionOperator::NOT_IN => $multi_value_select_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('verguetung_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['verguetung'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -6396,22 +6424,22 @@
     
         protected function AddFieldColumns(Grid $grid, $withDetails = true)
         {
-            if (GetCurrentUserPermissionsForPage('interessenbindung.interessenbindung_jahr')->HasViewGrant() && $withDetails)
+            if (GetCurrentUserPermissionsForPage('uv_interessenbindung.interessenbindung_jahr')->HasViewGrant() && $withDetails)
             {
             //
-            // View column for interessenbindung_interessenbindung_jahr detail
+            // View column for uv_interessenbindung_interessenbindung_jahr detail
             //
-            $column = new DetailColumn(array('id'), 'interessenbindung.interessenbindung_jahr', 'interessenbindung_interessenbindung_jahr_handler', $this->dataset, 'Interessenbindungsvergütung');
+            $column = new DetailColumn(array('id'), 'uv_interessenbindung.interessenbindung_jahr', 'uv_interessenbindung_interessenbindung_jahr_handler', $this->dataset, 'Interessenbindungsvergütung');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $grid->AddViewColumn($column);
             }
             
-            if (GetCurrentUserPermissionsForPage('interessenbindung.interessenbindung_log')->HasViewGrant() && $withDetails)
+            if (GetCurrentUserPermissionsForPage('uv_interessenbindung.interessenbindung_log')->HasViewGrant() && $withDetails)
             {
             //
-            // View column for interessenbindung_interessenbindung_log detail
+            // View column for uv_interessenbindung_interessenbindung_log detail
             //
-            $column = new DetailColumn(array('id'), 'interessenbindung.interessenbindung_log', 'interessenbindung_interessenbindung_log_handler', $this->dataset, 'Interessenbindung Log');
+            $column = new DetailColumn(array('id'), 'uv_interessenbindung.interessenbindung_log', 'uv_interessenbindung_interessenbindung_log_handler', $this->dataset, 'Interessenbindung Log');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $grid->AddViewColumn($column);
             }
@@ -6494,7 +6522,7 @@
             //
             // View column for hauptberuflich field
             //
-            $column = new CheckboxViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column = new CheckboxViewColumn('hauptberuflich', 'hauptberuflich', 'Haupt&shy;beruflich', $this->dataset);
             $column->SetOrderable(true);
             $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
@@ -6505,10 +6533,27 @@
             //
             // View column for behoerden_vertreter field
             //
-            $column = new TextViewColumn('behoerden_vertreter', 'behoerden_vertreter', 'Behördenvertreter', $this->dataset);
+            $column = new TextViewColumn('behoerden_vertreter', 'behoerden_vertreter', 'Behörden&shy;vertreter', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Entstand diese Interessenbindung als Behoerdenvertreter von amteswegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von amteswegen einsitz nimmt.');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for verguetung field
+            //
+            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung CHF/J (akt. Jahr)', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.
+            -1 = bezahlendes Mitglied
+            0 = ehrenamtlich
+            1 = bezahlt
+            >1 = Vergütung in CHF pro Jahr');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -6790,7 +6835,7 @@
             //
             // View column for hauptberuflich field
             //
-            $column = new CheckboxViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column = new CheckboxViewColumn('hauptberuflich', 'hauptberuflich', 'Haupt&shy;beruflich', $this->dataset);
             $column->SetOrderable(true);
             $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $grid->AddSingleRecordViewColumn($column);
@@ -6798,8 +6843,18 @@
             //
             // View column for behoerden_vertreter field
             //
-            $column = new TextViewColumn('behoerden_vertreter', 'behoerden_vertreter', 'Behördenvertreter', $this->dataset);
+            $column = new TextViewColumn('behoerden_vertreter', 'behoerden_vertreter', 'Behörden&shy;vertreter', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for verguetung field
+            //
+            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung CHF/J (akt. Jahr)', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -7072,7 +7127,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'edit_interessenbindung_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'edit_uv_interessenbindung_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7150,7 +7205,7 @@
                 )
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_searchable_name', 'edit_interessenbindung_organisation_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
+            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_searchable_name', 'edit_uv_interessenbindung_organisation_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7213,7 +7268,7 @@
             // Edit column for hauptberuflich field
             //
             $editor = new CheckBox('hauptberuflich_edit');
-            $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Haupt&shy;beruflich', 'hauptberuflich', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7225,7 +7280,7 @@
             $editor = new ComboBox('behoerden_vertreter_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->addChoice('J', 'Ja / Oui');
             $editor->addChoice('N', 'Nein / Non');
-            $editColumn = new CustomEditColumn('Behördenvertreter', 'behoerden_vertreter', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Behörden&shy;vertreter', 'behoerden_vertreter', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -7548,7 +7603,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'multi_edit_interessenbindung_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'multi_edit_uv_interessenbindung_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7626,7 +7681,7 @@
                 )
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_searchable_name', 'multi_edit_interessenbindung_organisation_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
+            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_searchable_name', 'multi_edit_uv_interessenbindung_organisation_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7689,7 +7744,7 @@
             // Edit column for hauptberuflich field
             //
             $editor = new CheckBox('hauptberuflich_edit');
-            $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Haupt&shy;beruflich', 'hauptberuflich', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7701,7 +7756,7 @@
             $editor = new ComboBox('behoerden_vertreter_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->addChoice('J', 'Ja / Oui');
             $editor->addChoice('N', 'Nein / Non');
-            $editColumn = new CustomEditColumn('Behördenvertreter', 'behoerden_vertreter', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Behörden&shy;vertreter', 'behoerden_vertreter', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -8033,7 +8088,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'insert_interessenbindung_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'insert_uv_interessenbindung_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -8111,7 +8166,7 @@
                 )
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_searchable_name', 'insert_interessenbindung_organisation_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
+            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_searchable_name', 'insert_uv_interessenbindung_organisation_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -8174,7 +8229,7 @@
             // Edit column for hauptberuflich field
             //
             $editor = new CheckBox('hauptberuflich_edit');
-            $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Haupt&shy;beruflich', 'hauptberuflich', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -8186,7 +8241,7 @@
             $editor = new ComboBox('behoerden_vertreter_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->addChoice('J', 'Ja / Oui');
             $editor->addChoice('N', 'Nein / Non');
-            $editColumn = new CustomEditColumn('Behördenvertreter', 'behoerden_vertreter', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Behörden&shy;vertreter', 'behoerden_vertreter', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -8379,7 +8434,7 @@
             //
             // View column for hauptberuflich field
             //
-            $column = new CheckboxViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column = new CheckboxViewColumn('hauptberuflich', 'hauptberuflich', 'Haupt&shy;beruflich', $this->dataset);
             $column->SetOrderable(true);
             $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $grid->AddPrintColumn($column);
@@ -8387,8 +8442,18 @@
             //
             // View column for behoerden_vertreter field
             //
-            $column = new TextViewColumn('behoerden_vertreter', 'behoerden_vertreter', 'Behördenvertreter', $this->dataset);
+            $column = new TextViewColumn('behoerden_vertreter', 'behoerden_vertreter', 'Behörden&shy;vertreter', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for verguetung field
+            //
+            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung CHF/J (akt. Jahr)', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddPrintColumn($column);
             
             //
@@ -8609,7 +8674,7 @@
             //
             // View column for hauptberuflich field
             //
-            $column = new CheckboxViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column = new CheckboxViewColumn('hauptberuflich', 'hauptberuflich', 'Haupt&shy;beruflich', $this->dataset);
             $column->SetOrderable(true);
             $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $grid->AddExportColumn($column);
@@ -8617,8 +8682,18 @@
             //
             // View column for behoerden_vertreter field
             //
-            $column = new TextViewColumn('behoerden_vertreter', 'behoerden_vertreter', 'Behördenvertreter', $this->dataset);
+            $column = new TextViewColumn('behoerden_vertreter', 'behoerden_vertreter', 'Behörden&shy;vertreter', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for verguetung field
+            //
+            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung CHF/J (akt. Jahr)', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddExportColumn($column);
             
             //
@@ -8839,7 +8914,7 @@
             //
             // View column for hauptberuflich field
             //
-            $column = new CheckboxViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column = new CheckboxViewColumn('hauptberuflich', 'hauptberuflich', 'Haupt&shy;beruflich', $this->dataset);
             $column->SetOrderable(true);
             $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $grid->AddCompareColumn($column);
@@ -8847,8 +8922,18 @@
             //
             // View column for behoerden_vertreter field
             //
-            $column = new TextViewColumn('behoerden_vertreter', 'behoerden_vertreter', 'Behördenvertreter', $this->dataset);
+            $column = new TextViewColumn('behoerden_vertreter', 'behoerden_vertreter', 'Behörden&shy;vertreter', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for verguetung field
+            //
+            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung CHF/J (akt. Jahr)', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddCompareColumn($column);
             
             //
@@ -9166,191 +9251,16 @@
         }
     
         protected function doRegisterHandlers() {
-            $detailPage = new interessenbindung_interessenbindung_jahrPage('interessenbindung_interessenbindung_jahr', $this, array('interessenbindung_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('interessenbindung.interessenbindung_jahr'), 'UTF-8');
-            $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('interessenbindung.interessenbindung_jahr'));
-            $detailPage->SetHttpHandlerName('interessenbindung_interessenbindung_jahr_handler');
-            $handler = new PageHTTPHandler('interessenbindung_interessenbindung_jahr_handler', $detailPage);
+            $detailPage = new uv_interessenbindung_interessenbindung_jahrPage('uv_interessenbindung_interessenbindung_jahr', $this, array('interessenbindung_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('uv_interessenbindung.interessenbindung_jahr'), 'UTF-8');
+            $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('uv_interessenbindung.interessenbindung_jahr'));
+            $detailPage->SetHttpHandlerName('uv_interessenbindung_interessenbindung_jahr_handler');
+            $handler = new PageHTTPHandler('uv_interessenbindung_interessenbindung_jahr_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
-            $detailPage = new interessenbindung_interessenbindung_logPage('interessenbindung_interessenbindung_log', $this, array('id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('interessenbindung.interessenbindung_log'), 'UTF-8');
-            $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('interessenbindung.interessenbindung_log'));
-            $detailPage->SetHttpHandlerName('interessenbindung_interessenbindung_log_handler');
-            $handler = new PageHTTPHandler('interessenbindung_interessenbindung_log_handler', $detailPage);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            $lookupDataset = new TableDataset(
-                MyPDOConnectionFactory::getInstance(),
-                GetConnectionOptions(),
-                '`v_parlamentarier_simple`');
-            $lookupDataset->addFields(
-                array(
-                    new StringField('anzeige_name'),
-                    new StringField('anzeige_name_de'),
-                    new StringField('anzeige_name_fr'),
-                    new StringField('name'),
-                    new StringField('name_de'),
-                    new StringField('name_fr'),
-                    new IntegerField('id', true),
-                    new StringField('nachname', true),
-                    new StringField('vorname', true),
-                    new StringField('vorname_kurz'),
-                    new StringField('zweiter_vorname'),
-                    new IntegerField('rat_id', true),
-                    new IntegerField('kanton_id', true),
-                    new StringField('kommissionen'),
-                    new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
-                    new IntegerField('fraktion_id'),
-                    new StringField('fraktionsfunktion'),
-                    new DateField('im_rat_seit', true),
-                    new DateField('im_rat_bis'),
-                    new DateField('ratswechsel'),
-                    new DateField('ratsunterbruch_von'),
-                    new DateField('ratsunterbruch_bis'),
-                    new StringField('beruf'),
-                    new StringField('beruf_fr'),
-                    new IntegerField('beruf_interessengruppe_id'),
-                    new StringField('titel'),
-                    new StringField('aemter'),
-                    new StringField('weitere_aemter'),
-                    new StringField('zivilstand'),
-                    new IntegerField('anzahl_kinder'),
-                    new IntegerField('militaerischer_grad_id'),
-                    new StringField('geschlecht'),
-                    new DateField('geburtstag'),
-                    new StringField('photo'),
-                    new StringField('photo_dateiname'),
-                    new StringField('photo_dateierweiterung'),
-                    new StringField('photo_dateiname_voll'),
-                    new StringField('photo_mime_type'),
-                    new StringField('kleinbild'),
-                    new IntegerField('sitzplatz'),
-                    new StringField('email'),
-                    new StringField('homepage'),
-                    new StringField('homepage_2'),
-                    new IntegerField('parlament_biografie_id'),
-                    new IntegerField('parlament_number'),
-                    new StringField('parlament_interessenbindungen'),
-                    new StringField('parlament_interessenbindungen_json'),
-                    new DateTimeField('parlament_interessenbindungen_updated'),
-                    new StringField('twitter_name'),
-                    new StringField('linkedin_profil_url'),
-                    new StringField('xing_profil_name'),
-                    new StringField('facebook_name'),
-                    new StringField('wikipedia'),
-                    new StringField('sprache'),
-                    new StringField('arbeitssprache'),
-                    new StringField('adresse_firma'),
-                    new StringField('adresse_strasse'),
-                    new StringField('adresse_zusatz'),
-                    new StringField('adresse_plz'),
-                    new StringField('adresse_ort'),
-                    new StringField('telephon_1'),
-                    new StringField('telephon_2'),
-                    new StringField('erfasst'),
-                    new StringField('notizen'),
-                    new StringField('eingabe_abgeschlossen_visa'),
-                    new DateTimeField('eingabe_abgeschlossen_datum'),
-                    new StringField('kontrolliert_visa'),
-                    new DateTimeField('kontrolliert_datum'),
-                    new StringField('autorisierung_verschickt_visa'),
-                    new DateTimeField('autorisierung_verschickt_datum'),
-                    new StringField('autorisiert_visa'),
-                    new DateField('autorisiert_datum'),
-                    new StringField('freigabe_visa'),
-                    new DateTimeField('freigabe_datum'),
-                    new StringField('created_visa', true),
-                    new DateTimeField('created_date', true),
-                    new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true),
-                    new StringField('beruf_de'),
-                    new DateField('von', true),
-                    new DateField('bis'),
-                    new IntegerField('aktiv'),
-                    new IntegerField('published', true),
-                    new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix', true),
-                    new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
-                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
-                    new IntegerField('kontrolliert_datum_unix'),
-                    new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix', true),
-                    new IntegerField('bis_unix')
-                )
-            );
-            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_interessenbindung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            $lookupDataset = new TableDataset(
-                MyPDOConnectionFactory::getInstance(),
-                GetConnectionOptions(),
-                '`v_organisation_simple`');
-            $lookupDataset->addFields(
-                array(
-                    new StringField('anzeige_name'),
-                    new StringField('anzeige_mixed'),
-                    new StringField('anzeige_bimixed'),
-                    new StringField('searchable_name'),
-                    new StringField('anzeige_name_de', true),
-                    new StringField('anzeige_name_fr'),
-                    new StringField('name'),
-                    new IntegerField('id', true),
-                    new StringField('name_de', true),
-                    new StringField('name_fr'),
-                    new StringField('name_it'),
-                    new StringField('uid'),
-                    new StringField('ort'),
-                    new StringField('abkuerzung_de'),
-                    new StringField('alias_namen_de'),
-                    new StringField('abkuerzung_fr'),
-                    new StringField('alias_namen_fr'),
-                    new StringField('abkuerzung_it'),
-                    new StringField('alias_namen_it'),
-                    new IntegerField('land_id'),
-                    new IntegerField('interessenraum_id'),
-                    new StringField('rechtsform'),
-                    new StringField('rechtsform_handelsregister'),
-                    new IntegerField('rechtsform_zefix'),
-                    new StringField('typ', true),
-                    new StringField('vernehmlassung', true),
-                    new IntegerField('interessengruppe_id'),
-                    new IntegerField('interessengruppe2_id'),
-                    new IntegerField('interessengruppe3_id'),
-                    new IntegerField('ALT_branche_id'),
-                    new StringField('homepage'),
-                    new StringField('handelsregister_url'),
-                    new StringField('twitter_name'),
-                    new StringField('beschreibung'),
-                    new StringField('beschreibung_fr'),
-                    new StringField('sekretariat'),
-                    new StringField('adresse_strasse'),
-                    new StringField('adresse_zusatz'),
-                    new StringField('adresse_plz'),
-                    new StringField('notizen'),
-                    new DateTimeField('updated_by_import'),
-                    new StringField('eingabe_abgeschlossen_visa'),
-                    new DateTimeField('eingabe_abgeschlossen_datum'),
-                    new StringField('kontrolliert_visa'),
-                    new DateTimeField('kontrolliert_datum'),
-                    new StringField('freigabe_visa'),
-                    new DateTimeField('freigabe_datum'),
-                    new StringField('created_visa', true),
-                    new DateTimeField('created_date', true),
-                    new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true),
-                    new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
-                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
-                    new IntegerField('kontrolliert_datum_unix'),
-                    new IntegerField('freigabe_datum_unix')
-                )
-            );
-            $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_interessenbindung_organisation_id_search', 'id', 'searchable_name', null, 20);
+            $detailPage = new uv_interessenbindung_interessenbindung_logPage('uv_interessenbindung_interessenbindung_log', $this, array('id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('uv_interessenbindung.interessenbindung_log'), 'UTF-8');
+            $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('uv_interessenbindung.interessenbindung_log'));
+            $detailPage->SetHttpHandlerName('uv_interessenbindung_interessenbindung_log_handler');
+            $handler = new PageHTTPHandler('uv_interessenbindung_interessenbindung_log_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -9456,7 +9366,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessenbindung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_uv_interessenbindung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -9525,7 +9435,7 @@
                 )
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessenbindung_organisation_id_search', 'id', 'searchable_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_uv_interessenbindung_organisation_id_search', 'id', 'searchable_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -9631,7 +9541,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_interessenbindung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_uv_interessenbindung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -9700,7 +9610,7 @@
                 )
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_interessenbindung_organisation_id_search', 'id', 'searchable_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_uv_interessenbindung_organisation_id_search', 'id', 'searchable_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -9806,7 +9716,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_interessenbindung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_uv_interessenbindung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -9875,7 +9785,182 @@
                 )
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_interessenbindung_organisation_id_search', 'id', 'searchable_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_uv_interessenbindung_organisation_id_search', 'id', 'searchable_name', null, 20);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_parlamentarier_simple`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('name'),
+                    new StringField('name_de'),
+                    new StringField('name_fr'),
+                    new IntegerField('id', true),
+                    new StringField('nachname', true),
+                    new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
+                    new StringField('zweiter_vorname'),
+                    new IntegerField('rat_id', true),
+                    new IntegerField('kanton_id', true),
+                    new StringField('kommissionen'),
+                    new IntegerField('partei_id'),
+                    new StringField('parteifunktion', true),
+                    new IntegerField('fraktion_id'),
+                    new StringField('fraktionsfunktion'),
+                    new DateField('im_rat_seit', true),
+                    new DateField('im_rat_bis'),
+                    new DateField('ratswechsel'),
+                    new DateField('ratsunterbruch_von'),
+                    new DateField('ratsunterbruch_bis'),
+                    new StringField('beruf'),
+                    new StringField('beruf_fr'),
+                    new IntegerField('beruf_interessengruppe_id'),
+                    new StringField('titel'),
+                    new StringField('aemter'),
+                    new StringField('weitere_aemter'),
+                    new StringField('zivilstand'),
+                    new IntegerField('anzahl_kinder'),
+                    new IntegerField('militaerischer_grad_id'),
+                    new StringField('geschlecht'),
+                    new DateField('geburtstag'),
+                    new StringField('photo'),
+                    new StringField('photo_dateiname'),
+                    new StringField('photo_dateierweiterung'),
+                    new StringField('photo_dateiname_voll'),
+                    new StringField('photo_mime_type'),
+                    new StringField('kleinbild'),
+                    new IntegerField('sitzplatz'),
+                    new StringField('email'),
+                    new StringField('homepage'),
+                    new StringField('homepage_2'),
+                    new IntegerField('parlament_biografie_id'),
+                    new IntegerField('parlament_number'),
+                    new StringField('parlament_interessenbindungen'),
+                    new StringField('parlament_interessenbindungen_json'),
+                    new DateTimeField('parlament_interessenbindungen_updated'),
+                    new StringField('twitter_name'),
+                    new StringField('linkedin_profil_url'),
+                    new StringField('xing_profil_name'),
+                    new StringField('facebook_name'),
+                    new StringField('wikipedia'),
+                    new StringField('sprache'),
+                    new StringField('arbeitssprache'),
+                    new StringField('adresse_firma'),
+                    new StringField('adresse_strasse'),
+                    new StringField('adresse_zusatz'),
+                    new StringField('adresse_plz'),
+                    new StringField('adresse_ort'),
+                    new StringField('telephon_1'),
+                    new StringField('telephon_2'),
+                    new StringField('erfasst'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('autorisierung_verschickt_visa'),
+                    new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisiert_visa'),
+                    new DateField('autorisiert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('beruf_de'),
+                    new DateField('von', true),
+                    new DateField('bis'),
+                    new IntegerField('aktiv'),
+                    new IntegerField('published', true),
+                    new IntegerField('geburtstag_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_bis_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix'),
+                    new IntegerField('von_unix', true),
+                    new IntegerField('bis_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_uv_interessenbindung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_organisation_simple`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_mixed'),
+                    new StringField('anzeige_bimixed'),
+                    new StringField('searchable_name'),
+                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('name'),
+                    new IntegerField('id', true),
+                    new StringField('name_de', true),
+                    new StringField('name_fr'),
+                    new StringField('name_it'),
+                    new StringField('uid'),
+                    new StringField('ort'),
+                    new StringField('abkuerzung_de'),
+                    new StringField('alias_namen_de'),
+                    new StringField('abkuerzung_fr'),
+                    new StringField('alias_namen_fr'),
+                    new StringField('abkuerzung_it'),
+                    new StringField('alias_namen_it'),
+                    new IntegerField('land_id'),
+                    new IntegerField('interessenraum_id'),
+                    new StringField('rechtsform'),
+                    new StringField('rechtsform_handelsregister'),
+                    new IntegerField('rechtsform_zefix'),
+                    new StringField('typ', true),
+                    new StringField('vernehmlassung', true),
+                    new IntegerField('interessengruppe_id'),
+                    new IntegerField('interessengruppe2_id'),
+                    new IntegerField('interessengruppe3_id'),
+                    new IntegerField('ALT_branche_id'),
+                    new StringField('homepage'),
+                    new StringField('handelsregister_url'),
+                    new StringField('twitter_name'),
+                    new StringField('beschreibung'),
+                    new StringField('beschreibung_fr'),
+                    new StringField('sekretariat'),
+                    new StringField('adresse_strasse'),
+                    new StringField('adresse_zusatz'),
+                    new StringField('adresse_plz'),
+                    new StringField('notizen'),
+                    new DateTimeField('updated_by_import'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new IntegerField('published', true),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('searchable_name', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_uv_interessenbindung_organisation_id_search', 'id', 'searchable_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -10025,8 +10110,8 @@
 
     try
     {
-        $Page = new interessenbindungPage("interessenbindung", "interessenbindung.php", GetCurrentUserPermissionsForPage("interessenbindung"), 'UTF-8');
-        $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("interessenbindung"));
+        $Page = new uv_interessenbindungPage("uv_interessenbindung", "interessenbindung.php", GetCurrentUserPermissionsForPage("uv_interessenbindung"), 'UTF-8');
+        $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("uv_interessenbindung"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 
         GetApplication()->Run();
