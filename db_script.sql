@@ -708,3 +708,131 @@ DELETE FROM `person_log` WHERE `nachname` IN ('Herr', 'Frau', 'Madame', 'Monsieu
 -- 03.10.2020 generate alias cols
 
 SELECT CONCAT('interessenbindung.', COLUMN_NAME, ' AS interessenbindung_', COLUMN_NAME, ',') FROM information_schema.COLUMNS WHERE `TABLE_NAME`='interessenbindung' and `TABLE_SCHEMA`='lobbywatch' ORDER BY ORDINAL_POSITION;
+
+-- 07.10.2020 q_interessenbindung
+
+(SELECT CONCAT("SELECT interessenbindung.* FROM interessenbindung;"))
+UNION
+(SELECT CONCAT("UPDATE interessenbindung SET ", GROUP_CONCAT('\n', COLUMN_NAME, ' = :', COLUMN_NAME), '\nWHERE id =:OLD_id;') FROM information_schema.COLUMNS WHERE `TABLE_NAME`='interessenbindung' and `TABLE_SCHEMA`='lobbywatch' ORDER BY ORDINAL_POSITION)
+UNION
+(SELECT CONCAT("INSERT INTO interessenbindung (", GROUP_CONCAT('\n', COLUMN_NAME), '\n) VALUES (', GROUP_CONCAT('\n:', COLUMN_NAME), '\n);') FROM information_schema.COLUMNS WHERE `TABLE_NAME`='interessenbindung' and `TABLE_SCHEMA`='lobbywatch' ORDER BY ORDINAL_POSITION)
+UNION
+(SELECT CONCAT("DELETE FROM interessenbindung WHERE id = :id;"));
+
+SELECT
+interessenbindung.*,
+interessenbindung_jahr.verguetung,
+interessenbindung_jahr.jahr as verguetung_jahr,
+interessenbindung_jahr.beschreibung as verguetung_beschreibung,
+interessenbindung_jahr.freigabe_datum as verguetung_freigabe_datum,
+interessenbindung_jahr_minus_1.verguetung as jahr_minus_1_verguetung,
+interessenbindung_jahr_minus_1.jahr as jahr_minus_1_verguetung_jahr,
+interessenbindung_jahr_minus_1.beschreibung as jahr_minus_1_verguetung_beschreibung,
+interessenbindung_jahr_minus_1.freigabe_datum as jahr_minus_1_verguetung_freigabe_datum,
+interessenbindung_jahr_minus_2.verguetung as jahr_minus_2_verguetung,
+interessenbindung_jahr_minus_2.jahr as jahr_minus_2_verguetung_jahr,
+interessenbindung_jahr_minus_2.beschreibung as jahr_minus_2_verguetung_beschreibung,
+interessenbindung_jahr_minus_2.freigabe_datum as jahr_minus_2_verguetung_freigabe_datum
+FROM `interessenbindung`
+LEFT JOIN interessenbindung_jahr ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id AND interessenbindung_jahr.jahr = YEAR(NOW())
+LEFT JOIN interessenbindung_jahr interessenbindung_jahr_minus_1 ON interessenbindung_jahr_minus_1.interessenbindung_id = interessenbindung.id AND interessenbindung_jahr.jahr = YEAR(NOW()) - 1
+LEFT JOIN interessenbindung_jahr interessenbindung_jahr_minus_2 ON interessenbindung_jahr_minus_2.interessenbindung_id = interessenbindung.id AND interessenbindung_jahr.jahr = YEAR(NOW()) - 2;
+
+INSERT INTO interessenbindung (
+id,
+parlamentarier_id,
+organisation_id,
+art,
+funktion_im_gremium,
+deklarationstyp,
+status,
+hauptberuflich,
+behoerden_vertreter,
+beschreibung,
+beschreibung_fr,
+quelle_url,
+quelle_url_gueltig,
+quelle,
+von,
+bis,
+notizen,
+updated_by_import,
+eingabe_abgeschlossen_visa,
+eingabe_abgeschlossen_datum,
+kontrolliert_visa,
+kontrolliert_datum,
+autorisiert_visa,
+autorisiert_datum,
+freigabe_visa,
+freigabe_datum,
+created_visa,
+created_date,
+updated_visa,
+updated_date
+) VALUES (
+:id,
+:parlamentarier_id,
+:organisation_id,
+:art,
+:funktion_im_gremium,
+:deklarationstyp,
+:status,
+:hauptberuflich,
+:behoerden_vertreter,
+:beschreibung,
+:beschreibung_fr,
+:quelle_url,
+:quelle_url_gueltig,
+:quelle,
+:von,
+:bis,
+:notizen,
+:updated_by_import,
+:eingabe_abgeschlossen_visa,
+:eingabe_abgeschlossen_datum,
+:kontrolliert_visa,
+:kontrolliert_datum,
+:autorisiert_visa,
+:autorisiert_datum,
+:freigabe_visa,
+:freigabe_datum,
+:created_visa,
+:created_date,
+:updated_visa,
+:updated_date
+);
+
+UPDATE interessenbindung SET
+id = :id,
+parlamentarier_id = :parlamentarier_id,
+organisation_id = :organisation_id,
+art = :art,
+funktion_im_gremium = :funktion_im_gremium,
+deklarationstyp = :deklarationstyp,
+status = :status,
+hauptberuflich = :hauptberuflich,
+behoerden_vertreter = :behoerden_vertreter,
+beschreibung = :beschreibung,
+beschreibung_fr = :beschreibung_fr,
+quelle_url = :quelle_url,
+quelle_url_gueltig = :quelle_url_gueltig,
+quelle = :quelle,
+von = :von,
+bis = :bis,
+notizen = :notizen,
+updated_by_import = :updated_by_import,
+eingabe_abgeschlossen_visa = :eingabe_abgeschlossen_visa,
+eingabe_abgeschlossen_datum = :eingabe_abgeschlossen_datum,
+kontrolliert_visa = :kontrolliert_visa,
+kontrolliert_datum = :kontrolliert_datum,
+autorisiert_visa = :autorisiert_visa,
+autorisiert_datum = :autorisiert_datum,
+freigabe_visa = :freigabe_visa,
+freigabe_datum = :freigabe_datum,
+created_visa = :created_visa,
+created_date = :created_date,
+updated_visa = :updated_visa,
+updated_date = :updated_date
+WHERE id =:OLD_id;
+
+DELETE FROM interessenbindung WHERE id = :id;
