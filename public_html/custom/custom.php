@@ -1398,7 +1398,7 @@ function drawWorkflowStyles($table_name, $rowData, &$rowCellStyles, &$rowStyles,
 
 }
 
-// logTableExtendedDrawRow('interessenbindung_jahr_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);
+// logTableExtendedDrawRow('XXX_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);
 function logTableExtendedDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles, &$rowClasses, &$cellClasses) {
   $logId = $rowData['log_id'];
   $id = $rowData['id'];

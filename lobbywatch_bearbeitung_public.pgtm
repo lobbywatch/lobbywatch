@@ -21533,7 +21533,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <ViewProperties type="text">
               <Format type="number" thousandSeparator="'"/>
             </ViewProperties>
-            <EditProperties type="textBox" maxLength="0"/>
+            <EditProperties type="textBox" maxLength="0" suffix="CHF/J"/>
             <Validators>
               <RangeClientValidatorInfo enabled="true" maxValue="999999" minValue="-1"/>
             </Validators>

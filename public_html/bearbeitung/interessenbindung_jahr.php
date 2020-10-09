@@ -1638,6 +1638,7 @@
             );
             
             $main_editor = new TextEdit('verguetung_edit');
+            $main_editor->SetSuffix('CHF/J');
             
             $filterBuilder->addColumn(
                 $columns['verguetung'],
@@ -3172,6 +3173,7 @@
             // Edit column for verguetung field
             //
             $editor = new TextEdit('verguetung_edit');
+            $editor->SetSuffix('CHF/J');
             $editColumn = new CustomEditColumn('Vergütung CHF/J', 'verguetung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -3765,6 +3767,7 @@
             // Edit column for verguetung field
             //
             $editor = new TextEdit('verguetung_edit');
+            $editor->SetSuffix('CHF/J');
             $editColumn = new CustomEditColumn('Vergütung CHF/J', 'verguetung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -4034,6 +4037,7 @@
             // Edit column for verguetung field
             //
             $editor = new TextEdit('verguetung_edit');
+            $editor->SetSuffix('CHF/J');
             $editColumn = new CustomEditColumn('Vergütung CHF/J', 'verguetung', $editor, $this->dataset);
             $editColumn->SetInsertDefaultValue('0');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
