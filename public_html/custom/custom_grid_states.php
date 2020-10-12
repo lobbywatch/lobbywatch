@@ -50,9 +50,9 @@ abstract class AbstractCommitEditSelectedOperationValuesGridState extends Commit
             $this->getDataset()->Open();
             if ($this->getDataset()->Next()) {
                 $this->CheckRLSEditGrant();
+                $rowValues = $this->getDataset()->GetCurrentFieldValues();
                 $this->getDataset()->Edit();
 
-                $rowValues = $this->getDataset()->GetCurrentFieldValues();
                 $this->DoOperation($rowValues);
                 $this->setDBUpdatedMetaData();
 
