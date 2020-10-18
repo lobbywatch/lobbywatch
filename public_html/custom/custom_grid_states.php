@@ -226,7 +226,8 @@ class SetEhrenamtlichSelectedGridState extends AbstractCommitEditSelectedOperati
     $id = $this->grid->GetDataset()->GetFieldValueByName('id');
 //     df($id, "SetEhrenamtlichSelectedGridState.DoOperation($rowValues) id");
     $sql_date = "STR_TO_DATE('$this->transactionDateTime','%d-%m-%Y %T')";
-    $table = preg_replace('/[`]/i', '', $this->grid->GetDataset()->GetName());
+    $table_raw = preg_replace('/[`]/i', '', $this->grid->GetDataset()->GetName());
+    $table = preg_replace('/^vf_/i', '', $table_raw);
     $year = date("Y");
     $desc = !empty($this->text1) && $this->text1 != 'null' && $this->text1 != 'undefined' ? "'{$this->text1}'" : "'Ehrenamtlich'";
     $src = !empty($this->text2) && $this->text2 != 'null' && $this->text2 != 'undefined' ? "'{$this->text2}'" : 'NULL';
@@ -246,7 +247,8 @@ class SetBezahltSelectedGridState extends AbstractCommitEditSelectedOperationVal
     $id = $this->grid->GetDataset()->GetFieldValueByName('id');
     // df($id, "SetBezahltSelectedGridState.DoOperation($rowValues) id");
     $sql_date = "STR_TO_DATE('$this->transactionDateTime','%d-%m-%Y %T')";
-    $table = preg_replace('/[`]/i', '', $this->grid->GetDataset()->GetName());
+    $table_raw = preg_replace('/[`]/i', '', $this->grid->GetDataset()->GetName());
+    $table = preg_replace('/^vf_/i', '', $table_raw);
     $year = date("Y");
     df($this->text1, '$this->text1');
     $desc = !empty($this->text1) && $this->text1 != 'null' && $this->text1 != 'undefined' ? "'{$this->text1}'" : "'Bezahlt'";
@@ -267,7 +269,8 @@ class SetZahlendSelectedGridState extends AbstractCommitEditSelectedOperationVal
     $id = $this->grid->GetDataset()->GetFieldValueByName('id');
 //     df($id, "SetZahlendSelectedGridState.DoOperation($rowValues) id");
     $sql_date = "STR_TO_DATE('$this->transactionDateTime','%d-%m-%Y %T')";
-    $table = preg_replace('/[`]/i', '', $this->grid->GetDataset()->GetName());
+    $table_raw = preg_replace('/[`]/i', '', $this->grid->GetDataset()->GetName());
+    $table = preg_replace('/^vf_/i', '', $table_raw);
     $year = date("Y");
     $desc = !empty($this->text1) && $this->text1 != 'null' && $this->text1 != 'undefined' ? "'{$this->text1}'" : "'Bezahlendes Mitglied'";
     $src = !empty($this->text2) && $this->text2 != 'null' && $this->text2 != 'undefined' ? "'{$this->text2}'" : 'NULL';
