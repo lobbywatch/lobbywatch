@@ -3200,6 +3200,7 @@
             $editor = new TextEdit('interessenbindung_hauptberuflich_edit');
             $editColumn = new CustomEditColumn('IB Haupt&shy;beruf', 'interessenbindung_hauptberuflich', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3474,6 +3475,7 @@
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
             $editColumn = new DynamicLookupEditColumn(' Parlamentarier', 'interessenbindung_parlamentarier_id', 'interessenbindung_parlamentarier_id_anzeige_name', 'edit_uv_interessenbindung_jahr_interessenbindung_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3552,6 +3554,7 @@
             $lookupDataset->setOrderByField('anzeige_mixed', 'ASC');
             $editColumn = new DynamicLookupEditColumn('Organisation', 'interessenbindung_organisation_id', 'interessenbindung_organisation_id_anzeige_mixed', 'edit_uv_interessenbindung_jahr_interessenbindung_organisation_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_mixed', '');
             $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3569,6 +3572,7 @@
             $editor->addChoice('gesellschafter', 'gesellschafter');
             $editColumn = new CustomEditColumn('IB Art', 'interessenbindung_art', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3579,6 +3583,7 @@
             $editor = new TextEdit('interessenbindung_funktion_im_gremium_edit');
             $editColumn = new CustomEditColumn('IB Funktion Im Gremium', 'interessenbindung_funktion_im_gremium', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3591,6 +3596,7 @@
             $editor->addChoice('nicht deklarationspflicht', 'nicht deklarationspflicht');
             $editColumn = new CustomEditColumn('IB Deklarationstyp', 'interessenbindung_deklarationstyp', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3603,6 +3609,7 @@
             $editor->addChoice('nicht-deklariert', 'nicht-deklariert');
             $editColumn = new CustomEditColumn('IB  Status', 'interessenbindung_status', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3613,6 +3620,7 @@
             $editor = new TextEdit('interessenbindung_behoerden_vertreter_edit');
             $editColumn = new CustomEditColumn('IB Behoerden Vertreter', 'interessenbindung_behoerden_vertreter', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3623,6 +3631,7 @@
             $editor = new TextEdit('interessenbindung_beschreibung_edit');
             $editColumn = new CustomEditColumn('IB Beschreibung', 'interessenbindung_beschreibung', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3633,6 +3642,7 @@
             $editor = new TextEdit('interessenbindung_quelle_url_edit');
             $editColumn = new CustomEditColumn('IB Quelle Url', 'interessenbindung_quelle_url', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3644,6 +3654,7 @@
             $editor->SetMaxLength(80);
             $editColumn = new CustomEditColumn('IB Quelle', 'interessenbindung_quelle', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3654,6 +3665,7 @@
             $editor = new DateTimeEdit('interessenbindung_von_edit', false, 'd.m.Y');
             $editColumn = new CustomEditColumn('IB Von', 'interessenbindung_von', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3664,6 +3676,7 @@
             $editor = new DateTimeEdit('interessenbindung_bis_edit', false, 'd.m.Y');
             $editColumn = new CustomEditColumn('IB Bis', 'interessenbindung_bis', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3674,6 +3687,7 @@
             $editor = new TextAreaEdit('interessenbindung_notizen_edit', 50, 8);
             $editColumn = new CustomEditColumn('IB Notizen', 'interessenbindung_notizen', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
