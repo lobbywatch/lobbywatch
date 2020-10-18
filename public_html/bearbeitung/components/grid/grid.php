@@ -1168,19 +1168,19 @@ class Grid {
     function GetAllowEhrenamtlichSelected() { // Afterburner
       $columns = $this->GetEditColumns(); // Afterburner
       $datasetName = preg_replace('/[`]/i', '', $this->GetDataset()->GetName()); // Afterburner
-      return $this->GetAllowDeleteSelected() && ($datasetName == "interessenbindung" || $datasetName == "mandat"); // Afterburner
+      return $this->GetAllowDeleteSelected() && (ends_with($datasetName, "interessenbindung") || ends_with($datasetName, "mandat")); // Afterburner
     }
 
     function GetAllowBezahltSelected() { // Afterburner
       $columns = $this->GetEditColumns(); // Afterburner
       $datasetName = preg_replace('/[`]/i', '', $this->GetDataset()->GetName()); // Afterburner
-      return $this->GetAllowDeleteSelected() && ($datasetName == "interessenbindung" || $datasetName == "mandat"); // Afterburner
+      return $this->GetAllowDeleteSelected() && (ends_with($datasetName, "interessenbindung") || ends_with($datasetName, "mandat")); // Afterburner
     }
 
     function GetAllowZahlendSelected() { // Afterburner
       $columns = $this->GetEditColumns(); // Afterburner
       $datasetName = preg_replace('/[`]/i', '', $this->GetDataset()->GetName()); // Afterburner
-      return $this->GetAllowDeleteSelected() && ($datasetName == "interessenbindung" || $datasetName == "mandat"); // Afterburner
+      return $this->GetAllowDeleteSelected() && (ends_with($datasetName, "interessenbindung") || ends_with($datasetName, "mandat")); // Afterburner
     }
 
     function GetAllowCreateVerguetungstransparenzliste() { // Afterburner
