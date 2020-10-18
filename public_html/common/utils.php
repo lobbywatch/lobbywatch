@@ -3069,11 +3069,11 @@ GROUP BY parlamentarier.id;";
 
 function _lobbywatch_interessenbindung_verguetung_SQL($jahr) {
   return "', ', CASE
-  WHEN interessenbindung_jahr_current.verguetung < 0 THEN CONCAT(" . lts('bezahlendes Mitglied') . ", ': CHF 0.-')
-  WHEN interessenbindung_jahr_current.verguetung = 0 THEN CONCAT(" . lts('ehrenamtlich') . ", ': CHF 0.-')
-  WHEN interessenbindung_jahr_current.verguetung IS NULL
-    OR interessenbindung_jahr_current.verguetung = 1 THEN CONCAT(" . lts('jährliche Entschädigung') . ", ' ', " . $jahr . ", ': CHF ________')
-  WHEN interessenbindung_jahr_current.verguetung > 1 THEN CONCAT(" . lts('jährliche Entschädigung') . ", ': CHF ', FORMAT(interessenbindung_jahr_current.verguetung, 'C', 'de_CH'), '.-')
+  WHEN interessenbindung_jahr_current.verguetung < 0 THEN CONCAT(" . lts('Entschädigung pro Jahr: keine; bezahlendes Mitglied') . ")
+  WHEN interessenbindung_jahr_current.verguetung = 0 THEN CONCAT(" . lts('Entschädigung pro Jahr: CHF 0.-, ehrenamtlich') . ")
+  WHEN interessenbindung_jahr_current.verguetung = 1 THEN CONCAT(" . lts('bezahlte Tätigkeit, Entschädigung pro Jahr:') . ", ' CHF ________')
+  WHEN interessenbindung_jahr_current.verguetung > 1 THEN CONCAT(" . lts('bezahlte Tätigkeit, Entschädigung pro Jahr:') . ", ' CHF ', FORMAT(interessenbindung_jahr_current.verguetung, 'C', 'de_CH'), '.-')
+  WHEN interessenbindung_jahr_current.verguetung IS NULL THEN CONCAT(" . lts('keine Angaben für das aktuelle Jahr (noch nicht erfasst/recherchiert): Entschädigung pro Jahr:') . ", ' CHF ________')
   ELSE 'ERROR: Unbekannter Fall bei der Vergütung'
   END";
 }
