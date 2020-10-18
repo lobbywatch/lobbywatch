@@ -516,8 +516,27 @@ UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
 UNIX_TIMESTAMP(interessenbindung.created_date) as created_date_unix, UNIX_TIMESTAMP(interessenbindung.updated_date) as updated_date_unix, UNIX_TIMESTAMP(interessenbindung.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(interessenbindung.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(interessenbindung.freigabe_datum) as freigabe_datum_unix
 FROM `interessenbindung`;
 
--- DROP VIEW IF EXISTS `uv_interessenbindung`;
+CREATE OR REPLACE VIEW `vf_interessenbindung` AS
+SELECT
+interessenbindung.*,
+interessenbindung_jahr.verguetung,
+interessenbindung_jahr.jahr as verguetung_jahr,
+interessenbindung_jahr.beschreibung as verguetung_beschreibung,
+interessenbindung_jahr.freigabe_datum as verguetung_freigabe_datum,
+interessenbindung_jahr_minus_1.verguetung as jahr_minus_1_verguetung,
+interessenbindung_jahr_minus_1.jahr as jahr_minus_1_verguetung_jahr,
+interessenbindung_jahr_minus_1.beschreibung as jahr_minus_1_verguetung_beschreibung,
+interessenbindung_jahr_minus_1.freigabe_datum as jahr_minus_1_verguetung_freigabe_datum,
+interessenbindung_jahr_minus_2.verguetung as jahr_minus_2_verguetung,
+interessenbindung_jahr_minus_2.jahr as jahr_minus_2_verguetung_jahr,
+interessenbindung_jahr_minus_2.beschreibung as jahr_minus_2_verguetung_beschreibung,
+interessenbindung_jahr_minus_2.freigabe_datum as jahr_minus_2_verguetung_freigabe_datum
+FROM `interessenbindung`
+LEFT JOIN interessenbindung_jahr ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id AND interessenbindung_jahr.jahr = YEAR(NOW())
+LEFT JOIN interessenbindung_jahr interessenbindung_jahr_minus_1 ON interessenbindung_jahr_minus_1.interessenbindung_id = interessenbindung.id AND interessenbindung_jahr.jahr = YEAR(NOW()) - 1
+LEFT JOIN interessenbindung_jahr interessenbindung_jahr_minus_2 ON interessenbindung_jahr_minus_2.interessenbindung_id = interessenbindung.id AND interessenbindung_jahr.jahr = YEAR(NOW()) - 2;
 
+-- TXTTODO v_mandat_simple
 CREATE OR REPLACE VIEW `v_mandat_simple` AS SELECT mandat.*,
 (mandat.von IS NULL OR mandat.von <= NOW()) AND (mandat.bis IS NULL OR mandat.bis > NOW()) as aktiv,
 IFNULL(freigabe_datum <= NOW(), FALSE) AS published,

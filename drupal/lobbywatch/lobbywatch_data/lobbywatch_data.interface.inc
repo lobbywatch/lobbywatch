@@ -379,6 +379,7 @@ function _lobbywatch_data_table_flat_list($table, $condition = '1', $json = true
   db_set_active('lobbywatch');
 
   try {
+    // TXTTODO _lobbywatch_data_table_flat_list nothing todo
     $sql = "
     SELECT " . _lobbywatch_data_select_fields_SQL($table) . "
     FROM v_$table $table

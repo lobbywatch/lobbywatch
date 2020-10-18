@@ -118,33 +118,13 @@ UNION (SELECT 'settings_category' tn, 'Einstellungskategorien' n, (select count(
         <Field name="id" isAutoInc="true"/>
       </PrimaryKeyFields>
     </DataSource>
-    <DataSource name="q_interessenbindung" type="query">
+    <DataSource name="vf_interessenbindung">
       <PrimaryKeyFields>
         <Field name="id" isAutoInc="true"/>
       </PrimaryKeyFields>
-      <SelectStatement>
-SELECT
-interessenbindung.*,
-interessenbindung_jahr.verguetung,
-interessenbindung_jahr.jahr as verguetung_jahr,
-interessenbindung_jahr.beschreibung as verguetung_beschreibung,
-interessenbindung_jahr.freigabe_datum as verguetung_freigabe_datum,
-interessenbindung_jahr_minus_1.verguetung as jahr_minus_1_verguetung,
-interessenbindung_jahr_minus_1.jahr as jahr_minus_1_verguetung_jahr,
-interessenbindung_jahr_minus_1.beschreibung as jahr_minus_1_verguetung_beschreibung,
-interessenbindung_jahr_minus_1.freigabe_datum as jahr_minus_1_verguetung_freigabe_datum,
-interessenbindung_jahr_minus_2.verguetung as jahr_minus_2_verguetung,
-interessenbindung_jahr_minus_2.jahr as jahr_minus_2_verguetung_jahr,
-interessenbindung_jahr_minus_2.beschreibung as jahr_minus_2_verguetung_beschreibung,
-interessenbindung_jahr_minus_2.freigabe_datum as jahr_minus_2_verguetung_freigabe_datum
-FROM `interessenbindung`
-LEFT JOIN interessenbindung_jahr ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id AND interessenbindung_jahr.jahr = YEAR(NOW())
-LEFT JOIN interessenbindung_jahr interessenbindung_jahr_minus_1 ON interessenbindung_jahr_minus_1.interessenbindung_id = interessenbindung.id AND interessenbindung_jahr.jahr = YEAR(NOW()) - 1
-LEFT JOIN interessenbindung_jahr interessenbindung_jahr_minus_2 ON interessenbindung_jahr_minus_2.interessenbindung_id = interessenbindung.id AND interessenbindung_jahr.jahr = YEAR(NOW()) - 2      </SelectStatement>
       <InsertStatements>
         <Statement>
 INSERT INTO interessenbindung (
-id,
 parlamentarier_id,
 organisation_id,
 art,
@@ -175,7 +155,6 @@ created_date,
 updated_visa,
 updated_date
 ) VALUES (
-:id,
 :parlamentarier_id,
 :organisation_id,
 :art,
@@ -210,7 +189,6 @@ updated_date
       <UpdateStatements>
         <Statement>
 UPDATE interessenbindung SET
-id = :id,
 parlamentarier_id = :parlamentarier_id,
 organisation_id = :organisation_id,
 art = :art,
@@ -19836,7 +19814,7 @@ $condition = &quot;left(person.nachname, 1) = '$partitionKey'&quot;;            
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="query" queryName="q_interessenbindung" numberByDataSource="0" fileName="interessenbindung" caption="Interessenbindung" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Interessenbindungen der Parlamentarier&quot;&gt;Intereressenbindungen von NR/SR&lt;/span&gt;" viewFormCaptionTemplate="Interessenbindung &quot;%parlamentarier_id%&quot; - &quot;%organisation_id%&quot;" editFormCaptionTemplate="Edit Interessenbindung &quot;%parlamentarier_id%&quot; - &quot;%organisation_id%&quot;" insertFormCaption="Add new Interessenbindung" addSeveralRecordsAtATimeValues="2,3,4,5" groupName="&lt;span class=&quot;releation-menu important-relation-menu&quot;&gt;Verbindungen&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
+      <Page type="table" tableName="vf_interessenbindung" numberByDataSource="0" fileName="interessenbindung" caption="Interessenbindung" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Interessenbindungen der Parlamentarier&quot;&gt;Intereressenbindungen von NR/SR&lt;/span&gt;" viewFormCaptionTemplate="Interessenbindung &quot;%parlamentarier_id%&quot; - &quot;%organisation_id%&quot;" editFormCaptionTemplate="Edit Interessenbindung &quot;%parlamentarier_id%&quot; - &quot;%organisation_id%&quot;" insertFormCaption="Add new Interessenbindung" addSeveralRecordsAtATimeValues="2,3,4,5" groupName="&lt;span class=&quot;releation-menu important-relation-menu&quot;&gt;Verbindungen&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
         <DefaultSortedColumns>
           <Column fieldName="updated_date" orderType="1"/>
         </DefaultSortedColumns>

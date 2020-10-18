@@ -136,6 +136,7 @@ do
    perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh/' \
   > "$file";
 done
+
 for file in $dir/components/grid/grid_states/abstract_grid_state.php
 do
   echo "Process $file";
@@ -143,6 +144,16 @@ do
   # Read file, process regex and write file
   cat "$file.bak" |
    perl -p -e's%^(\s*)(if \(!isset\(\$oldValues\[\$fieldName\]\) \|\| \(\$oldValues\[\$fieldName\] != \$fieldValue\)\))%\1if ((\$oldValues[\$fieldName] ?? null) != \$fieldValue) // Processed by afterburner.sh\n\1// \2 // Processed by afterburner.sh%' \
+  > "$file";
+done
+
+for file in $dir/components/dataset/view_based_dataset.php
+do
+  echo "Process $file";
+  mv "$file" "$file.bak";
+  # Read file, process regex and write file
+  cat "$file.bak" |
+   perl -p -e's%^(\s*)(return \$this->updateSql;)%$1$2\n    }\n\n    public function DoNotRewriteUnchangedValues() { // Processed by afterburner.sh\n      return empty(\$this->updateSql); // Processed by afterburner.sh%' \
   > "$file";
 done
 

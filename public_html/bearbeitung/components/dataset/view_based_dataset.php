@@ -54,6 +54,10 @@ class ViewBasedDataset extends TableDataset {
         return $this->updateSql;
     }
 
+    public function DoNotRewriteUnchangedValues() { // Processed by afterburner.sh
+      return empty($this->updateSql); // Processed by afterburner.sh
+    }
+
     /** @var string[] $value */
     public function setUpdateSQL($value) {
         $this->updateSql = $value;
