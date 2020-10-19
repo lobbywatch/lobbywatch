@@ -190,11 +190,8 @@
             //
             // View column for id field
             //
-            $column = new NumberViewColumn('id', 'id', 'Id', $this->dataset);
+            $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Technischer Schlüssel der Live-Daten');
             $column->SetFixedWidth(null);
@@ -480,11 +477,8 @@
             //
             // View column for id field
             //
-            $column = new NumberViewColumn('id', 'id', 'Id', $this->dataset);
+            $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -718,11 +712,8 @@
             //
             // View column for id field
             //
-            $column = new NumberViewColumn('id', 'id', 'Id', $this->dataset);
+            $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
             $grid->AddExportColumn($column);
             
             //
@@ -930,11 +921,8 @@
             //
             // View column for id field
             //
-            $column = new NumberViewColumn('id', 'id', 'Id', $this->dataset);
+            $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
             $grid->AddCompareColumn($column);
             
             //
