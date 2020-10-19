@@ -62,6 +62,7 @@ try {
     $jahr = date("Y");
 
     $rowData = get_parlamentarier($con, $id, $jahr);
+    $rowData_no_pg_members = get_parlamentarier($con, $id, $jahr, false);
     $lastLogRowData = get_parlamentarier_log_last_changed_parlament_interessenbindungen($con, $id);
 
     $reAuthorization = isset($rowData['autorisierung_verschickt_datum']);
@@ -151,7 +152,7 @@ try {
             '<h4>Gäste' . (substr_count($rowData['zutrittsberechtigungen'], '[VALID_Zutrittsberechtigung]') > 2 ? ' <img src="img/icons/warning.gif" alt="Warnung">': '') . '</h4>' . ($rowData['zutrittsberechtigungen'] ? '<ul>' . $rowData['zutrittsberechtigungen'] . '</ul>': '<p>keine</p>') .
             '<h4>Mandate der Gäste</h4>' . $zbRetDetail['gaesteMitMandaten'],
           'EmailTitle' => ($reAuthorization ? 'Re-' : '') . 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoParlam. '" target="_blank">' . $rowData["parlamentarier_name"] . '</a>',
-          'EmailText' => '<div>' . $rowData['anrede'] . '' . $emailIntroParlam . (isset($rowData['beruf']) ? '<b>' . lt('Beruf:') . '</b> ' . translate_record_field($rowData, 'beruf', false, true) . '' : '') . '<br><br><b>' . lt('Ihre Interessenbindungen:') .'</b><ul>' . $rowData['interessenbindungen_for_email'] . '</ul>' .
+          'EmailText' => '<div>' . $rowData['anrede'] . '' . $emailIntroParlam . (isset($rowData['beruf']) ? '<b>' . lt('Beruf:') . '</b> ' . translate_record_field($rowData, 'beruf', false, true) . '' : '') . '<br><br><b>' . lt('Ihre Interessenbindungen:') .'</b><ul>' . $rowData_no_pg_members['interessenbindungen_for_email'] . '</ul>' .
             // $organisationsbeziehungen .  RK Do not show Organisationsbeziehungen in Autorisierungs E-Mail, request Otto
             '<b>' . lt('Ihre Gäste:') . '</b></p>' . ($rowData['zutrittsberechtigungen_for_email'] ? '<ul>' . $rowData['zutrittsberechtigungen_for_email'] . '</ul>': '<br>' . lt('keine') . '<br>') .
             '' . $emailEndParlam . '</div>',

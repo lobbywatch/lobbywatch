@@ -2935,7 +2935,7 @@ function get_parlamentarier_lang($con, $id) {
       return $lang;
 }
 
-function get_parlamentarier($con, $id, $jahr) {
+function get_parlamentarier($con, $id, $jahr, $include_parlamentarische_gruppen_members = true) {
       $result = array();
       $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.name as parlamentarier_name2, parlamentarier.email, parlamentarier.geschlecht, parlamentarier.beruf, parlamentarier.beruf_fr, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.kontrolliert_datum, parlamentarier.freigabe_datum, parlamentarier.autorisierung_verschickt_datum, parlamentarier.autorisiert_datum, parlamentarier.kontrolliert_visa, parlamentarier.eingabe_abgeschlossen_visa, parlamentarier.im_rat_bis, parlamentarier.sitzplatz, parlamentarier.geburtstag, parlamentarier.im_rat_bis, parlamentarier.kleinbild, parlamentarier.parlament_biografie_id, parlamentarier.arbeitssprache, parlamentarier.aemter, parlamentarier.weitere_aemter, parlamentarier.parlament_interessenbindungen, parlamentarier.parlament_interessenbindungen_updated, DATE_FORMAT(parlament_interessenbindungen_updated, '%d.%m.%Y') as parlament_interessenbindungen_updated_formatted,
 GROUP_CONCAT(DISTINCT
@@ -3028,8 +3028,9 @@ LEFT JOIN v_in_kommission_liste in_kommission
 LEFT JOIN interessenbindung_jahr interessenbindung_jahr_current
   ON interessenbindung_jahr_current.interessenbindung_id = interessenbindung.id AND interessenbindung_jahr_current.jahr = $jahr
 WHERE
-  parlamentarier.id=:id
-GROUP BY parlamentarier.id;";
+  parlamentarier.id=:id" .
+  ($include_parlamentarische_gruppen_members ? "" : " AND NOT (interessenbindung.art = 'mitglied' AND organisation.rechtsform = 'Parlamentarische Gruppe')") .
+" GROUP BY parlamentarier.id;";
 
         // df($sql);
         $result = array();
@@ -3073,7 +3074,7 @@ function _lobbywatch_interessenbindung_verguetung_SQL($jahr) {
   WHEN interessenbindung_jahr_current.verguetung = 0 THEN CONCAT(" . lts('Entschädigung pro Jahr: CHF 0.-, ehrenamtlich') . ")
   WHEN interessenbindung_jahr_current.verguetung = 1 THEN CONCAT(" . lts('bezahlte Tätigkeit, Entschädigung pro Jahr:') . ", ' CHF ________')
   WHEN interessenbindung_jahr_current.verguetung > 1 THEN CONCAT(" . lts('bezahlte Tätigkeit, Entschädigung pro Jahr:') . ", ' CHF ', FORMAT(interessenbindung_jahr_current.verguetung, 'C', 'de_CH'), '.-')
-  WHEN interessenbindung_jahr_current.verguetung IS NULL THEN CONCAT(" . lts('keine Angaben für das aktuelle Jahr (noch nicht erfasst/recherchiert): Entschädigung pro Jahr:') . ", ' CHF ________')
+  WHEN interessenbindung_jahr_current.verguetung IS NULL THEN CONCAT(" . lts('Entschädigung pro Jahr:') . ", ' CHF ________')
   ELSE 'ERROR: Unbekannter Fall bei der Vergütung'
   END";
 }
