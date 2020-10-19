@@ -53,6 +53,7 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'zutrittsberechtigung' => '<span class="relation" title="Zutrittsberechtigungen für Gäse ins Bundeshaus">Zutrittsberechtigung</span>',
 'mandat' => '<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Personen</span>',
 'mandat.mandat_jahr' => '<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Personen</span>->Mandatsvergütung',
+'mandat.mandat_log' => '<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Personen</span>->Mandat Log',
 'in_kommission' => '<span class="relation">In Kommission</span>',
 'organisation_beziehung' => '<span class="relation">Organisation Beziehung</span>',
 'branche' => '<span class="entity">Branche</span>',
