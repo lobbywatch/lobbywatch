@@ -9867,6 +9867,1207 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
               <FieldMap masterColumnName="id" foreginColumnName="parlamentarier_id"/>
             </MasterForeignKeyColumnMap>
           </Detail>
+          <Detail caption="Parlamentarier Log">
+            <Page type="table" tableName="parlamentarier_log" numberByDataSource="0" fileName="" caption="Parlamentarier Log" shortCaption="Parlamentarier Log" allowAddMultipleRecords="false" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="0" editAbilityMode="0" multiEditAbility="0" includeAllFieldsForMultiEditByDefault="false" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
+              <DefaultSortedColumns>
+                <Column fieldName="log_id" orderType="1"/>
+              </DefaultSortedColumns>
+              <BeforeGridText/>
+              <DetailedDescription/>
+              <ColumnPresentations>
+                <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Live-Daten" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="nachname" caption="Nachname" headerHint="Nachname des Parlamentariers" showColumnFilter="false" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="100"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="vorname" caption="Vorname" headerHint="Vornahme des Parlamentariers" showColumnFilter="false" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="50"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="vorname_kurz" caption="Vorname Kurz" headerHint="Alltagsvorname oder gebräuchlicher Spitzname, z.B. Nik für Niklaus" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="15"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="zweiter_vorname" caption="Zweiter Vorname" headerHint="Zweiter Vorname des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="50"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="rat_id" caption="Rat Id" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates" selectedFilterOperators="1573119">
+                  <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <ViewProperties type="text"/>
+                  <EditProperties type="dynamicCombobox"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="kanton_id" caption="Kanton Id" headerHint="Kantonszugehörigkeit; Fremdschlüssel des Kantons" selectedFilterOperators="1573119">
+                  <Lookup tableName="v_kanton_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <ViewProperties type="text"/>
+                  <EditProperties type="dynamicCombobox"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="kommissionen" caption="Kommissionen" headerHint="Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="100"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="partei_id" caption="Partei Id" headerHint="Fremdschlüssel Partei. Leer bedeutet parteilos." canSetNull="true" selectedFilterOperators="1573119">
+                  <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <ViewProperties type="text"/>
+                  <EditProperties type="dynamicCombobox"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="parteifunktion" caption="Parteifunktion" headerHint="Funktion des Parlamentariers in der Partei" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="comboBox">
+                    <Values>
+                      <Value name="mitglied" caption="mitglied"/>
+                      <Value name="praesident" caption="praesident"/>
+                      <Value name="vizepraesident" caption="vizepraesident"/>
+                    </Values>
+                  </EditProperties>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="fraktion_id" caption="Fraktion Id" headerHint="Fraktionszugehörigkeit im nationalen Parlament. Fremdschlüssel." canSetNull="true" selectedFilterOperators="1573119">
+                  <Lookup tableName="v_fraktion" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <ViewProperties type="text"/>
+                  <EditProperties type="dynamicCombobox"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="fraktionsfunktion" caption="Fraktionsfunktion" headerHint="Funktion des Parlamentariers in der Fraktion" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="comboBox">
+                    <Values>
+                      <Value name="mitglied" caption="mitglied"/>
+                      <Value name="praesident" caption="praesident"/>
+                      <Value name="vizepraesident" caption="vizepraesident"/>
+                    </Values>
+                  </EditProperties>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="im_rat_seit" caption="Im Rat Seit" headerHint="Jahr der Zugehörigkeit zum Parlament" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="im_rat_bis" caption="Im Rat Bis" headerHint="Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="ratswechsel" caption="Ratswechsel" headerHint="Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="ratsunterbruch_von" caption="Ratsunterbruch Von" headerHint="Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="ratsunterbruch_bis" caption="Ratsunterbruch Bis" headerHint="Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="beruf" caption="Beruf" headerHint="Beruf des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="beruf_fr" caption="Beruf Fr" headerHint="Beruf des Parlamentariers auf französisch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" headerHint="Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers" canSetNull="true" selectedFilterOperators="1573119">
+                  <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <ViewProperties type="text"/>
+                  <EditProperties type="dynamicCombobox"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="titel" caption="Titel" headerHint="Titel des Parlamentariers, wird von ws.parlament.ch importiert" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="100"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="aemter" caption="Aemter" headerHint="Politische Ämter (importiert von ws.parlament.ch mandate)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="weitere_aemter" caption="Weitere Aemter" headerHint="Zusätzliche Ämter (importiert von ws.parlament.ch additionalMandate)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="zivilstand" caption="Zivilstand" headerHint="Zivilstand" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="comboBox">
+                    <Values>
+                      <Value name="ledig" caption="ledig"/>
+                      <Value name="verheiratet" caption="verheiratet"/>
+                      <Value name="geschieden" caption="geschieden"/>
+                      <Value name="eingetragene partnerschaft" caption="eingetragene partnerschaft"/>
+                      <Value name="getrennt" caption="getrennt"/>
+                      <Value name="verwitwet" caption="verwitwet"/>
+                    </Values>
+                  </EditProperties>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="anzahl_kinder" caption="Anzahl Kinder" headerHint="Anzahl der Kinder" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="militaerischer_grad_id" caption="Militaerischer Grad Id" headerHint="Militärischer Grad, leer (NULL) = kein Militärdienst" canSetNull="true" selectedFilterOperators="1573119">
+                  <Lookup tableName="v_mil_grad" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <ViewProperties type="text"/>
+                  <EditProperties type="dynamicCombobox"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="geschlecht" caption="Geschlecht" headerHint="Geschlecht des Parlamentariers, M=Mann, F=Frau" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="comboBox">
+                    <Values>
+                      <Value name="M" caption="M"/>
+                      <Value name="F" caption="F"/>
+                    </Values>
+                  </EditProperties>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="geburtstag" caption="Geburtstag" headerHint="Geburtstag des Parlamentariers" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="photo" caption="Photo" headerHint="Photo des Parlamentariers (JPEG/jpg)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="photo_dateiname" caption="Photo Dateiname" headerHint="Photodateiname ohne Erweiterung" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="photo_dateierweiterung" caption="Photo Dateierweiterung" headerHint="Erweiterung der Photodatei" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="15"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="photo_dateiname_voll" caption="Photo Dateiname Voll" headerHint="Photodateiname mit Erweiterung" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="photo_mime_type" caption="Photo Mime Type" headerHint="MIME Type des Photos" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="100"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="kleinbild" caption="Kleinbild" headerHint="Bild 44x62 px oder leer.png" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="80"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="sitzplatz" caption="Sitzplatz" headerHint="Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="email" caption="Email" headerHint="E-Mail-Adresse des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="100"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="homepage" caption="Homepage" headerHint="Homepage des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="homepage_2" caption="Homepage 2" headerHint="Zweite Homepage, importiert von ws.parlament.ch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="parlament_biografie_id" caption="Parlament Biografie Id" headerHint="Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="parlament_number" caption="Parlament Number" headerHint="Number Feld auf ws.parlament.ch, wird z.B. als ID für Photos verwendet." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" headerHint="Importierte Interessenbindungen von ws.parlament.ch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75" escapeHTMLChars="true"/>
+                  <EditProperties type="textArea" useHTMLFilter="true" columnCount="50" rowCount="8" placeholder="">
+                    <AllowedTags/>
+                  </EditProperties>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="parlament_interessenbindungen_json" caption="Parlament Interessenbindungen Json" headerHint="Importierte Interessenbindungen von ws.parlament.ch als JSON. Rechtsformen: -, AG, Anst., EG, EidgKomm, Gen., GmbH, KollG, Komm., Körp., Stift., Ve., öffStift; Gremien: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV; Funktionen: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75" escapeHTMLChars="true"/>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="parlament_interessenbindungen_updated" caption="Parlament Interessenbindungen Updated" headerHint="Datum, wann die Interessenbindungen von ws.parlament.ch zu letzt aktualisiert wurden." canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="twitter_name" caption="Twitter Name" headerHint="Twittername" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="50"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="linkedin_profil_url" caption="Linkedin Profil Url" headerHint="URL zum LinkedIn-Profil" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="xing_profil_name" caption="Xing Profil Name" headerHint="Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="facebook_name" caption="Facebook Name" headerHint="Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="wikipedia" caption="Wikipedia" headerHint="Link zum Wikipedia-Eintrag des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="sprache" caption="Sprache" headerHint="Sprache des Parlamentariers, wird von ws.parlament.ch importiert" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="comboBox">
+                    <Values>
+                      <Value name="de" caption="de"/>
+                      <Value name="fr" caption="fr"/>
+                      <Value name="it" caption="it"/>
+                      <Value name="sk" caption="sk"/>
+                      <Value name="rm" caption="rm"/>
+                      <Value name="tr" caption="tr"/>
+                    </Values>
+                  </EditProperties>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="arbeitssprache" caption="Arbeitssprache" headerHint="Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="comboBox">
+                    <Values>
+                      <Value name="de" caption="de"/>
+                      <Value name="fr" caption="fr"/>
+                      <Value name="it" caption="it"/>
+                    </Values>
+                  </EditProperties>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="adresse_firma" caption="Adresse Firma" headerHint="Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="100"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="adresse_strasse" caption="Adresse Strasse" headerHint="Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="100"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="adresse_zusatz" caption="Adresse Zusatz" headerHint="Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="100"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="adresse_plz" caption="Adresse Plz" headerHint="Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="adresse_ort" caption="Adresse Ort" headerHint="Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="100"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="telephon_1" caption="Telephon 1" headerHint="Telephonnummer 1, z.B. Festnetz" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="25"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="telephon_2" caption="Telephon 2" headerHint="Telephonnummer 2, z.B. Mobiltelephon" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="25"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="erfasst" caption="Erfasst" headerHint="Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden. NULL bedeutet Status unklar." canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="comboBox">
+                    <Values>
+                      <Value name="Ja" caption="Ja"/>
+                      <Value name="Nein" caption="Nein"/>
+                    </Values>
+                  </EditProperties>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="notizen" caption="Notizen" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat." canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="kontrolliert_visa" caption="Kontrolliert Visa" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat." canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="kontrolliert_datum" caption="Kontrolliert Datum" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="autorisierung_verschickt_visa" caption="Autorisierung Verschickt Visa" headerHint="Autorisierungsanfrage verschickt durch" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="autorisierung_verschickt_datum" caption="Autorisierung Verschickt Datum" headerHint="Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="autorisiert_visa" caption="Autorisiert Visa" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen." canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden." canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="freigabe_visa" caption="Freigabe Visa" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="freigabe_datum" caption="Freigabe Datum" headerHint="Freigabedatum (Freigabe = Daten sind fertig)" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="log_id" caption="Log Id" headerHint="Technischer Log-Schlüssel" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="action" caption="Action" headerHint="Aktionstyp" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="comboBox">
+                    <Values>
+                      <Value name="insert" caption="insert"/>
+                      <Value name="update" caption="update"/>
+                      <Value name="delete" caption="delete"/>
+                      <Value name="snapshot" caption="snapshot"/>
+                    </Values>
+                  </EditProperties>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="state" caption="State" headerHint="Status der Aktion" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="20"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="action_date" caption="Action Date" headerHint="Datum der Aktion" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="snapshot_id" caption="Snapshot Id" headerHint="Fremdschlüssel zu einem Snapshot" canSetNull="true" selectedFilterOperators="1589247">
+                  <Lookup tableName="snapshot" linkFieldName="id" displayFieldName="beschreibung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="dynamicCombobox"/>
+                </ColumnPresentation>
+              </ColumnPresentations>
+              <Columns>
+                <List>
+                  <Column fieldName="id"/>
+                  <Column fieldName="nachname"/>
+                  <Column fieldName="vorname"/>
+                  <Column fieldName="vorname_kurz"/>
+                  <Column fieldName="zweiter_vorname"/>
+                  <Column fieldName="rat_id"/>
+                  <Column fieldName="kanton_id"/>
+                  <Column fieldName="kommissionen"/>
+                  <Column fieldName="partei_id"/>
+                  <Column fieldName="parteifunktion"/>
+                  <Column fieldName="fraktion_id"/>
+                  <Column fieldName="fraktionsfunktion"/>
+                  <Column fieldName="im_rat_seit"/>
+                  <Column fieldName="im_rat_bis"/>
+                  <Column fieldName="ratswechsel"/>
+                  <Column fieldName="ratsunterbruch_von"/>
+                  <Column fieldName="ratsunterbruch_bis"/>
+                  <Column fieldName="beruf"/>
+                  <Column fieldName="beruf_fr"/>
+                  <Column fieldName="beruf_interessengruppe_id"/>
+                  <Column fieldName="titel"/>
+                  <Column fieldName="aemter"/>
+                  <Column fieldName="weitere_aemter"/>
+                  <Column fieldName="zivilstand"/>
+                  <Column fieldName="anzahl_kinder"/>
+                  <Column fieldName="militaerischer_grad_id"/>
+                  <Column fieldName="geschlecht"/>
+                  <Column fieldName="geburtstag"/>
+                  <Column fieldName="photo"/>
+                  <Column fieldName="photo_dateiname"/>
+                  <Column fieldName="photo_dateierweiterung"/>
+                  <Column fieldName="photo_dateiname_voll"/>
+                  <Column fieldName="photo_mime_type"/>
+                  <Column fieldName="kleinbild"/>
+                  <Column fieldName="sitzplatz"/>
+                  <Column fieldName="email"/>
+                  <Column fieldName="homepage"/>
+                  <Column fieldName="homepage_2"/>
+                  <Column fieldName="parlament_biografie_id"/>
+                  <Column fieldName="parlament_number"/>
+                  <Column fieldName="parlament_interessenbindungen"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
+                  <Column fieldName="parlament_interessenbindungen_updated"/>
+                  <Column fieldName="twitter_name"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="facebook_name"/>
+                  <Column fieldName="wikipedia"/>
+                  <Column fieldName="sprache"/>
+                  <Column fieldName="arbeitssprache"/>
+                  <Column fieldName="adresse_firma"/>
+                  <Column fieldName="adresse_strasse"/>
+                  <Column fieldName="adresse_zusatz"/>
+                  <Column fieldName="adresse_plz"/>
+                  <Column fieldName="adresse_ort"/>
+                  <Column fieldName="telephon_1"/>
+                  <Column fieldName="telephon_2"/>
+                  <Column fieldName="erfasst"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="autorisierung_verschickt_visa"/>
+                  <Column fieldName="autorisierung_verschickt_datum"/>
+                  <Column fieldName="autorisiert_visa"/>
+                  <Column fieldName="autorisiert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </List>
+                <View>
+                  <Column fieldName="id"/>
+                  <Column fieldName="nachname"/>
+                  <Column fieldName="vorname"/>
+                  <Column fieldName="vorname_kurz"/>
+                  <Column fieldName="zweiter_vorname"/>
+                  <Column fieldName="rat_id"/>
+                  <Column fieldName="kanton_id"/>
+                  <Column fieldName="kommissionen"/>
+                  <Column fieldName="partei_id"/>
+                  <Column fieldName="parteifunktion"/>
+                  <Column fieldName="fraktion_id"/>
+                  <Column fieldName="fraktionsfunktion"/>
+                  <Column fieldName="im_rat_seit"/>
+                  <Column fieldName="im_rat_bis"/>
+                  <Column fieldName="ratswechsel"/>
+                  <Column fieldName="ratsunterbruch_von"/>
+                  <Column fieldName="ratsunterbruch_bis"/>
+                  <Column fieldName="beruf"/>
+                  <Column fieldName="beruf_fr"/>
+                  <Column fieldName="beruf_interessengruppe_id"/>
+                  <Column fieldName="titel"/>
+                  <Column fieldName="aemter"/>
+                  <Column fieldName="weitere_aemter"/>
+                  <Column fieldName="zivilstand"/>
+                  <Column fieldName="anzahl_kinder"/>
+                  <Column fieldName="militaerischer_grad_id"/>
+                  <Column fieldName="geschlecht"/>
+                  <Column fieldName="geburtstag"/>
+                  <Column fieldName="photo"/>
+                  <Column fieldName="photo_dateiname"/>
+                  <Column fieldName="photo_dateierweiterung"/>
+                  <Column fieldName="photo_dateiname_voll"/>
+                  <Column fieldName="photo_mime_type"/>
+                  <Column fieldName="kleinbild"/>
+                  <Column fieldName="sitzplatz"/>
+                  <Column fieldName="email"/>
+                  <Column fieldName="homepage"/>
+                  <Column fieldName="homepage_2"/>
+                  <Column fieldName="parlament_biografie_id"/>
+                  <Column fieldName="parlament_number"/>
+                  <Column fieldName="parlament_interessenbindungen"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
+                  <Column fieldName="parlament_interessenbindungen_updated"/>
+                  <Column fieldName="twitter_name"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="facebook_name"/>
+                  <Column fieldName="wikipedia"/>
+                  <Column fieldName="sprache"/>
+                  <Column fieldName="arbeitssprache"/>
+                  <Column fieldName="adresse_firma"/>
+                  <Column fieldName="adresse_strasse"/>
+                  <Column fieldName="adresse_zusatz"/>
+                  <Column fieldName="adresse_plz"/>
+                  <Column fieldName="adresse_ort"/>
+                  <Column fieldName="telephon_1"/>
+                  <Column fieldName="telephon_2"/>
+                  <Column fieldName="erfasst"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="autorisierung_verschickt_visa"/>
+                  <Column fieldName="autorisierung_verschickt_datum"/>
+                  <Column fieldName="autorisiert_visa"/>
+                  <Column fieldName="autorisiert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </View>
+                <Edit>
+                  <Column fieldName="id" visible="false"/>
+                  <Column fieldName="nachname" visible="false"/>
+                  <Column fieldName="vorname" visible="false"/>
+                  <Column fieldName="vorname_kurz" visible="false"/>
+                  <Column fieldName="zweiter_vorname" visible="false"/>
+                  <Column fieldName="rat_id" visible="false"/>
+                  <Column fieldName="kanton_id" visible="false"/>
+                  <Column fieldName="kommissionen" visible="false"/>
+                  <Column fieldName="partei_id" visible="false"/>
+                  <Column fieldName="parteifunktion" visible="false"/>
+                  <Column fieldName="fraktion_id" visible="false"/>
+                  <Column fieldName="fraktionsfunktion" visible="false"/>
+                  <Column fieldName="im_rat_seit" visible="false"/>
+                  <Column fieldName="im_rat_bis" visible="false"/>
+                  <Column fieldName="ratswechsel" visible="false"/>
+                  <Column fieldName="ratsunterbruch_von" visible="false"/>
+                  <Column fieldName="ratsunterbruch_bis" visible="false"/>
+                  <Column fieldName="beruf" visible="false"/>
+                  <Column fieldName="beruf_fr" visible="false"/>
+                  <Column fieldName="beruf_interessengruppe_id" visible="false"/>
+                  <Column fieldName="titel" visible="false"/>
+                  <Column fieldName="aemter" visible="false"/>
+                  <Column fieldName="weitere_aemter" visible="false"/>
+                  <Column fieldName="zivilstand" visible="false"/>
+                  <Column fieldName="anzahl_kinder" visible="false"/>
+                  <Column fieldName="militaerischer_grad_id" visible="false"/>
+                  <Column fieldName="geschlecht" visible="false"/>
+                  <Column fieldName="geburtstag" visible="false"/>
+                  <Column fieldName="photo" visible="false"/>
+                  <Column fieldName="photo_dateiname" visible="false"/>
+                  <Column fieldName="photo_dateierweiterung" visible="false"/>
+                  <Column fieldName="photo_dateiname_voll" visible="false"/>
+                  <Column fieldName="photo_mime_type" visible="false"/>
+                  <Column fieldName="kleinbild" visible="false"/>
+                  <Column fieldName="sitzplatz" visible="false"/>
+                  <Column fieldName="email" visible="false"/>
+                  <Column fieldName="homepage" visible="false"/>
+                  <Column fieldName="homepage_2" visible="false"/>
+                  <Column fieldName="parlament_biografie_id" visible="false"/>
+                  <Column fieldName="parlament_number" visible="false"/>
+                  <Column fieldName="parlament_interessenbindungen" visible="false"/>
+                  <Column fieldName="parlament_interessenbindungen_json" visible="false"/>
+                  <Column fieldName="parlament_interessenbindungen_updated" visible="false"/>
+                  <Column fieldName="twitter_name" visible="false"/>
+                  <Column fieldName="linkedin_profil_url" visible="false"/>
+                  <Column fieldName="xing_profil_name" visible="false"/>
+                  <Column fieldName="facebook_name" visible="false"/>
+                  <Column fieldName="wikipedia" visible="false"/>
+                  <Column fieldName="sprache" visible="false"/>
+                  <Column fieldName="arbeitssprache" visible="false"/>
+                  <Column fieldName="adresse_firma" visible="false"/>
+                  <Column fieldName="adresse_strasse" visible="false"/>
+                  <Column fieldName="adresse_zusatz" visible="false"/>
+                  <Column fieldName="adresse_plz" visible="false"/>
+                  <Column fieldName="adresse_ort" visible="false"/>
+                  <Column fieldName="telephon_1" visible="false"/>
+                  <Column fieldName="telephon_2" visible="false"/>
+                  <Column fieldName="erfasst" visible="false"/>
+                  <Column fieldName="notizen" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
+                  <Column fieldName="kontrolliert_visa" visible="false"/>
+                  <Column fieldName="kontrolliert_datum" visible="false"/>
+                  <Column fieldName="autorisierung_verschickt_visa" visible="false"/>
+                  <Column fieldName="autorisierung_verschickt_datum" visible="false"/>
+                  <Column fieldName="autorisiert_visa" visible="false"/>
+                  <Column fieldName="autorisiert_datum" visible="false"/>
+                  <Column fieldName="freigabe_visa" visible="false"/>
+                  <Column fieldName="freigabe_datum" visible="false"/>
+                  <Column fieldName="created_visa" visible="false"/>
+                  <Column fieldName="created_date" visible="false"/>
+                  <Column fieldName="updated_visa" visible="false"/>
+                  <Column fieldName="updated_date" visible="false"/>
+                  <Column fieldName="log_id" visible="false"/>
+                  <Column fieldName="action" visible="false"/>
+                  <Column fieldName="state" visible="false"/>
+                  <Column fieldName="action_date" visible="false"/>
+                  <Column fieldName="snapshot_id" visible="false"/>
+                </Edit>
+                <Insert>
+                  <Column fieldName="id" visible="false"/>
+                  <Column fieldName="nachname" visible="false"/>
+                  <Column fieldName="vorname" visible="false"/>
+                  <Column fieldName="vorname_kurz" visible="false"/>
+                  <Column fieldName="zweiter_vorname" visible="false"/>
+                  <Column fieldName="rat_id" visible="false"/>
+                  <Column fieldName="kanton_id" visible="false"/>
+                  <Column fieldName="kommissionen" visible="false"/>
+                  <Column fieldName="partei_id" visible="false"/>
+                  <Column fieldName="parteifunktion" visible="false"/>
+                  <Column fieldName="fraktion_id" visible="false"/>
+                  <Column fieldName="fraktionsfunktion" visible="false"/>
+                  <Column fieldName="im_rat_seit" visible="false"/>
+                  <Column fieldName="im_rat_bis" visible="false"/>
+                  <Column fieldName="ratswechsel" visible="false"/>
+                  <Column fieldName="ratsunterbruch_von" visible="false"/>
+                  <Column fieldName="ratsunterbruch_bis" visible="false"/>
+                  <Column fieldName="beruf" visible="false"/>
+                  <Column fieldName="beruf_fr" visible="false"/>
+                  <Column fieldName="beruf_interessengruppe_id" visible="false"/>
+                  <Column fieldName="titel" visible="false"/>
+                  <Column fieldName="aemter" visible="false"/>
+                  <Column fieldName="weitere_aemter" visible="false"/>
+                  <Column fieldName="zivilstand" visible="false"/>
+                  <Column fieldName="anzahl_kinder" visible="false"/>
+                  <Column fieldName="militaerischer_grad_id" visible="false"/>
+                  <Column fieldName="geschlecht" visible="false"/>
+                  <Column fieldName="geburtstag" visible="false"/>
+                  <Column fieldName="photo" visible="false"/>
+                  <Column fieldName="photo_dateiname" visible="false"/>
+                  <Column fieldName="photo_dateierweiterung" visible="false"/>
+                  <Column fieldName="photo_dateiname_voll" visible="false"/>
+                  <Column fieldName="photo_mime_type" visible="false"/>
+                  <Column fieldName="kleinbild" visible="false"/>
+                  <Column fieldName="sitzplatz" visible="false"/>
+                  <Column fieldName="email" visible="false"/>
+                  <Column fieldName="homepage" visible="false"/>
+                  <Column fieldName="homepage_2" visible="false"/>
+                  <Column fieldName="parlament_biografie_id" visible="false"/>
+                  <Column fieldName="parlament_number" visible="false"/>
+                  <Column fieldName="parlament_interessenbindungen" visible="false"/>
+                  <Column fieldName="parlament_interessenbindungen_json" visible="false"/>
+                  <Column fieldName="parlament_interessenbindungen_updated" visible="false"/>
+                  <Column fieldName="twitter_name" visible="false"/>
+                  <Column fieldName="linkedin_profil_url" visible="false"/>
+                  <Column fieldName="xing_profil_name" visible="false"/>
+                  <Column fieldName="facebook_name" visible="false"/>
+                  <Column fieldName="wikipedia" visible="false"/>
+                  <Column fieldName="sprache" visible="false"/>
+                  <Column fieldName="arbeitssprache" visible="false"/>
+                  <Column fieldName="adresse_firma" visible="false"/>
+                  <Column fieldName="adresse_strasse" visible="false"/>
+                  <Column fieldName="adresse_zusatz" visible="false"/>
+                  <Column fieldName="adresse_plz" visible="false"/>
+                  <Column fieldName="adresse_ort" visible="false"/>
+                  <Column fieldName="telephon_1" visible="false"/>
+                  <Column fieldName="telephon_2" visible="false"/>
+                  <Column fieldName="erfasst" visible="false"/>
+                  <Column fieldName="notizen" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
+                  <Column fieldName="kontrolliert_visa" visible="false"/>
+                  <Column fieldName="kontrolliert_datum" visible="false"/>
+                  <Column fieldName="autorisierung_verschickt_visa" visible="false"/>
+                  <Column fieldName="autorisierung_verschickt_datum" visible="false"/>
+                  <Column fieldName="autorisiert_visa" visible="false"/>
+                  <Column fieldName="autorisiert_datum" visible="false"/>
+                  <Column fieldName="freigabe_visa" visible="false"/>
+                  <Column fieldName="freigabe_datum" visible="false"/>
+                  <Column fieldName="created_visa" visible="false"/>
+                  <Column fieldName="created_date" visible="false"/>
+                  <Column fieldName="updated_visa" visible="false"/>
+                  <Column fieldName="updated_date" visible="false"/>
+                  <Column fieldName="log_id" visible="false"/>
+                  <Column fieldName="action" visible="false"/>
+                  <Column fieldName="state" visible="false"/>
+                  <Column fieldName="action_date" visible="false"/>
+                  <Column fieldName="snapshot_id" visible="false"/>
+                </Insert>
+                <QuickFilter>
+                  <Column fieldName="id"/>
+                  <Column fieldName="nachname"/>
+                  <Column fieldName="vorname"/>
+                  <Column fieldName="vorname_kurz"/>
+                  <Column fieldName="zweiter_vorname"/>
+                  <Column fieldName="rat_id"/>
+                  <Column fieldName="kanton_id"/>
+                  <Column fieldName="kommissionen"/>
+                  <Column fieldName="partei_id"/>
+                  <Column fieldName="parteifunktion"/>
+                  <Column fieldName="fraktion_id"/>
+                  <Column fieldName="fraktionsfunktion"/>
+                  <Column fieldName="im_rat_seit"/>
+                  <Column fieldName="im_rat_bis"/>
+                  <Column fieldName="ratswechsel"/>
+                  <Column fieldName="ratsunterbruch_von"/>
+                  <Column fieldName="ratsunterbruch_bis"/>
+                  <Column fieldName="beruf"/>
+                  <Column fieldName="beruf_fr"/>
+                  <Column fieldName="beruf_interessengruppe_id"/>
+                  <Column fieldName="titel"/>
+                  <Column fieldName="aemter"/>
+                  <Column fieldName="weitere_aemter"/>
+                  <Column fieldName="zivilstand"/>
+                  <Column fieldName="anzahl_kinder"/>
+                  <Column fieldName="militaerischer_grad_id"/>
+                  <Column fieldName="geschlecht"/>
+                  <Column fieldName="geburtstag"/>
+                  <Column fieldName="photo"/>
+                  <Column fieldName="photo_dateiname"/>
+                  <Column fieldName="photo_dateierweiterung"/>
+                  <Column fieldName="photo_dateiname_voll"/>
+                  <Column fieldName="photo_mime_type"/>
+                  <Column fieldName="kleinbild"/>
+                  <Column fieldName="sitzplatz"/>
+                  <Column fieldName="email"/>
+                  <Column fieldName="homepage"/>
+                  <Column fieldName="homepage_2"/>
+                  <Column fieldName="parlament_biografie_id"/>
+                  <Column fieldName="parlament_number"/>
+                  <Column fieldName="parlament_interessenbindungen"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
+                  <Column fieldName="parlament_interessenbindungen_updated"/>
+                  <Column fieldName="twitter_name"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="facebook_name"/>
+                  <Column fieldName="wikipedia"/>
+                  <Column fieldName="sprache"/>
+                  <Column fieldName="arbeitssprache"/>
+                  <Column fieldName="adresse_firma"/>
+                  <Column fieldName="adresse_strasse"/>
+                  <Column fieldName="adresse_zusatz"/>
+                  <Column fieldName="adresse_plz"/>
+                  <Column fieldName="adresse_ort"/>
+                  <Column fieldName="telephon_1"/>
+                  <Column fieldName="telephon_2"/>
+                  <Column fieldName="erfasst"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="autorisierung_verschickt_visa"/>
+                  <Column fieldName="autorisierung_verschickt_datum"/>
+                  <Column fieldName="autorisiert_visa"/>
+                  <Column fieldName="autorisiert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </QuickFilter>
+                <FilterBuilder>
+                  <Column fieldName="id"/>
+                  <Column fieldName="nachname"/>
+                  <Column fieldName="vorname"/>
+                  <Column fieldName="vorname_kurz"/>
+                  <Column fieldName="zweiter_vorname"/>
+                  <Column fieldName="rat_id"/>
+                  <Column fieldName="kanton_id"/>
+                  <Column fieldName="kommissionen"/>
+                  <Column fieldName="partei_id"/>
+                  <Column fieldName="parteifunktion"/>
+                  <Column fieldName="fraktion_id"/>
+                  <Column fieldName="fraktionsfunktion"/>
+                  <Column fieldName="im_rat_seit"/>
+                  <Column fieldName="im_rat_bis"/>
+                  <Column fieldName="ratswechsel"/>
+                  <Column fieldName="ratsunterbruch_von"/>
+                  <Column fieldName="ratsunterbruch_bis"/>
+                  <Column fieldName="beruf"/>
+                  <Column fieldName="beruf_fr"/>
+                  <Column fieldName="beruf_interessengruppe_id"/>
+                  <Column fieldName="titel"/>
+                  <Column fieldName="aemter"/>
+                  <Column fieldName="weitere_aemter"/>
+                  <Column fieldName="zivilstand"/>
+                  <Column fieldName="anzahl_kinder"/>
+                  <Column fieldName="militaerischer_grad_id"/>
+                  <Column fieldName="geschlecht"/>
+                  <Column fieldName="geburtstag"/>
+                  <Column fieldName="photo"/>
+                  <Column fieldName="photo_dateiname"/>
+                  <Column fieldName="photo_dateierweiterung"/>
+                  <Column fieldName="photo_dateiname_voll"/>
+                  <Column fieldName="photo_mime_type"/>
+                  <Column fieldName="kleinbild"/>
+                  <Column fieldName="sitzplatz"/>
+                  <Column fieldName="email"/>
+                  <Column fieldName="homepage"/>
+                  <Column fieldName="homepage_2"/>
+                  <Column fieldName="parlament_biografie_id"/>
+                  <Column fieldName="parlament_number"/>
+                  <Column fieldName="parlament_interessenbindungen"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
+                  <Column fieldName="parlament_interessenbindungen_updated"/>
+                  <Column fieldName="twitter_name"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="facebook_name"/>
+                  <Column fieldName="wikipedia"/>
+                  <Column fieldName="sprache"/>
+                  <Column fieldName="arbeitssprache"/>
+                  <Column fieldName="adresse_firma"/>
+                  <Column fieldName="adresse_strasse"/>
+                  <Column fieldName="adresse_zusatz"/>
+                  <Column fieldName="adresse_plz"/>
+                  <Column fieldName="adresse_ort"/>
+                  <Column fieldName="telephon_1"/>
+                  <Column fieldName="telephon_2"/>
+                  <Column fieldName="erfasst"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="autorisierung_verschickt_visa"/>
+                  <Column fieldName="autorisierung_verschickt_datum"/>
+                  <Column fieldName="autorisiert_visa"/>
+                  <Column fieldName="autorisiert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </FilterBuilder>
+                <Print>
+                  <Column fieldName="id"/>
+                  <Column fieldName="nachname"/>
+                  <Column fieldName="vorname"/>
+                  <Column fieldName="vorname_kurz"/>
+                  <Column fieldName="zweiter_vorname"/>
+                  <Column fieldName="rat_id"/>
+                  <Column fieldName="kanton_id"/>
+                  <Column fieldName="kommissionen"/>
+                  <Column fieldName="partei_id"/>
+                  <Column fieldName="parteifunktion"/>
+                  <Column fieldName="fraktion_id"/>
+                  <Column fieldName="fraktionsfunktion"/>
+                  <Column fieldName="im_rat_seit"/>
+                  <Column fieldName="im_rat_bis"/>
+                  <Column fieldName="ratswechsel"/>
+                  <Column fieldName="ratsunterbruch_von"/>
+                  <Column fieldName="ratsunterbruch_bis"/>
+                  <Column fieldName="beruf"/>
+                  <Column fieldName="beruf_fr"/>
+                  <Column fieldName="beruf_interessengruppe_id"/>
+                  <Column fieldName="titel"/>
+                  <Column fieldName="aemter"/>
+                  <Column fieldName="weitere_aemter"/>
+                  <Column fieldName="zivilstand"/>
+                  <Column fieldName="anzahl_kinder"/>
+                  <Column fieldName="militaerischer_grad_id"/>
+                  <Column fieldName="geschlecht"/>
+                  <Column fieldName="geburtstag"/>
+                  <Column fieldName="photo"/>
+                  <Column fieldName="photo_dateiname"/>
+                  <Column fieldName="photo_dateierweiterung"/>
+                  <Column fieldName="photo_dateiname_voll"/>
+                  <Column fieldName="photo_mime_type"/>
+                  <Column fieldName="kleinbild"/>
+                  <Column fieldName="sitzplatz"/>
+                  <Column fieldName="email"/>
+                  <Column fieldName="homepage"/>
+                  <Column fieldName="homepage_2"/>
+                  <Column fieldName="parlament_biografie_id"/>
+                  <Column fieldName="parlament_number"/>
+                  <Column fieldName="parlament_interessenbindungen"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
+                  <Column fieldName="parlament_interessenbindungen_updated"/>
+                  <Column fieldName="twitter_name"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="facebook_name"/>
+                  <Column fieldName="wikipedia"/>
+                  <Column fieldName="sprache"/>
+                  <Column fieldName="arbeitssprache"/>
+                  <Column fieldName="adresse_firma"/>
+                  <Column fieldName="adresse_strasse"/>
+                  <Column fieldName="adresse_zusatz"/>
+                  <Column fieldName="adresse_plz"/>
+                  <Column fieldName="adresse_ort"/>
+                  <Column fieldName="telephon_1"/>
+                  <Column fieldName="telephon_2"/>
+                  <Column fieldName="erfasst"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="autorisierung_verschickt_visa"/>
+                  <Column fieldName="autorisierung_verschickt_datum"/>
+                  <Column fieldName="autorisiert_visa"/>
+                  <Column fieldName="autorisiert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </Print>
+                <Export>
+                  <Column fieldName="id"/>
+                  <Column fieldName="nachname"/>
+                  <Column fieldName="vorname"/>
+                  <Column fieldName="vorname_kurz"/>
+                  <Column fieldName="zweiter_vorname"/>
+                  <Column fieldName="rat_id"/>
+                  <Column fieldName="kanton_id"/>
+                  <Column fieldName="kommissionen"/>
+                  <Column fieldName="partei_id"/>
+                  <Column fieldName="parteifunktion"/>
+                  <Column fieldName="fraktion_id"/>
+                  <Column fieldName="fraktionsfunktion"/>
+                  <Column fieldName="im_rat_seit"/>
+                  <Column fieldName="im_rat_bis"/>
+                  <Column fieldName="ratswechsel"/>
+                  <Column fieldName="ratsunterbruch_von"/>
+                  <Column fieldName="ratsunterbruch_bis"/>
+                  <Column fieldName="beruf"/>
+                  <Column fieldName="beruf_fr"/>
+                  <Column fieldName="beruf_interessengruppe_id"/>
+                  <Column fieldName="titel"/>
+                  <Column fieldName="aemter"/>
+                  <Column fieldName="weitere_aemter"/>
+                  <Column fieldName="zivilstand"/>
+                  <Column fieldName="anzahl_kinder"/>
+                  <Column fieldName="militaerischer_grad_id"/>
+                  <Column fieldName="geschlecht"/>
+                  <Column fieldName="geburtstag"/>
+                  <Column fieldName="photo"/>
+                  <Column fieldName="photo_dateiname"/>
+                  <Column fieldName="photo_dateierweiterung"/>
+                  <Column fieldName="photo_dateiname_voll"/>
+                  <Column fieldName="photo_mime_type"/>
+                  <Column fieldName="kleinbild"/>
+                  <Column fieldName="sitzplatz"/>
+                  <Column fieldName="email"/>
+                  <Column fieldName="homepage"/>
+                  <Column fieldName="homepage_2"/>
+                  <Column fieldName="parlament_biografie_id"/>
+                  <Column fieldName="parlament_number"/>
+                  <Column fieldName="parlament_interessenbindungen"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
+                  <Column fieldName="parlament_interessenbindungen_updated"/>
+                  <Column fieldName="twitter_name"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="facebook_name"/>
+                  <Column fieldName="wikipedia"/>
+                  <Column fieldName="sprache"/>
+                  <Column fieldName="arbeitssprache"/>
+                  <Column fieldName="adresse_firma"/>
+                  <Column fieldName="adresse_strasse"/>
+                  <Column fieldName="adresse_zusatz"/>
+                  <Column fieldName="adresse_plz"/>
+                  <Column fieldName="adresse_ort"/>
+                  <Column fieldName="telephon_1"/>
+                  <Column fieldName="telephon_2"/>
+                  <Column fieldName="erfasst"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="autorisierung_verschickt_visa"/>
+                  <Column fieldName="autorisierung_verschickt_datum"/>
+                  <Column fieldName="autorisiert_visa"/>
+                  <Column fieldName="autorisiert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </Export>
+                <Compare>
+                  <Column fieldName="id"/>
+                  <Column fieldName="nachname"/>
+                  <Column fieldName="vorname"/>
+                  <Column fieldName="vorname_kurz"/>
+                  <Column fieldName="zweiter_vorname"/>
+                  <Column fieldName="rat_id"/>
+                  <Column fieldName="kanton_id"/>
+                  <Column fieldName="kommissionen"/>
+                  <Column fieldName="partei_id"/>
+                  <Column fieldName="parteifunktion"/>
+                  <Column fieldName="fraktion_id"/>
+                  <Column fieldName="fraktionsfunktion"/>
+                  <Column fieldName="im_rat_seit"/>
+                  <Column fieldName="im_rat_bis"/>
+                  <Column fieldName="ratswechsel"/>
+                  <Column fieldName="ratsunterbruch_von"/>
+                  <Column fieldName="ratsunterbruch_bis"/>
+                  <Column fieldName="beruf"/>
+                  <Column fieldName="beruf_fr"/>
+                  <Column fieldName="beruf_interessengruppe_id"/>
+                  <Column fieldName="titel"/>
+                  <Column fieldName="aemter"/>
+                  <Column fieldName="weitere_aemter"/>
+                  <Column fieldName="zivilstand"/>
+                  <Column fieldName="anzahl_kinder"/>
+                  <Column fieldName="militaerischer_grad_id"/>
+                  <Column fieldName="geschlecht"/>
+                  <Column fieldName="geburtstag"/>
+                  <Column fieldName="photo"/>
+                  <Column fieldName="photo_dateiname"/>
+                  <Column fieldName="photo_dateierweiterung"/>
+                  <Column fieldName="photo_dateiname_voll"/>
+                  <Column fieldName="photo_mime_type"/>
+                  <Column fieldName="kleinbild"/>
+                  <Column fieldName="sitzplatz"/>
+                  <Column fieldName="email"/>
+                  <Column fieldName="homepage"/>
+                  <Column fieldName="homepage_2"/>
+                  <Column fieldName="parlament_biografie_id"/>
+                  <Column fieldName="parlament_number"/>
+                  <Column fieldName="parlament_interessenbindungen"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
+                  <Column fieldName="parlament_interessenbindungen_updated"/>
+                  <Column fieldName="twitter_name"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="facebook_name"/>
+                  <Column fieldName="wikipedia"/>
+                  <Column fieldName="sprache"/>
+                  <Column fieldName="arbeitssprache"/>
+                  <Column fieldName="adresse_firma"/>
+                  <Column fieldName="adresse_strasse"/>
+                  <Column fieldName="adresse_zusatz"/>
+                  <Column fieldName="adresse_plz"/>
+                  <Column fieldName="adresse_ort"/>
+                  <Column fieldName="telephon_1"/>
+                  <Column fieldName="telephon_2"/>
+                  <Column fieldName="erfasst"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="autorisierung_verschickt_visa"/>
+                  <Column fieldName="autorisierung_verschickt_datum"/>
+                  <Column fieldName="autorisiert_visa"/>
+                  <Column fieldName="autorisiert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id" visible="false"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </Compare>
+                <MultiEdit>
+                  <Column fieldName="id" visible="false"/>
+                  <Column fieldName="nachname" visible="false"/>
+                  <Column fieldName="vorname" visible="false"/>
+                  <Column fieldName="vorname_kurz" visible="false"/>
+                  <Column fieldName="zweiter_vorname" visible="false"/>
+                  <Column fieldName="rat_id" visible="false"/>
+                  <Column fieldName="kanton_id" visible="false"/>
+                  <Column fieldName="kommissionen" visible="false"/>
+                  <Column fieldName="partei_id" visible="false"/>
+                  <Column fieldName="parteifunktion" visible="false"/>
+                  <Column fieldName="fraktion_id" visible="false"/>
+                  <Column fieldName="fraktionsfunktion" visible="false"/>
+                  <Column fieldName="im_rat_seit" visible="false"/>
+                  <Column fieldName="im_rat_bis" visible="false"/>
+                  <Column fieldName="ratswechsel" visible="false"/>
+                  <Column fieldName="ratsunterbruch_von" visible="false"/>
+                  <Column fieldName="ratsunterbruch_bis" visible="false"/>
+                  <Column fieldName="beruf" visible="false"/>
+                  <Column fieldName="beruf_fr" visible="false"/>
+                  <Column fieldName="beruf_interessengruppe_id" visible="false"/>
+                  <Column fieldName="titel" visible="false"/>
+                  <Column fieldName="aemter" visible="false"/>
+                  <Column fieldName="weitere_aemter" visible="false"/>
+                  <Column fieldName="zivilstand" visible="false"/>
+                  <Column fieldName="anzahl_kinder" visible="false"/>
+                  <Column fieldName="militaerischer_grad_id" visible="false"/>
+                  <Column fieldName="geschlecht" visible="false"/>
+                  <Column fieldName="geburtstag" visible="false"/>
+                  <Column fieldName="photo" visible="false"/>
+                  <Column fieldName="photo_dateiname" visible="false"/>
+                  <Column fieldName="photo_dateierweiterung" visible="false"/>
+                  <Column fieldName="photo_dateiname_voll" visible="false"/>
+                  <Column fieldName="photo_mime_type" visible="false"/>
+                  <Column fieldName="kleinbild" visible="false"/>
+                  <Column fieldName="sitzplatz" visible="false"/>
+                  <Column fieldName="email" visible="false"/>
+                  <Column fieldName="homepage" visible="false"/>
+                  <Column fieldName="homepage_2" visible="false"/>
+                  <Column fieldName="parlament_biografie_id" visible="false"/>
+                  <Column fieldName="parlament_number" visible="false"/>
+                  <Column fieldName="parlament_interessenbindungen" visible="false"/>
+                  <Column fieldName="parlament_interessenbindungen_json" visible="false"/>
+                  <Column fieldName="parlament_interessenbindungen_updated" visible="false"/>
+                  <Column fieldName="twitter_name" visible="false"/>
+                  <Column fieldName="linkedin_profil_url" visible="false"/>
+                  <Column fieldName="xing_profil_name" visible="false"/>
+                  <Column fieldName="facebook_name" visible="false"/>
+                  <Column fieldName="wikipedia" visible="false"/>
+                  <Column fieldName="sprache" visible="false"/>
+                  <Column fieldName="arbeitssprache" visible="false"/>
+                  <Column fieldName="adresse_firma" visible="false"/>
+                  <Column fieldName="adresse_strasse" visible="false"/>
+                  <Column fieldName="adresse_zusatz" visible="false"/>
+                  <Column fieldName="adresse_plz" visible="false"/>
+                  <Column fieldName="adresse_ort" visible="false"/>
+                  <Column fieldName="telephon_1" visible="false"/>
+                  <Column fieldName="telephon_2" visible="false"/>
+                  <Column fieldName="erfasst" visible="false"/>
+                  <Column fieldName="notizen" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
+                  <Column fieldName="kontrolliert_visa" visible="false"/>
+                  <Column fieldName="kontrolliert_datum" visible="false"/>
+                  <Column fieldName="autorisierung_verschickt_visa" visible="false"/>
+                  <Column fieldName="autorisierung_verschickt_datum" visible="false"/>
+                  <Column fieldName="autorisiert_visa" visible="false"/>
+                  <Column fieldName="autorisiert_datum" visible="false"/>
+                  <Column fieldName="freigabe_visa" visible="false"/>
+                  <Column fieldName="freigabe_datum" visible="false"/>
+                  <Column fieldName="created_visa" visible="false"/>
+                  <Column fieldName="created_date" visible="false"/>
+                  <Column fieldName="updated_visa" visible="false"/>
+                  <Column fieldName="updated_date" visible="false"/>
+                  <Column fieldName="log_id" visible="false"/>
+                  <Column fieldName="action" visible="false"/>
+                  <Column fieldName="state" visible="false"/>
+                  <Column fieldName="action_date" visible="false"/>
+                  <Column fieldName="snapshot_id" visible="false"/>
+                </MultiEdit>
+              </Columns>
+              <Details/>
+              <EventHandlers>
+                <CustomDrawRow enabled="true">
+logTableExtendedDrawRow('parlamentarier_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
+              </EventHandlers>
+              <RecordPermissions useRecordPermissions="false"/>
+              <PartitionNavigators/>
+            </Page>
+            <MasterForeignKeyColumnMap>
+              <FieldMap masterColumnName="id" foreginColumnName="id"/>
+            </MasterForeignKeyColumnMap>
+          </Detail>
           <Detail caption="Zutrittsberechtigte">
             <Page type="table" tableName="v_zutrittsberechtigung_simple_compat" numberByDataSource="0" fileName="" caption="Zutrittsberechtigte" shortCaption="Zutrittsberechtigte" allowAddMultipleRecords="false" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" multiEditAbility="0" includeAllFieldsForMultiEditByDefault="false" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
               <DefaultSortedColumns>
@@ -11023,1205 +12224,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="parlamentarier_id"/>
-            </MasterForeignKeyColumnMap>
-          </Detail>
-          <Detail caption="Parlamentarier Log">
-            <Page type="table" tableName="parlamentarier_log" numberByDataSource="0" fileName="" caption="Parlamentarier Log" shortCaption="Parlamentarier Log" allowAddMultipleRecords="false" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="0" editAbilityMode="0" multiEditAbility="0" includeAllFieldsForMultiEditByDefault="false" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
-              <DefaultSortedColumns>
-                <Column fieldName="log_id" orderType="1"/>
-              </DefaultSortedColumns>
-              <BeforeGridText/>
-              <DetailedDescription/>
-              <ColumnPresentations>
-                <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Live-Daten" showColumnFilter="false" selectedFilterOperators="1573119">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="nachname" caption="Nachname" headerHint="Nachname des Parlamentariers" showColumnFilter="false" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textBox" maxLength="100"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="vorname" caption="Vorname" headerHint="Vornahme des Parlamentariers" showColumnFilter="false" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="50"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="vorname_kurz" caption="Vorname Kurz" headerHint="Alltagsvorname oder gebräuchlicher Spitzname, z.B. Nik für Niklaus" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="15"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="zweiter_vorname" caption="Zweiter Vorname" headerHint="Zweiter Vorname des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="50"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="rat_id" caption="Rat Id" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates" selectedFilterOperators="1573119">
-                  <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-                  <ViewProperties type="text"/>
-                  <EditProperties type="dynamicCombobox"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="kanton_id" caption="Kanton Id" headerHint="Kantonszugehörigkeit; Fremdschlüssel des Kantons" selectedFilterOperators="1573119">
-                  <Lookup tableName="v_kanton_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-                  <ViewProperties type="text"/>
-                  <EditProperties type="dynamicCombobox"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="kommissionen" caption="Kommissionen" headerHint="Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textBox" maxLength="100"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="partei_id" caption="Partei Id" headerHint="Fremdschlüssel Partei. Leer bedeutet parteilos." canSetNull="true" selectedFilterOperators="1573119">
-                  <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-                  <ViewProperties type="text"/>
-                  <EditProperties type="dynamicCombobox"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="parteifunktion" caption="Parteifunktion" headerHint="Funktion des Parlamentariers in der Partei" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="comboBox">
-                    <Values>
-                      <Value name="mitglied" caption="mitglied"/>
-                      <Value name="praesident" caption="praesident"/>
-                      <Value name="vizepraesident" caption="vizepraesident"/>
-                    </Values>
-                  </EditProperties>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="fraktion_id" caption="Fraktion Id" headerHint="Fraktionszugehörigkeit im nationalen Parlament. Fremdschlüssel." canSetNull="true" selectedFilterOperators="1573119">
-                  <Lookup tableName="v_fraktion" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-                  <ViewProperties type="text"/>
-                  <EditProperties type="dynamicCombobox"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="fraktionsfunktion" caption="Fraktionsfunktion" headerHint="Funktion des Parlamentariers in der Fraktion" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="comboBox">
-                    <Values>
-                      <Value name="mitglied" caption="mitglied"/>
-                      <Value name="praesident" caption="praesident"/>
-                      <Value name="vizepraesident" caption="vizepraesident"/>
-                    </Values>
-                  </EditProperties>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="im_rat_seit" caption="Im Rat Seit" headerHint="Jahr der Zugehörigkeit zum Parlament" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
-                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="im_rat_bis" caption="Im Rat Bis" headerHint="Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
-                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="ratswechsel" caption="Ratswechsel" headerHint="Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
-                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="ratsunterbruch_von" caption="Ratsunterbruch Von" headerHint="Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
-                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="ratsunterbruch_bis" caption="Ratsunterbruch Bis" headerHint="Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
-                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="beruf" caption="Beruf" headerHint="Beruf des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="beruf_fr" caption="Beruf Fr" headerHint="Beruf des Parlamentariers auf französisch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" headerHint="Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers" canSetNull="true" selectedFilterOperators="1573119">
-                  <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-                  <ViewProperties type="text"/>
-                  <EditProperties type="dynamicCombobox"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="titel" caption="Titel" headerHint="Titel des Parlamentariers, wird von ws.parlament.ch importiert" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textBox" maxLength="100"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="aemter" caption="Aemter" headerHint="Politische Ämter (importiert von ws.parlament.ch mandate)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="weitere_aemter" caption="Weitere Aemter" headerHint="Zusätzliche Ämter (importiert von ws.parlament.ch additionalMandate)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="zivilstand" caption="Zivilstand" headerHint="Zivilstand" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="comboBox">
-                    <Values>
-                      <Value name="ledig" caption="ledig"/>
-                      <Value name="verheiratet" caption="verheiratet"/>
-                      <Value name="geschieden" caption="geschieden"/>
-                      <Value name="eingetragene partnerschaft" caption="eingetragene partnerschaft"/>
-                      <Value name="getrennt" caption="getrennt"/>
-                      <Value name="verwitwet" caption="verwitwet"/>
-                    </Values>
-                  </EditProperties>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="anzahl_kinder" caption="Anzahl Kinder" headerHint="Anzahl der Kinder" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
-                  <ViewProperties type="text">
-                    <Format type="number" thousandSeparator="'"/>
-                  </ViewProperties>
-                  <EditProperties type="textBox" maxLength="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="militaerischer_grad_id" caption="Militaerischer Grad Id" headerHint="Militärischer Grad, leer (NULL) = kein Militärdienst" canSetNull="true" selectedFilterOperators="1573119">
-                  <Lookup tableName="v_mil_grad" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-                  <ViewProperties type="text"/>
-                  <EditProperties type="dynamicCombobox"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="geschlecht" caption="Geschlecht" headerHint="Geschlecht des Parlamentariers, M=Mann, F=Frau" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="comboBox">
-                    <Values>
-                      <Value name="M" caption="M"/>
-                      <Value name="F" caption="F"/>
-                    </Values>
-                  </EditProperties>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="geburtstag" caption="Geburtstag" headerHint="Geburtstag des Parlamentariers" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
-                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="photo" caption="Photo" headerHint="Photo des Parlamentariers (JPEG/jpg)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="photo_dateiname" caption="Photo Dateiname" headerHint="Photodateiname ohne Erweiterung" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="photo_dateierweiterung" caption="Photo Dateierweiterung" headerHint="Erweiterung der Photodatei" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="15"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="photo_dateiname_voll" caption="Photo Dateiname Voll" headerHint="Photodateiname mit Erweiterung" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="photo_mime_type" caption="Photo Mime Type" headerHint="MIME Type des Photos" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textBox" maxLength="100"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="kleinbild" caption="Kleinbild" headerHint="Bild 44x62 px oder leer.png" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textBox" maxLength="80"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="sitzplatz" caption="Sitzplatz" headerHint="Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
-                  <ViewProperties type="text">
-                    <Format type="number" thousandSeparator="'"/>
-                  </ViewProperties>
-                  <EditProperties type="textBox" maxLength="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="email" caption="Email" headerHint="E-Mail-Adresse des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textBox" maxLength="100"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="homepage" caption="Homepage" headerHint="Homepage des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="homepage_2" caption="Homepage 2" headerHint="Zweite Homepage, importiert von ws.parlament.ch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="parlament_biografie_id" caption="Parlament Biografie Id" headerHint="Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="parlament_number" caption="Parlament Number" headerHint="Number Feld auf ws.parlament.ch, wird z.B. als ID für Photos verwendet." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" headerHint="Importierte Interessenbindungen von ws.parlament.ch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="parlament_interessenbindungen_json" caption="Parlament Interessenbindungen Json" headerHint="Importierte Interessenbindungen von ws.parlament.ch als JSON. Rechtsformen: -, AG, Anst., EG, EidgKomm, Gen., GmbH, KollG, Komm., Körp., Stift., Ve., öffStift; Gremien: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV; Funktionen: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="parlament_interessenbindungen_updated" caption="Parlament Interessenbindungen Updated" headerHint="Datum, wann die Interessenbindungen von ws.parlament.ch zu letzt aktualisiert wurden." canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="twitter_name" caption="Twitter Name" headerHint="Twittername" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="50"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="linkedin_profil_url" caption="Linkedin Profil Url" headerHint="URL zum LinkedIn-Profil" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="xing_profil_name" caption="Xing Profil Name" headerHint="Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="facebook_name" caption="Facebook Name" headerHint="Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="wikipedia" caption="Wikipedia" headerHint="Link zum Wikipedia-Eintrag des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="sprache" caption="Sprache" headerHint="Sprache des Parlamentariers, wird von ws.parlament.ch importiert" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="comboBox">
-                    <Values>
-                      <Value name="de" caption="de"/>
-                      <Value name="fr" caption="fr"/>
-                      <Value name="it" caption="it"/>
-                      <Value name="sk" caption="sk"/>
-                      <Value name="rm" caption="rm"/>
-                      <Value name="tr" caption="tr"/>
-                    </Values>
-                  </EditProperties>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="arbeitssprache" caption="Arbeitssprache" headerHint="Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="comboBox">
-                    <Values>
-                      <Value name="de" caption="de"/>
-                      <Value name="fr" caption="fr"/>
-                      <Value name="it" caption="it"/>
-                    </Values>
-                  </EditProperties>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="adresse_firma" caption="Adresse Firma" headerHint="Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textBox" maxLength="100"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="adresse_strasse" caption="Adresse Strasse" headerHint="Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textBox" maxLength="100"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="adresse_zusatz" caption="Adresse Zusatz" headerHint="Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textBox" maxLength="100"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="adresse_plz" caption="Adresse Plz" headerHint="Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="10"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="adresse_ort" caption="Adresse Ort" headerHint="Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textBox" maxLength="100"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="telephon_1" caption="Telephon 1" headerHint="Telephonnummer 1, z.B. Festnetz" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="25"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="telephon_2" caption="Telephon 2" headerHint="Telephonnummer 2, z.B. Mobiltelephon" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="25"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="erfasst" caption="Erfasst" headerHint="Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden. NULL bedeutet Status unklar." canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="comboBox">
-                    <Values>
-                      <Value name="Ja" caption="Ja"/>
-                      <Value name="Nein" caption="Nein"/>
-                    </Values>
-                  </EditProperties>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="notizen" caption="Notizen" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat." canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="10"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="kontrolliert_visa" caption="Kontrolliert Visa" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat." canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="10"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="kontrolliert_datum" caption="Kontrolliert Datum" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="autorisierung_verschickt_visa" caption="Autorisierung Verschickt Visa" headerHint="Autorisierungsanfrage verschickt durch" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="10"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="autorisierung_verschickt_datum" caption="Autorisierung Verschickt Datum" headerHint="Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="autorisiert_visa" caption="Autorisiert Visa" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen." canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="10"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden." canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
-                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="freigabe_visa" caption="Freigabe Visa" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="10"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="freigabe_datum" caption="Freigabe Datum" headerHint="Freigabedatum (Freigabe = Daten sind fertig)" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="10"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="10"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="log_id" caption="Log Id" headerHint="Technischer Log-Schlüssel" showColumnFilter="false" selectedFilterOperators="1573119">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="action" caption="Action" headerHint="Aktionstyp" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="comboBox">
-                    <Values>
-                      <Value name="insert" caption="insert"/>
-                      <Value name="update" caption="update"/>
-                      <Value name="delete" caption="delete"/>
-                      <Value name="snapshot" caption="snapshot"/>
-                    </Values>
-                  </EditProperties>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="state" caption="State" headerHint="Status der Aktion" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="20"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="action_date" caption="Action Date" headerHint="Datum der Aktion" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
-                </ColumnPresentation>
-                <ColumnPresentation fieldName="snapshot_id" caption="Snapshot Id" headerHint="Fremdschlüssel zu einem Snapshot" canSetNull="true" selectedFilterOperators="1589247">
-                  <Lookup tableName="snapshot" linkFieldName="id" displayFieldName="beschreibung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="dynamicCombobox"/>
-                </ColumnPresentation>
-              </ColumnPresentations>
-              <Columns>
-                <List>
-                  <Column fieldName="id"/>
-                  <Column fieldName="nachname"/>
-                  <Column fieldName="vorname"/>
-                  <Column fieldName="vorname_kurz"/>
-                  <Column fieldName="zweiter_vorname"/>
-                  <Column fieldName="rat_id"/>
-                  <Column fieldName="kanton_id"/>
-                  <Column fieldName="kommissionen"/>
-                  <Column fieldName="partei_id"/>
-                  <Column fieldName="parteifunktion"/>
-                  <Column fieldName="fraktion_id"/>
-                  <Column fieldName="fraktionsfunktion"/>
-                  <Column fieldName="im_rat_seit"/>
-                  <Column fieldName="im_rat_bis"/>
-                  <Column fieldName="ratswechsel"/>
-                  <Column fieldName="ratsunterbruch_von"/>
-                  <Column fieldName="ratsunterbruch_bis"/>
-                  <Column fieldName="beruf"/>
-                  <Column fieldName="beruf_fr"/>
-                  <Column fieldName="beruf_interessengruppe_id"/>
-                  <Column fieldName="titel"/>
-                  <Column fieldName="aemter"/>
-                  <Column fieldName="weitere_aemter"/>
-                  <Column fieldName="zivilstand"/>
-                  <Column fieldName="anzahl_kinder"/>
-                  <Column fieldName="militaerischer_grad_id"/>
-                  <Column fieldName="geschlecht"/>
-                  <Column fieldName="geburtstag"/>
-                  <Column fieldName="photo"/>
-                  <Column fieldName="photo_dateiname"/>
-                  <Column fieldName="photo_dateierweiterung"/>
-                  <Column fieldName="photo_dateiname_voll"/>
-                  <Column fieldName="photo_mime_type"/>
-                  <Column fieldName="kleinbild"/>
-                  <Column fieldName="sitzplatz"/>
-                  <Column fieldName="email"/>
-                  <Column fieldName="homepage"/>
-                  <Column fieldName="homepage_2"/>
-                  <Column fieldName="parlament_biografie_id"/>
-                  <Column fieldName="parlament_number"/>
-                  <Column fieldName="parlament_interessenbindungen"/>
-                  <Column fieldName="parlament_interessenbindungen_json"/>
-                  <Column fieldName="parlament_interessenbindungen_updated"/>
-                  <Column fieldName="twitter_name"/>
-                  <Column fieldName="linkedin_profil_url"/>
-                  <Column fieldName="xing_profil_name"/>
-                  <Column fieldName="facebook_name"/>
-                  <Column fieldName="wikipedia"/>
-                  <Column fieldName="sprache"/>
-                  <Column fieldName="arbeitssprache"/>
-                  <Column fieldName="adresse_firma"/>
-                  <Column fieldName="adresse_strasse"/>
-                  <Column fieldName="adresse_zusatz"/>
-                  <Column fieldName="adresse_plz"/>
-                  <Column fieldName="adresse_ort"/>
-                  <Column fieldName="telephon_1"/>
-                  <Column fieldName="telephon_2"/>
-                  <Column fieldName="erfasst"/>
-                  <Column fieldName="notizen"/>
-                  <Column fieldName="eingabe_abgeschlossen_visa"/>
-                  <Column fieldName="eingabe_abgeschlossen_datum"/>
-                  <Column fieldName="kontrolliert_visa"/>
-                  <Column fieldName="kontrolliert_datum"/>
-                  <Column fieldName="autorisierung_verschickt_visa"/>
-                  <Column fieldName="autorisierung_verschickt_datum"/>
-                  <Column fieldName="autorisiert_visa"/>
-                  <Column fieldName="autorisiert_datum"/>
-                  <Column fieldName="freigabe_visa"/>
-                  <Column fieldName="freigabe_datum"/>
-                  <Column fieldName="created_visa"/>
-                  <Column fieldName="created_date"/>
-                  <Column fieldName="updated_visa"/>
-                  <Column fieldName="updated_date"/>
-                  <Column fieldName="log_id"/>
-                  <Column fieldName="action"/>
-                  <Column fieldName="state"/>
-                  <Column fieldName="action_date"/>
-                  <Column fieldName="snapshot_id"/>
-                </List>
-                <View>
-                  <Column fieldName="id"/>
-                  <Column fieldName="nachname"/>
-                  <Column fieldName="vorname"/>
-                  <Column fieldName="vorname_kurz"/>
-                  <Column fieldName="zweiter_vorname"/>
-                  <Column fieldName="rat_id"/>
-                  <Column fieldName="kanton_id"/>
-                  <Column fieldName="kommissionen"/>
-                  <Column fieldName="partei_id"/>
-                  <Column fieldName="parteifunktion"/>
-                  <Column fieldName="fraktion_id"/>
-                  <Column fieldName="fraktionsfunktion"/>
-                  <Column fieldName="im_rat_seit"/>
-                  <Column fieldName="im_rat_bis"/>
-                  <Column fieldName="ratswechsel"/>
-                  <Column fieldName="ratsunterbruch_von"/>
-                  <Column fieldName="ratsunterbruch_bis"/>
-                  <Column fieldName="beruf"/>
-                  <Column fieldName="beruf_fr"/>
-                  <Column fieldName="beruf_interessengruppe_id"/>
-                  <Column fieldName="titel"/>
-                  <Column fieldName="aemter"/>
-                  <Column fieldName="weitere_aemter"/>
-                  <Column fieldName="zivilstand"/>
-                  <Column fieldName="anzahl_kinder"/>
-                  <Column fieldName="militaerischer_grad_id"/>
-                  <Column fieldName="geschlecht"/>
-                  <Column fieldName="geburtstag"/>
-                  <Column fieldName="photo"/>
-                  <Column fieldName="photo_dateiname"/>
-                  <Column fieldName="photo_dateierweiterung"/>
-                  <Column fieldName="photo_dateiname_voll"/>
-                  <Column fieldName="photo_mime_type"/>
-                  <Column fieldName="kleinbild"/>
-                  <Column fieldName="sitzplatz"/>
-                  <Column fieldName="email"/>
-                  <Column fieldName="homepage"/>
-                  <Column fieldName="homepage_2"/>
-                  <Column fieldName="parlament_biografie_id"/>
-                  <Column fieldName="parlament_number"/>
-                  <Column fieldName="parlament_interessenbindungen"/>
-                  <Column fieldName="parlament_interessenbindungen_json"/>
-                  <Column fieldName="parlament_interessenbindungen_updated"/>
-                  <Column fieldName="twitter_name"/>
-                  <Column fieldName="linkedin_profil_url"/>
-                  <Column fieldName="xing_profil_name"/>
-                  <Column fieldName="facebook_name"/>
-                  <Column fieldName="wikipedia"/>
-                  <Column fieldName="sprache"/>
-                  <Column fieldName="arbeitssprache"/>
-                  <Column fieldName="adresse_firma"/>
-                  <Column fieldName="adresse_strasse"/>
-                  <Column fieldName="adresse_zusatz"/>
-                  <Column fieldName="adresse_plz"/>
-                  <Column fieldName="adresse_ort"/>
-                  <Column fieldName="telephon_1"/>
-                  <Column fieldName="telephon_2"/>
-                  <Column fieldName="erfasst"/>
-                  <Column fieldName="notizen"/>
-                  <Column fieldName="eingabe_abgeschlossen_visa"/>
-                  <Column fieldName="eingabe_abgeschlossen_datum"/>
-                  <Column fieldName="kontrolliert_visa"/>
-                  <Column fieldName="kontrolliert_datum"/>
-                  <Column fieldName="autorisierung_verschickt_visa"/>
-                  <Column fieldName="autorisierung_verschickt_datum"/>
-                  <Column fieldName="autorisiert_visa"/>
-                  <Column fieldName="autorisiert_datum"/>
-                  <Column fieldName="freigabe_visa"/>
-                  <Column fieldName="freigabe_datum"/>
-                  <Column fieldName="created_visa"/>
-                  <Column fieldName="created_date"/>
-                  <Column fieldName="updated_visa"/>
-                  <Column fieldName="updated_date"/>
-                  <Column fieldName="log_id"/>
-                  <Column fieldName="action"/>
-                  <Column fieldName="state"/>
-                  <Column fieldName="action_date"/>
-                  <Column fieldName="snapshot_id"/>
-                </View>
-                <Edit>
-                  <Column fieldName="id" visible="false"/>
-                  <Column fieldName="nachname" visible="false"/>
-                  <Column fieldName="vorname" visible="false"/>
-                  <Column fieldName="vorname_kurz" visible="false"/>
-                  <Column fieldName="zweiter_vorname" visible="false"/>
-                  <Column fieldName="rat_id" visible="false"/>
-                  <Column fieldName="kanton_id" visible="false"/>
-                  <Column fieldName="kommissionen" visible="false"/>
-                  <Column fieldName="partei_id" visible="false"/>
-                  <Column fieldName="parteifunktion" visible="false"/>
-                  <Column fieldName="fraktion_id" visible="false"/>
-                  <Column fieldName="fraktionsfunktion" visible="false"/>
-                  <Column fieldName="im_rat_seit" visible="false"/>
-                  <Column fieldName="im_rat_bis" visible="false"/>
-                  <Column fieldName="ratswechsel" visible="false"/>
-                  <Column fieldName="ratsunterbruch_von" visible="false"/>
-                  <Column fieldName="ratsunterbruch_bis" visible="false"/>
-                  <Column fieldName="beruf" visible="false"/>
-                  <Column fieldName="beruf_fr" visible="false"/>
-                  <Column fieldName="beruf_interessengruppe_id" visible="false"/>
-                  <Column fieldName="titel" visible="false"/>
-                  <Column fieldName="aemter" visible="false"/>
-                  <Column fieldName="weitere_aemter" visible="false"/>
-                  <Column fieldName="zivilstand" visible="false"/>
-                  <Column fieldName="anzahl_kinder" visible="false"/>
-                  <Column fieldName="militaerischer_grad_id" visible="false"/>
-                  <Column fieldName="geschlecht" visible="false"/>
-                  <Column fieldName="geburtstag" visible="false"/>
-                  <Column fieldName="photo" visible="false"/>
-                  <Column fieldName="photo_dateiname" visible="false"/>
-                  <Column fieldName="photo_dateierweiterung" visible="false"/>
-                  <Column fieldName="photo_dateiname_voll" visible="false"/>
-                  <Column fieldName="photo_mime_type" visible="false"/>
-                  <Column fieldName="kleinbild" visible="false"/>
-                  <Column fieldName="sitzplatz" visible="false"/>
-                  <Column fieldName="email" visible="false"/>
-                  <Column fieldName="homepage" visible="false"/>
-                  <Column fieldName="homepage_2" visible="false"/>
-                  <Column fieldName="parlament_biografie_id" visible="false"/>
-                  <Column fieldName="parlament_number" visible="false"/>
-                  <Column fieldName="parlament_interessenbindungen" visible="false"/>
-                  <Column fieldName="parlament_interessenbindungen_json" visible="false"/>
-                  <Column fieldName="parlament_interessenbindungen_updated" visible="false"/>
-                  <Column fieldName="twitter_name" visible="false"/>
-                  <Column fieldName="linkedin_profil_url" visible="false"/>
-                  <Column fieldName="xing_profil_name" visible="false"/>
-                  <Column fieldName="facebook_name" visible="false"/>
-                  <Column fieldName="wikipedia" visible="false"/>
-                  <Column fieldName="sprache" visible="false"/>
-                  <Column fieldName="arbeitssprache" visible="false"/>
-                  <Column fieldName="adresse_firma" visible="false"/>
-                  <Column fieldName="adresse_strasse" visible="false"/>
-                  <Column fieldName="adresse_zusatz" visible="false"/>
-                  <Column fieldName="adresse_plz" visible="false"/>
-                  <Column fieldName="adresse_ort" visible="false"/>
-                  <Column fieldName="telephon_1" visible="false"/>
-                  <Column fieldName="telephon_2" visible="false"/>
-                  <Column fieldName="erfasst" visible="false"/>
-                  <Column fieldName="notizen" visible="false"/>
-                  <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
-                  <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
-                  <Column fieldName="kontrolliert_visa" visible="false"/>
-                  <Column fieldName="kontrolliert_datum" visible="false"/>
-                  <Column fieldName="autorisierung_verschickt_visa" visible="false"/>
-                  <Column fieldName="autorisierung_verschickt_datum" visible="false"/>
-                  <Column fieldName="autorisiert_visa" visible="false"/>
-                  <Column fieldName="autorisiert_datum" visible="false"/>
-                  <Column fieldName="freigabe_visa" visible="false"/>
-                  <Column fieldName="freigabe_datum" visible="false"/>
-                  <Column fieldName="created_visa" visible="false"/>
-                  <Column fieldName="created_date" visible="false"/>
-                  <Column fieldName="updated_visa" visible="false"/>
-                  <Column fieldName="updated_date" visible="false"/>
-                  <Column fieldName="log_id" visible="false"/>
-                  <Column fieldName="action" visible="false"/>
-                  <Column fieldName="state" visible="false"/>
-                  <Column fieldName="action_date" visible="false"/>
-                  <Column fieldName="snapshot_id" visible="false"/>
-                </Edit>
-                <Insert>
-                  <Column fieldName="id" visible="false"/>
-                  <Column fieldName="nachname" visible="false"/>
-                  <Column fieldName="vorname" visible="false"/>
-                  <Column fieldName="vorname_kurz" visible="false"/>
-                  <Column fieldName="zweiter_vorname" visible="false"/>
-                  <Column fieldName="rat_id" visible="false"/>
-                  <Column fieldName="kanton_id" visible="false"/>
-                  <Column fieldName="kommissionen" visible="false"/>
-                  <Column fieldName="partei_id" visible="false"/>
-                  <Column fieldName="parteifunktion" visible="false"/>
-                  <Column fieldName="fraktion_id" visible="false"/>
-                  <Column fieldName="fraktionsfunktion" visible="false"/>
-                  <Column fieldName="im_rat_seit" visible="false"/>
-                  <Column fieldName="im_rat_bis" visible="false"/>
-                  <Column fieldName="ratswechsel" visible="false"/>
-                  <Column fieldName="ratsunterbruch_von" visible="false"/>
-                  <Column fieldName="ratsunterbruch_bis" visible="false"/>
-                  <Column fieldName="beruf" visible="false"/>
-                  <Column fieldName="beruf_fr" visible="false"/>
-                  <Column fieldName="beruf_interessengruppe_id" visible="false"/>
-                  <Column fieldName="titel" visible="false"/>
-                  <Column fieldName="aemter" visible="false"/>
-                  <Column fieldName="weitere_aemter" visible="false"/>
-                  <Column fieldName="zivilstand" visible="false"/>
-                  <Column fieldName="anzahl_kinder" visible="false"/>
-                  <Column fieldName="militaerischer_grad_id" visible="false"/>
-                  <Column fieldName="geschlecht" visible="false"/>
-                  <Column fieldName="geburtstag" visible="false"/>
-                  <Column fieldName="photo" visible="false"/>
-                  <Column fieldName="photo_dateiname" visible="false"/>
-                  <Column fieldName="photo_dateierweiterung" visible="false"/>
-                  <Column fieldName="photo_dateiname_voll" visible="false"/>
-                  <Column fieldName="photo_mime_type" visible="false"/>
-                  <Column fieldName="kleinbild" visible="false"/>
-                  <Column fieldName="sitzplatz" visible="false"/>
-                  <Column fieldName="email" visible="false"/>
-                  <Column fieldName="homepage" visible="false"/>
-                  <Column fieldName="homepage_2" visible="false"/>
-                  <Column fieldName="parlament_biografie_id" visible="false"/>
-                  <Column fieldName="parlament_number" visible="false"/>
-                  <Column fieldName="parlament_interessenbindungen" visible="false"/>
-                  <Column fieldName="parlament_interessenbindungen_json" visible="false"/>
-                  <Column fieldName="parlament_interessenbindungen_updated" visible="false"/>
-                  <Column fieldName="twitter_name" visible="false"/>
-                  <Column fieldName="linkedin_profil_url" visible="false"/>
-                  <Column fieldName="xing_profil_name" visible="false"/>
-                  <Column fieldName="facebook_name" visible="false"/>
-                  <Column fieldName="wikipedia" visible="false"/>
-                  <Column fieldName="sprache" visible="false"/>
-                  <Column fieldName="arbeitssprache" visible="false"/>
-                  <Column fieldName="adresse_firma" visible="false"/>
-                  <Column fieldName="adresse_strasse" visible="false"/>
-                  <Column fieldName="adresse_zusatz" visible="false"/>
-                  <Column fieldName="adresse_plz" visible="false"/>
-                  <Column fieldName="adresse_ort" visible="false"/>
-                  <Column fieldName="telephon_1" visible="false"/>
-                  <Column fieldName="telephon_2" visible="false"/>
-                  <Column fieldName="erfasst" visible="false"/>
-                  <Column fieldName="notizen" visible="false"/>
-                  <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
-                  <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
-                  <Column fieldName="kontrolliert_visa" visible="false"/>
-                  <Column fieldName="kontrolliert_datum" visible="false"/>
-                  <Column fieldName="autorisierung_verschickt_visa" visible="false"/>
-                  <Column fieldName="autorisierung_verschickt_datum" visible="false"/>
-                  <Column fieldName="autorisiert_visa" visible="false"/>
-                  <Column fieldName="autorisiert_datum" visible="false"/>
-                  <Column fieldName="freigabe_visa" visible="false"/>
-                  <Column fieldName="freigabe_datum" visible="false"/>
-                  <Column fieldName="created_visa" visible="false"/>
-                  <Column fieldName="created_date" visible="false"/>
-                  <Column fieldName="updated_visa" visible="false"/>
-                  <Column fieldName="updated_date" visible="false"/>
-                  <Column fieldName="log_id" visible="false"/>
-                  <Column fieldName="action" visible="false"/>
-                  <Column fieldName="state" visible="false"/>
-                  <Column fieldName="action_date" visible="false"/>
-                  <Column fieldName="snapshot_id" visible="false"/>
-                </Insert>
-                <QuickFilter>
-                  <Column fieldName="id"/>
-                  <Column fieldName="nachname"/>
-                  <Column fieldName="vorname"/>
-                  <Column fieldName="vorname_kurz"/>
-                  <Column fieldName="zweiter_vorname"/>
-                  <Column fieldName="rat_id"/>
-                  <Column fieldName="kanton_id"/>
-                  <Column fieldName="kommissionen"/>
-                  <Column fieldName="partei_id"/>
-                  <Column fieldName="parteifunktion"/>
-                  <Column fieldName="fraktion_id"/>
-                  <Column fieldName="fraktionsfunktion"/>
-                  <Column fieldName="im_rat_seit"/>
-                  <Column fieldName="im_rat_bis"/>
-                  <Column fieldName="ratswechsel"/>
-                  <Column fieldName="ratsunterbruch_von"/>
-                  <Column fieldName="ratsunterbruch_bis"/>
-                  <Column fieldName="beruf"/>
-                  <Column fieldName="beruf_fr"/>
-                  <Column fieldName="beruf_interessengruppe_id"/>
-                  <Column fieldName="titel"/>
-                  <Column fieldName="aemter"/>
-                  <Column fieldName="weitere_aemter"/>
-                  <Column fieldName="zivilstand"/>
-                  <Column fieldName="anzahl_kinder"/>
-                  <Column fieldName="militaerischer_grad_id"/>
-                  <Column fieldName="geschlecht"/>
-                  <Column fieldName="geburtstag"/>
-                  <Column fieldName="photo"/>
-                  <Column fieldName="photo_dateiname"/>
-                  <Column fieldName="photo_dateierweiterung"/>
-                  <Column fieldName="photo_dateiname_voll"/>
-                  <Column fieldName="photo_mime_type"/>
-                  <Column fieldName="kleinbild"/>
-                  <Column fieldName="sitzplatz"/>
-                  <Column fieldName="email"/>
-                  <Column fieldName="homepage"/>
-                  <Column fieldName="homepage_2"/>
-                  <Column fieldName="parlament_biografie_id"/>
-                  <Column fieldName="parlament_number"/>
-                  <Column fieldName="parlament_interessenbindungen"/>
-                  <Column fieldName="parlament_interessenbindungen_json"/>
-                  <Column fieldName="parlament_interessenbindungen_updated"/>
-                  <Column fieldName="twitter_name"/>
-                  <Column fieldName="linkedin_profil_url"/>
-                  <Column fieldName="xing_profil_name"/>
-                  <Column fieldName="facebook_name"/>
-                  <Column fieldName="wikipedia"/>
-                  <Column fieldName="sprache"/>
-                  <Column fieldName="arbeitssprache"/>
-                  <Column fieldName="adresse_firma"/>
-                  <Column fieldName="adresse_strasse"/>
-                  <Column fieldName="adresse_zusatz"/>
-                  <Column fieldName="adresse_plz"/>
-                  <Column fieldName="adresse_ort"/>
-                  <Column fieldName="telephon_1"/>
-                  <Column fieldName="telephon_2"/>
-                  <Column fieldName="erfasst"/>
-                  <Column fieldName="notizen"/>
-                  <Column fieldName="eingabe_abgeschlossen_visa"/>
-                  <Column fieldName="eingabe_abgeschlossen_datum"/>
-                  <Column fieldName="kontrolliert_visa"/>
-                  <Column fieldName="kontrolliert_datum"/>
-                  <Column fieldName="autorisierung_verschickt_visa"/>
-                  <Column fieldName="autorisierung_verschickt_datum"/>
-                  <Column fieldName="autorisiert_visa"/>
-                  <Column fieldName="autorisiert_datum"/>
-                  <Column fieldName="freigabe_visa"/>
-                  <Column fieldName="freigabe_datum"/>
-                  <Column fieldName="created_visa"/>
-                  <Column fieldName="created_date"/>
-                  <Column fieldName="updated_visa"/>
-                  <Column fieldName="updated_date"/>
-                  <Column fieldName="log_id"/>
-                  <Column fieldName="action"/>
-                  <Column fieldName="state"/>
-                  <Column fieldName="action_date"/>
-                  <Column fieldName="snapshot_id"/>
-                </QuickFilter>
-                <FilterBuilder>
-                  <Column fieldName="id"/>
-                  <Column fieldName="nachname"/>
-                  <Column fieldName="vorname"/>
-                  <Column fieldName="vorname_kurz"/>
-                  <Column fieldName="zweiter_vorname"/>
-                  <Column fieldName="rat_id"/>
-                  <Column fieldName="kanton_id"/>
-                  <Column fieldName="kommissionen"/>
-                  <Column fieldName="partei_id"/>
-                  <Column fieldName="parteifunktion"/>
-                  <Column fieldName="fraktion_id"/>
-                  <Column fieldName="fraktionsfunktion"/>
-                  <Column fieldName="im_rat_seit"/>
-                  <Column fieldName="im_rat_bis"/>
-                  <Column fieldName="ratswechsel"/>
-                  <Column fieldName="ratsunterbruch_von"/>
-                  <Column fieldName="ratsunterbruch_bis"/>
-                  <Column fieldName="beruf"/>
-                  <Column fieldName="beruf_fr"/>
-                  <Column fieldName="beruf_interessengruppe_id"/>
-                  <Column fieldName="titel"/>
-                  <Column fieldName="aemter"/>
-                  <Column fieldName="weitere_aemter"/>
-                  <Column fieldName="zivilstand"/>
-                  <Column fieldName="anzahl_kinder"/>
-                  <Column fieldName="militaerischer_grad_id"/>
-                  <Column fieldName="geschlecht"/>
-                  <Column fieldName="geburtstag"/>
-                  <Column fieldName="photo"/>
-                  <Column fieldName="photo_dateiname"/>
-                  <Column fieldName="photo_dateierweiterung"/>
-                  <Column fieldName="photo_dateiname_voll"/>
-                  <Column fieldName="photo_mime_type"/>
-                  <Column fieldName="kleinbild"/>
-                  <Column fieldName="sitzplatz"/>
-                  <Column fieldName="email"/>
-                  <Column fieldName="homepage"/>
-                  <Column fieldName="homepage_2"/>
-                  <Column fieldName="parlament_biografie_id"/>
-                  <Column fieldName="parlament_number"/>
-                  <Column fieldName="parlament_interessenbindungen"/>
-                  <Column fieldName="parlament_interessenbindungen_json"/>
-                  <Column fieldName="parlament_interessenbindungen_updated"/>
-                  <Column fieldName="twitter_name"/>
-                  <Column fieldName="linkedin_profil_url"/>
-                  <Column fieldName="xing_profil_name"/>
-                  <Column fieldName="facebook_name"/>
-                  <Column fieldName="wikipedia"/>
-                  <Column fieldName="sprache"/>
-                  <Column fieldName="arbeitssprache"/>
-                  <Column fieldName="adresse_firma"/>
-                  <Column fieldName="adresse_strasse"/>
-                  <Column fieldName="adresse_zusatz"/>
-                  <Column fieldName="adresse_plz"/>
-                  <Column fieldName="adresse_ort"/>
-                  <Column fieldName="telephon_1"/>
-                  <Column fieldName="telephon_2"/>
-                  <Column fieldName="erfasst"/>
-                  <Column fieldName="notizen"/>
-                  <Column fieldName="eingabe_abgeschlossen_visa"/>
-                  <Column fieldName="eingabe_abgeschlossen_datum"/>
-                  <Column fieldName="kontrolliert_visa"/>
-                  <Column fieldName="kontrolliert_datum"/>
-                  <Column fieldName="autorisierung_verschickt_visa"/>
-                  <Column fieldName="autorisierung_verschickt_datum"/>
-                  <Column fieldName="autorisiert_visa"/>
-                  <Column fieldName="autorisiert_datum"/>
-                  <Column fieldName="freigabe_visa"/>
-                  <Column fieldName="freigabe_datum"/>
-                  <Column fieldName="created_visa"/>
-                  <Column fieldName="created_date"/>
-                  <Column fieldName="updated_visa"/>
-                  <Column fieldName="updated_date"/>
-                  <Column fieldName="log_id"/>
-                  <Column fieldName="action"/>
-                  <Column fieldName="state"/>
-                  <Column fieldName="action_date"/>
-                  <Column fieldName="snapshot_id"/>
-                </FilterBuilder>
-                <Print>
-                  <Column fieldName="id"/>
-                  <Column fieldName="nachname"/>
-                  <Column fieldName="vorname"/>
-                  <Column fieldName="vorname_kurz"/>
-                  <Column fieldName="zweiter_vorname"/>
-                  <Column fieldName="rat_id"/>
-                  <Column fieldName="kanton_id"/>
-                  <Column fieldName="kommissionen"/>
-                  <Column fieldName="partei_id"/>
-                  <Column fieldName="parteifunktion"/>
-                  <Column fieldName="fraktion_id"/>
-                  <Column fieldName="fraktionsfunktion"/>
-                  <Column fieldName="im_rat_seit"/>
-                  <Column fieldName="im_rat_bis"/>
-                  <Column fieldName="ratswechsel"/>
-                  <Column fieldName="ratsunterbruch_von"/>
-                  <Column fieldName="ratsunterbruch_bis"/>
-                  <Column fieldName="beruf"/>
-                  <Column fieldName="beruf_fr"/>
-                  <Column fieldName="beruf_interessengruppe_id"/>
-                  <Column fieldName="titel"/>
-                  <Column fieldName="aemter"/>
-                  <Column fieldName="weitere_aemter"/>
-                  <Column fieldName="zivilstand"/>
-                  <Column fieldName="anzahl_kinder"/>
-                  <Column fieldName="militaerischer_grad_id"/>
-                  <Column fieldName="geschlecht"/>
-                  <Column fieldName="geburtstag"/>
-                  <Column fieldName="photo"/>
-                  <Column fieldName="photo_dateiname"/>
-                  <Column fieldName="photo_dateierweiterung"/>
-                  <Column fieldName="photo_dateiname_voll"/>
-                  <Column fieldName="photo_mime_type"/>
-                  <Column fieldName="kleinbild"/>
-                  <Column fieldName="sitzplatz"/>
-                  <Column fieldName="email"/>
-                  <Column fieldName="homepage"/>
-                  <Column fieldName="homepage_2"/>
-                  <Column fieldName="parlament_biografie_id"/>
-                  <Column fieldName="parlament_number"/>
-                  <Column fieldName="parlament_interessenbindungen"/>
-                  <Column fieldName="parlament_interessenbindungen_json"/>
-                  <Column fieldName="parlament_interessenbindungen_updated"/>
-                  <Column fieldName="twitter_name"/>
-                  <Column fieldName="linkedin_profil_url"/>
-                  <Column fieldName="xing_profil_name"/>
-                  <Column fieldName="facebook_name"/>
-                  <Column fieldName="wikipedia"/>
-                  <Column fieldName="sprache"/>
-                  <Column fieldName="arbeitssprache"/>
-                  <Column fieldName="adresse_firma"/>
-                  <Column fieldName="adresse_strasse"/>
-                  <Column fieldName="adresse_zusatz"/>
-                  <Column fieldName="adresse_plz"/>
-                  <Column fieldName="adresse_ort"/>
-                  <Column fieldName="telephon_1"/>
-                  <Column fieldName="telephon_2"/>
-                  <Column fieldName="erfasst"/>
-                  <Column fieldName="notizen"/>
-                  <Column fieldName="eingabe_abgeschlossen_visa"/>
-                  <Column fieldName="eingabe_abgeschlossen_datum"/>
-                  <Column fieldName="kontrolliert_visa"/>
-                  <Column fieldName="kontrolliert_datum"/>
-                  <Column fieldName="autorisierung_verschickt_visa"/>
-                  <Column fieldName="autorisierung_verschickt_datum"/>
-                  <Column fieldName="autorisiert_visa"/>
-                  <Column fieldName="autorisiert_datum"/>
-                  <Column fieldName="freigabe_visa"/>
-                  <Column fieldName="freigabe_datum"/>
-                  <Column fieldName="created_visa"/>
-                  <Column fieldName="created_date"/>
-                  <Column fieldName="updated_visa"/>
-                  <Column fieldName="updated_date"/>
-                  <Column fieldName="log_id"/>
-                  <Column fieldName="action"/>
-                  <Column fieldName="state"/>
-                  <Column fieldName="action_date"/>
-                  <Column fieldName="snapshot_id"/>
-                </Print>
-                <Export>
-                  <Column fieldName="id"/>
-                  <Column fieldName="nachname"/>
-                  <Column fieldName="vorname"/>
-                  <Column fieldName="vorname_kurz"/>
-                  <Column fieldName="zweiter_vorname"/>
-                  <Column fieldName="rat_id"/>
-                  <Column fieldName="kanton_id"/>
-                  <Column fieldName="kommissionen"/>
-                  <Column fieldName="partei_id"/>
-                  <Column fieldName="parteifunktion"/>
-                  <Column fieldName="fraktion_id"/>
-                  <Column fieldName="fraktionsfunktion"/>
-                  <Column fieldName="im_rat_seit"/>
-                  <Column fieldName="im_rat_bis"/>
-                  <Column fieldName="ratswechsel"/>
-                  <Column fieldName="ratsunterbruch_von"/>
-                  <Column fieldName="ratsunterbruch_bis"/>
-                  <Column fieldName="beruf"/>
-                  <Column fieldName="beruf_fr"/>
-                  <Column fieldName="beruf_interessengruppe_id"/>
-                  <Column fieldName="titel"/>
-                  <Column fieldName="aemter"/>
-                  <Column fieldName="weitere_aemter"/>
-                  <Column fieldName="zivilstand"/>
-                  <Column fieldName="anzahl_kinder"/>
-                  <Column fieldName="militaerischer_grad_id"/>
-                  <Column fieldName="geschlecht"/>
-                  <Column fieldName="geburtstag"/>
-                  <Column fieldName="photo"/>
-                  <Column fieldName="photo_dateiname"/>
-                  <Column fieldName="photo_dateierweiterung"/>
-                  <Column fieldName="photo_dateiname_voll"/>
-                  <Column fieldName="photo_mime_type"/>
-                  <Column fieldName="kleinbild"/>
-                  <Column fieldName="sitzplatz"/>
-                  <Column fieldName="email"/>
-                  <Column fieldName="homepage"/>
-                  <Column fieldName="homepage_2"/>
-                  <Column fieldName="parlament_biografie_id"/>
-                  <Column fieldName="parlament_number"/>
-                  <Column fieldName="parlament_interessenbindungen"/>
-                  <Column fieldName="parlament_interessenbindungen_json"/>
-                  <Column fieldName="parlament_interessenbindungen_updated"/>
-                  <Column fieldName="twitter_name"/>
-                  <Column fieldName="linkedin_profil_url"/>
-                  <Column fieldName="xing_profil_name"/>
-                  <Column fieldName="facebook_name"/>
-                  <Column fieldName="wikipedia"/>
-                  <Column fieldName="sprache"/>
-                  <Column fieldName="arbeitssprache"/>
-                  <Column fieldName="adresse_firma"/>
-                  <Column fieldName="adresse_strasse"/>
-                  <Column fieldName="adresse_zusatz"/>
-                  <Column fieldName="adresse_plz"/>
-                  <Column fieldName="adresse_ort"/>
-                  <Column fieldName="telephon_1"/>
-                  <Column fieldName="telephon_2"/>
-                  <Column fieldName="erfasst"/>
-                  <Column fieldName="notizen"/>
-                  <Column fieldName="eingabe_abgeschlossen_visa"/>
-                  <Column fieldName="eingabe_abgeschlossen_datum"/>
-                  <Column fieldName="kontrolliert_visa"/>
-                  <Column fieldName="kontrolliert_datum"/>
-                  <Column fieldName="autorisierung_verschickt_visa"/>
-                  <Column fieldName="autorisierung_verschickt_datum"/>
-                  <Column fieldName="autorisiert_visa"/>
-                  <Column fieldName="autorisiert_datum"/>
-                  <Column fieldName="freigabe_visa"/>
-                  <Column fieldName="freigabe_datum"/>
-                  <Column fieldName="created_visa"/>
-                  <Column fieldName="created_date"/>
-                  <Column fieldName="updated_visa"/>
-                  <Column fieldName="updated_date"/>
-                  <Column fieldName="log_id"/>
-                  <Column fieldName="action"/>
-                  <Column fieldName="state"/>
-                  <Column fieldName="action_date"/>
-                  <Column fieldName="snapshot_id"/>
-                </Export>
-                <Compare>
-                  <Column fieldName="id"/>
-                  <Column fieldName="nachname"/>
-                  <Column fieldName="vorname"/>
-                  <Column fieldName="vorname_kurz"/>
-                  <Column fieldName="zweiter_vorname"/>
-                  <Column fieldName="rat_id"/>
-                  <Column fieldName="kanton_id"/>
-                  <Column fieldName="kommissionen"/>
-                  <Column fieldName="partei_id"/>
-                  <Column fieldName="parteifunktion"/>
-                  <Column fieldName="fraktion_id"/>
-                  <Column fieldName="fraktionsfunktion"/>
-                  <Column fieldName="im_rat_seit"/>
-                  <Column fieldName="im_rat_bis"/>
-                  <Column fieldName="ratswechsel"/>
-                  <Column fieldName="ratsunterbruch_von"/>
-                  <Column fieldName="ratsunterbruch_bis"/>
-                  <Column fieldName="beruf"/>
-                  <Column fieldName="beruf_fr"/>
-                  <Column fieldName="beruf_interessengruppe_id"/>
-                  <Column fieldName="titel"/>
-                  <Column fieldName="aemter"/>
-                  <Column fieldName="weitere_aemter"/>
-                  <Column fieldName="zivilstand"/>
-                  <Column fieldName="anzahl_kinder"/>
-                  <Column fieldName="militaerischer_grad_id"/>
-                  <Column fieldName="geschlecht"/>
-                  <Column fieldName="geburtstag"/>
-                  <Column fieldName="photo"/>
-                  <Column fieldName="photo_dateiname"/>
-                  <Column fieldName="photo_dateierweiterung"/>
-                  <Column fieldName="photo_dateiname_voll"/>
-                  <Column fieldName="photo_mime_type"/>
-                  <Column fieldName="kleinbild"/>
-                  <Column fieldName="sitzplatz"/>
-                  <Column fieldName="email"/>
-                  <Column fieldName="homepage"/>
-                  <Column fieldName="homepage_2"/>
-                  <Column fieldName="parlament_biografie_id"/>
-                  <Column fieldName="parlament_number"/>
-                  <Column fieldName="parlament_interessenbindungen"/>
-                  <Column fieldName="parlament_interessenbindungen_json"/>
-                  <Column fieldName="parlament_interessenbindungen_updated"/>
-                  <Column fieldName="twitter_name"/>
-                  <Column fieldName="linkedin_profil_url"/>
-                  <Column fieldName="xing_profil_name"/>
-                  <Column fieldName="facebook_name"/>
-                  <Column fieldName="wikipedia"/>
-                  <Column fieldName="sprache"/>
-                  <Column fieldName="arbeitssprache"/>
-                  <Column fieldName="adresse_firma"/>
-                  <Column fieldName="adresse_strasse"/>
-                  <Column fieldName="adresse_zusatz"/>
-                  <Column fieldName="adresse_plz"/>
-                  <Column fieldName="adresse_ort"/>
-                  <Column fieldName="telephon_1"/>
-                  <Column fieldName="telephon_2"/>
-                  <Column fieldName="erfasst"/>
-                  <Column fieldName="notizen"/>
-                  <Column fieldName="eingabe_abgeschlossen_visa"/>
-                  <Column fieldName="eingabe_abgeschlossen_datum"/>
-                  <Column fieldName="kontrolliert_visa"/>
-                  <Column fieldName="kontrolliert_datum"/>
-                  <Column fieldName="autorisierung_verschickt_visa"/>
-                  <Column fieldName="autorisierung_verschickt_datum"/>
-                  <Column fieldName="autorisiert_visa"/>
-                  <Column fieldName="autorisiert_datum"/>
-                  <Column fieldName="freigabe_visa"/>
-                  <Column fieldName="freigabe_datum"/>
-                  <Column fieldName="created_visa"/>
-                  <Column fieldName="created_date"/>
-                  <Column fieldName="updated_visa"/>
-                  <Column fieldName="updated_date"/>
-                  <Column fieldName="log_id" visible="false"/>
-                  <Column fieldName="action"/>
-                  <Column fieldName="state"/>
-                  <Column fieldName="action_date"/>
-                  <Column fieldName="snapshot_id"/>
-                </Compare>
-                <MultiEdit>
-                  <Column fieldName="id" visible="false"/>
-                  <Column fieldName="nachname" visible="false"/>
-                  <Column fieldName="vorname" visible="false"/>
-                  <Column fieldName="vorname_kurz" visible="false"/>
-                  <Column fieldName="zweiter_vorname" visible="false"/>
-                  <Column fieldName="rat_id" visible="false"/>
-                  <Column fieldName="kanton_id" visible="false"/>
-                  <Column fieldName="kommissionen" visible="false"/>
-                  <Column fieldName="partei_id" visible="false"/>
-                  <Column fieldName="parteifunktion" visible="false"/>
-                  <Column fieldName="fraktion_id" visible="false"/>
-                  <Column fieldName="fraktionsfunktion" visible="false"/>
-                  <Column fieldName="im_rat_seit" visible="false"/>
-                  <Column fieldName="im_rat_bis" visible="false"/>
-                  <Column fieldName="ratswechsel" visible="false"/>
-                  <Column fieldName="ratsunterbruch_von" visible="false"/>
-                  <Column fieldName="ratsunterbruch_bis" visible="false"/>
-                  <Column fieldName="beruf" visible="false"/>
-                  <Column fieldName="beruf_fr" visible="false"/>
-                  <Column fieldName="beruf_interessengruppe_id" visible="false"/>
-                  <Column fieldName="titel" visible="false"/>
-                  <Column fieldName="aemter" visible="false"/>
-                  <Column fieldName="weitere_aemter" visible="false"/>
-                  <Column fieldName="zivilstand" visible="false"/>
-                  <Column fieldName="anzahl_kinder" visible="false"/>
-                  <Column fieldName="militaerischer_grad_id" visible="false"/>
-                  <Column fieldName="geschlecht" visible="false"/>
-                  <Column fieldName="geburtstag" visible="false"/>
-                  <Column fieldName="photo" visible="false"/>
-                  <Column fieldName="photo_dateiname" visible="false"/>
-                  <Column fieldName="photo_dateierweiterung" visible="false"/>
-                  <Column fieldName="photo_dateiname_voll" visible="false"/>
-                  <Column fieldName="photo_mime_type" visible="false"/>
-                  <Column fieldName="kleinbild" visible="false"/>
-                  <Column fieldName="sitzplatz" visible="false"/>
-                  <Column fieldName="email" visible="false"/>
-                  <Column fieldName="homepage" visible="false"/>
-                  <Column fieldName="homepage_2" visible="false"/>
-                  <Column fieldName="parlament_biografie_id" visible="false"/>
-                  <Column fieldName="parlament_number" visible="false"/>
-                  <Column fieldName="parlament_interessenbindungen" visible="false"/>
-                  <Column fieldName="parlament_interessenbindungen_json" visible="false"/>
-                  <Column fieldName="parlament_interessenbindungen_updated" visible="false"/>
-                  <Column fieldName="twitter_name" visible="false"/>
-                  <Column fieldName="linkedin_profil_url" visible="false"/>
-                  <Column fieldName="xing_profil_name" visible="false"/>
-                  <Column fieldName="facebook_name" visible="false"/>
-                  <Column fieldName="wikipedia" visible="false"/>
-                  <Column fieldName="sprache" visible="false"/>
-                  <Column fieldName="arbeitssprache" visible="false"/>
-                  <Column fieldName="adresse_firma" visible="false"/>
-                  <Column fieldName="adresse_strasse" visible="false"/>
-                  <Column fieldName="adresse_zusatz" visible="false"/>
-                  <Column fieldName="adresse_plz" visible="false"/>
-                  <Column fieldName="adresse_ort" visible="false"/>
-                  <Column fieldName="telephon_1" visible="false"/>
-                  <Column fieldName="telephon_2" visible="false"/>
-                  <Column fieldName="erfasst" visible="false"/>
-                  <Column fieldName="notizen" visible="false"/>
-                  <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
-                  <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
-                  <Column fieldName="kontrolliert_visa" visible="false"/>
-                  <Column fieldName="kontrolliert_datum" visible="false"/>
-                  <Column fieldName="autorisierung_verschickt_visa" visible="false"/>
-                  <Column fieldName="autorisierung_verschickt_datum" visible="false"/>
-                  <Column fieldName="autorisiert_visa" visible="false"/>
-                  <Column fieldName="autorisiert_datum" visible="false"/>
-                  <Column fieldName="freigabe_visa" visible="false"/>
-                  <Column fieldName="freigabe_datum" visible="false"/>
-                  <Column fieldName="created_visa" visible="false"/>
-                  <Column fieldName="created_date" visible="false"/>
-                  <Column fieldName="updated_visa" visible="false"/>
-                  <Column fieldName="updated_date" visible="false"/>
-                  <Column fieldName="log_id" visible="false"/>
-                  <Column fieldName="action" visible="false"/>
-                  <Column fieldName="state" visible="false"/>
-                  <Column fieldName="action_date" visible="false"/>
-                  <Column fieldName="snapshot_id" visible="false"/>
-                </MultiEdit>
-              </Columns>
-              <Details/>
-              <EventHandlers>
-                <CustomDrawRow enabled="true">
-logTableExtendedDrawRow('parlamentarier_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
-              </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
-            </Page>
-            <MasterForeignKeyColumnMap>
-              <FieldMap masterColumnName="id" foreginColumnName="id"/>
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="Organisation Parlamentarier Beide Indirekt">
