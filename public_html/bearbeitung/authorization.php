@@ -73,6 +73,7 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'kommission' => '<span class="entity">Kommission</span>',
 'kommission.v_in_kommission' => '<span class="entity">Kommission</span>->Parlamentarier in Kommission',
 'kommission.branche' => '<span class="entity">Kommission</span>->Branche',
+'kommission.kommission_log' => '<span class="entity">Kommission</span>->Kommission Log',
 'partei' => '<span class="entity">Partei</span>',
 'partei.parlamentarier' => '<span class="entity">Partei</span>->Parlamentarier',
 'partei.fraktion' => '<span class="entity">Partei</span>->Fraktion',
