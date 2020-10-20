@@ -85,6 +85,7 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'kanton' => '<span class="entity">Kanton</span>',
 'kanton.kanton_jahr' => '<span class="entity">Kanton</span>->Kanton Jahr',
 'kanton.parlamentarier' => '<span class="entity">Kanton</span>-><s>Parlamentarier</s>',
+'kanton.kanton_log' => '<span class="entity">Kanton</span>->Kanton Log',
 'v_last_updated_tables' => '<span class="view">Tabellenstand</span>',
 'q_last_updated_tables' => '<span class="view">Tabellenstand</span>',
 'q_unvollstaendige_parlamentarier' => '<span class="view">Unvollständige Parlamentarier</span>',

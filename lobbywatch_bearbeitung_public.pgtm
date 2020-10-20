@@ -42522,6 +42522,621 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
               <FieldMap masterColumnName="id" foreginColumnName="kanton_id"/>
             </MasterForeignKeyColumnMap>
           </Detail>
+          <Detail caption="Kanton Log">
+            <Page type="table" tableName="kanton_log" numberByDataSource="0" fileName="" caption="Kanton Log" shortCaption="Kanton Log" allowAddMultipleRecords="false" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="0" editAbilityMode="0" multiEditAbility="0" includeAllFieldsForMultiEditByDefault="false" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
+              <DefaultSortedColumns>
+                <Column fieldName="log_id" orderType="1"/>
+              </DefaultSortedColumns>
+              <BeforeGridText/>
+              <DetailedDescription/>
+              <ColumnPresentations>
+                <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Live-Daten" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="abkuerzung" caption="Abkuerzung" headerHint="Kantonskürzel" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="comboBox">
+                    <Values>
+                      <Value name="AG" caption="AG"/>
+                      <Value name="AR" caption="AR"/>
+                      <Value name="AI" caption="AI"/>
+                      <Value name="BL" caption="BL"/>
+                      <Value name="BS" caption="BS"/>
+                      <Value name="BE" caption="BE"/>
+                      <Value name="FR" caption="FR"/>
+                      <Value name="GE" caption="GE"/>
+                      <Value name="GL" caption="GL"/>
+                      <Value name="GR" caption="GR"/>
+                      <Value name="JU" caption="JU"/>
+                      <Value name="LU" caption="LU"/>
+                      <Value name="NE" caption="NE"/>
+                      <Value name="NW" caption="NW"/>
+                      <Value name="OW" caption="OW"/>
+                      <Value name="SH" caption="SH"/>
+                      <Value name="SZ" caption="SZ"/>
+                      <Value name="SO" caption="SO"/>
+                      <Value name="SG" caption="SG"/>
+                      <Value name="TI" caption="TI"/>
+                      <Value name="TG" caption="TG"/>
+                      <Value name="UR" caption="UR"/>
+                      <Value name="VD" caption="VD"/>
+                      <Value name="VS" caption="VS"/>
+                      <Value name="ZG" caption="ZG"/>
+                      <Value name="ZH" caption="ZH"/>
+                    </Values>
+                  </EditProperties>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="kantonsnr" caption="Kantonsnr" headerHint="Nummer des Kantons gemäss Verfassung" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="name_de" caption="Name De" headerHint="Deutscher Name des Kantons" showColumnFilter="false" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="50"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="name_fr" caption="Name Fr" headerHint="Französischer Name" showColumnFilter="false" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="50"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="name_it" caption="Name It" headerHint="Italienischer Name" showColumnFilter="false" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="50"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="romandie" caption="Romandie" headerHint="Gehört dieser Kanton zur Romandie?" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="anzahl_staenderaete" caption="Anzahl Staenderaete" headerHint="Anzahl Ständeräte" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="amtssprache" caption="Amtssprache" headerHint="Amtssprachen des Kantons" showColumnFilter="false" selectedFilterOperators="1589055">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="checkBoxGroup" displayMode="0">
+                    <Values>
+                      <Value name="de" caption="de"/>
+                      <Value name="fr" caption="fr"/>
+                      <Value name="it" caption="it"/>
+                      <Value name="rm" caption="rm"/>
+                    </Values>
+                  </EditProperties>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="hauptort_de" caption="Hauptort De" headerHint="Hauptort des Kantons" showColumnFilter="false" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="50"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="hauptort_fr" caption="Hauptort Fr" headerHint="Hauptort auf französisch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="50"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="hauptort_it" caption="Hauptort It" headerHint="Hauptort auf italienisch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="50"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="flaeche_km2" caption="Flaeche Km2" headerHint="Fläche in km2" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="beitrittsjahr" caption="Beitrittsjahr" headerHint="Beitrittsjahr zur Schweiz" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="wappen_svg" caption="Wappen Svg" headerHint="SVG Wappen des Kantons" showColumnFilter="false" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="wappen_svg_pfad" caption="Wappen Svg Pfad" headerHint="Pfad zu SVG Wappen des Kantons" showColumnFilter="false" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="wappen_klein" caption="Wappen Klein" headerHint="Pfad zu kleinem Wappen des Kantons (25px)" showColumnFilter="false" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="wappen" caption="Wappen" headerHint="Pfad zu Wappen des Kantons (50px)" showColumnFilter="false" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="lagebild" caption="Lagebild" headerHint="Pfad zum lagebild des Kantons" showColumnFilter="false" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="homepage" caption="Homepage" headerHint="Homepage des Kantons" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Beschreibung des Kantons" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="notizen" caption="Notizen" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat." canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="kontrolliert_visa" caption="Kontrolliert Visa" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat." canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="kontrolliert_datum" caption="Kontrolliert Datum" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="freigabe_visa" caption="Freigabe Visa" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="freigabe_datum" caption="Freigabe Datum" headerHint="Freigabedatum (Freigabe = Daten sind fertig)" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="log_id" caption="Log Id" headerHint="Technischer Log-Schlüssel" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="action" caption="Action" headerHint="Aktionstyp" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="comboBox">
+                    <Values>
+                      <Value name="insert" caption="insert"/>
+                      <Value name="update" caption="update"/>
+                      <Value name="delete" caption="delete"/>
+                      <Value name="snapshot" caption="snapshot"/>
+                    </Values>
+                  </EditProperties>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="state" caption="State" headerHint="Status der Aktion" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="20"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="action_date" caption="Action Date" headerHint="Datum der Aktion" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="snapshot_id" caption="Snapshot Id" headerHint="Fremdschlüssel zu einem Snapshot" canSetNull="true" selectedFilterOperators="1589247">
+                  <Lookup tableName="snapshot" linkFieldName="id" displayFieldName="beschreibung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="dynamicCombobox"/>
+                </ColumnPresentation>
+              </ColumnPresentations>
+              <Columns>
+                <List>
+                  <Column fieldName="id"/>
+                  <Column fieldName="abkuerzung"/>
+                  <Column fieldName="kantonsnr"/>
+                  <Column fieldName="name_de"/>
+                  <Column fieldName="name_fr"/>
+                  <Column fieldName="name_it"/>
+                  <Column fieldName="romandie"/>
+                  <Column fieldName="anzahl_staenderaete"/>
+                  <Column fieldName="amtssprache"/>
+                  <Column fieldName="hauptort_de"/>
+                  <Column fieldName="hauptort_fr"/>
+                  <Column fieldName="hauptort_it"/>
+                  <Column fieldName="flaeche_km2"/>
+                  <Column fieldName="beitrittsjahr"/>
+                  <Column fieldName="wappen_svg"/>
+                  <Column fieldName="wappen_svg_pfad"/>
+                  <Column fieldName="wappen_klein"/>
+                  <Column fieldName="wappen"/>
+                  <Column fieldName="lagebild"/>
+                  <Column fieldName="homepage"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </List>
+                <View>
+                  <Column fieldName="id"/>
+                  <Column fieldName="abkuerzung"/>
+                  <Column fieldName="kantonsnr"/>
+                  <Column fieldName="name_de"/>
+                  <Column fieldName="name_fr"/>
+                  <Column fieldName="name_it"/>
+                  <Column fieldName="romandie"/>
+                  <Column fieldName="anzahl_staenderaete"/>
+                  <Column fieldName="amtssprache"/>
+                  <Column fieldName="hauptort_de"/>
+                  <Column fieldName="hauptort_fr"/>
+                  <Column fieldName="hauptort_it"/>
+                  <Column fieldName="flaeche_km2"/>
+                  <Column fieldName="beitrittsjahr"/>
+                  <Column fieldName="wappen_svg"/>
+                  <Column fieldName="wappen_svg_pfad"/>
+                  <Column fieldName="wappen_klein"/>
+                  <Column fieldName="wappen"/>
+                  <Column fieldName="lagebild"/>
+                  <Column fieldName="homepage"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </View>
+                <Edit>
+                  <Column fieldName="id" visible="false"/>
+                  <Column fieldName="abkuerzung" visible="false"/>
+                  <Column fieldName="kantonsnr" visible="false"/>
+                  <Column fieldName="name_de" visible="false"/>
+                  <Column fieldName="name_fr" visible="false"/>
+                  <Column fieldName="name_it" visible="false"/>
+                  <Column fieldName="romandie" visible="false"/>
+                  <Column fieldName="anzahl_staenderaete" visible="false"/>
+                  <Column fieldName="amtssprache" visible="false"/>
+                  <Column fieldName="hauptort_de" visible="false"/>
+                  <Column fieldName="hauptort_fr" visible="false"/>
+                  <Column fieldName="hauptort_it" visible="false"/>
+                  <Column fieldName="flaeche_km2" visible="false"/>
+                  <Column fieldName="beitrittsjahr" visible="false"/>
+                  <Column fieldName="wappen_svg" visible="false"/>
+                  <Column fieldName="wappen_svg_pfad" visible="false"/>
+                  <Column fieldName="wappen_klein" visible="false"/>
+                  <Column fieldName="wappen" visible="false"/>
+                  <Column fieldName="lagebild" visible="false"/>
+                  <Column fieldName="homepage" visible="false"/>
+                  <Column fieldName="beschreibung" visible="false"/>
+                  <Column fieldName="notizen" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
+                  <Column fieldName="kontrolliert_visa" visible="false"/>
+                  <Column fieldName="kontrolliert_datum" visible="false"/>
+                  <Column fieldName="freigabe_visa" visible="false"/>
+                  <Column fieldName="freigabe_datum" visible="false"/>
+                  <Column fieldName="created_visa" visible="false"/>
+                  <Column fieldName="created_date" visible="false"/>
+                  <Column fieldName="updated_visa" visible="false"/>
+                  <Column fieldName="updated_date" visible="false"/>
+                  <Column fieldName="log_id" visible="false"/>
+                  <Column fieldName="action" visible="false"/>
+                  <Column fieldName="state" visible="false"/>
+                  <Column fieldName="action_date" visible="false"/>
+                  <Column fieldName="snapshot_id" visible="false"/>
+                </Edit>
+                <Insert>
+                  <Column fieldName="id" visible="false"/>
+                  <Column fieldName="abkuerzung" visible="false"/>
+                  <Column fieldName="kantonsnr" visible="false"/>
+                  <Column fieldName="name_de" visible="false"/>
+                  <Column fieldName="name_fr" visible="false"/>
+                  <Column fieldName="name_it" visible="false"/>
+                  <Column fieldName="romandie" visible="false"/>
+                  <Column fieldName="anzahl_staenderaete" visible="false"/>
+                  <Column fieldName="amtssprache" visible="false"/>
+                  <Column fieldName="hauptort_de" visible="false"/>
+                  <Column fieldName="hauptort_fr" visible="false"/>
+                  <Column fieldName="hauptort_it" visible="false"/>
+                  <Column fieldName="flaeche_km2" visible="false"/>
+                  <Column fieldName="beitrittsjahr" visible="false"/>
+                  <Column fieldName="wappen_svg" visible="false"/>
+                  <Column fieldName="wappen_svg_pfad" visible="false"/>
+                  <Column fieldName="wappen_klein" visible="false"/>
+                  <Column fieldName="wappen" visible="false"/>
+                  <Column fieldName="lagebild" visible="false"/>
+                  <Column fieldName="homepage" visible="false"/>
+                  <Column fieldName="beschreibung" visible="false"/>
+                  <Column fieldName="notizen" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
+                  <Column fieldName="kontrolliert_visa" visible="false"/>
+                  <Column fieldName="kontrolliert_datum" visible="false"/>
+                  <Column fieldName="freigabe_visa" visible="false"/>
+                  <Column fieldName="freigabe_datum" visible="false"/>
+                  <Column fieldName="created_visa" visible="false"/>
+                  <Column fieldName="created_date" visible="false"/>
+                  <Column fieldName="updated_visa" visible="false"/>
+                  <Column fieldName="updated_date" visible="false"/>
+                  <Column fieldName="log_id" visible="false"/>
+                  <Column fieldName="action" visible="false"/>
+                  <Column fieldName="state" visible="false"/>
+                  <Column fieldName="action_date" visible="false"/>
+                  <Column fieldName="snapshot_id" visible="false"/>
+                </Insert>
+                <QuickFilter>
+                  <Column fieldName="id"/>
+                  <Column fieldName="abkuerzung"/>
+                  <Column fieldName="kantonsnr"/>
+                  <Column fieldName="name_de"/>
+                  <Column fieldName="name_fr"/>
+                  <Column fieldName="name_it"/>
+                  <Column fieldName="romandie"/>
+                  <Column fieldName="anzahl_staenderaete"/>
+                  <Column fieldName="amtssprache"/>
+                  <Column fieldName="hauptort_de"/>
+                  <Column fieldName="hauptort_fr"/>
+                  <Column fieldName="hauptort_it"/>
+                  <Column fieldName="flaeche_km2"/>
+                  <Column fieldName="beitrittsjahr"/>
+                  <Column fieldName="wappen_svg"/>
+                  <Column fieldName="wappen_svg_pfad"/>
+                  <Column fieldName="wappen_klein"/>
+                  <Column fieldName="wappen"/>
+                  <Column fieldName="lagebild"/>
+                  <Column fieldName="homepage"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </QuickFilter>
+                <FilterBuilder>
+                  <Column fieldName="id"/>
+                  <Column fieldName="abkuerzung"/>
+                  <Column fieldName="kantonsnr"/>
+                  <Column fieldName="name_de"/>
+                  <Column fieldName="name_fr"/>
+                  <Column fieldName="name_it"/>
+                  <Column fieldName="romandie"/>
+                  <Column fieldName="anzahl_staenderaete"/>
+                  <Column fieldName="amtssprache"/>
+                  <Column fieldName="hauptort_de"/>
+                  <Column fieldName="hauptort_fr"/>
+                  <Column fieldName="hauptort_it"/>
+                  <Column fieldName="flaeche_km2"/>
+                  <Column fieldName="beitrittsjahr"/>
+                  <Column fieldName="wappen_svg"/>
+                  <Column fieldName="wappen_svg_pfad"/>
+                  <Column fieldName="wappen_klein"/>
+                  <Column fieldName="wappen"/>
+                  <Column fieldName="lagebild"/>
+                  <Column fieldName="homepage"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </FilterBuilder>
+                <Print>
+                  <Column fieldName="id"/>
+                  <Column fieldName="abkuerzung"/>
+                  <Column fieldName="kantonsnr"/>
+                  <Column fieldName="name_de"/>
+                  <Column fieldName="name_fr"/>
+                  <Column fieldName="name_it"/>
+                  <Column fieldName="romandie"/>
+                  <Column fieldName="anzahl_staenderaete"/>
+                  <Column fieldName="amtssprache"/>
+                  <Column fieldName="hauptort_de"/>
+                  <Column fieldName="hauptort_fr"/>
+                  <Column fieldName="hauptort_it"/>
+                  <Column fieldName="flaeche_km2"/>
+                  <Column fieldName="beitrittsjahr"/>
+                  <Column fieldName="wappen_svg"/>
+                  <Column fieldName="wappen_svg_pfad"/>
+                  <Column fieldName="wappen_klein"/>
+                  <Column fieldName="wappen"/>
+                  <Column fieldName="lagebild"/>
+                  <Column fieldName="homepage"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </Print>
+                <Export>
+                  <Column fieldName="id"/>
+                  <Column fieldName="abkuerzung"/>
+                  <Column fieldName="kantonsnr"/>
+                  <Column fieldName="name_de"/>
+                  <Column fieldName="name_fr"/>
+                  <Column fieldName="name_it"/>
+                  <Column fieldName="romandie"/>
+                  <Column fieldName="anzahl_staenderaete"/>
+                  <Column fieldName="amtssprache"/>
+                  <Column fieldName="hauptort_de"/>
+                  <Column fieldName="hauptort_fr"/>
+                  <Column fieldName="hauptort_it"/>
+                  <Column fieldName="flaeche_km2"/>
+                  <Column fieldName="beitrittsjahr"/>
+                  <Column fieldName="wappen_svg"/>
+                  <Column fieldName="wappen_svg_pfad"/>
+                  <Column fieldName="wappen_klein"/>
+                  <Column fieldName="wappen"/>
+                  <Column fieldName="lagebild"/>
+                  <Column fieldName="homepage"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </Export>
+                <Compare>
+                  <Column fieldName="id"/>
+                  <Column fieldName="abkuerzung"/>
+                  <Column fieldName="kantonsnr"/>
+                  <Column fieldName="name_de"/>
+                  <Column fieldName="name_fr"/>
+                  <Column fieldName="name_it"/>
+                  <Column fieldName="romandie"/>
+                  <Column fieldName="anzahl_staenderaete"/>
+                  <Column fieldName="amtssprache"/>
+                  <Column fieldName="hauptort_de"/>
+                  <Column fieldName="hauptort_fr"/>
+                  <Column fieldName="hauptort_it"/>
+                  <Column fieldName="flaeche_km2"/>
+                  <Column fieldName="beitrittsjahr"/>
+                  <Column fieldName="wappen_svg"/>
+                  <Column fieldName="wappen_svg_pfad"/>
+                  <Column fieldName="wappen_klein"/>
+                  <Column fieldName="wappen"/>
+                  <Column fieldName="lagebild"/>
+                  <Column fieldName="homepage"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                  <Column fieldName="log_id" visible="false"/>
+                  <Column fieldName="action"/>
+                  <Column fieldName="state"/>
+                  <Column fieldName="action_date"/>
+                  <Column fieldName="snapshot_id"/>
+                </Compare>
+                <MultiEdit>
+                  <Column fieldName="id" visible="false"/>
+                  <Column fieldName="abkuerzung" visible="false"/>
+                  <Column fieldName="kantonsnr" visible="false"/>
+                  <Column fieldName="name_de" visible="false"/>
+                  <Column fieldName="name_fr" visible="false"/>
+                  <Column fieldName="name_it" visible="false"/>
+                  <Column fieldName="romandie" visible="false"/>
+                  <Column fieldName="anzahl_staenderaete" visible="false"/>
+                  <Column fieldName="amtssprache" visible="false"/>
+                  <Column fieldName="hauptort_de" visible="false"/>
+                  <Column fieldName="hauptort_fr" visible="false"/>
+                  <Column fieldName="hauptort_it" visible="false"/>
+                  <Column fieldName="flaeche_km2" visible="false"/>
+                  <Column fieldName="beitrittsjahr" visible="false"/>
+                  <Column fieldName="wappen_svg" visible="false"/>
+                  <Column fieldName="wappen_svg_pfad" visible="false"/>
+                  <Column fieldName="wappen_klein" visible="false"/>
+                  <Column fieldName="wappen" visible="false"/>
+                  <Column fieldName="lagebild" visible="false"/>
+                  <Column fieldName="homepage" visible="false"/>
+                  <Column fieldName="beschreibung" visible="false"/>
+                  <Column fieldName="notizen" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
+                  <Column fieldName="kontrolliert_visa" visible="false"/>
+                  <Column fieldName="kontrolliert_datum" visible="false"/>
+                  <Column fieldName="freigabe_visa" visible="false"/>
+                  <Column fieldName="freigabe_datum" visible="false"/>
+                  <Column fieldName="created_visa" visible="false"/>
+                  <Column fieldName="created_date" visible="false"/>
+                  <Column fieldName="updated_visa" visible="false"/>
+                  <Column fieldName="updated_date" visible="false"/>
+                  <Column fieldName="log_id" visible="false"/>
+                  <Column fieldName="action" visible="false"/>
+                  <Column fieldName="state" visible="false"/>
+                  <Column fieldName="action_date" visible="false"/>
+                  <Column fieldName="snapshot_id" visible="false"/>
+                </MultiEdit>
+              </Columns>
+              <Details/>
+              <EventHandlers>
+                <CustomDrawRow enabled="true">
+logTableExtendedDrawRow('kanton_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
+              </EventHandlers>
+              <RecordPermissions useRecordPermissions="false"/>
+              <PartitionNavigators/>
+            </Page>
+            <MasterForeignKeyColumnMap>
+              <FieldMap masterColumnName="id" foreginColumnName="id"/>
+            </MasterForeignKeyColumnMap>
+          </Detail>
         </Details>
         <EventHandlers>
           <CustomDrawRow enabled="true">
