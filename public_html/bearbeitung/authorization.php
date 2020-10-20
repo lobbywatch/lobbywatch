@@ -33,6 +33,7 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'organisation.mandat' => '<span class="entity important-entity">Organisation</span>-><s>Mandat</s>',
 'parlamentarier' => '<span class="entity important-entity">Parlamentarier</span>',
 'parlamentarier.parlamentarier_anhang' => '<span class="entity important-entity">Parlamentarier</span>->Parlamentarier Anhang',
+'parlamentarier.parlamentarier_anhang.parlamentarier_anhang_log' => '<span class="entity important-entity">Parlamentarier</span>->Parlamentarier Anhang->Parlamentarier Anhang Log',
 'parlamentarier.parlamentarier_transparenz' => '<span class="entity important-entity">Parlamentarier</span>->Parlamentarier Vergütungstransparenz',
 'parlamentarier.parlamentarier_log' => '<span class="entity important-entity">Parlamentarier</span>->Parlamentarier Log',
 'parlamentarier.v_zutrittsberechtigung_simple_compat' => '<span class="entity important-entity">Parlamentarier</span>->Zutrittsberechtigte',
