@@ -61,6 +61,7 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'in_kommission' => '<span class="relation">In Kommission</span>',
 'in_kommission.in_kommission_log' => '<span class="relation">In Kommission</span>->In Kommission Log',
 'organisation_beziehung' => '<span class="relation">Organisation Beziehung</span>',
+'organisation_beziehung.organisation_beziehung_log' => '<span class="relation">Organisation Beziehung</span>->Organisation Beziehung Log',
 'branche' => '<span class="entity">Branche</span>',
 'branche.interessengruppe' => '<span class="entity">Branche</span>->Interessengruppe',
 'branche.organisation' => '<span class="entity">Branche</span>->Organisation',
