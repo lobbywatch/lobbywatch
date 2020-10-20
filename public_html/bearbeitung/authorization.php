@@ -95,6 +95,7 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'settings.settings_log' => '<span class="settings">Settings</span>->Settings Log',
 'settings_category' => '<span class="settings">Settings Category</span>',
 'settings_category.settings' => '<span class="settings">Settings Category</span>-><s>Settings</s>',
+'settings_category.settings_category_log' => '<span class="settings">Settings Category</span>->Settings Category Log',
 'translation_source' => '<span class="settings">Translation Source</span>',
 'translation_source.translation_target' => '<span class="settings">Translation Source</span>->Translation Target',
 'translation_source.translation_target01' => '<span class="settings">Translation Source</span>->Translation Target',
