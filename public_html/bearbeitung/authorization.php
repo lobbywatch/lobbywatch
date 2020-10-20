@@ -77,6 +77,7 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'partei' => '<span class="entity">Partei</span>',
 'partei.parlamentarier' => '<span class="entity">Partei</span>->Parlamentarier',
 'partei.fraktion' => '<span class="entity">Partei</span>->Fraktion',
+'partei.partei_log' => '<span class="entity">Partei</span>->Partei Log',
 'fraktion' => '<span class="entity">Fraktion</span>',
 'fraktion.partei' => '<span class="entity">Fraktion</span>->Partei',
 'fraktion.parlamentarier' => '<span class="entity">Fraktion</span>->Parlamentarier',
