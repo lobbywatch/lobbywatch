@@ -67,6 +67,7 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'branche.organisation' => '<span class="entity">Branche</span>->Organisation',
 'branche.branche_log' => '<span class="entity">Branche</span>->Branche Log',
 'interessengruppe' => '<span class="entity">Lobbygruppe</span>',
+'interessengruppe.interessengruppe_log' => '<span class="entity">Lobbygruppe</span>->Interessengruppe Log',
 'interessengruppe.organisation' => '<span class="entity">Lobbygruppe</span>->Organisation',
 'interessengruppe.parlamentarier' => '<span class="entity">Lobbygruppe</span>->Parlamentarier',
 'kommission' => '<span class="entity">Kommission</span>',
