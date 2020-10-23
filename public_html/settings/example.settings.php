@@ -95,22 +95,12 @@ if ($stage) {
     ];
 
 if (!isset($drupal_running) || !$drupal_running) {
-  session_set_cookie_params(3600 * 24 * 30, '/bearbeitung/');
-  ini_set('session.gc_maxlifetime', 3600 * 24 * 30);
+  session_set_cookie_params(3600 * 24 * 14);
+  ini_set('session.gc_maxlifetime', 3600 * 24 * 14);
   ini_set('session.cookie_httponly', true);
   session_name('lwdb_sess');
   session_save_path('/path/for/sessions');
 //   phpinfo();
-
-//   $users = array (
-//       'otto' => '',
-//       'roland' => '',
-//       'rebecca' => '',
-//       'thomas' => '',
-//       'bane' => '',
-//       'admin' => '',
-//       'demo' => '',
-//   );
 
   if (@$maintenance_mode === true && preg_match('/(auswertung|info.php$)/', $_SERVER['REQUEST_URI']) == 0) {
     include dirname(__FILE__) . "/../common/maintenance.php";
