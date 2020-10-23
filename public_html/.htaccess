@@ -1,10 +1,30 @@
+# ModSec Exceptions by cyon
+
+<IfModule mod_security2.c>
+  # Fix Drupal Markdown posting problem, see support email from 23.04.2017
+  SecRuleRemoveById 332039
+
+  # Fix Drupal Markdown posting problem, see support email from 24.04.2017
+  SecRuleRemoveById 391235
+  SecRuleRemoveById 390707
+
+  # Disable completly
+  # SecRuleEngine Off
+  # SecRequestBodyAccess Off
+</IfModule>
+
 #
 # Apache/PHP/Drupal settings:
 #
 
 # Protect files and directories from prying eyes.
-<FilesMatch "\.(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\.php)?|xtmpl|bak)$|^(\..*|Entries.*|Repository|Root|Tag|Template)$">
-  Order allow,deny
+<FilesMatch "\.(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\.php)?|xtmpl)(~|\.sw[op]|\.bak|\.orig|\.save)?$|^(\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\.(json|lock))$|^#.*#$|\.php(~|\.sw[op]|\.bak|\.orig\.save)$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+  </IfModule>
 </FilesMatch>
 
 # Don't show directory listings for URLs which map to a directory.
@@ -18,6 +38,26 @@ Options +FollowSymLinks
 
 # Set the default handler.
 DirectoryIndex index.php index.html index.htm
+
+# Set MIME types
+AddType text/x-markdown .md .markdown .mkd
+AddType text/x-patch .diff .patch
+AddType text/x-csv .csv
+AddType text/x-python .py
+AddType application/vnd.oasis.opendocument.text .odt
+AddType application/vnd.oasis.opendocument.chart .odc
+AddType application/vnd.oasis.opendocument.presentation .odp
+AddType application/vnd.oasis.opendocument.graphics .odg
+AddType image/x-xcf .xcf
+AddType image/x-compressed-xcf .xcf.gz
+AddType application/pdf .pdf
+
+# Set icons
+# AddIconByType (Markdown,/sites/lobbywatch.ch/files/images/md-icon.png) text/x-markdown
+# AddIconByType (PDF,/sites/lobbywatch.ch/files/images/pdf-icon.png) application/pdf
+
+# Set file encodings for files without header
+AddCharset UTF-8 .csv .txt .diff .patch .md .markdown .mkd
 
 # Override PHP settings that cannot be changed at runtime. See
 # sites/default/default.settings.php and drupal_environment_initialize() in
@@ -54,9 +94,23 @@ DirectoryIndex index.php index.html index.htm
   </FilesMatch>
 </IfModule>
 
+<IfModule mod_setenvif.c>
+  SetEnvIfNoCase Host (lobbywatch)\.ch$ ENABLE_HSTS
+  # https://www.cyon.ch/support/a/277/wie-aktiviere-ich-http-strict-transport-security-hsts-fuer-meine-website
+  # http://www.troyhunt.com/2015/06/understanding-http-strict-transport.html
+  # 3600 = 1h, 86400 = 1d, 604800 = 1w, 10886400 = 18w, 31536000 = 1y
+  Header set Strict-Transport-Security "max-age=604800; includeSubDomains; preload" env=ENABLE_HSTS
+</IfModule>
+
 # Various rewrite rules.
 <IfModule mod_rewrite.c>
   RewriteEngine on
+
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP_HOST} dbforms\.lobbywatch\.ch$
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 
   # .htaccess changes in Drupal 7.20
   # Set "protossl" to "s" if we were accessed via https://.  This is used later
@@ -64,10 +118,14 @@ DirectoryIndex index.php index.html index.htm
   # you don't bounce between http and https.
   RewriteRule ^ - [E=protossl]
   RewriteCond %{HTTPS} on
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
   RewriteRule ^ - [E=protossl:s]
 
   # Make sure Authorization HTTP header is available to PHP
   # even when running as CGI or FastCGI.
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
   RewriteRule ^ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
   # Block access to "hidden" directories whose names begin with a period. This
@@ -83,10 +141,9 @@ DirectoryIndex index.php index.html index.htm
   # If you do not have mod_rewrite installed, you should remove these
   # directories from your webroot or otherwise protect them from being
   # downloaded.
-  RewriteRule "(^|/)\." - [F]
-
-  # Does not work
-  # RewriteRule ^d7/$ http://csvi-ms.net/ [R=301,L]
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+  RewriteRule "/\.|^\.(?!well-known/)" - [F]
 
   # If your site can be accessed both with and without the 'www.' prefix, you
   # can use one of the following settings to redirect users to your preferred
@@ -106,6 +163,8 @@ DirectoryIndex index.php index.html index.htm
   # RewriteRule ^ http%{ENV:protossl}://%1%{REQUEST_URI} [L,R=301]
 
   RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
   RewriteRule ^ http%{ENV:protossl}://%1%{REQUEST_URI} [L,R=301]
 
   # Modify the RewriteBase if you are using Drupal in a subdirectory or in a
@@ -123,23 +182,30 @@ DirectoryIndex index.php index.html index.htm
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_URI} !=/favicon.ico
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
   RewriteRule ^ index.php [L]
 
   # Rules to correctly serve gzip compressed CSS and JS files.
   # Requires both mod_rewrite and mod_headers to be enabled.
   <IfModule mod_headers.c>
-    # Serve gzip compressed CSS files if they exist and the client accepts gzip.
-    RewriteCond %{HTTP:Accept-encoding} gzip
-    RewriteCond %{REQUEST_FILENAME}\.gz -s
-    RewriteRule ^(.*)\.css $1\.css\.gz [QSA]
-
-    # Serve gzip compressed JS files if they exist and the client accepts gzip.
-    RewriteCond %{HTTP:Accept-encoding} gzip
-    RewriteCond %{REQUEST_FILENAME}\.gz -s
-    RewriteRule ^(.*)\.js $1\.js\.gz [QSA]
+    # ibex 31.12.2017, disable in order to allow Brotli to be used, https://www.cyon.ch/blog/Brotli
+    # # Serve gzip compressed CSS files if they exist and the client accepts gzip.
+    # RewriteCond %{HTTP:Accept-encoding} gzip
+    # RewriteCond %{REQUEST_FILENAME}\.gz -s
+    # RewriteRule ^(.*)\.css $1\.css\.gz [QSA]
+    #
+    # # Serve gzip compressed JS files if they exist and the client accepts gzip.
+    # RewriteCond %{HTTP:Accept-encoding} gzip
+    # RewriteCond %{REQUEST_FILENAME}\.gz -s
+    # RewriteRule ^(.*)\.js $1\.js\.gz [QSA]
 
     # Serve correct content types, and prevent mod_deflate double gzip.
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
     RewriteRule \.css\.gz$ - [T=text/css,E=no-gzip:1]
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
     RewriteRule \.js\.gz$ - [T=text/javascript,E=no-gzip:1]
 
     <FilesMatch "(\.js\.gz|\.css\.gz)$">
@@ -163,11 +229,6 @@ DirectoryIndex index.php index.html index.htm
     AddOutputFilterByType DEFLATE application/javascript
     AddOutputFilterByType DEFLATE application/x-javascript
     AddOutputFilterByType DEFLATE application/json
-    # remove browser bugs
-    # BrowserMatch ^Mozilla/4 gzip-only-text/html
-    # BrowserMatch ^Mozilla/4\.0[678] no-gzip
-    # BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
-    # Header append Vary User-Agent
   </IfModule>
 
 </IfModule>
@@ -256,25 +317,25 @@ AddDefaultCharset utf-8
 
 #     ExpiresActive on
 #     ExpiresDefault "access plus 1 month"
-# 
+#
 #   # CSS
 #     ExpiresByType text/css "access plus 1 year"
 #     ExpiresByType text/css "access plus 1 hour"
-# 
+#
 #   # Data interchange
 #     ExpiresByType application/json "access plus 0 seconds"
 #     ExpiresByType application/xml "access plus 0 seconds"
 #     ExpiresByType text/xml "access plus 0 seconds"
-# 
+#
 #   # Favicon (cannot be renamed!)
 #     ExpiresByType image/x-icon "access plus 1 week"
-# 
+#
 #   # HTML components (HTCs)
 #     ExpiresByType text/x-component "access plus 1 month"
-# 
+#
 #   # HTML
 #     ExpiresByType text/html "access plus 0 seconds"
-# 
+#
 #   # JavaScript
 #     ExpiresByType application/javascript "access plus 1 year"
 
@@ -290,11 +351,11 @@ AddDefaultCharset utf-8
 #     ExpiresByType video/mp4 "access plus 1 month"
 #     ExpiresByType video/ogg "access plus 1 month"
 #     ExpiresByType video/webm "access plus 1 month"
-# 
+#
 #   # Web feeds
 #     ExpiresByType application/atom+xml "access plus 1 hour"
 #     ExpiresByType application/rss+xml "access plus 1 hour"
-# 
+#
 #   # Web fonts
 #     ExpiresByType application/font-woff "access plus 1 month"
 #     ExpiresByType application/vnd.ms-fontobject "access plus 1 month"
@@ -302,4 +363,15 @@ AddDefaultCharset utf-8
 #     ExpiresByType font/opentype "access plus 1 month"
 #     ExpiresByType image/svg+xml "access plus 1 month"
 
+</IfModule>
+
+AddHandler application/x-httpd-php74 .php
+<IfModule mod_suphp.c>
+	suPHP_ConfigPath "/home/lobbywat/etc/php_settings/php56"
+</IfModule>
+
+# Add headers to all responses.
+<IfModule mod_headers.c>
+  # Disable content sniffing, since it's an attack vector.
+  Header always set X-Content-Type-Options nosniff
 </IfModule>
