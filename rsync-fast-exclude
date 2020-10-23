@@ -1,5 +1,7 @@
 # Files excluded in fast rsync mode
 
+*.bak
+*.old
 /bearbeitung/components/
 /bearbeitung/database_engine/
 /bearbeitung/images/

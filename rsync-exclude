@@ -4,6 +4,7 @@
 /oldauswertung/
 /bearbeitung/templates_c/
 *.bak
+*.old
 .*
 bak/
 /wiki/
