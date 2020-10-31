@@ -208,3 +208,50 @@
         </div>
     </div>
 {/if}
+
+<div class="btn-group">
+    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#" title="{$Captions->GetMessageString('Favorite Filters')}">
+        <i class="icon-filter-alt"></i>
+        <span class="{$spanClasses}">{$Captions->GetMessageString('Favorite Filters')}</span>
+        <span class="caret"></span>
+    </a>
+
+    <ul class="dropdown-menu" style="width:25em;">
+      {php}
+        $this->assign('loop', [1,2,3]);
+      {/php}
+      {foreach from=$loop key="key" item="i"}
+          {assign var="favorite_filter_name" value="`$DataGrid.SelectionId`filter_builder_favorite-filter-`$i`"}
+          {php}
+            $favorite_filter_name = $this->get_template_vars("favorite_filter_name");
+            // print("favorite_filter_name=$favorite_filter_name\n");
+            // $all = $this->get_template_vars();
+            // foreach ($all as $key => $value) print("KEYYY: $key=" /*. substr($value, 0 , 30)*/ . "\n");
+            // foreach ($all['DataGrid'] as $key => $value) print("KEYYYG: $key=" /*. substr($value, 0 , 30)*/ . "\n");
+            $this->assign('favorite_filter_name_available', isset($_SESSION[$favorite_filter_name]));
+            $this->assign('favorite_filter_name_name', $_SESSION[$favorite_filter_name . "_name"] ?? "No name");
+          {/php}
+          {if $favorite_filter_name_available}
+            <li>
+                <form action="" method="post">
+                  <input type="submit" name="restore-favorite-filter-{$i}" value="Restore filter #{$i}: {$favorite_filter_name_name}">
+                </form>
+            </li>
+          {/if}
+      {/foreach}
+      <li class="divider"></li>
+      {foreach from=$loop key="key" item="i"}
+          {assign var="favorite_filter_name" value="`$DataGrid.SelectionId`filter_builder_favorite-filter-`$i`"}
+          {php}
+            $favorite_filter_name = $this->get_template_vars("favorite_filter_name");
+            $this->assign('favorite_filter_name_name', $_SESSION[$favorite_filter_name . "_name"] ?? "");
+          {/php}
+          <li>
+              <form action="" method="post">
+                <input type="submit" name="save-favorite-filter-{$i}" value="Save filter #{$i}">
+                <input name="save-favorite-filter-{$i}-name" placeholder="Filter name" value="{$favorite_filter_name_name}">
+              </form>
+          </li>
+      {/foreach}
+    </ul>
+</div>

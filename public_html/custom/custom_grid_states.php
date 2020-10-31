@@ -315,3 +315,16 @@ ORDER BY nachname, vorname, id;";
     $eng_con->ExecSQL($sql);
   }
 }
+
+function getFilterDataFromGlobals_handleFavoriteFilters($grid, SuperGlobals $superGlobals, $id, $default) {
+  for ($i = 1; $i <= 3; $i++) {
+    $favorite_filter_name = $grid->getId() . "_${id}_favorite-filter-$i";
+    if ($superGlobals->isPostValueSet("save-favorite-filter-$i")) {
+      $superGlobals->setSessionVariable($favorite_filter_name, $superGlobals->getSessionVariableDef($grid->getId() . $id, $default));
+      $superGlobals->setSessionVariable($favorite_filter_name . "_name", $superGlobals->GetPostValueDef("save-favorite-filter-$i-name", null));
+    } elseif ($superGlobals->isPostValueSet("restore-favorite-filter-$i")) {
+      return $superGlobals->getSessionVariableDef($favorite_filter_name, $default);
+    }
+  }
+  return null;
+}

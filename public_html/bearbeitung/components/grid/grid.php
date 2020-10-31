@@ -1463,9 +1463,11 @@ class Grid {
 
     private function getFilterDataFromGlobals(SuperGlobals $superGlobals, $id, $default = null)
     {
-        return $superGlobals->isPostValueSet($id)
-            ? SystemUtils::FromJSON($superGlobals->getPostValue($id), true)
-            : $superGlobals->getSessionVariableDef($this->getId() . $id, $default);
+      $favorite_filter = getFilterDataFromGlobals_handleFavoriteFilters($this, $superGlobals, $id, $default);
+      if ($favorite_filter) return $favorite_filter;
+      return $superGlobals->isPostValueSet($id)
+          ? SystemUtils::FromJSON($superGlobals->getPostValue($id), true)
+          : $superGlobals->getSessionVariableDef($this->getId() . $id, $default);
     }
 
     private function restoreFlashMessageFromSession() {
