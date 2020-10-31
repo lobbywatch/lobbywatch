@@ -230,7 +230,7 @@
             // foreach ($all['DataGrid'] as $key => $value) print("KEYYYG: $key=" /*. substr($value, 0 , 30)*/ . "\n");
             // $_SESSION for accessing session data
             $this->assign('favorite_filter_name_available', isset($_COOKIE[$favorite_filter_name]));
-            $this->assign('favorite_filter_name_name', $_COOKIE[$favorite_filter_name . "_name"] ?? "");
+            $this->assign('favorite_filter_name_name', htmlspecialchars($_COOKIE[$favorite_filter_name . "_name"], ENT_HTML5 | ENT_QUOTES) ?? "");
           {/php}
           {if $favorite_filter_name_available}
             <li>
