@@ -317,13 +317,17 @@ ORDER BY nachname, vorname, id;";
 }
 
 function getFilterDataFromGlobals_handleFavoriteFilters($grid, SuperGlobals $superGlobals, $id, $default) {
-  for ($i = 1; $i <= 3; $i++) {
+  $expires = time() + 3600 * 24 * 365 * 5;
+  for ($i = 1; $i <= 5; $i++) {
     $favorite_filter_name = $grid->getId() . "_${id}_favorite-filter-$i";
     if ($superGlobals->isPostValueSet("save-favorite-filter-$i")) {
-      $superGlobals->setSessionVariable($favorite_filter_name, $superGlobals->getSessionVariableDef($grid->getId() . $id, $default));
-      $superGlobals->setSessionVariable($favorite_filter_name . "_name", $superGlobals->GetPostValueDef("save-favorite-filter-$i-name", null));
+      // $superGlobals->setSessionVariable($favorite_filter_name, $superGlobals->getSessionVariableDef($grid->getId() . $id, $default));
+      // $superGlobals->setSessionVariable($favorite_filter_name . "_name", $superGlobals->GetPostValueDef("save-favorite-filter-$i-name", null));
+      setcookie($favorite_filter_name, SystemUtils::ToJSON($superGlobals->getSessionVariableDef($grid->getId() . $id, $default)), $expires);
+      setcookie($favorite_filter_name . "_name", $superGlobals->GetPostValueDef("save-favorite-filter-$i-name", null), $expires);
     } elseif ($superGlobals->isPostValueSet("restore-favorite-filter-$i")) {
-      return $superGlobals->getSessionVariableDef($favorite_filter_name, $default);
+      return SystemUtils::FromJSON($_COOKIE[$favorite_filter_name], true) ?? $default;
+      // return $superGlobals->getSessionVariableDef($favorite_filter_name, $default);
     }
   }
   return null;

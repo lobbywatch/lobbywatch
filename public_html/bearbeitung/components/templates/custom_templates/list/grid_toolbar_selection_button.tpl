@@ -218,7 +218,7 @@
 
     <ul class="dropdown-menu" style="width:25em;">
       {php}
-        $this->assign('loop', [1,2,3]);
+        $this->assign('loop', [1,2,3,4,5]);
       {/php}
       {foreach from=$loop key="key" item="i"}
           {assign var="favorite_filter_name" value="`$DataGrid.SelectionId`filter_builder_favorite-filter-`$i`"}
@@ -228,8 +228,9 @@
             // $all = $this->get_template_vars();
             // foreach ($all as $key => $value) print("KEYYY: $key=" /*. substr($value, 0 , 30)*/ . "\n");
             // foreach ($all['DataGrid'] as $key => $value) print("KEYYYG: $key=" /*. substr($value, 0 , 30)*/ . "\n");
-            $this->assign('favorite_filter_name_available', isset($_SESSION[$favorite_filter_name]));
-            $this->assign('favorite_filter_name_name', $_SESSION[$favorite_filter_name . "_name"] ?? "No name");
+            // $_SESSION for accessing session data
+            $this->assign('favorite_filter_name_available', isset($_COOKIE[$favorite_filter_name]));
+            $this->assign('favorite_filter_name_name', $_COOKIE[$favorite_filter_name . "_name"] ?? "No name");
           {/php}
           {if $favorite_filter_name_available}
             <li>
@@ -244,7 +245,7 @@
           {assign var="favorite_filter_name" value="`$DataGrid.SelectionId`filter_builder_favorite-filter-`$i`"}
           {php}
             $favorite_filter_name = $this->get_template_vars("favorite_filter_name");
-            $this->assign('favorite_filter_name_name', $_SESSION[$favorite_filter_name . "_name"] ?? "");
+            $this->assign('favorite_filter_name_name', $_COOKIE[$favorite_filter_name . "_name"] ?? "");
           {/php}
           <li>
               <form action="" method="post">
