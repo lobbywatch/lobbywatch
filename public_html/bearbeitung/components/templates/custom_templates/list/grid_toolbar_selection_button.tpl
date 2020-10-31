@@ -249,8 +249,8 @@
           {/php}
           <li>
               <form action="" method="post">
-                <input type="submit" name="save-favorite-filter-{$i}" value="Save filter #{$i}">
                 <input name="save-favorite-filter-{$i}-name" placeholder="Filter name" value="{$favorite_filter_name_name}">
+                <input type="submit" name="save-favorite-filter-{$i}" value="Save filter #{$i}">
               </form>
           </li>
       {/foreach}
