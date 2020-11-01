@@ -221,36 +221,47 @@
         $this->assign('loop', [1,2,3,4,5]);
       {/php}
       {foreach from=$loop key="key" item="i"}
-          {assign var="favorite_filter_name" value="`$DataGrid.SelectionId`filter_builder_favorite-filter-`$i`"}
+          {assign var="favorite_filter_key" value="`$DataGrid.SelectionId`filter_builder_favorite-filter-`$i`"}
+          {assign var="save_favorite_filter_key" value="save-favorite-filter-`$i`"}
           {php}
-            $favorite_filter_name = $this->get_template_vars("favorite_filter_name");
-            // print("favorite_filter_name=$favorite_filter_name\n");
+            $i = $this->get_template_vars("i");
+            $favorite_filter_key = $this->get_template_vars("favorite_filter_key");
+            $save_favorite_filter_key = $this->get_template_vars("save_favorite_filter_key");
+            // print("favorite_filter_key=$favorite_filter_key\n");
             // $all = $this->get_template_vars();
             // foreach ($all as $key => $value) print("KEYYY: $key=" /*. substr($value, 0 , 30)*/ . "\n");
             // foreach ($all['DataGrid'] as $key => $value) print("KEYYYG: $key=" /*. substr($value, 0 , 30)*/ . "\n");
             // $_SESSION for accessing session data
-            $this->assign('favorite_filter_name_available', isset($_COOKIE[$favorite_filter_name]));
-            $this->assign('favorite_filter_name_name', htmlspecialchars($_COOKIE[$favorite_filter_name . "_name"], ENT_HTML5 | ENT_QUOTES) ?? "");
+            // Cookies are only available the next call, use $_POST directly
+            $this->assign('favorite_filter_key_available', isset($_POST[$save_favorite_filter_key]) || isset($_COOKIE[$favorite_filter_key]));
+            $favorite_filter_name_from_post = htmlspecialchars(trim($_POST[$save_favorite_filter_key . "-name"]), ENT_HTML5 | ENT_QUOTES) ?? null;
+            $favorite_filter_name_from_post = !empty($favorite_filter_name_from_post) ? $favorite_filter_name_from_post : null;
+            $this->assign('favorite_filter_name', $favorite_filter_name_from_post ?? htmlspecialchars(trim($_COOKIE[$favorite_filter_key . "_name"]), ENT_HTML5 | ENT_QUOTES) ?? "");
           {/php}
-          {if $favorite_filter_name_available}
+          {if $favorite_filter_key_available}
             <li>
                 <form action="" method="post">
-                  <input type="submit" name="restore-favorite-filter-{$i}" value="Restore filter #{$i}: {$favorite_filter_name_name}">
+                  <input type="submit" name="restore-favorite-filter-{$i}" value="Restore filter #{$i}: {$favorite_filter_name}">
                 </form>
             </li>
           {/if}
       {/foreach}
       <li class="divider"></li>
       {foreach from=$loop key="key" item="i"}
-          {assign var="favorite_filter_name" value="`$DataGrid.SelectionId`filter_builder_favorite-filter-`$i`"}
+          {assign var="favorite_filter_key" value="`$DataGrid.SelectionId`filter_builder_favorite-filter-`$i`"}
+          {assign var="save_favorite_filter_key" value="save-favorite-filter-`$i`"}
           {php}
-            $favorite_filter_name = $this->get_template_vars("favorite_filter_name");
-            $this->assign('favorite_filter_name_name', $_COOKIE[$favorite_filter_name . "_name"] ?? "");
+            $i = $this->get_template_vars("i");
+            $favorite_filter_key = $this->get_template_vars("favorite_filter_key");
+            $save_favorite_filter_key = $this->get_template_vars("save_favorite_filter_key");
+            $favorite_filter_name_from_post = htmlspecialchars(trim($_POST[$save_favorite_filter_key . "-name"]), ENT_COMPAT) ?? null;
+            $favorite_filter_name_from_post = !empty($favorite_filter_name_from_post) ? $favorite_filter_name_from_post : null;
+            $this->assign('favorite_filter_name', $favorite_filter_name_from_post ?? htmlspecialchars(trim($_COOKIE[$favorite_filter_key . "_name"]), ENT_COMPAT) ?? "");
           {/php}
           <li>
               <form action="" method="post">
-                <input name="save-favorite-filter-{$i}-name" placeholder="Filter name" value="{$favorite_filter_name_name}">
-                <input type="submit" name="save-favorite-filter-{$i}" value="Save filter #{$i}">
+                <input name="{$save_favorite_filter_key}-name" placeholder="Filter name" value="{$favorite_filter_name}">
+                <input type="submit" name="{$save_favorite_filter_key}" value="Save filter #{$i}">
               </form>
           </li>
       {/foreach}
