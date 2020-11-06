@@ -18,7 +18,7 @@ function _lobbywatch_meta() {
           'content' => $raw_block->content['#markup'],
         );
       }
-    } 
+    }
   }
 
   $lang = get_lang();
@@ -111,7 +111,7 @@ function _lobbywatch_meta_get_node_data($values) {
     'translations' => $translations
   ));
 
-  if (!$data['field_author']) {
+  if (empty($data['field_author'])) {
     $data['field_author'] = $wrapper->author->name->value();
   }
 
