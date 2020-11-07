@@ -49867,8 +49867,12 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
                   <ViewProperties type="text"/>
                   <EditProperties type="dynamicCombobox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="target_id" caption="Datensatz" headerHint="id in der Zieltabelle" selectedFilterOperators="1573119">
-                  <Lookup tableName="v_all_entity_records" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <ColumnPresentation fieldName="target_id" caption="Datensatz Id" headerHint="id in der Zieltabelle" selectedFilterOperators="1573119">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="target_table_name_with_id" caption="Datensatz" headerHint="Zieltabelle#id, ist die Zusammensetzung von Zieltablle und id mit einem Hash (#) getrennt. Dieses Feld ist aus technischen Gründen nötig für den PHP Formulargenerator." selectedFilterOperators="1589247">
+                  <Lookup tableName="v_all_entity_records" linkFieldName="table_with_id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   <ViewProperties type="text"/>
                   <EditProperties type="dynamicCombobox"/>
                 </ColumnPresentation>
@@ -49946,10 +49950,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="dynamicCombobox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="target_table_name_with_id" caption="Target Table Name With Id" headerHint="Zieltabelle#id, ist die Zusammensetzung von Zieltablle und id mit einem Hash (#) getrennt. Dieses Feld ist aus technischen Gründen nötig für den PHP Formulargenerator." showColumnFilter="false" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
-                  <EditProperties type="textBox" maxLength="52"/>
-                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -49957,6 +49957,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
                   <Column fieldName="nid"/>
                   <Column fieldName="target_table_name"/>
                   <Column fieldName="target_id"/>
+                  <Column fieldName="target_table_name_with_id"/>
                   <Column fieldName="notizen"/>
                   <Column fieldName="eingabe_abgeschlossen_visa"/>
                   <Column fieldName="eingabe_abgeschlossen_datum"/>
@@ -49973,13 +49974,13 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="target_table_name_with_id"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
                   <Column fieldName="nid"/>
                   <Column fieldName="target_table_name"/>
                   <Column fieldName="target_id"/>
+                  <Column fieldName="target_table_name_with_id"/>
                   <Column fieldName="notizen"/>
                   <Column fieldName="eingabe_abgeschlossen_visa"/>
                   <Column fieldName="eingabe_abgeschlossen_datum"/>
@@ -49996,13 +49997,13 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="target_table_name_with_id"/>
                 </View>
                 <Edit>
                   <Column fieldName="id" visible="false"/>
                   <Column fieldName="nid" visible="false"/>
                   <Column fieldName="target_table_name" visible="false"/>
                   <Column fieldName="target_id" visible="false"/>
+                  <Column fieldName="target_table_name_with_id" visible="false"/>
                   <Column fieldName="notizen" visible="false"/>
                   <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
                   <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
@@ -50019,13 +50020,13 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
-                  <Column fieldName="target_table_name_with_id"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="id" visible="false"/>
                   <Column fieldName="nid" visible="false"/>
                   <Column fieldName="target_table_name" visible="false"/>
                   <Column fieldName="target_id" visible="false"/>
+                  <Column fieldName="target_table_name_with_id" visible="false"/>
                   <Column fieldName="notizen" visible="false"/>
                   <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
                   <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
@@ -50042,7 +50043,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
-                  <Column fieldName="target_table_name_with_id"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -50072,6 +50072,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
                   <Column fieldName="nid"/>
                   <Column fieldName="target_table_name"/>
                   <Column fieldName="target_id"/>
+                  <Column fieldName="target_table_name_with_id"/>
                   <Column fieldName="notizen"/>
                   <Column fieldName="eingabe_abgeschlossen_visa"/>
                   <Column fieldName="eingabe_abgeschlossen_datum"/>
@@ -50088,13 +50089,13 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="target_table_name_with_id"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
                   <Column fieldName="nid"/>
                   <Column fieldName="target_table_name"/>
                   <Column fieldName="target_id"/>
+                  <Column fieldName="target_table_name_with_id"/>
                   <Column fieldName="notizen"/>
                   <Column fieldName="eingabe_abgeschlossen_visa"/>
                   <Column fieldName="eingabe_abgeschlossen_datum"/>
@@ -50111,13 +50112,13 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="target_table_name_with_id"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
                   <Column fieldName="nid"/>
                   <Column fieldName="target_table_name"/>
                   <Column fieldName="target_id"/>
+                  <Column fieldName="target_table_name_with_id"/>
                   <Column fieldName="notizen"/>
                   <Column fieldName="eingabe_abgeschlossen_visa"/>
                   <Column fieldName="eingabe_abgeschlossen_datum"/>
@@ -50134,13 +50135,13 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="target_table_name_with_id"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
                   <Column fieldName="nid"/>
                   <Column fieldName="target_table_name"/>
                   <Column fieldName="target_id"/>
+                  <Column fieldName="target_table_name_with_id"/>
                   <Column fieldName="notizen"/>
                   <Column fieldName="eingabe_abgeschlossen_visa"/>
                   <Column fieldName="eingabe_abgeschlossen_datum"/>
@@ -50152,18 +50153,18 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
                   <Column fieldName="created_date"/>
                   <Column fieldName="updated_visa"/>
                   <Column fieldName="updated_date"/>
-                  <Column fieldName="log_id" visible="false"/>
+                  <Column fieldName="log_id"/>
                   <Column fieldName="action"/>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="target_table_name_with_id"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
                   <Column fieldName="nid" visible="false"/>
                   <Column fieldName="target_table_name" visible="false"/>
                   <Column fieldName="target_id" visible="false"/>
+                  <Column fieldName="target_table_name_with_id" visible="false"/>
                   <Column fieldName="notizen" visible="false"/>
                   <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
                   <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
@@ -50180,7 +50181,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
-                  <Column fieldName="target_table_name_with_id"/>
                 </MultiEdit>
               </Columns>
               <Details/>

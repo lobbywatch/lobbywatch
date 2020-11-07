@@ -74,7 +74,7 @@
             );
             $this->dataset->AddLookupField('nid', 'v_d7_node', new IntegerField('nid'), new StringField('anzeige_name', false, false, false, false, 'nid_anzeige_name', 'nid_anzeige_name_v_d7_node'), 'nid_anzeige_name_v_d7_node');
             $this->dataset->AddLookupField('target_table_name', 'v_wissensartikelzieltabelle', new StringField('table_name'), new StringField('anzeige_name', false, false, false, false, 'target_table_name_anzeige_name', 'target_table_name_anzeige_name_v_wissensartikelzieltabelle'), 'target_table_name_anzeige_name_v_wissensartikelzieltabelle');
-            $this->dataset->AddLookupField('target_id', 'v_all_entity_records', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'target_id_anzeige_name', 'target_id_anzeige_name_v_all_entity_records'), 'target_id_anzeige_name_v_all_entity_records');
+            $this->dataset->AddLookupField('target_table_name_with_id', 'v_all_entity_records', new StringField('table_with_id'), new StringField('anzeige_name', false, false, false, false, 'target_table_name_with_id_anzeige_name', 'target_table_name_with_id_anzeige_name_v_all_entity_records'), 'target_table_name_with_id_anzeige_name_v_all_entity_records');
             $this->dataset->AddLookupField('snapshot_id', '`snapshot`', new IntegerField('id'), new StringField('beschreibung', false, false, false, false, 'snapshot_id_beschreibung', 'snapshot_id_beschreibung_snapshot'), 'snapshot_id_beschreibung_snapshot');
         }
     
@@ -108,7 +108,8 @@
                 new FilterColumn($this->dataset, 'id', 'id', 'Id'),
                 new FilterColumn($this->dataset, 'nid', 'nid_anzeige_name', 'Nid'),
                 new FilterColumn($this->dataset, 'target_table_name', 'target_table_name_anzeige_name', 'DB-Tabelle'),
-                new FilterColumn($this->dataset, 'target_id', 'target_id_anzeige_name', 'Datensatz'),
+                new FilterColumn($this->dataset, 'target_id', 'target_id', 'Datensatz Id'),
+                new FilterColumn($this->dataset, 'target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'Datensatz'),
                 new FilterColumn($this->dataset, 'notizen', 'notizen', 'Notizen'),
                 new FilterColumn($this->dataset, 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa'),
                 new FilterColumn($this->dataset, 'eingabe_abgeschlossen_datum', 'eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum'),
@@ -124,8 +125,7 @@
                 new FilterColumn($this->dataset, 'action', 'action', 'Action'),
                 new FilterColumn($this->dataset, 'state', 'state', 'State'),
                 new FilterColumn($this->dataset, 'action_date', 'action_date', 'Action Date'),
-                new FilterColumn($this->dataset, 'snapshot_id', 'snapshot_id_beschreibung', 'Snapshot Id'),
-                new FilterColumn($this->dataset, 'target_table_name_with_id', 'target_table_name_with_id', 'Target Table Name With Id')
+                new FilterColumn($this->dataset, 'snapshot_id', 'snapshot_id_beschreibung', 'Snapshot Id')
             );
         }
     
@@ -136,6 +136,7 @@
                 ->addColumn($columns['nid'])
                 ->addColumn($columns['target_table_name'])
                 ->addColumn($columns['target_id'])
+                ->addColumn($columns['target_table_name_with_id'])
                 ->addColumn($columns['notizen'])
                 ->addColumn($columns['eingabe_abgeschlossen_visa'])
                 ->addColumn($columns['eingabe_abgeschlossen_datum'])
@@ -151,8 +152,7 @@
                 ->addColumn($columns['action'])
                 ->addColumn($columns['state'])
                 ->addColumn($columns['action_date'])
-                ->addColumn($columns['snapshot_id'])
-                ->addColumn($columns['target_table_name_with_id']);
+                ->addColumn($columns['snapshot_id']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -161,6 +161,7 @@
                 ->setOptionsFor('nid')
                 ->setOptionsFor('target_table_name')
                 ->setOptionsFor('target_id')
+                ->setOptionsFor('target_table_name_with_id')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
                 ->setOptionsFor('kontrolliert_datum')
                 ->setOptionsFor('freigabe_datum')
@@ -253,14 +254,7 @@
                 )
             );
             
-            $main_editor = new DynamicCombobox('target_id_edit', $this->CreateLinkBuilder());
-            $main_editor->setAllowClear(true);
-            $main_editor->setMinimumInputLength(0);
-            $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_wissensartikel_link_wissensartikel_link_log_target_id_search');
-            
-            $multi_value_select_editor = new RemoteMultiValueSelect('target_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_wissensartikel_link_wissensartikel_link_log_target_id_search');
+            $main_editor = new TextEdit('target_id_edit');
             
             $filterBuilder->addColumn(
                 $columns['target_id'],
@@ -273,6 +267,39 @@
                     FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
                     FilterConditionOperator::IS_BETWEEN => $main_editor,
                     FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new DynamicCombobox('target_table_name_with_id_edit', $this->CreateLinkBuilder());
+            $main_editor->setAllowClear(true);
+            $main_editor->setMinimumInputLength(0);
+            $main_editor->SetAllowNullValue(false);
+            $main_editor->SetHandlerName('filter_builder_wissensartikel_link_wissensartikel_link_log_target_table_name_with_id_search');
+            
+            $multi_value_select_editor = new RemoteMultiValueSelect('target_table_name_with_id', $this->CreateLinkBuilder());
+            $multi_value_select_editor->SetHandlerName('filter_builder_wissensartikel_link_wissensartikel_link_log_target_table_name_with_id_search');
+            
+            $text_editor = new TextEdit('target_table_name_with_id');
+            
+            $filterBuilder->addColumn(
+                $columns['target_table_name_with_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $text_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $text_editor,
+                    FilterConditionOperator::BEGINS_WITH => $text_editor,
+                    FilterConditionOperator::ENDS_WITH => $text_editor,
+                    FilterConditionOperator::IS_LIKE => $text_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $text_editor,
                     FilterConditionOperator::IN => $multi_value_select_editor,
                     FilterConditionOperator::NOT_IN => $multi_value_select_editor,
                     FilterConditionOperator::IS_BLANK => null,
@@ -668,31 +695,6 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
-            
-            $main_editor = new TextEdit('target_table_name_with_id_edit');
-            $main_editor->SetMaxLength(52);
-            
-            $filterBuilder->addColumn(
-                $columns['target_table_name_with_id'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
-                    FilterConditionOperator::BEGINS_WITH => $main_editor,
-                    FilterConditionOperator::ENDS_WITH => $main_editor,
-                    FilterConditionOperator::IS_LIKE => $main_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -742,12 +744,22 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for target_id field
             //
-            $column = new TextViewColumn('target_id', 'target_id_anzeige_name', 'Datensatz', $this->dataset);
+            $column = new TextViewColumn('target_id', 'target_id', 'Datensatz Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('id in der Zieltabelle');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'Datensatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Zieltabelle#id, ist die Zusammensetzung von Zieltablle und id mit einem Hash (#) getrennt. Dieses Feld ist aus technischen Gründen nötig für den PHP Formulargenerator.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -921,16 +933,6 @@
             $column->SetDescription('Fremdschlüssel zu einem Snapshot');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
-            //
-            // View column for target_table_name_with_id field
-            //
-            $column = new TextViewColumn('target_table_name_with_id', 'target_table_name_with_id', 'Target Table Name With Id', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Zieltabelle#id, ist die Zusammensetzung von Zieltablle und id mit einem Hash (#) getrennt. Dieses Feld ist aus technischen Gründen nötig für den PHP Formulargenerator.');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -957,9 +959,16 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for target_id field
+            //
+            $column = new TextViewColumn('target_id', 'target_id', 'Datensatz Id', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('target_id', 'target_id_anzeige_name', 'Datensatz', $this->dataset);
+            $column = new TextViewColumn('target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'Datensatz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1085,55 +1094,21 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for target_table_name_with_id field
-            //
-            $column = new TextViewColumn('target_table_name_with_id', 'target_table_name_with_id', 'Target Table Name With Id', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
         }
     
         protected function AddEditColumns(Grid $grid)
         {
-            //
-            // Edit column for target_table_name_with_id field
-            //
-            $editor = new TextEdit('target_table_name_with_id_edit');
-            $editor->SetMaxLength(52);
-            $editColumn = new CustomEditColumn('Target Table Name With Id', 'target_table_name_with_id', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
+    
         }
     
         protected function AddMultiEditColumns(Grid $grid)
         {
-            //
-            // Edit column for target_table_name_with_id field
-            //
-            $editor = new TextEdit('target_table_name_with_id_edit');
-            $editor->SetMaxLength(52);
-            $editColumn = new CustomEditColumn('Target Table Name With Id', 'target_table_name_with_id', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
+    
         }
     
         protected function AddInsertColumns(Grid $grid)
         {
-            //
-            // Edit column for target_table_name_with_id field
-            //
-            $editor = new TextEdit('target_table_name_with_id_edit');
-            $editor->SetMaxLength(52);
-            $editColumn = new CustomEditColumn('Target Table Name With Id', 'target_table_name_with_id', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
+    
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -1166,9 +1141,16 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for target_id field
+            //
+            $column = new TextViewColumn('target_id', 'target_id', 'Datensatz Id', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('target_id', 'target_id_anzeige_name', 'Datensatz', $this->dataset);
+            $column = new TextViewColumn('target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'Datensatz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -1293,13 +1275,6 @@
             $column = new TextViewColumn('snapshot_id', 'snapshot_id_beschreibung', 'Snapshot Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for target_table_name_with_id field
-            //
-            $column = new TextViewColumn('target_table_name_with_id', 'target_table_name_with_id', 'Target Table Name With Id', $this->dataset);
-            $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
         }
     
@@ -1327,9 +1302,16 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for target_id field
+            //
+            $column = new TextViewColumn('target_id', 'target_id', 'Datensatz Id', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('target_id', 'target_id_anzeige_name', 'Datensatz', $this->dataset);
+            $column = new TextViewColumn('target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'Datensatz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -1455,13 +1437,6 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddExportColumn($column);
-            
-            //
-            // View column for target_table_name_with_id field
-            //
-            $column = new TextViewColumn('target_table_name_with_id', 'target_table_name_with_id', 'Target Table Name With Id', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
         }
     
         private function AddCompareColumns(Grid $grid)
@@ -1488,9 +1463,16 @@
             $grid->AddCompareColumn($column);
             
             //
+            // View column for target_id field
+            //
+            $column = new TextViewColumn('target_id', 'target_id', 'Datensatz Id', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('target_id', 'target_id_anzeige_name', 'Datensatz', $this->dataset);
+            $column = new TextViewColumn('target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'Datensatz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             
@@ -1578,6 +1560,16 @@
             $grid->AddCompareColumn($column);
             
             //
+            // View column for log_id field
+            //
+            $column = new NumberViewColumn('log_id', 'log_id', 'Log Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
             // View column for action field
             //
             $column = new TextViewColumn('action', 'action', 'Action', $this->dataset);
@@ -1605,13 +1597,6 @@
             $column = new TextViewColumn('snapshot_id', 'snapshot_id_beschreibung', 'Snapshot Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for target_table_name_with_id field
-            //
-            $column = new TextViewColumn('target_table_name_with_id', 'target_table_name_with_id', 'Target Table Name With Id', $this->dataset);
-            $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
         }
     
@@ -1789,7 +1774,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_wissensartikel_link_log_target_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_wissensartikel_link_log_target_table_name_with_id_search', 'table_with_id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -1808,7 +1793,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_wissensartikel_link_log_target_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_wissensartikel_link_log_target_table_name_with_id_search', 'table_with_id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
