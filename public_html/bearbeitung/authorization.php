@@ -104,7 +104,9 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'translation_target' => '<span class="settings">Translation Target</span>',
 'user' => '<span class="settings">User</span>',
 'parlamentarier_anhang' => 'Parlamentarier Anhang',
-'person_anhang' => 'Person Anhang');
+'person_anhang' => 'Person Anhang',
+'wissensartikel_link' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Lobbypediaverknüpfung</span>',
+'wissensartikel_link.wissensartikel_link_log' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Lobbypediaverknüpfung</span>->Lobbypediaverknüpfung Log');
 
 $usersTableInfo = array(
     'TableName' => 'user',

@@ -1547,6 +1547,69 @@ CREATE TABLE `kanton_log` (
 SET character_set_client = @saved_cs_client ;
 
 --
+-- Table structure for table `knowledge_article_link`
+--
+
+DROP TABLE IF EXISTS `knowledge_article_link`;
+SET @saved_cs_client     = @@character_set_client ;
+SET character_set_client = utf8 ;
+CREATE TABLE `knowledge_article_link` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
+  `nid` int(10) unsigned NOT NULL COMMENT 'CMS Drupal 7 node id (nid) des Lobbypedia-Artikels',
+  `target_table` enum('organisation','parlamentarier','interessenbindung','person','mandat','interessengruppe','branche','partei','fraktion','kommission') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Zieltabelle, die mit dem Lobbypedia-Artikel verknüpft wird.',
+  `target_id` int(11) NOT NULL COMMENT 'id in der Zieltabelle',
+  `notizen` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `eingabe_abgeschlossen_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `kontrolliert_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `freigabe_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  PRIMARY KEY (`id`),
+  KEY `idx_nid` (`nid`),
+  KEY `idx_target` (`target_table`,`target_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Verknüpfung von CMS Lobbypedia-Artikeln mit DB-Datensätzen';
+SET character_set_client = @saved_cs_client ;
+
+--
+-- Table structure for table `knowledge_article_link_log`
+--
+
+DROP TABLE IF EXISTS `knowledge_article_link_log`;
+SET @saved_cs_client     = @@character_set_client ;
+SET character_set_client = utf8 ;
+CREATE TABLE `knowledge_article_link_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  `nid` int(10) unsigned NOT NULL COMMENT 'CMS Drupal 7 node id (nid) des Lobbypedia-Artikels',
+  `target_table` enum('organisation','parlamentarier','interessenbindung','person','mandat','interessengruppe','branche','partei','fraktion','kommission') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Zieltabelle, die mit dem Lobbypedia-Artikel verknüpft wird.',
+  `target_id` int(11) NOT NULL COMMENT 'id in der Zieltabelle',
+  `notizen` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `eingabe_abgeschlossen_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `kontrolliert_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `freigabe_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  KEY `fk_knowledge_article_link_log_snapshot_id` (`snapshot_id`),
+  CONSTRAINT `fk_knowledge_article_link_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Verknüpfung von CMS Lobbypedia-Artikeln mit DB-Datensätzen';
+SET character_set_client = @saved_cs_client ;
+
+--
 -- Table structure for table `kommission`
 --
 
@@ -5819,6 +5882,24 @@ CREATE VIEW `uv_interessenbindung_jahr` AS SELECT
 SET character_set_client = @saved_cs_client;
 
 --
+-- Temporary table structure for view `v_all_entity_records`
+--
+
+DROP TABLE IF EXISTS `v_all_entity_records`;
+DROP VIEW IF EXISTS `v_all_entity_records`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE VIEW `v_all_entity_records` AS SELECT 
+ 1 AS `table_name`,
+ 1 AS `table_with_id`,
+ 1 AS `id`,
+ 1 AS `anzeige_name`,
+ 1 AS `anzeige_name_de`,
+ 1 AS `anzeige_name_fr`,
+ 1 AS `anzeige_name_mixed`;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Temporary table structure for view `v_branche`
 --
 
@@ -6001,6 +6082,33 @@ CREATE VIEW `v_country` AS SELECT
  1 AS `updated_date`,
  1 AS `created_date_unix`,
  1 AS `updated_date_unix`;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_d7_node`
+--
+
+DROP TABLE IF EXISTS `v_d7_node`;
+DROP VIEW IF EXISTS `v_d7_node`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE VIEW `v_d7_node` AS SELECT 
+ 1 AS `anzeige_name`,
+ 1 AS `anzeige_name_long`,
+ 1 AS `nid`,
+ 1 AS `vid`,
+ 1 AS `type`,
+ 1 AS `language`,
+ 1 AS `title`,
+ 1 AS `uid`,
+ 1 AS `status`,
+ 1 AS `created`,
+ 1 AS `changed`,
+ 1 AS `comment`,
+ 1 AS `promote`,
+ 1 AS `sticky`,
+ 1 AS `tnid`,
+ 1 AS `translate`;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7687,6 +7795,23 @@ DROP VIEW IF EXISTS `v_last_updated_tables_unordered`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE VIEW `v_last_updated_tables_unordered` AS SELECT 
+ 1 AS `table_name`,
+ 1 AS `name`,
+ 1 AS `anzahl_eintraege`,
+ 1 AS `last_visa`,
+ 1 AS `last_updated`,
+ 1 AS `last_updated_id`;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_last_updated_wissensartikel_link`
+--
+
+DROP TABLE IF EXISTS `v_last_updated_wissensartikel_link`;
+DROP VIEW IF EXISTS `v_last_updated_wissensartikel_link`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE VIEW `v_last_updated_wissensartikel_link` AS SELECT 
  1 AS `table_name`,
  1 AS `name`,
  1 AS `anzahl_eintraege`,
@@ -10743,6 +10868,72 @@ CREATE VIEW `v_user_permission` AS SELECT
 SET character_set_client = @saved_cs_client;
 
 --
+-- Temporary table structure for view `v_wissensartikel_link`
+--
+
+DROP TABLE IF EXISTS `v_wissensartikel_link`;
+DROP VIEW IF EXISTS `v_wissensartikel_link`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE VIEW `v_wissensartikel_link` AS SELECT 
+ 1 AS `id`,
+ 1 AS `nid`,
+ 1 AS `target_table_name`,
+ 1 AS `target_id`,
+ 1 AS `notizen`,
+ 1 AS `eingabe_abgeschlossen_visa`,
+ 1 AS `eingabe_abgeschlossen_datum`,
+ 1 AS `kontrolliert_visa`,
+ 1 AS `kontrolliert_datum`,
+ 1 AS `freigabe_visa`,
+ 1 AS `freigabe_datum`,
+ 1 AS `created_visa`,
+ 1 AS `created_date`,
+ 1 AS `updated_visa`,
+ 1 AS `updated_date`,
+ 1 AS `published`,
+ 1 AS `created_date_unix`,
+ 1 AS `updated_date_unix`,
+ 1 AS `eingabe_abgeschlossen_datum_unix`,
+ 1 AS `kontrolliert_datum_unix`,
+ 1 AS `freigabe_datum_unix`;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_wissensartikelzieltabelle`
+--
+
+DROP TABLE IF EXISTS `v_wissensartikelzieltabelle`;
+DROP VIEW IF EXISTS `v_wissensartikelzieltabelle`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE VIEW `v_wissensartikelzieltabelle` AS SELECT 
+ 1 AS `anzeige_name`,
+ 1 AS `anzeige_name_mixed`,
+ 1 AS `id`,
+ 1 AS `table_name`,
+ 1 AS `name_de`,
+ 1 AS `name_fr`,
+ 1 AS `notizen`,
+ 1 AS `eingabe_abgeschlossen_visa`,
+ 1 AS `eingabe_abgeschlossen_datum`,
+ 1 AS `kontrolliert_visa`,
+ 1 AS `kontrolliert_datum`,
+ 1 AS `freigabe_visa`,
+ 1 AS `freigabe_datum`,
+ 1 AS `created_visa`,
+ 1 AS `created_date`,
+ 1 AS `updated_visa`,
+ 1 AS `updated_date`,
+ 1 AS `published`,
+ 1 AS `created_date_unix`,
+ 1 AS `updated_date_unix`,
+ 1 AS `eingabe_abgeschlossen_datum_unix`,
+ 1 AS `kontrolliert_datum_unix`,
+ 1 AS `freigabe_datum_unix`;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Temporary table structure for view `v_zutrittsberechtigung`
 --
 
@@ -11406,6 +11597,189 @@ CREATE VIEW `v_zutrittsberechtigung_simple_compat` AS SELECT
 SET character_set_client = @saved_cs_client;
 
 --
+-- Temporary table structure for view `vf_interessenbindung`
+--
+
+DROP TABLE IF EXISTS `vf_interessenbindung`;
+DROP VIEW IF EXISTS `vf_interessenbindung`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE VIEW `vf_interessenbindung` AS SELECT 
+ 1 AS `id`,
+ 1 AS `parlamentarier_id`,
+ 1 AS `organisation_id`,
+ 1 AS `art`,
+ 1 AS `funktion_im_gremium`,
+ 1 AS `deklarationstyp`,
+ 1 AS `status`,
+ 1 AS `hauptberuflich`,
+ 1 AS `behoerden_vertreter`,
+ 1 AS `beschreibung`,
+ 1 AS `beschreibung_fr`,
+ 1 AS `quelle_url`,
+ 1 AS `quelle_url_gueltig`,
+ 1 AS `quelle`,
+ 1 AS `von`,
+ 1 AS `bis`,
+ 1 AS `notizen`,
+ 1 AS `updated_by_import`,
+ 1 AS `eingabe_abgeschlossen_visa`,
+ 1 AS `eingabe_abgeschlossen_datum`,
+ 1 AS `kontrolliert_visa`,
+ 1 AS `kontrolliert_datum`,
+ 1 AS `autorisiert_visa`,
+ 1 AS `autorisiert_datum`,
+ 1 AS `freigabe_visa`,
+ 1 AS `freigabe_datum`,
+ 1 AS `created_visa`,
+ 1 AS `created_date`,
+ 1 AS `updated_visa`,
+ 1 AS `updated_date`,
+ 1 AS `verguetung`,
+ 1 AS `verguetung_jahr`,
+ 1 AS `verguetung_beschreibung`,
+ 1 AS `verguetung_freigabe_datum`,
+ 1 AS `jahr_minus_1_verguetung`,
+ 1 AS `jahr_minus_1_verguetung_jahr`,
+ 1 AS `jahr_minus_1_verguetung_beschreibung`,
+ 1 AS `jahr_minus_1_verguetung_freigabe_datum`,
+ 1 AS `jahr_minus_2_verguetung`,
+ 1 AS `jahr_minus_2_verguetung_jahr`,
+ 1 AS `jahr_minus_2_verguetung_beschreibung`,
+ 1 AS `jahr_minus_2_verguetung_freigabe_datum`;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `wissensartikel_link`
+--
+
+DROP TABLE IF EXISTS `wissensartikel_link`;
+SET @saved_cs_client     = @@character_set_client ;
+SET character_set_client = utf8 ;
+CREATE TABLE `wissensartikel_link` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
+  `nid` int(10) unsigned NOT NULL COMMENT 'CMS Drupal 7 node id (nid) des Lobbypedia-Artikels',
+  `target_table_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Zieltabelle, die mit dem Lobbypedia-Artikel verknüpft wird.',
+  `target_id` int(11) NOT NULL COMMENT 'id in der Zieltabelle',
+  `target_table_name_with_id` varchar(52) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Zieltabelle#id, ist die Zusammensetzung von Zieltablle und id mit einem Hash (#) getrennt. Dieses Feld ist aus technischen Gründen nötig für den PHP Formulargenerator.',
+  `notizen` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `eingabe_abgeschlossen_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `kontrolliert_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `freigabe_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  PRIMARY KEY (`id`),
+  KEY `idx_nid` (`nid`),
+  KEY `idx_target` (`target_table_name`,`target_id`),
+  CONSTRAINT `fk_nid` FOREIGN KEY (`nid`) REFERENCES `lobbywat_d7lobbywatch`.`dlw_node` (`nid`),
+  CONSTRAINT `fk_target_table_name` FOREIGN KEY (`target_table_name`) REFERENCES `wissensartikelzieltabelle` (`table_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Verknüpfung von CMS Lobbypedia-Artikeln mit DB-Datensätzen';
+SET character_set_client = @saved_cs_client ;
+
+--
+-- Table structure for table `wissensartikel_link_log`
+--
+
+DROP TABLE IF EXISTS `wissensartikel_link_log`;
+SET @saved_cs_client     = @@character_set_client ;
+SET character_set_client = utf8 ;
+CREATE TABLE `wissensartikel_link_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  `nid` int(10) unsigned NOT NULL COMMENT 'CMS Drupal 7 node id (nid) des Lobbypedia-Artikels',
+  `target_table_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Zieltabelle, die mit dem Lobbypedia-Artikel verknüpft wird.',
+  `target_id` int(11) NOT NULL COMMENT 'id in der Zieltabelle',
+  `target_table_name_with_id` varchar(52) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Zieltabelle#id, ist die Zusammensetzung von Zieltablle und id mit einem Hash (#) getrennt. Dieses Feld ist aus technischen Gründen nötig für den PHP Formulargenerator.',
+  `notizen` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `eingabe_abgeschlossen_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `kontrolliert_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `freigabe_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  KEY `fk_wissensartikel_link_log_snapshot_id` (`snapshot_id`),
+  CONSTRAINT `fk_wissensartikel_link_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Verknüpfung von CMS Lobbypedia-Artikeln mit DB-Datensätzen';
+SET character_set_client = @saved_cs_client ;
+
+--
+-- Table structure for table `wissensartikelzieltabelle`
+--
+
+DROP TABLE IF EXISTS `wissensartikelzieltabelle`;
+SET @saved_cs_client     = @@character_set_client ;
+SET character_set_client = utf8 ;
+CREATE TABLE `wissensartikelzieltabelle` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
+  `table_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Technischer Name der Zieltabelle, die mit dem Lobbypedia-Artikel verknüpft werden kann.',
+  `name_de` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Deutscher Name der Zieltabelle, die mit dem Lobbypedia-Artikel verknüpft werden kann.',
+  `name_fr` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Französischer Name der Zieltabelle, die mit dem Lobbypedia-Artikel verknüpft werden kann.',
+  `notizen` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `eingabe_abgeschlossen_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `kontrolliert_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `freigabe_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `target_table_name_unique` (`table_name`) COMMENT 'Fachlicher unique constraint'
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Verknüpfung von CMS Lobbypedia-Artikeln mit DB-Datensätzen';
+SET character_set_client = @saved_cs_client ;
+
+--
+-- Table structure for table `wissensartikelzieltabelle_log`
+--
+
+DROP TABLE IF EXISTS `wissensartikelzieltabelle_log`;
+SET @saved_cs_client     = @@character_set_client ;
+SET character_set_client = utf8 ;
+CREATE TABLE `wissensartikelzieltabelle_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  `table_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Technischer Name der Zieltabelle, die mit dem Lobbypedia-Artikel verknüpft werden kann.',
+  `name_de` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Deutscher Name der Zieltabelle, die mit dem Lobbypedia-Artikel verknüpft werden kann.',
+  `name_fr` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Französischer Name der Zieltabelle, die mit dem Lobbypedia-Artikel verknüpft werden kann.',
+  `notizen` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `eingabe_abgeschlossen_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `kontrolliert_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `freigabe_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  UNIQUE KEY `target_table_name_unique` (`table_name`) COMMENT 'Fachlicher unique constraint',
+  KEY `fk_wissensartikelzieltabelle_log_snapshot_id` (`snapshot_id`),
+  CONSTRAINT `fk_wissensartikelzieltabelle_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Verknüpfung von CMS Lobbypedia-Artikeln mit DB-Datensätzen';
+SET character_set_client = @saved_cs_client ;
+
+--
 -- Table structure for table `zutrittsberechtigung`
 --
 
@@ -12008,6 +12382,24 @@ SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
 
 --
+-- Final view structure for view `v_all_entity_records`
+--
+
+DROP VIEW IF EXISTS `v_all_entity_records`;
+SET @saved_cs_client          = @@character_set_client ;
+SET @saved_cs_results         = @@character_set_results ;
+SET @saved_col_connection     = @@collation_connection ;
+SET character_set_client      = utf8mb4 ;
+SET character_set_results     = utf8mb4 ;
+SET collation_connection      = utf8mb4_unicode_ci ;
+CREATE  
+ 
+VIEW `v_all_entity_records` AS select 'person' AS `table_name`,concat('person','#',`v_person_simple`.`id`) AS `table_with_id`,`v_person_simple`.`id` AS `id`,`v_person_simple`.`anzeige_name` AS `anzeige_name`,`v_person_simple`.`anzeige_name_de` AS `anzeige_name_de`,`v_person_simple`.`anzeige_name_fr` AS `anzeige_name_fr`,`v_person_simple`.`anzeige_name` AS `anzeige_name_mixed` from `v_person_simple` union all select 'branche' AS `table_name`,concat('branche','#',`v_branche_simple`.`id`) AS `table_with_id`,`v_branche_simple`.`id` AS `id`,`v_branche_simple`.`anzeige_name` AS `anzeige_name`,`v_branche_simple`.`anzeige_name_de` AS `anzeige_name_de`,`v_branche_simple`.`anzeige_name_fr` AS `anzeige_name_fr`,`v_branche_simple`.`anzeige_name` AS `anzeige_name_mixed` from `v_branche_simple` union all select 'organisation' AS `table_name`,concat('organisation','#',`v_organisation_simple`.`id`) AS `table_with_id`,`v_organisation_simple`.`id` AS `id`,`v_organisation_simple`.`anzeige_name` AS `anzeige_name`,`v_organisation_simple`.`anzeige_name_de` AS `anzeige_name_de`,`v_organisation_simple`.`anzeige_name_fr` AS `anzeige_name_fr`,`v_organisation_simple`.`anzeige_name` AS `anzeige_name_mixed` from `v_organisation_simple` union all select 'parlamentarier' AS `table_name`,concat('parlamentarier','#',`v_parlamentarier_simple`.`id`) AS `table_with_id`,`v_parlamentarier_simple`.`id` AS `id`,`v_parlamentarier_simple`.`anzeige_name` AS `anzeige_name`,`v_parlamentarier_simple`.`anzeige_name_de` AS `anzeige_name_de`,`v_parlamentarier_simple`.`anzeige_name_fr` AS `anzeige_name_fr`,`v_parlamentarier_simple`.`anzeige_name` AS `anzeige_name_mixed` from `v_parlamentarier_simple` union all select 'kanton' AS `table_name`,concat('kanton','#',`v_kanton_simple`.`id`) AS `table_with_id`,`v_kanton_simple`.`id` AS `id`,`v_kanton_simple`.`anzeige_name` AS `anzeige_name`,`v_kanton_simple`.`anzeige_name_de` AS `anzeige_name_de`,`v_kanton_simple`.`anzeige_name_fr` AS `anzeige_name_fr`,`v_kanton_simple`.`anzeige_name` AS `anzeige_name_mixed` from `v_kanton_simple` union all select 'interessenraum' AS `table_name`,concat('interessenraum','#',`v_interessenraum`.`id`) AS `table_with_id`,`v_interessenraum`.`id` AS `id`,`v_interessenraum`.`anzeige_name` AS `anzeige_name`,`v_interessenraum`.`anzeige_name_de` AS `anzeige_name_de`,`v_interessenraum`.`anzeige_name_fr` AS `anzeige_name_fr`,`v_interessenraum`.`anzeige_name` AS `anzeige_name_mixed` from `v_interessenraum` union all select 'interessengruppe' AS `table_name`,concat('interessengruppe','#',`v_interessengruppe_simple`.`id`) AS `table_with_id`,`v_interessengruppe_simple`.`id` AS `id`,`v_interessengruppe_simple`.`anzeige_name` AS `anzeige_name`,`v_interessengruppe_simple`.`anzeige_name_de` AS `anzeige_name_de`,`v_interessengruppe_simple`.`anzeige_name_fr` AS `anzeige_name_fr`,`v_interessengruppe_simple`.`anzeige_name` AS `anzeige_name_mixed` from `v_interessengruppe_simple` union all select 'partei' AS `table_name`,concat('partei','#',`v_partei`.`id`) AS `table_with_id`,`v_partei`.`id` AS `id`,`v_partei`.`anzeige_name` AS `anzeige_name`,`v_partei`.`anzeige_name_de` AS `anzeige_name_de`,`v_partei`.`anzeige_name_fr` AS `anzeige_name_fr`,`v_partei`.`anzeige_name` AS `anzeige_name_mixed` from `v_partei` union all select 'fraktion' AS `table_name`,concat('fraktion','#',`v_fraktion`.`id`) AS `table_with_id`,`v_fraktion`.`id` AS `id`,`v_fraktion`.`anzeige_name` AS `anzeige_name`,`v_fraktion`.`anzeige_name_de` AS `anzeige_name_de`,`v_fraktion`.`anzeige_name_fr` AS `anzeige_name_fr`,`v_fraktion`.`anzeige_name` AS `anzeige_name_mixed` from `v_fraktion` union all select 'kommission' AS `table_name`,concat('kommission','#',`v_kommission`.`id`) AS `table_with_id`,`v_kommission`.`id` AS `id`,`v_kommission`.`anzeige_name` AS `anzeige_name`,`v_kommission`.`anzeige_name_de` AS `anzeige_name_de`,`v_kommission`.`anzeige_name_fr` AS `anzeige_name_fr`,`v_kommission`.`anzeige_name` AS `anzeige_name_mixed` from `v_kommission` ;
+SET character_set_client      = @saved_cs_client ;
+SET character_set_results     = @saved_cs_results ;
+SET collation_connection      = @saved_col_connection ;
+
+--
 -- Final view structure for view `v_branche`
 --
 
@@ -12075,6 +12467,24 @@ SET collation_connection      = utf8mb4_unicode_ci ;
 CREATE  
  
 VIEW `v_country` AS select `country`.`name_de` AS `anzeige_name`,`country`.`name_de` AS `anzeige_name_de`,`country`.`name_fr` AS `anzeige_name_fr`,concat_ws(' / ',`country`.`name_de`,`country`.`name_fr`) AS `anzeige_name_mixed`,`country`.`id` AS `id`,`country`.`continent` AS `continent`,`country`.`name_en` AS `name_en`,`country`.`official_name_en` AS `official_name_en`,`country`.`capital_en` AS `capital_en`,`country`.`name_de` AS `name_de`,`country`.`official_name_de` AS `official_name_de`,`country`.`capital_de` AS `capital_de`,`country`.`name_fr` AS `name_fr`,`country`.`official_name_fr` AS `official_name_fr`,`country`.`capital_fr` AS `capital_fr`,`country`.`name_it` AS `name_it`,`country`.`official_name_it` AS `official_name_it`,`country`.`capital_it` AS `capital_it`,`country`.`iso2` AS `iso2`,`country`.`iso3` AS `iso3`,`country`.`vehicle_code` AS `vehicle_code`,`country`.`ioc` AS `ioc`,`country`.`tld` AS `tld`,`country`.`currency` AS `currency`,`country`.`phone` AS `phone`,`country`.`utc` AS `utc`,`country`.`show_level` AS `show_level`,`country`.`created_visa` AS `created_visa`,`country`.`created_date` AS `created_date`,`country`.`updated_visa` AS `updated_visa`,`country`.`updated_date` AS `updated_date`,unix_timestamp(`country`.`created_date`) AS `created_date_unix`,unix_timestamp(`country`.`updated_date`) AS `updated_date_unix` from `country` ;
+SET character_set_client      = @saved_cs_client ;
+SET character_set_results     = @saved_cs_results ;
+SET collation_connection      = @saved_col_connection ;
+
+--
+-- Final view structure for view `v_d7_node`
+--
+
+DROP VIEW IF EXISTS `v_d7_node`;
+SET @saved_cs_client          = @@character_set_client ;
+SET @saved_cs_results         = @@character_set_results ;
+SET @saved_col_connection     = @@collation_connection ;
+SET character_set_client      = utf8mb4 ;
+SET character_set_results     = utf8mb4 ;
+SET collation_connection      = utf8mb4_unicode_ci ;
+CREATE  
+ 
+VIEW `v_d7_node` AS select `lobbywat_d7lobbywatch`.`dlw_node`.`title` AS `anzeige_name`,concat(`lobbywat_d7lobbywatch`.`dlw_node`.`title`,' (nid:',`lobbywat_d7lobbywatch`.`dlw_node`.`nid`,', lang:',`lobbywat_d7lobbywatch`.`dlw_node`.`language`,', published: ',`lobbywat_d7lobbywatch`.`dlw_node`.`status`,')') AS `anzeige_name_long`,`lobbywat_d7lobbywatch`.`dlw_node`.`nid` AS `nid`,`lobbywat_d7lobbywatch`.`dlw_node`.`vid` AS `vid`,`lobbywat_d7lobbywatch`.`dlw_node`.`type` AS `type`,`lobbywat_d7lobbywatch`.`dlw_node`.`language` AS `language`,`lobbywat_d7lobbywatch`.`dlw_node`.`title` AS `title`,`lobbywat_d7lobbywatch`.`dlw_node`.`uid` AS `uid`,`lobbywat_d7lobbywatch`.`dlw_node`.`status` AS `status`,`lobbywat_d7lobbywatch`.`dlw_node`.`created` AS `created`,`lobbywat_d7lobbywatch`.`dlw_node`.`changed` AS `changed`,`lobbywat_d7lobbywatch`.`dlw_node`.`comment` AS `comment`,`lobbywat_d7lobbywatch`.`dlw_node`.`promote` AS `promote`,`lobbywat_d7lobbywatch`.`dlw_node`.`sticky` AS `sticky`,`lobbywat_d7lobbywatch`.`dlw_node`.`tnid` AS `tnid`,`lobbywat_d7lobbywatch`.`dlw_node`.`translate` AS `translate` from `lobbywat_d7lobbywatch`.`dlw_node` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -12974,7 +13384,25 @@ SET character_set_results     = utf8mb4 ;
 SET collation_connection      = utf8mb4_unicode_ci ;
 CREATE  
  
-VIEW `v_last_updated_tables_unordered` AS select `v_last_updated_branche`.`table_name` AS `table_name`,`v_last_updated_branche`.`name` AS `name`,`v_last_updated_branche`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_branche`.`last_visa` AS `last_visa`,`v_last_updated_branche`.`last_updated` AS `last_updated`,`v_last_updated_branche`.`last_updated_id` AS `last_updated_id` from `v_last_updated_branche` union select `v_last_updated_interessenbindung`.`table_name` AS `table_name`,`v_last_updated_interessenbindung`.`name` AS `name`,`v_last_updated_interessenbindung`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_interessenbindung`.`last_visa` AS `last_visa`,`v_last_updated_interessenbindung`.`last_updated` AS `last_updated`,`v_last_updated_interessenbindung`.`last_updated_id` AS `last_updated_id` from `v_last_updated_interessenbindung` union select `v_last_updated_interessenbindung_jahr`.`table_name` AS `table_name`,`v_last_updated_interessenbindung_jahr`.`name` AS `name`,`v_last_updated_interessenbindung_jahr`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_interessenbindung_jahr`.`last_visa` AS `last_visa`,`v_last_updated_interessenbindung_jahr`.`last_updated` AS `last_updated`,`v_last_updated_interessenbindung_jahr`.`last_updated_id` AS `last_updated_id` from `v_last_updated_interessenbindung_jahr` union select `v_last_updated_interessengruppe`.`table_name` AS `table_name`,`v_last_updated_interessengruppe`.`name` AS `name`,`v_last_updated_interessengruppe`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_interessengruppe`.`last_visa` AS `last_visa`,`v_last_updated_interessengruppe`.`last_updated` AS `last_updated`,`v_last_updated_interessengruppe`.`last_updated_id` AS `last_updated_id` from `v_last_updated_interessengruppe` union select `v_last_updated_in_kommission`.`table_name` AS `table_name`,`v_last_updated_in_kommission`.`name` AS `name`,`v_last_updated_in_kommission`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_in_kommission`.`last_visa` AS `last_visa`,`v_last_updated_in_kommission`.`last_updated` AS `last_updated`,`v_last_updated_in_kommission`.`last_updated_id` AS `last_updated_id` from `v_last_updated_in_kommission` union select `v_last_updated_kommission`.`table_name` AS `table_name`,`v_last_updated_kommission`.`name` AS `name`,`v_last_updated_kommission`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_kommission`.`last_visa` AS `last_visa`,`v_last_updated_kommission`.`last_updated` AS `last_updated`,`v_last_updated_kommission`.`last_updated_id` AS `last_updated_id` from `v_last_updated_kommission` union select `v_last_updated_mandat`.`table_name` AS `table_name`,`v_last_updated_mandat`.`name` AS `name`,`v_last_updated_mandat`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_mandat`.`last_visa` AS `last_visa`,`v_last_updated_mandat`.`last_updated` AS `last_updated`,`v_last_updated_mandat`.`last_updated_id` AS `last_updated_id` from `v_last_updated_mandat` union select `v_last_updated_mandat_jahr`.`table_name` AS `table_name`,`v_last_updated_mandat_jahr`.`name` AS `name`,`v_last_updated_mandat_jahr`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_mandat_jahr`.`last_visa` AS `last_visa`,`v_last_updated_mandat_jahr`.`last_updated` AS `last_updated`,`v_last_updated_mandat_jahr`.`last_updated_id` AS `last_updated_id` from `v_last_updated_mandat_jahr` union select `v_last_updated_organisation`.`table_name` AS `table_name`,`v_last_updated_organisation`.`name` AS `name`,`v_last_updated_organisation`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_organisation`.`last_visa` AS `last_visa`,`v_last_updated_organisation`.`last_updated` AS `last_updated`,`v_last_updated_organisation`.`last_updated_id` AS `last_updated_id` from `v_last_updated_organisation` union select `v_last_updated_organisation_beziehung`.`table_name` AS `table_name`,`v_last_updated_organisation_beziehung`.`name` AS `name`,`v_last_updated_organisation_beziehung`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_organisation_beziehung`.`last_visa` AS `last_visa`,`v_last_updated_organisation_beziehung`.`last_updated` AS `last_updated`,`v_last_updated_organisation_beziehung`.`last_updated_id` AS `last_updated_id` from `v_last_updated_organisation_beziehung` union select `v_last_updated_organisation_jahr`.`table_name` AS `table_name`,`v_last_updated_organisation_jahr`.`name` AS `name`,`v_last_updated_organisation_jahr`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_organisation_jahr`.`last_visa` AS `last_visa`,`v_last_updated_organisation_jahr`.`last_updated` AS `last_updated`,`v_last_updated_organisation_jahr`.`last_updated_id` AS `last_updated_id` from `v_last_updated_organisation_jahr` union select `v_last_updated_parlamentarier`.`table_name` AS `table_name`,`v_last_updated_parlamentarier`.`name` AS `name`,`v_last_updated_parlamentarier`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_parlamentarier`.`last_visa` AS `last_visa`,`v_last_updated_parlamentarier`.`last_updated` AS `last_updated`,`v_last_updated_parlamentarier`.`last_updated_id` AS `last_updated_id` from `v_last_updated_parlamentarier` union select `v_last_updated_partei`.`table_name` AS `table_name`,`v_last_updated_partei`.`name` AS `name`,`v_last_updated_partei`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_partei`.`last_visa` AS `last_visa`,`v_last_updated_partei`.`last_updated` AS `last_updated`,`v_last_updated_partei`.`last_updated_id` AS `last_updated_id` from `v_last_updated_partei` union select `v_last_updated_fraktion`.`table_name` AS `table_name`,`v_last_updated_fraktion`.`name` AS `name`,`v_last_updated_fraktion`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_fraktion`.`last_visa` AS `last_visa`,`v_last_updated_fraktion`.`last_updated` AS `last_updated`,`v_last_updated_fraktion`.`last_updated_id` AS `last_updated_id` from `v_last_updated_fraktion` union select `v_last_updated_rat`.`table_name` AS `table_name`,`v_last_updated_rat`.`name` AS `name`,`v_last_updated_rat`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_rat`.`last_visa` AS `last_visa`,`v_last_updated_rat`.`last_updated` AS `last_updated`,`v_last_updated_rat`.`last_updated_id` AS `last_updated_id` from `v_last_updated_rat` union select `v_last_updated_kanton`.`table_name` AS `table_name`,`v_last_updated_kanton`.`name` AS `name`,`v_last_updated_kanton`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_kanton`.`last_visa` AS `last_visa`,`v_last_updated_kanton`.`last_updated` AS `last_updated`,`v_last_updated_kanton`.`last_updated_id` AS `last_updated_id` from `v_last_updated_kanton` union select `v_last_updated_kanton_jahr`.`table_name` AS `table_name`,`v_last_updated_kanton_jahr`.`name` AS `name`,`v_last_updated_kanton_jahr`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_kanton_jahr`.`last_visa` AS `last_visa`,`v_last_updated_kanton_jahr`.`last_updated` AS `last_updated`,`v_last_updated_kanton_jahr`.`last_updated_id` AS `last_updated_id` from `v_last_updated_kanton_jahr` union select `v_last_updated_zutrittsberechtigung`.`table_name` AS `table_name`,`v_last_updated_zutrittsberechtigung`.`name` AS `name`,`v_last_updated_zutrittsberechtigung`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_zutrittsberechtigung`.`last_visa` AS `last_visa`,`v_last_updated_zutrittsberechtigung`.`last_updated` AS `last_updated`,`v_last_updated_zutrittsberechtigung`.`last_updated_id` AS `last_updated_id` from `v_last_updated_zutrittsberechtigung` union select `v_last_updated_person`.`table_name` AS `table_name`,`v_last_updated_person`.`name` AS `name`,`v_last_updated_person`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_person`.`last_visa` AS `last_visa`,`v_last_updated_person`.`last_updated` AS `last_updated`,`v_last_updated_person`.`last_updated_id` AS `last_updated_id` from `v_last_updated_person` union select `v_last_updated_parlamentarier_transparenz`.`table_name` AS `table_name`,`v_last_updated_parlamentarier_transparenz`.`name` AS `name`,`v_last_updated_parlamentarier_transparenz`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_parlamentarier_transparenz`.`last_visa` AS `last_visa`,`v_last_updated_parlamentarier_transparenz`.`last_updated` AS `last_updated`,`v_last_updated_parlamentarier_transparenz`.`last_updated_id` AS `last_updated_id` from `v_last_updated_parlamentarier_transparenz` union select `v_last_updated_parlamentarier_anhang`.`table_name` AS `table_name`,`v_last_updated_parlamentarier_anhang`.`name` AS `name`,`v_last_updated_parlamentarier_anhang`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_parlamentarier_anhang`.`last_visa` AS `last_visa`,`v_last_updated_parlamentarier_anhang`.`last_updated` AS `last_updated`,`v_last_updated_parlamentarier_anhang`.`last_updated_id` AS `last_updated_id` from `v_last_updated_parlamentarier_anhang` union select `v_last_updated_organisation_anhang`.`table_name` AS `table_name`,`v_last_updated_organisation_anhang`.`name` AS `name`,`v_last_updated_organisation_anhang`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_organisation_anhang`.`last_visa` AS `last_visa`,`v_last_updated_organisation_anhang`.`last_updated` AS `last_updated`,`v_last_updated_organisation_anhang`.`last_updated_id` AS `last_updated_id` from `v_last_updated_organisation_anhang` union select `v_last_updated_person_anhang`.`table_name` AS `table_name`,`v_last_updated_person_anhang`.`name` AS `name`,`v_last_updated_person_anhang`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_person_anhang`.`last_visa` AS `last_visa`,`v_last_updated_person_anhang`.`last_updated` AS `last_updated`,`v_last_updated_person_anhang`.`last_updated_id` AS `last_updated_id` from `v_last_updated_person_anhang` union select `v_last_updated_settings`.`table_name` AS `table_name`,`v_last_updated_settings`.`name` AS `name`,`v_last_updated_settings`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_settings`.`last_visa` AS `last_visa`,`v_last_updated_settings`.`last_updated` AS `last_updated`,`v_last_updated_settings`.`last_updated_id` AS `last_updated_id` from `v_last_updated_settings` union select `v_last_updated_settings_category`.`table_name` AS `table_name`,`v_last_updated_settings_category`.`name` AS `name`,`v_last_updated_settings_category`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_settings_category`.`last_visa` AS `last_visa`,`v_last_updated_settings_category`.`last_updated` AS `last_updated`,`v_last_updated_settings_category`.`last_updated_id` AS `last_updated_id` from `v_last_updated_settings_category` ;
+VIEW `v_last_updated_tables_unordered` AS select `v_last_updated_branche`.`table_name` AS `table_name`,`v_last_updated_branche`.`name` AS `name`,`v_last_updated_branche`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_branche`.`last_visa` AS `last_visa`,`v_last_updated_branche`.`last_updated` AS `last_updated`,`v_last_updated_branche`.`last_updated_id` AS `last_updated_id` from `v_last_updated_branche` union select `v_last_updated_interessenbindung`.`table_name` AS `table_name`,`v_last_updated_interessenbindung`.`name` AS `name`,`v_last_updated_interessenbindung`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_interessenbindung`.`last_visa` AS `last_visa`,`v_last_updated_interessenbindung`.`last_updated` AS `last_updated`,`v_last_updated_interessenbindung`.`last_updated_id` AS `last_updated_id` from `v_last_updated_interessenbindung` union select `v_last_updated_interessenbindung_jahr`.`table_name` AS `table_name`,`v_last_updated_interessenbindung_jahr`.`name` AS `name`,`v_last_updated_interessenbindung_jahr`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_interessenbindung_jahr`.`last_visa` AS `last_visa`,`v_last_updated_interessenbindung_jahr`.`last_updated` AS `last_updated`,`v_last_updated_interessenbindung_jahr`.`last_updated_id` AS `last_updated_id` from `v_last_updated_interessenbindung_jahr` union select `v_last_updated_interessengruppe`.`table_name` AS `table_name`,`v_last_updated_interessengruppe`.`name` AS `name`,`v_last_updated_interessengruppe`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_interessengruppe`.`last_visa` AS `last_visa`,`v_last_updated_interessengruppe`.`last_updated` AS `last_updated`,`v_last_updated_interessengruppe`.`last_updated_id` AS `last_updated_id` from `v_last_updated_interessengruppe` union select `v_last_updated_in_kommission`.`table_name` AS `table_name`,`v_last_updated_in_kommission`.`name` AS `name`,`v_last_updated_in_kommission`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_in_kommission`.`last_visa` AS `last_visa`,`v_last_updated_in_kommission`.`last_updated` AS `last_updated`,`v_last_updated_in_kommission`.`last_updated_id` AS `last_updated_id` from `v_last_updated_in_kommission` union select `v_last_updated_wissensartikel_link`.`table_name` AS `table_name`,`v_last_updated_wissensartikel_link`.`name` AS `name`,`v_last_updated_wissensartikel_link`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_wissensartikel_link`.`last_visa` AS `last_visa`,`v_last_updated_wissensartikel_link`.`last_updated` AS `last_updated`,`v_last_updated_wissensartikel_link`.`last_updated_id` AS `last_updated_id` from `v_last_updated_wissensartikel_link` union select `v_last_updated_kommission`.`table_name` AS `table_name`,`v_last_updated_kommission`.`name` AS `name`,`v_last_updated_kommission`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_kommission`.`last_visa` AS `last_visa`,`v_last_updated_kommission`.`last_updated` AS `last_updated`,`v_last_updated_kommission`.`last_updated_id` AS `last_updated_id` from `v_last_updated_kommission` union select `v_last_updated_mandat`.`table_name` AS `table_name`,`v_last_updated_mandat`.`name` AS `name`,`v_last_updated_mandat`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_mandat`.`last_visa` AS `last_visa`,`v_last_updated_mandat`.`last_updated` AS `last_updated`,`v_last_updated_mandat`.`last_updated_id` AS `last_updated_id` from `v_last_updated_mandat` union select `v_last_updated_mandat_jahr`.`table_name` AS `table_name`,`v_last_updated_mandat_jahr`.`name` AS `name`,`v_last_updated_mandat_jahr`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_mandat_jahr`.`last_visa` AS `last_visa`,`v_last_updated_mandat_jahr`.`last_updated` AS `last_updated`,`v_last_updated_mandat_jahr`.`last_updated_id` AS `last_updated_id` from `v_last_updated_mandat_jahr` union select `v_last_updated_organisation`.`table_name` AS `table_name`,`v_last_updated_organisation`.`name` AS `name`,`v_last_updated_organisation`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_organisation`.`last_visa` AS `last_visa`,`v_last_updated_organisation`.`last_updated` AS `last_updated`,`v_last_updated_organisation`.`last_updated_id` AS `last_updated_id` from `v_last_updated_organisation` union select `v_last_updated_organisation_beziehung`.`table_name` AS `table_name`,`v_last_updated_organisation_beziehung`.`name` AS `name`,`v_last_updated_organisation_beziehung`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_organisation_beziehung`.`last_visa` AS `last_visa`,`v_last_updated_organisation_beziehung`.`last_updated` AS `last_updated`,`v_last_updated_organisation_beziehung`.`last_updated_id` AS `last_updated_id` from `v_last_updated_organisation_beziehung` union select `v_last_updated_organisation_jahr`.`table_name` AS `table_name`,`v_last_updated_organisation_jahr`.`name` AS `name`,`v_last_updated_organisation_jahr`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_organisation_jahr`.`last_visa` AS `last_visa`,`v_last_updated_organisation_jahr`.`last_updated` AS `last_updated`,`v_last_updated_organisation_jahr`.`last_updated_id` AS `last_updated_id` from `v_last_updated_organisation_jahr` union select `v_last_updated_parlamentarier`.`table_name` AS `table_name`,`v_last_updated_parlamentarier`.`name` AS `name`,`v_last_updated_parlamentarier`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_parlamentarier`.`last_visa` AS `last_visa`,`v_last_updated_parlamentarier`.`last_updated` AS `last_updated`,`v_last_updated_parlamentarier`.`last_updated_id` AS `last_updated_id` from `v_last_updated_parlamentarier` union select `v_last_updated_partei`.`table_name` AS `table_name`,`v_last_updated_partei`.`name` AS `name`,`v_last_updated_partei`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_partei`.`last_visa` AS `last_visa`,`v_last_updated_partei`.`last_updated` AS `last_updated`,`v_last_updated_partei`.`last_updated_id` AS `last_updated_id` from `v_last_updated_partei` union select `v_last_updated_fraktion`.`table_name` AS `table_name`,`v_last_updated_fraktion`.`name` AS `name`,`v_last_updated_fraktion`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_fraktion`.`last_visa` AS `last_visa`,`v_last_updated_fraktion`.`last_updated` AS `last_updated`,`v_last_updated_fraktion`.`last_updated_id` AS `last_updated_id` from `v_last_updated_fraktion` union select `v_last_updated_rat`.`table_name` AS `table_name`,`v_last_updated_rat`.`name` AS `name`,`v_last_updated_rat`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_rat`.`last_visa` AS `last_visa`,`v_last_updated_rat`.`last_updated` AS `last_updated`,`v_last_updated_rat`.`last_updated_id` AS `last_updated_id` from `v_last_updated_rat` union select `v_last_updated_kanton`.`table_name` AS `table_name`,`v_last_updated_kanton`.`name` AS `name`,`v_last_updated_kanton`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_kanton`.`last_visa` AS `last_visa`,`v_last_updated_kanton`.`last_updated` AS `last_updated`,`v_last_updated_kanton`.`last_updated_id` AS `last_updated_id` from `v_last_updated_kanton` union select `v_last_updated_kanton_jahr`.`table_name` AS `table_name`,`v_last_updated_kanton_jahr`.`name` AS `name`,`v_last_updated_kanton_jahr`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_kanton_jahr`.`last_visa` AS `last_visa`,`v_last_updated_kanton_jahr`.`last_updated` AS `last_updated`,`v_last_updated_kanton_jahr`.`last_updated_id` AS `last_updated_id` from `v_last_updated_kanton_jahr` union select `v_last_updated_zutrittsberechtigung`.`table_name` AS `table_name`,`v_last_updated_zutrittsberechtigung`.`name` AS `name`,`v_last_updated_zutrittsberechtigung`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_zutrittsberechtigung`.`last_visa` AS `last_visa`,`v_last_updated_zutrittsberechtigung`.`last_updated` AS `last_updated`,`v_last_updated_zutrittsberechtigung`.`last_updated_id` AS `last_updated_id` from `v_last_updated_zutrittsberechtigung` union select `v_last_updated_person`.`table_name` AS `table_name`,`v_last_updated_person`.`name` AS `name`,`v_last_updated_person`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_person`.`last_visa` AS `last_visa`,`v_last_updated_person`.`last_updated` AS `last_updated`,`v_last_updated_person`.`last_updated_id` AS `last_updated_id` from `v_last_updated_person` union select `v_last_updated_parlamentarier_transparenz`.`table_name` AS `table_name`,`v_last_updated_parlamentarier_transparenz`.`name` AS `name`,`v_last_updated_parlamentarier_transparenz`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_parlamentarier_transparenz`.`last_visa` AS `last_visa`,`v_last_updated_parlamentarier_transparenz`.`last_updated` AS `last_updated`,`v_last_updated_parlamentarier_transparenz`.`last_updated_id` AS `last_updated_id` from `v_last_updated_parlamentarier_transparenz` union select `v_last_updated_parlamentarier_anhang`.`table_name` AS `table_name`,`v_last_updated_parlamentarier_anhang`.`name` AS `name`,`v_last_updated_parlamentarier_anhang`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_parlamentarier_anhang`.`last_visa` AS `last_visa`,`v_last_updated_parlamentarier_anhang`.`last_updated` AS `last_updated`,`v_last_updated_parlamentarier_anhang`.`last_updated_id` AS `last_updated_id` from `v_last_updated_parlamentarier_anhang` union select `v_last_updated_organisation_anhang`.`table_name` AS `table_name`,`v_last_updated_organisation_anhang`.`name` AS `name`,`v_last_updated_organisation_anhang`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_organisation_anhang`.`last_visa` AS `last_visa`,`v_last_updated_organisation_anhang`.`last_updated` AS `last_updated`,`v_last_updated_organisation_anhang`.`last_updated_id` AS `last_updated_id` from `v_last_updated_organisation_anhang` union select `v_last_updated_person_anhang`.`table_name` AS `table_name`,`v_last_updated_person_anhang`.`name` AS `name`,`v_last_updated_person_anhang`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_person_anhang`.`last_visa` AS `last_visa`,`v_last_updated_person_anhang`.`last_updated` AS `last_updated`,`v_last_updated_person_anhang`.`last_updated_id` AS `last_updated_id` from `v_last_updated_person_anhang` union select `v_last_updated_settings`.`table_name` AS `table_name`,`v_last_updated_settings`.`name` AS `name`,`v_last_updated_settings`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_settings`.`last_visa` AS `last_visa`,`v_last_updated_settings`.`last_updated` AS `last_updated`,`v_last_updated_settings`.`last_updated_id` AS `last_updated_id` from `v_last_updated_settings` union select `v_last_updated_settings_category`.`table_name` AS `table_name`,`v_last_updated_settings_category`.`name` AS `name`,`v_last_updated_settings_category`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_settings_category`.`last_visa` AS `last_visa`,`v_last_updated_settings_category`.`last_updated` AS `last_updated`,`v_last_updated_settings_category`.`last_updated_id` AS `last_updated_id` from `v_last_updated_settings_category` ;
+SET character_set_client      = @saved_cs_client ;
+SET character_set_results     = @saved_cs_results ;
+SET collation_connection      = @saved_col_connection ;
+
+--
+-- Final view structure for view `v_last_updated_wissensartikel_link`
+--
+
+DROP VIEW IF EXISTS `v_last_updated_wissensartikel_link`;
+SET @saved_cs_client          = @@character_set_client ;
+SET @saved_cs_results         = @@character_set_results ;
+SET @saved_col_connection     = @@collation_connection ;
+SET character_set_client      = utf8mb4 ;
+SET character_set_results     = utf8mb4 ;
+SET collation_connection      = utf8mb4_unicode_ci ;
+CREATE  
+ 
+VIEW `v_last_updated_wissensartikel_link` AS (select 'wissensartikel_link' AS `table_name`,'Lobbypedia-Artikel-Verknüpfung' AS `name`,(select count(0) from `wissensartikel_link`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `wissensartikel_link` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -13952,6 +14380,42 @@ SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
 
 --
+-- Final view structure for view `v_wissensartikel_link`
+--
+
+DROP VIEW IF EXISTS `v_wissensartikel_link`;
+SET @saved_cs_client          = @@character_set_client ;
+SET @saved_cs_results         = @@character_set_results ;
+SET @saved_col_connection     = @@collation_connection ;
+SET character_set_client      = utf8mb4 ;
+SET character_set_results     = utf8mb4 ;
+SET collation_connection      = utf8mb4_unicode_ci ;
+CREATE  
+ 
+VIEW `v_wissensartikel_link` AS select `wissensartikel_link`.`id` AS `id`,`wissensartikel_link`.`nid` AS `nid`,`wissensartikel_link`.`target_table_name` AS `target_table_name`,`wissensartikel_link`.`target_id` AS `target_id`,`wissensartikel_link`.`notizen` AS `notizen`,`wissensartikel_link`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`wissensartikel_link`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`wissensartikel_link`.`kontrolliert_visa` AS `kontrolliert_visa`,`wissensartikel_link`.`kontrolliert_datum` AS `kontrolliert_datum`,`wissensartikel_link`.`freigabe_visa` AS `freigabe_visa`,`wissensartikel_link`.`freigabe_datum` AS `freigabe_datum`,`wissensartikel_link`.`created_visa` AS `created_visa`,`wissensartikel_link`.`created_date` AS `created_date`,`wissensartikel_link`.`updated_visa` AS `updated_visa`,`wissensartikel_link`.`updated_date` AS `updated_date`,ifnull((`wissensartikel_link`.`freigabe_datum` <= now()),FALSE) AS `published`,unix_timestamp(`wissensartikel_link`.`created_date`) AS `created_date_unix`,unix_timestamp(`wissensartikel_link`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`wissensartikel_link`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`wissensartikel_link`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`wissensartikel_link`.`freigabe_datum`) AS `freigabe_datum_unix` from `wissensartikel_link` ;
+SET character_set_client      = @saved_cs_client ;
+SET character_set_results     = @saved_cs_results ;
+SET collation_connection      = @saved_col_connection ;
+
+--
+-- Final view structure for view `v_wissensartikelzieltabelle`
+--
+
+DROP VIEW IF EXISTS `v_wissensartikelzieltabelle`;
+SET @saved_cs_client          = @@character_set_client ;
+SET @saved_cs_results         = @@character_set_results ;
+SET @saved_col_connection     = @@collation_connection ;
+SET character_set_client      = utf8mb4 ;
+SET character_set_results     = utf8mb4 ;
+SET collation_connection      = utf8mb4_unicode_ci ;
+CREATE  
+ 
+VIEW `v_wissensartikelzieltabelle` AS select `wissensartikelzieltabelle`.`name_de` AS `anzeige_name`,concat_ws(' / ',`wissensartikelzieltabelle`.`name_de`,`wissensartikelzieltabelle`.`name_fr`) AS `anzeige_name_mixed`,`wissensartikelzieltabelle`.`id` AS `id`,`wissensartikelzieltabelle`.`table_name` AS `table_name`,`wissensartikelzieltabelle`.`name_de` AS `name_de`,`wissensartikelzieltabelle`.`name_fr` AS `name_fr`,`wissensartikelzieltabelle`.`notizen` AS `notizen`,`wissensartikelzieltabelle`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`wissensartikelzieltabelle`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`wissensartikelzieltabelle`.`kontrolliert_visa` AS `kontrolliert_visa`,`wissensartikelzieltabelle`.`kontrolliert_datum` AS `kontrolliert_datum`,`wissensartikelzieltabelle`.`freigabe_visa` AS `freigabe_visa`,`wissensartikelzieltabelle`.`freigabe_datum` AS `freigabe_datum`,`wissensartikelzieltabelle`.`created_visa` AS `created_visa`,`wissensartikelzieltabelle`.`created_date` AS `created_date`,`wissensartikelzieltabelle`.`updated_visa` AS `updated_visa`,`wissensartikelzieltabelle`.`updated_date` AS `updated_date`,ifnull((`wissensartikelzieltabelle`.`freigabe_datum` <= now()),FALSE) AS `published`,unix_timestamp(`wissensartikelzieltabelle`.`created_date`) AS `created_date_unix`,unix_timestamp(`wissensartikelzieltabelle`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`wissensartikelzieltabelle`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`wissensartikelzieltabelle`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`wissensartikelzieltabelle`.`freigabe_datum`) AS `freigabe_datum_unix` from `wissensartikelzieltabelle` ;
+SET character_set_client      = @saved_cs_client ;
+SET character_set_results     = @saved_cs_results ;
+SET collation_connection      = @saved_col_connection ;
+
+--
 -- Final view structure for view `v_zutrittsberechtigung`
 --
 
@@ -14112,6 +14576,24 @@ VIEW `v_zutrittsberechtigung_simple_compat` AS select `person`.`anzeige_name` AS
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
+
+--
+-- Final view structure for view `vf_interessenbindung`
+--
+
+DROP VIEW IF EXISTS `vf_interessenbindung`;
+SET @saved_cs_client          = @@character_set_client ;
+SET @saved_cs_results         = @@character_set_results ;
+SET @saved_col_connection     = @@collation_connection ;
+SET character_set_client      = utf8mb4 ;
+SET character_set_results     = utf8mb4 ;
+SET collation_connection      = utf8mb4_unicode_ci ;
+CREATE  
+ 
+VIEW `vf_interessenbindung` AS select `interessenbindung`.`id` AS `id`,`interessenbindung`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung`.`status` AS `status`,`interessenbindung`.`hauptberuflich` AS `hauptberuflich`,`interessenbindung`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`beschreibung_fr` AS `beschreibung_fr`,`interessenbindung`.`quelle_url` AS `quelle_url`,`interessenbindung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung`.`quelle` AS `quelle`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`notizen` AS `notizen`,`interessenbindung`.`updated_by_import` AS `updated_by_import`,`interessenbindung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung`.`created_visa` AS `created_visa`,`interessenbindung`.`created_date` AS `created_date`,`interessenbindung`.`updated_visa` AS `updated_visa`,`interessenbindung`.`updated_date` AS `updated_date`,`interessenbindung_jahr`.`verguetung` AS `verguetung`,`interessenbindung_jahr`.`jahr` AS `verguetung_jahr`,`interessenbindung_jahr`.`beschreibung` AS `verguetung_beschreibung`,`interessenbindung_jahr`.`freigabe_datum` AS `verguetung_freigabe_datum`,`interessenbindung_jahr_minus_1`.`verguetung` AS `jahr_minus_1_verguetung`,`interessenbindung_jahr_minus_1`.`jahr` AS `jahr_minus_1_verguetung_jahr`,`interessenbindung_jahr_minus_1`.`beschreibung` AS `jahr_minus_1_verguetung_beschreibung`,`interessenbindung_jahr_minus_1`.`freigabe_datum` AS `jahr_minus_1_verguetung_freigabe_datum`,`interessenbindung_jahr_minus_2`.`verguetung` AS `jahr_minus_2_verguetung`,`interessenbindung_jahr_minus_2`.`jahr` AS `jahr_minus_2_verguetung_jahr`,`interessenbindung_jahr_minus_2`.`beschreibung` AS `jahr_minus_2_verguetung_beschreibung`,`interessenbindung_jahr_minus_2`.`freigabe_datum` AS `jahr_minus_2_verguetung_freigabe_datum` from (((`interessenbindung` left join `interessenbindung_jahr` on(((`interessenbindung_jahr`.`interessenbindung_id` = `interessenbindung`.`id`) and (`interessenbindung_jahr`.`jahr` = year(now()))))) left join `interessenbindung_jahr` `interessenbindung_jahr_minus_1` on(((`interessenbindung_jahr_minus_1`.`interessenbindung_id` = `interessenbindung`.`id`) and (`interessenbindung_jahr`.`jahr` = (year(now()) - 1))))) left join `interessenbindung_jahr` `interessenbindung_jahr_minus_2` on(((`interessenbindung_jahr_minus_2`.`interessenbindung_id` = `interessenbindung`.`id`) and (`interessenbindung_jahr`.`jahr` = (year(now()) - 2))))) ;
+SET character_set_client      = @saved_cs_client ;
+SET character_set_results     = @saved_cs_results ;
+SET collation_connection      = @saved_col_connection ;
 SET TIME_ZONE=@OLD_TIME_ZONE ;
 
 SET SQL_MODE=@OLD_SQL_MODE ;
@@ -14122,4 +14604,4 @@ SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS ;
 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION ;
 SET SQL_NOTES=@OLD_SQL_NOTES ;
 
--- Dump completed on 2020-10-03 12:46:47
+-- Dump completed on 2020-11-07 21:25:53

@@ -69,6 +69,7 @@
             UNION (SELECT \'person_anhang\' tn, \'Personenanhang\' n, (select count(*) from `person_anhang`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `person_anhang` t ORDER BY t.`updated_date` DESC LIMIT 1)
             UNION (SELECT \'settings\' tn, \'Einstellungen\' n, (select count(*) from `settings`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `settings` t ORDER BY t.`updated_date` DESC LIMIT 1)
             UNION (SELECT \'settings_category\' tn, \'Einstellungskategorien\' n, (select count(*) from `settings_category`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `settings_category` t ORDER BY t.`updated_date` DESC LIMIT 1)
+            UNION (SELECT \'wissensartikel_link\' tn, \'Lobbypediaverknüpfung\' n, (select count(*) from `wissensartikel_link`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `wissensartikel_link` t ORDER BY t.`updated_date` DESC LIMIT 1)
             ) uq) c ORDER BY c.lid DESC';
             $insertQuery = array();
             $updateQuery = array();

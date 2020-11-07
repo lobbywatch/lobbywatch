@@ -3227,3 +3227,105 @@ WHERE (zutrittsberechtigung_von <> (SELECT anzeige_name FROM v_parlamentarier_si
 OR (zutrittsberechtigung_von IS NULL AND (SELECT anzeige_name FROM v_parlamentarier_simple parlamentarier INNER JOIN zutrittsberechtigung ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) WHERE person.id = zutrittsberechtigung.person_id) IS NOT NULL)
 OR (zutrittsberechtigung_von IS NOT NULL AND (SELECT anzeige_name FROM v_parlamentarier_simple parlamentarier INNER JOIN zutrittsberechtigung ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) WHERE person.id = zutrittsberechtigung.person_id) IS NULL);
 SET @disable_triggers = NULL;
+
+-- 07.11.2020 Lobbypedia
+
+-- Table wissensartikelzieltabelle
+
+ALTER TABLE wissensartikel_link DROP FOREIGN KEY fk_target_table_name;
+DROP TABLE IF EXISTS `wissensartikelzieltabelle`;
+CREATE TABLE `wissensartikelzieltabelle` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
+  `table_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Technischer Name der Zieltabelle, die mit dem Lobbypedia-Artikel verknüpft werden kann.',
+  `name_de` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Deutscher Name der Zieltabelle, die mit dem Lobbypedia-Artikel verknüpft werden kann.',
+  `name_fr` varchar(50) COLLATE utf8mb4_unicode_ci COMMENT 'Französischer Name der Zieltabelle, die mit dem Lobbypedia-Artikel verknüpft werden kann.',
+  `notizen` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `eingabe_abgeschlossen_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `kontrolliert_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `freigabe_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `target_table_name_unique` (`table_name`) COMMENT 'Fachlicher unique constraint'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Verknüpfung von CMS Lobbypedia-Artikeln mit DB-Datensätzen';
+
+-- Table wissensartikelzieltabelle_log
+DROP TABLE IF EXISTS `wissensartikelzieltabelle_log`;
+CREATE TABLE IF NOT EXISTS `wissensartikelzieltabelle_log` LIKE `wissensartikelzieltabelle`;
+ALTER TABLE `wissensartikelzieltabelle_log`
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_wissensartikelzieltabelle_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- Table wissensartikel_link
+DROP TABLE IF EXISTS `wissensartikel_link`;
+CREATE TABLE `wissensartikel_link` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
+  `nid` int(10) unsigned NOT NULL COMMENT 'CMS Drupal 7 node id (nid) des Lobbypedia-Artikels',
+  `target_table_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Zieltabelle, die mit dem Lobbypedia-Artikel verknüpft wird.',
+  `target_id` int(11) NOT NULL COMMENT 'id in der Zieltabelle',
+  `target_table_name_with_id` varchar(52) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Zieltabelle#id, ist die Zusammensetzung von Zieltablle und id mit einem Hash (#) getrennt. Dieses Feld ist aus technischen Gründen nötig für den PHP Formulargenerator.',
+  `notizen` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `eingabe_abgeschlossen_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `kontrolliert_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `freigabe_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  PRIMARY KEY (`id`),
+  -- UNIQUE KEY `in_kommission_parlamentarier_kommission_funktion_unique` (`funktion`,`parlamentarier_id`,`kommission_id`,`bis`) COMMENT 'Fachlicher unique constraint',
+  KEY `idx_nid` (`nid`),
+  -- KEY `idx_nid_dummy` (`nid_dummy`),
+  KEY `idx_target` (`target_table_name`,`target_id`),
+  CONSTRAINT `fk_nid` FOREIGN KEY (`nid`) REFERENCES `lobbywat_d7lobbywatch`.`dlw_node` (`nid`),
+  CONSTRAINT `fk_target_table_name` FOREIGN KEY (`target_table_name`) REFERENCES `wissensartikelzieltabelle` (`table_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Verknüpfung von CMS Lobbypedia-Artikeln mit DB-Datensätzen';
+
+-- Table wissensartikel_link_log
+DROP TABLE IF EXISTS `wissensartikel_link_log`;
+CREATE TABLE IF NOT EXISTS `wissensartikel_link_log` LIKE `wissensartikel_link`;
+ALTER TABLE `wissensartikel_link_log`
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP INDEX `idx_nid`,
+  -- DROP INDEX `idx_nid_dummy`,
+  DROP INDEX `idx_target`,
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_wissensartikel_link_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- 'organisation','parlamentarier','interessenbindung','person','mandat','interessengruppe','branche','partei','fraktion','kommission'
+INSERT INTO `wissensartikelzieltabelle` (`table_name`, `name_de`, `name_fr`, `created_visa`, `updated_visa`) VALUES
+('organisation', 'Organisation', NULL, 'roland', 'roland'),
+('parlamentarier', 'Parlamentarier', NULL, 'roland', 'roland'),
+-- ('interessenbindung', 'Interessenbindung', NULL, 'roland', 'roland'),
+('person', 'Person', NULL, 'roland', 'roland'),
+-- ('mandat', 'Mandat', NULL, 'roland', 'roland'),
+('interessengruppe', 'Lobbygruppe', NULL, 'roland', 'roland'),
+('branche', 'Branche', NULL, 'roland', 'roland'),
+('partei', 'Partei', NULL, 'roland', 'roland'),
+('fraktion', 'Fraktion', NULL, 'roland', 'roland'),
+('kommission', 'Kommission', NULL, 'roland', 'roland');

@@ -2331,3 +2331,11 @@ function custom_OnEncryptPassword($password, &$result) {
 function custom_OnVerifyPassword($enteredPassword, $encryptedPassword, &$result) {
   $result = password_verify($enteredPassword, $encryptedPassword);
 }
+
+// custom_OnBeforeSaveWissensartikelLink($page, $rowData, $tableName, $cancel, $message, $messageDisplayTime);
+function custom_OnBeforeSaveWissensartikelLink($page, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime) {
+  // Ref for events: http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_page_editor_events/
+
+  // Extract id from column target_table_name_with_id to target_id because dependent lookup cannot handle it
+  $rowData['target_id'] = explode('#', $rowData['target_table_name_with_id'])[1] ?? null;
+}

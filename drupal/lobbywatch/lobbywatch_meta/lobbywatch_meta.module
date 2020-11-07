@@ -27,6 +27,13 @@ function lobbywatch_meta_menu() {
     'type' => MENU_CALLBACK,
     'file' => 'lobbywatch_meta.inc',
   );
+  $items['daten/knowledge_articles'] = array(
+    'page callback' => '_lobbywatch_meta_knowledge_articles',
+    'page arguments' => array(),
+    'access arguments' => array('access lobbywatch article content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'lobbywatch_meta.inc',
+  );
 
   return $items;
 }

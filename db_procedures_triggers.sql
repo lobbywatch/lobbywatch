@@ -70,6 +70,12 @@ BEGIN
    INSERT INTO `in_kommission_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `in_kommission`;
 
+   INSERT INTO `wissensartikel_link_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `wissensartikel_link`;
+
+   INSERT INTO `wissensartikelzieltabelle_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `wissensartikelzieltabelle`;
+
    INSERT INTO `kommission_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `kommission`;
 
@@ -2529,6 +2535,114 @@ thisTrigger: BEGIN
 END
 //
 delimiter ;
+
+-- wissensartikel_link triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_wissensartikel_link_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_wissensartikel_link_log_ins` AFTER INSERT ON `wissensartikel_link`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `wissensartikel_link_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `wissensartikel_link` WHERE id = NEW.id ;
+END
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_wissensartikel_link_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_wissensartikel_link_log_upd` AFTER UPDATE ON `wissensartikel_link`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `wissensartikel_link_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `wissensartikel_link` WHERE id = NEW.id ;
+END
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_wissensartikel_link_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_wissensartikel_link_log_del_before` BEFORE DELETE ON `wissensartikel_link`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `wissensartikel_link_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `wissensartikel_link` WHERE id = OLD.id ;
+END
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_wissensartikel_link_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_wissensartikel_link_log_del_after` AFTER DELETE ON `wissensartikel_link`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `wissensartikel_link_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+END
+//
+delimiter ;
+
+-- wissensartikelzieltabelle triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_wissensartikelzieltabelle_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_wissensartikelzieltabelle_log_ins` AFTER INSERT ON `wissensartikelzieltabelle`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `wissensartikelzieltabelle_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `wissensartikelzieltabelle` WHERE id = NEW.id ;
+END
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_wissensartikelzieltabelle_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_wissensartikelzieltabelle_log_upd` AFTER UPDATE ON `wissensartikelzieltabelle`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `wissensartikelzieltabelle_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `wissensartikelzieltabelle` WHERE id = NEW.id ;
+END
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_wissensartikelzieltabelle_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_wissensartikelzieltabelle_log_del_before` BEFORE DELETE ON `wissensartikelzieltabelle`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `wissensartikelzieltabelle_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `wissensartikelzieltabelle` WHERE id = OLD.id ;
+END
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_wissensartikelzieltabelle_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_wissensartikelzieltabelle_log_del_after` AFTER DELETE ON `wissensartikelzieltabelle`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `wissensartikelzieltabelle_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+END
+//
+delimiter ;
+
+-- end
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

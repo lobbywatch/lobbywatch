@@ -88,6 +88,19 @@ CREATE OR REPLACE VIEW `v_last_updated_in_kommission` AS
   ORDER BY t.`updated_date` DESC
   LIMIT 1
   );
+CREATE OR REPLACE VIEW `v_last_updated_wissensartikel_link` AS
+  (SELECT
+  'wissensartikel_link' table_name,
+  'Lobbypedia-Artikel-Verknüpfung' name,
+  (select count(*) from `wissensartikel_link`) anzahl_eintraege,
+  t.`updated_visa` AS last_visa,
+  t.`updated_date` last_updated,
+  t.id last_updated_id
+  FROM
+  `wissensartikel_link` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
 CREATE OR REPLACE VIEW `v_last_updated_kommission` AS
   (SELECT
   'kommission' table_name,
@@ -358,6 +371,8 @@ UNION
 SELECT * FROM v_last_updated_interessengruppe
 UNION
 SELECT * FROM v_last_updated_in_kommission
+UNION
+SELECT * FROM v_last_updated_wissensartikel_link
 UNION
 SELECT * FROM v_last_updated_kommission
 UNION
@@ -716,14 +731,37 @@ CREATE OR REPLACE VIEW `v_organisation_anhang` AS
 SELECT organisation_anhang.organisation_id as organisation_id2, organisation_anhang.*
 FROM `organisation_anhang`;
 
+-- remote: map Drupal 7 CMS node table to v_d7_node
+CREATE OR REPLACE VIEW v_d7_node AS
+SELECT
+title as anzeige_name,
+CONCAT(title, ' (nid:', nid, ', lang:', language, ', published: ', status, ')') as anzeige_name_long,
+dlw_node.*
+FROM `lobbywat_d7lobbywatch`.`dlw_node`;
+
+CREATE OR REPLACE VIEW `v_wissensartikelzieltabelle` AS
+SELECT
+name_de AS anzeige_name,
+CONCAT_WS(' / ', name_de, name_fr) AS anzeige_name_mixed,
+wissensartikelzieltabelle.*,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
+UNIX_TIMESTAMP(created_date) as created_date_unix, UNIX_TIMESTAMP(updated_date) as updated_date_unix, UNIX_TIMESTAMP(eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(freigabe_datum) as freigabe_datum_unix
+FROM `wissensartikelzieltabelle`;
+
+CREATE OR REPLACE VIEW `v_wissensartikel_link` AS
+SELECT
+wissensartikel_link.*,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
+UNIX_TIMESTAMP(created_date) as created_date_unix, UNIX_TIMESTAMP(updated_date) as updated_date_unix, UNIX_TIMESTAMP(eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(freigabe_datum) as freigabe_datum_unix
+FROM `wissensartikel_link`;
+
 CREATE OR REPLACE VIEW `v_in_kommission_simple` AS
 SELECT in_kommission.*,
 (in_kommission.von IS NULL OR in_kommission.von <= NOW()) AND (in_kommission.bis IS NULL OR in_kommission.bis > NOW()) as aktiv,
 IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
 UNIX_TIMESTAMP(in_kommission.created_date) as created_date_unix, UNIX_TIMESTAMP(in_kommission.updated_date) as updated_date_unix, UNIX_TIMESTAMP(in_kommission.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(in_kommission.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(in_kommission.freigabe_datum) as freigabe_datum_unix
-FROM `in_kommission`
-;
+FROM `in_kommission`;
 
 CREATE OR REPLACE VIEW `v_in_kommission` AS
 SELECT in_kommission.*,
@@ -3010,3 +3048,25 @@ CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIME
 
 CREATE OR REPLACE VIEW `v_search_table` AS
 SELECT * FROM `mv_search_table`;
+
+CREATE OR REPLACE VIEW `v_all_entity_records` AS
+SELECT 'person' AS table_name, CONCAT('person', '#', id) AS table_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_person_simple
+UNION ALL
+SELECT 'branche' AS table_name, CONCAT('branche', '#', id) AS table_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_branche_simple
+UNION ALL
+SELECT 'organisation' AS table_name, CONCAT('organisation', '#', id) AS table_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_organisation_simple
+UNION ALL
+SELECT 'parlamentarier' AS table_name, CONCAT('parlamentarier', '#', id) AS table_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_parlamentarier_simple
+UNION ALL
+SELECT 'kanton' AS table_name, CONCAT('kanton', '#', id) AS table_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_kanton_simple
+UNION ALL
+SELECT 'interessenraum' AS table_name, CONCAT('interessenraum', '#', id) AS table_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_interessenraum
+UNION ALL
+SELECT 'interessengruppe' AS table_name, CONCAT('interessengruppe', '#', id) AS table_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_interessengruppe_simple
+UNION ALL
+SELECT 'partei' AS table_name, CONCAT('partei', '#', id) AS table_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_partei
+UNION ALL
+SELECT 'fraktion' AS table_name, CONCAT('fraktion', '#', id) AS table_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_fraktion
+UNION ALL
+SELECT 'kommission' AS table_name, CONCAT('kommission', '#', id) AS table_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_kommission
+;

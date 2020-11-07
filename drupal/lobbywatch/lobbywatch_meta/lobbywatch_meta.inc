@@ -178,3 +178,45 @@ function _lobbywatch_meta_articles() {
   ));
   drupal_exit();
 }
+function _lobbywatch_meta_knowledge_articles() {
+  $lang = get_lang();
+  $query = new EntityFieldQuery();
+  $query
+    ->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'knowledge_article')
+    ->propertyCondition('language', $lang)
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->propertyOrderBy('nid', 'ASC');
+
+  $limit = min(array(100, isset($_GET['limit']) ? intval($_GET['limit']) : 10));
+  $offset = isset($_GET['page']) ? intval($_GET['page']) : 0;
+  $offset *= $limit;
+
+  $query->range($offset, $limit);
+
+  try {
+    $query_result = $query->execute();
+  }
+  catch (PDOException $exception) {
+    throw new RestWSException('Query failed.', 400);
+  }
+  $query_result = isset($query_result['node']) ? $query_result['node'] : array();
+
+  $articleIds = array_keys($query_result);
+
+  $query = new EntityFieldQuery();
+  $query
+    ->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'article')
+    ->propertyCondition('language', $lang)
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->propertyCondition('promote', 1);
+  $total = $query->count()->execute();
+
+  drupal_json_output(array(
+    'total' => intval($total),
+    'pages' => floor($total / $limit),
+    'list' => _lobbywatch_meta_load_nodes($articleIds)
+  ));
+  drupal_exit();
+}
