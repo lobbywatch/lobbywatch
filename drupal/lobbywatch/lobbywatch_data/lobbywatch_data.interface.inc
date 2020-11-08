@@ -664,6 +664,8 @@ function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = t
       $message .= ' | ' . $parlamentarier['message'];
       $sql .= ' | ' . $parlamentarier['sql'];
       $success = $success && $parlamentarier['success'];
+
+      _lobbywatch_add_wissensartikel('person', $id, $aggregated, $message, $sql);
     }
 
     $count = $zutrittsberechtigung['count'];
@@ -781,6 +783,8 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
         $sql .= ' | ' . $mandate['sql'];
         // $success = $success && $mandate['success'];
       }
+
+      _lobbywatch_add_wissensartikel('parlamentarier', $id, $aggregated, $message, $sql);
     }
 
 //     $count = count($aggregated);
@@ -906,6 +910,8 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
   //       $message .= ' | ' . $mandate['message'];
   //       $success = $success && $mandate['success'];
   //     }
+
+      _lobbywatch_add_wissensartikel('organisation', $id, $aggregated, $message, $sql);
     }
 
     $count = $organsation['count'];
@@ -937,6 +943,13 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
     }
   }
 
+}
+
+function _lobbywatch_add_wissensartikel($source_table, $id, &$aggregated, &$message, &$sql) {
+  $knowledge_articles =  _lobbywatch_data_table_flat_list('wissensartikel_link', "wissensartikel_link.target_id = $id AND wissensartikel_link.target_table_name = '$source_table'", false);
+  $aggregated['knowledge_articles'] = $knowledge_articles['data'];
+  $message .= ' | ' . $knowledge_articles['message'];
+  $sql .= ' | ' . $knowledge_articles['sql'];
 }
 
 function _lobbywatch_data_table_interessengruppe_aggregated_id($id, $json = true) {
@@ -1012,6 +1025,8 @@ function _lobbywatch_data_table_interessengruppe_aggregated_id($id, $json = true
       $message .= ' | ' . $zutrittsberechtigte['message'];
       $sql .= ' | ' . $zutrittsberechtigte['sql'];
       // $success = $success && $zutrittsberechtigte['success'];
+
+      _lobbywatch_add_wissensartikel('ineteressengruppe', $id, $aggregated, $message, $sql);
     }
 
     $count = $organsation['count'];
@@ -1139,6 +1154,8 @@ function _lobbywatch_data_table_branche_aggregated_id($id, $json = true) {
       // parlamentarier
       $aggregated_parlamentarier = _lobbywatch_data_get_parlamentarier_from_organisation($organisationen['data']);
       $aggregated = array_merge($aggregated, $aggregated_parlamentarier);
+
+      _lobbywatch_add_wissensartikel('branche', $id, $aggregated, $message, $sql);
     }
 
     $count = $branche['count'];
