@@ -11681,6 +11681,91 @@ CREATE TABLE `wissensartikel_link` (
   CONSTRAINT `fk_target_table_name` FOREIGN KEY (`target_table_name`) REFERENCES `wissensartikelzieltabelle` (`table_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Verknüpfung von CMS Lobbypedia-Artikeln mit DB-Datensätzen';
 SET character_set_client = @saved_cs_client ;
+SET @saved_cs_client      = @@character_set_client  ;
+SET @saved_cs_results     = @@character_set_results  ;
+SET @saved_col_connection = @@collation_connection  ;
+SET character_set_client  = utf8mb4  ;
+SET character_set_results = utf8mb4  ;
+SET collation_connection  = utf8mb4_general_ci  ;
+SET @saved_sql_mode       = @@sql_mode  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+DELIMITER ;;
+CREATE TRIGGER `trg_wissensartikel_link_log_ins` AFTER INSERT ON `wissensartikel_link`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `wissensartikel_link_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `wissensartikel_link` WHERE id = NEW.id ;
+END ;;
+DELIMITER ;
+SET sql_mode              = @saved_sql_mode  ;
+SET character_set_client  = @saved_cs_client  ;
+SET character_set_results = @saved_cs_results  ;
+SET collation_connection  = @saved_col_connection  ;
+SET @saved_cs_client      = @@character_set_client  ;
+SET @saved_cs_results     = @@character_set_results  ;
+SET @saved_col_connection = @@collation_connection  ;
+SET character_set_client  = utf8mb4  ;
+SET character_set_results = utf8mb4  ;
+SET collation_connection  = utf8mb4_general_ci  ;
+SET @saved_sql_mode       = @@sql_mode  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+DELIMITER ;;
+CREATE TRIGGER `trg_wissensartikel_link_log_upd` AFTER UPDATE ON `wissensartikel_link`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `wissensartikel_link_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `wissensartikel_link` WHERE id = NEW.id ;
+END ;;
+DELIMITER ;
+SET sql_mode              = @saved_sql_mode  ;
+SET character_set_client  = @saved_cs_client  ;
+SET character_set_results = @saved_cs_results  ;
+SET collation_connection  = @saved_col_connection  ;
+SET @saved_cs_client      = @@character_set_client  ;
+SET @saved_cs_results     = @@character_set_results  ;
+SET @saved_col_connection = @@collation_connection  ;
+SET character_set_client  = utf8mb4  ;
+SET character_set_results = utf8mb4  ;
+SET collation_connection  = utf8mb4_general_ci  ;
+SET @saved_sql_mode       = @@sql_mode  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+DELIMITER ;;
+CREATE TRIGGER `trg_wissensartikel_link_log_del_before` BEFORE DELETE ON `wissensartikel_link`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `wissensartikel_link_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `wissensartikel_link` WHERE id = OLD.id ;
+END ;;
+DELIMITER ;
+SET sql_mode              = @saved_sql_mode  ;
+SET character_set_client  = @saved_cs_client  ;
+SET character_set_results = @saved_cs_results  ;
+SET collation_connection  = @saved_col_connection  ;
+SET @saved_cs_client      = @@character_set_client  ;
+SET @saved_cs_results     = @@character_set_results  ;
+SET @saved_col_connection = @@collation_connection  ;
+SET character_set_client  = utf8mb4  ;
+SET character_set_results = utf8mb4  ;
+SET collation_connection  = utf8mb4_general_ci  ;
+SET @saved_sql_mode       = @@sql_mode  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+DELIMITER ;;
+CREATE TRIGGER `trg_wissensartikel_link_log_del_after` AFTER DELETE ON `wissensartikel_link`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `wissensartikel_link_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+END ;;
+DELIMITER ;
+SET sql_mode              = @saved_sql_mode  ;
+SET character_set_client  = @saved_cs_client  ;
+SET character_set_results = @saved_cs_results  ;
+SET collation_connection  = @saved_col_connection  ;
 
 --
 -- Table structure for table `wissensartikel_link_log`
@@ -11742,8 +11827,93 @@ CREATE TABLE `wissensartikelzieltabelle` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
   UNIQUE KEY `target_table_name_unique` (`table_name`) COMMENT 'Fachlicher unique constraint'
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Verknüpfung von CMS Lobbypedia-Artikeln mit DB-Datensätzen';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Verknüpfung von CMS Lobbypedia-Artikeln mit DB-Datensätzen';
 SET character_set_client = @saved_cs_client ;
+SET @saved_cs_client      = @@character_set_client  ;
+SET @saved_cs_results     = @@character_set_results  ;
+SET @saved_col_connection = @@collation_connection  ;
+SET character_set_client  = utf8mb4  ;
+SET character_set_results = utf8mb4  ;
+SET collation_connection  = utf8mb4_general_ci  ;
+SET @saved_sql_mode       = @@sql_mode  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+DELIMITER ;;
+CREATE TRIGGER `trg_wissensartikelzieltabelle_log_ins` AFTER INSERT ON `wissensartikelzieltabelle`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `wissensartikelzieltabelle_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `wissensartikelzieltabelle` WHERE id = NEW.id ;
+END ;;
+DELIMITER ;
+SET sql_mode              = @saved_sql_mode  ;
+SET character_set_client  = @saved_cs_client  ;
+SET character_set_results = @saved_cs_results  ;
+SET collation_connection  = @saved_col_connection  ;
+SET @saved_cs_client      = @@character_set_client  ;
+SET @saved_cs_results     = @@character_set_results  ;
+SET @saved_col_connection = @@collation_connection  ;
+SET character_set_client  = utf8mb4  ;
+SET character_set_results = utf8mb4  ;
+SET collation_connection  = utf8mb4_general_ci  ;
+SET @saved_sql_mode       = @@sql_mode  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+DELIMITER ;;
+CREATE TRIGGER `trg_wissensartikelzieltabelle_log_upd` AFTER UPDATE ON `wissensartikelzieltabelle`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `wissensartikelzieltabelle_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `wissensartikelzieltabelle` WHERE id = NEW.id ;
+END ;;
+DELIMITER ;
+SET sql_mode              = @saved_sql_mode  ;
+SET character_set_client  = @saved_cs_client  ;
+SET character_set_results = @saved_cs_results  ;
+SET collation_connection  = @saved_col_connection  ;
+SET @saved_cs_client      = @@character_set_client  ;
+SET @saved_cs_results     = @@character_set_results  ;
+SET @saved_col_connection = @@collation_connection  ;
+SET character_set_client  = utf8mb4  ;
+SET character_set_results = utf8mb4  ;
+SET collation_connection  = utf8mb4_general_ci  ;
+SET @saved_sql_mode       = @@sql_mode  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+DELIMITER ;;
+CREATE TRIGGER `trg_wissensartikelzieltabelle_log_del_before` BEFORE DELETE ON `wissensartikelzieltabelle`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `wissensartikelzieltabelle_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `wissensartikelzieltabelle` WHERE id = OLD.id ;
+END ;;
+DELIMITER ;
+SET sql_mode              = @saved_sql_mode  ;
+SET character_set_client  = @saved_cs_client  ;
+SET character_set_results = @saved_cs_results  ;
+SET collation_connection  = @saved_col_connection  ;
+SET @saved_cs_client      = @@character_set_client  ;
+SET @saved_cs_results     = @@character_set_results  ;
+SET @saved_col_connection = @@collation_connection  ;
+SET character_set_client  = utf8mb4  ;
+SET character_set_results = utf8mb4  ;
+SET collation_connection  = utf8mb4_general_ci  ;
+SET @saved_sql_mode       = @@sql_mode  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+DELIMITER ;;
+CREATE TRIGGER `trg_wissensartikelzieltabelle_log_del_after` AFTER DELETE ON `wissensartikelzieltabelle`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `wissensartikelzieltabelle_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+END ;;
+DELIMITER ;
+SET sql_mode              = @saved_sql_mode  ;
+SET character_set_client  = @saved_cs_client  ;
+SET character_set_results = @saved_cs_results  ;
+SET collation_connection  = @saved_col_connection  ;
 
 --
 -- Table structure for table `wissensartikelzieltabelle_log`
@@ -11777,7 +11947,7 @@ CREATE TABLE `wissensartikelzieltabelle_log` (
   UNIQUE KEY `target_table_name_unique` (`table_name`) COMMENT 'Fachlicher unique constraint',
   KEY `fk_wissensartikelzieltabelle_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_wissensartikelzieltabelle_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Verknüpfung von CMS Lobbypedia-Artikeln mit DB-Datensätzen';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Verknüpfung von CMS Lobbypedia-Artikeln mit DB-Datensätzen';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -12287,6 +12457,12 @@ BEGIN
 
    INSERT INTO `in_kommission_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `in_kommission`;
+
+   INSERT INTO `wissensartikel_link_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `wissensartikel_link`;
+
+   INSERT INTO `wissensartikelzieltabelle_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `wissensartikelzieltabelle`;
 
    INSERT INTO `kommission_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `kommission`;
@@ -14605,4 +14781,4 @@ SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS ;
 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION ;
 SET SQL_NOTES=@OLD_SQL_NOTES ;
 
--- Dump completed on 2020-11-08  8:40:50
+-- Dump completed on 2020-11-08  9:30:52
