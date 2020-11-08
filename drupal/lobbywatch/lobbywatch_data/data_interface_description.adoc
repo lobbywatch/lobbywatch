@@ -286,11 +286,13 @@ where `$table` is one of the following tables:
 * `organisation_beziehung`: Organisation Beziehung
 * `organisation_jahr`: Organisationsjahr
 * `parlamentarier`: Parlamentarier
+* `parlamentarier_transparenz`: Parlamentarier
 * `partei`: Partei
 * `fraktion`: Fraktion
 * `rat`: Rat
 * `kanton`: Kanton
 * `kanton_jahr`: Kantonjahr
+* `wissensartikel_link`: Lobbypediaverknüpfung
 * `zutrittsberechtigung`: Zutrittsberechtigter
 
 `%` is the placeholder for query data, e.g. the id or the name

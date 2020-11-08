@@ -19,6 +19,7 @@ class Constants {
     'organisation_beziehung' => 'Organisation Beziehung',
     'organisation_jahr' => 'Organisationsjahr',
     'parlamentarier' => 'Parlamentarier',
+    'parlamentarier_transparenz' => 'Parlamentariertransparenz',
     'partei' => 'Partei',
     'fraktion' => 'Fraktion',
     'rat' => 'Rat',
