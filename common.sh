@@ -288,6 +288,22 @@ enable_fail_onerror() {
   # set -u
 }
 
+enable_fail_onerror_no_pipe() {
+  # Abort on errors
+  # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
+  trap 'abort $LINENO' ERR
+  # https://sipb.mit.edu/doc/safe-shell/
+  set -e -u +o pipefail
+}
+
+disable_fail_onerror() {
+  # Abort on errors
+  # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
+  trap 'abort $LINENO' ERR
+  # https://sipb.mit.edu/doc/safe-shell/
+  set +e +u +o pipefail
+}
+
 quit() {
   trap : 0
   exit 0
