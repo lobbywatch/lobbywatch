@@ -56,8 +56,8 @@ update_triggers=false
 backup_db=false
 upload_files=false
 sql_file=''
-compare_db_structs=false
-compare_LP_db_structs=false
+compare_remote_db_structs=false
+compare_local_remote_db_structs=false
 visual=false
 save_schema=false
 local_DB=""
@@ -94,9 +94,9 @@ while test $# -gt 0; do
       case $1 in
                 -h|--help)
                         echo "Deploy lobbywatch"
-                        echo " "
+                        echo
                         echo "$0 [options]"
-                        echo " "
+                        echo
                         echo "Options:"
                         echo "-u, --upload              Upload files"
                         echo "-p, --production          Deploy to production, otherwise test"
@@ -116,15 +116,15 @@ while test $# -gt 0; do
                         echo "-t, --trigger             Update triggers and procedures (mutually exclusive -s -t -r)"
                         echo "-S, --saveschema          Save DB schema as lobbywatch.sql"
                         echo "-s, --sql file            Copy and run sql file (mutually exclusive -s -t -r)"
-                        echo "-c, --compare             Compare remote DB structs"
-                        echo "-C, --compareLP           Compare local and remote DB structs"
-                        echo "-x, --visual              Visual compare remote DB structs"
-                        echo "-X, --visualLP            Visual compare local and remote DB structs"
+                        echo "-c, --compare             Compare remote DB structs (TEST and PROD)"
+                        echo "-C, --compareLR           Compare local and remote DB structs"
+                        echo "-x, --visual              Visual compare remote DB structs (TEST and PROD)"
+                        echo "-X, --visualLR            Visual compare local and remote DB structs (choose DBs with -l or -p)"
                         echo "-m, --maintenance         Set maintenance mode"
                         echo "-q, --quiet               Execute quiet, less questions"
                         echo "-v, --verbose             Verbose mode"
                         echo "-h, --help                Show brief help"
-                        echo ""
+                        echo
                         echo -e "Example with real last value: ./deploy.sh -r -s prod_bak/`cat prod_bak/last_dbdump_data.txt`"
                         echo -e 'Example                     : ./deploy.sh -r -s prod_bak/`cat prod_bak/last_dbdump_data.txt`'
                         quit
@@ -164,20 +164,20 @@ while test $# -gt 0; do
                         shift
                         ;;
                 -c|--compare)
-                        compare_db_structs=true
+                        compare_remote_db_structs=true
                         shift
                         ;;
                 -x|--visual)
-                        compare_db_structs=true
+                        compare_remote_db_structs=true
                         visual=true
                         shift
                         ;;
-                -C|--compareLP)
-                        compare_LP_db_structs=true
+                -C|--compareLR)
+                        compare_local_remote_db_structs=true
                         shift
                         ;;
-                -X|--visualLP)
-                        compare_LP_db_structs=true
+                -X|--visualLR)
+                        compare_local_remote_db_structs=true
                         visual=true
                         shift
                         ;;
@@ -387,11 +387,11 @@ if $downloaddbbaks ; then
   fi
 fi
 
-if $compare_db_structs ; then
+if $compare_remote_db_structs ; then
   ensure_remote
 
   if ! $quiet_mode ; then
-    askContinueYn "Compare DB structs REMOTE prod and test?"
+    askContinueYn "Compare DB structs REMOTE PROD and TEST?"
   fi
 
   echo "## Upload run_db_script.sh"
@@ -439,7 +439,7 @@ if $compare_db_structs ; then
 
 fi
 
-if $compare_LP_db_structs ; then
+if $compare_local_remote_db_structs ; then
   if [[ $local_DB == "" ]]; then
     local_DB="lobbywatch"
   fi
