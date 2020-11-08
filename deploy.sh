@@ -59,6 +59,7 @@ sql_file=''
 compare_db_structs=false
 compare_LP_db_structs=false
 visual=false
+save_schema=false
 local_DB=""
 PW=""
 askpw=false
@@ -113,6 +114,7 @@ while test $# -gt 0; do
                         echo "-r, --refresh             Refresh DB MVs (views) (interactively) (mutually exclusive -s -t -r)"
 #                         echo "-R, --refreshDirectly     Refresh DB MVs (views) and execute (non-ineractively)"
                         echo "-t, --trigger             Update triggers and procedures (mutually exclusive -s -t -r)"
+                        echo "-S, --saveschema          Save DB schema as lobbywatch.sql"
                         echo "-s, --sql file            Copy and run sql file (mutually exclusive -s -t -r)"
                         echo "-c, --compare             Compare remote DB structs"
                         echo "-C, --compareLP           Compare local and remote DB structs"
@@ -177,6 +179,10 @@ while test $# -gt 0; do
                 -X|--visualLP)
                         compare_LP_db_structs=true
                         visual=true
+                        shift
+                        ;;
+                -S|--saveschema)
+                        save_schema=true
                         shift
                         ;;
                 -d|--dry-run)
@@ -550,6 +556,27 @@ if $run_sql ; then
     #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -s" < $db_dir/deploy_load_db.sh
   #   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c ./deploy_load_db.sh"
     ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh $db_base_name$env_suffix $db_user $sql_file interactive $PW\""
+  fi
+fi
+
+if $save_schema ; then
+  checkLocalMySQLRunning
+
+  if [[ $local_DB == "" ]]; then
+    local_DB="lobbywatch"
+  fi
+
+  if ! $quiet_mode ; then
+    askContinueYn "Save lobbywatch.sql from $local_DB?"
+  fi
+
+  echo "## Backup DB structure local '$local_DB'"
+  ./run_local_db_script.sh $local_DB dbdump_struct interactive && mv `cat last_dbdump_file.txt` lobbywatch.sql
+
+  if ! $quiet_mode ; then
+    enable_fail_onerror_no_pipe
+    diff -u -w --color=always -B <(git show HEAD:lobbywatch.sql | perl -p -e's/AUTO_INCREMENT=\d+//ig') <(cat lobbywatch.sql | perl -p -e's/AUTO_INCREMENT=\d+//ig') | less
+    enable_fail_onerror
   fi
 fi
 
