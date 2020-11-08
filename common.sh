@@ -284,7 +284,7 @@ enable_fail_onerror() {
   # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
   trap 'abort $LINENO' ERR
   # https://sipb.mit.edu/doc/safe-shell/
-  set -e -o pipefail
+  set -e -u -o pipefail
   # set -u
 }
 
