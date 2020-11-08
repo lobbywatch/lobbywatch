@@ -207,10 +207,9 @@ function _lobbywatch_meta_knowledge_articles() {
   $query = new EntityFieldQuery();
   $query
     ->entityCondition('entity_type', 'node')
-    ->entityCondition('bundle', 'article')
+    ->entityCondition('bundle', 'knowledge_article')
     ->propertyCondition('language', $lang)
-    ->propertyCondition('status', NODE_PUBLISHED)
-    ->propertyCondition('promote', 1);
+    ->propertyCondition('status', NODE_PUBLISHED);
   $total = $query->count()->execute();
 
   drupal_json_output(array(

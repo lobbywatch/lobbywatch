@@ -49593,7 +49593,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <DefaultSortedColumns>
           <Column fieldName="updated_date" orderType="1"/>
         </DefaultSortedColumns>
-        <BeforeGridText/>
+        <BeforeGridText>
+Übersetzungen: Die Lobbypedia-Artikel können im Drupal CMS übersetzt werden. Nur der Hauptartikel (dh. der deutsche Artikel) muss verlinkt werden.        </BeforeGridText>
         <DetailedDescription/>
         <ColumnPresentations>
           <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel" showColumnFilter="false" selectedFilterOperators="1573119">

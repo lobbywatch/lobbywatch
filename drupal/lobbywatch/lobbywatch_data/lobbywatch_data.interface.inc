@@ -368,7 +368,7 @@ function _lobbywatch_data_transformation($table, &$items) {
   }
 }
 
-function _lobbywatch_data_table_flat_list($table, $condition = '1', $json = true, $order_by = '') {
+function _lobbywatch_data_table_flat_list($table, $condition = '1', $json = true, $order_by = '', $join = '', $join_select = '') {
   global $show_sql;
   $success = true;
   $message = '';
@@ -382,7 +382,9 @@ function _lobbywatch_data_table_flat_list($table, $condition = '1', $json = true
     // TXTTODO _lobbywatch_data_table_flat_list nothing todo
     $sql = "
     SELECT " . _lobbywatch_data_select_fields_SQL($table) . "
+    $join_select
     FROM v_$table $table
+    $join
     WHERE $condition " .
         _lobbywatch_data_filter_unpublished_SQL($table) .
         _lobbywatch_data_filter_fields_SQL($table) .
@@ -945,8 +947,10 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
 
 }
 
+/** Add knowledge_articles of current language. The Drupal 7 translation system is used. */
 function _lobbywatch_add_wissensartikel($source_table, $id, &$aggregated, &$message, &$sql) {
-  $knowledge_articles =  _lobbywatch_data_table_flat_list('wissensartikel_link', "wissensartikel_link.target_id = $id AND wissensartikel_link.target_table_name = '$source_table'", false);
+  $lang = get_lang();
+  $knowledge_articles =  _lobbywatch_data_table_flat_list('wissensartikel_link', "wissensartikel_link.target_id = $id AND wissensartikel_link.target_table_name = '$source_table'", false, '', 'JOIN v_d7_node node ON node.tnid_nid = (SELECT tnid_nid FROM v_d7_node WHERE nid=wissensartikel_link.node_id) AND node.status=1' . ($lang ? " AND node.language = '$lang'" : ''), ', node.tnid_nid, node.language article_language, node.type article_type, node.status article_status, node.nid article_nid, node.title as article_title');
   $aggregated['knowledge_articles'] = $knowledge_articles['data'];
   $message .= ' | ' . $knowledge_articles['message'];
   $sql .= ' | ' . $knowledge_articles['sql'];

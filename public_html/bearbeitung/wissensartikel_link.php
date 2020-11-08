@@ -4113,6 +4113,7 @@
             $this->setExportSelectedRecordsAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
             $this->setExportListRecordAvailable(array());
             $this->setExportOneRecordAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
+            $this->setDescription('Übersetzungen: Die Lobbypedia-Artikel können im Drupal CMS übersetzt werden. Nur der Hauptartikel (dh. der deutsche Artikel) muss verlinkt werden.');
             $this->setShowFormErrorsOnTop(true);
     
             return $result;

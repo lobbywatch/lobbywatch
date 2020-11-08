@@ -749,7 +749,8 @@ FROM v_d7_node_raw node;
 -- remote: map Drupal 7 CMS node table to v_d7_node
 CREATE OR REPLACE VIEW v_d7_node AS
 SELECT
-node.*
+node.*,
+CASE WHEN tnid > 0 THEN tnid ELSE nid END AS tnid_nid
 FROM v_d7_node_simple node;
 
 CREATE OR REPLACE VIEW `v_wissensartikelzieltabelle` AS
@@ -770,10 +771,23 @@ FROM `wissensartikel_link`;
 
 CREATE OR REPLACE VIEW `v_wissensartikel_link` AS
 SELECT
-*
-FROM `v_wissensartikel_link_simple`;
+wissensartikel_link.*
+FROM `v_wissensartikel_link_simple` wissensartikel_link;
 
-DROP VIEW IF EXISTS vf_wissensartikel_link;
+CREATE OR REPLACE VIEW `v_wissensartikel_link_node` AS
+SELECT
+wissensartikel_link.*,
+node.language,
+node.type,
+node.status,
+node.title,
+node.nid,
+node.tnid,
+node.tnid_nid
+FROM `v_wissensartikel_link_simple` wissensartikel_link
+JOIN v_d7_node node ON node.nid = wissensartikel_link.node_id;
+
+-- DROP VIEW IF EXISTS vf_wissensartikel_link;
 CREATE OR REPLACE VIEW `uv_wissensartikel_link` AS
 SELECT
 wissensartikel_link.*,
