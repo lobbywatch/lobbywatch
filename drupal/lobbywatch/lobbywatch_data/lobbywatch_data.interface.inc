@@ -665,7 +665,7 @@ function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = t
       $sql .= ' | ' . $parlamentarier['sql'];
       $success = $success && $parlamentarier['success'];
 
-      _lobbywatch_add_wissensartikel('person', $id, $aggregated, $message, $sql);
+      _lobbywatch_add_wissensartikel($table, $id, $aggregated, $message, $sql);
     }
 
     $count = $zutrittsberechtigung['count'];
@@ -784,7 +784,7 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
         // $success = $success && $mandate['success'];
       }
 
-      _lobbywatch_add_wissensartikel('parlamentarier', $id, $aggregated, $message, $sql);
+      _lobbywatch_add_wissensartikel($table, $id, $aggregated, $message, $sql);
     }
 
 //     $count = count($aggregated);
@@ -911,7 +911,7 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
   //       $success = $success && $mandate['success'];
   //     }
 
-      _lobbywatch_add_wissensartikel('organisation', $id, $aggregated, $message, $sql);
+      _lobbywatch_add_wissensartikel($table, $id, $aggregated, $message, $sql);
     }
 
     $count = $organsation['count'];
@@ -1026,7 +1026,7 @@ function _lobbywatch_data_table_interessengruppe_aggregated_id($id, $json = true
       $sql .= ' | ' . $zutrittsberechtigte['sql'];
       // $success = $success && $zutrittsberechtigte['success'];
 
-      _lobbywatch_add_wissensartikel('ineteressengruppe', $id, $aggregated, $message, $sql);
+      _lobbywatch_add_wissensartikel($table, $id, $aggregated, $message, $sql);
     }
 
     $count = $organsation['count'];
@@ -1155,7 +1155,7 @@ function _lobbywatch_data_table_branche_aggregated_id($id, $json = true) {
       $aggregated_parlamentarier = _lobbywatch_data_get_parlamentarier_from_organisation($organisationen['data']);
       $aggregated = array_merge($aggregated, $aggregated_parlamentarier);
 
-      _lobbywatch_add_wissensartikel('branche', $id, $aggregated, $message, $sql);
+      _lobbywatch_add_wissensartikel($table, $id, $aggregated, $message, $sql);
     }
 
     $count = $branche['count'];
