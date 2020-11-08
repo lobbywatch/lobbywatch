@@ -97,7 +97,7 @@ function generatedGetPageInfos() // Afterburned
     $result[] = array('caption' => '<span class="settings">Translation Source</span>', 'short_caption' => 'Translation Source', 'filename' => 'translation_source.php', 'name' => 'translation_source', 'group_name' => 'Meta', 'add_separator' => false, 'description' => '');
     $result[] = array('caption' => '<span class="settings">Translation Target</span>', 'short_caption' => 'Translation Target', 'filename' => 'translation_target.php', 'name' => 'translation_target', 'group_name' => 'Meta', 'add_separator' => false, 'description' => '');
     $result[] = array('caption' => '<span class="settings">User</span>', 'short_caption' => 'User', 'filename' => 'user.php', 'name' => 'user', 'group_name' => 'Meta', 'add_separator' => false, 'description' => '');
-    $result[] = array('caption' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Lobbypediaverknüpfung</span>', 'short_caption' => 'Lobbypediaverknüpfung', 'filename' => 'wissensartikel_link.php', 'name' => 'wissensartikel_link', 'group_name' => '<span class="releation-menu important-relation-menu">Verbindungen</span>', 'add_separator' => false, 'description' => '');
+    $result[] = array('caption' => '<span class="relation" title="Verknüpfung von Lobbypedia-Artikel mit einem Datensatz">Lobbypediaverknüpfung</span>', 'short_caption' => 'Lobbypediaverknüpfung', 'filename' => 'wissensartikel_link.php', 'name' => 'uv_wissensartikel_link', 'group_name' => '<span class="releation-menu important-relation-menu">Verbindungen</span>', 'add_separator' => false, 'description' => '');
     return $result;
 }
 

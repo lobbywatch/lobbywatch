@@ -732,12 +732,25 @@ SELECT organisation_anhang.organisation_id as organisation_id2, organisation_anh
 FROM `organisation_anhang`;
 
 -- remote: map Drupal 7 CMS node table to v_d7_node
-CREATE OR REPLACE VIEW v_d7_node AS
+CREATE OR REPLACE VIEW v_d7_node_raw AS
 SELECT
-title as anzeige_name,
-CONCAT(title, ' (nid:', nid, ', lang:', language, ', published: ', status, ')') as anzeige_name_long,
 dlw_node.*
 FROM `lobbywat_d7lobbywatch`.`dlw_node`;
+
+-- remote: map Drupal 7 CMS node table to v_d7_node
+CREATE OR REPLACE VIEW v_d7_node_simple AS
+SELECT
+title as anzeige_name,
+CONCAT(title, ' [nid: ', nid, ', lang: ', language, ', publ: ', status, ']') as anzeige_name_lang,
+CONCAT('nid: ', nid, ', lang: ', language, ', published: ', status, '') as anzeige_meta,
+node.*
+FROM v_d7_node_raw node;
+
+-- remote: map Drupal 7 CMS node table to v_d7_node
+CREATE OR REPLACE VIEW v_d7_node AS
+SELECT
+node.*
+FROM v_d7_node_simple node;
 
 CREATE OR REPLACE VIEW `v_wissensartikelzieltabelle` AS
 SELECT
@@ -748,12 +761,25 @@ IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(created_date) as created_date_unix, UNIX_TIMESTAMP(updated_date) as updated_date_unix, UNIX_TIMESTAMP(eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(freigabe_datum) as freigabe_datum_unix
 FROM `wissensartikelzieltabelle`;
 
-CREATE OR REPLACE VIEW `v_wissensartikel_link` AS
+CREATE OR REPLACE VIEW `v_wissensartikel_link_simple` AS
 SELECT
 wissensartikel_link.*,
 IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(created_date) as created_date_unix, UNIX_TIMESTAMP(updated_date) as updated_date_unix, UNIX_TIMESTAMP(eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(freigabe_datum) as freigabe_datum_unix
 FROM `wissensartikel_link`;
+
+CREATE OR REPLACE VIEW `v_wissensartikel_link` AS
+SELECT
+*
+FROM `v_wissensartikel_link_simple`;
+
+DROP VIEW IF EXISTS vf_wissensartikel_link;
+CREATE OR REPLACE VIEW `uv_wissensartikel_link` AS
+SELECT
+wissensartikel_link.*,
+node.*
+FROM `wissensartikel_link`
+JOIN v_d7_node_raw node ON node.nid = wissensartikel_link.node_id;
 
 CREATE OR REPLACE VIEW `v_in_kommission_simple` AS
 SELECT in_kommission.*,

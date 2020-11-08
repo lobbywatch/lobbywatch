@@ -5882,6 +5882,47 @@ CREATE VIEW `uv_interessenbindung_jahr` AS SELECT
 SET character_set_client = @saved_cs_client;
 
 --
+-- Temporary table structure for view `uv_wissensartikel_link`
+--
+
+DROP TABLE IF EXISTS `uv_wissensartikel_link`;
+DROP VIEW IF EXISTS `uv_wissensartikel_link`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE VIEW `uv_wissensartikel_link` AS SELECT 
+ 1 AS `id`,
+ 1 AS `node_id`,
+ 1 AS `target_table_name`,
+ 1 AS `target_id`,
+ 1 AS `target_table_name_with_id`,
+ 1 AS `notizen`,
+ 1 AS `eingabe_abgeschlossen_visa`,
+ 1 AS `eingabe_abgeschlossen_datum`,
+ 1 AS `kontrolliert_visa`,
+ 1 AS `kontrolliert_datum`,
+ 1 AS `freigabe_visa`,
+ 1 AS `freigabe_datum`,
+ 1 AS `created_visa`,
+ 1 AS `created_date`,
+ 1 AS `updated_visa`,
+ 1 AS `updated_date`,
+ 1 AS `nid`,
+ 1 AS `vid`,
+ 1 AS `type`,
+ 1 AS `language`,
+ 1 AS `title`,
+ 1 AS `uid`,
+ 1 AS `status`,
+ 1 AS `created`,
+ 1 AS `changed`,
+ 1 AS `comment`,
+ 1 AS `promote`,
+ 1 AS `sticky`,
+ 1 AS `tnid`,
+ 1 AS `translate`;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Temporary table structure for view `v_all_entity_records`
 --
 
@@ -6094,7 +6135,61 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE VIEW `v_d7_node` AS SELECT 
  1 AS `anzeige_name`,
- 1 AS `anzeige_name_long`,
+ 1 AS `anzeige_name_lang`,
+ 1 AS `anzeige_meta`,
+ 1 AS `nid`,
+ 1 AS `vid`,
+ 1 AS `type`,
+ 1 AS `language`,
+ 1 AS `title`,
+ 1 AS `uid`,
+ 1 AS `status`,
+ 1 AS `created`,
+ 1 AS `changed`,
+ 1 AS `comment`,
+ 1 AS `promote`,
+ 1 AS `sticky`,
+ 1 AS `tnid`,
+ 1 AS `translate`;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_d7_node_raw`
+--
+
+DROP TABLE IF EXISTS `v_d7_node_raw`;
+DROP VIEW IF EXISTS `v_d7_node_raw`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE VIEW `v_d7_node_raw` AS SELECT 
+ 1 AS `nid`,
+ 1 AS `vid`,
+ 1 AS `type`,
+ 1 AS `language`,
+ 1 AS `title`,
+ 1 AS `uid`,
+ 1 AS `status`,
+ 1 AS `created`,
+ 1 AS `changed`,
+ 1 AS `comment`,
+ 1 AS `promote`,
+ 1 AS `sticky`,
+ 1 AS `tnid`,
+ 1 AS `translate`;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_d7_node_simple`
+--
+
+DROP TABLE IF EXISTS `v_d7_node_simple`;
+DROP VIEW IF EXISTS `v_d7_node_simple`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE VIEW `v_d7_node_simple` AS SELECT 
+ 1 AS `anzeige_name`,
+ 1 AS `anzeige_name_lang`,
+ 1 AS `anzeige_meta`,
  1 AS `nid`,
  1 AS `vid`,
  1 AS `type`,
@@ -10877,7 +10972,40 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE VIEW `v_wissensartikel_link` AS SELECT 
  1 AS `id`,
- 1 AS `nid`,
+ 1 AS `node_id`,
+ 1 AS `target_table_name`,
+ 1 AS `target_id`,
+ 1 AS `target_table_name_with_id`,
+ 1 AS `notizen`,
+ 1 AS `eingabe_abgeschlossen_visa`,
+ 1 AS `eingabe_abgeschlossen_datum`,
+ 1 AS `kontrolliert_visa`,
+ 1 AS `kontrolliert_datum`,
+ 1 AS `freigabe_visa`,
+ 1 AS `freigabe_datum`,
+ 1 AS `created_visa`,
+ 1 AS `created_date`,
+ 1 AS `updated_visa`,
+ 1 AS `updated_date`,
+ 1 AS `published`,
+ 1 AS `created_date_unix`,
+ 1 AS `updated_date_unix`,
+ 1 AS `eingabe_abgeschlossen_datum_unix`,
+ 1 AS `kontrolliert_datum_unix`,
+ 1 AS `freigabe_datum_unix`;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_wissensartikel_link_simple`
+--
+
+DROP TABLE IF EXISTS `v_wissensartikel_link_simple`;
+DROP VIEW IF EXISTS `v_wissensartikel_link_simple`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE VIEW `v_wissensartikel_link_simple` AS SELECT 
+ 1 AS `id`,
+ 1 AS `node_id`,
  1 AS `target_table_name`,
  1 AS `target_id`,
  1 AS `target_table_name_with_id`,
@@ -11659,7 +11787,7 @@ SET @saved_cs_client     = @@character_set_client ;
 SET character_set_client = utf8 ;
 CREATE TABLE `wissensartikel_link` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
-  `nid` int(10) unsigned NOT NULL COMMENT 'CMS Drupal 7 node id (nid) des Lobbypedia-Artikels',
+  `node_id` int(10) unsigned NOT NULL COMMENT 'CMS Drupal 7 node id (nid) des Lobbypedia-Artikels',
   `target_table_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Zieltabelle, die mit dem Lobbypedia-Artikel verknüpft wird.',
   `target_id` int(11) NOT NULL COMMENT 'id in der Zieltabelle',
   `target_table_name_with_id` varchar(52) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Zieltabelle#id, ist die Zusammensetzung von Zieltablle und id mit einem Hash (#) getrennt. Dieses Feld ist aus technischen Gründen nötig für den PHP Formulargenerator.',
@@ -11675,9 +11803,9 @@ CREATE TABLE `wissensartikel_link` (
   `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
-  KEY `idx_nid` (`nid`),
+  KEY `idx_node_id` (`node_id`),
   KEY `idx_target` (`target_table_name`,`target_id`),
-  CONSTRAINT `fk_nid` FOREIGN KEY (`nid`) REFERENCES `lobbywat_d7lobbywatch`.`dlw_node` (`nid`),
+  CONSTRAINT `fk_node_id` FOREIGN KEY (`node_id`) REFERENCES `lobbywat_d7lobbywatch`.`dlw_node` (`nid`),
   CONSTRAINT `fk_target_table_name` FOREIGN KEY (`target_table_name`) REFERENCES `wissensartikelzieltabelle` (`table_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Verknüpfung von CMS Lobbypedia-Artikeln mit DB-Datensätzen';
 SET character_set_client = @saved_cs_client ;
@@ -11688,7 +11816,7 @@ SET character_set_client  = utf8mb4  ;
 SET character_set_results = utf8mb4  ;
 SET collation_connection  = utf8mb4_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
-SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
 CREATE TRIGGER `trg_wissensartikel_link_log_ins` AFTER INSERT ON `wissensartikel_link`
 FOR EACH ROW
@@ -11709,7 +11837,7 @@ SET character_set_client  = utf8mb4  ;
 SET character_set_results = utf8mb4  ;
 SET collation_connection  = utf8mb4_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
-SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
 CREATE TRIGGER `trg_wissensartikel_link_log_upd` AFTER UPDATE ON `wissensartikel_link`
 FOR EACH ROW
@@ -11730,7 +11858,7 @@ SET character_set_client  = utf8mb4  ;
 SET character_set_results = utf8mb4  ;
 SET collation_connection  = utf8mb4_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
-SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
 CREATE TRIGGER `trg_wissensartikel_link_log_del_before` BEFORE DELETE ON `wissensartikel_link`
 FOR EACH ROW
@@ -11751,7 +11879,7 @@ SET character_set_client  = utf8mb4  ;
 SET character_set_results = utf8mb4  ;
 SET collation_connection  = utf8mb4_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
-SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
 CREATE TRIGGER `trg_wissensartikel_link_log_del_after` AFTER DELETE ON `wissensartikel_link`
 FOR EACH ROW
@@ -11776,7 +11904,7 @@ SET @saved_cs_client     = @@character_set_client ;
 SET character_set_client = utf8 ;
 CREATE TABLE `wissensartikel_link_log` (
   `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
-  `nid` int(10) unsigned NOT NULL COMMENT 'CMS Drupal 7 node id (nid) des Lobbypedia-Artikels',
+  `node_id` int(10) unsigned NOT NULL COMMENT 'CMS Drupal 7 node id (nid) des Lobbypedia-Artikels',
   `target_table_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Zieltabelle, die mit dem Lobbypedia-Artikel verknüpft wird.',
   `target_id` int(11) NOT NULL COMMENT 'id in der Zieltabelle',
   `target_table_name_with_id` varchar(52) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Zieltabelle#id, ist die Zusammensetzung von Zieltablle und id mit einem Hash (#) getrennt. Dieses Feld ist aus technischen Gründen nötig für den PHP Formulargenerator.',
@@ -11836,7 +11964,7 @@ SET character_set_client  = utf8mb4  ;
 SET character_set_results = utf8mb4  ;
 SET collation_connection  = utf8mb4_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
-SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
 CREATE TRIGGER `trg_wissensartikelzieltabelle_log_ins` AFTER INSERT ON `wissensartikelzieltabelle`
 FOR EACH ROW
@@ -11857,7 +11985,7 @@ SET character_set_client  = utf8mb4  ;
 SET character_set_results = utf8mb4  ;
 SET collation_connection  = utf8mb4_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
-SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
 CREATE TRIGGER `trg_wissensartikelzieltabelle_log_upd` AFTER UPDATE ON `wissensartikelzieltabelle`
 FOR EACH ROW
@@ -11878,7 +12006,7 @@ SET character_set_client  = utf8mb4  ;
 SET character_set_results = utf8mb4  ;
 SET collation_connection  = utf8mb4_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
-SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
 CREATE TRIGGER `trg_wissensartikelzieltabelle_log_del_before` BEFORE DELETE ON `wissensartikelzieltabelle`
 FOR EACH ROW
@@ -11899,7 +12027,7 @@ SET character_set_client  = utf8mb4  ;
 SET character_set_results = utf8mb4  ;
 SET collation_connection  = utf8mb4_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
-SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
 CREATE TRIGGER `trg_wissensartikelzieltabelle_log_del_after` AFTER DELETE ON `wissensartikelzieltabelle`
 FOR EACH ROW
@@ -12559,6 +12687,24 @@ SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
 
 --
+-- Final view structure for view `uv_wissensartikel_link`
+--
+
+DROP VIEW IF EXISTS `uv_wissensartikel_link`;
+SET @saved_cs_client          = @@character_set_client ;
+SET @saved_cs_results         = @@character_set_results ;
+SET @saved_col_connection     = @@collation_connection ;
+SET character_set_client      = utf8mb4 ;
+SET character_set_results     = utf8mb4 ;
+SET collation_connection      = utf8mb4_unicode_ci ;
+CREATE  
+ 
+VIEW `uv_wissensartikel_link` AS select `wissensartikel_link`.`id` AS `id`,`wissensartikel_link`.`node_id` AS `node_id`,`wissensartikel_link`.`target_table_name` AS `target_table_name`,`wissensartikel_link`.`target_id` AS `target_id`,`wissensartikel_link`.`target_table_name_with_id` AS `target_table_name_with_id`,`wissensartikel_link`.`notizen` AS `notizen`,`wissensartikel_link`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`wissensartikel_link`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`wissensartikel_link`.`kontrolliert_visa` AS `kontrolliert_visa`,`wissensartikel_link`.`kontrolliert_datum` AS `kontrolliert_datum`,`wissensartikel_link`.`freigabe_visa` AS `freigabe_visa`,`wissensartikel_link`.`freigabe_datum` AS `freigabe_datum`,`wissensartikel_link`.`created_visa` AS `created_visa`,`wissensartikel_link`.`created_date` AS `created_date`,`wissensartikel_link`.`updated_visa` AS `updated_visa`,`wissensartikel_link`.`updated_date` AS `updated_date`,`node`.`nid` AS `nid`,`node`.`vid` AS `vid`,`node`.`type` AS `type`,`node`.`language` AS `language`,`node`.`title` AS `title`,`node`.`uid` AS `uid`,`node`.`status` AS `status`,`node`.`created` AS `created`,`node`.`changed` AS `changed`,`node`.`comment` AS `comment`,`node`.`promote` AS `promote`,`node`.`sticky` AS `sticky`,`node`.`tnid` AS `tnid`,`node`.`translate` AS `translate` from (`wissensartikel_link` join `v_d7_node_raw` `node` on((`node`.`nid` = `wissensartikel_link`.`node_id`))) ;
+SET character_set_client      = @saved_cs_client ;
+SET character_set_results     = @saved_cs_results ;
+SET collation_connection      = @saved_col_connection ;
+
+--
 -- Final view structure for view `v_all_entity_records`
 --
 
@@ -12661,7 +12807,43 @@ SET character_set_results     = utf8mb4 ;
 SET collation_connection      = utf8mb4_unicode_ci ;
 CREATE  
  
-VIEW `v_d7_node` AS select `lobbywat_d7lobbywatch`.`dlw_node`.`title` AS `anzeige_name`,concat(`lobbywat_d7lobbywatch`.`dlw_node`.`title`,' (nid:',`lobbywat_d7lobbywatch`.`dlw_node`.`nid`,', lang:',`lobbywat_d7lobbywatch`.`dlw_node`.`language`,', published: ',`lobbywat_d7lobbywatch`.`dlw_node`.`status`,')') AS `anzeige_name_long`,`lobbywat_d7lobbywatch`.`dlw_node`.`nid` AS `nid`,`lobbywat_d7lobbywatch`.`dlw_node`.`vid` AS `vid`,`lobbywat_d7lobbywatch`.`dlw_node`.`type` AS `type`,`lobbywat_d7lobbywatch`.`dlw_node`.`language` AS `language`,`lobbywat_d7lobbywatch`.`dlw_node`.`title` AS `title`,`lobbywat_d7lobbywatch`.`dlw_node`.`uid` AS `uid`,`lobbywat_d7lobbywatch`.`dlw_node`.`status` AS `status`,`lobbywat_d7lobbywatch`.`dlw_node`.`created` AS `created`,`lobbywat_d7lobbywatch`.`dlw_node`.`changed` AS `changed`,`lobbywat_d7lobbywatch`.`dlw_node`.`comment` AS `comment`,`lobbywat_d7lobbywatch`.`dlw_node`.`promote` AS `promote`,`lobbywat_d7lobbywatch`.`dlw_node`.`sticky` AS `sticky`,`lobbywat_d7lobbywatch`.`dlw_node`.`tnid` AS `tnid`,`lobbywat_d7lobbywatch`.`dlw_node`.`translate` AS `translate` from `lobbywat_d7lobbywatch`.`dlw_node` ;
+VIEW `v_d7_node` AS select `node`.`anzeige_name` AS `anzeige_name`,`node`.`anzeige_name_lang` AS `anzeige_name_lang`,`node`.`anzeige_meta` AS `anzeige_meta`,`node`.`nid` AS `nid`,`node`.`vid` AS `vid`,`node`.`type` AS `type`,`node`.`language` AS `language`,`node`.`title` AS `title`,`node`.`uid` AS `uid`,`node`.`status` AS `status`,`node`.`created` AS `created`,`node`.`changed` AS `changed`,`node`.`comment` AS `comment`,`node`.`promote` AS `promote`,`node`.`sticky` AS `sticky`,`node`.`tnid` AS `tnid`,`node`.`translate` AS `translate` from `v_d7_node_simple` `node` ;
+SET character_set_client      = @saved_cs_client ;
+SET character_set_results     = @saved_cs_results ;
+SET collation_connection      = @saved_col_connection ;
+
+--
+-- Final view structure for view `v_d7_node_raw`
+--
+
+DROP VIEW IF EXISTS `v_d7_node_raw`;
+SET @saved_cs_client          = @@character_set_client ;
+SET @saved_cs_results         = @@character_set_results ;
+SET @saved_col_connection     = @@collation_connection ;
+SET character_set_client      = utf8mb4 ;
+SET character_set_results     = utf8mb4 ;
+SET collation_connection      = utf8mb4_unicode_ci ;
+CREATE  
+ 
+VIEW `v_d7_node_raw` AS select `lobbywat_d7lobbywatch`.`dlw_node`.`nid` AS `nid`,`lobbywat_d7lobbywatch`.`dlw_node`.`vid` AS `vid`,`lobbywat_d7lobbywatch`.`dlw_node`.`type` AS `type`,`lobbywat_d7lobbywatch`.`dlw_node`.`language` AS `language`,`lobbywat_d7lobbywatch`.`dlw_node`.`title` AS `title`,`lobbywat_d7lobbywatch`.`dlw_node`.`uid` AS `uid`,`lobbywat_d7lobbywatch`.`dlw_node`.`status` AS `status`,`lobbywat_d7lobbywatch`.`dlw_node`.`created` AS `created`,`lobbywat_d7lobbywatch`.`dlw_node`.`changed` AS `changed`,`lobbywat_d7lobbywatch`.`dlw_node`.`comment` AS `comment`,`lobbywat_d7lobbywatch`.`dlw_node`.`promote` AS `promote`,`lobbywat_d7lobbywatch`.`dlw_node`.`sticky` AS `sticky`,`lobbywat_d7lobbywatch`.`dlw_node`.`tnid` AS `tnid`,`lobbywat_d7lobbywatch`.`dlw_node`.`translate` AS `translate` from `lobbywat_d7lobbywatch`.`dlw_node` ;
+SET character_set_client      = @saved_cs_client ;
+SET character_set_results     = @saved_cs_results ;
+SET collation_connection      = @saved_col_connection ;
+
+--
+-- Final view structure for view `v_d7_node_simple`
+--
+
+DROP VIEW IF EXISTS `v_d7_node_simple`;
+SET @saved_cs_client          = @@character_set_client ;
+SET @saved_cs_results         = @@character_set_results ;
+SET @saved_col_connection     = @@collation_connection ;
+SET character_set_client      = utf8mb4 ;
+SET character_set_results     = utf8mb4 ;
+SET collation_connection      = utf8mb4_unicode_ci ;
+CREATE  
+ 
+VIEW `v_d7_node_simple` AS select `node`.`title` AS `anzeige_name`,concat(`node`.`title`,' [nid: ',`node`.`nid`,', lang: ',`node`.`language`,', publ: ',`node`.`status`,']') AS `anzeige_name_lang`,concat('nid: ',`node`.`nid`,', lang: ',`node`.`language`,', published: ',`node`.`status`,'') AS `anzeige_meta`,`node`.`nid` AS `nid`,`node`.`vid` AS `vid`,`node`.`type` AS `type`,`node`.`language` AS `language`,`node`.`title` AS `title`,`node`.`uid` AS `uid`,`node`.`status` AS `status`,`node`.`created` AS `created`,`node`.`changed` AS `changed`,`node`.`comment` AS `comment`,`node`.`promote` AS `promote`,`node`.`sticky` AS `sticky`,`node`.`tnid` AS `tnid`,`node`.`translate` AS `translate` from `v_d7_node_raw` `node` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -14569,7 +14751,25 @@ SET character_set_results     = utf8mb4 ;
 SET collation_connection      = utf8mb4_unicode_ci ;
 CREATE  
  
-VIEW `v_wissensartikel_link` AS select `wissensartikel_link`.`id` AS `id`,`wissensartikel_link`.`nid` AS `nid`,`wissensartikel_link`.`target_table_name` AS `target_table_name`,`wissensartikel_link`.`target_id` AS `target_id`,`wissensartikel_link`.`target_table_name_with_id` AS `target_table_name_with_id`,`wissensartikel_link`.`notizen` AS `notizen`,`wissensartikel_link`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`wissensartikel_link`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`wissensartikel_link`.`kontrolliert_visa` AS `kontrolliert_visa`,`wissensartikel_link`.`kontrolliert_datum` AS `kontrolliert_datum`,`wissensartikel_link`.`freigabe_visa` AS `freigabe_visa`,`wissensartikel_link`.`freigabe_datum` AS `freigabe_datum`,`wissensartikel_link`.`created_visa` AS `created_visa`,`wissensartikel_link`.`created_date` AS `created_date`,`wissensartikel_link`.`updated_visa` AS `updated_visa`,`wissensartikel_link`.`updated_date` AS `updated_date`,ifnull((`wissensartikel_link`.`freigabe_datum` <= now()),FALSE) AS `published`,unix_timestamp(`wissensartikel_link`.`created_date`) AS `created_date_unix`,unix_timestamp(`wissensartikel_link`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`wissensartikel_link`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`wissensartikel_link`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`wissensartikel_link`.`freigabe_datum`) AS `freigabe_datum_unix` from `wissensartikel_link` ;
+VIEW `v_wissensartikel_link` AS select `v_wissensartikel_link_simple`.`id` AS `id`,`v_wissensartikel_link_simple`.`node_id` AS `node_id`,`v_wissensartikel_link_simple`.`target_table_name` AS `target_table_name`,`v_wissensartikel_link_simple`.`target_id` AS `target_id`,`v_wissensartikel_link_simple`.`target_table_name_with_id` AS `target_table_name_with_id`,`v_wissensartikel_link_simple`.`notizen` AS `notizen`,`v_wissensartikel_link_simple`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`v_wissensartikel_link_simple`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`v_wissensartikel_link_simple`.`kontrolliert_visa` AS `kontrolliert_visa`,`v_wissensartikel_link_simple`.`kontrolliert_datum` AS `kontrolliert_datum`,`v_wissensartikel_link_simple`.`freigabe_visa` AS `freigabe_visa`,`v_wissensartikel_link_simple`.`freigabe_datum` AS `freigabe_datum`,`v_wissensartikel_link_simple`.`created_visa` AS `created_visa`,`v_wissensartikel_link_simple`.`created_date` AS `created_date`,`v_wissensartikel_link_simple`.`updated_visa` AS `updated_visa`,`v_wissensartikel_link_simple`.`updated_date` AS `updated_date`,`v_wissensartikel_link_simple`.`published` AS `published`,`v_wissensartikel_link_simple`.`created_date_unix` AS `created_date_unix`,`v_wissensartikel_link_simple`.`updated_date_unix` AS `updated_date_unix`,`v_wissensartikel_link_simple`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`v_wissensartikel_link_simple`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`v_wissensartikel_link_simple`.`freigabe_datum_unix` AS `freigabe_datum_unix` from `v_wissensartikel_link_simple` ;
+SET character_set_client      = @saved_cs_client ;
+SET character_set_results     = @saved_cs_results ;
+SET collation_connection      = @saved_col_connection ;
+
+--
+-- Final view structure for view `v_wissensartikel_link_simple`
+--
+
+DROP VIEW IF EXISTS `v_wissensartikel_link_simple`;
+SET @saved_cs_client          = @@character_set_client ;
+SET @saved_cs_results         = @@character_set_results ;
+SET @saved_col_connection     = @@collation_connection ;
+SET character_set_client      = utf8mb4 ;
+SET character_set_results     = utf8mb4 ;
+SET collation_connection      = utf8mb4_unicode_ci ;
+CREATE  
+ 
+VIEW `v_wissensartikel_link_simple` AS select `wissensartikel_link`.`id` AS `id`,`wissensartikel_link`.`node_id` AS `node_id`,`wissensartikel_link`.`target_table_name` AS `target_table_name`,`wissensartikel_link`.`target_id` AS `target_id`,`wissensartikel_link`.`target_table_name_with_id` AS `target_table_name_with_id`,`wissensartikel_link`.`notizen` AS `notizen`,`wissensartikel_link`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`wissensartikel_link`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`wissensartikel_link`.`kontrolliert_visa` AS `kontrolliert_visa`,`wissensartikel_link`.`kontrolliert_datum` AS `kontrolliert_datum`,`wissensartikel_link`.`freigabe_visa` AS `freigabe_visa`,`wissensartikel_link`.`freigabe_datum` AS `freigabe_datum`,`wissensartikel_link`.`created_visa` AS `created_visa`,`wissensartikel_link`.`created_date` AS `created_date`,`wissensartikel_link`.`updated_visa` AS `updated_visa`,`wissensartikel_link`.`updated_date` AS `updated_date`,ifnull((`wissensartikel_link`.`freigabe_datum` <= now()),FALSE) AS `published`,unix_timestamp(`wissensartikel_link`.`created_date`) AS `created_date_unix`,unix_timestamp(`wissensartikel_link`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`wissensartikel_link`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`wissensartikel_link`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`wissensartikel_link`.`freigabe_datum`) AS `freigabe_datum_unix` from `wissensartikel_link` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -14781,4 +14981,4 @@ SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS ;
 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION ;
 SET SQL_NOTES=@OLD_SQL_NOTES ;
 
--- Dump completed on 2020-11-08  9:30:52
+-- Dump completed on 2020-11-08 11:29:12

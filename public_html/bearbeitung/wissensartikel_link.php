@@ -36,7 +36,7 @@
     
     
     
-    class wissensartikel_link_wissensartikel_link_logPage extends DetailPage
+    class uv_wissensartikel_link_wissensartikel_link_logPage extends DetailPage
     {
         protected function DoBeforeCreate()
         {
@@ -50,7 +50,7 @@
             $this->dataset->addFields(
                 array(
                     new IntegerField('id', true),
-                    new IntegerField('nid', true),
+                    new IntegerField('node_id', true),
                     new StringField('target_table_name', true),
                     new IntegerField('target_id', true),
                     new StringField('target_table_name_with_id', true),
@@ -72,7 +72,7 @@
                     new IntegerField('snapshot_id')
                 )
             );
-            $this->dataset->AddLookupField('nid', 'v_d7_node', new IntegerField('nid'), new StringField('anzeige_name', false, false, false, false, 'nid_anzeige_name', 'nid_anzeige_name_v_d7_node'), 'nid_anzeige_name_v_d7_node');
+            $this->dataset->AddLookupField('node_id', 'v_d7_node', new IntegerField('nid'), new StringField('anzeige_name', false, false, false, false, 'node_id_anzeige_name', 'node_id_anzeige_name_v_d7_node'), 'node_id_anzeige_name_v_d7_node');
             $this->dataset->AddLookupField('target_table_name', 'v_wissensartikelzieltabelle', new StringField('table_name'), new StringField('anzeige_name', false, false, false, false, 'target_table_name_anzeige_name', 'target_table_name_anzeige_name_v_wissensartikelzieltabelle'), 'target_table_name_anzeige_name_v_wissensartikelzieltabelle');
             $this->dataset->AddLookupField('target_table_name_with_id', 'v_all_entity_records', new StringField('table_name_with_id'), new StringField('anzeige_name', false, false, false, false, 'target_table_name_with_id_anzeige_name', 'target_table_name_with_id_anzeige_name_v_all_entity_records'), 'target_table_name_with_id_anzeige_name_v_all_entity_records');
             $this->dataset->AddLookupField('snapshot_id', '`snapshot`', new IntegerField('id'), new StringField('beschreibung', false, false, false, false, 'snapshot_id_beschreibung', 'snapshot_id_beschreibung_snapshot'), 'snapshot_id_beschreibung_snapshot');
@@ -106,7 +106,7 @@
         {
             return array(
                 new FilterColumn($this->dataset, 'id', 'id', 'Id'),
-                new FilterColumn($this->dataset, 'nid', 'nid_anzeige_name', 'Nid'),
+                new FilterColumn($this->dataset, 'node_id', 'node_id_anzeige_name', 'Nid'),
                 new FilterColumn($this->dataset, 'target_table_name', 'target_table_name_anzeige_name', 'DB-Tabelle'),
                 new FilterColumn($this->dataset, 'target_id', 'target_id', 'Datensatz Id'),
                 new FilterColumn($this->dataset, 'target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'Datensatz'),
@@ -133,7 +133,7 @@
         {
             $quickFilter
                 ->addColumn($columns['id'])
-                ->addColumn($columns['nid'])
+                ->addColumn($columns['node_id'])
                 ->addColumn($columns['target_table_name'])
                 ->addColumn($columns['target_id'])
                 ->addColumn($columns['target_table_name_with_id'])
@@ -158,7 +158,7 @@
         protected function setupColumnFilter(ColumnFilter $columnFilter)
         {
             $columnFilter
-                ->setOptionsFor('nid')
+                ->setOptionsFor('node_id')
                 ->setOptionsFor('target_table_name')
                 ->setOptionsFor('target_id')
                 ->setOptionsFor('target_table_name_with_id')
@@ -192,17 +192,17 @@
                 )
             );
             
-            $main_editor = new DynamicCombobox('nid_edit', $this->CreateLinkBuilder());
+            $main_editor = new DynamicCombobox('node_id_edit', $this->CreateLinkBuilder());
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_wissensartikel_link_wissensartikel_link_log_nid_search');
+            $main_editor->SetHandlerName('filter_builder_uv_wissensartikel_link_wissensartikel_link_log_node_id_search');
             
-            $multi_value_select_editor = new RemoteMultiValueSelect('nid', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_wissensartikel_link_wissensartikel_link_log_nid_search');
+            $multi_value_select_editor = new RemoteMultiValueSelect('node_id', $this->CreateLinkBuilder());
+            $multi_value_select_editor->SetHandlerName('filter_builder_uv_wissensartikel_link_wissensartikel_link_log_node_id_search');
             
             $filterBuilder->addColumn(
-                $columns['nid'],
+                $columns['node_id'],
                 array(
                     FilterConditionOperator::EQUALS => $main_editor,
                     FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
@@ -223,10 +223,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_wissensartikel_link_wissensartikel_link_log_target_table_name_search');
+            $main_editor->SetHandlerName('filter_builder_uv_wissensartikel_link_wissensartikel_link_log_target_table_name_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('target_table_name', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_wissensartikel_link_wissensartikel_link_log_target_table_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_uv_wissensartikel_link_wissensartikel_link_log_target_table_name_search');
             
             $text_editor = new TextEdit('target_table_name');
             
@@ -276,10 +276,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_wissensartikel_link_wissensartikel_link_log_target_table_name_with_id_search');
+            $main_editor->SetHandlerName('filter_builder_uv_wissensartikel_link_wissensartikel_link_log_target_table_name_with_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('target_table_name_with_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_wissensartikel_link_wissensartikel_link_log_target_table_name_with_id_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_uv_wissensartikel_link_wissensartikel_link_log_target_table_name_with_id_search');
             
             $text_editor = new TextEdit('target_table_name_with_id');
             
@@ -665,10 +665,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_wissensartikel_link_wissensartikel_link_log_snapshot_id_search');
+            $main_editor->SetHandlerName('filter_builder_uv_wissensartikel_link_wissensartikel_link_log_snapshot_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('snapshot_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_wissensartikel_link_wissensartikel_link_log_snapshot_id_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_uv_wissensartikel_link_wissensartikel_link_log_snapshot_id_search');
             
             $text_editor = new TextEdit('snapshot_id');
             
@@ -726,7 +726,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('nid', 'nid_anzeige_name', 'Nid', $this->dataset);
+            $column = new TextViewColumn('node_id', 'node_id_anzeige_name', 'Nid', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('CMS Drupal 7 node id (nid) des Lobbypedia-Artikels');
@@ -947,7 +947,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('nid', 'nid_anzeige_name', 'Nid', $this->dataset);
+            $column = new TextViewColumn('node_id', 'node_id_anzeige_name', 'Nid', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1129,7 +1129,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('nid', 'nid_anzeige_name', 'Nid', $this->dataset);
+            $column = new TextViewColumn('node_id', 'node_id_anzeige_name', 'Nid', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -1290,7 +1290,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('nid', 'nid_anzeige_name', 'Nid', $this->dataset);
+            $column = new TextViewColumn('node_id', 'node_id_anzeige_name', 'Nid', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -1451,7 +1451,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('nid', 'nid_anzeige_name', 'Nid', $this->dataset);
+            $column = new TextViewColumn('node_id', 'node_id_anzeige_name', 'Nid', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             
@@ -1702,7 +1702,8 @@
             $lookupDataset->addFields(
                 array(
                     new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_long'),
+                    new StringField('anzeige_name_lang'),
+                    new StringField('anzeige_meta'),
                     new IntegerField('nid', true),
                     new IntegerField('vid'),
                     new StringField('type', true),
@@ -1720,7 +1721,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_wissensartikel_link_log_nid_search', 'nid', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_uv_wissensartikel_link_wissensartikel_link_log_node_id_search', 'nid', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -1755,7 +1756,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_wissensartikel_link_log_target_table_name_search', 'table_name', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_uv_wissensartikel_link_wissensartikel_link_log_target_table_name_search', 'table_name', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -1774,7 +1775,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_wissensartikel_link_log_target_table_name_with_id_search', 'table_name_with_id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_uv_wissensartikel_link_wissensartikel_link_log_target_table_name_with_id_search', 'table_name_with_id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -1793,7 +1794,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_wissensartikel_link_log_target_table_name_with_id_search', 'table_name_with_id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_uv_wissensartikel_link_wissensartikel_link_log_target_table_name_with_id_search', 'table_name_with_id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -1812,7 +1813,7 @@
                 )
             );
             $lookupDataset->setOrderByField('beschreibung', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_wissensartikel_link_log_snapshot_id_search', 'id', 'beschreibung', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_uv_wissensartikel_link_wissensartikel_link_log_snapshot_id_search', 'id', 'beschreibung', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -1962,21 +1963,21 @@
     
     
     
-    class wissensartikel_linkPage extends Page
+    class uv_wissensartikel_linkPage extends Page
     {
         protected function DoBeforeCreate()
         {
             $this->SetTitle('Lobbypediaverknüpfung');
-            $this->SetMenuLabel('<span class="relation" title="Interessenbindungen der Parlamentarier">Lobbypediaverknüpfung</span>');
+            $this->SetMenuLabel('<span class="relation" title="Verknüpfung von Lobbypedia-Artikel mit einem Datensatz">Lobbypediaverknüpfung</span>');
     
             $this->dataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
-                '`wissensartikel_link`');
+                '`uv_wissensartikel_link`');
             $this->dataset->addFields(
                 array(
                     new IntegerField('id', true, true, true),
-                    new IntegerField('nid', true),
+                    new IntegerField('node_id', true),
                     new StringField('target_table_name', true),
                     new IntegerField('target_id', true),
                     new StringField('target_table_name_with_id', true),
@@ -1990,10 +1991,24 @@
                     new StringField('created_visa', true),
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true)
+                    new DateTimeField('updated_date', true),
+                    new IntegerField('nid', true),
+                    new IntegerField('vid'),
+                    new StringField('type', true),
+                    new StringField('language', true),
+                    new StringField('title', true),
+                    new IntegerField('uid', true),
+                    new IntegerField('status', true),
+                    new IntegerField('created', true),
+                    new IntegerField('changed', true),
+                    new IntegerField('comment', true),
+                    new IntegerField('promote', true),
+                    new IntegerField('sticky', true),
+                    new IntegerField('tnid', true),
+                    new IntegerField('translate', true)
                 )
             );
-            $this->dataset->AddLookupField('nid', 'v_d7_node', new IntegerField('nid'), new StringField('anzeige_name', false, false, false, false, 'nid_anzeige_name', 'nid_anzeige_name_v_d7_node'), 'nid_anzeige_name_v_d7_node');
+            $this->dataset->AddLookupField('node_id', 'v_d7_node', new IntegerField('nid'), new StringField('anzeige_name', false, false, false, false, 'node_id_anzeige_name', 'node_id_anzeige_name_v_d7_node'), 'node_id_anzeige_name_v_d7_node');
             $this->dataset->AddLookupField('target_table_name', 'v_wissensartikelzieltabelle', new StringField('table_name'), new StringField('anzeige_name', false, false, false, false, 'target_table_name_anzeige_name', 'target_table_name_anzeige_name_v_wissensartikelzieltabelle'), 'target_table_name_anzeige_name_v_wissensartikelzieltabelle');
             $this->dataset->AddLookupField('target_table_name_with_id', 'v_all_entity_records', new StringField('table_name_with_id'), new StringField('anzeige_name', false, false, false, false, 'target_table_name_with_id_anzeige_name', 'target_table_name_with_id_anzeige_name_v_all_entity_records'), 'target_table_name_with_id_anzeige_name_v_all_entity_records');
         }
@@ -2026,10 +2041,13 @@
         {
             return array(
                 new FilterColumn($this->dataset, 'id', 'id', 'Id'),
-                new FilterColumn($this->dataset, 'nid', 'nid_anzeige_name', 'Lobbypedia-Artikel'),
+                new FilterColumn($this->dataset, 'node_id', 'node_id_anzeige_name', 'Titel'),
+                new FilterColumn($this->dataset, 'language', 'language', 'Sprache'),
+                new FilterColumn($this->dataset, 'nid', 'nid', 'nid'),
+                new FilterColumn($this->dataset, 'status', 'status', 'Published'),
                 new FilterColumn($this->dataset, 'target_table_name', 'target_table_name_anzeige_name', 'DB-Tabelle'),
-                new FilterColumn($this->dataset, 'target_id', 'target_id', 'Datensatz id'),
-                new FilterColumn($this->dataset, 'target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'Datensatz'),
+                new FilterColumn($this->dataset, 'target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'Titel'),
+                new FilterColumn($this->dataset, 'target_id', 'target_id', 'Id'),
                 new FilterColumn($this->dataset, 'notizen', 'notizen', 'Notizen'),
                 new FilterColumn($this->dataset, 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa'),
                 new FilterColumn($this->dataset, 'eingabe_abgeschlossen_datum', 'eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum'),
@@ -2040,7 +2058,18 @@
                 new FilterColumn($this->dataset, 'created_visa', 'created_visa', 'Created Visa'),
                 new FilterColumn($this->dataset, 'created_date', 'created_date', 'Created Date'),
                 new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', 'Updated Visa'),
-                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date')
+                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date'),
+                new FilterColumn($this->dataset, 'vid', 'vid', 'Vid'),
+                new FilterColumn($this->dataset, 'type', 'type', 'Type'),
+                new FilterColumn($this->dataset, 'title', 'title', 'Title'),
+                new FilterColumn($this->dataset, 'uid', 'uid', 'Uid'),
+                new FilterColumn($this->dataset, 'created', 'created', 'Created'),
+                new FilterColumn($this->dataset, 'changed', 'changed', 'Changed'),
+                new FilterColumn($this->dataset, 'comment', 'comment', 'Comment'),
+                new FilterColumn($this->dataset, 'promote', 'promote', 'Promote'),
+                new FilterColumn($this->dataset, 'sticky', 'sticky', 'Sticky'),
+                new FilterColumn($this->dataset, 'tnid', 'tnid', 'Tnid'),
+                new FilterColumn($this->dataset, 'translate', 'translate', 'Translate')
             );
         }
     
@@ -2048,10 +2077,13 @@
         {
             $quickFilter
                 ->addColumn($columns['id'])
+                ->addColumn($columns['node_id'])
+                ->addColumn($columns['language'])
                 ->addColumn($columns['nid'])
+                ->addColumn($columns['status'])
                 ->addColumn($columns['target_table_name'])
-                ->addColumn($columns['target_id'])
                 ->addColumn($columns['target_table_name_with_id'])
+                ->addColumn($columns['target_id'])
                 ->addColumn($columns['notizen'])
                 ->addColumn($columns['created_visa'])
                 ->addColumn($columns['created_date'])
@@ -2062,10 +2094,13 @@
         protected function setupColumnFilter(ColumnFilter $columnFilter)
         {
             $columnFilter
+                ->setOptionsFor('node_id')
+                ->setOptionsFor('language')
                 ->setOptionsFor('nid')
+                ->setOptionsFor('status')
                 ->setOptionsFor('target_table_name')
-                ->setOptionsFor('target_id')
                 ->setOptionsFor('target_table_name_with_id')
+                ->setOptionsFor('target_id')
                 ->setOptionsFor('eingabe_abgeschlossen_visa')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
                 ->setOptionsFor('kontrolliert_visa')
@@ -2096,17 +2131,19 @@
                 )
             );
             
-            $main_editor = new DynamicCombobox('nid_edit', $this->CreateLinkBuilder());
+            $main_editor = new DynamicCombobox('node_id_edit', $this->CreateLinkBuilder());
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
+            $main_editor->setFormatSelection('return item.formatted_value;');
+            $main_editor->setFormatResult('return item.formatted_value;');
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_wissensartikel_link_nid_search');
+            $main_editor->SetHandlerName('filter_builder_uv_wissensartikel_link_node_id_search');
             
-            $multi_value_select_editor = new RemoteMultiValueSelect('nid', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_wissensartikel_link_nid_search');
+            $multi_value_select_editor = new RemoteMultiValueSelect('node_id', $this->CreateLinkBuilder());
+            $multi_value_select_editor->SetHandlerName('filter_builder_uv_wissensartikel_link_node_id_search');
             
             $filterBuilder->addColumn(
-                $columns['nid'],
+                $columns['node_id'],
                 array(
                     FilterConditionOperator::EQUALS => $main_editor,
                     FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
@@ -2123,14 +2160,75 @@
                 )
             );
             
+            $main_editor = new TextEdit('language_edit');
+            $main_editor->SetMaxLength(12);
+            
+            $filterBuilder->addColumn(
+                $columns['language'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('nid_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['nid'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('status_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['status'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
             $main_editor = new DynamicCombobox('target_table_name_edit', $this->CreateLinkBuilder());
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_wissensartikel_link_target_table_name_search');
+            $main_editor->SetHandlerName('filter_builder_uv_wissensartikel_link_target_table_name_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('target_table_name', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_wissensartikel_link_target_table_name_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_uv_wissensartikel_link_target_table_name_search');
             
             $filterBuilder->addColumn(
                 $columns['target_table_name'],
@@ -2150,32 +2248,14 @@
                 )
             );
             
-            $main_editor = new TextEdit('target_id_edit');
-            
-            $filterBuilder->addColumn(
-                $columns['target_id'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
-            
             $main_editor = new DynamicCombobox('target_table_name_with_id_edit', $this->CreateLinkBuilder());
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_wissensartikel_link_target_table_name_with_id_search');
+            $main_editor->SetHandlerName('filter_builder_uv_wissensartikel_link_target_table_name_with_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('target_table_name_with_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_wissensartikel_link_target_table_name_with_id_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_uv_wissensartikel_link_target_table_name_with_id_search');
             
             $text_editor = new TextEdit('target_table_name_with_id');
             
@@ -2198,6 +2278,24 @@
                     FilterConditionOperator::IS_NOT_LIKE => $text_editor,
                     FilterConditionOperator::IN => $multi_value_select_editor,
                     FilterConditionOperator::NOT_IN => $multi_value_select_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('target_id_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['target_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -2499,12 +2597,12 @@
     
         protected function AddFieldColumns(Grid $grid, $withDetails = true)
         {
-            if (GetCurrentUserPermissionsForPage('wissensartikel_link.wissensartikel_link_log')->HasViewGrant() && $withDetails)
+            if (GetCurrentUserPermissionsForPage('uv_wissensartikel_link.wissensartikel_link_log')->HasViewGrant() && $withDetails)
             {
             //
-            // View column for wissensartikel_link_wissensartikel_link_log detail
+            // View column for uv_wissensartikel_link_wissensartikel_link_log detail
             //
-            $column = new DetailColumn(array('id'), 'wissensartikel_link.wissensartikel_link_log', 'wissensartikel_link_wissensartikel_link_log_handler', $this->dataset, 'Lobbypediaverknüpfung Log');
+            $column = new DetailColumn(array('id'), 'uv_wissensartikel_link.wissensartikel_link_log', 'uv_wissensartikel_link_wissensartikel_link_log_handler', $this->dataset, 'Lobbypediaverknüpfung Log');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $grid->AddViewColumn($column);
             }
@@ -2525,10 +2623,44 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('nid', 'nid_anzeige_name', 'Lobbypedia-Artikel', $this->dataset);
+            $column = new TextViewColumn('node_id', 'node_id_anzeige_name', 'Titel', $this->dataset);
             $column->SetOrderable(true);
+            $column->setHrefTemplate('https://cms.lobbywatch.ch/node/%node_id%');
+            $column->setTarget('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('CMS Drupal 7 node id (nid) des Lobbypedia-Artikels');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for language field
+            //
+            $column = new TextViewColumn('language', 'language', 'Sprache', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('und = undefined, de, fr');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for nid field
+            //
+            $column = new TextViewColumn('nid', 'nid', 'nid', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('https://cms.lobbywatch.ch/node/%node_id%');
+            $column->setTarget('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('CMS Drupl node id. Click to visit article');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for status field
+            //
+            $column = new TextViewColumn('status', 'status', 'Published', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('1 = öffentlich, 0 = nicht öffentlich');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2543,22 +2675,24 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for target_id field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('target_id', 'target_id', 'Datensatz id', $this->dataset);
+            $column = new TextViewColumn('target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'Titel', $this->dataset);
             $column->SetOrderable(true);
+            $column->setHrefTemplate('%target_table_name%.php?operation=view&pk0=%target_id%');
+            $column->setTarget('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('id in der Zieltabelle');
+            $column->SetDescription('Zieltabelle#id, ist die Zusammensetzung von Zieltablle und id mit einem Hash (#) getrennt. Dieses Feld ist aus technischen Gründen nötig für den PHP Formulargenerator.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for target_id field
             //
-            $column = new TextViewColumn('target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'Datensatz', $this->dataset);
+            $column = new TextViewColumn('target_id', 'target_id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Zieltabelle#id, ist die Zusammensetzung von Zieltablle und id mit einem Hash (#) getrennt. Dieses Feld ist aus technischen Gründen nötig für den PHP Formulargenerator.');
+            $column->SetDescription('id in der Zieltabelle');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2694,7 +2828,32 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('nid', 'nid_anzeige_name', 'Lobbypedia-Artikel', $this->dataset);
+            $column = new TextViewColumn('node_id', 'node_id_anzeige_name', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('https://cms.lobbywatch.ch/node/%node_id%');
+            $column->setTarget('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for language field
+            //
+            $column = new TextViewColumn('language', 'language', 'Sprache', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for nid field
+            //
+            $column = new TextViewColumn('nid', 'nid', 'nid', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('https://cms.lobbywatch.ch/node/%node_id%');
+            $column->setTarget('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for status field
+            //
+            $column = new TextViewColumn('status', 'status', 'Published', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -2706,16 +2865,18 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for target_id field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('target_id', 'target_id', 'Datensatz id', $this->dataset);
+            $column = new TextViewColumn('target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'Titel', $this->dataset);
             $column->SetOrderable(true);
+            $column->setHrefTemplate('%target_table_name%.php?operation=view&pk0=%target_id%');
+            $column->setTarget('');
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for target_id field
             //
-            $column = new TextViewColumn('target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'Datensatz', $this->dataset);
+            $column = new TextViewColumn('target_id', 'target_id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -2806,11 +2967,13 @@
         protected function AddEditColumns(Grid $grid)
         {
             //
-            // Edit column for nid field
+            // Edit column for node_id field
             //
-            $editor = new DynamicCombobox('nid_edit', $this->CreateLinkBuilder());
+            $editor = new DynamicCombobox('node_id_edit', $this->CreateLinkBuilder());
             $editor->setAllowClear(true);
             $editor->setMinimumInputLength(0);
+            $editor->setFormatSelection('return item.formatted_value;');
+            $editor->setFormatResult('return item.formatted_value;');
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -2818,7 +2981,8 @@
             $lookupDataset->addFields(
                 array(
                     new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_long'),
+                    new StringField('anzeige_name_lang'),
+                    new StringField('anzeige_meta'),
                     new IntegerField('nid', true),
                     new IntegerField('vid'),
                     new StringField('type', true),
@@ -2837,7 +3001,7 @@
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\''));
-            $editColumn = new DynamicLookupEditColumn('Lobbypedia-Artikel', 'nid', 'nid_anzeige_name', 'edit_wissensartikel_link_nid_search', $editor, $this->dataset, $lookupDataset, 'nid', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Titel', 'node_id', 'node_id_anzeige_name', 'edit_uv_wissensartikel_link_node_id_search', $editor, $this->dataset, $lookupDataset, 'nid', 'anzeige_name', '%anzeige_name%<br><small>nid: %nid%, lang: %language%, published: %status%</small>');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2881,7 +3045,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('DB-Tabelle', 'target_table_name', 'target_table_name_anzeige_name', 'edit_wissensartikel_link_target_table_name_search', $editor, $this->dataset, $lookupDataset, 'table_name', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('DB-Tabelle', 'target_table_name', 'target_table_name_anzeige_name', 'edit_uv_wissensartikel_link_target_table_name_search', $editor, $this->dataset, $lookupDataset, 'table_name', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2909,7 +3073,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Datensatz', 'target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'edit_wissensartikel_link_target_table_name_with_id_search', $editor, $this->dataset, $lookupDataset, 'table_name_with_id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Titel', 'target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'edit_uv_wissensartikel_link_target_table_name_with_id_search', $editor, $this->dataset, $lookupDataset, 'table_name_with_id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3037,11 +3201,13 @@
         protected function AddMultiEditColumns(Grid $grid)
         {
             //
-            // Edit column for nid field
+            // Edit column for node_id field
             //
-            $editor = new DynamicCombobox('nid_edit', $this->CreateLinkBuilder());
+            $editor = new DynamicCombobox('node_id_edit', $this->CreateLinkBuilder());
             $editor->setAllowClear(true);
             $editor->setMinimumInputLength(0);
+            $editor->setFormatSelection('return item.formatted_value;');
+            $editor->setFormatResult('return item.formatted_value;');
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -3049,7 +3215,8 @@
             $lookupDataset->addFields(
                 array(
                     new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_long'),
+                    new StringField('anzeige_name_lang'),
+                    new StringField('anzeige_meta'),
                     new IntegerField('nid', true),
                     new IntegerField('vid'),
                     new StringField('type', true),
@@ -3068,7 +3235,7 @@
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\''));
-            $editColumn = new DynamicLookupEditColumn('Lobbypedia-Artikel', 'nid', 'nid_anzeige_name', 'multi_edit_wissensartikel_link_nid_search', $editor, $this->dataset, $lookupDataset, 'nid', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Titel', 'node_id', 'node_id_anzeige_name', 'multi_edit_uv_wissensartikel_link_node_id_search', $editor, $this->dataset, $lookupDataset, 'nid', 'anzeige_name', '%anzeige_name%<br><small>nid: %nid%, lang: %language%, published: %status%</small>');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3112,7 +3279,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('DB-Tabelle', 'target_table_name', 'target_table_name_anzeige_name', 'multi_edit_wissensartikel_link_target_table_name_search', $editor, $this->dataset, $lookupDataset, 'table_name', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('DB-Tabelle', 'target_table_name', 'target_table_name_anzeige_name', 'multi_edit_uv_wissensartikel_link_target_table_name_search', $editor, $this->dataset, $lookupDataset, 'table_name', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3140,7 +3307,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Datensatz', 'target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'multi_edit_wissensartikel_link_target_table_name_with_id_search', $editor, $this->dataset, $lookupDataset, 'table_name_with_id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Titel', 'target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'multi_edit_uv_wissensartikel_link_target_table_name_with_id_search', $editor, $this->dataset, $lookupDataset, 'table_name_with_id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3268,11 +3435,13 @@
         protected function AddInsertColumns(Grid $grid)
         {
             //
-            // Edit column for nid field
+            // Edit column for node_id field
             //
-            $editor = new DynamicCombobox('nid_edit', $this->CreateLinkBuilder());
+            $editor = new DynamicCombobox('node_id_edit', $this->CreateLinkBuilder());
             $editor->setAllowClear(true);
             $editor->setMinimumInputLength(0);
+            $editor->setFormatSelection('return item.formatted_value;');
+            $editor->setFormatResult('return item.formatted_value;');
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
@@ -3280,7 +3449,8 @@
             $lookupDataset->addFields(
                 array(
                     new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_long'),
+                    new StringField('anzeige_name_lang'),
+                    new StringField('anzeige_meta'),
                     new IntegerField('nid', true),
                     new IntegerField('vid'),
                     new StringField('type', true),
@@ -3299,7 +3469,7 @@
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\''));
-            $editColumn = new DynamicLookupEditColumn('Lobbypedia-Artikel', 'nid', 'nid_anzeige_name', 'insert_wissensartikel_link_nid_search', $editor, $this->dataset, $lookupDataset, 'nid', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Titel', 'node_id', 'node_id_anzeige_name', 'insert_uv_wissensartikel_link_node_id_search', $editor, $this->dataset, $lookupDataset, 'nid', 'anzeige_name', '%anzeige_name%<br><small>nid: %nid%, lang: %language%, published: %status%</small>');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3343,7 +3513,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('DB-Tabelle', 'target_table_name', 'target_table_name_anzeige_name', 'insert_wissensartikel_link_target_table_name_search', $editor, $this->dataset, $lookupDataset, 'table_name', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('DB-Tabelle', 'target_table_name', 'target_table_name_anzeige_name', 'insert_uv_wissensartikel_link_target_table_name_search', $editor, $this->dataset, $lookupDataset, 'table_name', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3371,7 +3541,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Datensatz', 'target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'insert_wissensartikel_link_target_table_name_with_id_search', $editor, $this->dataset, $lookupDataset, 'table_name_with_id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Titel', 'target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'insert_uv_wissensartikel_link_target_table_name_with_id_search', $editor, $this->dataset, $lookupDataset, 'table_name_with_id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3409,7 +3579,32 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('nid', 'nid_anzeige_name', 'Lobbypedia-Artikel', $this->dataset);
+            $column = new TextViewColumn('node_id', 'node_id_anzeige_name', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('https://cms.lobbywatch.ch/node/%node_id%');
+            $column->setTarget('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for language field
+            //
+            $column = new TextViewColumn('language', 'language', 'Sprache', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for nid field
+            //
+            $column = new TextViewColumn('nid', 'nid', 'nid', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('https://cms.lobbywatch.ch/node/%node_id%');
+            $column->setTarget('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for status field
+            //
+            $column = new TextViewColumn('status', 'status', 'Published', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -3421,16 +3616,18 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for target_id field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('target_id', 'target_id', 'Datensatz id', $this->dataset);
+            $column = new TextViewColumn('target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'Titel', $this->dataset);
             $column->SetOrderable(true);
+            $column->setHrefTemplate('%target_table_name%.php?operation=view&pk0=%target_id%');
+            $column->setTarget('');
             $grid->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for target_id field
             //
-            $column = new TextViewColumn('target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'Datensatz', $this->dataset);
+            $column = new TextViewColumn('target_id', 'target_id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -3533,7 +3730,32 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('nid', 'nid_anzeige_name', 'Lobbypedia-Artikel', $this->dataset);
+            $column = new TextViewColumn('node_id', 'node_id_anzeige_name', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('https://cms.lobbywatch.ch/node/%node_id%');
+            $column->setTarget('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for language field
+            //
+            $column = new TextViewColumn('language', 'language', 'Sprache', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for nid field
+            //
+            $column = new TextViewColumn('nid', 'nid', 'nid', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('https://cms.lobbywatch.ch/node/%node_id%');
+            $column->setTarget('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for status field
+            //
+            $column = new TextViewColumn('status', 'status', 'Published', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -3545,16 +3767,18 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for target_id field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('target_id', 'target_id', 'Datensatz id', $this->dataset);
+            $column = new TextViewColumn('target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'Titel', $this->dataset);
             $column->SetOrderable(true);
+            $column->setHrefTemplate('%target_table_name%.php?operation=view&pk0=%target_id%');
+            $column->setTarget('');
             $grid->AddExportColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for target_id field
             //
-            $column = new TextViewColumn('target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'Datensatz', $this->dataset);
+            $column = new TextViewColumn('target_id', 'target_id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -3647,7 +3871,32 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('nid', 'nid_anzeige_name', 'Lobbypedia-Artikel', $this->dataset);
+            $column = new TextViewColumn('node_id', 'node_id_anzeige_name', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('https://cms.lobbywatch.ch/node/%node_id%');
+            $column->setTarget('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for language field
+            //
+            $column = new TextViewColumn('language', 'language', 'Sprache', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for nid field
+            //
+            $column = new TextViewColumn('nid', 'nid', 'nid', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('https://cms.lobbywatch.ch/node/%node_id%');
+            $column->setTarget('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for status field
+            //
+            $column = new TextViewColumn('status', 'status', 'Published', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             
@@ -3659,16 +3908,18 @@
             $grid->AddCompareColumn($column);
             
             //
-            // View column for target_id field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('target_id', 'target_id', 'Datensatz id', $this->dataset);
+            $column = new TextViewColumn('target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'Titel', $this->dataset);
             $column->SetOrderable(true);
+            $column->setHrefTemplate('%target_table_name%.php?operation=view&pk0=%target_id%');
+            $column->setTarget('');
             $grid->AddCompareColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for target_id field
             //
-            $column = new TextViewColumn('target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'Datensatz', $this->dataset);
+            $column = new TextViewColumn('target_id', 'target_id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             
@@ -3928,10 +4179,10 @@
         }
     
         protected function doRegisterHandlers() {
-            $detailPage = new wissensartikel_link_wissensartikel_link_logPage('wissensartikel_link_wissensartikel_link_log', $this, array('id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('wissensartikel_link.wissensartikel_link_log'), 'UTF-8');
-            $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('wissensartikel_link.wissensartikel_link_log'));
-            $detailPage->SetHttpHandlerName('wissensartikel_link_wissensartikel_link_log_handler');
-            $handler = new PageHTTPHandler('wissensartikel_link_wissensartikel_link_log_handler', $detailPage);
+            $detailPage = new uv_wissensartikel_link_wissensartikel_link_logPage('uv_wissensartikel_link_wissensartikel_link_log', $this, array('id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('uv_wissensartikel_link.wissensartikel_link_log'), 'UTF-8');
+            $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('uv_wissensartikel_link.wissensartikel_link_log'));
+            $detailPage->SetHttpHandlerName('uv_wissensartikel_link_wissensartikel_link_log_handler');
+            $handler = new PageHTTPHandler('uv_wissensartikel_link_wissensartikel_link_log_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -3941,7 +4192,8 @@
             $lookupDataset->addFields(
                 array(
                     new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_long'),
+                    new StringField('anzeige_name_lang'),
+                    new StringField('anzeige_meta'),
                     new IntegerField('nid', true),
                     new IntegerField('vid'),
                     new StringField('type', true),
@@ -3960,7 +4212,7 @@
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_wissensartikel_link_nid_search', 'nid', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_uv_wissensartikel_link_node_id_search', 'nid', 'anzeige_name', '%anzeige_name%<br><small>nid: %nid%, lang: %language%, published: %status%</small>', 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -3995,7 +4247,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_wissensartikel_link_target_table_name_search', 'table_name', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_uv_wissensartikel_link_target_table_name_search', 'table_name', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -4014,7 +4266,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_wissensartikel_link_target_table_name_with_id_search', 'table_name_with_id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_uv_wissensartikel_link_target_table_name_with_id_search', 'table_name_with_id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -4024,7 +4276,8 @@
             $lookupDataset->addFields(
                 array(
                     new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_long'),
+                    new StringField('anzeige_name_lang'),
+                    new StringField('anzeige_meta'),
                     new IntegerField('nid', true),
                     new IntegerField('vid'),
                     new StringField('type', true),
@@ -4043,7 +4296,7 @@
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_nid_search', 'nid', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_uv_wissensartikel_link_node_id_search', 'nid', 'anzeige_name', '%anzeige_name%<br><small>nid: %nid%, lang: %language%, published: %status%</small>', 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -4078,7 +4331,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_target_table_name_search', 'table_name', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_uv_wissensartikel_link_target_table_name_search', 'table_name', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -4097,26 +4350,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_target_table_name_with_id_search', 'table_name_with_id', 'anzeige_name', null, 20);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            $lookupDataset = new TableDataset(
-                MyPDOConnectionFactory::getInstance(),
-                GetConnectionOptions(),
-                '`v_all_entity_records`');
-            $lookupDataset->addFields(
-                array(
-                    new StringField('table_name', true),
-                    new StringField('table_name_with_id'),
-                    new IntegerField('id', true),
-                    new StringField('anzeige_name'),
-                    new StringField('anzeige_name_de'),
-                    new StringField('anzeige_name_fr'),
-                    new StringField('anzeige_name_mixed')
-                )
-            );
-            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_target_table_name_with_id_search', 'table_name_with_id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_uv_wissensartikel_link_target_table_name_with_id_search', 'table_name_with_id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -4126,7 +4360,8 @@
             $lookupDataset->addFields(
                 array(
                     new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_long'),
+                    new StringField('anzeige_name_lang'),
+                    new StringField('anzeige_meta'),
                     new IntegerField('nid', true),
                     new IntegerField('vid'),
                     new StringField('type', true),
@@ -4145,7 +4380,7 @@
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_wissensartikel_link_nid_search', 'nid', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_uv_wissensartikel_link_node_id_search', 'nid', 'anzeige_name', '%anzeige_name%<br><small>nid: %nid%, lang: %language%, published: %status%</small>', 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -4180,7 +4415,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_wissensartikel_link_target_table_name_search', 'table_name', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_uv_wissensartikel_link_target_table_name_search', 'table_name', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -4199,7 +4434,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_wissensartikel_link_target_table_name_with_id_search', 'table_name_with_id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_uv_wissensartikel_link_target_table_name_with_id_search', 'table_name_with_id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -4209,7 +4444,8 @@
             $lookupDataset->addFields(
                 array(
                     new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_long'),
+                    new StringField('anzeige_name_lang'),
+                    new StringField('anzeige_meta'),
                     new IntegerField('nid', true),
                     new IntegerField('vid'),
                     new StringField('type', true),
@@ -4228,7 +4464,7 @@
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_wissensartikel_link_nid_search', 'nid', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_uv_wissensartikel_link_node_id_search', 'nid', 'anzeige_name', '%anzeige_name%<br><small>nid: %nid%, lang: %language%, published: %status%</small>', 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -4263,7 +4499,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_wissensartikel_link_target_table_name_search', 'table_name', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_uv_wissensartikel_link_target_table_name_search', 'table_name', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -4282,7 +4518,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_wissensartikel_link_target_table_name_with_id_search', 'table_name_with_id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_uv_wissensartikel_link_target_table_name_with_id_search', 'table_name_with_id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -4403,7 +4639,7 @@
     
         protected function doGetCustomColumnGroup(FixedKeysArray $columns, ViewColumnGroup $columnGroup)
         {
-    
+            custom_OnGetCustomColumnGroup_wissensartikel($columns, $columnGroup);
         }
     
         protected function doPageLoaded()
@@ -4432,8 +4668,8 @@
 
     try
     {
-        $Page = new wissensartikel_linkPage("wissensartikel_link", "wissensartikel_link.php", GetCurrentUserPermissionsForPage("wissensartikel_link"), 'UTF-8');
-        $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("wissensartikel_link"));
+        $Page = new uv_wissensartikel_linkPage("uv_wissensartikel_link", "wissensartikel_link.php", GetCurrentUserPermissionsForPage("uv_wissensartikel_link"), 'UTF-8');
+        $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("uv_wissensartikel_link"));
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 
         GetApplication()->Run();

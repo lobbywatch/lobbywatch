@@ -2339,3 +2339,23 @@ function custom_OnBeforeSaveWissensartikelLink($page, &$rowData, $tableName, &$c
   // Extract id from column target_table_name_with_id to target_id because dependent lookup cannot handle it
   $rowData['target_id'] = explode('#', $rowData['target_table_name_with_id'])[1] ?? null;
 }
+
+// custom_OnGetCustomColumnGroup_wissensartikel($columns, $columnGroup);
+function custom_OnGetCustomColumnGroup_wissensartikel(FixedKeysArray $columns, ViewColumnGroup $columnGroup)
+{
+    $columnGroup->add(new ViewColumnGroup('Lobbypedia-Artikel',
+        [
+            $columns['node_id'],
+            $columns['language'],
+            $columns['nid'],
+            $columns['status'],
+        ]
+    ));
+    $columnGroup->add(new ViewColumnGroup('Datensatz',
+        [
+            $columns['target_table_name'],
+            $columns['target_table_name_with_id'],
+            $columns['target_id'],
+        ]
+    ));
+}

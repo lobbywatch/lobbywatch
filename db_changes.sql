@@ -3274,7 +3274,7 @@ ALTER TABLE `wissensartikelzieltabelle_log`
 DROP TABLE IF EXISTS `wissensartikel_link`;
 CREATE TABLE `wissensartikel_link` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
-  `nid` int(10) unsigned NOT NULL COMMENT 'CMS Drupal 7 node id (nid) des Lobbypedia-Artikels',
+  `node_id` int(10) unsigned NOT NULL COMMENT 'CMS Drupal 7 node id (nid) des Lobbypedia-Artikels',
   `target_table_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Zieltabelle, die mit dem Lobbypedia-Artikel verknüpft wird.',
   `target_id` int(11) NOT NULL COMMENT 'id in der Zieltabelle',
   `target_table_name_with_id` varchar(52) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Zieltabelle#id, ist die Zusammensetzung von Zieltablle und id mit einem Hash (#) getrennt. Dieses Feld ist aus technischen Gründen nötig für den PHP Formulargenerator.',
@@ -3291,10 +3291,9 @@ CREATE TABLE `wissensartikel_link` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
   -- UNIQUE KEY `in_kommission_parlamentarier_kommission_funktion_unique` (`funktion`,`parlamentarier_id`,`kommission_id`,`bis`) COMMENT 'Fachlicher unique constraint',
-  KEY `idx_nid` (`nid`),
-  -- KEY `idx_nid_dummy` (`nid_dummy`),
+  KEY `idx_node_id` (`node_id`),
   KEY `idx_target` (`target_table_name`,`target_id`),
-  CONSTRAINT `fk_nid` FOREIGN KEY (`nid`) REFERENCES `lobbywat_d7lobbywatch`.`dlw_node` (`nid`),
+  CONSTRAINT `fk_node_id` FOREIGN KEY (`node_id`) REFERENCES `lobbywat_d7lobbywatch`.`dlw_node` (`nid`),
   CONSTRAINT `fk_target_table_name` FOREIGN KEY (`target_table_name`) REFERENCES `wissensartikelzieltabelle` (`table_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Verknüpfung von CMS Lobbypedia-Artikeln mit DB-Datensätzen';
 
@@ -3305,8 +3304,7 @@ ALTER TABLE `wissensartikel_link_log`
   CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  DROP INDEX `idx_nid`,
-  -- DROP INDEX `idx_nid_dummy`,
+  DROP INDEX `idx_node_id`,
   DROP INDEX `idx_target`,
   DROP PRIMARY KEY,
   ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
