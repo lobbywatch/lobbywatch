@@ -100,7 +100,7 @@ while test $# -gt 0; do
                         echo "Options:"
                         echo "-u, --upload              Upload files"
                         echo "-p, --production          Deploy to production, otherwise test"
-                        echo "-l[=DB], --local[=DB]     Set env local and local DB (-l and -p are mutual exclusive, -l wins)"
+                        echo "-l[=DB], -L, --local[=DB] Set env local and local DB (-l only is 'lobbywatchtest', -L only is 'lobbywatch') (-l and -p are mutual exclusive, -l wins)"
                         echo "-w=PW, --pw=PW            Set DB password (Alternative: Setup ~/.my.cnf)"
                         echo "-W, --askpw               Ask DB password (Alternative: Setup ~/.my.cnf) (-W wins over -w)"
                         echo "-f, --full                Deploy full with system files"
@@ -228,6 +228,11 @@ while test $# -gt 0; do
                         ;;
                 -l|--local)
                         local_DB="lobbywatchtest"
+                        env="local_${local_DB}"
+                        shift
+                        ;;
+                -L)
+                        local_DB="lobbywatch"
                         env="local_${local_DB}"
                         shift
                         ;;
