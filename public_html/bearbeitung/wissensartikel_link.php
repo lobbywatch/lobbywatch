@@ -74,7 +74,7 @@
             );
             $this->dataset->AddLookupField('nid', 'v_d7_node', new IntegerField('nid'), new StringField('anzeige_name', false, false, false, false, 'nid_anzeige_name', 'nid_anzeige_name_v_d7_node'), 'nid_anzeige_name_v_d7_node');
             $this->dataset->AddLookupField('target_table_name', 'v_wissensartikelzieltabelle', new StringField('table_name'), new StringField('anzeige_name', false, false, false, false, 'target_table_name_anzeige_name', 'target_table_name_anzeige_name_v_wissensartikelzieltabelle'), 'target_table_name_anzeige_name_v_wissensartikelzieltabelle');
-            $this->dataset->AddLookupField('target_table_name_with_id', 'v_all_entity_records', new StringField('table_with_id'), new StringField('anzeige_name', false, false, false, false, 'target_table_name_with_id_anzeige_name', 'target_table_name_with_id_anzeige_name_v_all_entity_records'), 'target_table_name_with_id_anzeige_name_v_all_entity_records');
+            $this->dataset->AddLookupField('target_table_name_with_id', 'v_all_entity_records', new StringField('table_name_with_id'), new StringField('anzeige_name', false, false, false, false, 'target_table_name_with_id_anzeige_name', 'target_table_name_with_id_anzeige_name_v_all_entity_records'), 'target_table_name_with_id_anzeige_name_v_all_entity_records');
             $this->dataset->AddLookupField('snapshot_id', '`snapshot`', new IntegerField('id'), new StringField('beschreibung', false, false, false, false, 'snapshot_id_beschreibung', 'snapshot_id_beschreibung_snapshot'), 'snapshot_id_beschreibung_snapshot');
         }
     
@@ -1765,7 +1765,7 @@
             $lookupDataset->addFields(
                 array(
                     new StringField('table_name', true),
-                    new StringField('table_with_id'),
+                    new StringField('table_name_with_id'),
                     new IntegerField('id', true),
                     new StringField('anzeige_name'),
                     new StringField('anzeige_name_de'),
@@ -1774,7 +1774,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_wissensartikel_link_log_target_table_name_with_id_search', 'table_with_id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_wissensartikel_link_log_target_table_name_with_id_search', 'table_name_with_id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -1784,7 +1784,7 @@
             $lookupDataset->addFields(
                 array(
                     new StringField('table_name', true),
-                    new StringField('table_with_id'),
+                    new StringField('table_name_with_id'),
                     new IntegerField('id', true),
                     new StringField('anzeige_name'),
                     new StringField('anzeige_name_de'),
@@ -1793,7 +1793,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_wissensartikel_link_log_target_table_name_with_id_search', 'table_with_id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_wissensartikel_link_log_target_table_name_with_id_search', 'table_name_with_id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -1995,7 +1995,7 @@
             );
             $this->dataset->AddLookupField('nid', 'v_d7_node', new IntegerField('nid'), new StringField('anzeige_name', false, false, false, false, 'nid_anzeige_name', 'nid_anzeige_name_v_d7_node'), 'nid_anzeige_name_v_d7_node');
             $this->dataset->AddLookupField('target_table_name', 'v_wissensartikelzieltabelle', new StringField('table_name'), new StringField('anzeige_name', false, false, false, false, 'target_table_name_anzeige_name', 'target_table_name_anzeige_name_v_wissensartikelzieltabelle'), 'target_table_name_anzeige_name_v_wissensartikelzieltabelle');
-            $this->dataset->AddLookupField('target_table_name_with_id', 'v_all_entity_records', new StringField('table_with_id'), new StringField('anzeige_name', false, false, false, false, 'target_table_name_with_id_anzeige_name', 'target_table_name_with_id_anzeige_name_v_all_entity_records'), 'target_table_name_with_id_anzeige_name_v_all_entity_records');
+            $this->dataset->AddLookupField('target_table_name_with_id', 'v_all_entity_records', new StringField('table_name_with_id'), new StringField('anzeige_name', false, false, false, false, 'target_table_name_with_id_anzeige_name', 'target_table_name_with_id_anzeige_name_v_all_entity_records'), 'target_table_name_with_id_anzeige_name_v_all_entity_records');
         }
     
         protected function DoPrepare() {
@@ -2900,7 +2900,7 @@
             $lookupDataset->addFields(
                 array(
                     new StringField('table_name', true),
-                    new StringField('table_with_id'),
+                    new StringField('table_name_with_id'),
                     new IntegerField('id', true),
                     new StringField('anzeige_name'),
                     new StringField('anzeige_name_de'),
@@ -2909,7 +2909,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Datensatz', 'target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'edit_wissensartikel_link_target_table_name_with_id_search', $editor, $this->dataset, $lookupDataset, 'table_with_id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Datensatz', 'target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'edit_wissensartikel_link_target_table_name_with_id_search', $editor, $this->dataset, $lookupDataset, 'table_name_with_id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3131,7 +3131,7 @@
             $lookupDataset->addFields(
                 array(
                     new StringField('table_name', true),
-                    new StringField('table_with_id'),
+                    new StringField('table_name_with_id'),
                     new IntegerField('id', true),
                     new StringField('anzeige_name'),
                     new StringField('anzeige_name_de'),
@@ -3140,7 +3140,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Datensatz', 'target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'multi_edit_wissensartikel_link_target_table_name_with_id_search', $editor, $this->dataset, $lookupDataset, 'table_with_id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Datensatz', 'target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'multi_edit_wissensartikel_link_target_table_name_with_id_search', $editor, $this->dataset, $lookupDataset, 'table_name_with_id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3362,7 +3362,7 @@
             $lookupDataset->addFields(
                 array(
                     new StringField('table_name', true),
-                    new StringField('table_with_id'),
+                    new StringField('table_name_with_id'),
                     new IntegerField('id', true),
                     new StringField('anzeige_name'),
                     new StringField('anzeige_name_de'),
@@ -3371,7 +3371,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Datensatz', 'target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'insert_wissensartikel_link_target_table_name_with_id_search', $editor, $this->dataset, $lookupDataset, 'table_with_id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Datensatz', 'target_table_name_with_id', 'target_table_name_with_id_anzeige_name', 'insert_wissensartikel_link_target_table_name_with_id_search', $editor, $this->dataset, $lookupDataset, 'table_name_with_id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4005,7 +4005,7 @@
             $lookupDataset->addFields(
                 array(
                     new StringField('table_name', true),
-                    new StringField('table_with_id'),
+                    new StringField('table_name_with_id'),
                     new IntegerField('id', true),
                     new StringField('anzeige_name'),
                     new StringField('anzeige_name_de'),
@@ -4014,7 +4014,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_wissensartikel_link_target_table_name_with_id_search', 'table_with_id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_wissensartikel_link_target_table_name_with_id_search', 'table_name_with_id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -4088,7 +4088,7 @@
             $lookupDataset->addFields(
                 array(
                     new StringField('table_name', true),
-                    new StringField('table_with_id'),
+                    new StringField('table_name_with_id'),
                     new IntegerField('id', true),
                     new StringField('anzeige_name'),
                     new StringField('anzeige_name_de'),
@@ -4097,7 +4097,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_target_table_name_with_id_search', 'table_with_id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_target_table_name_with_id_search', 'table_name_with_id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -4107,7 +4107,7 @@
             $lookupDataset->addFields(
                 array(
                     new StringField('table_name', true),
-                    new StringField('table_with_id'),
+                    new StringField('table_name_with_id'),
                     new IntegerField('id', true),
                     new StringField('anzeige_name'),
                     new StringField('anzeige_name_de'),
@@ -4116,7 +4116,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_target_table_name_with_id_search', 'table_with_id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_wissensartikel_link_target_table_name_with_id_search', 'table_name_with_id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -4190,7 +4190,7 @@
             $lookupDataset->addFields(
                 array(
                     new StringField('table_name', true),
-                    new StringField('table_with_id'),
+                    new StringField('table_name_with_id'),
                     new IntegerField('id', true),
                     new StringField('anzeige_name'),
                     new StringField('anzeige_name_de'),
@@ -4199,7 +4199,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_wissensartikel_link_target_table_name_with_id_search', 'table_with_id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_wissensartikel_link_target_table_name_with_id_search', 'table_name_with_id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -4273,7 +4273,7 @@
             $lookupDataset->addFields(
                 array(
                     new StringField('table_name', true),
-                    new StringField('table_with_id'),
+                    new StringField('table_name_with_id'),
                     new IntegerField('id', true),
                     new StringField('anzeige_name'),
                     new StringField('anzeige_name_de'),
@@ -4282,7 +4282,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_wissensartikel_link_target_table_name_with_id_search', 'table_with_id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_wissensartikel_link_target_table_name_with_id_search', 'table_name_with_id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        

@@ -3050,23 +3050,23 @@ CREATE OR REPLACE VIEW `v_search_table` AS
 SELECT * FROM `mv_search_table`;
 
 CREATE OR REPLACE VIEW `v_all_entity_records` AS
-SELECT 'person' AS table_name, CONCAT('person', '#', id) AS table_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_person_simple
+SELECT 'person' AS table_name, CONCAT('person', '#', id) AS table_name_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_person_simple
 UNION ALL
-SELECT 'branche' AS table_name, CONCAT('branche', '#', id) AS table_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_branche_simple
+SELECT 'branche' AS table_name, CONCAT('branche', '#', id) AS table_name_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_branche_simple
 UNION ALL
-SELECT 'organisation' AS table_name, CONCAT('organisation', '#', id) AS table_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_organisation_simple
+SELECT 'organisation' AS table_name, CONCAT('organisation', '#', id) AS table_name_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_organisation_simple
 UNION ALL
-SELECT 'parlamentarier' AS table_name, CONCAT('parlamentarier', '#', id) AS table_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_parlamentarier_simple
+SELECT 'parlamentarier' AS table_name, CONCAT('parlamentarier', '#', id) AS table_name_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_parlamentarier_simple
 UNION ALL
-SELECT 'kanton' AS table_name, CONCAT('kanton', '#', id) AS table_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_kanton_simple
+SELECT 'kanton' AS table_name, CONCAT('kanton', '#', id) AS table_name_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_kanton_simple
 UNION ALL
-SELECT 'interessenraum' AS table_name, CONCAT('interessenraum', '#', id) AS table_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_interessenraum
+SELECT 'interessenraum' AS table_name, CONCAT('interessenraum', '#', id) AS table_name_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_interessenraum
 UNION ALL
-SELECT 'interessengruppe' AS table_name, CONCAT('interessengruppe', '#', id) AS table_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_interessengruppe_simple
+SELECT 'interessengruppe' AS table_name, CONCAT('interessengruppe', '#', id) AS table_name_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_interessengruppe_simple
 UNION ALL
-SELECT 'partei' AS table_name, CONCAT('partei', '#', id) AS table_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_partei
+SELECT 'partei' AS table_name, CONCAT('partei', '#', id) AS table_name_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_partei
 UNION ALL
-SELECT 'fraktion' AS table_name, CONCAT('fraktion', '#', id) AS table_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_fraktion
+SELECT 'fraktion' AS table_name, CONCAT('fraktion', '#', id) AS table_name_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_fraktion
 UNION ALL
-SELECT 'kommission' AS table_name, CONCAT('kommission', '#', id) AS table_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_kommission
+SELECT 'kommission' AS table_name, CONCAT('kommission', '#', id) AS table_name_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_kommission
 ;
