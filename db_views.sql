@@ -548,8 +548,8 @@ interessenbindung_jahr_minus_2.beschreibung as jahr_minus_2_verguetung_beschreib
 interessenbindung_jahr_minus_2.freigabe_datum as jahr_minus_2_verguetung_freigabe_datum
 FROM `interessenbindung`
 LEFT JOIN interessenbindung_jahr ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id AND interessenbindung_jahr.jahr = YEAR(NOW())
-LEFT JOIN interessenbindung_jahr interessenbindung_jahr_minus_1 ON interessenbindung_jahr_minus_1.interessenbindung_id = interessenbindung.id AND interessenbindung_jahr.jahr = YEAR(NOW()) - 1
-LEFT JOIN interessenbindung_jahr interessenbindung_jahr_minus_2 ON interessenbindung_jahr_minus_2.interessenbindung_id = interessenbindung.id AND interessenbindung_jahr.jahr = YEAR(NOW()) - 2;
+LEFT JOIN interessenbindung_jahr interessenbindung_jahr_minus_1 ON interessenbindung_jahr_minus_1.interessenbindung_id = interessenbindung.id AND interessenbindung_jahr_minus_1.jahr = YEAR(NOW()) - 1
+LEFT JOIN interessenbindung_jahr interessenbindung_jahr_minus_2 ON interessenbindung_jahr_minus_2.interessenbindung_id = interessenbindung.id AND interessenbindung_jahr_minus_2.jahr = YEAR(NOW()) - 2;
 
 -- TXTTODO v_mandat_simple
 CREATE OR REPLACE VIEW `v_mandat_simple` AS SELECT mandat.*,
