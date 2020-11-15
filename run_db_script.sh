@@ -188,7 +188,7 @@ export LW_DEST_DB=$db
 
 PATTERN_USE="^\s*USE.*;"
 CREATED="-- Created: `date +"%d.%m.%Y %T"`\n\n"
-BEGIN_SETTINGS="\n\nSET @disable_triggers = 1; -- ibex disable triggers\n-- SET FOREIGN_KEY_CHECKS=1;"
+BEGIN_SETTINGS="\n\nSET @disable_triggers = 1; -- ibex disable triggers\n-- SET FOREIGN_KEY_CHECKS=1;\nSET SQL_NOTES=1;"
 START_TRANSACTION="\nSET AUTOCOMMIT = 0;\nSTART TRANSACTION;\n"
 END_TRANSACTION="\nCOMMIT;\n"
 END_SETTINGS="SET @disable_triggers = NULL; -- ibex enable triggers"
