@@ -8150,6 +8150,7 @@ $this-&gt;GetConnection()-&gt;ExecQueryToArray(&quot;
 SELECT DISTINCT
 left(o.name_de, 1) as first_letter
 FROM organisation o
+WHERE left(o.name_de, 1) &lt;&gt; '\&quot;'
 ORDER BY first_letter&quot;, $tmp
 );
 
@@ -8157,7 +8158,7 @@ foreach($tmp as $letter) {
   $partitions[$letter['first_letter']] = strtoupper($letter['first_letter']);
 }            </OnGetPartitions>
             <OnGetPartitionConditionHandler>
-$condition = &quot;left(organisation.name_de, 1) = '$partitionKey'&quot;;            </OnGetPartitionConditionHandler>
+$condition = &quot;(left(organisation.name_de, 1) = '$partitionKey' OR left(organisation.name_de, 2) = '\&quot;$partitionKey')&quot;;            </OnGetPartitionConditionHandler>
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>

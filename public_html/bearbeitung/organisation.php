@@ -43605,6 +43605,7 @@
             SELECT DISTINCT
             left(o.name_de, 1) as first_letter
             FROM organisation o
+            WHERE left(o.name_de, 1) <> '\"'
             ORDER BY first_letter", $tmp
             );
             
@@ -43615,7 +43616,7 @@
         
         function partition_OnGetPartitionCondition($partitionKey, &$condition)
         {
-            $condition = "left(organisation.name_de, 1) = '$partitionKey'";
+            $condition = "(left(organisation.name_de, 1) = '$partitionKey' OR left(organisation.name_de, 2) = '\"$partitionKey')";
         }
     
         protected function CreateGrid()
