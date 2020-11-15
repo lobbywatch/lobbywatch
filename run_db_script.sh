@@ -169,6 +169,7 @@ START=$(date +%s)
 echo -e "+++++++++++++++++++++++++" >> $logfile
 #mysql -vvv -ucsvimsne_script csvimsne_lobbywatch$env_suffix < $script 2>&1 > lobbywatch$env_suffix_sql.log
 if [[ "$script" == "dbdump" ]] ; then
+  FILE="$DUMP_FILE_GZ"
   # http://stackoverflow.com/questions/1221833/bash-pipe-output-and-capture-exit-status
   # --add-drop-database --routines --skip-extended-insert
   # Add --skip-quote-names http://www.iheavy.com/2012/08/09/5-things-you-overlooked-with-mysql-dumps/
@@ -184,6 +185,7 @@ if [[ "$script" == "dbdump" ]] ; then
    grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
    gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
 elif [[ "$script" == "dbdump_data" ]] ; then
+  FILE="$DUMP_FILE_GZ"
   # http://stackoverflow.com/questions/5109993/mysqldump-data-only
   # http://stackoverflow.com/questions/25778365/add-truncate-table-command-in-mysqldump-before-create-table-if-not-exist
   # Add --skip-quote-names http://www.iheavy.com/2012/08/09/5-things-you-overlooked-with-mysql-dumps/
@@ -197,13 +199,14 @@ elif [[ "$script" == "dbdump_data" ]] ; then
    grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
    gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
 elif [[ "$script" == "dbdump_struct" ]] ; then
+  FILE="$DUMP_FILE"
   # http://stackoverflow.com/questions/2389468/compare-structures-of-two-databases
   #  --routines : Routines may need additional permissions, otherwise "mysqldump: csvimsne_script has insufficent privileges to SHOW CREATE PROCEDURE"
   # Conditional MySQL execution comments are sometimes multiline comments, thus use perl -0 -pe with modifier s
   # http://stackoverflow.com/questions/1916392/how-can-i-get-rid-of-these-comments-in-a-mysql-dump
   # http://stackoverflow.com/questions/1103149/non-greedy-regex-matching-in-sed
   # mysqldump -u$username --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile >$DUMP_FILE 2>>$logfile
-  (set -o pipefail; $MYSQLDUMP -h $HOST -P $PORT -u$username $PW --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile --default-character-set=$charset |
+  (set -o pipefail; $MYSQLDUMP -h $HOST -P $PORT -u$username $PW --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile --default-character-set=$charset 2>>$logfile |
    perl -0 -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|sg' |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
    perl -p -e's/DEFINER=`.*?`@`[a-zA-Z0-9_.-]+` //ig' |
@@ -213,6 +216,7 @@ elif [[ "$script" == "dbdump_struct" ]] ; then
    # perl -pe's/ALTER DATABASE `\w+` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;//ig' |
    perl -p -e's/ALGORITHM=UNDEFINED//ig' >$DUMP_FILE 2>>$logfile)
 else
+  FILE="$script"
   CAT="cat"
   if [[ "$script" == *.sql.gz ]] ; then
     CAT="zcat"
@@ -238,6 +242,8 @@ echo -e "+++++++++++++++++++++++++" >> $logfile
 if (($OK != 0)); then
   date +"%d.%m.%Y %T" >> $logfile
   echo -e "\n*** ERROR ***" >> $logfile
+  echo -e "\nERROR CODE: $OK" >> $logfile
+  echo -e "\nDATA FILE: $FILE" >> $logfile
   echo -e "\nFAILED" >> $logfile
   END=$(date +%s)
   DIFF=$(( $END - $START ))
