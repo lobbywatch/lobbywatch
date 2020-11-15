@@ -180,6 +180,7 @@ if [[ "$script" == "dbdump" ]] ; then
    sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
    perl -p -e's/DEFINER=`.*?`@`[a-zA-Z0-9_.-]+` //ig' |
+   perl -0 -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|sg' |
    perl -p -e"s/\`$db\`\.//ig" |
    perl -p -e's/\r//ig' |
    grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
@@ -193,7 +194,7 @@ elif [[ "$script" == "dbdump_data" ]] ; then
   (set -o pipefail; $MYSQLDUMP -h $HOST -P $PORT -u$username $PW --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --no-create-db --no-create-info --skip-triggers --log-error=$logfile --default-character-set=$charset 2>>$logfile |
    sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n-- \0 -- ibex Disable setting of original DB\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" |
    sed -r 's/^\s*LOCK TABLES (`[^`]+`) WRITE;/\0\nTRUNCATE \1; -- ibex added/ig' |
-   sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" |
+   perl -0 -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|sg' |
    perl -p -e's/\r//ig' |
    perl -p -e"s/\`$db\`\.//ig" |
    grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
