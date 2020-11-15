@@ -83,7 +83,7 @@ try
       $id = $record->id;
       $i++;
 
-      $rowData = get_parlamentarier($con, $id);
+      $rowData = get_parlamentarier($con, $id, date("Y"));
       $transparenzData = get_parlamentarier_transparenz($con, $id);
 
       $markup .= '<tr' . (!$record->freigabe_datum_unix || $record->freigabe_datum_unix > time() ? ' class="unpublished"': '') . "><td>$i</td><td>" . (!$active ? '<s>': '') . '<a href="/daten/parlamentarier/' . check_plain($id) . '/' . _lobbywatch_clean_for_url($record->anzeige_name) . '">' . check_plain($record->anzeige_name) . '</a>' . (!$active ? '</s>': '') . '</td><td>' . $id . '</td><td>' . check_plain($record->partei) . '</td><td>' . check_plain($record->rat) . '</td><td>' . check_plain($record->kanton) .
