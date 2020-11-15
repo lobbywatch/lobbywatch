@@ -74,6 +74,28 @@ quit() {
 
 # enable_fail_onerror
 
+POSITIONAL=()
+while test $# -gt 0; do
+    case $1 in
+        -h|--help)
+            echo "Run DB script for lobbywatch"
+            echo
+            echo "$0 [options] DB username script/dbdump|dbdump_data|dbdump_struct cron|interactive|cronverbose [PW]"
+            echo
+            echo "Options:"
+            echo "-h, --help                Show this help"
+            echo
+            exit
+        ;;
+        *)
+            POSITIONAL+=("$1") # save it in an array for later
+            shift
+        ;;
+    esac
+done
+
+set -- "${POSITIONAL[@]}" # restore positional parameters
+
 db=$1
 username=$2
 # script=db_check.sql
