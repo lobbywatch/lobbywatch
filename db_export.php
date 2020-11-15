@@ -927,8 +927,11 @@ class SqlExporter extends FlatExporter implements IExporter {
     // $header[] = "SET TIME_ZONE='+00:00';";
     $header[] = '';
     $header[] = "SET FOREIGN_KEY_CHECKS=0;";
+    $header[] = "SET SQL_MODE = \"NO_AUTO_VALUE_ON_ZERO\";";
+    $header[] = "SET AUTOCOMMIT = 0;";
+    $header[] = "START TRANSACTION;";
     $header[] = '';
-    $header[] = "-- SET SQL_NOTES=0;";
+    $header[] = "SET SQL_NOTES=1;";
     $header[] = '';
 
     $header[] = "CREATE DATABASE IF NOT EXISTS lobbywatch_public DEFAULT CHARACTER SET utf8mb4;";
@@ -955,9 +958,11 @@ class SqlExporter extends FlatExporter implements IExporter {
     return [';', ''];
   }
   function getFileFooter(bool $wrap): array {
-    return ['SET FOREIGN_KEY_CHECKS=1;'];
+    $footer = [];
+    $footer[] = "SET FOREIGN_KEY_CHECKS=1;";
+    $footer[] = "COMMIT;";
+    return $footer;
   }
-
 
   protected static function escape_sql_field(string $field = null, string $data_type, string $qe): string {
     if (is_null($field)) {
@@ -1780,10 +1785,6 @@ function main() {
       print( "directory '$path' is not created successfully...");
   }
 
-  $db = get_PDO_lobbywatch_DB_connection($db_name, $user_prefix);
-  utils_set_db_session_parameters_exec($db);
-  print("-- $env: {$db_connection['database']}\n");
-
   if (isset($options['h']) || isset($options['help'])) {
     print("DB export
 Parameters:
@@ -1851,6 +1852,9 @@ Parameters:
     print("-- Speed filter: ${filter['slow']}\n");
   }
 
+  $db = get_PDO_lobbywatch_DB_connection($db_name, $user_prefix, false);
+  utils_set_db_session_parameters_exec($db);
+  print("-- $env: {$db_connection['database']}\n");
 
   $start_export = microtime(true);
 
