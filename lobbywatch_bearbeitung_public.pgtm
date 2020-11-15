@@ -8383,7 +8383,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
               <UrlClientValidatorInfo enabled="true"/>
             </Validators>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" headerHint="Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" headerHint="Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden." canSetNull="true" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <Hyperlink template="http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%"/>
             <EditProperties type="textBox" maxLength="0"/>
@@ -8391,7 +8391,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
               <DigitsClientValidatorInfo enabled="true"/>
             </Validators>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="parlament_number" caption="Parlament Number" headerHint="Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="parlament_number" caption="Parlament Number" headerHint="Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet." canSetNull="true" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <EditProperties type="radioEdit" displayMode="0"/>
             <Validators>

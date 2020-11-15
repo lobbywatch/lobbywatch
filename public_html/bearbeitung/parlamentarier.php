@@ -47989,6 +47989,8 @@
                 ->setOptionsFor('geschlecht')
                 ->setOptionsFor('geburtstag')
                 ->setOptionsFor('zivilstand')
+                ->setOptionsFor('parlament_biografie_id')
+                ->setOptionsFor('parlament_number')
                 ->setOptionsFor('parlament_interessenbindungen_updated')
                 ->setOptionsFor('arbeitssprache')
                 ->setOptionsFor('sprache')

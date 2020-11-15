@@ -1717,7 +1717,8 @@
                     new IntegerField('promote', true),
                     new IntegerField('sticky', true),
                     new IntegerField('tnid', true),
-                    new IntegerField('translate', true)
+                    new IntegerField('translate', true),
+                    new IntegerField('tnid_nid', true)
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
@@ -2996,7 +2997,8 @@
                     new IntegerField('promote', true),
                     new IntegerField('sticky', true),
                     new IntegerField('tnid', true),
-                    new IntegerField('translate', true)
+                    new IntegerField('translate', true),
+                    new IntegerField('tnid_nid', true)
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
@@ -3230,7 +3232,8 @@
                     new IntegerField('promote', true),
                     new IntegerField('sticky', true),
                     new IntegerField('tnid', true),
-                    new IntegerField('translate', true)
+                    new IntegerField('translate', true),
+                    new IntegerField('tnid_nid', true)
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
@@ -3464,7 +3467,8 @@
                     new IntegerField('promote', true),
                     new IntegerField('sticky', true),
                     new IntegerField('tnid', true),
-                    new IntegerField('translate', true)
+                    new IntegerField('translate', true),
+                    new IntegerField('tnid_nid', true)
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
@@ -4208,7 +4212,8 @@
                     new IntegerField('promote', true),
                     new IntegerField('sticky', true),
                     new IntegerField('tnid', true),
-                    new IntegerField('translate', true)
+                    new IntegerField('translate', true),
+                    new IntegerField('tnid_nid', true)
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
@@ -4292,7 +4297,8 @@
                     new IntegerField('promote', true),
                     new IntegerField('sticky', true),
                     new IntegerField('tnid', true),
-                    new IntegerField('translate', true)
+                    new IntegerField('translate', true),
+                    new IntegerField('tnid_nid', true)
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
@@ -4376,7 +4382,8 @@
                     new IntegerField('promote', true),
                     new IntegerField('sticky', true),
                     new IntegerField('tnid', true),
-                    new IntegerField('translate', true)
+                    new IntegerField('translate', true),
+                    new IntegerField('tnid_nid', true)
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
@@ -4460,7 +4467,8 @@
                     new IntegerField('promote', true),
                     new IntegerField('sticky', true),
                     new IntegerField('tnid', true),
-                    new IntegerField('translate', true)
+                    new IntegerField('translate', true),
+                    new IntegerField('tnid_nid', true)
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
