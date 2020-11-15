@@ -924,7 +924,7 @@ class SqlExporter extends FlatExporter implements IExporter {
     // $header[] = "-- Intern data included: " . !$filter_intern_fields . "$eol$eol");
 
     $header[] = "SET NAMES utf8mb4;";
-    $header[] = "SET TIME_ZONE='+00:00';";
+    // $header[] = "SET TIME_ZONE='+00:00';";
     $header[] = '';
     $header[] = "SET FOREIGN_KEY_CHECKS=0;";
     $header[] = '';
