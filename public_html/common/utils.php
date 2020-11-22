@@ -2503,7 +2503,7 @@ function fillDataFromZefixRestResult($json, &$data) {
         // 'adresse_zusatz' => (!empty($address->addon) ? $address->addon : null) ?? ('Postfach ' . $address->poBox) ?? ('Postfach ' . $address2->poBox) ?? null,
         'adresse_zusatz' => !empty($address->addon) ? $address->addon : (!empty($address->poBox) ? 'Postfach ' . $address->poBox : (!empty($address2->poBox) ? 'Postfach ' . $address2->poBox : null)),
         'ort' => $address->city ?? null,
-        'adresse_plz' => +$address->swissZipCode ?? null,
+        'adresse_plz' => isset($address->swissZipCode) && is_numeric($address->swissZipCode) ? +$address->swissZipCode : null,
         'land_iso2' => 'CH' ?? null,
         'land_id' => _lobbywatch_ws_get_land_id('CH') ?? null,
         'handelsregister_url' => $ot->cantonalExcerptWeb?? null,
