@@ -117,6 +117,7 @@ function _lobbywatch_data_not_allowd($type, $table, $json = true) {
   }
 }
 
+// TODO remove CORS, it is wrong
 function lobbywatch_json_output($response = null, $cors = true) {
   global $no_cors; // Global scope is only within one request
   if ($cors && empty($no_cors)) { // Should we disable cors?
@@ -1391,7 +1392,7 @@ function _lobbywatch_data_router($path = '', $version = '', $data_type = '', $ca
   } else if ($call_type === 'table' && array_key_exists($object, Constants::$workflow_tables) && $response_type === 'flat' && $respone_object === 'list') {
 //     df($parameter, '_lobbywatch_data_table_flat_list');
     return _lobbywatch_data_table_flat_list($object, 1, false);
-  } else if ($call_type === 'ws' && ($object === 'uid' || $object === 'zefix') && $response_type === 'flat' && $respone_object === 'uid' && $parameter) {
+  } else if ($call_type === 'ws' && (in_array($object, ['uid','zefix', 'zefix-rest'])) && $response_type === 'flat' && $respone_object === 'uid' && $parameter) {
 //     df($parameter, '_lobbywatch_data_table_flat_list');
     return _lobbywatch_data_ws_uid($object, $parameter, false);
 //   } else if ($call_type === 'ws' && ($object === 'zefix') && $response_type === 'flat' && $respone_object === 'uid' && $parameter) {
@@ -1559,6 +1560,9 @@ function _lobbywatch_data_ws_uid($table, $uid, $json = true) {
       $items = _lobbywatch_fetch_ws_uid_data($uid, 0, false, false);
     } else if ($table == 'zefix') {
       $items = _lobbywatch_fetch_ws_zefix_data($uid, 0, false, false);
+      $no_cors = true; // Disable CORS since it is a protected service
+    } else if ($table == 'zefix-rest') {
+      $items = _lobbywatch_fetch_ws_zefix_rest_data($uid, 0, false);
       $no_cors = true; // Disable CORS since it is a protected service
     } else {
       // Must not happen

@@ -1406,6 +1406,43 @@ function new_get_file_contents($url) {
   return $file_contents;
 }
 
+/** Data: array("param" => "value") ==> index.php?param=value
+ * https://stackoverflow.com/questions/9802788/call-a-rest-api-in-php
+ */
+function callAPI($method, $url, $data = false, $basicAuthUsernamePassword = false) {
+    $curl = curl_init();
+
+    switch ($method) {
+        case "POST":
+            curl_setopt($curl, CURLOPT_POST, 1);
+
+            if ($data)
+                curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+            break;
+        case "PUT":
+            curl_setopt($curl, CURLOPT_PUT, 1);
+            break;
+        default:
+            if ($data)
+                $url = sprintf("%s?%s", $url, http_build_query($data));
+    }
+
+    // Optional Authentication:
+    if ($basicAuthUsernamePassword) {
+      curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+      curl_setopt($curl, CURLOPT_USERPWD, $basicAuthUsernamePassword);
+  }
+
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+    $result = curl_exec($curl);
+
+    curl_close($curl);
+
+    return $result;
+}
+
 // See also addslashes()
 function escape_string($string) {
   // return mysql_escape_string($string);
@@ -1947,6 +1984,8 @@ function _lobbywatch_check_uid_format($uid_raw, &$uid, &$message) {
       $uid = $matches[1] . $matches[2] . $matches[3];
     } else if (preg_match('/^(\d{9})$/', $uid_raw, $matches)) {
       $uid = $matches[1];
+    } else if (preg_match('/^CHE(\d{9})$/', $uid_raw, $matches)) {
+      $uid = $matches[1];
     } else {
       $message = "Wrong UID format: $uid_raw, correct: (9-digits or CHE-000.000.000)";
       $success = false;
@@ -2166,6 +2205,60 @@ function _lobbywatch_fetch_ws_zefix_data($uid_raw, $verbose = 0, $ssl = true, $t
   return $data;
 }
 
+function _lobbywatch_fetch_ws_zefix_rest_data($uid_raw, $verbose = 0, $test_mode = false) {
+  $data = initDataArray();
+
+  if (!_lobbywatch_check_uid_format($uid_raw, $uid, $data['message'])) {
+    $data['data'] = array();
+    $data['success'] = false;
+    return $data;
+  }
+
+  $data['sql'] .= "uid=$uid";
+
+  if (!_lobbywatch_check_uid_check_digit($uid, $data['message'])) {
+    $data['data'] = array();
+    $data['success'] = false;
+    return $data;
+  }
+
+  // $client = initSoapClient($data, getZefixWsLogin($test_mode), $verbose, $ssl);
+  ws_get_organization_from_zefix_rest($uid, $data, $verbose, $test_mode);
+  return $data;
+}
+
+function ws_get_organization_from_zefix_rest($uid_raw, &$data, $verbose, $test_mode = false) {
+  global $zefix_ws_login;
+
+  $response = null;
+  try {
+    $uid = getUIDnumber($uid_raw);
+    /* Set your parameters for the request */
+    $params = array(
+      'uid' => $uid,
+    );
+    $base_url = $test_mode ? 'https://www.zefixintg.admin.ch/ZefixPublicREST/api/v1/company/uid' : 'https://www.zefix.admin.ch/ZefixPublicREST/api/v1/company/uid';
+    $url = "$base_url/CHE$uid";
+    $basicAuthUsernamePassword = "{$zefix_ws_login['username']}:${zefix_ws_login['password']}";
+    $response_raw = callAPI('GET', $url, false, $basicAuthUsernamePassword);
+    $response_json = json_decode($response_raw, false, 512, JSON_THROW_ON_ERROR);
+    if (isset($response_json)) {
+      fillDataFromZefixRestResult($response_json, $data);
+    } else {
+      $data['message'] .= 'No Result from zefix webservice. ';
+      $data['success'] = false;
+      $data['sql'] = "uid=$uid";
+    }
+  } catch(Exception $e) {
+    $data['message'] .= _utils_get_exeption($e);
+    $data['success'] = false;
+    $data['sql'] = "uid=$uid";
+  } finally {
+    ws_verbose_logging($client, $response, $data, $verbose);
+  }
+  return $response;
+}
+
 function ws_get_organization_from_zefix($uid_raw, $client, &$data, $verbose) {
   /* Invoke webservice method with your parameters. */
   $response = null;
@@ -2362,6 +2455,63 @@ function fillDataFromZefixResult($object, &$data) {
     }
 }
 
+// https://www.zefix.admin.ch/ZefixPublicREST/api/v1/company/uid/CHE112133855
+// https://www.zefix.admin.ch/ZefixPublicREST/swagger-ui/index.html?configUrl=/ZefixPublicREST/v3/api-docs/swagger-config#/Company/showUID
+
+// https://www.zefixintg.admin.ch/ZefixPublicREST/api/v1/company/uid/CHE112133855
+// https://www.zefixintg.admin.ch/ZefixPublicREST/swagger-ui/index.html?configUrl=/ZefixPublicREST/v3/api-docs/swagger-config#/Company/showUID
+
+function fillDataFromZefixRestResult($json, &$data) {
+    if (!empty((array) $json)) {
+//       print_r($object);
+      if (is_array($json)) {
+        $ot = $json[0];
+        $data['count'] = count($json);
+      } else {
+        $ot = $json;
+        $data['count'] = 1;
+      }
+      $oid = $ot;
+      $uid_ws = $oid->uid;
+      if (isset($ot->address)) {
+        $base_address = $ot->address;
+        // $address = $base_address[0] ?? $base_address;
+        // $address2 = $base_address[1] ?? null;
+        $address = is_array($base_address) ? $base_address[0] : $base_address;
+        $address2 = is_array($base_address) && isset($base_address[1]) ? $base_address[1] : null;
+      } else {
+        $base_address = $address = $address2 = null;
+      }
+      $old_hr_id = isset($oid->chid) ? $oid->chid : null;
+      $legel_form_handelsregister_uid = $oid->legalForm->uid ?? null;
+      $data['data'] = array(
+        'uid' => formatUID($uid_ws),
+        'uid_zahl' => $uid_ws,
+        'alte_hr_id' => $old_hr_id ?? null,
+        'name' => $oid->name,
+        'name_de' => $oid->name,
+    // TODO 'name_fr' => $ot->organisation->organisationIdentification->organisationName, TODO
+        'rechtsform_handelsregister' => $legel_form_handelsregister_uid,
+        'rechtsform' => _lobbywatch_ws_get_rechtsform($legel_form_handelsregister_uid),
+        'rechtsform_zefix' => $oid->legalForm->id ?? null,
+        'adresse_strasse' => isset($address->street) ? ($address->street . (isset($address->houseNumber) ? ' ' . $address->houseNumber : '')) : null,
+        // 'adresse_zusatz' => (!empty($address->addon) ? $address->addon : null) ?? ('Postfach ' . $address->poBox) ?? ('Postfach ' . $address2->poBox) ?? null,
+        'adresse_zusatz' => !empty($address->addon) ? $address->addon : (!empty($address->poBox) ? 'Postfach ' . $address->poBox : (!empty($address2->poBox) ? 'Postfach ' . $address2->poBox : null)),
+        'ort' => $address->city ?? null,
+        'adresse_plz' => +$address->swissZipCode ?? null,
+        'land_iso2' => 'CH' ?? null,
+        'land_id' => _lobbywatch_ws_get_land_id('CH') ?? null,
+        'handelsregister_url' => $ot->cantonalExcerptWeb?? null,
+        'handelsregister_ws_url' => $ot->wsLink ?? null, // TODO what for?
+        'zweck' => $ot->purpose ?? null,
+        'register_kanton' => $ot->canton ?? null,
+      );
+    } else {
+      $data['message'] .= 'Nothing found';
+      $data['success'] = false;
+    }
+}
+
  /**
    * Generiert Prüfsumme nach ESR-Verfahren.
    *
@@ -2450,6 +2600,8 @@ function getUIDnumber($uid_raw) {
   $formatted_uid = formatUID($uid_raw);
   if (preg_match('/^CHE-(\d{3})[.](\d{3})[.](\d{3})$/', $formatted_uid, $matches)) {
     $uid = $matches[1] . $matches[2] . $matches[3];
+  } else if (preg_match('/^CHE(\d{9})$/', $formatted_uid, $matches)) {
+    $uid = $matches[1];
   } else {
     //throw new Exception("Not an UID: $uid_raw");
     $uid = null;

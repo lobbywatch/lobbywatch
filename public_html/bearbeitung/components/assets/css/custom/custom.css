@@ -335,6 +335,7 @@ ul.css-tabs a {
   position:relative;
   top:1px;
   outline:0;
+  border-radius:4px 4px 0 0;
   -moz-border-radius:4px 4px 0 0;
 }
 
@@ -401,8 +402,7 @@ small.desc {
   position: relative;
   width: 16px;
   height: 16px;
-  /* ../../images/loading.gif */
-  background: transparent url('../../images/indicator.gif') no-repeat center center;
+  background: transparent url('../../img/loading.gif') no-repeat center center;
   float: left;
 }
 
@@ -410,7 +410,7 @@ small.desc {
   position: relative;
   width: 48px;
   height: 48px;
-  background: transparent url('../../images/loading.gif') no-repeat center center;
+  background: transparent url('../../img/loading.gif') no-repeat center center;
   float: left;
 }
 

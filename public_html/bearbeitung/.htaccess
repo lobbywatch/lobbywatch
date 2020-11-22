@@ -2,3 +2,7 @@
  SecFilterEngine Off
  SecFilterScanPOST Off
 </IfModule>
+
+    # CORS: allow zefix UID ws
+    # Header set Access-Control-Allow-Origin "https://www.zefixintg.admin.ch"
+    # Header set Access-Control-Allow-Origin "*"

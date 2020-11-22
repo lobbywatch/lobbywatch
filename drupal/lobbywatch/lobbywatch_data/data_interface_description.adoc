@@ -106,7 +106,7 @@ JSON Response:
     "name" : "Gesundheit",
     "kommission_id" : "1",
     "beschreibung" : "Akteure im Gesundheitswesen",
-    "angaben" : "Wie werden die ca. 60 Milliarden j\u00e4hrlich aufgeteilt",
+    "angaben" : "Wie werden die ca. 60 Milliarden jährlich aufgeteilt",
     "farbcode" : "blue",
     "symbol_rel" : null,
     "symbol_klein_rel" : "branche_symbole\/default_branche.png",
@@ -114,7 +114,7 @@ JSON Response:
     "symbol_dateierweiterung" : null,
     "symbol_dateiname" : null,
     "symbol_mime_type" : null,
-    "kommission" : "Kommissionen f\u00fcr soziale Sicherheit und Gesundheit (SGK)",
+    "kommission" : "Kommissionen für soziale Sicherheit und Gesundheit (SGK)",
     "symbol_path" : "\/test\/files\/branche_symbole\/default_branche.png",
     "symbol_url" : "http:\/\/lobbywatch.ch\/\/test\/files\/branche_symbole\/default_branche.png"
     }
@@ -146,7 +146,7 @@ JSON Response:
         "beschreibung" : "Medikamentenforschung, Medikamentenvertrieb, Pharmafirmen, Apotheken",
         "branche" : "Gesundheit",
         "kommission_id" : "1",
-        "kommission" : "Kommissionen f\u00fcr soziale Sicherheit und Gesundheit (SGK)"
+        "kommission" : "Kommissionen für soziale Sicherheit und Gesundheit (SGK)"
         },
         {
         "anzeige_name" : "Krankenkassen",
@@ -156,7 +156,7 @@ JSON Response:
         "beschreibung" : "Krankenkassen, Dachorganisationen KK, Unterorganisationen KK",
         "branche" : "Gesundheit",
         "kommission_id" : "1",
-        "kommission" : "Kommissionen f\u00fcr soziale Sicherheit und Gesundheit (SGK)"
+        "kommission" : "Kommissionen für soziale Sicherheit und Gesundheit (SGK)"
         },
         {"__comment" : "…"},
         {
@@ -164,10 +164,10 @@ JSON Response:
         "id" : "88",
         "name" : "Dienstleistungen",
         "branche_id" : "1",
-        "beschreibung" : "Firmen mit Dienstleistungen explizit f\u00fcr das Gesundheitswesen, z.B. IT-L\u00f6sungen.",
+        "beschreibung" : "Firmen mit Dienstleistungen explizit für das Gesundheitswesen, z.B. IT-Lösungen.",
         "branche" : "Gesundheit",
         "kommission_id" : "1",
-        "kommission" : "Kommissionen f\u00fcr soziale Sicherheit und Gesundheit (SGK)"
+        "kommission" : "Kommissionen für soziale Sicherheit und Gesundheit (SGK)"
         } ]
 }
 ----
@@ -620,7 +620,7 @@ Example:
 
 === Options / Parameters
 
-Queries can be modiefied by serveral options. Some options are only
+Queries can be modified by serveral options. Some options are only
 available if permission is granted.
 
 * `includeUnpublished`=1 (default): Show unpublished data? (Requires
@@ -649,15 +649,16 @@ https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/$ws/flat/uid/%
 where `$ws` is one of the following webservices:
 
 * `uid`: UID-Register webservice of Bundesamt für Statistik (BfS)
-* `zefix`: Zefix webservice (Handelsregister, Zentraler Firmenindex)
-(not yet implemented)
+* `zefix`: Zefix SOAP webservice (Handelsregister, Zentraler Firmenindex) (DEPRECATED)
+* `zefix-rest`: Zefix REST webservice (Handelsregister, Zentraler Firmenindex)
 
-`%` is the placeholder for the UID, either a 9-digit UID number or a
-`CHE-000.000.000`
+`%` is the placeholder for the UID, either a 9-digit number, `CHE000000000` string or a
+`CHE-000.000.000` string
 
 === UID-Register Webservice of Bundesamt für Statistik (BFS)
 
-The UID can be given as 9-digit UID number or as CHE-000.000.000.
+The UID can be given as 9-digit number, `CHE000000000` string or a
+`CHE-000.000.000` string.
 
 The JSON response is given in the same base structure as for the DB
 interface.
@@ -709,15 +710,16 @@ https://www.uid.admin.ch/Detail.aspx?uid_id=CHE-107.810.911
 * No login is required for public services
 * This webservice is run by the Bundesamt für Statistik (BFS).
 
-=== Zefix webservice (Handelsregister, Zentraler Firmenindex)
+=== Zefix SOAP webservice (Handelsregister, Zentraler Firmenindex) [DEPRECATED]
 
-The UID can be given as 9-digit UID number or as CHE-000.000.000.
+The UID can be given as 9-digit number, `CHE000000000` string or a
+`CHE-000.000.000` string.
 
 The JSON response is given in the same base structure as for the DB
 interface.
 
-The Zefix webservice is not public. The access is protected by an access
-key. It is has to be added as paremter access_key.
+The Zefix SOAP webservice is not public. The access is protected by an access
+key. It is has to be added as parameter access_key.
 
 Calls: +
 `https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/zefix/flat/uid/CHE-107.810.911?access_key=ACCESS_KEY` +
@@ -773,6 +775,68 @@ http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=CHE-107.810.911&langu
 WSDL]
 * https://www.e-service.admin.ch/wiki/download/attachments/44827026/ZefixService.xsd?version=2&modificationDate=1428391225000[XML-Schema]
 * Base URL: http://www.e-service.admin.ch/ws-zefix-1.6/ZefixService
+* Login is always required
+* This webservice is run by Eidgenössisches Amt für das Handelsregister.
+
+=== Zefix REST webservice (Handelsregister, Zentraler Firmenindex)
+
+The UID can be given as 9-digit number, `CHE000000000` string or a
+`CHE-000.000.000` string.
+
+The JSON response is given in the same base structure as for the DB
+interface.
+
+The Zefix REST webservice is not public. The access is protected by an access
+key. It is has to be added as parameter access_key.
+
+Calls: +
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/zefix-rest/flat/uid/CHE-107.810.911?access_key=ACCESS_KEY` +
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/zefix-rest/flat/uid/CHE107810911?access_key=ACCESS_KEY` +
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/zefix-rest/flat/uid/107810911?access_key=ACCESS_KEY`
+
+JSON Response:
+
+[source,json]
+----
+{
+    "success": true,
+    "count": 1,
+    "message": "",
+    "sql": "uid=107810911",
+    "source": "zefix-rest",
+    "build secs": "0.21",
+    "data": {
+        "uid": "CHE-107.810.911",
+        "uid_zahl": "CHE107810911",
+        "alte_hr_id": "CH03570104919",
+        "name": "Schweizerischer Nationalfonds zur Förderung der wissenschaftlichen Forschung",
+        "name_de": "Schweizerischer Nationalfonds zur Förderung der wissenschaftlichen Forschung",
+        "rechtsform_handelsregister": "0110",
+        "rechtsform": "Stiftung",
+        "rechtsform_zefix": 7,
+        "adresse_strasse": "Wildhainweg 3",
+        "adresse_zusatz": null,
+        "ort": "Bern",
+        "adresse_plz": 3012,
+        "land_iso2": "CH",
+        "land_id": "191",
+        "handelsregister_url": "https://be.chregister.ch/cr-portal/auszug/auszug.xhtml?uid=CHE-107.810.911",
+        "handelsregister_ws_url": null,
+        "zweck": "Die Stiftung fördert die wissenschaftliche Forschung in der Schweiz. Sie fördert ihre internationale Wettbewerbsfähigkeit und Vernetzung und ihre Problemlösungskapazität. Sie schenkt der Förderung des wissenschaftlichen Nachwuchses besondere Aufmerksamkeit.",
+        "register_kanton": "BE"
+    }
+}
+----
+
+Reference:
+
+* Environments:
+    * Production:
+        * OpenAPI definition: https://www.zefix.admin.ch/ZefixPublicREST/swagger-ui/index.html?configUrl=/ZefixPublicREST/v3/api-docs/swagger-config#/Company/showUID
+        * Example: https://www.zefix.admin.ch/ZefixPublicREST/api/v1/company/uid/CHE112133855
+    * Integration:
+        * OpenAPI definition: https://www.zefixintg.admin.ch/ZefixPublicREST/swagger-ui/index.html?configUrl=/ZefixPublicREST/v3/api-docs/swagger-config#/Company/showUID
+        * Example: https://www.zefixintg.admin.ch/ZefixPublicREST/api/v1/company/uid/CHE112133855
 * Login is always required
 * This webservice is run by Eidgenössisches Amt für das Handelsregister.
 

@@ -37,7 +37,7 @@
       <div class="btn-group">
         <!-- <button id="btn-ws-uid" type="button" class="btn" title="Calls UID webservice and fetches organisation name, location, … Precondition: UID CHE-Number is filled." {*onclick="jQuery('#name_de_edit').val('xxx'); alert('Hi'); return false;"*}>Call UID WS</button> -->
         <a class="btn btn-default" href="#" id="btn-ws-uid" title="Calls UID webservice and fetches organisation name, location, … Precondition: UID CHE-Number is filled." {*onclick="jQuery('#name_de_edit').val('xxx'); alert('Hi'); return false;"*}>Call UID WS</a>
-        <div id="ws-uid-indicator" class="ws-indicator-small" style="display:none"></div>
+        {* <div id="ws-uid-indicator" class="ws-indicator-small" style="display:none"></div> *}
       </div>
     {/if}
 {/capture}
