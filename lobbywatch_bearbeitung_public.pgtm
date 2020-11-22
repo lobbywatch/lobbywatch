@@ -420,29 +420,29 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
               <Values>
-                <Value name="1 " caption=" Einzelunternehmen / Raison individuelle / Ditta individuale"/>
-                <Value name="2 " caption=" Kollektivgesellschaft / Société en nom collectif / Società in nome collettivo"/>
-                <Value name="3 " caption=" Aktiengesellschaft / Société anonyme / Società anonima"/>
-                <Value name="4 " caption=" GmbH / Société à responsabilité limitée / Società a responsabilità limitata"/>
-                <Value name="5 " caption=" Genossenschaft / Société coopérative / Cooperativa"/>
-                <Value name="6 " caption=" Verein / Association / Assiciazione"/>
-                <Value name="7 " caption=" Stiftung / Fondation / Fondazione"/>
-                <Value name="8 " caption=" Besondere Rechtsformen / Natures juridiques particulières / Natura giuridica particolare"/>
-                <Value name="9 " caption=" Zweigniederlassung CH / Succursale CH / Succursale CH"/>
-                <Value name="10 " caption=" Kommanditgesellschaft / Société en commandite / Società in accomandita"/>
-                <Value name="11 " caption=" Kommanditaktiengesellschaft / Société en commandite par actions / Società in accomandita per azioni"/>
-                <Value name="82 " caption=" Selbst. öffentlichrechtliche Körperschaft / Entreprise autonome de droit public / Istituto autonomo di diritto pubblico"/>
-                <Value name="83 " caption=" öffentlichrechtliche Anstalt / Fondation de doit public / Fondazione di diritto pubblico"/>
-                <Value name="84 " caption=" Gemeinderschaft / Indivision / Indivisione"/>
-                <Value name="85 " caption=" Institut / Institution / Istituto"/>
-                <Value name="86 " caption=" Nichtkaufmännische Prokura / Procuration non commerciale / Procura non commerciale"/>
-                <Value name="89 " caption=" Nicht definierte Rechtsform / Nature juridique non définie / natura giuridica indefinita"/>
-                <Value name="92 " caption=" Ausländische Zweigniederlassung / Succursale étrangère / Succursale estera"/>
-                <Value name="101 " caption=" Einzelunternehmen / Entreprise individuelle / Impresa individuale / Sole proprietorship"/>
-                <Value name="823 " caption=" öffentlichrechtliche AG / Société anonyme de droit public / Società anonima di diritto pubblico"/>
-                <Value name="824 " caption=" öffentlichrechtliche GmbH / S.à.r.l. de droit public / S.a.r.l. di diritto pubblico"/>
-                <Value name="825 " caption=" öffentlichrechtliche Genossenschaft / Société coopérative de droit public / Società cooperativa di diritto pubblico"/>
-                <Value name="826 " caption=" öffentlichrechtlicher Verein / Association de droit public / Associazione di diritto pubblico"/>
+                <Value name="1" caption=" Einzelunternehmen / Raison individuelle / Ditta individuale"/>
+                <Value name="2" caption=" Kollektivgesellschaft / Société en nom collectif / Società in nome collettivo"/>
+                <Value name="3" caption=" Aktiengesellschaft / Société anonyme / Società anonima"/>
+                <Value name="4" caption=" GmbH / Société à responsabilité limitée / Società a responsabilità limitata"/>
+                <Value name="5" caption=" Genossenschaft / Société coopérative / Cooperativa"/>
+                <Value name="6" caption=" Verein / Association / Assiciazione"/>
+                <Value name="7" caption=" Stiftung / Fondation / Fondazione"/>
+                <Value name="8" caption=" Besondere Rechtsformen / Natures juridiques particulières / Natura giuridica particolare"/>
+                <Value name="9" caption=" Zweigniederlassung CH / Succursale CH / Succursale CH"/>
+                <Value name="10" caption=" Kommanditgesellschaft / Société en commandite / Società in accomandita"/>
+                <Value name="11" caption=" Kommanditaktiengesellschaft / Société en commandite par actions / Società in accomandita per azioni"/>
+                <Value name="82" caption=" Selbst. öffentlichrechtliche Körperschaft / Entreprise autonome de droit public / Istituto autonomo di diritto pubblico"/>
+                <Value name="83" caption=" öffentlichrechtliche Anstalt / Fondation de doit public / Fondazione di diritto pubblico"/>
+                <Value name="84" caption=" Gemeinderschaft / Indivision / Indivisione"/>
+                <Value name="85" caption=" Institut / Institution / Istituto"/>
+                <Value name="86" caption=" Nichtkaufmännische Prokura / Procuration non commerciale / Procura non commerciale"/>
+                <Value name="89" caption=" Nicht definierte Rechtsform / Nature juridique non définie / natura giuridica indefinita"/>
+                <Value name="92" caption=" Ausländische Zweigniederlassung / Succursale étrangère / Succursale estera"/>
+                <Value name="101" caption=" Einzelunternehmen / Entreprise individuelle / Impresa individuale / Sole proprietorship"/>
+                <Value name="823" caption=" öffentlichrechtliche AG / Société anonyme de droit public / Società anonima di diritto pubblico"/>
+                <Value name="824" caption=" öffentlichrechtliche GmbH / S.à.r.l. de droit public / S.a.r.l. di diritto pubblico"/>
+                <Value name="825" caption=" öffentlichrechtliche Genossenschaft / Société coopérative de droit public / Società cooperativa di diritto pubblico"/>
+                <Value name="826" caption=" öffentlichrechtlicher Verein / Association de droit public / Associazione di diritto pubblico"/>
               </Values>
             </EditProperties>
           </ColumnPresentation>
@@ -761,17 +761,17 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="interessengruppe2_id"/>
             <Column fieldName="interessengruppe3_id"/>
             <Column fieldName="notizen"/>
-            <Column fieldName="updated_by_import"/>
+            <Column fieldName="updated_by_import" visible="false"/>
             <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
             <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
             <Column fieldName="kontrolliert_visa" visible="false"/>
             <Column fieldName="kontrolliert_datum" visible="false"/>
             <Column fieldName="freigabe_visa" visible="false"/>
             <Column fieldName="freigabe_datum" visible="false"/>
-            <Column fieldName="created_visa"/>
-            <Column fieldName="created_date"/>
-            <Column fieldName="updated_visa"/>
-            <Column fieldName="updated_date"/>
+            <Column fieldName="created_visa" visible="false"/>
+            <Column fieldName="created_date" visible="false"/>
+            <Column fieldName="updated_visa" visible="false"/>
+            <Column fieldName="updated_date" visible="false"/>
             <Column fieldName="ALT_branche_id" visible="false"/>
           </Insert>
           <QuickFilter>
@@ -8140,6 +8140,24 @@ check_organisation_interessengruppe_order($page, $rowData, $cancel, $message, $t
 customOnCustomRenderColumn('organisation', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
+          <OnInsertFormEditorValueChanged enabled="true">
+if (sender.getFieldName() == 'uid') {
+  const input = sender.getValue();
+  if (/(CHE)?(\d{9})/.test(input)) {
+    formatted = input.replace(/(CHE)?\s*(\d{3})(\d{3})(\d{3})/, 'CHE-$2.$3.$4');
+    sender.setValue(formatted);
+  }
+}
+          </OnInsertFormEditorValueChanged>
+          <OnEditFormEditorValueChanged enabled="true">
+if (sender.getFieldName() == 'uid') {
+  const input = sender.getValue();
+  if (/(CHE)?(\d{9})/.test(input)) {
+    formatted = input.replace(/(CHE)?\s*(\d{3})(\d{3})(\d{3})/, 'CHE-$2.$3.$4');
+    sender.setValue(formatted);
+  }
+}
+          </OnEditFormEditorValueChanged>
         </EventHandlers>
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators>

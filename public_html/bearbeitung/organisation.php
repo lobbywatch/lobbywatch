@@ -38501,29 +38501,29 @@
             );
             
             $main_editor = new ComboBox('rechtsform_zefix_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $main_editor->addChoice('1 ', ' Einzelunternehmen / Raison individuelle / Ditta individuale');
-            $main_editor->addChoice('2 ', ' Kollektivgesellschaft / Société en nom collectif / Società in nome collettivo');
-            $main_editor->addChoice('3 ', ' Aktiengesellschaft / Société anonyme / Società anonima');
-            $main_editor->addChoice('4 ', ' GmbH / Société à responsabilité limitée / Società a responsabilità limitata');
-            $main_editor->addChoice('5 ', ' Genossenschaft / Société coopérative / Cooperativa');
-            $main_editor->addChoice('6 ', ' Verein / Association / Assiciazione');
-            $main_editor->addChoice('7 ', ' Stiftung / Fondation / Fondazione');
-            $main_editor->addChoice('8 ', ' Besondere Rechtsformen / Natures juridiques particulières / Natura giuridica particolare');
-            $main_editor->addChoice('9 ', ' Zweigniederlassung CH / Succursale CH / Succursale CH');
-            $main_editor->addChoice('10 ', ' Kommanditgesellschaft / Société en commandite / Società in accomandita');
-            $main_editor->addChoice('11 ', ' Kommanditaktiengesellschaft / Société en commandite par actions / Società in accomandita per azioni');
-            $main_editor->addChoice('82 ', ' Selbst. öffentlichrechtliche Körperschaft / Entreprise autonome de droit public / Istituto autonomo di diritto pubblico');
-            $main_editor->addChoice('83 ', ' öffentlichrechtliche Anstalt / Fondation de doit public / Fondazione di diritto pubblico');
-            $main_editor->addChoice('84 ', ' Gemeinderschaft / Indivision / Indivisione');
-            $main_editor->addChoice('85 ', ' Institut / Institution / Istituto');
-            $main_editor->addChoice('86 ', ' Nichtkaufmännische Prokura / Procuration non commerciale / Procura non commerciale');
-            $main_editor->addChoice('89 ', ' Nicht definierte Rechtsform / Nature juridique non définie / natura giuridica indefinita');
-            $main_editor->addChoice('92 ', ' Ausländische Zweigniederlassung / Succursale étrangère / Succursale estera');
-            $main_editor->addChoice('101 ', ' Einzelunternehmen / Entreprise individuelle / Impresa individuale / Sole proprietorship');
-            $main_editor->addChoice('823 ', ' öffentlichrechtliche AG / Société anonyme de droit public / Società anonima di diritto pubblico');
-            $main_editor->addChoice('824 ', ' öffentlichrechtliche GmbH / S.à.r.l. de droit public / S.a.r.l. di diritto pubblico');
-            $main_editor->addChoice('825 ', ' öffentlichrechtliche Genossenschaft / Société coopérative de droit public / Società cooperativa di diritto pubblico');
-            $main_editor->addChoice('826 ', ' öffentlichrechtlicher Verein / Association de droit public / Associazione di diritto pubblico');
+            $main_editor->addChoice('1', ' Einzelunternehmen / Raison individuelle / Ditta individuale');
+            $main_editor->addChoice('2', ' Kollektivgesellschaft / Société en nom collectif / Società in nome collettivo');
+            $main_editor->addChoice('3', ' Aktiengesellschaft / Société anonyme / Società anonima');
+            $main_editor->addChoice('4', ' GmbH / Société à responsabilité limitée / Società a responsabilità limitata');
+            $main_editor->addChoice('5', ' Genossenschaft / Société coopérative / Cooperativa');
+            $main_editor->addChoice('6', ' Verein / Association / Assiciazione');
+            $main_editor->addChoice('7', ' Stiftung / Fondation / Fondazione');
+            $main_editor->addChoice('8', ' Besondere Rechtsformen / Natures juridiques particulières / Natura giuridica particolare');
+            $main_editor->addChoice('9', ' Zweigniederlassung CH / Succursale CH / Succursale CH');
+            $main_editor->addChoice('10', ' Kommanditgesellschaft / Société en commandite / Società in accomandita');
+            $main_editor->addChoice('11', ' Kommanditaktiengesellschaft / Société en commandite par actions / Società in accomandita per azioni');
+            $main_editor->addChoice('82', ' Selbst. öffentlichrechtliche Körperschaft / Entreprise autonome de droit public / Istituto autonomo di diritto pubblico');
+            $main_editor->addChoice('83', ' öffentlichrechtliche Anstalt / Fondation de doit public / Fondazione di diritto pubblico');
+            $main_editor->addChoice('84', ' Gemeinderschaft / Indivision / Indivisione');
+            $main_editor->addChoice('85', ' Institut / Institution / Istituto');
+            $main_editor->addChoice('86', ' Nichtkaufmännische Prokura / Procuration non commerciale / Procura non commerciale');
+            $main_editor->addChoice('89', ' Nicht definierte Rechtsform / Nature juridique non définie / natura giuridica indefinita');
+            $main_editor->addChoice('92', ' Ausländische Zweigniederlassung / Succursale étrangère / Succursale estera');
+            $main_editor->addChoice('101', ' Einzelunternehmen / Entreprise individuelle / Impresa individuale / Sole proprietorship');
+            $main_editor->addChoice('823', ' öffentlichrechtliche AG / Société anonyme de droit public / Società anonima di diritto pubblico');
+            $main_editor->addChoice('824', ' öffentlichrechtliche GmbH / S.à.r.l. de droit public / S.a.r.l. di diritto pubblico');
+            $main_editor->addChoice('825', ' öffentlichrechtliche Genossenschaft / Société coopérative de droit public / Società cooperativa di diritto pubblico');
+            $main_editor->addChoice('826', ' öffentlichrechtlicher Verein / Association de droit public / Associazione di diritto pubblico');
             $main_editor->SetAllowNullValue(false);
             
             $multi_value_select_editor = new MultiValueSelect('rechtsform_zefix');
@@ -40487,29 +40487,29 @@
             // Edit column for rechtsform_zefix field
             //
             $editor = new ComboBox('rechtsform_zefix_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->addChoice('1 ', ' Einzelunternehmen / Raison individuelle / Ditta individuale');
-            $editor->addChoice('2 ', ' Kollektivgesellschaft / Société en nom collectif / Società in nome collettivo');
-            $editor->addChoice('3 ', ' Aktiengesellschaft / Société anonyme / Società anonima');
-            $editor->addChoice('4 ', ' GmbH / Société à responsabilité limitée / Società a responsabilità limitata');
-            $editor->addChoice('5 ', ' Genossenschaft / Société coopérative / Cooperativa');
-            $editor->addChoice('6 ', ' Verein / Association / Assiciazione');
-            $editor->addChoice('7 ', ' Stiftung / Fondation / Fondazione');
-            $editor->addChoice('8 ', ' Besondere Rechtsformen / Natures juridiques particulières / Natura giuridica particolare');
-            $editor->addChoice('9 ', ' Zweigniederlassung CH / Succursale CH / Succursale CH');
-            $editor->addChoice('10 ', ' Kommanditgesellschaft / Société en commandite / Società in accomandita');
-            $editor->addChoice('11 ', ' Kommanditaktiengesellschaft / Société en commandite par actions / Società in accomandita per azioni');
-            $editor->addChoice('82 ', ' Selbst. öffentlichrechtliche Körperschaft / Entreprise autonome de droit public / Istituto autonomo di diritto pubblico');
-            $editor->addChoice('83 ', ' öffentlichrechtliche Anstalt / Fondation de doit public / Fondazione di diritto pubblico');
-            $editor->addChoice('84 ', ' Gemeinderschaft / Indivision / Indivisione');
-            $editor->addChoice('85 ', ' Institut / Institution / Istituto');
-            $editor->addChoice('86 ', ' Nichtkaufmännische Prokura / Procuration non commerciale / Procura non commerciale');
-            $editor->addChoice('89 ', ' Nicht definierte Rechtsform / Nature juridique non définie / natura giuridica indefinita');
-            $editor->addChoice('92 ', ' Ausländische Zweigniederlassung / Succursale étrangère / Succursale estera');
-            $editor->addChoice('101 ', ' Einzelunternehmen / Entreprise individuelle / Impresa individuale / Sole proprietorship');
-            $editor->addChoice('823 ', ' öffentlichrechtliche AG / Société anonyme de droit public / Società anonima di diritto pubblico');
-            $editor->addChoice('824 ', ' öffentlichrechtliche GmbH / S.à.r.l. de droit public / S.a.r.l. di diritto pubblico');
-            $editor->addChoice('825 ', ' öffentlichrechtliche Genossenschaft / Société coopérative de droit public / Società cooperativa di diritto pubblico');
-            $editor->addChoice('826 ', ' öffentlichrechtlicher Verein / Association de droit public / Associazione di diritto pubblico');
+            $editor->addChoice('1', ' Einzelunternehmen / Raison individuelle / Ditta individuale');
+            $editor->addChoice('2', ' Kollektivgesellschaft / Société en nom collectif / Società in nome collettivo');
+            $editor->addChoice('3', ' Aktiengesellschaft / Société anonyme / Società anonima');
+            $editor->addChoice('4', ' GmbH / Société à responsabilité limitée / Società a responsabilità limitata');
+            $editor->addChoice('5', ' Genossenschaft / Société coopérative / Cooperativa');
+            $editor->addChoice('6', ' Verein / Association / Assiciazione');
+            $editor->addChoice('7', ' Stiftung / Fondation / Fondazione');
+            $editor->addChoice('8', ' Besondere Rechtsformen / Natures juridiques particulières / Natura giuridica particolare');
+            $editor->addChoice('9', ' Zweigniederlassung CH / Succursale CH / Succursale CH');
+            $editor->addChoice('10', ' Kommanditgesellschaft / Société en commandite / Società in accomandita');
+            $editor->addChoice('11', ' Kommanditaktiengesellschaft / Société en commandite par actions / Società in accomandita per azioni');
+            $editor->addChoice('82', ' Selbst. öffentlichrechtliche Körperschaft / Entreprise autonome de droit public / Istituto autonomo di diritto pubblico');
+            $editor->addChoice('83', ' öffentlichrechtliche Anstalt / Fondation de doit public / Fondazione di diritto pubblico');
+            $editor->addChoice('84', ' Gemeinderschaft / Indivision / Indivisione');
+            $editor->addChoice('85', ' Institut / Institution / Istituto');
+            $editor->addChoice('86', ' Nichtkaufmännische Prokura / Procuration non commerciale / Procura non commerciale');
+            $editor->addChoice('89', ' Nicht definierte Rechtsform / Nature juridique non définie / natura giuridica indefinita');
+            $editor->addChoice('92', ' Ausländische Zweigniederlassung / Succursale étrangère / Succursale estera');
+            $editor->addChoice('101', ' Einzelunternehmen / Entreprise individuelle / Impresa individuale / Sole proprietorship');
+            $editor->addChoice('823', ' öffentlichrechtliche AG / Société anonyme de droit public / Società anonima di diritto pubblico');
+            $editor->addChoice('824', ' öffentlichrechtliche GmbH / S.à.r.l. de droit public / S.a.r.l. di diritto pubblico');
+            $editor->addChoice('825', ' öffentlichrechtliche Genossenschaft / Société coopérative de droit public / Società cooperativa di diritto pubblico');
+            $editor->addChoice('826', ' öffentlichrechtlicher Verein / Association de droit public / Associazione di diritto pubblico');
             $editColumn = new CustomEditColumn('Rechtsform Zefix', 'rechtsform_zefix', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
@@ -41250,29 +41250,29 @@
             // Edit column for rechtsform_zefix field
             //
             $editor = new ComboBox('rechtsform_zefix_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->addChoice('1 ', ' Einzelunternehmen / Raison individuelle / Ditta individuale');
-            $editor->addChoice('2 ', ' Kollektivgesellschaft / Société en nom collectif / Società in nome collettivo');
-            $editor->addChoice('3 ', ' Aktiengesellschaft / Société anonyme / Società anonima');
-            $editor->addChoice('4 ', ' GmbH / Société à responsabilité limitée / Società a responsabilità limitata');
-            $editor->addChoice('5 ', ' Genossenschaft / Société coopérative / Cooperativa');
-            $editor->addChoice('6 ', ' Verein / Association / Assiciazione');
-            $editor->addChoice('7 ', ' Stiftung / Fondation / Fondazione');
-            $editor->addChoice('8 ', ' Besondere Rechtsformen / Natures juridiques particulières / Natura giuridica particolare');
-            $editor->addChoice('9 ', ' Zweigniederlassung CH / Succursale CH / Succursale CH');
-            $editor->addChoice('10 ', ' Kommanditgesellschaft / Société en commandite / Società in accomandita');
-            $editor->addChoice('11 ', ' Kommanditaktiengesellschaft / Société en commandite par actions / Società in accomandita per azioni');
-            $editor->addChoice('82 ', ' Selbst. öffentlichrechtliche Körperschaft / Entreprise autonome de droit public / Istituto autonomo di diritto pubblico');
-            $editor->addChoice('83 ', ' öffentlichrechtliche Anstalt / Fondation de doit public / Fondazione di diritto pubblico');
-            $editor->addChoice('84 ', ' Gemeinderschaft / Indivision / Indivisione');
-            $editor->addChoice('85 ', ' Institut / Institution / Istituto');
-            $editor->addChoice('86 ', ' Nichtkaufmännische Prokura / Procuration non commerciale / Procura non commerciale');
-            $editor->addChoice('89 ', ' Nicht definierte Rechtsform / Nature juridique non définie / natura giuridica indefinita');
-            $editor->addChoice('92 ', ' Ausländische Zweigniederlassung / Succursale étrangère / Succursale estera');
-            $editor->addChoice('101 ', ' Einzelunternehmen / Entreprise individuelle / Impresa individuale / Sole proprietorship');
-            $editor->addChoice('823 ', ' öffentlichrechtliche AG / Société anonyme de droit public / Società anonima di diritto pubblico');
-            $editor->addChoice('824 ', ' öffentlichrechtliche GmbH / S.à.r.l. de droit public / S.a.r.l. di diritto pubblico');
-            $editor->addChoice('825 ', ' öffentlichrechtliche Genossenschaft / Société coopérative de droit public / Società cooperativa di diritto pubblico');
-            $editor->addChoice('826 ', ' öffentlichrechtlicher Verein / Association de droit public / Associazione di diritto pubblico');
+            $editor->addChoice('1', ' Einzelunternehmen / Raison individuelle / Ditta individuale');
+            $editor->addChoice('2', ' Kollektivgesellschaft / Société en nom collectif / Società in nome collettivo');
+            $editor->addChoice('3', ' Aktiengesellschaft / Société anonyme / Società anonima');
+            $editor->addChoice('4', ' GmbH / Société à responsabilité limitée / Società a responsabilità limitata');
+            $editor->addChoice('5', ' Genossenschaft / Société coopérative / Cooperativa');
+            $editor->addChoice('6', ' Verein / Association / Assiciazione');
+            $editor->addChoice('7', ' Stiftung / Fondation / Fondazione');
+            $editor->addChoice('8', ' Besondere Rechtsformen / Natures juridiques particulières / Natura giuridica particolare');
+            $editor->addChoice('9', ' Zweigniederlassung CH / Succursale CH / Succursale CH');
+            $editor->addChoice('10', ' Kommanditgesellschaft / Société en commandite / Società in accomandita');
+            $editor->addChoice('11', ' Kommanditaktiengesellschaft / Société en commandite par actions / Società in accomandita per azioni');
+            $editor->addChoice('82', ' Selbst. öffentlichrechtliche Körperschaft / Entreprise autonome de droit public / Istituto autonomo di diritto pubblico');
+            $editor->addChoice('83', ' öffentlichrechtliche Anstalt / Fondation de doit public / Fondazione di diritto pubblico');
+            $editor->addChoice('84', ' Gemeinderschaft / Indivision / Indivisione');
+            $editor->addChoice('85', ' Institut / Institution / Istituto');
+            $editor->addChoice('86', ' Nichtkaufmännische Prokura / Procuration non commerciale / Procura non commerciale');
+            $editor->addChoice('89', ' Nicht definierte Rechtsform / Nature juridique non définie / natura giuridica indefinita');
+            $editor->addChoice('92', ' Ausländische Zweigniederlassung / Succursale étrangère / Succursale estera');
+            $editor->addChoice('101', ' Einzelunternehmen / Entreprise individuelle / Impresa individuale / Sole proprietorship');
+            $editor->addChoice('823', ' öffentlichrechtliche AG / Société anonyme de droit public / Società anonima di diritto pubblico');
+            $editor->addChoice('824', ' öffentlichrechtliche GmbH / S.à.r.l. de droit public / S.a.r.l. di diritto pubblico');
+            $editor->addChoice('825', ' öffentlichrechtliche Genossenschaft / Société coopérative de droit public / Società cooperativa di diritto pubblico');
+            $editor->addChoice('826', ' öffentlichrechtlicher Verein / Association de droit public / Associazione di diritto pubblico');
             $editColumn = new CustomEditColumn('Rechtsform Zefix', 'rechtsform_zefix', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
@@ -42060,29 +42060,29 @@
             // Edit column for rechtsform_zefix field
             //
             $editor = new ComboBox('rechtsform_zefix_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->addChoice('1 ', ' Einzelunternehmen / Raison individuelle / Ditta individuale');
-            $editor->addChoice('2 ', ' Kollektivgesellschaft / Société en nom collectif / Società in nome collettivo');
-            $editor->addChoice('3 ', ' Aktiengesellschaft / Société anonyme / Società anonima');
-            $editor->addChoice('4 ', ' GmbH / Société à responsabilité limitée / Società a responsabilità limitata');
-            $editor->addChoice('5 ', ' Genossenschaft / Société coopérative / Cooperativa');
-            $editor->addChoice('6 ', ' Verein / Association / Assiciazione');
-            $editor->addChoice('7 ', ' Stiftung / Fondation / Fondazione');
-            $editor->addChoice('8 ', ' Besondere Rechtsformen / Natures juridiques particulières / Natura giuridica particolare');
-            $editor->addChoice('9 ', ' Zweigniederlassung CH / Succursale CH / Succursale CH');
-            $editor->addChoice('10 ', ' Kommanditgesellschaft / Société en commandite / Società in accomandita');
-            $editor->addChoice('11 ', ' Kommanditaktiengesellschaft / Société en commandite par actions / Società in accomandita per azioni');
-            $editor->addChoice('82 ', ' Selbst. öffentlichrechtliche Körperschaft / Entreprise autonome de droit public / Istituto autonomo di diritto pubblico');
-            $editor->addChoice('83 ', ' öffentlichrechtliche Anstalt / Fondation de doit public / Fondazione di diritto pubblico');
-            $editor->addChoice('84 ', ' Gemeinderschaft / Indivision / Indivisione');
-            $editor->addChoice('85 ', ' Institut / Institution / Istituto');
-            $editor->addChoice('86 ', ' Nichtkaufmännische Prokura / Procuration non commerciale / Procura non commerciale');
-            $editor->addChoice('89 ', ' Nicht definierte Rechtsform / Nature juridique non définie / natura giuridica indefinita');
-            $editor->addChoice('92 ', ' Ausländische Zweigniederlassung / Succursale étrangère / Succursale estera');
-            $editor->addChoice('101 ', ' Einzelunternehmen / Entreprise individuelle / Impresa individuale / Sole proprietorship');
-            $editor->addChoice('823 ', ' öffentlichrechtliche AG / Société anonyme de droit public / Società anonima di diritto pubblico');
-            $editor->addChoice('824 ', ' öffentlichrechtliche GmbH / S.à.r.l. de droit public / S.a.r.l. di diritto pubblico');
-            $editor->addChoice('825 ', ' öffentlichrechtliche Genossenschaft / Société coopérative de droit public / Società cooperativa di diritto pubblico');
-            $editor->addChoice('826 ', ' öffentlichrechtlicher Verein / Association de droit public / Associazione di diritto pubblico');
+            $editor->addChoice('1', ' Einzelunternehmen / Raison individuelle / Ditta individuale');
+            $editor->addChoice('2', ' Kollektivgesellschaft / Société en nom collectif / Società in nome collettivo');
+            $editor->addChoice('3', ' Aktiengesellschaft / Société anonyme / Società anonima');
+            $editor->addChoice('4', ' GmbH / Société à responsabilité limitée / Società a responsabilità limitata');
+            $editor->addChoice('5', ' Genossenschaft / Société coopérative / Cooperativa');
+            $editor->addChoice('6', ' Verein / Association / Assiciazione');
+            $editor->addChoice('7', ' Stiftung / Fondation / Fondazione');
+            $editor->addChoice('8', ' Besondere Rechtsformen / Natures juridiques particulières / Natura giuridica particolare');
+            $editor->addChoice('9', ' Zweigniederlassung CH / Succursale CH / Succursale CH');
+            $editor->addChoice('10', ' Kommanditgesellschaft / Société en commandite / Società in accomandita');
+            $editor->addChoice('11', ' Kommanditaktiengesellschaft / Société en commandite par actions / Società in accomandita per azioni');
+            $editor->addChoice('82', ' Selbst. öffentlichrechtliche Körperschaft / Entreprise autonome de droit public / Istituto autonomo di diritto pubblico');
+            $editor->addChoice('83', ' öffentlichrechtliche Anstalt / Fondation de doit public / Fondazione di diritto pubblico');
+            $editor->addChoice('84', ' Gemeinderschaft / Indivision / Indivisione');
+            $editor->addChoice('85', ' Institut / Institution / Istituto');
+            $editor->addChoice('86', ' Nichtkaufmännische Prokura / Procuration non commerciale / Procura non commerciale');
+            $editor->addChoice('89', ' Nicht definierte Rechtsform / Nature juridique non définie / natura giuridica indefinita');
+            $editor->addChoice('92', ' Ausländische Zweigniederlassung / Succursale étrangère / Succursale estera');
+            $editor->addChoice('101', ' Einzelunternehmen / Entreprise individuelle / Impresa individuale / Sole proprietorship');
+            $editor->addChoice('823', ' öffentlichrechtliche AG / Société anonyme de droit public / Società anonima di diritto pubblico');
+            $editor->addChoice('824', ' öffentlichrechtliche GmbH / S.à.r.l. de droit public / S.a.r.l. di diritto pubblico');
+            $editor->addChoice('825', ' öffentlichrechtliche Genossenschaft / Société coopérative de droit public / Società cooperativa di diritto pubblico');
+            $editor->addChoice('826', ' öffentlichrechtlicher Verein / Association de droit public / Associazione di diritto pubblico');
             $editColumn = new CustomEditColumn('Rechtsform Zefix', 'rechtsform_zefix', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
@@ -42412,58 +42412,6 @@
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
             $editor->setPlaceholder(getNotizenPlaceholder()); // Afterburned
             $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for updated_by_import field
-            //
-            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
-            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for created_visa field
-            //
-            $editor = new TextEdit('created_visa_edit');
-            $editor->SetMaxLength(10);
-            $editColumn = new CustomEditColumn('Created Visa', 'created_visa', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for created_date field
-            //
-            $editor = new DateTimeEdit('created_date_edit', false, 'd.m.Y H:i:s');
-            $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for updated_visa field
-            //
-            $editor = new TextEdit('updated_visa_edit');
-            $editor->SetMaxLength(10);
-            $editColumn = new CustomEditColumn('Updated Visa', 'updated_visa', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for updated_date field
-            //
-            $editor = new DateTimeEdit('updated_date_edit', false, 'd.m.Y H:i:s');
-            $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -43699,7 +43647,21 @@
         }
      
         protected function setClientSideEvents(Grid $grid) {
-    
+            $grid->SetInsertClientEditorValueChangedScript('if (sender.getFieldName() == \'uid\') {
+              const input = sender.getValue();
+              if (/(CHE)?(\d{9})/.test(input)) {
+                formatted = input.replace(/(CHE)?\s*(\d{3})(\d{3})(\d{3})/, \'CHE-$2.$3.$4\');
+                sender.setValue(formatted);
+              }
+            }');
+            
+            $grid->SetEditClientEditorValueChangedScript('if (sender.getFieldName() == \'uid\') {
+              const input = sender.getValue();
+              if (/(CHE)?(\d{9})/.test(input)) {
+                formatted = input.replace(/(CHE)?\s*(\d{3})(\d{3})(\d{3})/, \'CHE-$2.$3.$4\');
+                sender.setValue(formatted);
+              }
+            }');
         }
     
         protected function doRegisterHandlers() {
