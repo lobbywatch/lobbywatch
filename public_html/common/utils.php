@@ -14,12 +14,18 @@ include_once dirname(__FILE__) . '/../custom/version.php';
 // Call function from command line
 // /opt/lampp/bin/php -r "require 'ws_uid_fetcher.php'; print(formatUID('CHE-101.079.31') . \"\n\");"
 
+/** Overwrite DB field if the new value is not null. */
 const FIELD_MODE_OVERWRITE = 0;
+/** Like FIELD_MODE_OVERWRITE, but mark with *. */
 const FIELD_MODE_OVERWRITE_MARK = 1;
-const FIELD_MODE_OPTIONAL = 2;
-const FIELD_MODE_ONLY_NEW = 3;
+/** Like FIELD_MODE_OVERWRITE_MARK, but show 25 chars difference like verbose mode 2. */
 const FIELD_MODE_OVERWRITE_MARK_LOG = 4;
+/** Overwrite DB field even if the new value is null. */
 const FIELD_MODE_OVERWRITE_NULL = 5;
+/** Generate commented out overwrite DB field SQL. */
+const FIELD_MODE_OPTIONAL = 2;
+/** Write DB field if the field is not set yet. */
+const FIELD_MODE_ONLY_NEW = 3;
 
 global $today;
 global $sql_today;
@@ -2022,13 +2028,13 @@ function initDataArray() {
   $data = array();
   $data['message'] = '';
   $data['sql'] = '';
-  $data['data'] = array();
+  $data['data'] = [];
   $data['success'] = true;
   $data['count'] = 0;
   return $data;
 }
 
-function getUidWsLogin($test_mode = false) {
+function getUidBfsWsLogin($test_mode = false) {
   if ($test_mode) {
     $host = 'www.uid-wse-a.admin.ch';
   } else {
@@ -2044,7 +2050,7 @@ function getUidWsLogin($test_mode = false) {
   return $response;
 }
 
-function getZefixWsLogin($test_mode = false) {
+function getZefixSoapWsLogin($test_mode = false) {
   global $zefix_ws_login;
   $username = $zefix_ws_login['username'];
   $password = $zefix_ws_login['password'];
@@ -2055,7 +2061,7 @@ function getZefixWsLogin($test_mode = false) {
 //     $wsdl = "http://" . urlencode($username) . ':' . urlencode($password) . "@test-e-service.fenceit.ch/ws-zefix-1.6/ZefixService?wsdl";
 //     $wsdl = "https://www.e-service.admin.ch/wiki/download/attachments/44827026/ZefixService.wsdl?version=2&modificationDate=1428391225000";
     // Workaround PHP bug https://bugs.php.net/bug.php?id=61463
-    $wsdl = "https://cms.lobbywatch.ch/d7/sites/lobbywatch.ch/app/common/ZefixService16Test.wsdl";
+    $wsdl = "https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/common/ZefixService16Test.wsdl";
 //     $host = 'test-e-service.fenceit.ch';
     $host = 'cms.lobbywatch.ch';
   } else {
@@ -2128,7 +2134,7 @@ function initSoapClient(&$data, $login, $verbose = 0, $ssl = true) {
   return $client;
 }
 
-function _lobbywatch_fetch_ws_uid_data($uid_raw, $verbose = 0, $ssl = true, $test_mode = false) {
+function _lobbywatch_fetch_ws_uid_bfs_data($uid_raw, $verbose = 0, $ssl = true, $test_mode = false) {
   $data = initDataArray();
 
   if (!_lobbywatch_check_uid_format($uid_raw, $uid, $data['message'])) {
@@ -2145,7 +2151,7 @@ function _lobbywatch_fetch_ws_uid_data($uid_raw, $verbose = 0, $ssl = true, $tes
     return $data;
   }
 
-  $client = initSoapClient($data, getUidWsLogin($test_mode), $verbose, $ssl);
+  $client = initSoapClient($data, getUidBfsWsLogin($test_mode), $verbose, $ssl);
 
   /*
   Parameter: uid
@@ -2178,11 +2184,11 @@ function _lobbywatch_fetch_ws_uid_data($uid_raw, $verbose = 0, $ssl = true, $tes
   </soapenv:Envelope>
   */
 
-  ws_get_organization_from_uid($uid, $client, $data, $verbose);
+  ws_get_organization_from_uid_bfs($uid, $client, $data, $verbose);
   return $data;
 }
 
-function _lobbywatch_fetch_ws_zefix_data($uid_raw, $verbose = 0, $ssl = true, $test_mode = false) {
+function _lobbywatch_fetch_ws_zefix_soap_data($uid_raw, $verbose = 0, $ssl = true, $test_mode = false) {
   $data = initDataArray();
 
   if (!_lobbywatch_check_uid_format($uid_raw, $uid, $data['message'])) {
@@ -2199,9 +2205,9 @@ function _lobbywatch_fetch_ws_zefix_data($uid_raw, $verbose = 0, $ssl = true, $t
     return $data;
   }
 
-  $client = initSoapClient($data, getZefixWsLogin($test_mode), $verbose, $ssl);
+  $client = initSoapClient($data, getZefixSoapWsLogin($test_mode), $verbose, $ssl);
 
-  ws_get_organization_from_zefix($uid, $client, $data, $verbose);
+  ws_get_organization_from_zefix_soap($uid, $client, $data, $verbose);
   return $data;
 }
 
@@ -2222,7 +2228,6 @@ function _lobbywatch_fetch_ws_zefix_rest_data($uid_raw, $verbose = 0, $test_mode
     return $data;
   }
 
-  // $client = initSoapClient($data, getZefixWsLogin($test_mode), $verbose, $ssl);
   ws_get_organization_from_zefix_rest($uid, $data, $verbose, $test_mode);
   return $data;
 }
@@ -2254,12 +2259,12 @@ function ws_get_organization_from_zefix_rest($uid_raw, &$data, $verbose, $test_m
     $data['success'] = false;
     $data['sql'] = "uid=$uid";
   } finally {
-    ws_verbose_logging($client, $response, $data, $verbose);
+    ws_verbose_logging(null, $response, $data, $verbose);
   }
   return $response;
 }
 
-function ws_get_organization_from_zefix($uid_raw, $client, &$data, $verbose) {
+function ws_get_organization_from_zefix_soap($uid_raw, $client, &$data, $verbose) {
   /* Invoke webservice method with your parameters. */
   $response = null;
   try {
@@ -2286,7 +2291,7 @@ function ws_get_organization_from_zefix($uid_raw, $client, &$data, $verbose) {
   return $response;
 }
 
-function ws_get_organization_from_uid($uid_raw, $client, &$data, $verbose) {
+function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose) {
   /* Invoke webservice method with your parameters. */
   $response = null;
   try {
@@ -2324,7 +2329,7 @@ function _lobbywatch_fetch_ws_uid_data_from_old_hr_id($old_hr_id_raw, $verbose =
 
   $data['sql'] .= "hr-id=$old_hr_id | hr-id-raw=$old_hr_id_raw";
 
-  $client = initSoapClient($data, getUidWsLogin($test_mode), $verbose, $ssl);
+  $client = initSoapClient($data, getUidBfsWsLogin($test_mode), $verbose, $ssl);
 
   /* Invoke webservice method with your parameters. */
   try {
@@ -2353,12 +2358,12 @@ function _lobbywatch_fetch_ws_uid_data_from_old_hr_id($old_hr_id_raw, $verbose =
 
 
 function ws_verbose_logging($client, $response, &$data, $verbose) {
-  if ($verbose >= 11) {
+  if ($verbose >= 11 && !empty($client)) {
     print_r($client->__getLastRequestHeaders());
     print_r($client->__getLastRequest());
   }
   if ($verbose >= 10) {
-    $data['client'] = $client;
+    if (!empty($client)) $data['client'] = $client;
     $data['response'] = $response;
   }
   if ($verbose >= 12) {
@@ -2686,10 +2691,8 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
     $max_output_length = 1000;
   } else if ($verbose > 2) {
     $max_output_length = 100;
-  } else if ($verbose > 1) {
+  } else if ($verbose > 1 || $mode == FIELD_MODE_OVERWRITE_MARK_LOG) {
     $max_output_length = 25;
-  } else if ($mode == FIELD_MODE_OVERWRITE_MARK_LOG) {
-    $max_output_length = 20;
   } else {
     $max_output_length = 10;
   }
@@ -2715,7 +2718,7 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
 
   // TODO enhance to support also dates with time
   if ((!empty($val) && (empty($db_val) || ($db_val != $val && !starts_with($val, 'STR_TO_DATE(')) || (is_string($db_val) && "STR_TO_DATE('{$db_val}','%Y-%m-%d')" != $val && starts_with($val, 'STR_TO_DATE('))))
-      || ($mode == FIELD_MODE_OVERWRITE_NULL && is_null($val) && isset($db_val)))  {
+      || ($mode == FIELD_MODE_OVERWRITE_NULL && is_null($val) && isset($db_val))) {
     $msg = $verbose || $mode == FIELD_MODE_OVERWRITE_MARK_LOG ? " (" . (isset($db_val) ? cut($db_val, $max_output_length) . " → " : '') . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '';
     if ($mode == FIELD_MODE_OPTIONAL && !empty($db_val)) {
       $fields[] = "[{$field}{$msg}]";
@@ -2766,6 +2769,15 @@ global $errors;
   if ($updated_date_field) {
     $update[$updated_date_field] = "$updated_date_field = $sql_transaction_date";
   }
+}
+
+/**
+ * id function which gets the field from the ws object using the $ws_field name.interessenbindung
+ * This function allows to use strings instead of direct values in checkField().
+ * Convenience function.
+ */
+function getValueFromWSFieldName($ws_field, $parlamentarier_ws, $parlamentarier_db_obj, $field, $fields) {
+  return $parlamentarier_ws->$ws_field;
 }
 
 function _lobbywatch_fetch_organisation_title($table, $id) {

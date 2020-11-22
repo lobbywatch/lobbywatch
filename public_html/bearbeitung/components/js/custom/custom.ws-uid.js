@@ -85,7 +85,7 @@ $(function() {
         //   }
         // });
 
-       $.getJSON('/de/data/interface/v1/json/ws/zefix-rest/flat/uid/' + uid_raw, function(data, textStatus, jqXHR){
+       $.getJSON('/de/data/interface/v1/json/ws/uid/flat/uid/' + uid_raw, function(data, textStatus, jqXHR){
   //                alert(data.data);
           if (data && data.success && data.data) {
   //               alert('uid ws fetched successful: ' + textStatus);

@@ -1,6 +1,5 @@
 <?php
-// Run: /opt/lampp/bin/php -f ws_uid_fetcher.php -- --uid 107810911 --ssl -t
-// Run: php -f ws_uid_fetcher.php -- -a --ssl -v1 -n20 -s
+// Run: php -f ws_uid_fetcher.php -- -a --ssl -v1 -n20 -s -t
 
 /*
 # ./deploy.sh -b -B -p
@@ -93,7 +92,7 @@ function main() {
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
-  $options = getopt('hsv::u:tsmo:n::fz:a',array('docroot:','help', 'uid:', 'ssl', 'zefix:'));
+  $options = getopt('hsv::u:tsmo:n::fz:Z:a',array('docroot:','help', 'uid:', 'ssl', 'zefix:', 'zefix-rest:'));
 
 //    var_dump($options);
 
@@ -149,13 +148,13 @@ function main() {
       if (!$uid) {
         $uid = $default_uid;
       }
-      show_ws_uid_ws_data($uid, $ssl, $test_mode);
+      show_ws_uid_bfs_ws_data($uid, $ssl, $test_mode);
   } else if (isset($options['u'])) {
       $uid = $options['u'];
       if (!$uid) {
         $uid = $default_uid;
       }
-      show_ws_uid_ws_data($uid, $ssl, $test_mode);
+      show_ws_uid_bfs_ws_data($uid, $ssl, $test_mode);
   }
 
   if (isset($options['zefix'])) {
@@ -163,13 +162,27 @@ function main() {
       if (!$uid) {
         $uid = $default_uid;
       }
-      show_ws_zefix_ws_data($uid, $ssl, $test_mode);
+      show_ws_zefix_soap_ws_data($uid, $ssl, $test_mode);
+  } else if (isset($options['Z'])) {
+      $uid = $options['Z'];
+      if (!$uid) {
+        $uid = $default_uid;
+      }
+      show_ws_zefix_soap_ws_data($uid, $ssl, $test_mode);
+  }
+
+  if (isset($options['zefix-rest'])) {
+      $uid = $options['zefix-rest'];
+      if (!$uid) {
+        $uid = $default_uid;
+      }
+      show_ws_zefix_rest_ws_data($uid, $ssl, $test_mode);
   } else if (isset($options['z'])) {
       $uid = $options['z'];
       if (!$uid) {
         $uid = $default_uid;
       }
-      show_ws_zefix_ws_data($uid, $ssl, $test_mode);
+      show_ws_zefix_rest_ws_data($uid, $ssl, $test_mode);
   }
 
   if (isset($options['m'])) {
@@ -192,18 +205,19 @@ function main() {
   if (isset($options['h']) || isset($options['help'])) {
     print("ws uid Fetcher for Lobbywatch.ch.
 Parameters:
--u UID, --uid UID   Call UID-Register-WS, UID as 9-digit or CHE-000.000.000 string (default: $default_uid)
--z UID, --zefix     UID Call Zefix-WS, UID as 9-digit or CHE-000.000.000 string (default: $default_uid)
--o HR-ID            Search old HR-ID
--t                  Call test service (default: production)
---ssl               Use SSL
--m                  Migrate old hr-id to uid from handelsregister_url
--a                  Actualise organisations with UID from webservices
--n number           Limit number of records
--s                  Output SQL script
--v[level]           Verbose, optional level, 1 = default
--h, --help          This help
---docroot path      Set the document root for images
+-u UID, --uid UID    Call UID-Register-WS, UID as 9-digit, CHE00000000, or CHE-000.000.000 string (default: $default_uid)
+-Z UID, --zefix      UID Call Zefix-WS, UID as 9-digit , CHE00000000, or CHE-000.000.000 string (default: $default_uid)
+-z UID, --zefix-rest UID Call Zefix-WS, UID as 9-digit , CHE00000000, or CHE-000.000.000 string (default: $default_uid)
+-o HR-ID             Search old HR-ID
+-t                   Call test service (default: production)
+--ssl                Use SSL
+-m                   Migrate old hr-id to uid from handelsregister_url
+-a                   Actualise organisations with UID from webservices
+-n number            Limit number of records
+-s                   Output SQL script
+-v[level]            Verbose, optional level, 1 = default
+-h, --help           This help
+--docroot path       Set the document root for images
 ");
   }
 
@@ -222,7 +236,7 @@ Parameters:
 //     }
 // }
 
-function show_ws_uid_ws_data($uid, $ssl, $test_mode) {
+function show_ws_uid_bfs_ws_data($uid, $ssl, $test_mode) {
   global $script;
   global $context;
   global $show_sql;
@@ -234,12 +248,26 @@ function show_ws_uid_ws_data($uid, $ssl, $test_mode) {
 //   ini_set('soap.wsdl_cache_ttl',0);
 
   print("UID=$uid\n");
-  $data = _lobbywatch_fetch_ws_uid_data($uid, $verbose, $ssl, $test_mode);
+  $data = _lobbywatch_fetch_ws_uid_bfs_data($uid, $verbose, $ssl, $test_mode);
   print_r($data);
   print_r($data['data']);
 }
 
-function show_ws_zefix_ws_data($uid, $ssl, $test_mode) {
+function show_ws_zefix_rest_ws_data($uid, $ssl, $test_mode) {
+  global $script;
+  global $context;
+  global $show_sql;
+  global $db;
+  global $today;
+  global $verbose;
+
+  print("UID=$uid\n");
+  $data = _lobbywatch_fetch_ws_zefix_rest_data($uid, $verbose, $ssl, $test_mode);
+  print_r($data);
+  print_r($data['data']);
+}
+
+function show_ws_zefix_soap_ws_data($uid, $ssl, $test_mode) {
   global $script;
   global $context;
   global $show_sql;
@@ -251,7 +279,7 @@ function show_ws_zefix_ws_data($uid, $ssl, $test_mode) {
 //   ini_set('soap.wsdl_cache_ttl',0);
 
   print("UID=$uid\n");
-  $data = _lobbywatch_fetch_ws_zefix_data($uid, $verbose, $ssl, $test_mode);
+  $data = _lobbywatch_fetch_ws_zefix_soap_data($uid, $verbose, $ssl, $test_mode);
   print_r($data);
   print_r($data['data']);
 }
@@ -301,7 +329,7 @@ function migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode) {
   print("rows = " . $stmt->rowCount() . "\n");
 
   $data = initDataArray();
-  $client = initSoapClient($data, getUidWsLogin($test_mode), $verbose, $ssl);
+  $client = initSoapClient($data, getUidBfsWsLogin($test_mode), $verbose, $ssl);
 
   $level = 0;
   $n_new_uid = 0;
@@ -407,7 +435,7 @@ function migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode) {
 
     if ($uid) {
       if (!$rechtsform_handelsregister) {
-        $data = _lobbywatch_fetch_ws_uid_data($uid, $verbose, $ssl, $test_mode);
+        $data = _lobbywatch_fetch_ws_uid_bfs_data($uid, $verbose, $ssl, $test_mode);
         if ($data['success']) {
           $rechtsform_handelsregister = $data['data']['rechtsform_handelsregister'];
         }
@@ -448,9 +476,13 @@ function actualise_organisations_having_an_UID($records_limit, $ssl, $test_mode)
   global $sql_transaction_date;
   global $verbose;
 
+  $uidBFSenabled = true;
+  $zefixSoapEnabled = false;
+  $zefixRestEnabled = true;
+
   $script[] = $comment = "\n-- Actualise organisations having an UID from webservices $transaction_date";
 
-  $sql = "SELECT id, name_de, handelsregister_url, uid, rechtsform, rechtsform_handelsregister, rechtsform_zefix FROM organisation WHERE uid IS NOT NULL ORDER BY id;"; //  WHERE handelsregister_url IS NOT NULL
+  $sql = "SELECT id, name_de, handelsregister_url, uid, rechtsform, rechtsform_handelsregister, rechtsform_zefix, beschreibung, name_de, name_fr, ort, adresse_strasse, adresse_zusatz, adresse_plz FROM organisation WHERE uid IS NOT NULL ORDER BY id;"; //  WHERE handelsregister_url IS NOT NULL
   $stmt = $db->prepare($sql);
 
   $stmt->execute(array());
@@ -458,10 +490,14 @@ function actualise_organisations_having_an_UID($records_limit, $ssl, $test_mode)
   echo "\n/*\nActualise organisations having an UID from webservices $transaction_date\n";
   print("rows = " . $stmt->rowCount() . "\n");
 
-  $dataUid = initDataArray();
-  $clientUid = initSoapClient($dataUid, getUidWsLogin($test_mode), $verbose, $ssl);
-  $dataZefix = initDataArray();
-  $clientZefix = initSoapClient($dataZefix, getZefixWsLogin($test_mode), $verbose, $ssl);
+  if ($uidBFSenabled) {
+    $dataUid = initDataArray();
+    $clientUid = initSoapClient($dataUid, getUidBfsWsLogin($test_mode), $verbose, $ssl);
+  }
+  if ($zefixSoapEnabled) {
+    $dataZefix = initDataArray();
+    $clientZefix = initSoapClient($dataZefix, getZefixSoapWsLogin($test_mode), $verbose, $ssl);
+  }
 
   $level = 0;
   $n_ok = 0;
@@ -471,6 +507,7 @@ function actualise_organisations_having_an_UID($records_limit, $ssl, $test_mode)
 
   $n_ws_uid_found = 0;
   $n_ws_zefix_found = 0;
+  $n_ws_zefix_rest_found = 0;
 
   $i = 0;
   while ($organisation_db = $stmt->fetch(PDO::FETCH_OBJ)) {
@@ -486,33 +523,70 @@ function actualise_organisations_having_an_UID($records_limit, $ssl, $test_mode)
     $update_optional = array();
     $fields = array();
     $different_db_values = false;
-    $dataUid = initDataArray();
-    ws_get_organization_from_uid($uid, $clientUid, $dataUid, $verbose); // Similar to _lobbywatch_fetch_ws_uid_data() in utils.php
-    if ($dataUid['success']) {
-      // http://stackoverflow.com/questions/1869091/how-to-convert-an-array-to-object-in-php
-      $organisation_ws = (object) $dataUid['data'];
+    // UID WS (BFS)
+    if ($uidBFSenabled) {
+        $dataUid = initDataArray();
+      ws_get_organization_from_uid_bfs($uid, $clientUid, $dataUid, $verbose); // Similar to _lobbywatch_fetch_ws_uid_bfs_data() in utils.php
+      if ($dataUid['success']) {
+        // http://stackoverflow.com/questions/1869091/how-to-convert-an-array-to-object-in-php
+        $organisation_ws = (object) $dataUid['data'];
 
-      $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
-      $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, '_lobbywatch_ws_get_rechtsform');
+        $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldName');
+        $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, '_lobbywatch_ws_get_rechtsform');
+      }
     }
-    $dataZefix = initDataArray();
-    ws_get_organization_from_zefix($uid, $clientZefix, $dataZefix, $verbose); // Similar to _lobbywatch_fetch_ws_uid_data() in utils.php
-    if ($dataZefix['success']) {
-      // http://stackoverflow.com/questions/1869091/how-to-convert-an-array-to-object-in-php
-      $organisation_ws = (object) $dataZefix['data'];
 
-      $different_db_values |= checkField('rechtsform_zefix', 'rechtsform_zefix', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
-      // Overwrite (re-set) if we have Zefix data (Many fields will be double set, but this is not a problem)
-      $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
-      $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, '_lobbywatch_ws_get_rechtsform');
+    // Zefix SOAP
+    if ($zefixSoapEnabled) {
+      $dataZefix = initDataArray();
+      ws_get_organization_from_zefix_soap($uid, $clientZefix, $dataZefix, $verbose); // Similar to _lobbywatch_fetch_ws_uid_bfs_data() in utils.php
+      if ($dataZefix['success']) {
+        // http://stackoverflow.com/questions/1869091/how-to-convert-an-array-to-object-in-php
+        $organisation_ws = (object) $dataZefix['data'];
 
-      // ----------------------------------------------------------
-      // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT
-      // ----------------------------------------------------------
+        $different_db_values |= checkField('rechtsform_zefix', 'rechtsform_zefix', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldName');
+        // Overwrite (re-set) if we have Zefix data (Many fields will be double set, but this is not a problem)
+        $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldName');
+        $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, '_lobbywatch_ws_get_rechtsform');
 
-  //     print_r($organisation_ws);
-  //     print("Check: $organisation_ws->rechtsform_handelsregister $organisation_db->rechtsform " . _lobbywatch_ws_get_rechtsform($organisation_ws->rechtsform_handelsregister));
+        // ----------------------------------------------------------
+        // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT
+        // ----------------------------------------------------------
+
+    //     print_r($organisation_ws);
+    //     print("Check: $organisation_ws->rechtsform_handelsregister $organisation_db->rechtsform " . _lobbywatch_ws_get_rechtsform($organisation_ws->rechtsform_handelsregister));
+      }
     }
+
+    // Zefix REST
+    if ($zefixRestEnabled) {
+      $dataZefixRest = initDataArray();
+      ws_get_organization_from_zefix_rest($uid, $dataZefixRest, $verbose, $test_mode); // Similar to _lobbywatch_fetch_ws_uid_bfs_data() in utils.php
+      if ($dataZefixRest['success']) {
+        // http://stackoverflow.com/questions/1869091/how-to-convert-an-array-to-object-in-php
+        $organisation_ws = (object) $dataZefixRest['data'];
+
+        $different_db_values |= checkField('rechtsform_zefix', 'rechtsform_zefix', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldName');
+        // Overwrite (re-set) if we have Zefix data (Many fields will be double set, but this is not a problem)
+        $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldName');
+        $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, '_lobbywatch_ws_get_rechtsform');
+        $different_db_values |= checkField('beschreibung', 'zweck', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, 'getValueFromWSFieldName');
+        $different_db_values |= checkField('ort', 'ort', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK_LOG, 'getValueFromWSFieldName');
+        $different_db_values |= checkField('adresse_strasse', 'adresse_strasse', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK_LOG, 'getValueFromWSFieldName');
+        $different_db_values |= checkField('adresse_zusatz', 'adresse_zusatz', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK_LOG, 'getValueFromWSFieldName');
+        $different_db_values |= checkField('adresse_plz', 'adresse_plz', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK_LOG, 'getValueFromWSFieldName');
+
+        // ----------------------------------------------------------
+        // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT
+        // ----------------------------------------------------------
+
+    //     print_r($organisation_ws);
+    //     print("Check: $organisation_ws->rechtsform_handelsregister $organisation_db->rechtsform " . _lobbywatch_ws_get_rechtsform($organisation_ws->rechtsform_handelsregister));
+      } else {
+        // $fields[] = "Not found on zefix rest";
+      }
+    }
+
     $name_short = mb_substr($name, 0, 42);
     if (count($update) > 0) {
       $script[] = $comment = "-- Update Organisation '$name_short', id=$id, uid=$uid, fields: " . implode(", ", $fields);
@@ -534,7 +608,7 @@ function actualise_organisations_having_an_UID($records_limit, $ssl, $test_mode)
       }
     } else if ($different_db_values) {
       $sign = '~';
-    } else if (empty($dataUid['success']) && empty($dataZefix['success'])) {
+    } else if (empty($dataUid['success']) && empty($dataZefix['success']) && empty($dataZefixRest['success'])) {
       $sign = '!';
     } else {
       $sign = '=';
@@ -549,8 +623,9 @@ function actualise_organisations_having_an_UID($records_limit, $ssl, $test_mode)
       case '!': $n_not_found++; break;
     }
 
-    $ws_uid_found = !empty($dataUid['success']);
-    $ws_zefix_found = !empty($dataZefix['success']);
+    $ws_uid_found = !empty($dataUid['success']) && !empty($dataUid['data']);
+    $ws_zefix_found = !empty($dataZefix['success']) && !empty($dataZefix['data']);
+    $ws_zefix_rest_found = !empty($dataZefixRest['success']) && !empty($dataZefixRest['data']);
 
     if ($ws_uid_found) {
       $n_ws_uid_found++;
@@ -560,11 +635,16 @@ function actualise_organisations_having_an_UID($records_limit, $ssl, $test_mode)
       $n_ws_zefix_found++;
     }
 
-    print(str_repeat("\t", $level) . str_pad($i, 4, " ", STR_PAD_LEFT) . '|' . str_pad($id, 4, " ", STR_PAD_LEFT) . '|' . str_pad($uid_db, 15, " ", STR_PAD_LEFT) . ' |' . ($ws_uid_found ? 'U' : ' ') . ($ws_zefix_found ? 'Z' : ' ') . mb_str_pad("| $sign | " . mb_substr($name, 0, 42), 50, " ") . "| " . implode(" | ", $fields) . "\n");
+    if ($ws_zefix_rest_found) {
+      $n_ws_zefix_rest_found++;
+    }
+
+    print(str_repeat("\t", $level) . str_pad($i, 4, " ", STR_PAD_LEFT) . '|' . str_pad($id, 4, " ", STR_PAD_LEFT) . '|' . str_pad($uid_db, 15, " ", STR_PAD_LEFT) . ' |' . ($ws_uid_found ? 'U' : ' ') . ($ws_zefix_found ? 'Z' : ' ') . ($ws_zefix_rest_found ? 'R' : ' ') . mb_str_pad("| $sign | " . mb_substr($name, 0, 42), 50, " ") . "| " . implode(" | ", $fields) . "\n");
   }
 
   print("\nU: $n_ws_uid_found");
   print("\nZ: $n_ws_zefix_found\n");
+  print("\nR: $n_ws_zefix_rest_found\n");
 
   print("\n≠: $n_updated");
   print("\n=: $n_ok");
@@ -632,7 +712,7 @@ function search_name_and_set_uid($records_limit, $ssl, $test_mode) {
   print("rows = " . $stmt->rowCount() . "\n");
 
   $data = initDataArray();
-  $client = initSoapClient($data, getUidWsLogin($test_mode), $verbose, $ssl);
+  $client = initSoapClient($data, getUidBfsWsLogin($test_mode), $verbose, $ssl);
 
   $level = 0;
 
@@ -665,7 +745,7 @@ function search_name_and_set_uid($records_limit, $ssl, $test_mode) {
       $n_equal_uid++;
     } else if (!$uid_db && $uid_ws) {
       $data = initDataArray();
-      ws_get_organization_from_uid($uid_ws, $client, $data, $verbose);
+      ws_get_organization_from_uid_bfs($uid_ws, $client, $data, $verbose);
       @$plz_ws = $data['data']['adresse_plz'];
       @$rechtsform_ws = $data['data']['rechtsform'];
       $replace_pattern = '/[.,() "-/]/ui';

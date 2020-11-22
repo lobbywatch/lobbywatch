@@ -648,9 +648,10 @@ https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/$ws/flat/uid/%
 
 where `$ws` is one of the following webservices:
 
-* `uid`: UID-Register webservice of Bundesamt für Statistik (BfS)
-* `zefix`: Zefix SOAP webservice (Handelsregister, Zentraler Firmenindex) (DEPRECATED)
+* *`uid`*: Calling `zefix-rest` and if not found, call `uid-bfs`
+* `uid-bfs`: UID-Register webservice of Bundesamt für Statistik (BfS)
 * `zefix-rest`: Zefix REST webservice (Handelsregister, Zentraler Firmenindex)
+* `zefix`: Zefix SOAP webservice (Handelsregister, Zentraler Firmenindex) (DEPRECATED)
 
 `%` is the placeholder for the UID, either a 9-digit number, `CHE000000000` string or a
 `CHE-000.000.000` string
@@ -664,8 +665,8 @@ The JSON response is given in the same base structure as for the DB
 interface.
 
 Calls: +
-`https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/uid/flat/uid/CHE-107.810.911` +
-`https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/uid/flat/uid/107810911`
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/uid-bfs/flat/uid/CHE-107.810.911` +
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/uid-bfs/flat/uid/107810911`
 
 JSON Response:
 
@@ -722,8 +723,9 @@ The Zefix SOAP webservice is not public. The access is protected by an access
 key. It is has to be added as parameter access_key.
 
 Calls: +
-`https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/zefix/flat/uid/CHE-107.810.911?access_key=ACCESS_KEY` +
-`https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/zefix/flat/uid/107810911?access_key=ACCESS_KEY`
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/zefix-soap/flat/uid/CHE-107.810.911?access_key=ACCESS_KEY` +
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/zefix-soap/flat/uid/CHE107810911?access_key=ACCESS_KEY` +
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/zefix-soap/flat/uid/107810911?access_key=ACCESS_KEY`
 
 JSON Response:
 

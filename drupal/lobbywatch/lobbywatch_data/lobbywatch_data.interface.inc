@@ -1387,7 +1387,7 @@ function _lobbywatch_data_router($path = '', $version = '', $data_type = '', $ca
   } else if ($call_type === 'table' && array_key_exists($object, Constants::$workflow_tables) && $response_type === 'flat' && $respone_object === 'list') {
 //     df($parameter, '_lobbywatch_data_table_flat_list');
     return _lobbywatch_data_table_flat_list($object, 1, false);
-  } else if ($call_type === 'ws' && (in_array($object, ['uid','zefix', 'zefix-rest'])) && $response_type === 'flat' && $respone_object === 'uid' && $parameter) {
+  } else if ($call_type === 'ws' && (in_array($object, ['uid','zefix-soap', 'zefix-rest', 'uid-bfs'])) && $response_type === 'flat' && $respone_object === 'uid' && $parameter) {
 //     df($parameter, '_lobbywatch_data_table_flat_list');
     return _lobbywatch_data_ws_uid($object, $parameter, false);
 //   } else if ($call_type === 'ws' && ($object === 'zefix') && $response_type === 'flat' && $respone_object === 'uid' && $parameter) {
@@ -1540,7 +1540,7 @@ function _lobbywatch_data_ws_uid($table, $uid, $json = true) {
   $sql = '';
 
   // Protect Zefix WS, either with key or from cyon.ch server or localhost
-  if ($table == 'zefix' && (empty($_GET['access_key']) || !in_array($_GET['access_key'], $zefix_ws_login['keys'], true)) && $_SERVER['REMOTE_ADDR'] !== '91.206.24.232' && $_SERVER['REMOTE_ADDR'] !== '127.0.0.1') {
+  if (in_array($table, ['uid','zefix-soap', 'zefix-rest', /*'uid-bfs'*/]) && (empty($_GET['access_key']) || !in_array($_GET['access_key'], $zefix_ws_login['keys'], true)) && $_SERVER['REMOTE_ADDR'] !== '91.206.24.232' && $_SERVER['REMOTE_ADDR'] !== '127.0.0.1') {
     _lobbywatch_data_json_403();
   }
 
@@ -1550,12 +1550,18 @@ function _lobbywatch_data_ws_uid($table, $uid, $json = true) {
   db_set_active('lobbywatch');
 
   try {
-    if ($table == 'uid') {
-      $items = _lobbywatch_fetch_ws_uid_data($uid, 0, false, false);
-    } else if ($table == 'zefix') {
-      $items = _lobbywatch_fetch_ws_zefix_data($uid, 0, false, false);
+    if ($table == 'uid-bfs') {
+      $items = _lobbywatch_fetch_ws_uid_bfs_data($uid, 0, false, false);
+    } else if ($table == 'zefix-soap') {
+      $items = _lobbywatch_fetch_ws_zefix_soap_data($uid, 0, false, false);
     } else if ($table == 'zefix-rest') {
       $items = _lobbywatch_fetch_ws_zefix_rest_data($uid, 0, false);
+    } else if ($table == 'uid') {
+      $items = _lobbywatch_fetch_ws_zefix_rest_data($uid, 0, false);
+      if (!$success = $items['success']) {
+        $message .= "zefix-rest unsuccessful (${items['message']}), calling uid@bfs";
+        $items = _lobbywatch_fetch_ws_uid_bfs_data($uid, 0, false, false);
+      }
     } else {
       // Must not happen
       $items = null;
