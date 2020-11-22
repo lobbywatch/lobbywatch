@@ -2304,7 +2304,17 @@ function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose) {
       ),
     );
 //     $response = $client->__soapCall("GetByUID", array($params));
-    $response = $client->GetByUID($params);
+    try {
+      $response = $client->GetByUID($params);
+    } catch (SoapFault $e) {
+      if ($e->faultstring == 'Request_limit_exceeded') {
+        $fault = (array) $e->detail->BusinessFault;
+        print("${fault['Error']} [op=${fault['Operation']}]: ${fault['ErrorDetail']}\n");
+        print($e);
+        print("\nERROR: Abort\n");
+        exit(1);
+      }
+    }
     if (isset($response->GetByUIDResult)) {
       fillDataFromUIDResult($response->GetByUIDResult, $data);
     } else {
