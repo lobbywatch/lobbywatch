@@ -531,8 +531,8 @@ function actualise_organisations_having_an_UID($records_limit, $ssl, $test_mode)
         // http://stackoverflow.com/questions/1869091/how-to-convert-an-array-to-object-in-php
         $organisation_ws = (object) $dataUid['data'];
 
-        $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldName');
-        $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, '_lobbywatch_ws_get_rechtsform');
+        $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+        $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, '_lobbywatch_ws_get_rechtsform');
       }
     }
 
@@ -544,9 +544,9 @@ function actualise_organisations_having_an_UID($records_limit, $ssl, $test_mode)
         // http://stackoverflow.com/questions/1869091/how-to-convert-an-array-to-object-in-php
         $organisation_ws = (object) $dataZefix['data'];
 
-        $different_db_values |= checkField('rechtsform_zefix', 'rechtsform_zefix', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldName');
+        $different_db_values |= checkField('rechtsform_zefix', 'rechtsform_zefix', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
         // Overwrite (re-set) if we have Zefix data (Many fields will be double set, but this is not a problem)
-        $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldName');
+        $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
         $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, '_lobbywatch_ws_get_rechtsform');
 
         // ----------------------------------------------------------
@@ -566,15 +566,15 @@ function actualise_organisations_having_an_UID($records_limit, $ssl, $test_mode)
         // http://stackoverflow.com/questions/1869091/how-to-convert-an-array-to-object-in-php
         $organisation_ws = (object) $dataZefixRest['data'];
 
-        $different_db_values |= checkField('rechtsform_zefix', 'rechtsform_zefix', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldName');
+        $different_db_values |= checkField('rechtsform_zefix', 'rechtsform_zefix', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
         // Overwrite (re-set) if we have Zefix data (Many fields will be double set, but this is not a problem)
-        $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldName');
-        $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, '_lobbywatch_ws_get_rechtsform');
-        $different_db_values |= checkField('beschreibung', 'zweck', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, 'getValueFromWSFieldName');
-        $different_db_values |= checkField('ort', 'ort', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK_LOG, 'getValueFromWSFieldName');
-        $different_db_values |= checkField('adresse_strasse', 'adresse_strasse', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK_LOG, 'getValueFromWSFieldName');
-        $different_db_values |= checkField('adresse_zusatz', 'adresse_zusatz', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK_LOG, 'getValueFromWSFieldName');
-        $different_db_values |= checkField('adresse_plz', 'adresse_plz', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK_LOG, 'getValueFromWSFieldName');
+        $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+        $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, '_lobbywatch_ws_get_rechtsform');
+        $different_db_values |= checkField('beschreibung', 'zweck', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, 'getValueFromWSFieldNameEmptyAsNull');
+        $different_db_values |= checkField('ort', 'ort', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+        $different_db_values |= checkField('adresse_strasse', 'adresse_strasse', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+        $different_db_values |= checkField('adresse_zusatz', 'adresse_zusatz', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+        $different_db_values |= checkField('adresse_plz', 'adresse_plz', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
 
         // ----------------------------------------------------------
         // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT

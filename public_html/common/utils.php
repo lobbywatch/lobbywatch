@@ -2306,6 +2306,7 @@ function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose) {
 //     $response = $client->__soapCall("GetByUID", array($params));
     try {
       $response = $client->GetByUID($params);
+      sleep(3); // TODO remove rate limit
     } catch (SoapFault $e) {
       if ($e->faultstring == 'Request_limit_exceeded') {
         $fault = (array) $e->detail->BusinessFault;
@@ -2316,7 +2317,7 @@ function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose) {
       }
     }
     if (isset($response->GetByUIDResult)) {
-      fillDataFromUIDResult($response->GetByUIDResult, $data);
+      fillDataFromUidBfsResult($response->GetByUIDResult, $data);
     } else {
       $data['message'] .= 'No Result from uid webservice. ';
       $data['success'] = false;
@@ -2356,7 +2357,7 @@ function _lobbywatch_fetch_ws_uid_data_from_old_hr_id($old_hr_id_raw, $verbose =
       ),
     );
     $response = $client->Search($params);
-    fillDataFromUIDResult($response->SearchResult, $data);
+    fillDataFromUidBfsResult($response->SearchResult, $data);
   } catch(Exception $e) {
     $data['message'] .= _utils_get_exeption($e);
     $data['success'] = false;
@@ -2381,7 +2382,7 @@ function ws_verbose_logging($client, $response, &$data, $verbose) {
   }
 }
 
-function fillDataFromUIDResult($object, &$data) {
+function fillDataFromUidBfsResult($object, &$data) {
     if (!empty((array) $object)) {
 //       print_r($object);
       if (is_array($object->organisationType)) {
@@ -2396,21 +2397,21 @@ function fillDataFromUIDResult($object, &$data) {
       $base_address = $ot->organisation->contact->address;
       $address = is_array($base_address) ? $base_address[0]->postalAddress->addressInformation : $base_address->postalAddress->addressInformation;
       $address2 = is_array($base_address) && isset($base_address[1]->postalAddress->addressInformation) ? $base_address[1]->postalAddress->addressInformation : null;
-      $old_hr_id = isset($oid->OtherOrganisationId) ? (is_array($oid->OtherOrganisationId) ? $oid->OtherOrganisationId[0] : $oid->OtherOrganisationId) : null;
-      $legel_form = isset($oid->legalForm) ? $oid->legalForm : null;
+      $old_hr_id = !empty($oid->OtherOrganisationId) ? (is_array($oid->OtherOrganisationId) ? $oid->OtherOrganisationId[0] : $oid->OtherOrganisationId) : null;
+      $legel_form = !empty($oid->legalForm) ? $oid->legalForm : null;
       $data['data'] = array(
         'uid' => formatUID($uid_ws),
-        'uid_zahl' => $uid_ws,
-        'alte_hr_id' => isset($old_hr_id->organisationId) && substr($old_hr_id->organisationId, 0, 2) == 'CH' ? $old_hr_id->organisationId : null,
-        'name' => $oid->organisationName,
-        'name_de' => $oid->organisationName,
+        'uid_raw' => $uid_ws,
+        'alte_hr_id' => !empty($old_hr_id->organisationId) && substr($old_hr_id->organisationId, 0, 2) == 'CH' ? $old_hr_id->organisationId : null,
+        'name' => trim($oid->organisationName),
+        'name_de' => trim($oid->organisationName),
     // TODO 'name_fr' => $ot->organisation->organisationIdentification->organisationName,
         'rechtsform_handelsregister' => $legel_form,
         'rechtsform' => _lobbywatch_ws_get_rechtsform($legel_form),
-        'adresse_strasse' => $address->street . (isset($address->houseNumber) ? ' ' . $address->houseNumber : ''),
-        'adresse_zusatz' => isset($address->addressLine1) ? $address->addressLine1 : (isset($address2->postOfficeBoxNumber) ? 'Postfach ' . $address2->postOfficeBoxNumber : null),
-        'ort' => $address->town,
-        'adresse_plz' => $address->swissZipCode,
+        'adresse_strasse' => trim($address->street) . (!empty($address->houseNumber) ? ' ' . trim($address->houseNumber) : ''),
+        'adresse_zusatz' => !empty($address->addressLine1) ? trim($address->addressLine1) : (!empty($address2->postOfficeBoxNumber) ? 'Postfach ' . trim($address2->postOfficeBoxNumber) : null),
+        'ort' => trim($address->town),
+        'adresse_plz' => +$address->swissZipCode,
         'land_iso2' => $address->country->countryIdISO2,
         'land_id' => _lobbywatch_ws_get_land_id($address->country->countryIdISO2),
     //     'handelsregister_url' => ,
@@ -2434,34 +2435,34 @@ function fillDataFromZefixResult($object, &$data) {
       }
       $oid = $ot;
       $uid_ws = $oid->uid;
-      if (isset($ot->address)) {
+      if (!empty($ot->address)) {
         $base_address = $ot->address;
         $address = is_array($base_address) ? $base_address[0]->addressInformation : $base_address->addressInformation;
-        $address2 = is_array($base_address) && isset($base_address[1]->addressInformation) ? $base_address[1]->addressInformation : null;
+        $address2 = is_array($base_address) && !empty($base_address[1]->addressInformation) ? $base_address[1]->addressInformation : null;
       } else {
         $base_address = $address = $address2 = null;
       }
-      $old_hr_id = isset($oid->chid) ? $oid->chid : null;
-      $legel_form_handelsregister = isset($oid->legalform->legalFormUid) ? $oid->legalform->legalFormUid : null;
+      $old_hr_id = !empty($oid->chid) ? $oid->chid : null;
+      $legel_form_handelsregister = !empty($oid->legalform->legalFormUid) ? $oid->legalform->legalFormUid : null;
       $data['data'] = array(
         'uid' => formatUID($uid_ws),
-        'uid_zahl' => $uid_ws,
-        'alte_hr_id' => isset($old_hr_id) ? $old_hr_id : null,
+        'uid_raw' => $uid_ws,
+        'alte_hr_id' => !empty($old_hr_id) ? $old_hr_id : null,
         'name' => $oid->name,
         'name_de' => $oid->name,
     // TODO 'name_fr' => $ot->organisation->organisationIdentification->organisationName, TODO
         'rechtsform_handelsregister' => $legel_form_handelsregister,
         'rechtsform' => _lobbywatch_ws_get_rechtsform($legel_form_handelsregister),
-        'rechtsform_zefix' => isset($oid->legalform->legalFormId) ? $oid->legalform->legalFormId : null,
-        'adresse_strasse' => isset($address->street) ? ($address->street . (isset($address->houseNumber) ? ' ' . $address->houseNumber : '')) : null,
-        'adresse_zusatz' => isset($address->addressLine1) ? $address->addressLine1 : (isset($address2->postOfficeBoxNumber) ? 'Postfach ' . $address2->postOfficeBoxNumber : null),
-        'ort' => isset($address->town) ? $address->town : null,
-        'adresse_plz' => isset($address->swissZipCode) ? $address->swissZipCode : null,
-        'land_iso2' => isset($address->country) ? $address->country : null,
-        'land_id' => isset($address->country) ? _lobbywatch_ws_get_land_id($address->country) : null,
-        'handelsregister_url' => isset($ot->webLink) ? $ot->webLink : null,
-        'handelsregister_ws_url' => isset($ot->wsLink) ? $ot->wsLink : null,
-        'zweck' => isset($ot->purpose) ? $ot->purpose : null,
+        'rechtsform_zefix' => !empty($oid->legalform->legalFormId) ? $oid->legalform->legalFormId : null,
+        'adresse_strasse' => !empty($address->street) ? ($address->street . (!empty($address->houseNumber) ? ' ' . $address->houseNumber : '')) : null,
+        'adresse_zusatz' => !empty($address->addressLine1) ? $address->addressLine1 : (!empty($address2->postOfficeBoxNumber) ? 'Postfach ' . $address2->postOfficeBoxNumber : null),
+        'ort' => !empty($address->town) ? $address->town : null,
+        'adresse_plz' => !empty($address->swissZipCode) ? $address->swissZipCode : null,
+        'land_iso2' => !empty($address->country) ? $address->country : null,
+        'land_id' => !empty($address->country) ? _lobbywatch_ws_get_land_id($address->country) : null,
+        'handelsregister_url' => !empty($ot->webLink) ? $ot->webLink : null,
+        'handelsregister_ws_url' => !empty($ot->wsLink) ? $ot->wsLink : null,
+        'zweck' => !empty($ot->purpose) ? "Zweck: " . trim($ot->purpose) : null,
         'register_kanton' => getCantonCodeFromZefixRegistryId($ot->registerOfficeId),
       );
     } else {
@@ -2488,37 +2489,37 @@ function fillDataFromZefixRestResult($json, &$data) {
       }
       $oid = $ot;
       $uid_ws = $oid->uid;
-      if (isset($ot->address)) {
+      if (!empty($ot->address)) {
         $base_address = $ot->address;
         // $address = $base_address[0] ?? $base_address;
         // $address2 = $base_address[1] ?? null;
         $address = is_array($base_address) ? $base_address[0] : $base_address;
-        $address2 = is_array($base_address) && isset($base_address[1]) ? $base_address[1] : null;
+        $address2 = is_array($base_address) && !empty($base_address[1]) ? $base_address[1] : null;
       } else {
         $base_address = $address = $address2 = null;
       }
-      $old_hr_id = isset($oid->chid) ? $oid->chid : null;
+      $old_hr_id = !empty($oid->chid) ? $oid->chid : null;
       $legel_form_handelsregister_uid = $oid->legalForm->uid ?? null;
       $data['data'] = array(
         'uid' => formatUID($uid_ws),
-        'uid_zahl' => $uid_ws,
+        'uid_raw' => $uid_ws,
         'alte_hr_id' => $old_hr_id ?? null,
-        'name' => $oid->name,
-        'name_de' => $oid->name,
+        'name' => trim($oid->name),
+        'name_de' => trim($oid->name),
     // TODO 'name_fr' => $ot->organisation->organisationIdentification->organisationName, TODO
         'rechtsform_handelsregister' => $legel_form_handelsregister_uid,
         'rechtsform' => _lobbywatch_ws_get_rechtsform($legel_form_handelsregister_uid),
         'rechtsform_zefix' => $oid->legalForm->id ?? null,
-        'adresse_strasse' => isset($address->street) ? ($address->street . (isset($address->houseNumber) ? ' ' . $address->houseNumber : '')) : null,
+        'adresse_strasse' => !empty($address->street) ? (trim($address->street) . (!empty($address->houseNumber) ? ' ' . trim($address->houseNumber) : '')) : null,
         // 'adresse_zusatz' => (!empty($address->addon) ? $address->addon : null) ?? ('Postfach ' . $address->poBox) ?? ('Postfach ' . $address2->poBox) ?? null,
-        'adresse_zusatz' => !empty($address->addon) ? $address->addon : (!empty($address->poBox) ? 'Postfach ' . $address->poBox : (!empty($address2->poBox) ? 'Postfach ' . $address2->poBox : null)),
-        'ort' => $address->city ?? null,
-        'adresse_plz' => isset($address->swissZipCode) && is_numeric($address->swissZipCode) ? +$address->swissZipCode : null,
+        'adresse_zusatz' => !empty($address->addon) ? trim($address->addon) : (!empty($address->poBox) ? 'Postfach ' . trim($address->poBox) : (!empty($address2->poBox) ? 'Postfach ' . trim($address2->poBox) : null)),
+        'ort' => $address->city ? trim($address->city) : null,
+        'adresse_plz' => !empty($address->swissZipCode) && is_numeric($address->swissZipCode) ? +$address->swissZipCode : null,
         'land_iso2' => 'CH' ?? null,
         'land_id' => _lobbywatch_ws_get_land_id('CH') ?? null,
-        'handelsregister_url' => $ot->cantonalExcerptWeb?? null,
+        'handelsregister_url' => $ot->cantonalExcerptWeb ? trim($ot->cantonalExcerptWeb) : null,
         'handelsregister_ws_url' => $ot->wsLink ?? null, // TODO what for?
-        'zweck' => $ot->purpose ?? null,
+        'zweck' => $ot->purpose ? "Zweck: " . trim($ot->purpose) : null,
         'register_kanton' => $ot->canton ?? null,
       );
     } else {
@@ -2788,6 +2789,16 @@ global $errors;
  */
 function getValueFromWSFieldName($ws_field, $parlamentarier_ws, $parlamentarier_db_obj, $field, $fields) {
   return $parlamentarier_ws->$ws_field;
+}
+
+/**
+ * id function which gets the field from the ws object using the $ws_field name.interessenbindung
+ * This function allows to use strings instead of direct values in checkField().
+ * Convenience function.
+ */
+function getValueFromWSFieldNameEmptyAsNull($ws_field, $parlamentarier_ws, $parlamentarier_db_obj, $field, $fields) {
+  if (trim($parlamentarier_ws->$ws_field) === '') return null;
+  return trim($parlamentarier_ws->$ws_field);
 }
 
 function _lobbywatch_fetch_organisation_title($table, $id) {
