@@ -658,6 +658,13 @@ select a.parlamentarier_id, a.stichdatum, b.stichdatum from parlamentarier_trans
 -- Compare parlamentarier_transparenz
 select a.parlamentarier_id, a.stichdatum, b.stichdatum from parlamentarier_transparenz a LEFT OUTER JOIN parlamentarier_transparenz b ON a.parlamentarier_id=b.parlamentarier_id AND b.stichdatum = '2017-11-01' WHERE a.stichdatum = '2017-05-27' ORDER BY `a`.`parlamentarier_id` ASC
 
+-- 26.11.2020 Copy Vergütungstransparenzliste 2020-01-30 -> 2020-12-31
+
+INSERT INTO `parlamentarier_transparenz` (parlamentarier_id, stichdatum, verguetung_transparent, notizen, `eingabe_abgeschlossen_visa`, `eingabe_abgeschlossen_datum`, `kontrolliert_visa`, `kontrolliert_datum`, `freigabe_visa`, `freigabe_datum`, created_visa, updated_visa, created_date, updated_date)
+SELECT parlamentarier_id, '2020-12-31' as stichdatum, verguetung_transparent, notizen, `eingabe_abgeschlossen_visa`, `eingabe_abgeschlossen_datum`, `kontrolliert_visa`, `kontrolliert_datum`, `freigabe_visa`, `freigabe_datum`, created_visa, updated_visa, created_date, updated_date
+FROM `parlamentarier_transparenz`
+WHERE stichdatum='2020-01-30' ORDER BY id;
+
 -- 24.10.2019 Find duplicated mandate and zutrittsberechtigung
 
 -- Double mandate
