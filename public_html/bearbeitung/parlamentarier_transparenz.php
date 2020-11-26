@@ -2376,7 +2376,7 @@
             //
             // View column for parlamentarier_transparenz_parlamentarier_transparenz_log detail
             //
-            $column = new DetailColumn(array('id'), 'parlamentarier_transparenz.parlamentarier_transparenz_log', 'parlamentarier_transparenz_parlamentarier_transparenz_log_handler', $this->dataset, 'Parlamentarier Transparenz Log');
+            $column = new DetailColumn(array('id', 'parlamentarier_id'), 'parlamentarier_transparenz.parlamentarier_transparenz_log', 'parlamentarier_transparenz_parlamentarier_transparenz_log_handler', $this->dataset, 'Parlamentarier Transparenz Log');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $grid->AddViewColumn($column);
             }
@@ -4037,7 +4037,7 @@
         }
     
         protected function doRegisterHandlers() {
-            $detailPage = new parlamentarier_transparenz_parlamentarier_transparenz_logPage('parlamentarier_transparenz_parlamentarier_transparenz_log', $this, array('id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('parlamentarier_transparenz.parlamentarier_transparenz_log'), 'UTF-8');
+            $detailPage = new parlamentarier_transparenz_parlamentarier_transparenz_logPage('parlamentarier_transparenz_parlamentarier_transparenz_log', $this, array('id', 'parlamentarier_id'), array('id', 'parlamentarier_id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('parlamentarier_transparenz.parlamentarier_transparenz_log'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier_transparenz.parlamentarier_transparenz_log'));
             $detailPage->SetHttpHandlerName('parlamentarier_transparenz_parlamentarier_transparenz_log_handler');
             $handler = new PageHTTPHandler('parlamentarier_transparenz_parlamentarier_transparenz_log_handler', $detailPage);

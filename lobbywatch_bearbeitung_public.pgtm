@@ -8147,8 +8147,7 @@ if (sender.getFieldName() == 'uid') {
     formatted = input.replace(/(CHE)?\s*(\d{3})(\d{3})(\d{3})/, 'CHE-$2.$3.$4');
     sender.setValue(formatted);
   }
-}
-          </OnInsertFormEditorValueChanged>
+}          </OnInsertFormEditorValueChanged>
           <OnEditFormEditorValueChanged enabled="true">
 if (sender.getFieldName() == 'uid') {
   const input = sender.getValue();
@@ -8156,8 +8155,7 @@ if (sender.getFieldName() == 'uid') {
     formatted = input.replace(/(CHE)?\s*(\d{3})(\d{3})(\d{3})/, 'CHE-$2.$3.$4');
     sender.setValue(formatted);
   }
-}
-          </OnEditFormEditorValueChanged>
+}          </OnEditFormEditorValueChanged>
           <OnEditFormLoaded enabled="true">
 if (editors['updated_by_import'].getValue()) {
    editors['name_de'].setEnabled(false);  
@@ -19690,6 +19688,7 @@ logTableExtendedDrawRow('parlamentarier_transparenz_log', $rowData, $rowCellStyl
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
+              <FieldMap masterColumnName="parlamentarier_id" foreginColumnName="parlamentarier_id"/>
             </MasterForeignKeyColumnMap>
           </Detail>
         </Details>
