@@ -22,7 +22,8 @@ enable_fail_onerror
 PHP=php
 # PHP=/usr/bin/php
 if [[ "$HOSTNAME" =~ "rpialch" || "$HOSTNAME" =~ "rpiw" || "$HOSTNAME" =~ "abel" ]]; then
-  PHP="docker run -i --rm --name php74_execution --network=host -v $PWD:/usr/src/myapp -w /usr/src/myapp php74 php"
+  # PHP="docker run -i --rm --name php74_execution --network=host -v $PWD:/usr/src/myapp -w /usr/src/myapp php74 php"
+  PHP="docker run -i --rm --name php80_execution --network=host -v $PWD:/usr/src/myapp -w /usr/src/myapp php80 php"
   echo "Use docker PHP"
 fi
 
