@@ -2304,18 +2304,25 @@ function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose) {
       ),
     );
 //     $response = $client->__soapCall("GetByUID", array($params));
-    try {
-      $response = $client->GetByUID($params);
-      sleep(3); // TODO remove rate limit
-    } catch (SoapFault $e) {
-      if ($e->faultstring == 'Request_limit_exceeded') {
-        $fault = (array) $e->detail->BusinessFault;
-        print("${fault['Error']} [op=${fault['Operation']}]: ${fault['ErrorDetail']}\n");
-        print($e);
-        print("\nERROR: Abort\n");
-        exit(1);
+    for ($i = 0; !$response; $i++) {
+      try {
+        $response = $client->GetByUID($params);
+      } catch (SoapFault $e) {
+        if ($e->faultstring == 'Request_limit_exceeded') {
+          // $fault = (array) $e->detail->BusinessFault;
+          // print("${fault['Error']} [op=${fault['Operation']}]: ${fault['ErrorDetail']}\n");
+          // print($e);
+          // print("\nERROR: Abort\n");
+          // exit(1);
+          if ($i < 3) {
+            sleep(5 * ($i + 1));
+          } else {
+            throw $e;
+          }
+        }
       }
     }
+
     if (isset($response->GetByUIDResult)) {
       fillDataFromUidBfsResult($response->GetByUIDResult, $data);
     } else {

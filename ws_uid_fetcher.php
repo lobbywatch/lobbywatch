@@ -529,6 +529,9 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
     if ($uidBFSenabled) {
         $dataUid = initDataArray();
       ws_get_organization_from_uid_bfs($uid, $clientUid, $dataUid, $verbose); // Similar to _lobbywatch_fetch_ws_uid_bfs_data() in utils.php
+      if (!$records_limit || $records_limit > 20) {
+        sleep(3);
+      }
       if ($dataUid['success']) {
         // http://stackoverflow.com/questions/1869091/how-to-convert-an-array-to-object-in-php
         $organisation_ws = (object) $dataUid['data'];
@@ -748,6 +751,9 @@ function search_name_and_set_uid($records_limit, $ssl, $test_mode) {
     } else if (!$uid_db && $uid_ws) {
       $data = initDataArray();
       ws_get_organization_from_uid_bfs($uid_ws, $client, $data, $verbose);
+      if (!$records_limit || $records_limit > 20) {
+        sleep(3);
+      }
       @$plz_ws = $data['data']['adresse_plz'];
       @$rechtsform_ws = $data['data']['rechtsform'];
       $replace_pattern = '/[.,() "-/]/ui';
