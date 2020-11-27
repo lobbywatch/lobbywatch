@@ -550,8 +550,10 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   $parlamentarier_ws = get_object_from_json_url($ws_parlament_url);
 
 
-  $ws_parlament_url_odata = "https://ws.parlament.ch/odata.svc/PersonInterest?\$filter=" . urlencode("(Language eq 'DE') and (PersonNumber eq $biografie_id)") . "&\$orderby=SortOrder";
-  $parlamentarier_ws_odata = get_object_from_json_url($ws_parlament_url_odata);
+  // https://ws.parlament.ch/odata.svc/Person?$filter=(PersonNumber+eq+1139)+and+(Language eq 'DE')
+  // https://ws.parlament.ch/odata.svc/PersonInterest?$filter=(PersonNumber+eq+1139)+and+(Language eq 'DE')
+  $ws_parlament_url_odata_PersonInterest = "https://ws.parlament.ch/odata.svc/PersonInterest?\$filter=" . urlencode("(Language eq 'DE') and (PersonNumber eq $biografie_id)") . "&\$orderby=SortOrder";
+  $parlamentarier_ws_odata_PersonInterest = get_object_from_json_url($ws_parlament_url_odata_PersonInterest);
 
   $different_db_values = false;
 
@@ -679,15 +681,15 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
 
   // $different_db_values |= $ib_changed = checkField('parlament_interessenbindungen', $parlamentarier_ws->concerns ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungen', 'parlament_interessenbindungen_updated', 'normalizeParlamentInteressenbindungen');
   // $different_db_values |= $ib_json_changed = checkField('parlament_interessenbindungen_json', $parlamentarier_ws->concerns ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungenJson', 'parlament_interessenbindungen_updated', 'decodeJson');
-  $different_db_values |= $ib_changed = checkField('parlament_interessenbindungen', $parlamentarier_ws_odata->d->results ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungenOdata', 'parlament_interessenbindungen_updated', 'normalizeParlamentInteressenbindungen');
-  $different_db_values |= $ib_json_changed = checkField('parlament_interessenbindungen_json', $parlamentarier_ws_odata->d->results ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungenJsonOdata', 'parlament_interessenbindungen_updated', 'decodeJson');
+  $different_db_values |= $ib_changed = checkField('parlament_interessenbindungen', $parlamentarier_ws_odata_PersonInterest->d->results ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungenOdata', 'parlament_interessenbindungen_updated', 'normalizeParlamentInteressenbindungen');
+  $different_db_values |= $ib_json_changed = checkField('parlament_interessenbindungen_json', $parlamentarier_ws_odata_PersonInterest->d->results ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungenJsonOdata', 'parlament_interessenbindungen_updated', 'decodeJson');
 
   if ($ib_changed) {
     // print("<p>p<ins>ins</ins><del>del</del><i>i</i><b>b</b><mark>mark</mark><s>s</s></p>");
     $old_ib_html = $parlamentarier_db_obj->parlament_interessenbindungen ?? '';
     $old_ib_html_normalized = normalizeParlamentInteressenbindungen($old_ib_html);
     $new_ib_html_old = getParlamentInteressenbindungen($parlamentarier_ws->concerns);
-    $new_ib_html_odata = getParlamentInteressenbindungenOdata($parlamentarier_ws_odata->d->results ?? []);
+    $new_ib_html_odata = getParlamentInteressenbindungenOdata($parlamentarier_ws_odata_PersonInterest->d->results ?? []);
     $diff = htmlDiffStyled($old_ib_html_normalized, $new_ib_html_odata, false);
 
     // $old_json = json_encode($old_ib_html);
