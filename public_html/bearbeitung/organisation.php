@@ -37960,7 +37960,7 @@
             
             $main_editor = new TextEdit('uid_edit');
             $main_editor->SetMaxLength(15);
-            $main_editor->SetPlaceholder('CHE-999.999.999');
+            $main_editor->SetPlaceholder('CHE-999.999.999 or CHE123456789 or 123456789');
             
             $filterBuilder->addColumn(
                 $columns['uid'],
@@ -40158,7 +40158,7 @@
             //
             $editor = new TextEdit('uid_edit');
             $editor->SetMaxLength(15);
-            $editor->SetPlaceholder('CHE-999.999.999');
+            $editor->SetPlaceholder('CHE-999.999.999 or CHE123456789 or 123456789');
             $editColumn = new CustomEditColumn('Handelsregister UID', 'uid', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new CustomRegExpValidator('^(CHE-\d\d\d\.\d\d\d\.\d\d\d|)$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
@@ -41729,7 +41729,7 @@
             //
             $editor = new TextEdit('uid_edit');
             $editor->SetMaxLength(15);
-            $editor->SetPlaceholder('CHE-999.999.999');
+            $editor->SetPlaceholder('CHE-999.999.999 or CHE123456789 or 123456789');
             $editColumn = new CustomEditColumn('Handelsregister UID', 'uid', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new CustomRegExpValidator('^(CHE-\d\d\d\.\d\d\d\.\d\d\d|)$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
