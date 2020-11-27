@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 5.7.26, for Linux (x86_64)
+-- MariaDB dump 10.17  Distrib 10.4.14-MariaDB, for Linux (x86_64)
 --
 -- Host: 127.0.0.1    Database: lobbywatch
 -- ------------------------------------------------------
@@ -254,6 +254,141 @@ CREATE TABLE `country` (
   KEY `idx_show_level` (`show_level`),
   KEY `idx_continent` (`continent`)
 ) ENGINE=InnoDB AUTO_INCREMENT=252 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Länder der Welt mit ISO Code (http://countrylist.net)';
+SET character_set_client = @saved_cs_client ;
+SET @saved_cs_client      = @@character_set_client  ;
+SET @saved_cs_results     = @@character_set_results  ;
+SET @saved_col_connection = @@collation_connection  ;
+SET character_set_client  = utf8mb4  ;
+SET character_set_results = utf8mb4  ;
+SET collation_connection  = utf8mb4_general_ci  ;
+SET @saved_sql_mode       = @@sql_mode  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+DELIMITER ;;
+CREATE TRIGGER `trg_country_log_ins` AFTER INSERT ON `country`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `country_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `country` WHERE id = NEW.id ;
+END ;;
+DELIMITER ;
+SET sql_mode              = @saved_sql_mode  ;
+SET character_set_client  = @saved_cs_client  ;
+SET character_set_results = @saved_cs_results  ;
+SET collation_connection  = @saved_col_connection  ;
+SET @saved_cs_client      = @@character_set_client  ;
+SET @saved_cs_results     = @@character_set_results  ;
+SET @saved_col_connection = @@collation_connection  ;
+SET character_set_client  = utf8mb4  ;
+SET character_set_results = utf8mb4  ;
+SET collation_connection  = utf8mb4_general_ci  ;
+SET @saved_sql_mode       = @@sql_mode  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+DELIMITER ;;
+CREATE TRIGGER `trg_country_log_upd` AFTER UPDATE ON `country`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `country_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `country` WHERE id = NEW.id ;
+END ;;
+DELIMITER ;
+SET sql_mode              = @saved_sql_mode  ;
+SET character_set_client  = @saved_cs_client  ;
+SET character_set_results = @saved_cs_results  ;
+SET collation_connection  = @saved_col_connection  ;
+SET @saved_cs_client      = @@character_set_client  ;
+SET @saved_cs_results     = @@character_set_results  ;
+SET @saved_col_connection = @@collation_connection  ;
+SET character_set_client  = utf8mb4  ;
+SET character_set_results = utf8mb4  ;
+SET collation_connection  = utf8mb4_general_ci  ;
+SET @saved_sql_mode       = @@sql_mode  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+DELIMITER ;;
+CREATE TRIGGER `trg_country_log_del_before` BEFORE DELETE ON `country`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `country_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `country` WHERE id = OLD.id ;
+END ;;
+DELIMITER ;
+SET sql_mode              = @saved_sql_mode  ;
+SET character_set_client  = @saved_cs_client  ;
+SET character_set_results = @saved_cs_results  ;
+SET collation_connection  = @saved_col_connection  ;
+SET @saved_cs_client      = @@character_set_client  ;
+SET @saved_cs_results     = @@character_set_results  ;
+SET @saved_col_connection = @@collation_connection  ;
+SET character_set_client  = utf8mb4  ;
+SET character_set_results = utf8mb4  ;
+SET collation_connection  = utf8mb4_general_ci  ;
+SET @saved_sql_mode       = @@sql_mode  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+DELIMITER ;;
+CREATE TRIGGER `trg_country_log_del_after` AFTER DELETE ON `country`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `country_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+END ;;
+DELIMITER ;
+SET sql_mode              = @saved_sql_mode  ;
+SET character_set_client  = @saved_cs_client  ;
+SET character_set_results = @saved_cs_results  ;
+SET collation_connection  = @saved_col_connection  ;
+
+--
+-- Table structure for table `country_log`
+--
+
+DROP TABLE IF EXISTS `country_log`;
+SET @saved_cs_client     = @@character_set_client ;
+SET character_set_client = utf8 ;
+CREATE TABLE `country_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  `continent` enum('Antarctica','Australia','Africa','North America','South America','Europe','Asia') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Kontinent',
+  `name_en` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Name des Landes auf Englisch',
+  `official_name_en` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Offizieller Name des Landes (englisch)',
+  `capital_en` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Hauptstadt auf Englisch',
+  `name_de` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Name des Landes auf Deutsch',
+  `official_name_de` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Offizieller Name des Landes (deutsch)',
+  `capital_de` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Hauptstadt auf Deutsch',
+  `name_fr` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Französischer Name',
+  `official_name_fr` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Offizieller Name des Landes (französisch)',
+  `capital_fr` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Hauptstadt auf Französisch',
+  `name_it` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Italienischer Name',
+  `official_name_it` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Offizieller Name des Landes (italiensich)',
+  `capital_it` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Hauptstadt auf Italienisch',
+  `iso2` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ISO 3166 ALPHA-2 Code',
+  `iso3` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ISO 3166 ALPHA-3 Code',
+  `vehicle_code` varchar(4) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Nationalitätszeichen für Fahrzeuge',
+  `ioc` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT ' Ländercodes des Internationalen Olympischen Komitees (IOC)',
+  `tld` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Top Level Domain für Internet',
+  `currency` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Währungsabkürzung',
+  `phone` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Internatinale Vorwahl',
+  `utc` mediumint(9) NOT NULL COMMENT 'Verschiebung zur Weltzeit GMT',
+  `show_level` int(11) NOT NULL DEFAULT '0' COMMENT 'Anzeigestufe je höher desto selektiver',
+  `created_visa` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  UNIQUE KEY `idx_name_de` (`name_de`),
+  UNIQUE KEY `idx_name_en` (`name_en`),
+  KEY `idx_show_level` (`show_level`),
+  KEY `idx_continent` (`continent`),
+  KEY `fk_country_log_snapshot_id` (`snapshot_id`),
+  CONSTRAINT `fk_country_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Länder der Welt mit ISO Code (http://countrylist.net)';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -1197,6 +1332,129 @@ CREATE TABLE `interessenraum` (
   UNIQUE KEY `interessenraum_name_unique` (`name`) COMMENT 'Fachlicher unique constraint',
   KEY `reihenfolge` (`reihenfolge`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Liste der Interessenbereiche (Stammdaten)';
+SET character_set_client = @saved_cs_client ;
+SET @saved_cs_client      = @@character_set_client  ;
+SET @saved_cs_results     = @@character_set_results  ;
+SET @saved_col_connection = @@collation_connection  ;
+SET character_set_client  = utf8mb4  ;
+SET character_set_results = utf8mb4  ;
+SET collation_connection  = utf8mb4_general_ci  ;
+SET @saved_sql_mode       = @@sql_mode  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+DELIMITER ;;
+CREATE TRIGGER `trg_interessenraum_log_ins` AFTER INSERT ON `interessenraum`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessenraum_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `interessenraum` WHERE id = NEW.id ;
+END ;;
+DELIMITER ;
+SET sql_mode              = @saved_sql_mode  ;
+SET character_set_client  = @saved_cs_client  ;
+SET character_set_results = @saved_cs_results  ;
+SET collation_connection  = @saved_col_connection  ;
+SET @saved_cs_client      = @@character_set_client  ;
+SET @saved_cs_results     = @@character_set_results  ;
+SET @saved_col_connection = @@collation_connection  ;
+SET character_set_client  = utf8mb4  ;
+SET character_set_results = utf8mb4  ;
+SET collation_connection  = utf8mb4_general_ci  ;
+SET @saved_sql_mode       = @@sql_mode  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+DELIMITER ;;
+CREATE TRIGGER `trg_interessenraum_log_upd` AFTER UPDATE ON `interessenraum`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessenraum_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `interessenraum` WHERE id = NEW.id ;
+END ;;
+DELIMITER ;
+SET sql_mode              = @saved_sql_mode  ;
+SET character_set_client  = @saved_cs_client  ;
+SET character_set_results = @saved_cs_results  ;
+SET collation_connection  = @saved_col_connection  ;
+SET @saved_cs_client      = @@character_set_client  ;
+SET @saved_cs_results     = @@character_set_results  ;
+SET @saved_col_connection = @@collation_connection  ;
+SET character_set_client  = utf8mb4  ;
+SET character_set_results = utf8mb4  ;
+SET collation_connection  = utf8mb4_general_ci  ;
+SET @saved_sql_mode       = @@sql_mode  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+DELIMITER ;;
+CREATE TRIGGER `trg_interessenraum_log_del_before` BEFORE DELETE ON `interessenraum`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessenraum_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `interessenraum` WHERE id = OLD.id ;
+END ;;
+DELIMITER ;
+SET sql_mode              = @saved_sql_mode  ;
+SET character_set_client  = @saved_cs_client  ;
+SET character_set_results = @saved_cs_results  ;
+SET collation_connection  = @saved_col_connection  ;
+SET @saved_cs_client      = @@character_set_client  ;
+SET @saved_cs_results     = @@character_set_results  ;
+SET @saved_col_connection = @@collation_connection  ;
+SET character_set_client  = utf8mb4  ;
+SET character_set_results = utf8mb4  ;
+SET collation_connection  = utf8mb4_general_ci  ;
+SET @saved_sql_mode       = @@sql_mode  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
+DELIMITER ;;
+CREATE TRIGGER `trg_interessenraum_log_del_after` AFTER DELETE ON `interessenraum`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `interessenraum_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+END ;;
+DELIMITER ;
+SET sql_mode              = @saved_sql_mode  ;
+SET character_set_client  = @saved_cs_client  ;
+SET character_set_results = @saved_cs_results  ;
+SET collation_connection  = @saved_col_connection  ;
+
+--
+-- Table structure for table `interessenraum_log`
+--
+
+DROP TABLE IF EXISTS `interessenraum_log`;
+SET @saved_cs_client     = @@character_set_client ;
+SET character_set_client = utf8 ;
+CREATE TABLE `interessenraum_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Name des Interessenbereiches',
+  `name_fr` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Französischer Name des Interessenbereiches',
+  `beschreibung` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Beschreibung des Interessenraumes',
+  `beschreibung_fr` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Französische Beschreibung des Interessenraumes',
+  `reihenfolge` int(11) DEFAULT NULL COMMENT 'Anzeigereihenfolge (je kleiner desto höher)',
+  `notizen` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `eingabe_abgeschlossen_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `kontrolliert_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `freigabe_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  UNIQUE KEY `interessenraum_name_unique` (`name`) COMMENT 'Fachlicher unique constraint',
+  KEY `reihenfolge` (`reihenfolge`),
+  KEY `fk_interessenraum_log_snapshot_id` (`snapshot_id`),
+  CONSTRAINT `fk_interessenraum_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Liste der Interessenbereiche (Stammdaten)';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -4287,6 +4545,7 @@ CREATE TABLE `parlamentarier_transparenz` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des Parlamentariers',
   `stichdatum` date NOT NULL COMMENT 'Stichdatum der Auswertung der Vergütungstransparenz',
+  `in_liste` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Ist dieser Eintrag in der Transparenzliste mit dem angegebenen Stichdatum enthalten? (Dieses Feld verhindert Transparenzlisteneinträge löschen zu müssen, wenn diese nicht in der Transparenzliste enthalten sind.)',
   `verguetung_transparent` enum('ja','nein','teilweise') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Ist der dieser Parlamentarier transparent bzgl seinen Vergütungen? ja, nein, teilweise (Leer/NULL bedeutet noch nicht eingetragen)',
   `notizen` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
@@ -4403,6 +4662,7 @@ CREATE TABLE `parlamentarier_transparenz_log` (
   `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des Parlamentariers',
   `stichdatum` date NOT NULL COMMENT 'Stichdatum der Auswertung der Vergütungstransparenz',
+  `in_liste` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Ist dieser Eintrag in der Transparenzliste mit dem angegebenen Stichdatum enthalten? (Dieses Feld verhindert Transparenzlisteneinträge löschen zu müssen, wenn diese nicht in der Transparenzliste enthalten sind.)',
   `verguetung_transparent` enum('ja','nein','teilweise') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Ist der dieser Parlamentarier transparent bzgl seinen Vergütungen? ja, nein, teilweise (Leer/NULL bedeutet noch nicht eingetragen)',
   `notizen` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
@@ -5828,57 +6088,58 @@ DROP TABLE IF EXISTS `uv_interessenbindung_jahr`;
 DROP VIEW IF EXISTS `uv_interessenbindung_jahr`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `uv_interessenbindung_jahr` AS SELECT 
- 1 AS `id`,
- 1 AS `interessenbindung_id`,
- 1 AS `jahr`,
- 1 AS `verguetung`,
- 1 AS `beschreibung`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `interessenbindung_parlamentarier_id`,
- 1 AS `interessenbindung_organisation_id`,
- 1 AS `interessenbindung_art`,
- 1 AS `interessenbindung_funktion_im_gremium`,
- 1 AS `interessenbindung_deklarationstyp`,
- 1 AS `interessenbindung_status`,
- 1 AS `interessenbindung_hauptberuflich`,
- 1 AS `interessenbindung_behoerden_vertreter`,
- 1 AS `interessenbindung_beschreibung`,
- 1 AS `interessenbindung_beschreibung_fr`,
- 1 AS `interessenbindung_quelle_url`,
- 1 AS `interessenbindung_quelle_url_gueltig`,
- 1 AS `interessenbindung_quelle`,
- 1 AS `interessenbindung_von`,
- 1 AS `interessenbindung_bis`,
- 1 AS `interessenbindung_notizen`,
- 1 AS `interessenbindung_updated_by_import`,
- 1 AS `interessenbindung_eingabe_abgeschlossen_visa`,
- 1 AS `interessenbindung_eingabe_abgeschlossen_datum`,
- 1 AS `interessenbindung_kontrolliert_visa`,
- 1 AS `interessenbindung_kontrolliert_datum`,
- 1 AS `interessenbindung_autorisiert_visa`,
- 1 AS `interessenbindung_autorisiert_datum`,
- 1 AS `interessenbindung_freigabe_visa`,
- 1 AS `interessenbindung_freigabe_datum`,
- 1 AS `interessenbindung_created_visa`,
- 1 AS `interessenbindung_created_date`,
- 1 AS `interessenbindung_updated_visa`,
- 1 AS `interessenbindung_updated_date`;
+CREATE TABLE `uv_interessenbindung_jahr` (
+  `id` tinyint NOT NULL,
+  `interessenbindung_id` tinyint NOT NULL,
+  `jahr` tinyint NOT NULL,
+  `verguetung` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `interessenbindung_parlamentarier_id` tinyint NOT NULL,
+  `interessenbindung_organisation_id` tinyint NOT NULL,
+  `interessenbindung_art` tinyint NOT NULL,
+  `interessenbindung_funktion_im_gremium` tinyint NOT NULL,
+  `interessenbindung_deklarationstyp` tinyint NOT NULL,
+  `interessenbindung_status` tinyint NOT NULL,
+  `interessenbindung_hauptberuflich` tinyint NOT NULL,
+  `interessenbindung_behoerden_vertreter` tinyint NOT NULL,
+  `interessenbindung_beschreibung` tinyint NOT NULL,
+  `interessenbindung_beschreibung_fr` tinyint NOT NULL,
+  `interessenbindung_quelle_url` tinyint NOT NULL,
+  `interessenbindung_quelle_url_gueltig` tinyint NOT NULL,
+  `interessenbindung_quelle` tinyint NOT NULL,
+  `interessenbindung_von` tinyint NOT NULL,
+  `interessenbindung_bis` tinyint NOT NULL,
+  `interessenbindung_notizen` tinyint NOT NULL,
+  `interessenbindung_updated_by_import` tinyint NOT NULL,
+  `interessenbindung_eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `interessenbindung_eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `interessenbindung_kontrolliert_visa` tinyint NOT NULL,
+  `interessenbindung_kontrolliert_datum` tinyint NOT NULL,
+  `interessenbindung_autorisiert_visa` tinyint NOT NULL,
+  `interessenbindung_autorisiert_datum` tinyint NOT NULL,
+  `interessenbindung_freigabe_visa` tinyint NOT NULL,
+  `interessenbindung_freigabe_datum` tinyint NOT NULL,
+  `interessenbindung_created_visa` tinyint NOT NULL,
+  `interessenbindung_created_date` tinyint NOT NULL,
+  `interessenbindung_updated_visa` tinyint NOT NULL,
+  `interessenbindung_updated_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -5889,37 +6150,38 @@ DROP TABLE IF EXISTS `uv_wissensartikel_link`;
 DROP VIEW IF EXISTS `uv_wissensartikel_link`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `uv_wissensartikel_link` AS SELECT 
- 1 AS `id`,
- 1 AS `node_id`,
- 1 AS `target_table_name`,
- 1 AS `target_id`,
- 1 AS `target_table_name_with_id`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `nid`,
- 1 AS `vid`,
- 1 AS `type`,
- 1 AS `language`,
- 1 AS `title`,
- 1 AS `uid`,
- 1 AS `status`,
- 1 AS `created`,
- 1 AS `changed`,
- 1 AS `comment`,
- 1 AS `promote`,
- 1 AS `sticky`,
- 1 AS `tnid`,
- 1 AS `translate`;
+CREATE TABLE `uv_wissensartikel_link` (
+  `id` tinyint NOT NULL,
+  `node_id` tinyint NOT NULL,
+  `target_table_name` tinyint NOT NULL,
+  `target_id` tinyint NOT NULL,
+  `target_table_name_with_id` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `nid` tinyint NOT NULL,
+  `vid` tinyint NOT NULL,
+  `type` tinyint NOT NULL,
+  `language` tinyint NOT NULL,
+  `title` tinyint NOT NULL,
+  `uid` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `created` tinyint NOT NULL,
+  `changed` tinyint NOT NULL,
+  `comment` tinyint NOT NULL,
+  `promote` tinyint NOT NULL,
+  `sticky` tinyint NOT NULL,
+  `tnid` tinyint NOT NULL,
+  `translate` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -5930,14 +6192,15 @@ DROP TABLE IF EXISTS `v_all_entity_records`;
 DROP VIEW IF EXISTS `v_all_entity_records`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_all_entity_records` AS SELECT 
- 1 AS `table_name`,
- 1 AS `table_name_with_id`,
- 1 AS `id`,
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `anzeige_name_mixed`;
+CREATE TABLE `v_all_entity_records` (
+  `table_name` tinyint NOT NULL,
+  `table_name_with_id` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `anzeige_name_mixed` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -5948,68 +6211,69 @@ DROP TABLE IF EXISTS `v_branche`;
 DROP VIEW IF EXISTS `v_branche`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_branche` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `anzeige_name_mixed`,
- 1 AS `id`,
- 1 AS `name`,
- 1 AS `name_fr`,
- 1 AS `kommission_id`,
- 1 AS `kommission2_id`,
- 1 AS `technischer_name`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `angaben`,
- 1 AS `angaben_fr`,
- 1 AS `farbcode`,
- 1 AS `symbol_abs`,
- 1 AS `symbol_rel`,
- 1 AS `symbol_klein_rel`,
- 1 AS `symbol_dateiname_wo_ext`,
- 1 AS `symbol_dateierweiterung`,
- 1 AS `symbol_dateiname`,
- 1 AS `symbol_mime_type`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `name_de`,
- 1 AS `beschreibung_de`,
- 1 AS `angaben_de`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `kommission1_id`,
- 1 AS `kommission1`,
- 1 AS `kommission1_de`,
- 1 AS `kommission1_fr`,
- 1 AS `kommission1_name`,
- 1 AS `kommission1_name_de`,
- 1 AS `kommission1_name_fr`,
- 1 AS `kommission1_abkuerzung`,
- 1 AS `kommission1_abkuerzung_de`,
- 1 AS `kommission1_abkuerzung_fr`,
- 1 AS `kommission2`,
- 1 AS `kommission2_de`,
- 1 AS `kommission2_fr`,
- 1 AS `kommission2_name`,
- 1 AS `kommission2_name_de`,
- 1 AS `kommission2_name_fr`,
- 1 AS `kommission2_abkuerzung`,
- 1 AS `kommission2_abkuerzung_de`,
- 1 AS `kommission2_abkuerzung_fr`;
+CREATE TABLE `v_branche` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `anzeige_name_mixed` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `kommission_id` tinyint NOT NULL,
+  `kommission2_id` tinyint NOT NULL,
+  `technischer_name` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `angaben` tinyint NOT NULL,
+  `angaben_fr` tinyint NOT NULL,
+  `farbcode` tinyint NOT NULL,
+  `symbol_abs` tinyint NOT NULL,
+  `symbol_rel` tinyint NOT NULL,
+  `symbol_klein_rel` tinyint NOT NULL,
+  `symbol_dateiname_wo_ext` tinyint NOT NULL,
+  `symbol_dateierweiterung` tinyint NOT NULL,
+  `symbol_dateiname` tinyint NOT NULL,
+  `symbol_mime_type` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `beschreibung_de` tinyint NOT NULL,
+  `angaben_de` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `kommission1_id` tinyint NOT NULL,
+  `kommission1` tinyint NOT NULL,
+  `kommission1_de` tinyint NOT NULL,
+  `kommission1_fr` tinyint NOT NULL,
+  `kommission1_name` tinyint NOT NULL,
+  `kommission1_name_de` tinyint NOT NULL,
+  `kommission1_name_fr` tinyint NOT NULL,
+  `kommission1_abkuerzung` tinyint NOT NULL,
+  `kommission1_abkuerzung_de` tinyint NOT NULL,
+  `kommission1_abkuerzung_fr` tinyint NOT NULL,
+  `kommission2` tinyint NOT NULL,
+  `kommission2_de` tinyint NOT NULL,
+  `kommission2_fr` tinyint NOT NULL,
+  `kommission2_name` tinyint NOT NULL,
+  `kommission2_name_de` tinyint NOT NULL,
+  `kommission2_name_fr` tinyint NOT NULL,
+  `kommission2_abkuerzung` tinyint NOT NULL,
+  `kommission2_abkuerzung_de` tinyint NOT NULL,
+  `kommission2_abkuerzung_fr` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6020,12 +6284,13 @@ DROP TABLE IF EXISTS `v_branche_name_with_null`;
 DROP VIEW IF EXISTS `v_branche_name_with_null`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_branche_name_with_null` AS SELECT 
- 1 AS `id`,
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `anzeige_name_mixed`;
+CREATE TABLE `v_branche_name_with_null` (
+  `id` tinyint NOT NULL,
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `anzeige_name_mixed` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6036,49 +6301,50 @@ DROP TABLE IF EXISTS `v_branche_simple`;
 DROP VIEW IF EXISTS `v_branche_simple`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_branche_simple` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `anzeige_name_mixed`,
- 1 AS `id`,
- 1 AS `name`,
- 1 AS `name_fr`,
- 1 AS `kommission_id`,
- 1 AS `kommission2_id`,
- 1 AS `technischer_name`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `angaben`,
- 1 AS `angaben_fr`,
- 1 AS `farbcode`,
- 1 AS `symbol_abs`,
- 1 AS `symbol_rel`,
- 1 AS `symbol_klein_rel`,
- 1 AS `symbol_dateiname_wo_ext`,
- 1 AS `symbol_dateierweiterung`,
- 1 AS `symbol_dateiname`,
- 1 AS `symbol_mime_type`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `name_de`,
- 1 AS `beschreibung_de`,
- 1 AS `angaben_de`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_branche_simple` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `anzeige_name_mixed` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `kommission_id` tinyint NOT NULL,
+  `kommission2_id` tinyint NOT NULL,
+  `technischer_name` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `angaben` tinyint NOT NULL,
+  `angaben_fr` tinyint NOT NULL,
+  `farbcode` tinyint NOT NULL,
+  `symbol_abs` tinyint NOT NULL,
+  `symbol_rel` tinyint NOT NULL,
+  `symbol_klein_rel` tinyint NOT NULL,
+  `symbol_dateiname_wo_ext` tinyint NOT NULL,
+  `symbol_dateierweiterung` tinyint NOT NULL,
+  `symbol_dateiname` tinyint NOT NULL,
+  `symbol_mime_type` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `beschreibung_de` tinyint NOT NULL,
+  `angaben_de` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6089,40 +6355,41 @@ DROP TABLE IF EXISTS `v_country`;
 DROP VIEW IF EXISTS `v_country`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_country` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `anzeige_name_mixed`,
- 1 AS `id`,
- 1 AS `continent`,
- 1 AS `name_en`,
- 1 AS `official_name_en`,
- 1 AS `capital_en`,
- 1 AS `name_de`,
- 1 AS `official_name_de`,
- 1 AS `capital_de`,
- 1 AS `name_fr`,
- 1 AS `official_name_fr`,
- 1 AS `capital_fr`,
- 1 AS `name_it`,
- 1 AS `official_name_it`,
- 1 AS `capital_it`,
- 1 AS `iso2`,
- 1 AS `iso3`,
- 1 AS `vehicle_code`,
- 1 AS `ioc`,
- 1 AS `tld`,
- 1 AS `currency`,
- 1 AS `phone`,
- 1 AS `utc`,
- 1 AS `show_level`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`;
+CREATE TABLE `v_country` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `anzeige_name_mixed` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `continent` tinyint NOT NULL,
+  `name_en` tinyint NOT NULL,
+  `official_name_en` tinyint NOT NULL,
+  `capital_en` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `official_name_de` tinyint NOT NULL,
+  `capital_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `official_name_fr` tinyint NOT NULL,
+  `capital_fr` tinyint NOT NULL,
+  `name_it` tinyint NOT NULL,
+  `official_name_it` tinyint NOT NULL,
+  `capital_it` tinyint NOT NULL,
+  `iso2` tinyint NOT NULL,
+  `iso3` tinyint NOT NULL,
+  `vehicle_code` tinyint NOT NULL,
+  `ioc` tinyint NOT NULL,
+  `tld` tinyint NOT NULL,
+  `currency` tinyint NOT NULL,
+  `phone` tinyint NOT NULL,
+  `utc` tinyint NOT NULL,
+  `show_level` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6133,24 +6400,26 @@ DROP TABLE IF EXISTS `v_d7_node`;
 DROP VIEW IF EXISTS `v_d7_node`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_d7_node` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_lang`,
- 1 AS `anzeige_meta`,
- 1 AS `nid`,
- 1 AS `vid`,
- 1 AS `type`,
- 1 AS `language`,
- 1 AS `title`,
- 1 AS `uid`,
- 1 AS `status`,
- 1 AS `created`,
- 1 AS `changed`,
- 1 AS `comment`,
- 1 AS `promote`,
- 1 AS `sticky`,
- 1 AS `tnid`,
- 1 AS `translate`;
+CREATE TABLE `v_d7_node` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_lang` tinyint NOT NULL,
+  `anzeige_meta` tinyint NOT NULL,
+  `nid` tinyint NOT NULL,
+  `vid` tinyint NOT NULL,
+  `type` tinyint NOT NULL,
+  `language` tinyint NOT NULL,
+  `title` tinyint NOT NULL,
+  `uid` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `created` tinyint NOT NULL,
+  `changed` tinyint NOT NULL,
+  `comment` tinyint NOT NULL,
+  `promote` tinyint NOT NULL,
+  `sticky` tinyint NOT NULL,
+  `tnid` tinyint NOT NULL,
+  `translate` tinyint NOT NULL,
+  `tnid_nid` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6161,21 +6430,22 @@ DROP TABLE IF EXISTS `v_d7_node_raw`;
 DROP VIEW IF EXISTS `v_d7_node_raw`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_d7_node_raw` AS SELECT 
- 1 AS `nid`,
- 1 AS `vid`,
- 1 AS `type`,
- 1 AS `language`,
- 1 AS `title`,
- 1 AS `uid`,
- 1 AS `status`,
- 1 AS `created`,
- 1 AS `changed`,
- 1 AS `comment`,
- 1 AS `promote`,
- 1 AS `sticky`,
- 1 AS `tnid`,
- 1 AS `translate`;
+CREATE TABLE `v_d7_node_raw` (
+  `nid` tinyint NOT NULL,
+  `vid` tinyint NOT NULL,
+  `type` tinyint NOT NULL,
+  `language` tinyint NOT NULL,
+  `title` tinyint NOT NULL,
+  `uid` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `created` tinyint NOT NULL,
+  `changed` tinyint NOT NULL,
+  `comment` tinyint NOT NULL,
+  `promote` tinyint NOT NULL,
+  `sticky` tinyint NOT NULL,
+  `tnid` tinyint NOT NULL,
+  `translate` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6186,24 +6456,25 @@ DROP TABLE IF EXISTS `v_d7_node_simple`;
 DROP VIEW IF EXISTS `v_d7_node_simple`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_d7_node_simple` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_lang`,
- 1 AS `anzeige_meta`,
- 1 AS `nid`,
- 1 AS `vid`,
- 1 AS `type`,
- 1 AS `language`,
- 1 AS `title`,
- 1 AS `uid`,
- 1 AS `status`,
- 1 AS `created`,
- 1 AS `changed`,
- 1 AS `comment`,
- 1 AS `promote`,
- 1 AS `sticky`,
- 1 AS `tnid`,
- 1 AS `translate`;
+CREATE TABLE `v_d7_node_simple` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_lang` tinyint NOT NULL,
+  `anzeige_meta` tinyint NOT NULL,
+  `nid` tinyint NOT NULL,
+  `vid` tinyint NOT NULL,
+  `type` tinyint NOT NULL,
+  `language` tinyint NOT NULL,
+  `title` tinyint NOT NULL,
+  `uid` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `created` tinyint NOT NULL,
+  `changed` tinyint NOT NULL,
+  `comment` tinyint NOT NULL,
+  `promote` tinyint NOT NULL,
+  `sticky` tinyint NOT NULL,
+  `tnid` tinyint NOT NULL,
+  `translate` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6214,40 +6485,41 @@ DROP TABLE IF EXISTS `v_fraktion`;
 DROP VIEW IF EXISTS `v_fraktion`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_fraktion` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `anzeige_name_mixed`,
- 1 AS `id`,
- 1 AS `abkuerzung`,
- 1 AS `name`,
- 1 AS `name_fr`,
- 1 AS `position`,
- 1 AS `farbcode`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `name_de`,
- 1 AS `beschreibung_de`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_fraktion` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `anzeige_name_mixed` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `abkuerzung` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `position` tinyint NOT NULL,
+  `farbcode` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `beschreibung_de` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6258,54 +6530,55 @@ DROP TABLE IF EXISTS `v_in_kommission`;
 DROP VIEW IF EXISTS `v_in_kommission`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_in_kommission` AS SELECT 
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `kommission_id`,
- 1 AS `funktion`,
- 1 AS `parlament_committee_function`,
- 1 AS `parlament_committee_function_name`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `rat`,
- 1 AS `rat_de`,
- 1 AS `rat_fr`,
- 1 AS `rat_mixed`,
- 1 AS `ratstyp`,
- 1 AS `kommission_abkuerzung`,
- 1 AS `kommission_name`,
- 1 AS `kommission_abkuerzung_de`,
- 1 AS `kommission_name_de`,
- 1 AS `kommission_abkuerzung_fr`,
- 1 AS `kommission_name_fr`,
- 1 AS `kommission_abkuerzung_mixed`,
- 1 AS `kommission_name_mixed`,
- 1 AS `kommission_art`,
- 1 AS `kommission_typ`,
- 1 AS `kommission_beschreibung`,
- 1 AS `kommission_sachbereiche`,
- 1 AS `kommission_mutter_kommission_id`,
- 1 AS `kommission_parlament_url`;
+CREATE TABLE `v_in_kommission` (
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `kommission_id` tinyint NOT NULL,
+  `funktion` tinyint NOT NULL,
+  `parlament_committee_function` tinyint NOT NULL,
+  `parlament_committee_function_name` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `rat` tinyint NOT NULL,
+  `rat_de` tinyint NOT NULL,
+  `rat_fr` tinyint NOT NULL,
+  `rat_mixed` tinyint NOT NULL,
+  `ratstyp` tinyint NOT NULL,
+  `kommission_abkuerzung` tinyint NOT NULL,
+  `kommission_name` tinyint NOT NULL,
+  `kommission_abkuerzung_de` tinyint NOT NULL,
+  `kommission_name_de` tinyint NOT NULL,
+  `kommission_abkuerzung_fr` tinyint NOT NULL,
+  `kommission_name_fr` tinyint NOT NULL,
+  `kommission_abkuerzung_mixed` tinyint NOT NULL,
+  `kommission_name_mixed` tinyint NOT NULL,
+  `kommission_art` tinyint NOT NULL,
+  `kommission_typ` tinyint NOT NULL,
+  `kommission_beschreibung` tinyint NOT NULL,
+  `kommission_sachbereiche` tinyint NOT NULL,
+  `kommission_mutter_kommission_id` tinyint NOT NULL,
+  `kommission_parlament_url` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6316,45 +6589,46 @@ DROP TABLE IF EXISTS `v_in_kommission_liste`;
 DROP VIEW IF EXISTS `v_in_kommission_liste`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_in_kommission_liste` AS SELECT 
- 1 AS `abkuerzung`,
- 1 AS `abkuerzung_fr`,
- 1 AS `name`,
- 1 AS `name_fr`,
- 1 AS `typ`,
- 1 AS `art`,
- 1 AS `beschreibung`,
- 1 AS `sachbereiche`,
- 1 AS `mutter_kommission_id`,
- 1 AS `parlament_url`,
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `kommission_id`,
- 1 AS `funktion`,
- 1 AS `parlament_committee_function`,
- 1 AS `parlament_committee_function_name`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_in_kommission_liste` (
+  `abkuerzung` tinyint NOT NULL,
+  `abkuerzung_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `typ` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `sachbereiche` tinyint NOT NULL,
+  `mutter_kommission_id` tinyint NOT NULL,
+  `parlament_url` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `kommission_id` tinyint NOT NULL,
+  `funktion` tinyint NOT NULL,
+  `parlament_committee_function` tinyint NOT NULL,
+  `parlament_committee_function_name` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6365,95 +6639,96 @@ DROP TABLE IF EXISTS `v_in_kommission_parlamentarier`;
 DROP VIEW IF EXISTS `v_in_kommission_parlamentarier`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_in_kommission_parlamentarier` AS SELECT 
- 1 AS `parlamentarier_name`,
- 1 AS `name`,
- 1 AS `nachname`,
- 1 AS `vorname`,
- 1 AS `zweiter_vorname`,
- 1 AS `rat_id`,
- 1 AS `kanton_id`,
- 1 AS `kommissionen`,
- 1 AS `partei_id`,
- 1 AS `parteifunktion`,
- 1 AS `fraktion_id`,
- 1 AS `fraktionsfunktion`,
- 1 AS `im_rat_seit`,
- 1 AS `im_rat_bis`,
- 1 AS `ratswechsel`,
- 1 AS `ratsunterbruch_von`,
- 1 AS `ratsunterbruch_bis`,
- 1 AS `beruf`,
- 1 AS `beruf_interessengruppe_id`,
- 1 AS `zivilstand`,
- 1 AS `anzahl_kinder`,
- 1 AS `militaerischer_grad_id`,
- 1 AS `geschlecht`,
- 1 AS `geburtstag`,
- 1 AS `photo`,
- 1 AS `photo_dateiname`,
- 1 AS `photo_dateierweiterung`,
- 1 AS `photo_dateiname_voll`,
- 1 AS `photo_mime_type`,
- 1 AS `kleinbild`,
- 1 AS `sitzplatz`,
- 1 AS `email`,
- 1 AS `homepage`,
- 1 AS `parlament_biografie_id`,
- 1 AS `twitter_name`,
- 1 AS `linkedin_profil_url`,
- 1 AS `xing_profil_name`,
- 1 AS `facebook_name`,
- 1 AS `arbeitssprache`,
- 1 AS `adresse_firma`,
- 1 AS `adresse_strasse`,
- 1 AS `adresse_zusatz`,
- 1 AS `adresse_plz`,
- 1 AS `adresse_ort`,
- 1 AS `im_rat_seit_unix`,
- 1 AS `im_rat_bis_unix`,
- 1 AS `rat`,
- 1 AS `rat_de`,
- 1 AS `rat_fr`,
- 1 AS `kanton`,
- 1 AS `vertretene_bevoelkerung`,
- 1 AS `kommissionen_namen`,
- 1 AS `kommissionen_abkuerzung`,
- 1 AS `partei`,
- 1 AS `partei_de`,
- 1 AS `partei_fr`,
- 1 AS `fraktion`,
- 1 AS `militaerischer_grad`,
- 1 AS `militaerischer_grad_de`,
- 1 AS `militaerischer_grad_fr`,
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `kommission_id`,
- 1 AS `funktion`,
- 1 AS `parlament_committee_function`,
- 1 AS `parlament_committee_function_name`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_in_kommission_parlamentarier` (
+  `parlamentarier_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `nachname` tinyint NOT NULL,
+  `vorname` tinyint NOT NULL,
+  `zweiter_vorname` tinyint NOT NULL,
+  `rat_id` tinyint NOT NULL,
+  `kanton_id` tinyint NOT NULL,
+  `kommissionen` tinyint NOT NULL,
+  `partei_id` tinyint NOT NULL,
+  `parteifunktion` tinyint NOT NULL,
+  `fraktion_id` tinyint NOT NULL,
+  `fraktionsfunktion` tinyint NOT NULL,
+  `im_rat_seit` tinyint NOT NULL,
+  `im_rat_bis` tinyint NOT NULL,
+  `ratswechsel` tinyint NOT NULL,
+  `ratsunterbruch_von` tinyint NOT NULL,
+  `ratsunterbruch_bis` tinyint NOT NULL,
+  `beruf` tinyint NOT NULL,
+  `beruf_interessengruppe_id` tinyint NOT NULL,
+  `zivilstand` tinyint NOT NULL,
+  `anzahl_kinder` tinyint NOT NULL,
+  `militaerischer_grad_id` tinyint NOT NULL,
+  `geschlecht` tinyint NOT NULL,
+  `geburtstag` tinyint NOT NULL,
+  `photo` tinyint NOT NULL,
+  `photo_dateiname` tinyint NOT NULL,
+  `photo_dateierweiterung` tinyint NOT NULL,
+  `photo_dateiname_voll` tinyint NOT NULL,
+  `photo_mime_type` tinyint NOT NULL,
+  `kleinbild` tinyint NOT NULL,
+  `sitzplatz` tinyint NOT NULL,
+  `email` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `parlament_biografie_id` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `linkedin_profil_url` tinyint NOT NULL,
+  `xing_profil_name` tinyint NOT NULL,
+  `facebook_name` tinyint NOT NULL,
+  `arbeitssprache` tinyint NOT NULL,
+  `adresse_firma` tinyint NOT NULL,
+  `adresse_strasse` tinyint NOT NULL,
+  `adresse_zusatz` tinyint NOT NULL,
+  `adresse_plz` tinyint NOT NULL,
+  `adresse_ort` tinyint NOT NULL,
+  `im_rat_seit_unix` tinyint NOT NULL,
+  `im_rat_bis_unix` tinyint NOT NULL,
+  `rat` tinyint NOT NULL,
+  `rat_de` tinyint NOT NULL,
+  `rat_fr` tinyint NOT NULL,
+  `kanton` tinyint NOT NULL,
+  `vertretene_bevoelkerung` tinyint NOT NULL,
+  `kommissionen_namen` tinyint NOT NULL,
+  `kommissionen_abkuerzung` tinyint NOT NULL,
+  `partei` tinyint NOT NULL,
+  `partei_de` tinyint NOT NULL,
+  `partei_fr` tinyint NOT NULL,
+  `fraktion` tinyint NOT NULL,
+  `militaerischer_grad` tinyint NOT NULL,
+  `militaerischer_grad_de` tinyint NOT NULL,
+  `militaerischer_grad_fr` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `kommission_id` tinyint NOT NULL,
+  `funktion` tinyint NOT NULL,
+  `parlament_committee_function` tinyint NOT NULL,
+  `parlament_committee_function_name` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6464,35 +6739,36 @@ DROP TABLE IF EXISTS `v_in_kommission_simple`;
 DROP VIEW IF EXISTS `v_in_kommission_simple`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_in_kommission_simple` AS SELECT 
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `kommission_id`,
- 1 AS `funktion`,
- 1 AS `parlament_committee_function`,
- 1 AS `parlament_committee_function_name`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_in_kommission_simple` (
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `kommission_id` tinyint NOT NULL,
+  `funktion` tinyint NOT NULL,
+  `parlament_committee_function` tinyint NOT NULL,
+  `parlament_committee_function_name` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6503,52 +6779,53 @@ DROP TABLE IF EXISTS `v_interessenbindung`;
 DROP VIEW IF EXISTS `v_interessenbindung`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_interessenbindung` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `organisation_id`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `deklarationstyp`,
- 1 AS `status`,
- 1 AS `hauptberuflich`,
- 1 AS `behoerden_vertreter`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `updated_by_import`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `wirksamkeit`,
- 1 AS `parlamentarier_im_rat_seit`,
- 1 AS `wirksamkeit_index`,
- 1 AS `organisation_lobbyeinfluss`,
- 1 AS `refreshed_date`;
+CREATE TABLE `v_interessenbindung` (
+  `anzeige_name` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `deklarationstyp` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `hauptberuflich` tinyint NOT NULL,
+  `behoerden_vertreter` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `updated_by_import` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `wirksamkeit` tinyint NOT NULL,
+  `parlamentarier_im_rat_seit` tinyint NOT NULL,
+  `wirksamkeit_index` tinyint NOT NULL,
+  `organisation_lobbyeinfluss` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6559,34 +6836,35 @@ DROP TABLE IF EXISTS `v_interessenbindung_jahr`;
 DROP VIEW IF EXISTS `v_interessenbindung_jahr`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_interessenbindung_jahr` AS SELECT 
- 1 AS `id`,
- 1 AS `interessenbindung_id`,
- 1 AS `jahr`,
- 1 AS `verguetung`,
- 1 AS `beschreibung`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_interessenbindung_jahr` (
+  `id` tinyint NOT NULL,
+  `interessenbindung_id` tinyint NOT NULL,
+  `jahr` tinyint NOT NULL,
+  `verguetung` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6597,13 +6875,52 @@ DROP TABLE IF EXISTS `v_interessenbindung_jahr_current`;
 DROP VIEW IF EXISTS `v_interessenbindung_jahr_current`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_interessenbindung_jahr_current` AS SELECT 
- 1 AS `interessenbindung_id`,
- 1 AS `verguetung`,
- 1 AS `verguetung_jahr`,
- 1 AS `verguetung_beschreibung`,
- 1 AS `published`,
- 1 AS `freigabe_datum`;
+CREATE TABLE `v_interessenbindung_jahr_current` (
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `deklarationstyp` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `hauptberuflich` tinyint NOT NULL,
+  `behoerden_vertreter` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `updated_by_import` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `verguetung` tinyint NOT NULL,
+  `verguetung_jahr` tinyint NOT NULL,
+  `verguetung_beschreibung` tinyint NOT NULL,
+  `verguetung_published` tinyint NOT NULL,
+  `verguetung_freigabe_datum` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6614,11 +6931,12 @@ DROP TABLE IF EXISTS `v_interessenbindung_jahr_last`;
 DROP VIEW IF EXISTS `v_interessenbindung_jahr_last`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_interessenbindung_jahr_last` AS SELECT 
- 1 AS `interessenbindung_id`,
- 1 AS `verguetung`,
- 1 AS `verguetung_jahr`,
- 1 AS `verguetung_beschreibung`;
+CREATE TABLE `v_interessenbindung_jahr_last` (
+  `interessenbindung_id` tinyint NOT NULL,
+  `verguetung` tinyint NOT NULL,
+  `verguetung_jahr` tinyint NOT NULL,
+  `verguetung_beschreibung` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6629,13 +6947,14 @@ DROP TABLE IF EXISTS `v_interessenbindung_jahr_max`;
 DROP VIEW IF EXISTS `v_interessenbindung_jahr_max`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_interessenbindung_jahr_max` AS SELECT 
- 1 AS `interessenbindung_id`,
- 1 AS `verguetung`,
- 1 AS `verguetung_jahr`,
- 1 AS `verguetung_beschreibung`,
- 1 AS `published`,
- 1 AS `freigabe_datum`;
+CREATE TABLE `v_interessenbindung_jahr_max` (
+  `interessenbindung_id` tinyint NOT NULL,
+  `verguetung` tinyint NOT NULL,
+  `verguetung_jahr` tinyint NOT NULL,
+  `verguetung_beschreibung` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6646,50 +6965,51 @@ DROP TABLE IF EXISTS `v_interessenbindung_jahr_raw`;
 DROP VIEW IF EXISTS `v_interessenbindung_jahr_raw`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_interessenbindung_jahr_raw` AS SELECT 
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `organisation_id`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `deklarationstyp`,
- 1 AS `status`,
- 1 AS `hauptberuflich`,
- 1 AS `behoerden_vertreter`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `updated_by_import`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `verguetung`,
- 1 AS `verguetung_jahr`,
- 1 AS `verguetung_beschreibung`,
- 1 AS `verguetung_freigabe_datum`;
+CREATE TABLE `v_interessenbindung_jahr_raw` (
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `deklarationstyp` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `hauptberuflich` tinyint NOT NULL,
+  `behoerden_vertreter` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `updated_by_import` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `verguetung` tinyint NOT NULL,
+  `verguetung_jahr` tinyint NOT NULL,
+  `verguetung_beschreibung` tinyint NOT NULL,
+  `verguetung_freigabe_datum` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6700,105 +7020,106 @@ DROP TABLE IF EXISTS `v_interessenbindung_liste`;
 DROP VIEW IF EXISTS `v_interessenbindung_liste`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_interessenbindung_liste` AS SELECT 
- 1 AS `organisation_name`,
- 1 AS `organisation_name_de`,
- 1 AS `organisation_name_fr`,
- 1 AS `name`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `name_it`,
- 1 AS `ort`,
- 1 AS `land_id`,
- 1 AS `interessenraum_id`,
- 1 AS `rechtsform`,
- 1 AS `typ`,
- 1 AS `vernehmlassung`,
- 1 AS `interessengruppe_id`,
- 1 AS `interessengruppe1_id`,
- 1 AS `interessengruppe2_id`,
- 1 AS `interessengruppe3_id`,
- 1 AS `homepage`,
- 1 AS `handelsregister_url`,
- 1 AS `twitter_name`,
- 1 AS `organisation_beschreibung`,
- 1 AS `adresse_strasse`,
- 1 AS `adresse_zusatz`,
- 1 AS `adresse_plz`,
- 1 AS `interessengruppe`,
- 1 AS `interessengruppe_fr`,
- 1 AS `interessengruppe_branche`,
- 1 AS `interessengruppe_branche_id`,
- 1 AS `interessengruppe1`,
- 1 AS `interessengruppe1_fr`,
- 1 AS `interessengruppe1_branche`,
- 1 AS `interessengruppe1_branche_id`,
- 1 AS `interessengruppe2`,
- 1 AS `interessengruppe2_fr`,
- 1 AS `interessengruppe2_branche`,
- 1 AS `interessengruppe2_branche_id`,
- 1 AS `interessengruppe3`,
- 1 AS `interessengruppe3_fr`,
- 1 AS `interessengruppe3_branche`,
- 1 AS `interessengruppe3_branche_id`,
- 1 AS `land`,
- 1 AS `interessenraum`,
- 1 AS `organisation_jahr_id`,
- 1 AS `jahr`,
- 1 AS `umsatz`,
- 1 AS `gewinn`,
- 1 AS `kapital`,
- 1 AS `mitarbeiter_weltweit`,
- 1 AS `mitarbeiter_schweiz`,
- 1 AS `geschaeftsbericht_url`,
- 1 AS `anzeige_name`,
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `organisation_id`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `deklarationstyp`,
- 1 AS `status`,
- 1 AS `hauptberuflich`,
- 1 AS `behoerden_vertreter`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `updated_by_import`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `wirksamkeit`,
- 1 AS `parlamentarier_im_rat_seit`,
- 1 AS `wirksamkeit_index`,
- 1 AS `organisation_lobbyeinfluss`,
- 1 AS `refreshed_date`,
- 1 AS `verguetung`,
- 1 AS `verguetung_jahr`,
- 1 AS `verguetung_beschreibung`;
+CREATE TABLE `v_interessenbindung_liste` (
+  `organisation_name` tinyint NOT NULL,
+  `organisation_name_de` tinyint NOT NULL,
+  `organisation_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `name_it` tinyint NOT NULL,
+  `ort` tinyint NOT NULL,
+  `land_id` tinyint NOT NULL,
+  `interessenraum_id` tinyint NOT NULL,
+  `rechtsform` tinyint NOT NULL,
+  `typ` tinyint NOT NULL,
+  `vernehmlassung` tinyint NOT NULL,
+  `interessengruppe_id` tinyint NOT NULL,
+  `interessengruppe1_id` tinyint NOT NULL,
+  `interessengruppe2_id` tinyint NOT NULL,
+  `interessengruppe3_id` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `handelsregister_url` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `organisation_beschreibung` tinyint NOT NULL,
+  `adresse_strasse` tinyint NOT NULL,
+  `adresse_zusatz` tinyint NOT NULL,
+  `adresse_plz` tinyint NOT NULL,
+  `interessengruppe` tinyint NOT NULL,
+  `interessengruppe_fr` tinyint NOT NULL,
+  `interessengruppe_branche` tinyint NOT NULL,
+  `interessengruppe_branche_id` tinyint NOT NULL,
+  `interessengruppe1` tinyint NOT NULL,
+  `interessengruppe1_fr` tinyint NOT NULL,
+  `interessengruppe1_branche` tinyint NOT NULL,
+  `interessengruppe1_branche_id` tinyint NOT NULL,
+  `interessengruppe2` tinyint NOT NULL,
+  `interessengruppe2_fr` tinyint NOT NULL,
+  `interessengruppe2_branche` tinyint NOT NULL,
+  `interessengruppe2_branche_id` tinyint NOT NULL,
+  `interessengruppe3` tinyint NOT NULL,
+  `interessengruppe3_fr` tinyint NOT NULL,
+  `interessengruppe3_branche` tinyint NOT NULL,
+  `interessengruppe3_branche_id` tinyint NOT NULL,
+  `land` tinyint NOT NULL,
+  `interessenraum` tinyint NOT NULL,
+  `organisation_jahr_id` tinyint NOT NULL,
+  `jahr` tinyint NOT NULL,
+  `umsatz` tinyint NOT NULL,
+  `gewinn` tinyint NOT NULL,
+  `kapital` tinyint NOT NULL,
+  `mitarbeiter_weltweit` tinyint NOT NULL,
+  `mitarbeiter_schweiz` tinyint NOT NULL,
+  `geschaeftsbericht_url` tinyint NOT NULL,
+  `anzeige_name` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `deklarationstyp` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `hauptberuflich` tinyint NOT NULL,
+  `behoerden_vertreter` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `updated_by_import` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `wirksamkeit` tinyint NOT NULL,
+  `parlamentarier_im_rat_seit` tinyint NOT NULL,
+  `wirksamkeit_index` tinyint NOT NULL,
+  `organisation_lobbyeinfluss` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL,
+  `verguetung` tinyint NOT NULL,
+  `verguetung_jahr` tinyint NOT NULL,
+  `verguetung_beschreibung` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6809,106 +7130,107 @@ DROP TABLE IF EXISTS `v_interessenbindung_liste_indirekt`;
 DROP VIEW IF EXISTS `v_interessenbindung_liste_indirekt`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_interessenbindung_liste_indirekt` AS SELECT 
- 1 AS `beziehung`,
- 1 AS `organisation_name`,
- 1 AS `organisation_name_de`,
- 1 AS `organisation_name_fr`,
- 1 AS `name`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `name_it`,
- 1 AS `ort`,
- 1 AS `land_id`,
- 1 AS `interessenraum_id`,
- 1 AS `rechtsform`,
- 1 AS `typ`,
- 1 AS `vernehmlassung`,
- 1 AS `interessengruppe_id`,
- 1 AS `interessengruppe1_id`,
- 1 AS `interessengruppe2_id`,
- 1 AS `interessengruppe3_id`,
- 1 AS `homepage`,
- 1 AS `handelsregister_url`,
- 1 AS `twitter_name`,
- 1 AS `organisation_beschreibung`,
- 1 AS `adresse_strasse`,
- 1 AS `adresse_zusatz`,
- 1 AS `adresse_plz`,
- 1 AS `interessengruppe`,
- 1 AS `interessengruppe_fr`,
- 1 AS `interessengruppe_branche`,
- 1 AS `interessengruppe_branche_id`,
- 1 AS `interessengruppe1`,
- 1 AS `interessengruppe1_fr`,
- 1 AS `interessengruppe1_branche`,
- 1 AS `interessengruppe1_branche_id`,
- 1 AS `interessengruppe2`,
- 1 AS `interessengruppe2_fr`,
- 1 AS `interessengruppe2_branche`,
- 1 AS `interessengruppe2_branche_id`,
- 1 AS `interessengruppe3`,
- 1 AS `interessengruppe3_fr`,
- 1 AS `interessengruppe3_branche`,
- 1 AS `interessengruppe3_branche_id`,
- 1 AS `land`,
- 1 AS `interessenraum`,
- 1 AS `organisation_jahr_id`,
- 1 AS `jahr`,
- 1 AS `umsatz`,
- 1 AS `gewinn`,
- 1 AS `kapital`,
- 1 AS `mitarbeiter_weltweit`,
- 1 AS `mitarbeiter_schweiz`,
- 1 AS `geschaeftsbericht_url`,
- 1 AS `anzeige_name`,
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `organisation_id`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `deklarationstyp`,
- 1 AS `status`,
- 1 AS `hauptberuflich`,
- 1 AS `behoerden_vertreter`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `updated_by_import`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `wirksamkeit`,
- 1 AS `parlamentarier_im_rat_seit`,
- 1 AS `wirksamkeit_index`,
- 1 AS `organisation_lobbyeinfluss`,
- 1 AS `refreshed_date`,
- 1 AS `verguetung`,
- 1 AS `verguetung_jahr`,
- 1 AS `verguetung_beschreibung`;
+CREATE TABLE `v_interessenbindung_liste_indirekt` (
+  `beziehung` tinyint NOT NULL,
+  `organisation_name` tinyint NOT NULL,
+  `organisation_name_de` tinyint NOT NULL,
+  `organisation_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `name_it` tinyint NOT NULL,
+  `ort` tinyint NOT NULL,
+  `land_id` tinyint NOT NULL,
+  `interessenraum_id` tinyint NOT NULL,
+  `rechtsform` tinyint NOT NULL,
+  `typ` tinyint NOT NULL,
+  `vernehmlassung` tinyint NOT NULL,
+  `interessengruppe_id` tinyint NOT NULL,
+  `interessengruppe1_id` tinyint NOT NULL,
+  `interessengruppe2_id` tinyint NOT NULL,
+  `interessengruppe3_id` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `handelsregister_url` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `organisation_beschreibung` tinyint NOT NULL,
+  `adresse_strasse` tinyint NOT NULL,
+  `adresse_zusatz` tinyint NOT NULL,
+  `adresse_plz` tinyint NOT NULL,
+  `interessengruppe` tinyint NOT NULL,
+  `interessengruppe_fr` tinyint NOT NULL,
+  `interessengruppe_branche` tinyint NOT NULL,
+  `interessengruppe_branche_id` tinyint NOT NULL,
+  `interessengruppe1` tinyint NOT NULL,
+  `interessengruppe1_fr` tinyint NOT NULL,
+  `interessengruppe1_branche` tinyint NOT NULL,
+  `interessengruppe1_branche_id` tinyint NOT NULL,
+  `interessengruppe2` tinyint NOT NULL,
+  `interessengruppe2_fr` tinyint NOT NULL,
+  `interessengruppe2_branche` tinyint NOT NULL,
+  `interessengruppe2_branche_id` tinyint NOT NULL,
+  `interessengruppe3` tinyint NOT NULL,
+  `interessengruppe3_fr` tinyint NOT NULL,
+  `interessengruppe3_branche` tinyint NOT NULL,
+  `interessengruppe3_branche_id` tinyint NOT NULL,
+  `land` tinyint NOT NULL,
+  `interessenraum` tinyint NOT NULL,
+  `organisation_jahr_id` tinyint NOT NULL,
+  `jahr` tinyint NOT NULL,
+  `umsatz` tinyint NOT NULL,
+  `gewinn` tinyint NOT NULL,
+  `kapital` tinyint NOT NULL,
+  `mitarbeiter_weltweit` tinyint NOT NULL,
+  `mitarbeiter_schweiz` tinyint NOT NULL,
+  `geschaeftsbericht_url` tinyint NOT NULL,
+  `anzeige_name` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `deklarationstyp` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `hauptberuflich` tinyint NOT NULL,
+  `behoerden_vertreter` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `updated_by_import` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `wirksamkeit` tinyint NOT NULL,
+  `parlamentarier_im_rat_seit` tinyint NOT NULL,
+  `wirksamkeit_index` tinyint NOT NULL,
+  `organisation_lobbyeinfluss` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL,
+  `verguetung` tinyint NOT NULL,
+  `verguetung_jahr` tinyint NOT NULL,
+  `verguetung_beschreibung` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6919,49 +7241,50 @@ DROP TABLE IF EXISTS `v_interessenbindung_medium_raw`;
 DROP VIEW IF EXISTS `v_interessenbindung_medium_raw`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_interessenbindung_medium_raw` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `organisation_id`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `deklarationstyp`,
- 1 AS `status`,
- 1 AS `hauptberuflich`,
- 1 AS `behoerden_vertreter`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `updated_by_import`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `wirksamkeit`,
- 1 AS `parlamentarier_im_rat_seit`;
+CREATE TABLE `v_interessenbindung_medium_raw` (
+  `anzeige_name` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `deklarationstyp` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `hauptberuflich` tinyint NOT NULL,
+  `behoerden_vertreter` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `updated_by_import` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `wirksamkeit` tinyint NOT NULL,
+  `parlamentarier_im_rat_seit` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -6972,52 +7295,53 @@ DROP TABLE IF EXISTS `v_interessenbindung_raw`;
 DROP VIEW IF EXISTS `v_interessenbindung_raw`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_interessenbindung_raw` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `organisation_id`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `deklarationstyp`,
- 1 AS `status`,
- 1 AS `hauptberuflich`,
- 1 AS `behoerden_vertreter`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `updated_by_import`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `wirksamkeit`,
- 1 AS `parlamentarier_im_rat_seit`,
- 1 AS `wirksamkeit_index`,
- 1 AS `organisation_lobbyeinfluss`,
- 1 AS `refreshed_date`;
+CREATE TABLE `v_interessenbindung_raw` (
+  `anzeige_name` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `deklarationstyp` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `hauptberuflich` tinyint NOT NULL,
+  `behoerden_vertreter` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `updated_by_import` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `wirksamkeit` tinyint NOT NULL,
+  `parlamentarier_im_rat_seit` tinyint NOT NULL,
+  `wirksamkeit_index` tinyint NOT NULL,
+  `organisation_lobbyeinfluss` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7028,46 +7352,47 @@ DROP TABLE IF EXISTS `v_interessenbindung_simple`;
 DROP VIEW IF EXISTS `v_interessenbindung_simple`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_interessenbindung_simple` AS SELECT 
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `organisation_id`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `deklarationstyp`,
- 1 AS `status`,
- 1 AS `hauptberuflich`,
- 1 AS `behoerden_vertreter`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `updated_by_import`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_interessenbindung_simple` (
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `deklarationstyp` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `hauptberuflich` tinyint NOT NULL,
+  `behoerden_vertreter` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `updated_by_import` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7078,63 +7403,64 @@ DROP TABLE IF EXISTS `v_interessengruppe`;
 DROP VIEW IF EXISTS `v_interessengruppe`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_interessengruppe` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `anzeige_name_mixed`,
- 1 AS `id`,
- 1 AS `name`,
- 1 AS `name_fr`,
- 1 AS `branche_id`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `alias_namen`,
- 1 AS `alias_namen_fr`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `name_de`,
- 1 AS `beschreibung_de`,
- 1 AS `alias_namen_de`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `branche`,
- 1 AS `branche_de`,
- 1 AS `branche_fr`,
- 1 AS `kommission_id`,
- 1 AS `kommission1_id`,
- 1 AS `kommission2_id`,
- 1 AS `kommission1`,
- 1 AS `kommission1_de`,
- 1 AS `kommission1_fr`,
- 1 AS `kommission1_name`,
- 1 AS `kommission1_name_de`,
- 1 AS `kommission1_name_fr`,
- 1 AS `kommission1_abkuerzung`,
- 1 AS `kommission1_abkuerzung_de`,
- 1 AS `kommission1_abkuerzung_fr`,
- 1 AS `kommission2`,
- 1 AS `kommission2_de`,
- 1 AS `kommission2_fr`,
- 1 AS `kommission2_name`,
- 1 AS `kommission2_name_de`,
- 1 AS `kommission2_name_fr`,
- 1 AS `kommission2_abkuerzung`,
- 1 AS `kommission2_abkuerzung_de`,
- 1 AS `kommission2_abkuerzung_fr`;
+CREATE TABLE `v_interessengruppe` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `anzeige_name_mixed` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `branche_id` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `alias_namen` tinyint NOT NULL,
+  `alias_namen_fr` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `beschreibung_de` tinyint NOT NULL,
+  `alias_namen_de` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `branche` tinyint NOT NULL,
+  `branche_de` tinyint NOT NULL,
+  `branche_fr` tinyint NOT NULL,
+  `kommission_id` tinyint NOT NULL,
+  `kommission1_id` tinyint NOT NULL,
+  `kommission2_id` tinyint NOT NULL,
+  `kommission1` tinyint NOT NULL,
+  `kommission1_de` tinyint NOT NULL,
+  `kommission1_fr` tinyint NOT NULL,
+  `kommission1_name` tinyint NOT NULL,
+  `kommission1_name_de` tinyint NOT NULL,
+  `kommission1_name_fr` tinyint NOT NULL,
+  `kommission1_abkuerzung` tinyint NOT NULL,
+  `kommission1_abkuerzung_de` tinyint NOT NULL,
+  `kommission1_abkuerzung_fr` tinyint NOT NULL,
+  `kommission2` tinyint NOT NULL,
+  `kommission2_de` tinyint NOT NULL,
+  `kommission2_fr` tinyint NOT NULL,
+  `kommission2_name` tinyint NOT NULL,
+  `kommission2_name_de` tinyint NOT NULL,
+  `kommission2_name_fr` tinyint NOT NULL,
+  `kommission2_abkuerzung` tinyint NOT NULL,
+  `kommission2_abkuerzung_de` tinyint NOT NULL,
+  `kommission2_abkuerzung_fr` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7145,39 +7471,40 @@ DROP TABLE IF EXISTS `v_interessengruppe_simple`;
 DROP VIEW IF EXISTS `v_interessengruppe_simple`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_interessengruppe_simple` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `anzeige_name_mixed`,
- 1 AS `id`,
- 1 AS `name`,
- 1 AS `name_fr`,
- 1 AS `branche_id`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `alias_namen`,
- 1 AS `alias_namen_fr`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `name_de`,
- 1 AS `beschreibung_de`,
- 1 AS `alias_namen_de`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_interessengruppe_simple` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `anzeige_name_mixed` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `branche_id` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `alias_namen` tinyint NOT NULL,
+  `alias_namen_fr` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `beschreibung_de` tinyint NOT NULL,
+  `alias_namen_de` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7188,36 +7515,37 @@ DROP TABLE IF EXISTS `v_interessenraum`;
 DROP VIEW IF EXISTS `v_interessenraum`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_interessenraum` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `anzeige_name_mixed`,
- 1 AS `id`,
- 1 AS `name`,
- 1 AS `name_fr`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `reihenfolge`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `name_de`,
- 1 AS `beschreibung_de`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_interessenraum` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `anzeige_name_mixed` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `reihenfolge` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `beschreibung_de` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7228,50 +7556,51 @@ DROP TABLE IF EXISTS `v_kanton`;
 DROP VIEW IF EXISTS `v_kanton`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_kanton` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `anzeige_name_mixed`,
- 1 AS `id`,
- 1 AS `abkuerzung`,
- 1 AS `kantonsnr`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `name_it`,
- 1 AS `romandie`,
- 1 AS `anzahl_staenderaete`,
- 1 AS `amtssprache`,
- 1 AS `hauptort_de`,
- 1 AS `hauptort_fr`,
- 1 AS `hauptort_it`,
- 1 AS `flaeche_km2`,
- 1 AS `beitrittsjahr`,
- 1 AS `wappen_svg`,
- 1 AS `wappen_svg_pfad`,
- 1 AS `wappen_klein`,
- 1 AS `wappen`,
- 1 AS `lagebild`,
- 1 AS `homepage`,
- 1 AS `beschreibung`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `kanton_jahr_id`,
- 1 AS `jahr`,
- 1 AS `einwohner`,
- 1 AS `auslaenderanteil`,
- 1 AS `bevoelkerungsdichte`,
- 1 AS `anzahl_gemeinden`,
- 1 AS `anzahl_nationalraete`;
+CREATE TABLE `v_kanton` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `anzeige_name_mixed` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `abkuerzung` tinyint NOT NULL,
+  `kantonsnr` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `name_it` tinyint NOT NULL,
+  `romandie` tinyint NOT NULL,
+  `anzahl_staenderaete` tinyint NOT NULL,
+  `amtssprache` tinyint NOT NULL,
+  `hauptort_de` tinyint NOT NULL,
+  `hauptort_fr` tinyint NOT NULL,
+  `hauptort_it` tinyint NOT NULL,
+  `flaeche_km2` tinyint NOT NULL,
+  `beitrittsjahr` tinyint NOT NULL,
+  `wappen_svg` tinyint NOT NULL,
+  `wappen_svg_pfad` tinyint NOT NULL,
+  `wappen_klein` tinyint NOT NULL,
+  `wappen` tinyint NOT NULL,
+  `lagebild` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `kanton_jahr_id` tinyint NOT NULL,
+  `jahr` tinyint NOT NULL,
+  `einwohner` tinyint NOT NULL,
+  `auslaenderanteil` tinyint NOT NULL,
+  `bevoelkerungsdichte` tinyint NOT NULL,
+  `anzahl_gemeinden` tinyint NOT NULL,
+  `anzahl_nationalraete` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7282,36 +7611,37 @@ DROP TABLE IF EXISTS `v_kanton_jahr`;
 DROP VIEW IF EXISTS `v_kanton_jahr`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_kanton_jahr` AS SELECT 
- 1 AS `id`,
- 1 AS `kanton_id`,
- 1 AS `jahr`,
- 1 AS `anzahl_nationalraete`,
- 1 AS `einwohner`,
- 1 AS `auslaenderanteil`,
- 1 AS `bevoelkerungsdichte`,
- 1 AS `anzahl_gemeinden`,
- 1 AS `steuereinnahmen`,
- 1 AS `ausgaben`,
- 1 AS `finanzausgleich`,
- 1 AS `schulden`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_kanton_jahr` (
+  `id` tinyint NOT NULL,
+  `kanton_id` tinyint NOT NULL,
+  `jahr` tinyint NOT NULL,
+  `anzahl_nationalraete` tinyint NOT NULL,
+  `einwohner` tinyint NOT NULL,
+  `auslaenderanteil` tinyint NOT NULL,
+  `bevoelkerungsdichte` tinyint NOT NULL,
+  `anzahl_gemeinden` tinyint NOT NULL,
+  `steuereinnahmen` tinyint NOT NULL,
+  `ausgaben` tinyint NOT NULL,
+  `finanzausgleich` tinyint NOT NULL,
+  `schulden` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7322,31 +7652,32 @@ DROP TABLE IF EXISTS `v_kanton_jahr_last`;
 DROP VIEW IF EXISTS `v_kanton_jahr_last`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_kanton_jahr_last` AS SELECT 
- 1 AS `max_jahr`,
- 1 AS `id`,
- 1 AS `kanton_id`,
- 1 AS `jahr`,
- 1 AS `anzahl_nationalraete`,
- 1 AS `einwohner`,
- 1 AS `auslaenderanteil`,
- 1 AS `bevoelkerungsdichte`,
- 1 AS `anzahl_gemeinden`,
- 1 AS `steuereinnahmen`,
- 1 AS `ausgaben`,
- 1 AS `finanzausgleich`,
- 1 AS `schulden`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`;
+CREATE TABLE `v_kanton_jahr_last` (
+  `max_jahr` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `kanton_id` tinyint NOT NULL,
+  `jahr` tinyint NOT NULL,
+  `anzahl_nationalraete` tinyint NOT NULL,
+  `einwohner` tinyint NOT NULL,
+  `auslaenderanteil` tinyint NOT NULL,
+  `bevoelkerungsdichte` tinyint NOT NULL,
+  `anzahl_gemeinden` tinyint NOT NULL,
+  `steuereinnahmen` tinyint NOT NULL,
+  `ausgaben` tinyint NOT NULL,
+  `finanzausgleich` tinyint NOT NULL,
+  `schulden` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7357,43 +7688,44 @@ DROP TABLE IF EXISTS `v_kanton_simple`;
 DROP VIEW IF EXISTS `v_kanton_simple`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_kanton_simple` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `anzeige_name_mixed`,
- 1 AS `id`,
- 1 AS `abkuerzung`,
- 1 AS `kantonsnr`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `name_it`,
- 1 AS `romandie`,
- 1 AS `anzahl_staenderaete`,
- 1 AS `amtssprache`,
- 1 AS `hauptort_de`,
- 1 AS `hauptort_fr`,
- 1 AS `hauptort_it`,
- 1 AS `flaeche_km2`,
- 1 AS `beitrittsjahr`,
- 1 AS `wappen_svg`,
- 1 AS `wappen_svg_pfad`,
- 1 AS `wappen_klein`,
- 1 AS `wappen`,
- 1 AS `lagebild`,
- 1 AS `homepage`,
- 1 AS `beschreibung`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`;
+CREATE TABLE `v_kanton_simple` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `anzeige_name_mixed` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `abkuerzung` tinyint NOT NULL,
+  `kantonsnr` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `name_it` tinyint NOT NULL,
+  `romandie` tinyint NOT NULL,
+  `anzahl_staenderaete` tinyint NOT NULL,
+  `amtssprache` tinyint NOT NULL,
+  `hauptort_de` tinyint NOT NULL,
+  `hauptort_fr` tinyint NOT NULL,
+  `hauptort_it` tinyint NOT NULL,
+  `flaeche_km2` tinyint NOT NULL,
+  `beitrittsjahr` tinyint NOT NULL,
+  `wappen_svg` tinyint NOT NULL,
+  `wappen_svg_pfad` tinyint NOT NULL,
+  `wappen_klein` tinyint NOT NULL,
+  `wappen` tinyint NOT NULL,
+  `lagebild` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7404,56 +7736,57 @@ DROP TABLE IF EXISTS `v_kommission`;
 DROP VIEW IF EXISTS `v_kommission`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_kommission` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `anzeige_name_mixed`,
- 1 AS `id`,
- 1 AS `abkuerzung`,
- 1 AS `abkuerzung_fr`,
- 1 AS `name`,
- 1 AS `name_fr`,
- 1 AS `rat_id`,
- 1 AS `typ`,
- 1 AS `art`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `sachbereiche`,
- 1 AS `sachbereiche_fr`,
- 1 AS `anzahl_mitglieder`,
- 1 AS `anzahl_nationalraete`,
- 1 AS `anzahl_staenderaete`,
- 1 AS `mutter_kommission_id`,
- 1 AS `zweitrat_kommission_id`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `parlament_url`,
- 1 AS `parlament_id`,
- 1 AS `parlament_committee_number`,
- 1 AS `parlament_subcommittee_number`,
- 1 AS `parlament_type_code`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `name_de`,
- 1 AS `abkuerzung_de`,
- 1 AS `beschreibung_de`,
- 1 AS `sachbereiche_de`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_kommission` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `anzeige_name_mixed` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `abkuerzung` tinyint NOT NULL,
+  `abkuerzung_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `rat_id` tinyint NOT NULL,
+  `typ` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `sachbereiche` tinyint NOT NULL,
+  `sachbereiche_fr` tinyint NOT NULL,
+  `anzahl_mitglieder` tinyint NOT NULL,
+  `anzahl_nationalraete` tinyint NOT NULL,
+  `anzahl_staenderaete` tinyint NOT NULL,
+  `mutter_kommission_id` tinyint NOT NULL,
+  `zweitrat_kommission_id` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `parlament_url` tinyint NOT NULL,
+  `parlament_id` tinyint NOT NULL,
+  `parlament_committee_number` tinyint NOT NULL,
+  `parlament_subcommittee_number` tinyint NOT NULL,
+  `parlament_type_code` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `abkuerzung_de` tinyint NOT NULL,
+  `beschreibung_de` tinyint NOT NULL,
+  `sachbereiche_de` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7464,13 +7797,14 @@ DROP TABLE IF EXISTS `v_last_updated_branche`;
 DROP VIEW IF EXISTS `v_last_updated_branche`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_branche` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_branche` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7481,13 +7815,14 @@ DROP TABLE IF EXISTS `v_last_updated_fraktion`;
 DROP VIEW IF EXISTS `v_last_updated_fraktion`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_fraktion` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_fraktion` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7498,13 +7833,14 @@ DROP TABLE IF EXISTS `v_last_updated_in_kommission`;
 DROP VIEW IF EXISTS `v_last_updated_in_kommission`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_in_kommission` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_in_kommission` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7515,13 +7851,14 @@ DROP TABLE IF EXISTS `v_last_updated_interessenbindung`;
 DROP VIEW IF EXISTS `v_last_updated_interessenbindung`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_interessenbindung` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_interessenbindung` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7532,13 +7869,14 @@ DROP TABLE IF EXISTS `v_last_updated_interessenbindung_jahr`;
 DROP VIEW IF EXISTS `v_last_updated_interessenbindung_jahr`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_interessenbindung_jahr` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_interessenbindung_jahr` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7549,13 +7887,14 @@ DROP TABLE IF EXISTS `v_last_updated_interessengruppe`;
 DROP VIEW IF EXISTS `v_last_updated_interessengruppe`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_interessengruppe` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_interessengruppe` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7566,13 +7905,14 @@ DROP TABLE IF EXISTS `v_last_updated_kanton`;
 DROP VIEW IF EXISTS `v_last_updated_kanton`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_kanton` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_kanton` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7583,13 +7923,14 @@ DROP TABLE IF EXISTS `v_last_updated_kanton_jahr`;
 DROP VIEW IF EXISTS `v_last_updated_kanton_jahr`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_kanton_jahr` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_kanton_jahr` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7600,13 +7941,14 @@ DROP TABLE IF EXISTS `v_last_updated_kommission`;
 DROP VIEW IF EXISTS `v_last_updated_kommission`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_kommission` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_kommission` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7617,13 +7959,14 @@ DROP TABLE IF EXISTS `v_last_updated_mandat`;
 DROP VIEW IF EXISTS `v_last_updated_mandat`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_mandat` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_mandat` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7634,13 +7977,14 @@ DROP TABLE IF EXISTS `v_last_updated_mandat_jahr`;
 DROP VIEW IF EXISTS `v_last_updated_mandat_jahr`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_mandat_jahr` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_mandat_jahr` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7651,13 +7995,14 @@ DROP TABLE IF EXISTS `v_last_updated_organisation`;
 DROP VIEW IF EXISTS `v_last_updated_organisation`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_organisation` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_organisation` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7668,13 +8013,14 @@ DROP TABLE IF EXISTS `v_last_updated_organisation_anhang`;
 DROP VIEW IF EXISTS `v_last_updated_organisation_anhang`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_organisation_anhang` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_organisation_anhang` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7685,13 +8031,14 @@ DROP TABLE IF EXISTS `v_last_updated_organisation_beziehung`;
 DROP VIEW IF EXISTS `v_last_updated_organisation_beziehung`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_organisation_beziehung` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_organisation_beziehung` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7702,13 +8049,14 @@ DROP TABLE IF EXISTS `v_last_updated_organisation_jahr`;
 DROP VIEW IF EXISTS `v_last_updated_organisation_jahr`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_organisation_jahr` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_organisation_jahr` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7719,13 +8067,14 @@ DROP TABLE IF EXISTS `v_last_updated_parlamentarier`;
 DROP VIEW IF EXISTS `v_last_updated_parlamentarier`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_parlamentarier` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_parlamentarier` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7736,13 +8085,14 @@ DROP TABLE IF EXISTS `v_last_updated_parlamentarier_anhang`;
 DROP VIEW IF EXISTS `v_last_updated_parlamentarier_anhang`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_parlamentarier_anhang` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_parlamentarier_anhang` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7753,13 +8103,14 @@ DROP TABLE IF EXISTS `v_last_updated_parlamentarier_transparenz`;
 DROP VIEW IF EXISTS `v_last_updated_parlamentarier_transparenz`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_parlamentarier_transparenz` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_parlamentarier_transparenz` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7770,13 +8121,14 @@ DROP TABLE IF EXISTS `v_last_updated_partei`;
 DROP VIEW IF EXISTS `v_last_updated_partei`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_partei` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_partei` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7787,13 +8139,14 @@ DROP TABLE IF EXISTS `v_last_updated_person`;
 DROP VIEW IF EXISTS `v_last_updated_person`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_person` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_person` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7804,13 +8157,14 @@ DROP TABLE IF EXISTS `v_last_updated_person_anhang`;
 DROP VIEW IF EXISTS `v_last_updated_person_anhang`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_person_anhang` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_person_anhang` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7821,13 +8175,14 @@ DROP TABLE IF EXISTS `v_last_updated_rat`;
 DROP VIEW IF EXISTS `v_last_updated_rat`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_rat` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_rat` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7838,13 +8193,14 @@ DROP TABLE IF EXISTS `v_last_updated_settings`;
 DROP VIEW IF EXISTS `v_last_updated_settings`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_settings` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_settings` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7855,13 +8211,14 @@ DROP TABLE IF EXISTS `v_last_updated_settings_category`;
 DROP VIEW IF EXISTS `v_last_updated_settings_category`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_settings_category` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_settings_category` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7872,13 +8229,14 @@ DROP TABLE IF EXISTS `v_last_updated_tables`;
 DROP VIEW IF EXISTS `v_last_updated_tables`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_tables` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_tables` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7889,13 +8247,14 @@ DROP TABLE IF EXISTS `v_last_updated_tables_unordered`;
 DROP VIEW IF EXISTS `v_last_updated_tables_unordered`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_tables_unordered` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_tables_unordered` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7906,13 +8265,14 @@ DROP TABLE IF EXISTS `v_last_updated_wissensartikel_link`;
 DROP VIEW IF EXISTS `v_last_updated_wissensartikel_link`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_wissensartikel_link` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_wissensartikel_link` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7923,13 +8283,14 @@ DROP TABLE IF EXISTS `v_last_updated_zutrittsberechtigung`;
 DROP VIEW IF EXISTS `v_last_updated_zutrittsberechtigung`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_last_updated_zutrittsberechtigung` AS SELECT 
- 1 AS `table_name`,
- 1 AS `name`,
- 1 AS `anzahl_eintraege`,
- 1 AS `last_visa`,
- 1 AS `last_updated`,
- 1 AS `last_updated_id`;
+CREATE TABLE `v_last_updated_zutrittsberechtigung` (
+  `table_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `anzahl_eintraege` tinyint NOT NULL,
+  `last_visa` tinyint NOT NULL,
+  `last_updated` tinyint NOT NULL,
+  `last_updated_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7940,47 +8301,48 @@ DROP TABLE IF EXISTS `v_mandat`;
 DROP VIEW IF EXISTS `v_mandat`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_mandat` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `id`,
- 1 AS `person_id`,
- 1 AS `organisation_id`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `hauptberuflich`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `wirksamkeit`,
- 1 AS `wirksamkeit_index`,
- 1 AS `organisation_lobbyeinfluss`,
- 1 AS `refreshed_date`;
+CREATE TABLE `v_mandat` (
+  `anzeige_name` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `person_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `hauptberuflich` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `wirksamkeit` tinyint NOT NULL,
+  `wirksamkeit_index` tinyint NOT NULL,
+  `organisation_lobbyeinfluss` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -7991,34 +8353,35 @@ DROP TABLE IF EXISTS `v_mandat_jahr`;
 DROP VIEW IF EXISTS `v_mandat_jahr`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_mandat_jahr` AS SELECT 
- 1 AS `id`,
- 1 AS `mandat_id`,
- 1 AS `jahr`,
- 1 AS `verguetung`,
- 1 AS `beschreibung`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_mandat_jahr` (
+  `id` tinyint NOT NULL,
+  `mandat_id` tinyint NOT NULL,
+  `jahr` tinyint NOT NULL,
+  `verguetung` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -8029,44 +8392,45 @@ DROP TABLE IF EXISTS `v_mandat_medium_raw`;
 DROP VIEW IF EXISTS `v_mandat_medium_raw`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_mandat_medium_raw` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `id`,
- 1 AS `person_id`,
- 1 AS `organisation_id`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `hauptberuflich`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `wirksamkeit`;
+CREATE TABLE `v_mandat_medium_raw` (
+  `anzeige_name` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `person_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `hauptberuflich` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `wirksamkeit` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -8077,47 +8441,48 @@ DROP TABLE IF EXISTS `v_mandat_raw`;
 DROP VIEW IF EXISTS `v_mandat_raw`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_mandat_raw` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `id`,
- 1 AS `person_id`,
- 1 AS `organisation_id`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `hauptberuflich`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `wirksamkeit`,
- 1 AS `wirksamkeit_index`,
- 1 AS `organisation_lobbyeinfluss`,
- 1 AS `refreshed_date`;
+CREATE TABLE `v_mandat_raw` (
+  `anzeige_name` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `person_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `hauptberuflich` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `wirksamkeit` tinyint NOT NULL,
+  `wirksamkeit_index` tinyint NOT NULL,
+  `organisation_lobbyeinfluss` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -8128,42 +8493,43 @@ DROP TABLE IF EXISTS `v_mandat_simple`;
 DROP VIEW IF EXISTS `v_mandat_simple`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_mandat_simple` AS SELECT 
- 1 AS `id`,
- 1 AS `person_id`,
- 1 AS `organisation_id`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `hauptberuflich`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_mandat_simple` (
+  `id` tinyint NOT NULL,
+  `person_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `hauptberuflich` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -8174,23 +8540,24 @@ DROP TABLE IF EXISTS `v_mil_grad`;
 DROP VIEW IF EXISTS `v_mil_grad`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_mil_grad` AS SELECT 
- 1 AS `id`,
- 1 AS `name`,
- 1 AS `name_fr`,
- 1 AS `abkuerzung`,
- 1 AS `abkuerzung_fr`,
- 1 AS `typ`,
- 1 AS `ranghoehe`,
- 1 AS `anzeigestufe`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `name_de`,
- 1 AS `abkuerzung_de`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`;
+CREATE TABLE `v_mil_grad` (
+  `id` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `abkuerzung` tinyint NOT NULL,
+  `abkuerzung_fr` tinyint NOT NULL,
+  `typ` tinyint NOT NULL,
+  `ranghoehe` tinyint NOT NULL,
+  `anzeigestufe` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `abkuerzung_de` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -8201,195 +8568,196 @@ DROP TABLE IF EXISTS `v_organisation`;
 DROP VIEW IF EXISTS `v_organisation`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_mixed`,
- 1 AS `anzeige_bimixed`,
- 1 AS `searchable_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `name`,
- 1 AS `id`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `name_it`,
- 1 AS `uid`,
- 1 AS `ort`,
- 1 AS `abkuerzung_de`,
- 1 AS `alias_namen_de`,
- 1 AS `abkuerzung_fr`,
- 1 AS `alias_namen_fr`,
- 1 AS `abkuerzung_it`,
- 1 AS `alias_namen_it`,
- 1 AS `land_id`,
- 1 AS `interessenraum_id`,
- 1 AS `rechtsform`,
- 1 AS `rechtsform_handelsregister`,
- 1 AS `rechtsform_zefix`,
- 1 AS `typ`,
- 1 AS `vernehmlassung`,
- 1 AS `interessengruppe_id`,
- 1 AS `interessengruppe2_id`,
- 1 AS `interessengruppe3_id`,
- 1 AS `ALT_branche_id`,
- 1 AS `homepage`,
- 1 AS `handelsregister_url`,
- 1 AS `twitter_name`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `sekretariat`,
- 1 AS `adresse_strasse`,
- 1 AS `adresse_zusatz`,
- 1 AS `adresse_plz`,
- 1 AS `notizen`,
- 1 AS `updated_by_import`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `branche_ALT`,
- 1 AS `branche_de_ALT`,
- 1 AS `branche_fr_ALT`,
- 1 AS `interessengruppe`,
- 1 AS `interessengruppe_de`,
- 1 AS `interessengruppe_fr`,
- 1 AS `interessengruppe_branche`,
- 1 AS `interessengruppe_branche_de`,
- 1 AS `interessengruppe_branche_fr`,
- 1 AS `interessengruppe_branche_id`,
- 1 AS `interessengruppe_branche_kommission1_id`,
- 1 AS `interessengruppe_branche_kommission1_abkuerzung`,
- 1 AS `interessengruppe_branche_kommission1_abkuerzung_de`,
- 1 AS `interessengruppe_branche_kommission1_abkuerzung_fr`,
- 1 AS `interessengruppe_branche_kommission1_name`,
- 1 AS `interessengruppe_branche_kommission1_name_de`,
- 1 AS `interessengruppe_branche_kommission1_name_fr`,
- 1 AS `interessengruppe_branche_kommission2_id`,
- 1 AS `interessengruppe_branche_kommission2_abkuerzung`,
- 1 AS `interessengruppe_branche_kommission2_abkuerzung_de`,
- 1 AS `interessengruppe_branche_kommission2_abkuerzung_fr`,
- 1 AS `interessengruppe_branche_kommission2_name`,
- 1 AS `interessengruppe_branche_kommission2_name_de`,
- 1 AS `interessengruppe_branche_kommission2_name_fr`,
- 1 AS `interessengruppe1`,
- 1 AS `interessengruppe1_id`,
- 1 AS `interessengruppe1_de`,
- 1 AS `interessengruppe1_fr`,
- 1 AS `interessengruppe1_branche`,
- 1 AS `interessengruppe1_branche_de`,
- 1 AS `interessengruppe1_branche_fr`,
- 1 AS `interessengruppe1_branche_id`,
- 1 AS `interessengruppe1_branche_kommission_abkuerzung`,
- 1 AS `interessengruppe1_branche_kommission_abkuerzung_de`,
- 1 AS `interessengruppe1_branche_kommission_abkuerzung_fr`,
- 1 AS `interessengruppe1_branche_kommissionen_abkuerzung`,
- 1 AS `interessengruppe1_branche_kommissionen_abkuerzung_de`,
- 1 AS `interessengruppe1_branche_kommissionen_abkuerzung_fr`,
- 1 AS `interessengruppe1_branche_kommission1_id`,
- 1 AS `interessengruppe1_branche_kommission1_abkuerzung`,
- 1 AS `interessengruppe1_branche_kommission1_abkuerzung_de`,
- 1 AS `interessengruppe1_branche_kommission1_abkuerzung_fr`,
- 1 AS `interessengruppe1_branche_kommission1_name`,
- 1 AS `interessengruppe1_branche_kommission1_name_de`,
- 1 AS `interessengruppe1_branche_kommission1_name_fr`,
- 1 AS `interessengruppe1_branche_kommission2_id`,
- 1 AS `interessengruppe1_branche_kommission2_abkuerzung`,
- 1 AS `interessengruppe1_branche_kommission2_abkuerzung_de`,
- 1 AS `interessengruppe1_branche_kommission2_abkuerzung_fr`,
- 1 AS `interessengruppe1_branche_kommission2_name`,
- 1 AS `interessengruppe1_branche_kommission2_name_de`,
- 1 AS `interessengruppe1_branche_kommission2_name_fr`,
- 1 AS `interessengruppe2`,
- 1 AS `interessengruppe2_de`,
- 1 AS `interessengruppe2_fr`,
- 1 AS `interessengruppe2_branche`,
- 1 AS `interessengruppe2_branche_de`,
- 1 AS `interessengruppe2_branche_fr`,
- 1 AS `interessengruppe2_branche_id`,
- 1 AS `interessengruppe2_branche_kommission_abkuerzung`,
- 1 AS `interessengruppe2_branche_kommission_abkuerzung_de`,
- 1 AS `interessengruppe2_branche_kommission_abkuerzung_fr`,
- 1 AS `interessengruppe2_branche_kommissionen_abkuerzung`,
- 1 AS `interessengruppe2_branche_kommissionen_abkuerzung_de`,
- 1 AS `interessengruppe2_branche_kommissionen_abkuerzung_fr`,
- 1 AS `interessengruppe2_branche_kommission1_id`,
- 1 AS `interessengruppe2_branche_kommission1_abkuerzung`,
- 1 AS `interessengruppe2_branche_kommission1_abkuerzung_de`,
- 1 AS `interessengruppe2_branche_kommission1_abkuerzung_fr`,
- 1 AS `interessengruppe2_branche_kommission1_name`,
- 1 AS `interessengruppe2_branche_kommission1_name_de`,
- 1 AS `interessengruppe2_branche_kommission1_name_fr`,
- 1 AS `interessengruppe2_branche_kommission2_id`,
- 1 AS `interessengruppe2_branche_kommission2_abkuerzung`,
- 1 AS `interessengruppe2_branche_kommission2_abkuerzung_de`,
- 1 AS `interessengruppe2_branche_kommission2_abkuerzung_fr`,
- 1 AS `interessengruppe2_branche_kommission2_name`,
- 1 AS `interessengruppe2_branche_kommission2_name_de`,
- 1 AS `interessengruppe2_branche_kommission2_name_fr`,
- 1 AS `interessengruppe3`,
- 1 AS `interessengruppe3_de`,
- 1 AS `interessengruppe3_fr`,
- 1 AS `interessengruppe3_branche`,
- 1 AS `interessengruppe3_branche_de`,
- 1 AS `interessengruppe3_branche_fr`,
- 1 AS `interessengruppe3_branche_id`,
- 1 AS `interessengruppe3_branche_kommission_abkuerzung`,
- 1 AS `interessengruppe3_branche_kommission_abkuerzung_de`,
- 1 AS `interessengruppe3_branche_kommission_abkuerzung_fr`,
- 1 AS `interessengruppe3_branche_kommissionen_abkuerzung`,
- 1 AS `interessengruppe3_branche_kommissionen_abkuerzung_de`,
- 1 AS `interessengruppe3_branche_kommissionen_abkuerzung_fr`,
- 1 AS `interessengruppe3_branche_kommission1_id`,
- 1 AS `interessengruppe3_branche_kommission1_abkuerzung`,
- 1 AS `interessengruppe3_branche_kommission1_abkuerzung_de`,
- 1 AS `interessengruppe3_branche_kommission1_abkuerzung_fr`,
- 1 AS `interessengruppe3_branche_kommission1_name`,
- 1 AS `interessengruppe3_branche_kommission1_name_de`,
- 1 AS `interessengruppe3_branche_kommission1_name_fr`,
- 1 AS `interessengruppe3_branche_kommission2_id`,
- 1 AS `interessengruppe3_branche_kommission2_abkuerzung`,
- 1 AS `interessengruppe3_branche_kommission2_abkuerzung_de`,
- 1 AS `interessengruppe3_branche_kommission2_abkuerzung_fr`,
- 1 AS `interessengruppe3_branche_kommission2_name`,
- 1 AS `interessengruppe3_branche_kommission2_name_de`,
- 1 AS `interessengruppe3_branche_kommission2_name_fr`,
- 1 AS `refreshed_date`,
- 1 AS `land`,
- 1 AS `interessenraum`,
- 1 AS `interessenraum_de`,
- 1 AS `interessenraum_fr`,
- 1 AS `organisation_jahr_id`,
- 1 AS `jahr`,
- 1 AS `umsatz`,
- 1 AS `gewinn`,
- 1 AS `kapital`,
- 1 AS `mitarbeiter_weltweit`,
- 1 AS `mitarbeiter_schweiz`,
- 1 AS `geschaeftsbericht_url`,
- 1 AS `quelle_url`,
- 1 AS `anzahl_interessenbindung_tief`,
- 1 AS `anzahl_interessenbindung_mittel`,
- 1 AS `anzahl_interessenbindung_hoch`,
- 1 AS `anzahl_interessenbindung_tief_nach_wahl`,
- 1 AS `anzahl_interessenbindung_mittel_nach_wahl`,
- 1 AS `anzahl_interessenbindung_hoch_nach_wahl`,
- 1 AS `anzahl_mandat_tief`,
- 1 AS `anzahl_mandat_mittel`,
- 1 AS `anzahl_mandat_hoch`,
- 1 AS `lobbyeinfluss`,
- 1 AS `lobbyeinfluss_index`;
+CREATE TABLE `v_organisation` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_mixed` tinyint NOT NULL,
+  `anzeige_bimixed` tinyint NOT NULL,
+  `searchable_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `name_it` tinyint NOT NULL,
+  `uid` tinyint NOT NULL,
+  `ort` tinyint NOT NULL,
+  `abkuerzung_de` tinyint NOT NULL,
+  `alias_namen_de` tinyint NOT NULL,
+  `abkuerzung_fr` tinyint NOT NULL,
+  `alias_namen_fr` tinyint NOT NULL,
+  `abkuerzung_it` tinyint NOT NULL,
+  `alias_namen_it` tinyint NOT NULL,
+  `land_id` tinyint NOT NULL,
+  `interessenraum_id` tinyint NOT NULL,
+  `rechtsform` tinyint NOT NULL,
+  `rechtsform_handelsregister` tinyint NOT NULL,
+  `rechtsform_zefix` tinyint NOT NULL,
+  `typ` tinyint NOT NULL,
+  `vernehmlassung` tinyint NOT NULL,
+  `interessengruppe_id` tinyint NOT NULL,
+  `interessengruppe2_id` tinyint NOT NULL,
+  `interessengruppe3_id` tinyint NOT NULL,
+  `ALT_branche_id` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `handelsregister_url` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `sekretariat` tinyint NOT NULL,
+  `adresse_strasse` tinyint NOT NULL,
+  `adresse_zusatz` tinyint NOT NULL,
+  `adresse_plz` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `updated_by_import` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `branche_ALT` tinyint NOT NULL,
+  `branche_de_ALT` tinyint NOT NULL,
+  `branche_fr_ALT` tinyint NOT NULL,
+  `interessengruppe` tinyint NOT NULL,
+  `interessengruppe_de` tinyint NOT NULL,
+  `interessengruppe_fr` tinyint NOT NULL,
+  `interessengruppe_branche` tinyint NOT NULL,
+  `interessengruppe_branche_de` tinyint NOT NULL,
+  `interessengruppe_branche_fr` tinyint NOT NULL,
+  `interessengruppe_branche_id` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_id` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_abkuerzung` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_name` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_name_de` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_name_fr` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_id` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_abkuerzung` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_name` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_name_de` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_name_fr` tinyint NOT NULL,
+  `interessengruppe1` tinyint NOT NULL,
+  `interessengruppe1_id` tinyint NOT NULL,
+  `interessengruppe1_de` tinyint NOT NULL,
+  `interessengruppe1_fr` tinyint NOT NULL,
+  `interessengruppe1_branche` tinyint NOT NULL,
+  `interessengruppe1_branche_de` tinyint NOT NULL,
+  `interessengruppe1_branche_fr` tinyint NOT NULL,
+  `interessengruppe1_branche_id` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission_abkuerzung` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe1_branche_kommissionen_abkuerzung` tinyint NOT NULL,
+  `interessengruppe1_branche_kommissionen_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe1_branche_kommissionen_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_id` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_abkuerzung` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_name` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_name_de` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_name_fr` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_id` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_abkuerzung` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_name` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_name_de` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_name_fr` tinyint NOT NULL,
+  `interessengruppe2` tinyint NOT NULL,
+  `interessengruppe2_de` tinyint NOT NULL,
+  `interessengruppe2_fr` tinyint NOT NULL,
+  `interessengruppe2_branche` tinyint NOT NULL,
+  `interessengruppe2_branche_de` tinyint NOT NULL,
+  `interessengruppe2_branche_fr` tinyint NOT NULL,
+  `interessengruppe2_branche_id` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission_abkuerzung` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe2_branche_kommissionen_abkuerzung` tinyint NOT NULL,
+  `interessengruppe2_branche_kommissionen_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe2_branche_kommissionen_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_id` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_abkuerzung` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_name` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_name_de` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_name_fr` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_id` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_abkuerzung` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_name` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_name_de` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_name_fr` tinyint NOT NULL,
+  `interessengruppe3` tinyint NOT NULL,
+  `interessengruppe3_de` tinyint NOT NULL,
+  `interessengruppe3_fr` tinyint NOT NULL,
+  `interessengruppe3_branche` tinyint NOT NULL,
+  `interessengruppe3_branche_de` tinyint NOT NULL,
+  `interessengruppe3_branche_fr` tinyint NOT NULL,
+  `interessengruppe3_branche_id` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission_abkuerzung` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe3_branche_kommissionen_abkuerzung` tinyint NOT NULL,
+  `interessengruppe3_branche_kommissionen_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe3_branche_kommissionen_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_id` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_abkuerzung` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_name` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_name_de` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_name_fr` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_id` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_abkuerzung` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_name` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_name_de` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_name_fr` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL,
+  `land` tinyint NOT NULL,
+  `interessenraum` tinyint NOT NULL,
+  `interessenraum_de` tinyint NOT NULL,
+  `interessenraum_fr` tinyint NOT NULL,
+  `organisation_jahr_id` tinyint NOT NULL,
+  `jahr` tinyint NOT NULL,
+  `umsatz` tinyint NOT NULL,
+  `gewinn` tinyint NOT NULL,
+  `kapital` tinyint NOT NULL,
+  `mitarbeiter_weltweit` tinyint NOT NULL,
+  `mitarbeiter_schweiz` tinyint NOT NULL,
+  `geschaeftsbericht_url` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `anzahl_interessenbindung_tief` tinyint NOT NULL,
+  `anzahl_interessenbindung_mittel` tinyint NOT NULL,
+  `anzahl_interessenbindung_hoch` tinyint NOT NULL,
+  `anzahl_interessenbindung_tief_nach_wahl` tinyint NOT NULL,
+  `anzahl_interessenbindung_mittel_nach_wahl` tinyint NOT NULL,
+  `anzahl_interessenbindung_hoch_nach_wahl` tinyint NOT NULL,
+  `anzahl_mandat_tief` tinyint NOT NULL,
+  `anzahl_mandat_mittel` tinyint NOT NULL,
+  `anzahl_mandat_hoch` tinyint NOT NULL,
+  `lobbyeinfluss` tinyint NOT NULL,
+  `lobbyeinfluss_index` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -8400,23 +8768,24 @@ DROP TABLE IF EXISTS `v_organisation_anhang`;
 DROP VIEW IF EXISTS `v_organisation_anhang`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation_anhang` AS SELECT 
- 1 AS `organisation_id2`,
- 1 AS `id`,
- 1 AS `organisation_id`,
- 1 AS `datei`,
- 1 AS `dateiname`,
- 1 AS `dateierweiterung`,
- 1 AS `dateiname_voll`,
- 1 AS `mime_type`,
- 1 AS `encoding`,
- 1 AS `beschreibung`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`;
+CREATE TABLE `v_organisation_anhang` (
+  `organisation_id2` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `datei` tinyint NOT NULL,
+  `dateiname` tinyint NOT NULL,
+  `dateierweiterung` tinyint NOT NULL,
+  `dateiname_voll` tinyint NOT NULL,
+  `mime_type` tinyint NOT NULL,
+  `encoding` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -8427,42 +8796,43 @@ DROP TABLE IF EXISTS `v_organisation_beziehung`;
 DROP VIEW IF EXISTS `v_organisation_beziehung`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation_beziehung` AS SELECT 
- 1 AS `id`,
- 1 AS `organisation_id`,
- 1 AS `ziel_organisation_id`,
- 1 AS `art`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `organisation_name`,
- 1 AS `organisation_name_fr`,
- 1 AS `ziel_organisation_name`,
- 1 AS `ziel_organisation_name_fr`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_organisation_beziehung` (
+  `id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `ziel_organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `organisation_name` tinyint NOT NULL,
+  `organisation_name_fr` tinyint NOT NULL,
+  `ziel_organisation_name` tinyint NOT NULL,
+  `ziel_organisation_name_fr` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -8473,24 +8843,25 @@ DROP TABLE IF EXISTS `v_organisation_beziehung_arbeitet_fuer`;
 DROP VIEW IF EXISTS `v_organisation_beziehung_arbeitet_fuer`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation_beziehung_arbeitet_fuer` AS SELECT 
- 1 AS `organisation_name`,
- 1 AS `organisation_name_de`,
- 1 AS `organisation_name_fr`,
- 1 AS `organisation_id`,
- 1 AS `ziel_organisation_id`,
- 1 AS `art`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `freigabe_datum`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `id`,
- 1 AS `name_de`,
- 1 AS `rechtsform`,
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `ort`;
+CREATE TABLE `v_organisation_beziehung_arbeitet_fuer` (
+  `organisation_name` tinyint NOT NULL,
+  `organisation_name_de` tinyint NOT NULL,
+  `organisation_name_fr` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `ziel_organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `rechtsform` tinyint NOT NULL,
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `ort` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -8501,24 +8872,25 @@ DROP TABLE IF EXISTS `v_organisation_beziehung_auftraggeber_fuer`;
 DROP VIEW IF EXISTS `v_organisation_beziehung_auftraggeber_fuer`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation_beziehung_auftraggeber_fuer` AS SELECT 
- 1 AS `organisation_name`,
- 1 AS `organisation_name_de`,
- 1 AS `organisation_name_fr`,
- 1 AS `organisation_id`,
- 1 AS `ziel_organisation_id`,
- 1 AS `art`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `freigabe_datum`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `id`,
- 1 AS `name_de`,
- 1 AS `rechtsform`,
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `ort`;
+CREATE TABLE `v_organisation_beziehung_auftraggeber_fuer` (
+  `organisation_name` tinyint NOT NULL,
+  `organisation_name_de` tinyint NOT NULL,
+  `organisation_name_fr` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `ziel_organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `rechtsform` tinyint NOT NULL,
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `ort` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -8529,24 +8901,25 @@ DROP TABLE IF EXISTS `v_organisation_beziehung_mitglied_von`;
 DROP VIEW IF EXISTS `v_organisation_beziehung_mitglied_von`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation_beziehung_mitglied_von` AS SELECT 
- 1 AS `organisation_name`,
- 1 AS `organisation_name_de`,
- 1 AS `organisation_name_fr`,
- 1 AS `organisation_id`,
- 1 AS `ziel_organisation_id`,
- 1 AS `art`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `freigabe_datum`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `id`,
- 1 AS `name_de`,
- 1 AS `rechtsform`,
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `ort`;
+CREATE TABLE `v_organisation_beziehung_mitglied_von` (
+  `organisation_name` tinyint NOT NULL,
+  `organisation_name_de` tinyint NOT NULL,
+  `organisation_name_fr` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `ziel_organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `rechtsform` tinyint NOT NULL,
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `ort` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -8557,24 +8930,25 @@ DROP TABLE IF EXISTS `v_organisation_beziehung_mitglieder`;
 DROP VIEW IF EXISTS `v_organisation_beziehung_mitglieder`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation_beziehung_mitglieder` AS SELECT 
- 1 AS `organisation_name`,
- 1 AS `organisation_name_de`,
- 1 AS `organisation_name_fr`,
- 1 AS `organisation_id`,
- 1 AS `ziel_organisation_id`,
- 1 AS `art`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `freigabe_datum`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `id`,
- 1 AS `name_de`,
- 1 AS `rechtsform`,
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `ort`;
+CREATE TABLE `v_organisation_beziehung_mitglieder` (
+  `organisation_name` tinyint NOT NULL,
+  `organisation_name_de` tinyint NOT NULL,
+  `organisation_name_fr` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `ziel_organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `rechtsform` tinyint NOT NULL,
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `ort` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -8585,24 +8959,25 @@ DROP TABLE IF EXISTS `v_organisation_beziehung_muttergesellschaft`;
 DROP VIEW IF EXISTS `v_organisation_beziehung_muttergesellschaft`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation_beziehung_muttergesellschaft` AS SELECT 
- 1 AS `organisation_name`,
- 1 AS `organisation_name_de`,
- 1 AS `organisation_name_fr`,
- 1 AS `organisation_id`,
- 1 AS `ziel_organisation_id`,
- 1 AS `art`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `freigabe_datum`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `id`,
- 1 AS `name_de`,
- 1 AS `rechtsform`,
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `ort`;
+CREATE TABLE `v_organisation_beziehung_muttergesellschaft` (
+  `organisation_name` tinyint NOT NULL,
+  `organisation_name_de` tinyint NOT NULL,
+  `organisation_name_fr` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `ziel_organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `rechtsform` tinyint NOT NULL,
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `ort` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -8613,24 +8988,25 @@ DROP TABLE IF EXISTS `v_organisation_beziehung_tochtergesellschaften`;
 DROP VIEW IF EXISTS `v_organisation_beziehung_tochtergesellschaften`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation_beziehung_tochtergesellschaften` AS SELECT 
- 1 AS `organisation_name`,
- 1 AS `organisation_name_de`,
- 1 AS `organisation_name_fr`,
- 1 AS `organisation_id`,
- 1 AS `ziel_organisation_id`,
- 1 AS `art`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `freigabe_datum`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `id`,
- 1 AS `name_de`,
- 1 AS `rechtsform`,
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `ort`;
+CREATE TABLE `v_organisation_beziehung_tochtergesellschaften` (
+  `organisation_name` tinyint NOT NULL,
+  `organisation_name_de` tinyint NOT NULL,
+  `organisation_name_fr` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `ziel_organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `rechtsform` tinyint NOT NULL,
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `ort` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -8641,36 +9017,37 @@ DROP TABLE IF EXISTS `v_organisation_jahr`;
 DROP VIEW IF EXISTS `v_organisation_jahr`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation_jahr` AS SELECT 
- 1 AS `id`,
- 1 AS `organisation_id`,
- 1 AS `jahr`,
- 1 AS `umsatz`,
- 1 AS `gewinn`,
- 1 AS `kapital`,
- 1 AS `mitarbeiter_weltweit`,
- 1 AS `mitarbeiter_schweiz`,
- 1 AS `geschaeftsbericht_url`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_organisation_jahr` (
+  `id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `jahr` tinyint NOT NULL,
+  `umsatz` tinyint NOT NULL,
+  `gewinn` tinyint NOT NULL,
+  `kapital` tinyint NOT NULL,
+  `mitarbeiter_weltweit` tinyint NOT NULL,
+  `mitarbeiter_schweiz` tinyint NOT NULL,
+  `geschaeftsbericht_url` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -8681,31 +9058,32 @@ DROP TABLE IF EXISTS `v_organisation_jahr_last`;
 DROP VIEW IF EXISTS `v_organisation_jahr_last`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation_jahr_last` AS SELECT 
- 1 AS `max_jahr`,
- 1 AS `id`,
- 1 AS `organisation_id`,
- 1 AS `jahr`,
- 1 AS `umsatz`,
- 1 AS `gewinn`,
- 1 AS `kapital`,
- 1 AS `mitarbeiter_weltweit`,
- 1 AS `mitarbeiter_schweiz`,
- 1 AS `geschaeftsbericht_url`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`;
+CREATE TABLE `v_organisation_jahr_last` (
+  `max_jahr` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `jahr` tinyint NOT NULL,
+  `umsatz` tinyint NOT NULL,
+  `gewinn` tinyint NOT NULL,
+  `kapital` tinyint NOT NULL,
+  `mitarbeiter_weltweit` tinyint NOT NULL,
+  `mitarbeiter_schweiz` tinyint NOT NULL,
+  `geschaeftsbericht_url` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -8716,19 +9094,20 @@ DROP TABLE IF EXISTS `v_organisation_lobbyeinfluss_raw`;
 DROP VIEW IF EXISTS `v_organisation_lobbyeinfluss_raw`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation_lobbyeinfluss_raw` AS SELECT 
- 1 AS `id`,
- 1 AS `anzahl_interessenbindung_tief`,
- 1 AS `anzahl_interessenbindung_mittel`,
- 1 AS `anzahl_interessenbindung_hoch`,
- 1 AS `anzahl_interessenbindung_tief_nach_wahl`,
- 1 AS `anzahl_interessenbindung_mittel_nach_wahl`,
- 1 AS `anzahl_interessenbindung_hoch_nach_wahl`,
- 1 AS `anzahl_mandat_tief`,
- 1 AS `anzahl_mandat_mittel`,
- 1 AS `anzahl_mandat_hoch`,
- 1 AS `lobbyeinfluss`,
- 1 AS `refreshed_date`;
+CREATE TABLE `v_organisation_lobbyeinfluss_raw` (
+  `id` tinyint NOT NULL,
+  `anzahl_interessenbindung_tief` tinyint NOT NULL,
+  `anzahl_interessenbindung_mittel` tinyint NOT NULL,
+  `anzahl_interessenbindung_hoch` tinyint NOT NULL,
+  `anzahl_interessenbindung_tief_nach_wahl` tinyint NOT NULL,
+  `anzahl_interessenbindung_mittel_nach_wahl` tinyint NOT NULL,
+  `anzahl_interessenbindung_hoch_nach_wahl` tinyint NOT NULL,
+  `anzahl_mandat_tief` tinyint NOT NULL,
+  `anzahl_mandat_mittel` tinyint NOT NULL,
+  `anzahl_mandat_hoch` tinyint NOT NULL,
+  `lobbyeinfluss` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -8739,171 +9118,172 @@ DROP TABLE IF EXISTS `v_organisation_medium_raw`;
 DROP VIEW IF EXISTS `v_organisation_medium_raw`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation_medium_raw` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_mixed`,
- 1 AS `anzeige_bimixed`,
- 1 AS `searchable_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `name`,
- 1 AS `id`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `name_it`,
- 1 AS `uid`,
- 1 AS `ort`,
- 1 AS `abkuerzung_de`,
- 1 AS `alias_namen_de`,
- 1 AS `abkuerzung_fr`,
- 1 AS `alias_namen_fr`,
- 1 AS `abkuerzung_it`,
- 1 AS `alias_namen_it`,
- 1 AS `land_id`,
- 1 AS `interessenraum_id`,
- 1 AS `rechtsform`,
- 1 AS `rechtsform_handelsregister`,
- 1 AS `rechtsform_zefix`,
- 1 AS `typ`,
- 1 AS `vernehmlassung`,
- 1 AS `interessengruppe_id`,
- 1 AS `interessengruppe2_id`,
- 1 AS `interessengruppe3_id`,
- 1 AS `ALT_branche_id`,
- 1 AS `homepage`,
- 1 AS `handelsregister_url`,
- 1 AS `twitter_name`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `sekretariat`,
- 1 AS `adresse_strasse`,
- 1 AS `adresse_zusatz`,
- 1 AS `adresse_plz`,
- 1 AS `notizen`,
- 1 AS `updated_by_import`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `branche_ALT`,
- 1 AS `branche_de_ALT`,
- 1 AS `branche_fr_ALT`,
- 1 AS `interessengruppe`,
- 1 AS `interessengruppe_de`,
- 1 AS `interessengruppe_fr`,
- 1 AS `interessengruppe_branche`,
- 1 AS `interessengruppe_branche_de`,
- 1 AS `interessengruppe_branche_fr`,
- 1 AS `interessengruppe_branche_id`,
- 1 AS `interessengruppe_branche_kommission1_id`,
- 1 AS `interessengruppe_branche_kommission1_abkuerzung`,
- 1 AS `interessengruppe_branche_kommission1_abkuerzung_de`,
- 1 AS `interessengruppe_branche_kommission1_abkuerzung_fr`,
- 1 AS `interessengruppe_branche_kommission1_name`,
- 1 AS `interessengruppe_branche_kommission1_name_de`,
- 1 AS `interessengruppe_branche_kommission1_name_fr`,
- 1 AS `interessengruppe_branche_kommission2_id`,
- 1 AS `interessengruppe_branche_kommission2_abkuerzung`,
- 1 AS `interessengruppe_branche_kommission2_abkuerzung_de`,
- 1 AS `interessengruppe_branche_kommission2_abkuerzung_fr`,
- 1 AS `interessengruppe_branche_kommission2_name`,
- 1 AS `interessengruppe_branche_kommission2_name_de`,
- 1 AS `interessengruppe_branche_kommission2_name_fr`,
- 1 AS `interessengruppe1`,
- 1 AS `interessengruppe1_id`,
- 1 AS `interessengruppe1_de`,
- 1 AS `interessengruppe1_fr`,
- 1 AS `interessengruppe1_branche`,
- 1 AS `interessengruppe1_branche_de`,
- 1 AS `interessengruppe1_branche_fr`,
- 1 AS `interessengruppe1_branche_id`,
- 1 AS `interessengruppe1_branche_kommission_abkuerzung`,
- 1 AS `interessengruppe1_branche_kommission_abkuerzung_de`,
- 1 AS `interessengruppe1_branche_kommission_abkuerzung_fr`,
- 1 AS `interessengruppe1_branche_kommissionen_abkuerzung`,
- 1 AS `interessengruppe1_branche_kommissionen_abkuerzung_de`,
- 1 AS `interessengruppe1_branche_kommissionen_abkuerzung_fr`,
- 1 AS `interessengruppe1_branche_kommission1_id`,
- 1 AS `interessengruppe1_branche_kommission1_abkuerzung`,
- 1 AS `interessengruppe1_branche_kommission1_abkuerzung_de`,
- 1 AS `interessengruppe1_branche_kommission1_abkuerzung_fr`,
- 1 AS `interessengruppe1_branche_kommission1_name`,
- 1 AS `interessengruppe1_branche_kommission1_name_de`,
- 1 AS `interessengruppe1_branche_kommission1_name_fr`,
- 1 AS `interessengruppe1_branche_kommission2_id`,
- 1 AS `interessengruppe1_branche_kommission2_abkuerzung`,
- 1 AS `interessengruppe1_branche_kommission2_abkuerzung_de`,
- 1 AS `interessengruppe1_branche_kommission2_abkuerzung_fr`,
- 1 AS `interessengruppe1_branche_kommission2_name`,
- 1 AS `interessengruppe1_branche_kommission2_name_de`,
- 1 AS `interessengruppe1_branche_kommission2_name_fr`,
- 1 AS `interessengruppe2`,
- 1 AS `interessengruppe2_de`,
- 1 AS `interessengruppe2_fr`,
- 1 AS `interessengruppe2_branche`,
- 1 AS `interessengruppe2_branche_de`,
- 1 AS `interessengruppe2_branche_fr`,
- 1 AS `interessengruppe2_branche_id`,
- 1 AS `interessengruppe2_branche_kommission_abkuerzung`,
- 1 AS `interessengruppe2_branche_kommission_abkuerzung_de`,
- 1 AS `interessengruppe2_branche_kommission_abkuerzung_fr`,
- 1 AS `interessengruppe2_branche_kommissionen_abkuerzung`,
- 1 AS `interessengruppe2_branche_kommissionen_abkuerzung_de`,
- 1 AS `interessengruppe2_branche_kommissionen_abkuerzung_fr`,
- 1 AS `interessengruppe2_branche_kommission1_id`,
- 1 AS `interessengruppe2_branche_kommission1_abkuerzung`,
- 1 AS `interessengruppe2_branche_kommission1_abkuerzung_de`,
- 1 AS `interessengruppe2_branche_kommission1_abkuerzung_fr`,
- 1 AS `interessengruppe2_branche_kommission1_name`,
- 1 AS `interessengruppe2_branche_kommission1_name_de`,
- 1 AS `interessengruppe2_branche_kommission1_name_fr`,
- 1 AS `interessengruppe2_branche_kommission2_id`,
- 1 AS `interessengruppe2_branche_kommission2_abkuerzung`,
- 1 AS `interessengruppe2_branche_kommission2_abkuerzung_de`,
- 1 AS `interessengruppe2_branche_kommission2_abkuerzung_fr`,
- 1 AS `interessengruppe2_branche_kommission2_name`,
- 1 AS `interessengruppe2_branche_kommission2_name_de`,
- 1 AS `interessengruppe2_branche_kommission2_name_fr`,
- 1 AS `interessengruppe3`,
- 1 AS `interessengruppe3_de`,
- 1 AS `interessengruppe3_fr`,
- 1 AS `interessengruppe3_branche`,
- 1 AS `interessengruppe3_branche_de`,
- 1 AS `interessengruppe3_branche_fr`,
- 1 AS `interessengruppe3_branche_id`,
- 1 AS `interessengruppe3_branche_kommission_abkuerzung`,
- 1 AS `interessengruppe3_branche_kommission_abkuerzung_de`,
- 1 AS `interessengruppe3_branche_kommission_abkuerzung_fr`,
- 1 AS `interessengruppe3_branche_kommissionen_abkuerzung`,
- 1 AS `interessengruppe3_branche_kommissionen_abkuerzung_de`,
- 1 AS `interessengruppe3_branche_kommissionen_abkuerzung_fr`,
- 1 AS `interessengruppe3_branche_kommission1_id`,
- 1 AS `interessengruppe3_branche_kommission1_abkuerzung`,
- 1 AS `interessengruppe3_branche_kommission1_abkuerzung_de`,
- 1 AS `interessengruppe3_branche_kommission1_abkuerzung_fr`,
- 1 AS `interessengruppe3_branche_kommission1_name`,
- 1 AS `interessengruppe3_branche_kommission1_name_de`,
- 1 AS `interessengruppe3_branche_kommission1_name_fr`,
- 1 AS `interessengruppe3_branche_kommission2_id`,
- 1 AS `interessengruppe3_branche_kommission2_abkuerzung`,
- 1 AS `interessengruppe3_branche_kommission2_abkuerzung_de`,
- 1 AS `interessengruppe3_branche_kommission2_abkuerzung_fr`,
- 1 AS `interessengruppe3_branche_kommission2_name`,
- 1 AS `interessengruppe3_branche_kommission2_name_de`,
- 1 AS `interessengruppe3_branche_kommission2_name_fr`,
- 1 AS `refreshed_date`;
+CREATE TABLE `v_organisation_medium_raw` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_mixed` tinyint NOT NULL,
+  `anzeige_bimixed` tinyint NOT NULL,
+  `searchable_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `name_it` tinyint NOT NULL,
+  `uid` tinyint NOT NULL,
+  `ort` tinyint NOT NULL,
+  `abkuerzung_de` tinyint NOT NULL,
+  `alias_namen_de` tinyint NOT NULL,
+  `abkuerzung_fr` tinyint NOT NULL,
+  `alias_namen_fr` tinyint NOT NULL,
+  `abkuerzung_it` tinyint NOT NULL,
+  `alias_namen_it` tinyint NOT NULL,
+  `land_id` tinyint NOT NULL,
+  `interessenraum_id` tinyint NOT NULL,
+  `rechtsform` tinyint NOT NULL,
+  `rechtsform_handelsregister` tinyint NOT NULL,
+  `rechtsform_zefix` tinyint NOT NULL,
+  `typ` tinyint NOT NULL,
+  `vernehmlassung` tinyint NOT NULL,
+  `interessengruppe_id` tinyint NOT NULL,
+  `interessengruppe2_id` tinyint NOT NULL,
+  `interessengruppe3_id` tinyint NOT NULL,
+  `ALT_branche_id` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `handelsregister_url` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `sekretariat` tinyint NOT NULL,
+  `adresse_strasse` tinyint NOT NULL,
+  `adresse_zusatz` tinyint NOT NULL,
+  `adresse_plz` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `updated_by_import` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `branche_ALT` tinyint NOT NULL,
+  `branche_de_ALT` tinyint NOT NULL,
+  `branche_fr_ALT` tinyint NOT NULL,
+  `interessengruppe` tinyint NOT NULL,
+  `interessengruppe_de` tinyint NOT NULL,
+  `interessengruppe_fr` tinyint NOT NULL,
+  `interessengruppe_branche` tinyint NOT NULL,
+  `interessengruppe_branche_de` tinyint NOT NULL,
+  `interessengruppe_branche_fr` tinyint NOT NULL,
+  `interessengruppe_branche_id` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_id` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_abkuerzung` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_name` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_name_de` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_name_fr` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_id` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_abkuerzung` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_name` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_name_de` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_name_fr` tinyint NOT NULL,
+  `interessengruppe1` tinyint NOT NULL,
+  `interessengruppe1_id` tinyint NOT NULL,
+  `interessengruppe1_de` tinyint NOT NULL,
+  `interessengruppe1_fr` tinyint NOT NULL,
+  `interessengruppe1_branche` tinyint NOT NULL,
+  `interessengruppe1_branche_de` tinyint NOT NULL,
+  `interessengruppe1_branche_fr` tinyint NOT NULL,
+  `interessengruppe1_branche_id` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission_abkuerzung` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe1_branche_kommissionen_abkuerzung` tinyint NOT NULL,
+  `interessengruppe1_branche_kommissionen_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe1_branche_kommissionen_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_id` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_abkuerzung` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_name` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_name_de` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_name_fr` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_id` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_abkuerzung` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_name` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_name_de` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_name_fr` tinyint NOT NULL,
+  `interessengruppe2` tinyint NOT NULL,
+  `interessengruppe2_de` tinyint NOT NULL,
+  `interessengruppe2_fr` tinyint NOT NULL,
+  `interessengruppe2_branche` tinyint NOT NULL,
+  `interessengruppe2_branche_de` tinyint NOT NULL,
+  `interessengruppe2_branche_fr` tinyint NOT NULL,
+  `interessengruppe2_branche_id` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission_abkuerzung` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe2_branche_kommissionen_abkuerzung` tinyint NOT NULL,
+  `interessengruppe2_branche_kommissionen_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe2_branche_kommissionen_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_id` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_abkuerzung` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_name` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_name_de` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_name_fr` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_id` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_abkuerzung` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_name` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_name_de` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_name_fr` tinyint NOT NULL,
+  `interessengruppe3` tinyint NOT NULL,
+  `interessengruppe3_de` tinyint NOT NULL,
+  `interessengruppe3_fr` tinyint NOT NULL,
+  `interessengruppe3_branche` tinyint NOT NULL,
+  `interessengruppe3_branche_de` tinyint NOT NULL,
+  `interessengruppe3_branche_fr` tinyint NOT NULL,
+  `interessengruppe3_branche_id` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission_abkuerzung` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe3_branche_kommissionen_abkuerzung` tinyint NOT NULL,
+  `interessengruppe3_branche_kommissionen_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe3_branche_kommissionen_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_id` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_abkuerzung` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_name` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_name_de` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_name_fr` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_id` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_abkuerzung` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_name` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_name_de` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_name_fr` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -8914,92 +9294,93 @@ DROP TABLE IF EXISTS `v_organisation_normalized_interessengruppe_raw`;
 DROP VIEW IF EXISTS `v_organisation_normalized_interessengruppe_raw`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation_normalized_interessengruppe_raw` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_mixed`,
- 1 AS `anzeige_bimixed`,
- 1 AS `searchable_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `name`,
- 1 AS `id`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `name_it`,
- 1 AS `uid`,
- 1 AS `ort`,
- 1 AS `abkuerzung_de`,
- 1 AS `alias_namen_de`,
- 1 AS `abkuerzung_fr`,
- 1 AS `alias_namen_fr`,
- 1 AS `abkuerzung_it`,
- 1 AS `alias_namen_it`,
- 1 AS `land_id`,
- 1 AS `interessenraum_id`,
- 1 AS `rechtsform`,
- 1 AS `rechtsform_handelsregister`,
- 1 AS `rechtsform_zefix`,
- 1 AS `typ`,
- 1 AS `vernehmlassung`,
- 1 AS `interessengruppe1_id`,
- 1 AS `--organisation.interessengruppe2_id`,
- 1 AS `--organisation.interessengruppe3_id`,
- 1 AS `homepage`,
- 1 AS `handelsregister_url`,
- 1 AS `twitter_name`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `sekretariat`,
- 1 AS `adresse_strasse`,
- 1 AS `adresse_zusatz`,
- 1 AS `adresse_plz`,
- 1 AS `notizen`,
- 1 AS `updated_by_import`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `interessengruppe_id`,
- 1 AS `interessengruppe`,
- 1 AS `interessengruppe_de`,
- 1 AS `interessengruppe_fr`,
- 1 AS `interessengruppe_branche`,
- 1 AS `interessengruppe_branche_de`,
- 1 AS `interessengruppe_branche_fr`,
- 1 AS `interessengruppe_branche_id`,
- 1 AS `interessengruppe_branche_kommission_abkuerzung`,
- 1 AS `interessengruppe_branche_kommission_abkuerzung_de`,
- 1 AS `interessengruppe_branche_kommission_abkuerzung_fr`,
- 1 AS `interessengruppe_branche_kommissionen_abkuerzung`,
- 1 AS `interessengruppe_branche_kommissionen_abkuerzung_de`,
- 1 AS `interessengruppe_branche_kommissionen_abkuerzung_fr`,
- 1 AS `interessengruppe_branche_kommission1_id`,
- 1 AS `interessengruppe_branche_kommission1_abkuerzung`,
- 1 AS `interessengruppe_branche_kommission1_abkuerzung_de`,
- 1 AS `interessengruppe_branche_kommission1_abkuerzung_fr`,
- 1 AS `interessengruppe_branche_kommission1_name`,
- 1 AS `interessengruppe_branche_kommission1_name_de`,
- 1 AS `interessengruppe_branche_kommission1_name_fr`,
- 1 AS `interessengruppe_branche_kommission2_id`,
- 1 AS `interessengruppe_branche_kommission2_abkuerzung`,
- 1 AS `interessengruppe_branche_kommission2_abkuerzung_de`,
- 1 AS `interessengruppe_branche_kommission2_abkuerzung_fr`,
- 1 AS `interessengruppe_branche_kommission2_name`,
- 1 AS `interessengruppe_branche_kommission2_name_de`,
- 1 AS `interessengruppe_branche_kommission2_name_fr`,
- 1 AS `refreshed_date`;
+CREATE TABLE `v_organisation_normalized_interessengruppe_raw` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_mixed` tinyint NOT NULL,
+  `anzeige_bimixed` tinyint NOT NULL,
+  `searchable_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `name_it` tinyint NOT NULL,
+  `uid` tinyint NOT NULL,
+  `ort` tinyint NOT NULL,
+  `abkuerzung_de` tinyint NOT NULL,
+  `alias_namen_de` tinyint NOT NULL,
+  `abkuerzung_fr` tinyint NOT NULL,
+  `alias_namen_fr` tinyint NOT NULL,
+  `abkuerzung_it` tinyint NOT NULL,
+  `alias_namen_it` tinyint NOT NULL,
+  `land_id` tinyint NOT NULL,
+  `interessenraum_id` tinyint NOT NULL,
+  `rechtsform` tinyint NOT NULL,
+  `rechtsform_handelsregister` tinyint NOT NULL,
+  `rechtsform_zefix` tinyint NOT NULL,
+  `typ` tinyint NOT NULL,
+  `vernehmlassung` tinyint NOT NULL,
+  `interessengruppe1_id` tinyint NOT NULL,
+  `--organisation.interessengruppe2_id` tinyint NOT NULL,
+  `--organisation.interessengruppe3_id` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `handelsregister_url` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `sekretariat` tinyint NOT NULL,
+  `adresse_strasse` tinyint NOT NULL,
+  `adresse_zusatz` tinyint NOT NULL,
+  `adresse_plz` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `updated_by_import` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `interessengruppe_id` tinyint NOT NULL,
+  `interessengruppe` tinyint NOT NULL,
+  `interessengruppe_de` tinyint NOT NULL,
+  `interessengruppe_fr` tinyint NOT NULL,
+  `interessengruppe_branche` tinyint NOT NULL,
+  `interessengruppe_branche_de` tinyint NOT NULL,
+  `interessengruppe_branche_fr` tinyint NOT NULL,
+  `interessengruppe_branche_id` tinyint NOT NULL,
+  `interessengruppe_branche_kommission_abkuerzung` tinyint NOT NULL,
+  `interessengruppe_branche_kommission_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe_branche_kommission_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe_branche_kommissionen_abkuerzung` tinyint NOT NULL,
+  `interessengruppe_branche_kommissionen_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe_branche_kommissionen_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_id` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_abkuerzung` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_name` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_name_de` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_name_fr` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_id` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_abkuerzung` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_name` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_name_de` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_name_fr` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -9010,100 +9391,101 @@ DROP TABLE IF EXISTS `v_organisation_parlamentarier`;
 DROP VIEW IF EXISTS `v_organisation_parlamentarier`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation_parlamentarier` AS SELECT 
- 1 AS `parlamentarier_name`,
- 1 AS `name`,
- 1 AS `nachname`,
- 1 AS `vorname`,
- 1 AS `zweiter_vorname`,
- 1 AS `rat_id`,
- 1 AS `kanton_id`,
- 1 AS `kommissionen`,
- 1 AS `partei_id`,
- 1 AS `parteifunktion`,
- 1 AS `fraktion_id`,
- 1 AS `fraktionsfunktion`,
- 1 AS `im_rat_seit`,
- 1 AS `im_rat_bis`,
- 1 AS `ratswechsel`,
- 1 AS `ratsunterbruch_von`,
- 1 AS `ratsunterbruch_bis`,
- 1 AS `beruf`,
- 1 AS `beruf_interessengruppe_id`,
- 1 AS `zivilstand`,
- 1 AS `anzahl_kinder`,
- 1 AS `militaerischer_grad_id`,
- 1 AS `geschlecht`,
- 1 AS `geburtstag`,
- 1 AS `photo`,
- 1 AS `photo_dateiname`,
- 1 AS `photo_dateierweiterung`,
- 1 AS `photo_dateiname_voll`,
- 1 AS `photo_mime_type`,
- 1 AS `kleinbild`,
- 1 AS `sitzplatz`,
- 1 AS `email`,
- 1 AS `homepage`,
- 1 AS `parlament_biografie_id`,
- 1 AS `twitter_name`,
- 1 AS `linkedin_profil_url`,
- 1 AS `xing_profil_name`,
- 1 AS `facebook_name`,
- 1 AS `arbeitssprache`,
- 1 AS `adresse_firma`,
- 1 AS `adresse_strasse`,
- 1 AS `adresse_zusatz`,
- 1 AS `adresse_plz`,
- 1 AS `adresse_ort`,
- 1 AS `im_rat_seit_unix`,
- 1 AS `im_rat_bis_unix`,
- 1 AS `kanton`,
- 1 AS `vertretene_bevoelkerung`,
- 1 AS `kommissionen_namen`,
- 1 AS `kommissionen_abkuerzung`,
- 1 AS `partei`,
- 1 AS `partei_fr`,
- 1 AS `fraktion`,
- 1 AS `militaerischer_grad`,
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `organisation_id`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `deklarationstyp`,
- 1 AS `status`,
- 1 AS `hauptberuflich`,
- 1 AS `behoerden_vertreter`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `updated_by_import`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_organisation_parlamentarier` (
+  `parlamentarier_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `nachname` tinyint NOT NULL,
+  `vorname` tinyint NOT NULL,
+  `zweiter_vorname` tinyint NOT NULL,
+  `rat_id` tinyint NOT NULL,
+  `kanton_id` tinyint NOT NULL,
+  `kommissionen` tinyint NOT NULL,
+  `partei_id` tinyint NOT NULL,
+  `parteifunktion` tinyint NOT NULL,
+  `fraktion_id` tinyint NOT NULL,
+  `fraktionsfunktion` tinyint NOT NULL,
+  `im_rat_seit` tinyint NOT NULL,
+  `im_rat_bis` tinyint NOT NULL,
+  `ratswechsel` tinyint NOT NULL,
+  `ratsunterbruch_von` tinyint NOT NULL,
+  `ratsunterbruch_bis` tinyint NOT NULL,
+  `beruf` tinyint NOT NULL,
+  `beruf_interessengruppe_id` tinyint NOT NULL,
+  `zivilstand` tinyint NOT NULL,
+  `anzahl_kinder` tinyint NOT NULL,
+  `militaerischer_grad_id` tinyint NOT NULL,
+  `geschlecht` tinyint NOT NULL,
+  `geburtstag` tinyint NOT NULL,
+  `photo` tinyint NOT NULL,
+  `photo_dateiname` tinyint NOT NULL,
+  `photo_dateierweiterung` tinyint NOT NULL,
+  `photo_dateiname_voll` tinyint NOT NULL,
+  `photo_mime_type` tinyint NOT NULL,
+  `kleinbild` tinyint NOT NULL,
+  `sitzplatz` tinyint NOT NULL,
+  `email` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `parlament_biografie_id` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `linkedin_profil_url` tinyint NOT NULL,
+  `xing_profil_name` tinyint NOT NULL,
+  `facebook_name` tinyint NOT NULL,
+  `arbeitssprache` tinyint NOT NULL,
+  `adresse_firma` tinyint NOT NULL,
+  `adresse_strasse` tinyint NOT NULL,
+  `adresse_zusatz` tinyint NOT NULL,
+  `adresse_plz` tinyint NOT NULL,
+  `adresse_ort` tinyint NOT NULL,
+  `im_rat_seit_unix` tinyint NOT NULL,
+  `im_rat_bis_unix` tinyint NOT NULL,
+  `kanton` tinyint NOT NULL,
+  `vertretene_bevoelkerung` tinyint NOT NULL,
+  `kommissionen_namen` tinyint NOT NULL,
+  `kommissionen_abkuerzung` tinyint NOT NULL,
+  `partei` tinyint NOT NULL,
+  `partei_fr` tinyint NOT NULL,
+  `fraktion` tinyint NOT NULL,
+  `militaerischer_grad` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `deklarationstyp` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `hauptberuflich` tinyint NOT NULL,
+  `behoerden_vertreter` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `updated_by_import` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -9114,27 +9496,28 @@ DROP TABLE IF EXISTS `v_organisation_parlamentarier_beide`;
 DROP VIEW IF EXISTS `v_organisation_parlamentarier_beide`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation_parlamentarier_beide` AS SELECT 
- 1 AS `verbindung`,
- 1 AS `parlamentarier_id`,
- 1 AS `parlamentarier_name`,
- 1 AS `ratstyp`,
- 1 AS `kanton`,
- 1 AS `partei_id`,
- 1 AS `partei`,
- 1 AS `kommissionen`,
- 1 AS `parlament_biografie_id`,
- 1 AS `person_id`,
- 1 AS `zutrittsberechtigter`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `beschreibung`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `organisation_id`,
- 1 AS `freigabe_datum`,
- 1 AS `im_rat_bis`,
- 1 AS `im_rat_bis_unix`;
+CREATE TABLE `v_organisation_parlamentarier_beide` (
+  `verbindung` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `parlamentarier_name` tinyint NOT NULL,
+  `ratstyp` tinyint NOT NULL,
+  `kanton` tinyint NOT NULL,
+  `partei_id` tinyint NOT NULL,
+  `partei` tinyint NOT NULL,
+  `kommissionen` tinyint NOT NULL,
+  `parlament_biografie_id` tinyint NOT NULL,
+  `person_id` tinyint NOT NULL,
+  `zutrittsberechtigter` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `im_rat_bis` tinyint NOT NULL,
+  `im_rat_bis_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -9145,31 +9528,32 @@ DROP TABLE IF EXISTS `v_organisation_parlamentarier_beide_indirekt`;
 DROP VIEW IF EXISTS `v_organisation_parlamentarier_beide_indirekt`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation_parlamentarier_beide_indirekt` AS SELECT 
- 1 AS `beziehung`,
- 1 AS `verbindung`,
- 1 AS `parlamentarier_id`,
- 1 AS `parlamentarier_name`,
- 1 AS `ratstyp`,
- 1 AS `kanton`,
- 1 AS `partei_id`,
- 1 AS `partei`,
- 1 AS `kommissionen`,
- 1 AS `parlament_biografie_id`,
- 1 AS `person_id`,
- 1 AS `zutrittsberechtigter`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `beschreibung`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `bis_unix`,
- 1 AS `zwischen_organisation_id`,
- 1 AS `zwischen_organisation_art`,
- 1 AS `connector_organisation_id`,
- 1 AS `freigabe_datum`,
- 1 AS `im_rat_bis`,
- 1 AS `im_rat_bis_unix`;
+CREATE TABLE `v_organisation_parlamentarier_beide_indirekt` (
+  `beziehung` tinyint NOT NULL,
+  `verbindung` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `parlamentarier_name` tinyint NOT NULL,
+  `ratstyp` tinyint NOT NULL,
+  `kanton` tinyint NOT NULL,
+  `partei_id` tinyint NOT NULL,
+  `partei` tinyint NOT NULL,
+  `kommissionen` tinyint NOT NULL,
+  `parlament_biografie_id` tinyint NOT NULL,
+  `person_id` tinyint NOT NULL,
+  `zutrittsberechtigter` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `zwischen_organisation_id` tinyint NOT NULL,
+  `zwischen_organisation_art` tinyint NOT NULL,
+  `connector_organisation_id` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `im_rat_bis` tinyint NOT NULL,
+  `im_rat_bis_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -9180,102 +9564,103 @@ DROP TABLE IF EXISTS `v_organisation_parlamentarier_indirekt`;
 DROP VIEW IF EXISTS `v_organisation_parlamentarier_indirekt`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation_parlamentarier_indirekt` AS SELECT 
- 1 AS `beziehung`,
- 1 AS `parlamentarier_name`,
- 1 AS `name`,
- 1 AS `nachname`,
- 1 AS `vorname`,
- 1 AS `zweiter_vorname`,
- 1 AS `rat_id`,
- 1 AS `kanton_id`,
- 1 AS `kommissionen`,
- 1 AS `partei_id`,
- 1 AS `parteifunktion`,
- 1 AS `fraktion_id`,
- 1 AS `fraktionsfunktion`,
- 1 AS `im_rat_seit`,
- 1 AS `im_rat_bis`,
- 1 AS `ratswechsel`,
- 1 AS `ratsunterbruch_von`,
- 1 AS `ratsunterbruch_bis`,
- 1 AS `beruf`,
- 1 AS `beruf_interessengruppe_id`,
- 1 AS `zivilstand`,
- 1 AS `anzahl_kinder`,
- 1 AS `militaerischer_grad_id`,
- 1 AS `geschlecht`,
- 1 AS `geburtstag`,
- 1 AS `photo`,
- 1 AS `photo_dateiname`,
- 1 AS `photo_dateierweiterung`,
- 1 AS `photo_dateiname_voll`,
- 1 AS `photo_mime_type`,
- 1 AS `kleinbild`,
- 1 AS `sitzplatz`,
- 1 AS `email`,
- 1 AS `homepage`,
- 1 AS `parlament_biografie_id`,
- 1 AS `twitter_name`,
- 1 AS `linkedin_profil_url`,
- 1 AS `xing_profil_name`,
- 1 AS `facebook_name`,
- 1 AS `arbeitssprache`,
- 1 AS `adresse_firma`,
- 1 AS `adresse_strasse`,
- 1 AS `adresse_zusatz`,
- 1 AS `adresse_plz`,
- 1 AS `adresse_ort`,
- 1 AS `im_rat_seit_unix`,
- 1 AS `im_rat_bis_unix`,
- 1 AS `kanton`,
- 1 AS `vertretene_bevoelkerung`,
- 1 AS `kommissionen_namen`,
- 1 AS `kommissionen_abkuerzung`,
- 1 AS `partei`,
- 1 AS `partei_fr`,
- 1 AS `fraktion`,
- 1 AS `militaerischer_grad`,
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `organisation_id`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `deklarationstyp`,
- 1 AS `status`,
- 1 AS `hauptberuflich`,
- 1 AS `behoerden_vertreter`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `updated_by_import`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `connector_organisation_id`;
+CREATE TABLE `v_organisation_parlamentarier_indirekt` (
+  `beziehung` tinyint NOT NULL,
+  `parlamentarier_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `nachname` tinyint NOT NULL,
+  `vorname` tinyint NOT NULL,
+  `zweiter_vorname` tinyint NOT NULL,
+  `rat_id` tinyint NOT NULL,
+  `kanton_id` tinyint NOT NULL,
+  `kommissionen` tinyint NOT NULL,
+  `partei_id` tinyint NOT NULL,
+  `parteifunktion` tinyint NOT NULL,
+  `fraktion_id` tinyint NOT NULL,
+  `fraktionsfunktion` tinyint NOT NULL,
+  `im_rat_seit` tinyint NOT NULL,
+  `im_rat_bis` tinyint NOT NULL,
+  `ratswechsel` tinyint NOT NULL,
+  `ratsunterbruch_von` tinyint NOT NULL,
+  `ratsunterbruch_bis` tinyint NOT NULL,
+  `beruf` tinyint NOT NULL,
+  `beruf_interessengruppe_id` tinyint NOT NULL,
+  `zivilstand` tinyint NOT NULL,
+  `anzahl_kinder` tinyint NOT NULL,
+  `militaerischer_grad_id` tinyint NOT NULL,
+  `geschlecht` tinyint NOT NULL,
+  `geburtstag` tinyint NOT NULL,
+  `photo` tinyint NOT NULL,
+  `photo_dateiname` tinyint NOT NULL,
+  `photo_dateierweiterung` tinyint NOT NULL,
+  `photo_dateiname_voll` tinyint NOT NULL,
+  `photo_mime_type` tinyint NOT NULL,
+  `kleinbild` tinyint NOT NULL,
+  `sitzplatz` tinyint NOT NULL,
+  `email` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `parlament_biografie_id` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `linkedin_profil_url` tinyint NOT NULL,
+  `xing_profil_name` tinyint NOT NULL,
+  `facebook_name` tinyint NOT NULL,
+  `arbeitssprache` tinyint NOT NULL,
+  `adresse_firma` tinyint NOT NULL,
+  `adresse_strasse` tinyint NOT NULL,
+  `adresse_zusatz` tinyint NOT NULL,
+  `adresse_plz` tinyint NOT NULL,
+  `adresse_ort` tinyint NOT NULL,
+  `im_rat_seit_unix` tinyint NOT NULL,
+  `im_rat_bis_unix` tinyint NOT NULL,
+  `kanton` tinyint NOT NULL,
+  `vertretene_bevoelkerung` tinyint NOT NULL,
+  `kommissionen_namen` tinyint NOT NULL,
+  `kommissionen_abkuerzung` tinyint NOT NULL,
+  `partei` tinyint NOT NULL,
+  `partei_fr` tinyint NOT NULL,
+  `fraktion` tinyint NOT NULL,
+  `militaerischer_grad` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `deklarationstyp` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `hauptberuflich` tinyint NOT NULL,
+  `behoerden_vertreter` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `updated_by_import` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `connector_organisation_id` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -9286,195 +9671,196 @@ DROP TABLE IF EXISTS `v_organisation_raw`;
 DROP VIEW IF EXISTS `v_organisation_raw`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation_raw` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_mixed`,
- 1 AS `anzeige_bimixed`,
- 1 AS `searchable_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `name`,
- 1 AS `id`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `name_it`,
- 1 AS `uid`,
- 1 AS `ort`,
- 1 AS `abkuerzung_de`,
- 1 AS `alias_namen_de`,
- 1 AS `abkuerzung_fr`,
- 1 AS `alias_namen_fr`,
- 1 AS `abkuerzung_it`,
- 1 AS `alias_namen_it`,
- 1 AS `land_id`,
- 1 AS `interessenraum_id`,
- 1 AS `rechtsform`,
- 1 AS `rechtsform_handelsregister`,
- 1 AS `rechtsform_zefix`,
- 1 AS `typ`,
- 1 AS `vernehmlassung`,
- 1 AS `interessengruppe_id`,
- 1 AS `interessengruppe2_id`,
- 1 AS `interessengruppe3_id`,
- 1 AS `ALT_branche_id`,
- 1 AS `homepage`,
- 1 AS `handelsregister_url`,
- 1 AS `twitter_name`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `sekretariat`,
- 1 AS `adresse_strasse`,
- 1 AS `adresse_zusatz`,
- 1 AS `adresse_plz`,
- 1 AS `notizen`,
- 1 AS `updated_by_import`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `branche_ALT`,
- 1 AS `branche_de_ALT`,
- 1 AS `branche_fr_ALT`,
- 1 AS `interessengruppe`,
- 1 AS `interessengruppe_de`,
- 1 AS `interessengruppe_fr`,
- 1 AS `interessengruppe_branche`,
- 1 AS `interessengruppe_branche_de`,
- 1 AS `interessengruppe_branche_fr`,
- 1 AS `interessengruppe_branche_id`,
- 1 AS `interessengruppe_branche_kommission1_id`,
- 1 AS `interessengruppe_branche_kommission1_abkuerzung`,
- 1 AS `interessengruppe_branche_kommission1_abkuerzung_de`,
- 1 AS `interessengruppe_branche_kommission1_abkuerzung_fr`,
- 1 AS `interessengruppe_branche_kommission1_name`,
- 1 AS `interessengruppe_branche_kommission1_name_de`,
- 1 AS `interessengruppe_branche_kommission1_name_fr`,
- 1 AS `interessengruppe_branche_kommission2_id`,
- 1 AS `interessengruppe_branche_kommission2_abkuerzung`,
- 1 AS `interessengruppe_branche_kommission2_abkuerzung_de`,
- 1 AS `interessengruppe_branche_kommission2_abkuerzung_fr`,
- 1 AS `interessengruppe_branche_kommission2_name`,
- 1 AS `interessengruppe_branche_kommission2_name_de`,
- 1 AS `interessengruppe_branche_kommission2_name_fr`,
- 1 AS `interessengruppe1`,
- 1 AS `interessengruppe1_id`,
- 1 AS `interessengruppe1_de`,
- 1 AS `interessengruppe1_fr`,
- 1 AS `interessengruppe1_branche`,
- 1 AS `interessengruppe1_branche_de`,
- 1 AS `interessengruppe1_branche_fr`,
- 1 AS `interessengruppe1_branche_id`,
- 1 AS `interessengruppe1_branche_kommission_abkuerzung`,
- 1 AS `interessengruppe1_branche_kommission_abkuerzung_de`,
- 1 AS `interessengruppe1_branche_kommission_abkuerzung_fr`,
- 1 AS `interessengruppe1_branche_kommissionen_abkuerzung`,
- 1 AS `interessengruppe1_branche_kommissionen_abkuerzung_de`,
- 1 AS `interessengruppe1_branche_kommissionen_abkuerzung_fr`,
- 1 AS `interessengruppe1_branche_kommission1_id`,
- 1 AS `interessengruppe1_branche_kommission1_abkuerzung`,
- 1 AS `interessengruppe1_branche_kommission1_abkuerzung_de`,
- 1 AS `interessengruppe1_branche_kommission1_abkuerzung_fr`,
- 1 AS `interessengruppe1_branche_kommission1_name`,
- 1 AS `interessengruppe1_branche_kommission1_name_de`,
- 1 AS `interessengruppe1_branche_kommission1_name_fr`,
- 1 AS `interessengruppe1_branche_kommission2_id`,
- 1 AS `interessengruppe1_branche_kommission2_abkuerzung`,
- 1 AS `interessengruppe1_branche_kommission2_abkuerzung_de`,
- 1 AS `interessengruppe1_branche_kommission2_abkuerzung_fr`,
- 1 AS `interessengruppe1_branche_kommission2_name`,
- 1 AS `interessengruppe1_branche_kommission2_name_de`,
- 1 AS `interessengruppe1_branche_kommission2_name_fr`,
- 1 AS `interessengruppe2`,
- 1 AS `interessengruppe2_de`,
- 1 AS `interessengruppe2_fr`,
- 1 AS `interessengruppe2_branche`,
- 1 AS `interessengruppe2_branche_de`,
- 1 AS `interessengruppe2_branche_fr`,
- 1 AS `interessengruppe2_branche_id`,
- 1 AS `interessengruppe2_branche_kommission_abkuerzung`,
- 1 AS `interessengruppe2_branche_kommission_abkuerzung_de`,
- 1 AS `interessengruppe2_branche_kommission_abkuerzung_fr`,
- 1 AS `interessengruppe2_branche_kommissionen_abkuerzung`,
- 1 AS `interessengruppe2_branche_kommissionen_abkuerzung_de`,
- 1 AS `interessengruppe2_branche_kommissionen_abkuerzung_fr`,
- 1 AS `interessengruppe2_branche_kommission1_id`,
- 1 AS `interessengruppe2_branche_kommission1_abkuerzung`,
- 1 AS `interessengruppe2_branche_kommission1_abkuerzung_de`,
- 1 AS `interessengruppe2_branche_kommission1_abkuerzung_fr`,
- 1 AS `interessengruppe2_branche_kommission1_name`,
- 1 AS `interessengruppe2_branche_kommission1_name_de`,
- 1 AS `interessengruppe2_branche_kommission1_name_fr`,
- 1 AS `interessengruppe2_branche_kommission2_id`,
- 1 AS `interessengruppe2_branche_kommission2_abkuerzung`,
- 1 AS `interessengruppe2_branche_kommission2_abkuerzung_de`,
- 1 AS `interessengruppe2_branche_kommission2_abkuerzung_fr`,
- 1 AS `interessengruppe2_branche_kommission2_name`,
- 1 AS `interessengruppe2_branche_kommission2_name_de`,
- 1 AS `interessengruppe2_branche_kommission2_name_fr`,
- 1 AS `interessengruppe3`,
- 1 AS `interessengruppe3_de`,
- 1 AS `interessengruppe3_fr`,
- 1 AS `interessengruppe3_branche`,
- 1 AS `interessengruppe3_branche_de`,
- 1 AS `interessengruppe3_branche_fr`,
- 1 AS `interessengruppe3_branche_id`,
- 1 AS `interessengruppe3_branche_kommission_abkuerzung`,
- 1 AS `interessengruppe3_branche_kommission_abkuerzung_de`,
- 1 AS `interessengruppe3_branche_kommission_abkuerzung_fr`,
- 1 AS `interessengruppe3_branche_kommissionen_abkuerzung`,
- 1 AS `interessengruppe3_branche_kommissionen_abkuerzung_de`,
- 1 AS `interessengruppe3_branche_kommissionen_abkuerzung_fr`,
- 1 AS `interessengruppe3_branche_kommission1_id`,
- 1 AS `interessengruppe3_branche_kommission1_abkuerzung`,
- 1 AS `interessengruppe3_branche_kommission1_abkuerzung_de`,
- 1 AS `interessengruppe3_branche_kommission1_abkuerzung_fr`,
- 1 AS `interessengruppe3_branche_kommission1_name`,
- 1 AS `interessengruppe3_branche_kommission1_name_de`,
- 1 AS `interessengruppe3_branche_kommission1_name_fr`,
- 1 AS `interessengruppe3_branche_kommission2_id`,
- 1 AS `interessengruppe3_branche_kommission2_abkuerzung`,
- 1 AS `interessengruppe3_branche_kommission2_abkuerzung_de`,
- 1 AS `interessengruppe3_branche_kommission2_abkuerzung_fr`,
- 1 AS `interessengruppe3_branche_kommission2_name`,
- 1 AS `interessengruppe3_branche_kommission2_name_de`,
- 1 AS `interessengruppe3_branche_kommission2_name_fr`,
- 1 AS `refreshed_date`,
- 1 AS `land`,
- 1 AS `interessenraum`,
- 1 AS `interessenraum_de`,
- 1 AS `interessenraum_fr`,
- 1 AS `organisation_jahr_id`,
- 1 AS `jahr`,
- 1 AS `umsatz`,
- 1 AS `gewinn`,
- 1 AS `kapital`,
- 1 AS `mitarbeiter_weltweit`,
- 1 AS `mitarbeiter_schweiz`,
- 1 AS `geschaeftsbericht_url`,
- 1 AS `quelle_url`,
- 1 AS `anzahl_interessenbindung_tief`,
- 1 AS `anzahl_interessenbindung_mittel`,
- 1 AS `anzahl_interessenbindung_hoch`,
- 1 AS `anzahl_interessenbindung_tief_nach_wahl`,
- 1 AS `anzahl_interessenbindung_mittel_nach_wahl`,
- 1 AS `anzahl_interessenbindung_hoch_nach_wahl`,
- 1 AS `anzahl_mandat_tief`,
- 1 AS `anzahl_mandat_mittel`,
- 1 AS `anzahl_mandat_hoch`,
- 1 AS `lobbyeinfluss`,
- 1 AS `lobbyeinfluss_index`;
+CREATE TABLE `v_organisation_raw` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_mixed` tinyint NOT NULL,
+  `anzeige_bimixed` tinyint NOT NULL,
+  `searchable_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `name_it` tinyint NOT NULL,
+  `uid` tinyint NOT NULL,
+  `ort` tinyint NOT NULL,
+  `abkuerzung_de` tinyint NOT NULL,
+  `alias_namen_de` tinyint NOT NULL,
+  `abkuerzung_fr` tinyint NOT NULL,
+  `alias_namen_fr` tinyint NOT NULL,
+  `abkuerzung_it` tinyint NOT NULL,
+  `alias_namen_it` tinyint NOT NULL,
+  `land_id` tinyint NOT NULL,
+  `interessenraum_id` tinyint NOT NULL,
+  `rechtsform` tinyint NOT NULL,
+  `rechtsform_handelsregister` tinyint NOT NULL,
+  `rechtsform_zefix` tinyint NOT NULL,
+  `typ` tinyint NOT NULL,
+  `vernehmlassung` tinyint NOT NULL,
+  `interessengruppe_id` tinyint NOT NULL,
+  `interessengruppe2_id` tinyint NOT NULL,
+  `interessengruppe3_id` tinyint NOT NULL,
+  `ALT_branche_id` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `handelsregister_url` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `sekretariat` tinyint NOT NULL,
+  `adresse_strasse` tinyint NOT NULL,
+  `adresse_zusatz` tinyint NOT NULL,
+  `adresse_plz` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `updated_by_import` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `branche_ALT` tinyint NOT NULL,
+  `branche_de_ALT` tinyint NOT NULL,
+  `branche_fr_ALT` tinyint NOT NULL,
+  `interessengruppe` tinyint NOT NULL,
+  `interessengruppe_de` tinyint NOT NULL,
+  `interessengruppe_fr` tinyint NOT NULL,
+  `interessengruppe_branche` tinyint NOT NULL,
+  `interessengruppe_branche_de` tinyint NOT NULL,
+  `interessengruppe_branche_fr` tinyint NOT NULL,
+  `interessengruppe_branche_id` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_id` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_abkuerzung` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_name` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_name_de` tinyint NOT NULL,
+  `interessengruppe_branche_kommission1_name_fr` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_id` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_abkuerzung` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_name` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_name_de` tinyint NOT NULL,
+  `interessengruppe_branche_kommission2_name_fr` tinyint NOT NULL,
+  `interessengruppe1` tinyint NOT NULL,
+  `interessengruppe1_id` tinyint NOT NULL,
+  `interessengruppe1_de` tinyint NOT NULL,
+  `interessengruppe1_fr` tinyint NOT NULL,
+  `interessengruppe1_branche` tinyint NOT NULL,
+  `interessengruppe1_branche_de` tinyint NOT NULL,
+  `interessengruppe1_branche_fr` tinyint NOT NULL,
+  `interessengruppe1_branche_id` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission_abkuerzung` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe1_branche_kommissionen_abkuerzung` tinyint NOT NULL,
+  `interessengruppe1_branche_kommissionen_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe1_branche_kommissionen_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_id` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_abkuerzung` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_name` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_name_de` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission1_name_fr` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_id` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_abkuerzung` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_name` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_name_de` tinyint NOT NULL,
+  `interessengruppe1_branche_kommission2_name_fr` tinyint NOT NULL,
+  `interessengruppe2` tinyint NOT NULL,
+  `interessengruppe2_de` tinyint NOT NULL,
+  `interessengruppe2_fr` tinyint NOT NULL,
+  `interessengruppe2_branche` tinyint NOT NULL,
+  `interessengruppe2_branche_de` tinyint NOT NULL,
+  `interessengruppe2_branche_fr` tinyint NOT NULL,
+  `interessengruppe2_branche_id` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission_abkuerzung` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe2_branche_kommissionen_abkuerzung` tinyint NOT NULL,
+  `interessengruppe2_branche_kommissionen_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe2_branche_kommissionen_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_id` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_abkuerzung` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_name` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_name_de` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission1_name_fr` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_id` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_abkuerzung` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_name` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_name_de` tinyint NOT NULL,
+  `interessengruppe2_branche_kommission2_name_fr` tinyint NOT NULL,
+  `interessengruppe3` tinyint NOT NULL,
+  `interessengruppe3_de` tinyint NOT NULL,
+  `interessengruppe3_fr` tinyint NOT NULL,
+  `interessengruppe3_branche` tinyint NOT NULL,
+  `interessengruppe3_branche_de` tinyint NOT NULL,
+  `interessengruppe3_branche_fr` tinyint NOT NULL,
+  `interessengruppe3_branche_id` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission_abkuerzung` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe3_branche_kommissionen_abkuerzung` tinyint NOT NULL,
+  `interessengruppe3_branche_kommissionen_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe3_branche_kommissionen_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_id` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_abkuerzung` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_name` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_name_de` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission1_name_fr` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_id` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_abkuerzung` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_abkuerzung_de` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_abkuerzung_fr` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_name` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_name_de` tinyint NOT NULL,
+  `interessengruppe3_branche_kommission2_name_fr` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL,
+  `land` tinyint NOT NULL,
+  `interessenraum` tinyint NOT NULL,
+  `interessenraum_de` tinyint NOT NULL,
+  `interessenraum_fr` tinyint NOT NULL,
+  `organisation_jahr_id` tinyint NOT NULL,
+  `jahr` tinyint NOT NULL,
+  `umsatz` tinyint NOT NULL,
+  `gewinn` tinyint NOT NULL,
+  `kapital` tinyint NOT NULL,
+  `mitarbeiter_weltweit` tinyint NOT NULL,
+  `mitarbeiter_schweiz` tinyint NOT NULL,
+  `geschaeftsbericht_url` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `anzahl_interessenbindung_tief` tinyint NOT NULL,
+  `anzahl_interessenbindung_mittel` tinyint NOT NULL,
+  `anzahl_interessenbindung_hoch` tinyint NOT NULL,
+  `anzahl_interessenbindung_tief_nach_wahl` tinyint NOT NULL,
+  `anzahl_interessenbindung_mittel_nach_wahl` tinyint NOT NULL,
+  `anzahl_interessenbindung_hoch_nach_wahl` tinyint NOT NULL,
+  `anzahl_mandat_tief` tinyint NOT NULL,
+  `anzahl_mandat_mittel` tinyint NOT NULL,
+  `anzahl_mandat_hoch` tinyint NOT NULL,
+  `lobbyeinfluss` tinyint NOT NULL,
+  `lobbyeinfluss_index` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -9485,64 +9871,65 @@ DROP TABLE IF EXISTS `v_organisation_simple`;
 DROP VIEW IF EXISTS `v_organisation_simple`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation_simple` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_mixed`,
- 1 AS `anzeige_bimixed`,
- 1 AS `searchable_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `name`,
- 1 AS `id`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `name_it`,
- 1 AS `uid`,
- 1 AS `ort`,
- 1 AS `abkuerzung_de`,
- 1 AS `alias_namen_de`,
- 1 AS `abkuerzung_fr`,
- 1 AS `alias_namen_fr`,
- 1 AS `abkuerzung_it`,
- 1 AS `alias_namen_it`,
- 1 AS `land_id`,
- 1 AS `interessenraum_id`,
- 1 AS `rechtsform`,
- 1 AS `rechtsform_handelsregister`,
- 1 AS `rechtsform_zefix`,
- 1 AS `typ`,
- 1 AS `vernehmlassung`,
- 1 AS `interessengruppe_id`,
- 1 AS `interessengruppe2_id`,
- 1 AS `interessengruppe3_id`,
- 1 AS `ALT_branche_id`,
- 1 AS `homepage`,
- 1 AS `handelsregister_url`,
- 1 AS `twitter_name`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `sekretariat`,
- 1 AS `adresse_strasse`,
- 1 AS `adresse_zusatz`,
- 1 AS `adresse_plz`,
- 1 AS `notizen`,
- 1 AS `updated_by_import`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_organisation_simple` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_mixed` tinyint NOT NULL,
+  `anzeige_bimixed` tinyint NOT NULL,
+  `searchable_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `name_it` tinyint NOT NULL,
+  `uid` tinyint NOT NULL,
+  `ort` tinyint NOT NULL,
+  `abkuerzung_de` tinyint NOT NULL,
+  `alias_namen_de` tinyint NOT NULL,
+  `abkuerzung_fr` tinyint NOT NULL,
+  `alias_namen_fr` tinyint NOT NULL,
+  `abkuerzung_it` tinyint NOT NULL,
+  `alias_namen_it` tinyint NOT NULL,
+  `land_id` tinyint NOT NULL,
+  `interessenraum_id` tinyint NOT NULL,
+  `rechtsform` tinyint NOT NULL,
+  `rechtsform_handelsregister` tinyint NOT NULL,
+  `rechtsform_zefix` tinyint NOT NULL,
+  `typ` tinyint NOT NULL,
+  `vernehmlassung` tinyint NOT NULL,
+  `interessengruppe_id` tinyint NOT NULL,
+  `interessengruppe2_id` tinyint NOT NULL,
+  `interessengruppe3_id` tinyint NOT NULL,
+  `ALT_branche_id` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `handelsregister_url` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `sekretariat` tinyint NOT NULL,
+  `adresse_strasse` tinyint NOT NULL,
+  `adresse_zusatz` tinyint NOT NULL,
+  `adresse_plz` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `updated_by_import` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -9553,63 +9940,64 @@ DROP TABLE IF EXISTS `v_organisation_zutrittsberechtigung`;
 DROP VIEW IF EXISTS `v_organisation_zutrittsberechtigung`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_organisation_zutrittsberechtigung` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `zutrittsberechtigung_name`,
- 1 AS `name`,
- 1 AS `parlamentarier_id`,
- 1 AS `nachname`,
- 1 AS `vorname`,
- 1 AS `zweiter_vorname`,
- 1 AS `funktion`,
- 1 AS `beruf`,
- 1 AS `beruf_interessengruppe_id`,
- 1 AS `partei_id`,
- 1 AS `geschlecht`,
- 1 AS `email`,
- 1 AS `homepage`,
- 1 AS `twitter_name`,
- 1 AS `linkedin_profil_url`,
- 1 AS `xing_profil_name`,
- 1 AS `facebook_name`,
- 1 AS `partei`,
- 1 AS `parlamentarier_name`,
- 1 AS `zutrittsberechtigung_bis_unix`,
- 1 AS `id`,
- 1 AS `person_id`,
- 1 AS `organisation_id`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `hauptberuflich`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_organisation_zutrittsberechtigung` (
+  `anzeige_name` tinyint NOT NULL,
+  `zutrittsberechtigung_name` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `nachname` tinyint NOT NULL,
+  `vorname` tinyint NOT NULL,
+  `zweiter_vorname` tinyint NOT NULL,
+  `funktion` tinyint NOT NULL,
+  `beruf` tinyint NOT NULL,
+  `beruf_interessengruppe_id` tinyint NOT NULL,
+  `partei_id` tinyint NOT NULL,
+  `geschlecht` tinyint NOT NULL,
+  `email` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `linkedin_profil_url` tinyint NOT NULL,
+  `xing_profil_name` tinyint NOT NULL,
+  `facebook_name` tinyint NOT NULL,
+  `partei` tinyint NOT NULL,
+  `parlamentarier_name` tinyint NOT NULL,
+  `zutrittsberechtigung_bis_unix` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `person_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `hauptberuflich` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -9620,158 +10008,159 @@ DROP TABLE IF EXISTS `v_parlamentarier`;
 DROP VIEW IF EXISTS `v_parlamentarier`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_parlamentarier` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `name`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `id`,
- 1 AS `nachname`,
- 1 AS `vorname`,
- 1 AS `vorname_kurz`,
- 1 AS `zweiter_vorname`,
- 1 AS `rat_id`,
- 1 AS `kanton_id`,
- 1 AS `kommissionen`,
- 1 AS `partei_id`,
- 1 AS `parteifunktion`,
- 1 AS `fraktion_id`,
- 1 AS `fraktionsfunktion`,
- 1 AS `im_rat_seit`,
- 1 AS `im_rat_bis`,
- 1 AS `ratswechsel`,
- 1 AS `ratsunterbruch_von`,
- 1 AS `ratsunterbruch_bis`,
- 1 AS `beruf`,
- 1 AS `beruf_fr`,
- 1 AS `beruf_interessengruppe_id`,
- 1 AS `titel`,
- 1 AS `aemter`,
- 1 AS `weitere_aemter`,
- 1 AS `zivilstand`,
- 1 AS `anzahl_kinder`,
- 1 AS `militaerischer_grad_id`,
- 1 AS `geschlecht`,
- 1 AS `geburtstag`,
- 1 AS `photo`,
- 1 AS `photo_dateiname`,
- 1 AS `photo_dateierweiterung`,
- 1 AS `photo_dateiname_voll`,
- 1 AS `photo_mime_type`,
- 1 AS `kleinbild`,
- 1 AS `sitzplatz`,
- 1 AS `email`,
- 1 AS `homepage`,
- 1 AS `homepage_2`,
- 1 AS `parlament_biografie_id`,
- 1 AS `parlament_number`,
- 1 AS `parlament_interessenbindungen`,
- 1 AS `parlament_interessenbindungen_json`,
- 1 AS `parlament_interessenbindungen_updated`,
- 1 AS `twitter_name`,
- 1 AS `linkedin_profil_url`,
- 1 AS `xing_profil_name`,
- 1 AS `facebook_name`,
- 1 AS `wikipedia`,
- 1 AS `sprache`,
- 1 AS `arbeitssprache`,
- 1 AS `adresse_firma`,
- 1 AS `adresse_strasse`,
- 1 AS `adresse_zusatz`,
- 1 AS `adresse_plz`,
- 1 AS `adresse_ort`,
- 1 AS `telephon_1`,
- 1 AS `telephon_2`,
- 1 AS `erfasst`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisierung_verschickt_visa`,
- 1 AS `autorisierung_verschickt_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `beruf_de`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `geburtstag_unix`,
- 1 AS `im_rat_seit_unix`,
- 1 AS `im_rat_bis_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `von_unix`,
- 1 AS `bis_unix`,
- 1 AS `vertretene_bevoelkerung`,
- 1 AS `rat`,
- 1 AS `kanton`,
- 1 AS `romandie`,
- 1 AS `rat_de`,
- 1 AS `kanton_name_de`,
- 1 AS `rat_fr`,
- 1 AS `kanton_name_fr`,
- 1 AS `kommissionen_namen`,
- 1 AS `kommissionen_namen_de`,
- 1 AS `kommissionen_namen_fr`,
- 1 AS `kommissionen_abkuerzung`,
- 1 AS `kommissionen_abkuerzung_de`,
- 1 AS `kommissionen_abkuerzung_fr`,
- 1 AS `kommissionen_anzahl`,
- 1 AS `partei`,
- 1 AS `partei_name`,
- 1 AS `fraktion`,
- 1 AS `militaerischer_grad`,
- 1 AS `partei_de`,
- 1 AS `partei_name_de`,
- 1 AS `militaerischer_grad_de`,
- 1 AS `partei_fr`,
- 1 AS `partei_name_fr`,
- 1 AS `militaerischer_grad_fr`,
- 1 AS `beruf_branche_id`,
- 1 AS `titel_de`,
- 1 AS `titel_fr`,
- 1 AS `parlamentarier_id`,
- 1 AS `anzahl_interessenbindungen`,
- 1 AS `anzahl_hauptberufliche_interessenbindungen`,
- 1 AS `anzahl_nicht_hauptberufliche_interessenbindungen`,
- 1 AS `anzahl_abgelaufene_interessenbindungen`,
- 1 AS `anzahl_interessenbindungen_alle`,
- 1 AS `anzahl_erfasste_verguetungen`,
- 1 AS `anzahl_erfasste_hauptberufliche_verguetungen`,
- 1 AS `anzahl_erfasste_nicht_hauptberufliche_verguetungen`,
- 1 AS `verguetungstransparenz_berechnet`,
- 1 AS `verguetungstransparenz_berechnet_nicht_beruflich`,
- 1 AS `verguetungstransparenz_berechnet_alle`,
- 1 AS `verguetungstransparenz_beurteilung_stichdatum`,
- 1 AS `verguetungstransparenz_beurteilung`,
- 1 AS `refreshed_date`,
- 1 AS `anzahl_interessenbindung_tief`,
- 1 AS `anzahl_interessenbindung_mittel`,
- 1 AS `anzahl_interessenbindung_hoch`,
- 1 AS `anzahl_interessenbindung_tief_nach_wahl`,
- 1 AS `anzahl_interessenbindung_mittel_nach_wahl`,
- 1 AS `anzahl_interessenbindung_hoch_nach_wahl`,
- 1 AS `lobbyfaktor`,
- 1 AS `lobbyfaktor_max`,
- 1 AS `lobbyfaktor_percent_max`,
- 1 AS `anzahl_interessenbindung_tief_max`,
- 1 AS `anzahl_interessenbindung_mittel_max`,
- 1 AS `anzahl_interessenbindung_hoch_max`,
- 1 AS `ratstyp`,
- 1 AS `kanton_abkuerzung`;
+CREATE TABLE `v_parlamentarier` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `nachname` tinyint NOT NULL,
+  `vorname` tinyint NOT NULL,
+  `vorname_kurz` tinyint NOT NULL,
+  `zweiter_vorname` tinyint NOT NULL,
+  `rat_id` tinyint NOT NULL,
+  `kanton_id` tinyint NOT NULL,
+  `kommissionen` tinyint NOT NULL,
+  `partei_id` tinyint NOT NULL,
+  `parteifunktion` tinyint NOT NULL,
+  `fraktion_id` tinyint NOT NULL,
+  `fraktionsfunktion` tinyint NOT NULL,
+  `im_rat_seit` tinyint NOT NULL,
+  `im_rat_bis` tinyint NOT NULL,
+  `ratswechsel` tinyint NOT NULL,
+  `ratsunterbruch_von` tinyint NOT NULL,
+  `ratsunterbruch_bis` tinyint NOT NULL,
+  `beruf` tinyint NOT NULL,
+  `beruf_fr` tinyint NOT NULL,
+  `beruf_interessengruppe_id` tinyint NOT NULL,
+  `titel` tinyint NOT NULL,
+  `aemter` tinyint NOT NULL,
+  `weitere_aemter` tinyint NOT NULL,
+  `zivilstand` tinyint NOT NULL,
+  `anzahl_kinder` tinyint NOT NULL,
+  `militaerischer_grad_id` tinyint NOT NULL,
+  `geschlecht` tinyint NOT NULL,
+  `geburtstag` tinyint NOT NULL,
+  `photo` tinyint NOT NULL,
+  `photo_dateiname` tinyint NOT NULL,
+  `photo_dateierweiterung` tinyint NOT NULL,
+  `photo_dateiname_voll` tinyint NOT NULL,
+  `photo_mime_type` tinyint NOT NULL,
+  `kleinbild` tinyint NOT NULL,
+  `sitzplatz` tinyint NOT NULL,
+  `email` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `homepage_2` tinyint NOT NULL,
+  `parlament_biografie_id` tinyint NOT NULL,
+  `parlament_number` tinyint NOT NULL,
+  `parlament_interessenbindungen` tinyint NOT NULL,
+  `parlament_interessenbindungen_json` tinyint NOT NULL,
+  `parlament_interessenbindungen_updated` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `linkedin_profil_url` tinyint NOT NULL,
+  `xing_profil_name` tinyint NOT NULL,
+  `facebook_name` tinyint NOT NULL,
+  `wikipedia` tinyint NOT NULL,
+  `sprache` tinyint NOT NULL,
+  `arbeitssprache` tinyint NOT NULL,
+  `adresse_firma` tinyint NOT NULL,
+  `adresse_strasse` tinyint NOT NULL,
+  `adresse_zusatz` tinyint NOT NULL,
+  `adresse_plz` tinyint NOT NULL,
+  `adresse_ort` tinyint NOT NULL,
+  `telephon_1` tinyint NOT NULL,
+  `telephon_2` tinyint NOT NULL,
+  `erfasst` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisierung_verschickt_visa` tinyint NOT NULL,
+  `autorisierung_verschickt_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `beruf_de` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `geburtstag_unix` tinyint NOT NULL,
+  `im_rat_seit_unix` tinyint NOT NULL,
+  `im_rat_bis_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `vertretene_bevoelkerung` tinyint NOT NULL,
+  `rat` tinyint NOT NULL,
+  `kanton` tinyint NOT NULL,
+  `romandie` tinyint NOT NULL,
+  `rat_de` tinyint NOT NULL,
+  `kanton_name_de` tinyint NOT NULL,
+  `rat_fr` tinyint NOT NULL,
+  `kanton_name_fr` tinyint NOT NULL,
+  `kommissionen_namen` tinyint NOT NULL,
+  `kommissionen_namen_de` tinyint NOT NULL,
+  `kommissionen_namen_fr` tinyint NOT NULL,
+  `kommissionen_abkuerzung` tinyint NOT NULL,
+  `kommissionen_abkuerzung_de` tinyint NOT NULL,
+  `kommissionen_abkuerzung_fr` tinyint NOT NULL,
+  `kommissionen_anzahl` tinyint NOT NULL,
+  `partei` tinyint NOT NULL,
+  `partei_name` tinyint NOT NULL,
+  `fraktion` tinyint NOT NULL,
+  `militaerischer_grad` tinyint NOT NULL,
+  `partei_de` tinyint NOT NULL,
+  `partei_name_de` tinyint NOT NULL,
+  `militaerischer_grad_de` tinyint NOT NULL,
+  `partei_fr` tinyint NOT NULL,
+  `partei_name_fr` tinyint NOT NULL,
+  `militaerischer_grad_fr` tinyint NOT NULL,
+  `beruf_branche_id` tinyint NOT NULL,
+  `titel_de` tinyint NOT NULL,
+  `titel_fr` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `anzahl_interessenbindungen` tinyint NOT NULL,
+  `anzahl_hauptberufliche_interessenbindungen` tinyint NOT NULL,
+  `anzahl_nicht_hauptberufliche_interessenbindungen` tinyint NOT NULL,
+  `anzahl_abgelaufene_interessenbindungen` tinyint NOT NULL,
+  `anzahl_interessenbindungen_alle` tinyint NOT NULL,
+  `anzahl_erfasste_verguetungen` tinyint NOT NULL,
+  `anzahl_erfasste_hauptberufliche_verguetungen` tinyint NOT NULL,
+  `anzahl_erfasste_nicht_hauptberufliche_verguetungen` tinyint NOT NULL,
+  `verguetungstransparenz_berechnet` tinyint NOT NULL,
+  `verguetungstransparenz_berechnet_nicht_beruflich` tinyint NOT NULL,
+  `verguetungstransparenz_berechnet_alle` tinyint NOT NULL,
+  `verguetungstransparenz_beurteilung_stichdatum` tinyint NOT NULL,
+  `verguetungstransparenz_beurteilung` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL,
+  `anzahl_interessenbindung_tief` tinyint NOT NULL,
+  `anzahl_interessenbindung_mittel` tinyint NOT NULL,
+  `anzahl_interessenbindung_hoch` tinyint NOT NULL,
+  `anzahl_interessenbindung_tief_nach_wahl` tinyint NOT NULL,
+  `anzahl_interessenbindung_mittel_nach_wahl` tinyint NOT NULL,
+  `anzahl_interessenbindung_hoch_nach_wahl` tinyint NOT NULL,
+  `lobbyfaktor` tinyint NOT NULL,
+  `lobbyfaktor_max` tinyint NOT NULL,
+  `lobbyfaktor_percent_max` tinyint NOT NULL,
+  `anzahl_interessenbindung_tief_max` tinyint NOT NULL,
+  `anzahl_interessenbindung_mittel_max` tinyint NOT NULL,
+  `anzahl_interessenbindung_hoch_max` tinyint NOT NULL,
+  `ratstyp` tinyint NOT NULL,
+  `kanton_abkuerzung` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -9782,23 +10171,24 @@ DROP TABLE IF EXISTS `v_parlamentarier_anhang`;
 DROP VIEW IF EXISTS `v_parlamentarier_anhang`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_parlamentarier_anhang` AS SELECT 
- 1 AS `parlamentarier_id2`,
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `datei`,
- 1 AS `dateiname`,
- 1 AS `dateierweiterung`,
- 1 AS `dateiname_voll`,
- 1 AS `mime_type`,
- 1 AS `encoding`,
- 1 AS `beschreibung`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`;
+CREATE TABLE `v_parlamentarier_anhang` (
+  `parlamentarier_id2` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `datei` tinyint NOT NULL,
+  `dateiname` tinyint NOT NULL,
+  `dateierweiterung` tinyint NOT NULL,
+  `dateiname_voll` tinyint NOT NULL,
+  `mime_type` tinyint NOT NULL,
+  `encoding` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -9809,17 +10199,18 @@ DROP TABLE IF EXISTS `v_parlamentarier_lobbyfaktor`;
 DROP VIEW IF EXISTS `v_parlamentarier_lobbyfaktor`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_parlamentarier_lobbyfaktor` AS SELECT 
- 1 AS `id`,
- 1 AS `anzahl_interessenbindung_tief`,
- 1 AS `anzahl_interessenbindung_mittel`,
- 1 AS `anzahl_interessenbindung_hoch`,
- 1 AS `anzahl_interessenbindung_tief_nach_wahl`,
- 1 AS `anzahl_interessenbindung_mittel_nach_wahl`,
- 1 AS `anzahl_interessenbindung_hoch_nach_wahl`,
- 1 AS `lobbyfaktor`,
- 1 AS `lobbyfaktor_einfach`,
- 1 AS `refreshed_date`;
+CREATE TABLE `v_parlamentarier_lobbyfaktor` (
+  `id` tinyint NOT NULL,
+  `anzahl_interessenbindung_tief` tinyint NOT NULL,
+  `anzahl_interessenbindung_mittel` tinyint NOT NULL,
+  `anzahl_interessenbindung_hoch` tinyint NOT NULL,
+  `anzahl_interessenbindung_tief_nach_wahl` tinyint NOT NULL,
+  `anzahl_interessenbindung_mittel_nach_wahl` tinyint NOT NULL,
+  `anzahl_interessenbindung_hoch_nach_wahl` tinyint NOT NULL,
+  `lobbyfaktor` tinyint NOT NULL,
+  `lobbyfaktor_einfach` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -9830,13 +10221,14 @@ DROP TABLE IF EXISTS `v_parlamentarier_lobbyfaktor_max_raw`;
 DROP VIEW IF EXISTS `v_parlamentarier_lobbyfaktor_max_raw`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_parlamentarier_lobbyfaktor_max_raw` AS SELECT 
- 1 AS `id`,
- 1 AS `anzahl_interessenbindung_tief_max`,
- 1 AS `anzahl_interessenbindung_mittel_max`,
- 1 AS `anzahl_interessenbindung_hoch_max`,
- 1 AS `lobbyfaktor_max`,
- 1 AS `refreshed_date`;
+CREATE TABLE `v_parlamentarier_lobbyfaktor_max_raw` (
+  `id` tinyint NOT NULL,
+  `anzahl_interessenbindung_tief_max` tinyint NOT NULL,
+  `anzahl_interessenbindung_mittel_max` tinyint NOT NULL,
+  `anzahl_interessenbindung_hoch_max` tinyint NOT NULL,
+  `lobbyfaktor_max` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -9847,17 +10239,18 @@ DROP TABLE IF EXISTS `v_parlamentarier_lobbyfaktor_raw`;
 DROP VIEW IF EXISTS `v_parlamentarier_lobbyfaktor_raw`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_parlamentarier_lobbyfaktor_raw` AS SELECT 
- 1 AS `id`,
- 1 AS `anzahl_interessenbindung_tief`,
- 1 AS `anzahl_interessenbindung_mittel`,
- 1 AS `anzahl_interessenbindung_hoch`,
- 1 AS `anzahl_interessenbindung_tief_nach_wahl`,
- 1 AS `anzahl_interessenbindung_mittel_nach_wahl`,
- 1 AS `anzahl_interessenbindung_hoch_nach_wahl`,
- 1 AS `lobbyfaktor`,
- 1 AS `lobbyfaktor_einfach`,
- 1 AS `refreshed_date`;
+CREATE TABLE `v_parlamentarier_lobbyfaktor_raw` (
+  `id` tinyint NOT NULL,
+  `anzahl_interessenbindung_tief` tinyint NOT NULL,
+  `anzahl_interessenbindung_mittel` tinyint NOT NULL,
+  `anzahl_interessenbindung_hoch` tinyint NOT NULL,
+  `anzahl_interessenbindung_tief_nach_wahl` tinyint NOT NULL,
+  `anzahl_interessenbindung_mittel_nach_wahl` tinyint NOT NULL,
+  `anzahl_interessenbindung_hoch_nach_wahl` tinyint NOT NULL,
+  `lobbyfaktor` tinyint NOT NULL,
+  `lobbyfaktor_einfach` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -9868,144 +10261,145 @@ DROP TABLE IF EXISTS `v_parlamentarier_medium_raw`;
 DROP VIEW IF EXISTS `v_parlamentarier_medium_raw`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_parlamentarier_medium_raw` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `name`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `id`,
- 1 AS `nachname`,
- 1 AS `vorname`,
- 1 AS `vorname_kurz`,
- 1 AS `zweiter_vorname`,
- 1 AS `rat_id`,
- 1 AS `kanton_id`,
- 1 AS `kommissionen`,
- 1 AS `partei_id`,
- 1 AS `parteifunktion`,
- 1 AS `fraktion_id`,
- 1 AS `fraktionsfunktion`,
- 1 AS `im_rat_seit`,
- 1 AS `im_rat_bis`,
- 1 AS `ratswechsel`,
- 1 AS `ratsunterbruch_von`,
- 1 AS `ratsunterbruch_bis`,
- 1 AS `beruf`,
- 1 AS `beruf_fr`,
- 1 AS `beruf_interessengruppe_id`,
- 1 AS `titel`,
- 1 AS `aemter`,
- 1 AS `weitere_aemter`,
- 1 AS `zivilstand`,
- 1 AS `anzahl_kinder`,
- 1 AS `militaerischer_grad_id`,
- 1 AS `geschlecht`,
- 1 AS `geburtstag`,
- 1 AS `photo`,
- 1 AS `photo_dateiname`,
- 1 AS `photo_dateierweiterung`,
- 1 AS `photo_dateiname_voll`,
- 1 AS `photo_mime_type`,
- 1 AS `kleinbild`,
- 1 AS `sitzplatz`,
- 1 AS `email`,
- 1 AS `homepage`,
- 1 AS `homepage_2`,
- 1 AS `parlament_biografie_id`,
- 1 AS `parlament_number`,
- 1 AS `parlament_interessenbindungen`,
- 1 AS `parlament_interessenbindungen_json`,
- 1 AS `parlament_interessenbindungen_updated`,
- 1 AS `twitter_name`,
- 1 AS `linkedin_profil_url`,
- 1 AS `xing_profil_name`,
- 1 AS `facebook_name`,
- 1 AS `wikipedia`,
- 1 AS `sprache`,
- 1 AS `arbeitssprache`,
- 1 AS `adresse_firma`,
- 1 AS `adresse_strasse`,
- 1 AS `adresse_zusatz`,
- 1 AS `adresse_plz`,
- 1 AS `adresse_ort`,
- 1 AS `telephon_1`,
- 1 AS `telephon_2`,
- 1 AS `erfasst`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisierung_verschickt_visa`,
- 1 AS `autorisierung_verschickt_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `beruf_de`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `geburtstag_unix`,
- 1 AS `im_rat_seit_unix`,
- 1 AS `im_rat_bis_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `von_unix`,
- 1 AS `bis_unix`,
- 1 AS `vertretene_bevoelkerung`,
- 1 AS `rat`,
- 1 AS `kanton`,
- 1 AS `romandie`,
- 1 AS `rat_de`,
- 1 AS `kanton_name_de`,
- 1 AS `rat_fr`,
- 1 AS `kanton_name_fr`,
- 1 AS `kommissionen_namen`,
- 1 AS `kommissionen_namen_de`,
- 1 AS `kommissionen_namen_fr`,
- 1 AS `kommissionen_abkuerzung`,
- 1 AS `kommissionen_abkuerzung_de`,
- 1 AS `kommissionen_abkuerzung_fr`,
- 1 AS `kommissionen_anzahl`,
- 1 AS `partei`,
- 1 AS `partei_name`,
- 1 AS `fraktion`,
- 1 AS `militaerischer_grad`,
- 1 AS `partei_de`,
- 1 AS `partei_name_de`,
- 1 AS `militaerischer_grad_de`,
- 1 AS `partei_fr`,
- 1 AS `partei_name_fr`,
- 1 AS `militaerischer_grad_fr`,
- 1 AS `beruf_branche_id`,
- 1 AS `titel_de`,
- 1 AS `titel_fr`,
- 1 AS `parlamentarier_id`,
- 1 AS `anzahl_interessenbindungen`,
- 1 AS `anzahl_hauptberufliche_interessenbindungen`,
- 1 AS `anzahl_nicht_hauptberufliche_interessenbindungen`,
- 1 AS `anzahl_abgelaufene_interessenbindungen`,
- 1 AS `anzahl_interessenbindungen_alle`,
- 1 AS `anzahl_erfasste_verguetungen`,
- 1 AS `anzahl_erfasste_hauptberufliche_verguetungen`,
- 1 AS `anzahl_erfasste_nicht_hauptberufliche_verguetungen`,
- 1 AS `verguetungstransparenz_berechnet`,
- 1 AS `verguetungstransparenz_berechnet_nicht_beruflich`,
- 1 AS `verguetungstransparenz_berechnet_alle`,
- 1 AS `verguetungstransparenz_beurteilung_stichdatum`,
- 1 AS `verguetungstransparenz_beurteilung`,
- 1 AS `refreshed_date`;
+CREATE TABLE `v_parlamentarier_medium_raw` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `nachname` tinyint NOT NULL,
+  `vorname` tinyint NOT NULL,
+  `vorname_kurz` tinyint NOT NULL,
+  `zweiter_vorname` tinyint NOT NULL,
+  `rat_id` tinyint NOT NULL,
+  `kanton_id` tinyint NOT NULL,
+  `kommissionen` tinyint NOT NULL,
+  `partei_id` tinyint NOT NULL,
+  `parteifunktion` tinyint NOT NULL,
+  `fraktion_id` tinyint NOT NULL,
+  `fraktionsfunktion` tinyint NOT NULL,
+  `im_rat_seit` tinyint NOT NULL,
+  `im_rat_bis` tinyint NOT NULL,
+  `ratswechsel` tinyint NOT NULL,
+  `ratsunterbruch_von` tinyint NOT NULL,
+  `ratsunterbruch_bis` tinyint NOT NULL,
+  `beruf` tinyint NOT NULL,
+  `beruf_fr` tinyint NOT NULL,
+  `beruf_interessengruppe_id` tinyint NOT NULL,
+  `titel` tinyint NOT NULL,
+  `aemter` tinyint NOT NULL,
+  `weitere_aemter` tinyint NOT NULL,
+  `zivilstand` tinyint NOT NULL,
+  `anzahl_kinder` tinyint NOT NULL,
+  `militaerischer_grad_id` tinyint NOT NULL,
+  `geschlecht` tinyint NOT NULL,
+  `geburtstag` tinyint NOT NULL,
+  `photo` tinyint NOT NULL,
+  `photo_dateiname` tinyint NOT NULL,
+  `photo_dateierweiterung` tinyint NOT NULL,
+  `photo_dateiname_voll` tinyint NOT NULL,
+  `photo_mime_type` tinyint NOT NULL,
+  `kleinbild` tinyint NOT NULL,
+  `sitzplatz` tinyint NOT NULL,
+  `email` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `homepage_2` tinyint NOT NULL,
+  `parlament_biografie_id` tinyint NOT NULL,
+  `parlament_number` tinyint NOT NULL,
+  `parlament_interessenbindungen` tinyint NOT NULL,
+  `parlament_interessenbindungen_json` tinyint NOT NULL,
+  `parlament_interessenbindungen_updated` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `linkedin_profil_url` tinyint NOT NULL,
+  `xing_profil_name` tinyint NOT NULL,
+  `facebook_name` tinyint NOT NULL,
+  `wikipedia` tinyint NOT NULL,
+  `sprache` tinyint NOT NULL,
+  `arbeitssprache` tinyint NOT NULL,
+  `adresse_firma` tinyint NOT NULL,
+  `adresse_strasse` tinyint NOT NULL,
+  `adresse_zusatz` tinyint NOT NULL,
+  `adresse_plz` tinyint NOT NULL,
+  `adresse_ort` tinyint NOT NULL,
+  `telephon_1` tinyint NOT NULL,
+  `telephon_2` tinyint NOT NULL,
+  `erfasst` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisierung_verschickt_visa` tinyint NOT NULL,
+  `autorisierung_verschickt_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `beruf_de` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `geburtstag_unix` tinyint NOT NULL,
+  `im_rat_seit_unix` tinyint NOT NULL,
+  `im_rat_bis_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `vertretene_bevoelkerung` tinyint NOT NULL,
+  `rat` tinyint NOT NULL,
+  `kanton` tinyint NOT NULL,
+  `romandie` tinyint NOT NULL,
+  `rat_de` tinyint NOT NULL,
+  `kanton_name_de` tinyint NOT NULL,
+  `rat_fr` tinyint NOT NULL,
+  `kanton_name_fr` tinyint NOT NULL,
+  `kommissionen_namen` tinyint NOT NULL,
+  `kommissionen_namen_de` tinyint NOT NULL,
+  `kommissionen_namen_fr` tinyint NOT NULL,
+  `kommissionen_abkuerzung` tinyint NOT NULL,
+  `kommissionen_abkuerzung_de` tinyint NOT NULL,
+  `kommissionen_abkuerzung_fr` tinyint NOT NULL,
+  `kommissionen_anzahl` tinyint NOT NULL,
+  `partei` tinyint NOT NULL,
+  `partei_name` tinyint NOT NULL,
+  `fraktion` tinyint NOT NULL,
+  `militaerischer_grad` tinyint NOT NULL,
+  `partei_de` tinyint NOT NULL,
+  `partei_name_de` tinyint NOT NULL,
+  `militaerischer_grad_de` tinyint NOT NULL,
+  `partei_fr` tinyint NOT NULL,
+  `partei_name_fr` tinyint NOT NULL,
+  `militaerischer_grad_fr` tinyint NOT NULL,
+  `beruf_branche_id` tinyint NOT NULL,
+  `titel_de` tinyint NOT NULL,
+  `titel_fr` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `anzahl_interessenbindungen` tinyint NOT NULL,
+  `anzahl_hauptberufliche_interessenbindungen` tinyint NOT NULL,
+  `anzahl_nicht_hauptberufliche_interessenbindungen` tinyint NOT NULL,
+  `anzahl_abgelaufene_interessenbindungen` tinyint NOT NULL,
+  `anzahl_interessenbindungen_alle` tinyint NOT NULL,
+  `anzahl_erfasste_verguetungen` tinyint NOT NULL,
+  `anzahl_erfasste_hauptberufliche_verguetungen` tinyint NOT NULL,
+  `anzahl_erfasste_nicht_hauptberufliche_verguetungen` tinyint NOT NULL,
+  `verguetungstransparenz_berechnet` tinyint NOT NULL,
+  `verguetungstransparenz_berechnet_nicht_beruflich` tinyint NOT NULL,
+  `verguetungstransparenz_berechnet_alle` tinyint NOT NULL,
+  `verguetungstransparenz_beurteilung_stichdatum` tinyint NOT NULL,
+  `verguetungstransparenz_beurteilung` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10016,156 +10410,157 @@ DROP TABLE IF EXISTS `v_parlamentarier_raw`;
 DROP VIEW IF EXISTS `v_parlamentarier_raw`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_parlamentarier_raw` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `name`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `id`,
- 1 AS `nachname`,
- 1 AS `vorname`,
- 1 AS `vorname_kurz`,
- 1 AS `zweiter_vorname`,
- 1 AS `rat_id`,
- 1 AS `kanton_id`,
- 1 AS `kommissionen`,
- 1 AS `partei_id`,
- 1 AS `parteifunktion`,
- 1 AS `fraktion_id`,
- 1 AS `fraktionsfunktion`,
- 1 AS `im_rat_seit`,
- 1 AS `im_rat_bis`,
- 1 AS `ratswechsel`,
- 1 AS `ratsunterbruch_von`,
- 1 AS `ratsunterbruch_bis`,
- 1 AS `beruf`,
- 1 AS `beruf_fr`,
- 1 AS `beruf_interessengruppe_id`,
- 1 AS `titel`,
- 1 AS `aemter`,
- 1 AS `weitere_aemter`,
- 1 AS `zivilstand`,
- 1 AS `anzahl_kinder`,
- 1 AS `militaerischer_grad_id`,
- 1 AS `geschlecht`,
- 1 AS `geburtstag`,
- 1 AS `photo`,
- 1 AS `photo_dateiname`,
- 1 AS `photo_dateierweiterung`,
- 1 AS `photo_dateiname_voll`,
- 1 AS `photo_mime_type`,
- 1 AS `kleinbild`,
- 1 AS `sitzplatz`,
- 1 AS `email`,
- 1 AS `homepage`,
- 1 AS `homepage_2`,
- 1 AS `parlament_biografie_id`,
- 1 AS `parlament_number`,
- 1 AS `parlament_interessenbindungen`,
- 1 AS `parlament_interessenbindungen_json`,
- 1 AS `parlament_interessenbindungen_updated`,
- 1 AS `twitter_name`,
- 1 AS `linkedin_profil_url`,
- 1 AS `xing_profil_name`,
- 1 AS `facebook_name`,
- 1 AS `wikipedia`,
- 1 AS `sprache`,
- 1 AS `arbeitssprache`,
- 1 AS `adresse_firma`,
- 1 AS `adresse_strasse`,
- 1 AS `adresse_zusatz`,
- 1 AS `adresse_plz`,
- 1 AS `adresse_ort`,
- 1 AS `telephon_1`,
- 1 AS `telephon_2`,
- 1 AS `erfasst`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisierung_verschickt_visa`,
- 1 AS `autorisierung_verschickt_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `beruf_de`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `geburtstag_unix`,
- 1 AS `im_rat_seit_unix`,
- 1 AS `im_rat_bis_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `von_unix`,
- 1 AS `bis_unix`,
- 1 AS `vertretene_bevoelkerung`,
- 1 AS `rat`,
- 1 AS `kanton`,
- 1 AS `romandie`,
- 1 AS `rat_de`,
- 1 AS `kanton_name_de`,
- 1 AS `rat_fr`,
- 1 AS `kanton_name_fr`,
- 1 AS `kommissionen_namen`,
- 1 AS `kommissionen_namen_de`,
- 1 AS `kommissionen_namen_fr`,
- 1 AS `kommissionen_abkuerzung`,
- 1 AS `kommissionen_abkuerzung_de`,
- 1 AS `kommissionen_abkuerzung_fr`,
- 1 AS `kommissionen_anzahl`,
- 1 AS `partei`,
- 1 AS `partei_name`,
- 1 AS `fraktion`,
- 1 AS `militaerischer_grad`,
- 1 AS `partei_de`,
- 1 AS `partei_name_de`,
- 1 AS `militaerischer_grad_de`,
- 1 AS `partei_fr`,
- 1 AS `partei_name_fr`,
- 1 AS `militaerischer_grad_fr`,
- 1 AS `beruf_branche_id`,
- 1 AS `titel_de`,
- 1 AS `titel_fr`,
- 1 AS `parlamentarier_id`,
- 1 AS `anzahl_interessenbindungen`,
- 1 AS `anzahl_hauptberufliche_interessenbindungen`,
- 1 AS `anzahl_nicht_hauptberufliche_interessenbindungen`,
- 1 AS `anzahl_abgelaufene_interessenbindungen`,
- 1 AS `anzahl_interessenbindungen_alle`,
- 1 AS `anzahl_erfasste_verguetungen`,
- 1 AS `anzahl_erfasste_hauptberufliche_verguetungen`,
- 1 AS `anzahl_erfasste_nicht_hauptberufliche_verguetungen`,
- 1 AS `verguetungstransparenz_berechnet`,
- 1 AS `verguetungstransparenz_berechnet_nicht_beruflich`,
- 1 AS `verguetungstransparenz_berechnet_alle`,
- 1 AS `verguetungstransparenz_beurteilung_stichdatum`,
- 1 AS `verguetungstransparenz_beurteilung`,
- 1 AS `refreshed_date`,
- 1 AS `anzahl_interessenbindung_tief`,
- 1 AS `anzahl_interessenbindung_mittel`,
- 1 AS `anzahl_interessenbindung_hoch`,
- 1 AS `anzahl_interessenbindung_tief_nach_wahl`,
- 1 AS `anzahl_interessenbindung_mittel_nach_wahl`,
- 1 AS `anzahl_interessenbindung_hoch_nach_wahl`,
- 1 AS `lobbyfaktor`,
- 1 AS `lobbyfaktor_max`,
- 1 AS `lobbyfaktor_percent_max`,
- 1 AS `anzahl_interessenbindung_tief_max`,
- 1 AS `anzahl_interessenbindung_mittel_max`,
- 1 AS `anzahl_interessenbindung_hoch_max`;
+CREATE TABLE `v_parlamentarier_raw` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `nachname` tinyint NOT NULL,
+  `vorname` tinyint NOT NULL,
+  `vorname_kurz` tinyint NOT NULL,
+  `zweiter_vorname` tinyint NOT NULL,
+  `rat_id` tinyint NOT NULL,
+  `kanton_id` tinyint NOT NULL,
+  `kommissionen` tinyint NOT NULL,
+  `partei_id` tinyint NOT NULL,
+  `parteifunktion` tinyint NOT NULL,
+  `fraktion_id` tinyint NOT NULL,
+  `fraktionsfunktion` tinyint NOT NULL,
+  `im_rat_seit` tinyint NOT NULL,
+  `im_rat_bis` tinyint NOT NULL,
+  `ratswechsel` tinyint NOT NULL,
+  `ratsunterbruch_von` tinyint NOT NULL,
+  `ratsunterbruch_bis` tinyint NOT NULL,
+  `beruf` tinyint NOT NULL,
+  `beruf_fr` tinyint NOT NULL,
+  `beruf_interessengruppe_id` tinyint NOT NULL,
+  `titel` tinyint NOT NULL,
+  `aemter` tinyint NOT NULL,
+  `weitere_aemter` tinyint NOT NULL,
+  `zivilstand` tinyint NOT NULL,
+  `anzahl_kinder` tinyint NOT NULL,
+  `militaerischer_grad_id` tinyint NOT NULL,
+  `geschlecht` tinyint NOT NULL,
+  `geburtstag` tinyint NOT NULL,
+  `photo` tinyint NOT NULL,
+  `photo_dateiname` tinyint NOT NULL,
+  `photo_dateierweiterung` tinyint NOT NULL,
+  `photo_dateiname_voll` tinyint NOT NULL,
+  `photo_mime_type` tinyint NOT NULL,
+  `kleinbild` tinyint NOT NULL,
+  `sitzplatz` tinyint NOT NULL,
+  `email` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `homepage_2` tinyint NOT NULL,
+  `parlament_biografie_id` tinyint NOT NULL,
+  `parlament_number` tinyint NOT NULL,
+  `parlament_interessenbindungen` tinyint NOT NULL,
+  `parlament_interessenbindungen_json` tinyint NOT NULL,
+  `parlament_interessenbindungen_updated` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `linkedin_profil_url` tinyint NOT NULL,
+  `xing_profil_name` tinyint NOT NULL,
+  `facebook_name` tinyint NOT NULL,
+  `wikipedia` tinyint NOT NULL,
+  `sprache` tinyint NOT NULL,
+  `arbeitssprache` tinyint NOT NULL,
+  `adresse_firma` tinyint NOT NULL,
+  `adresse_strasse` tinyint NOT NULL,
+  `adresse_zusatz` tinyint NOT NULL,
+  `adresse_plz` tinyint NOT NULL,
+  `adresse_ort` tinyint NOT NULL,
+  `telephon_1` tinyint NOT NULL,
+  `telephon_2` tinyint NOT NULL,
+  `erfasst` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisierung_verschickt_visa` tinyint NOT NULL,
+  `autorisierung_verschickt_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `beruf_de` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `geburtstag_unix` tinyint NOT NULL,
+  `im_rat_seit_unix` tinyint NOT NULL,
+  `im_rat_bis_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `vertretene_bevoelkerung` tinyint NOT NULL,
+  `rat` tinyint NOT NULL,
+  `kanton` tinyint NOT NULL,
+  `romandie` tinyint NOT NULL,
+  `rat_de` tinyint NOT NULL,
+  `kanton_name_de` tinyint NOT NULL,
+  `rat_fr` tinyint NOT NULL,
+  `kanton_name_fr` tinyint NOT NULL,
+  `kommissionen_namen` tinyint NOT NULL,
+  `kommissionen_namen_de` tinyint NOT NULL,
+  `kommissionen_namen_fr` tinyint NOT NULL,
+  `kommissionen_abkuerzung` tinyint NOT NULL,
+  `kommissionen_abkuerzung_de` tinyint NOT NULL,
+  `kommissionen_abkuerzung_fr` tinyint NOT NULL,
+  `kommissionen_anzahl` tinyint NOT NULL,
+  `partei` tinyint NOT NULL,
+  `partei_name` tinyint NOT NULL,
+  `fraktion` tinyint NOT NULL,
+  `militaerischer_grad` tinyint NOT NULL,
+  `partei_de` tinyint NOT NULL,
+  `partei_name_de` tinyint NOT NULL,
+  `militaerischer_grad_de` tinyint NOT NULL,
+  `partei_fr` tinyint NOT NULL,
+  `partei_name_fr` tinyint NOT NULL,
+  `militaerischer_grad_fr` tinyint NOT NULL,
+  `beruf_branche_id` tinyint NOT NULL,
+  `titel_de` tinyint NOT NULL,
+  `titel_fr` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `anzahl_interessenbindungen` tinyint NOT NULL,
+  `anzahl_hauptberufliche_interessenbindungen` tinyint NOT NULL,
+  `anzahl_nicht_hauptberufliche_interessenbindungen` tinyint NOT NULL,
+  `anzahl_abgelaufene_interessenbindungen` tinyint NOT NULL,
+  `anzahl_interessenbindungen_alle` tinyint NOT NULL,
+  `anzahl_erfasste_verguetungen` tinyint NOT NULL,
+  `anzahl_erfasste_hauptberufliche_verguetungen` tinyint NOT NULL,
+  `anzahl_erfasste_nicht_hauptberufliche_verguetungen` tinyint NOT NULL,
+  `verguetungstransparenz_berechnet` tinyint NOT NULL,
+  `verguetungstransparenz_berechnet_nicht_beruflich` tinyint NOT NULL,
+  `verguetungstransparenz_berechnet_alle` tinyint NOT NULL,
+  `verguetungstransparenz_beurteilung_stichdatum` tinyint NOT NULL,
+  `verguetungstransparenz_beurteilung` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL,
+  `anzahl_interessenbindung_tief` tinyint NOT NULL,
+  `anzahl_interessenbindung_mittel` tinyint NOT NULL,
+  `anzahl_interessenbindung_hoch` tinyint NOT NULL,
+  `anzahl_interessenbindung_tief_nach_wahl` tinyint NOT NULL,
+  `anzahl_interessenbindung_mittel_nach_wahl` tinyint NOT NULL,
+  `anzahl_interessenbindung_hoch_nach_wahl` tinyint NOT NULL,
+  `lobbyfaktor` tinyint NOT NULL,
+  `lobbyfaktor_max` tinyint NOT NULL,
+  `lobbyfaktor_percent_max` tinyint NOT NULL,
+  `anzahl_interessenbindung_tief_max` tinyint NOT NULL,
+  `anzahl_interessenbindung_mittel_max` tinyint NOT NULL,
+  `anzahl_interessenbindung_hoch_max` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10176,101 +10571,102 @@ DROP TABLE IF EXISTS `v_parlamentarier_simple`;
 DROP VIEW IF EXISTS `v_parlamentarier_simple`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_parlamentarier_simple` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `name`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `id`,
- 1 AS `nachname`,
- 1 AS `vorname`,
- 1 AS `vorname_kurz`,
- 1 AS `zweiter_vorname`,
- 1 AS `rat_id`,
- 1 AS `kanton_id`,
- 1 AS `kommissionen`,
- 1 AS `partei_id`,
- 1 AS `parteifunktion`,
- 1 AS `fraktion_id`,
- 1 AS `fraktionsfunktion`,
- 1 AS `im_rat_seit`,
- 1 AS `im_rat_bis`,
- 1 AS `ratswechsel`,
- 1 AS `ratsunterbruch_von`,
- 1 AS `ratsunterbruch_bis`,
- 1 AS `beruf`,
- 1 AS `beruf_fr`,
- 1 AS `beruf_interessengruppe_id`,
- 1 AS `titel`,
- 1 AS `aemter`,
- 1 AS `weitere_aemter`,
- 1 AS `zivilstand`,
- 1 AS `anzahl_kinder`,
- 1 AS `militaerischer_grad_id`,
- 1 AS `geschlecht`,
- 1 AS `geburtstag`,
- 1 AS `photo`,
- 1 AS `photo_dateiname`,
- 1 AS `photo_dateierweiterung`,
- 1 AS `photo_dateiname_voll`,
- 1 AS `photo_mime_type`,
- 1 AS `kleinbild`,
- 1 AS `sitzplatz`,
- 1 AS `email`,
- 1 AS `homepage`,
- 1 AS `homepage_2`,
- 1 AS `parlament_biografie_id`,
- 1 AS `parlament_number`,
- 1 AS `parlament_interessenbindungen`,
- 1 AS `parlament_interessenbindungen_json`,
- 1 AS `parlament_interessenbindungen_updated`,
- 1 AS `twitter_name`,
- 1 AS `linkedin_profil_url`,
- 1 AS `xing_profil_name`,
- 1 AS `facebook_name`,
- 1 AS `wikipedia`,
- 1 AS `sprache`,
- 1 AS `arbeitssprache`,
- 1 AS `adresse_firma`,
- 1 AS `adresse_strasse`,
- 1 AS `adresse_zusatz`,
- 1 AS `adresse_plz`,
- 1 AS `adresse_ort`,
- 1 AS `telephon_1`,
- 1 AS `telephon_2`,
- 1 AS `erfasst`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisierung_verschickt_visa`,
- 1 AS `autorisierung_verschickt_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `beruf_de`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `geburtstag_unix`,
- 1 AS `im_rat_seit_unix`,
- 1 AS `im_rat_bis_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `von_unix`,
- 1 AS `bis_unix`;
+CREATE TABLE `v_parlamentarier_simple` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `nachname` tinyint NOT NULL,
+  `vorname` tinyint NOT NULL,
+  `vorname_kurz` tinyint NOT NULL,
+  `zweiter_vorname` tinyint NOT NULL,
+  `rat_id` tinyint NOT NULL,
+  `kanton_id` tinyint NOT NULL,
+  `kommissionen` tinyint NOT NULL,
+  `partei_id` tinyint NOT NULL,
+  `parteifunktion` tinyint NOT NULL,
+  `fraktion_id` tinyint NOT NULL,
+  `fraktionsfunktion` tinyint NOT NULL,
+  `im_rat_seit` tinyint NOT NULL,
+  `im_rat_bis` tinyint NOT NULL,
+  `ratswechsel` tinyint NOT NULL,
+  `ratsunterbruch_von` tinyint NOT NULL,
+  `ratsunterbruch_bis` tinyint NOT NULL,
+  `beruf` tinyint NOT NULL,
+  `beruf_fr` tinyint NOT NULL,
+  `beruf_interessengruppe_id` tinyint NOT NULL,
+  `titel` tinyint NOT NULL,
+  `aemter` tinyint NOT NULL,
+  `weitere_aemter` tinyint NOT NULL,
+  `zivilstand` tinyint NOT NULL,
+  `anzahl_kinder` tinyint NOT NULL,
+  `militaerischer_grad_id` tinyint NOT NULL,
+  `geschlecht` tinyint NOT NULL,
+  `geburtstag` tinyint NOT NULL,
+  `photo` tinyint NOT NULL,
+  `photo_dateiname` tinyint NOT NULL,
+  `photo_dateierweiterung` tinyint NOT NULL,
+  `photo_dateiname_voll` tinyint NOT NULL,
+  `photo_mime_type` tinyint NOT NULL,
+  `kleinbild` tinyint NOT NULL,
+  `sitzplatz` tinyint NOT NULL,
+  `email` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `homepage_2` tinyint NOT NULL,
+  `parlament_biografie_id` tinyint NOT NULL,
+  `parlament_number` tinyint NOT NULL,
+  `parlament_interessenbindungen` tinyint NOT NULL,
+  `parlament_interessenbindungen_json` tinyint NOT NULL,
+  `parlament_interessenbindungen_updated` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `linkedin_profil_url` tinyint NOT NULL,
+  `xing_profil_name` tinyint NOT NULL,
+  `facebook_name` tinyint NOT NULL,
+  `wikipedia` tinyint NOT NULL,
+  `sprache` tinyint NOT NULL,
+  `arbeitssprache` tinyint NOT NULL,
+  `adresse_firma` tinyint NOT NULL,
+  `adresse_strasse` tinyint NOT NULL,
+  `adresse_zusatz` tinyint NOT NULL,
+  `adresse_plz` tinyint NOT NULL,
+  `adresse_ort` tinyint NOT NULL,
+  `telephon_1` tinyint NOT NULL,
+  `telephon_2` tinyint NOT NULL,
+  `erfasst` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisierung_verschickt_visa` tinyint NOT NULL,
+  `autorisierung_verschickt_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `beruf_de` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `geburtstag_unix` tinyint NOT NULL,
+  `im_rat_seit_unix` tinyint NOT NULL,
+  `im_rat_bis_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10281,28 +10677,30 @@ DROP TABLE IF EXISTS `v_parlamentarier_transparenz`;
 DROP VIEW IF EXISTS `v_parlamentarier_transparenz`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_parlamentarier_transparenz` AS SELECT 
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `stichdatum`,
- 1 AS `verguetung_transparent`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_parlamentarier_transparenz` (
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `stichdatum` tinyint NOT NULL,
+  `in_liste` tinyint NOT NULL,
+  `verguetung_transparent` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10313,19 +10711,20 @@ DROP TABLE IF EXISTS `v_parlamentarier_transparenz_calculated`;
 DROP VIEW IF EXISTS `v_parlamentarier_transparenz_calculated`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_parlamentarier_transparenz_calculated` AS SELECT 
- 1 AS `parlamentarier_id`,
- 1 AS `anzahl_interessenbindungen`,
- 1 AS `anzahl_hauptberufliche_interessenbindungen`,
- 1 AS `anzahl_nicht_hauptberufliche_interessenbindungen`,
- 1 AS `anzahl_abgelaufene_interessenbindungen`,
- 1 AS `anzahl_interessenbindungen_alle`,
- 1 AS `anzahl_erfasste_verguetungen`,
- 1 AS `anzahl_erfasste_hauptberufliche_verguetungen`,
- 1 AS `anzahl_erfasste_nicht_hauptberufliche_verguetungen`,
- 1 AS `verguetungstransparenz_berechnet`,
- 1 AS `verguetungstransparenz_berechnet_nicht_beruflich`,
- 1 AS `verguetungstransparenz_berechnet_alle`;
+CREATE TABLE `v_parlamentarier_transparenz_calculated` (
+  `parlamentarier_id` tinyint NOT NULL,
+  `anzahl_interessenbindungen` tinyint NOT NULL,
+  `anzahl_hauptberufliche_interessenbindungen` tinyint NOT NULL,
+  `anzahl_nicht_hauptberufliche_interessenbindungen` tinyint NOT NULL,
+  `anzahl_abgelaufene_interessenbindungen` tinyint NOT NULL,
+  `anzahl_interessenbindungen_alle` tinyint NOT NULL,
+  `anzahl_erfasste_verguetungen` tinyint NOT NULL,
+  `anzahl_erfasste_hauptberufliche_verguetungen` tinyint NOT NULL,
+  `anzahl_erfasste_nicht_hauptberufliche_verguetungen` tinyint NOT NULL,
+  `verguetungstransparenz_berechnet` tinyint NOT NULL,
+  `verguetungstransparenz_berechnet_nicht_beruflich` tinyint NOT NULL,
+  `verguetungstransparenz_berechnet_alle` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10336,29 +10735,31 @@ DROP TABLE IF EXISTS `v_parlamentarier_transparenz_last_all`;
 DROP VIEW IF EXISTS `v_parlamentarier_transparenz_last_all`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_parlamentarier_transparenz_last_all` AS SELECT 
- 1 AS `max_stichdatum`,
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `stichdatum`,
- 1 AS `verguetung_transparent`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_parlamentarier_transparenz_last_all` (
+  `max_stichdatum` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `stichdatum` tinyint NOT NULL,
+  `in_liste` tinyint NOT NULL,
+  `verguetung_transparent` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10369,29 +10770,31 @@ DROP TABLE IF EXISTS `v_parlamentarier_transparenz_last_published`;
 DROP VIEW IF EXISTS `v_parlamentarier_transparenz_last_published`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_parlamentarier_transparenz_last_published` AS SELECT 
- 1 AS `max_stichdatum`,
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `stichdatum`,
- 1 AS `verguetung_transparent`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_parlamentarier_transparenz_last_published` (
+  `max_stichdatum` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `stichdatum` tinyint NOT NULL,
+  `in_liste` tinyint NOT NULL,
+  `verguetung_transparent` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10402,28 +10805,30 @@ DROP TABLE IF EXISTS `v_parlamentarier_transparenz_last_stichdatum_all`;
 DROP VIEW IF EXISTS `v_parlamentarier_transparenz_last_stichdatum_all`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_parlamentarier_transparenz_last_stichdatum_all` AS SELECT 
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `stichdatum`,
- 1 AS `verguetung_transparent`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_parlamentarier_transparenz_last_stichdatum_all` (
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `stichdatum` tinyint NOT NULL,
+  `in_liste` tinyint NOT NULL,
+  `verguetung_transparent` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10434,28 +10839,30 @@ DROP TABLE IF EXISTS `v_parlamentarier_transparenz_last_stichdatum_published`;
 DROP VIEW IF EXISTS `v_parlamentarier_transparenz_last_stichdatum_published`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_parlamentarier_transparenz_last_stichdatum_published` AS SELECT 
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `stichdatum`,
- 1 AS `verguetung_transparent`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_parlamentarier_transparenz_last_stichdatum_published` (
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `stichdatum` tinyint NOT NULL,
+  `in_liste` tinyint NOT NULL,
+  `verguetung_transparent` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10466,52 +10873,53 @@ DROP TABLE IF EXISTS `v_partei`;
 DROP VIEW IF EXISTS `v_partei`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_partei` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `anzeige_name_mixed`,
- 1 AS `abkuerzung_mixed`,
- 1 AS `id`,
- 1 AS `abkuerzung`,
- 1 AS `abkuerzung_fr`,
- 1 AS `name`,
- 1 AS `name_fr`,
- 1 AS `fraktion_id`,
- 1 AS `gruendung`,
- 1 AS `position`,
- 1 AS `farbcode`,
- 1 AS `homepage`,
- 1 AS `homepage_fr`,
- 1 AS `email`,
- 1 AS `email_fr`,
- 1 AS `twitter_name`,
- 1 AS `twitter_name_fr`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `name_de`,
- 1 AS `abkuerzung_de`,
- 1 AS `beschreibung_de`,
- 1 AS `homepage_de`,
- 1 AS `twitter_name_de`,
- 1 AS `email_de`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_partei` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `anzeige_name_mixed` tinyint NOT NULL,
+  `abkuerzung_mixed` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `abkuerzung` tinyint NOT NULL,
+  `abkuerzung_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `fraktion_id` tinyint NOT NULL,
+  `gruendung` tinyint NOT NULL,
+  `position` tinyint NOT NULL,
+  `farbcode` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `homepage_fr` tinyint NOT NULL,
+  `email` tinyint NOT NULL,
+  `email_fr` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `twitter_name_fr` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `abkuerzung_de` tinyint NOT NULL,
+  `beschreibung_de` tinyint NOT NULL,
+  `homepage_de` tinyint NOT NULL,
+  `twitter_name_de` tinyint NOT NULL,
+  `email_de` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10522,57 +10930,58 @@ DROP TABLE IF EXISTS `v_person`;
 DROP VIEW IF EXISTS `v_person`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_person` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `name`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `id`,
- 1 AS `nachname`,
- 1 AS `vorname`,
- 1 AS `zweiter_vorname`,
- 1 AS `namensunterscheidung`,
- 1 AS `beschreibung_de`,
- 1 AS `beschreibung_fr`,
- 1 AS `parlamentarier_kommissionen`,
- 1 AS `beruf`,
- 1 AS `beruf_fr`,
- 1 AS `beruf_interessengruppe_id`,
- 1 AS `partei_id`,
- 1 AS `geschlecht`,
- 1 AS `arbeitssprache`,
- 1 AS `email`,
- 1 AS `homepage`,
- 1 AS `twitter_name`,
- 1 AS `linkedin_profil_url`,
- 1 AS `xing_profil_name`,
- 1 AS `facebook_name`,
- 1 AS `telephon_1`,
- 1 AS `telephon_2`,
- 1 AS `erfasst`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisierung_verschickt_visa`,
- 1 AS `autorisierung_verschickt_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_person` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `nachname` tinyint NOT NULL,
+  `vorname` tinyint NOT NULL,
+  `zweiter_vorname` tinyint NOT NULL,
+  `namensunterscheidung` tinyint NOT NULL,
+  `beschreibung_de` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `parlamentarier_kommissionen` tinyint NOT NULL,
+  `beruf` tinyint NOT NULL,
+  `beruf_fr` tinyint NOT NULL,
+  `beruf_interessengruppe_id` tinyint NOT NULL,
+  `partei_id` tinyint NOT NULL,
+  `geschlecht` tinyint NOT NULL,
+  `arbeitssprache` tinyint NOT NULL,
+  `email` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `linkedin_profil_url` tinyint NOT NULL,
+  `xing_profil_name` tinyint NOT NULL,
+  `facebook_name` tinyint NOT NULL,
+  `telephon_1` tinyint NOT NULL,
+  `telephon_2` tinyint NOT NULL,
+  `erfasst` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisierung_verschickt_visa` tinyint NOT NULL,
+  `autorisierung_verschickt_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10583,23 +10992,24 @@ DROP TABLE IF EXISTS `v_person_anhang`;
 DROP VIEW IF EXISTS `v_person_anhang`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_person_anhang` AS SELECT 
- 1 AS `person_id2`,
- 1 AS `id`,
- 1 AS `person_id`,
- 1 AS `datei`,
- 1 AS `dateiname`,
- 1 AS `dateierweiterung`,
- 1 AS `dateiname_voll`,
- 1 AS `mime_type`,
- 1 AS `encoding`,
- 1 AS `beschreibung`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`;
+CREATE TABLE `v_person_anhang` (
+  `person_id2` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `person_id` tinyint NOT NULL,
+  `datei` tinyint NOT NULL,
+  `dateiname` tinyint NOT NULL,
+  `dateierweiterung` tinyint NOT NULL,
+  `dateiname_voll` tinyint NOT NULL,
+  `mime_type` tinyint NOT NULL,
+  `encoding` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10610,101 +11020,102 @@ DROP TABLE IF EXISTS `v_person_mandate`;
 DROP VIEW IF EXISTS `v_person_mandate`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_person_mandate` AS SELECT 
- 1 AS `organisation_name`,
- 1 AS `organisation_name_de`,
- 1 AS `organisation_name_fr`,
- 1 AS `name`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `name_it`,
- 1 AS `ort`,
- 1 AS `land_id`,
- 1 AS `interessenraum_id`,
- 1 AS `rechtsform`,
- 1 AS `typ`,
- 1 AS `vernehmlassung`,
- 1 AS `interessengruppe_id`,
- 1 AS `interessengruppe1_id`,
- 1 AS `interessengruppe2_id`,
- 1 AS `interessengruppe3_id`,
- 1 AS `homepage`,
- 1 AS `handelsregister_url`,
- 1 AS `twitter_name`,
- 1 AS `organisation_beschreibung`,
- 1 AS `adresse_strasse`,
- 1 AS `adresse_zusatz`,
- 1 AS `adresse_plz`,
- 1 AS `interessengruppe`,
- 1 AS `interessengruppe_fr`,
- 1 AS `interessengruppe_branche`,
- 1 AS `interessengruppe_branche_id`,
- 1 AS `interessengruppe1`,
- 1 AS `interessengruppe1_fr`,
- 1 AS `interessengruppe1_branche`,
- 1 AS `interessengruppe1_branche_id`,
- 1 AS `interessengruppe2`,
- 1 AS `interessengruppe2_fr`,
- 1 AS `interessengruppe2_branche`,
- 1 AS `interessengruppe2_branche_id`,
- 1 AS `interessengruppe3`,
- 1 AS `interessengruppe3_fr`,
- 1 AS `interessengruppe3_branche`,
- 1 AS `interessengruppe3_branche_id`,
- 1 AS `land`,
- 1 AS `interessenraum`,
- 1 AS `organisation_jahr_id`,
- 1 AS `jahr`,
- 1 AS `umsatz`,
- 1 AS `gewinn`,
- 1 AS `kapital`,
- 1 AS `mitarbeiter_weltweit`,
- 1 AS `mitarbeiter_schweiz`,
- 1 AS `geschaeftsbericht_url`,
- 1 AS `person_name`,
- 1 AS `anzeige_name`,
- 1 AS `id`,
- 1 AS `person_id`,
- 1 AS `organisation_id`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `hauptberuflich`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `wirksamkeit`,
- 1 AS `wirksamkeit_index`,
- 1 AS `organisation_lobbyeinfluss`,
- 1 AS `refreshed_date`,
- 1 AS `verguetung`,
- 1 AS `verguetung_jahr`,
- 1 AS `verguetung_beschreibung`;
+CREATE TABLE `v_person_mandate` (
+  `organisation_name` tinyint NOT NULL,
+  `organisation_name_de` tinyint NOT NULL,
+  `organisation_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `name_it` tinyint NOT NULL,
+  `ort` tinyint NOT NULL,
+  `land_id` tinyint NOT NULL,
+  `interessenraum_id` tinyint NOT NULL,
+  `rechtsform` tinyint NOT NULL,
+  `typ` tinyint NOT NULL,
+  `vernehmlassung` tinyint NOT NULL,
+  `interessengruppe_id` tinyint NOT NULL,
+  `interessengruppe1_id` tinyint NOT NULL,
+  `interessengruppe2_id` tinyint NOT NULL,
+  `interessengruppe3_id` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `handelsregister_url` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `organisation_beschreibung` tinyint NOT NULL,
+  `adresse_strasse` tinyint NOT NULL,
+  `adresse_zusatz` tinyint NOT NULL,
+  `adresse_plz` tinyint NOT NULL,
+  `interessengruppe` tinyint NOT NULL,
+  `interessengruppe_fr` tinyint NOT NULL,
+  `interessengruppe_branche` tinyint NOT NULL,
+  `interessengruppe_branche_id` tinyint NOT NULL,
+  `interessengruppe1` tinyint NOT NULL,
+  `interessengruppe1_fr` tinyint NOT NULL,
+  `interessengruppe1_branche` tinyint NOT NULL,
+  `interessengruppe1_branche_id` tinyint NOT NULL,
+  `interessengruppe2` tinyint NOT NULL,
+  `interessengruppe2_fr` tinyint NOT NULL,
+  `interessengruppe2_branche` tinyint NOT NULL,
+  `interessengruppe2_branche_id` tinyint NOT NULL,
+  `interessengruppe3` tinyint NOT NULL,
+  `interessengruppe3_fr` tinyint NOT NULL,
+  `interessengruppe3_branche` tinyint NOT NULL,
+  `interessengruppe3_branche_id` tinyint NOT NULL,
+  `land` tinyint NOT NULL,
+  `interessenraum` tinyint NOT NULL,
+  `organisation_jahr_id` tinyint NOT NULL,
+  `jahr` tinyint NOT NULL,
+  `umsatz` tinyint NOT NULL,
+  `gewinn` tinyint NOT NULL,
+  `kapital` tinyint NOT NULL,
+  `mitarbeiter_weltweit` tinyint NOT NULL,
+  `mitarbeiter_schweiz` tinyint NOT NULL,
+  `geschaeftsbericht_url` tinyint NOT NULL,
+  `person_name` tinyint NOT NULL,
+  `anzeige_name` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `person_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `hauptberuflich` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `wirksamkeit` tinyint NOT NULL,
+  `wirksamkeit_index` tinyint NOT NULL,
+  `organisation_lobbyeinfluss` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL,
+  `verguetung` tinyint NOT NULL,
+  `verguetung_jahr` tinyint NOT NULL,
+  `verguetung_beschreibung` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10715,57 +11126,58 @@ DROP TABLE IF EXISTS `v_person_simple`;
 DROP VIEW IF EXISTS `v_person_simple`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_person_simple` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `name`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `id`,
- 1 AS `nachname`,
- 1 AS `vorname`,
- 1 AS `zweiter_vorname`,
- 1 AS `namensunterscheidung`,
- 1 AS `beschreibung_de`,
- 1 AS `beschreibung_fr`,
- 1 AS `parlamentarier_kommissionen`,
- 1 AS `beruf`,
- 1 AS `beruf_fr`,
- 1 AS `beruf_interessengruppe_id`,
- 1 AS `partei_id`,
- 1 AS `geschlecht`,
- 1 AS `arbeitssprache`,
- 1 AS `email`,
- 1 AS `homepage`,
- 1 AS `twitter_name`,
- 1 AS `linkedin_profil_url`,
- 1 AS `xing_profil_name`,
- 1 AS `facebook_name`,
- 1 AS `telephon_1`,
- 1 AS `telephon_2`,
- 1 AS `erfasst`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisierung_verschickt_visa`,
- 1 AS `autorisierung_verschickt_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_person_simple` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `nachname` tinyint NOT NULL,
+  `vorname` tinyint NOT NULL,
+  `zweiter_vorname` tinyint NOT NULL,
+  `namensunterscheidung` tinyint NOT NULL,
+  `beschreibung_de` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `parlamentarier_kommissionen` tinyint NOT NULL,
+  `beruf` tinyint NOT NULL,
+  `beruf_fr` tinyint NOT NULL,
+  `beruf_interessengruppe_id` tinyint NOT NULL,
+  `partei_id` tinyint NOT NULL,
+  `geschlecht` tinyint NOT NULL,
+  `arbeitssprache` tinyint NOT NULL,
+  `email` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `linkedin_profil_url` tinyint NOT NULL,
+  `xing_profil_name` tinyint NOT NULL,
+  `facebook_name` tinyint NOT NULL,
+  `telephon_1` tinyint NOT NULL,
+  `telephon_2` tinyint NOT NULL,
+  `erfasst` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisierung_verschickt_visa` tinyint NOT NULL,
+  `autorisierung_verschickt_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10776,52 +11188,53 @@ DROP TABLE IF EXISTS `v_rat`;
 DROP VIEW IF EXISTS `v_rat`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_rat` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `anzeige_name_mixed`,
- 1 AS `abkuerzung_mixed`,
- 1 AS `id`,
- 1 AS `abkuerzung`,
- 1 AS `abkuerzung_fr`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `name_it`,
- 1 AS `name_en`,
- 1 AS `anzahl_mitglieder`,
- 1 AS `typ`,
- 1 AS `interessenraum_id`,
- 1 AS `anzeigestufe`,
- 1 AS `gewicht`,
- 1 AS `beschreibung`,
- 1 AS `homepage_de`,
- 1 AS `homepage_fr`,
- 1 AS `homepage_it`,
- 1 AS `homepage_en`,
- 1 AS `mitglied_bezeichnung_maennlich_de`,
- 1 AS `mitglied_bezeichnung_weiblich_de`,
- 1 AS `mitglied_bezeichnung_maennlich_fr`,
- 1 AS `mitglied_bezeichnung_weiblich_fr`,
- 1 AS `parlament_id`,
- 1 AS `parlament_type`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_rat` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `anzeige_name_mixed` tinyint NOT NULL,
+  `abkuerzung_mixed` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `abkuerzung` tinyint NOT NULL,
+  `abkuerzung_fr` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `name_it` tinyint NOT NULL,
+  `name_en` tinyint NOT NULL,
+  `anzahl_mitglieder` tinyint NOT NULL,
+  `typ` tinyint NOT NULL,
+  `interessenraum_id` tinyint NOT NULL,
+  `anzeigestufe` tinyint NOT NULL,
+  `gewicht` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `homepage_de` tinyint NOT NULL,
+  `homepage_fr` tinyint NOT NULL,
+  `homepage_it` tinyint NOT NULL,
+  `homepage_en` tinyint NOT NULL,
+  `mitglied_bezeichnung_maennlich_de` tinyint NOT NULL,
+  `mitglied_bezeichnung_weiblich_de` tinyint NOT NULL,
+  `mitglied_bezeichnung_maennlich_fr` tinyint NOT NULL,
+  `mitglied_bezeichnung_weiblich_fr` tinyint NOT NULL,
+  `parlament_id` tinyint NOT NULL,
+  `parlament_type` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10832,19 +11245,20 @@ DROP TABLE IF EXISTS `v_search_table`;
 DROP VIEW IF EXISTS `v_search_table`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_search_table` AS SELECT 
- 1 AS `id`,
- 1 AS `table_name`,
- 1 AS `page`,
- 1 AS `table_weight`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `search_keywords_de`,
- 1 AS `search_keywords_fr`,
- 1 AS `freigabe_datum`,
- 1 AS `bis`,
- 1 AS `weight`,
- 1 AS `refreshed_date`;
+CREATE TABLE `v_search_table` (
+  `id` tinyint NOT NULL,
+  `table_name` tinyint NOT NULL,
+  `page` tinyint NOT NULL,
+  `table_weight` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `search_keywords_de` tinyint NOT NULL,
+  `search_keywords_fr` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `weight` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10855,19 +11269,20 @@ DROP TABLE IF EXISTS `v_search_table_raw`;
 DROP VIEW IF EXISTS `v_search_table_raw`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_search_table_raw` AS SELECT 
- 1 AS `id`,
- 1 AS `table_name`,
- 1 AS `page`,
- 1 AS `table_weight`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `search_keywords_de`,
- 1 AS `search_keywords_fr`,
- 1 AS `freigabe_datum`,
- 1 AS `bis`,
- 1 AS `weight`,
- 1 AS `refreshed_date`;
+CREATE TABLE `v_search_table_raw` (
+  `id` tinyint NOT NULL,
+  `table_name` tinyint NOT NULL,
+  `page` tinyint NOT NULL,
+  `table_weight` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `search_keywords_de` tinyint NOT NULL,
+  `search_keywords_fr` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `weight` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10878,20 +11293,21 @@ DROP TABLE IF EXISTS `v_settings`;
 DROP VIEW IF EXISTS `v_settings`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_settings` AS SELECT 
- 1 AS `id`,
- 1 AS `key_name`,
- 1 AS `value`,
- 1 AS `description`,
- 1 AS `category_id`,
- 1 AS `notizen`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `category_name`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`;
+CREATE TABLE `v_settings` (
+  `id` tinyint NOT NULL,
+  `key_name` tinyint NOT NULL,
+  `value` tinyint NOT NULL,
+  `description` tinyint NOT NULL,
+  `category_id` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `category_name` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10902,17 +11318,18 @@ DROP TABLE IF EXISTS `v_settings_category`;
 DROP VIEW IF EXISTS `v_settings_category`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_settings_category` AS SELECT 
- 1 AS `id`,
- 1 AS `name`,
- 1 AS `description`,
- 1 AS `notizen`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`;
+CREATE TABLE `v_settings_category` (
+  `id` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `description` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10923,28 +11340,29 @@ DROP TABLE IF EXISTS `v_user`;
 DROP VIEW IF EXISTS `v_user`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_user` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `username`,
- 1 AS `id`,
- 1 AS `name`,
- 1 AS `password`,
- 1 AS `nachname`,
- 1 AS `vorname`,
- 1 AS `email`,
- 1 AS `token`,
- 1 AS `status`,
- 1 AS `mobile`,
- 1 AS `last_login`,
- 1 AS `last_access`,
- 1 AS `farbcode`,
- 1 AS `notizen`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`;
+CREATE TABLE `v_user` (
+  `anzeige_name` tinyint NOT NULL,
+  `username` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `password` tinyint NOT NULL,
+  `nachname` tinyint NOT NULL,
+  `vorname` tinyint NOT NULL,
+  `email` tinyint NOT NULL,
+  `token` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `mobile` tinyint NOT NULL,
+  `last_login` tinyint NOT NULL,
+  `last_access` tinyint NOT NULL,
+  `farbcode` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10955,11 +11373,12 @@ DROP TABLE IF EXISTS `v_user_permission`;
 DROP VIEW IF EXISTS `v_user_permission`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_user_permission` AS SELECT 
- 1 AS `id`,
- 1 AS `user_id`,
- 1 AS `page_name`,
- 1 AS `permission_name`;
+CREATE TABLE `v_user_permission` (
+  `id` tinyint NOT NULL,
+  `user_id` tinyint NOT NULL,
+  `page_name` tinyint NOT NULL,
+  `permission_name` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -10970,29 +11389,71 @@ DROP TABLE IF EXISTS `v_wissensartikel_link`;
 DROP VIEW IF EXISTS `v_wissensartikel_link`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_wissensartikel_link` AS SELECT 
- 1 AS `id`,
- 1 AS `node_id`,
- 1 AS `target_table_name`,
- 1 AS `target_id`,
- 1 AS `target_table_name_with_id`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_wissensartikel_link` (
+  `id` tinyint NOT NULL,
+  `node_id` tinyint NOT NULL,
+  `target_table_name` tinyint NOT NULL,
+  `target_id` tinyint NOT NULL,
+  `target_table_name_with_id` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_wissensartikel_link_node`
+--
+
+DROP TABLE IF EXISTS `v_wissensartikel_link_node`;
+DROP VIEW IF EXISTS `v_wissensartikel_link_node`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `v_wissensartikel_link_node` (
+  `id` tinyint NOT NULL,
+  `node_id` tinyint NOT NULL,
+  `target_table_name` tinyint NOT NULL,
+  `target_id` tinyint NOT NULL,
+  `target_table_name_with_id` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `language` tinyint NOT NULL,
+  `type` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `title` tinyint NOT NULL,
+  `nid` tinyint NOT NULL,
+  `tnid` tinyint NOT NULL,
+  `tnid_nid` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -11003,29 +11464,30 @@ DROP TABLE IF EXISTS `v_wissensartikel_link_simple`;
 DROP VIEW IF EXISTS `v_wissensartikel_link_simple`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_wissensartikel_link_simple` AS SELECT 
- 1 AS `id`,
- 1 AS `node_id`,
- 1 AS `target_table_name`,
- 1 AS `target_id`,
- 1 AS `target_table_name_with_id`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_wissensartikel_link_simple` (
+  `id` tinyint NOT NULL,
+  `node_id` tinyint NOT NULL,
+  `target_table_name` tinyint NOT NULL,
+  `target_id` tinyint NOT NULL,
+  `target_table_name_with_id` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -11036,30 +11498,31 @@ DROP TABLE IF EXISTS `v_wissensartikelzieltabelle`;
 DROP VIEW IF EXISTS `v_wissensartikelzieltabelle`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_wissensartikelzieltabelle` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_mixed`,
- 1 AS `id`,
- 1 AS `table_name`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_wissensartikelzieltabelle` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_mixed` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `table_name` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -11070,99 +11533,100 @@ DROP TABLE IF EXISTS `v_zutrittsberechtigung`;
 DROP VIEW IF EXISTS `v_zutrittsberechtigung`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_zutrittsberechtigung` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `name`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `id`,
- 1 AS `nachname`,
- 1 AS `vorname`,
- 1 AS `zweiter_vorname`,
- 1 AS `beschreibung_de`,
- 1 AS `beschreibung_fr`,
- 1 AS `parlamentarier_kommissionen`,
- 1 AS `parlamentarier_kommissionen_zutrittsberechtigung`,
- 1 AS `beruf`,
- 1 AS `beruf_fr`,
- 1 AS `beruf_interessengruppe_id`,
- 1 AS `partei_id`,
- 1 AS `geschlecht`,
- 1 AS `arbeitssprache`,
- 1 AS `email`,
- 1 AS `homepage`,
- 1 AS `twitter_name`,
- 1 AS `linkedin_profil_url`,
- 1 AS `xing_profil_name`,
- 1 AS `facebook_name`,
- 1 AS `telephon_1`,
- 1 AS `telephon_2`,
- 1 AS `erfasst`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa_person`,
- 1 AS `eingabe_abgeschlossen_datum_person`,
- 1 AS `kontrolliert_visa_person`,
- 1 AS `kontrolliert_datum_person`,
- 1 AS `autorisierung_verschickt_visa`,
- 1 AS `autorisierung_verschickt_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa_person`,
- 1 AS `freigabe_datum_person`,
- 1 AS `created_visa_person`,
- 1 AS `created_date_person`,
- 1 AS `updated_visa_person`,
- 1 AS `updated_date_person`,
- 1 AS `published_person`,
- 1 AS `created_date_unix_person`,
- 1 AS `updated_date_unix_person`,
- 1 AS `eingabe_abgeschlossen_datum_unix_person`,
- 1 AS `kontrolliert_datum_unix_person`,
- 1 AS `freigabe_datum_unix_person`,
- 1 AS `parlamentarier_id`,
- 1 AS `person_id`,
- 1 AS `zutrittsberechtigung_id`,
- 1 AS `funktion`,
- 1 AS `funktion_fr`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `beruf_branche_id`,
- 1 AS `partei`,
- 1 AS `partei_de`,
- 1 AS `partei_fr`,
- 1 AS `parlamentarier_name`,
- 1 AS `parlamentarier_freigabe_datum`,
- 1 AS `parlamentarier_freigabe_datum_unix`,
- 1 AS `anzahl_mandat_tief`,
- 1 AS `anzahl_mandat_mittel`,
- 1 AS `anzahl_mandat_hoch`,
- 1 AS `lobbyfaktor`,
- 1 AS `lobbyfaktor_max`,
- 1 AS `lobbyfaktor_percent_max`,
- 1 AS `anzahl_mandat_tief_max`,
- 1 AS `anzahl_mandat_mittel_max`,
- 1 AS `anzahl_mandat_hoch_max`,
- 1 AS `refreshed_date`;
+CREATE TABLE `v_zutrittsberechtigung` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `nachname` tinyint NOT NULL,
+  `vorname` tinyint NOT NULL,
+  `zweiter_vorname` tinyint NOT NULL,
+  `beschreibung_de` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `parlamentarier_kommissionen` tinyint NOT NULL,
+  `parlamentarier_kommissionen_zutrittsberechtigung` tinyint NOT NULL,
+  `beruf` tinyint NOT NULL,
+  `beruf_fr` tinyint NOT NULL,
+  `beruf_interessengruppe_id` tinyint NOT NULL,
+  `partei_id` tinyint NOT NULL,
+  `geschlecht` tinyint NOT NULL,
+  `arbeitssprache` tinyint NOT NULL,
+  `email` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `linkedin_profil_url` tinyint NOT NULL,
+  `xing_profil_name` tinyint NOT NULL,
+  `facebook_name` tinyint NOT NULL,
+  `telephon_1` tinyint NOT NULL,
+  `telephon_2` tinyint NOT NULL,
+  `erfasst` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa_person` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_person` tinyint NOT NULL,
+  `kontrolliert_visa_person` tinyint NOT NULL,
+  `kontrolliert_datum_person` tinyint NOT NULL,
+  `autorisierung_verschickt_visa` tinyint NOT NULL,
+  `autorisierung_verschickt_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa_person` tinyint NOT NULL,
+  `freigabe_datum_person` tinyint NOT NULL,
+  `created_visa_person` tinyint NOT NULL,
+  `created_date_person` tinyint NOT NULL,
+  `updated_visa_person` tinyint NOT NULL,
+  `updated_date_person` tinyint NOT NULL,
+  `published_person` tinyint NOT NULL,
+  `created_date_unix_person` tinyint NOT NULL,
+  `updated_date_unix_person` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix_person` tinyint NOT NULL,
+  `kontrolliert_datum_unix_person` tinyint NOT NULL,
+  `freigabe_datum_unix_person` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `person_id` tinyint NOT NULL,
+  `zutrittsberechtigung_id` tinyint NOT NULL,
+  `funktion` tinyint NOT NULL,
+  `funktion_fr` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `beruf_branche_id` tinyint NOT NULL,
+  `partei` tinyint NOT NULL,
+  `partei_de` tinyint NOT NULL,
+  `partei_fr` tinyint NOT NULL,
+  `parlamentarier_name` tinyint NOT NULL,
+  `parlamentarier_freigabe_datum` tinyint NOT NULL,
+  `parlamentarier_freigabe_datum_unix` tinyint NOT NULL,
+  `anzahl_mandat_tief` tinyint NOT NULL,
+  `anzahl_mandat_mittel` tinyint NOT NULL,
+  `anzahl_mandat_hoch` tinyint NOT NULL,
+  `lobbyfaktor` tinyint NOT NULL,
+  `lobbyfaktor_max` tinyint NOT NULL,
+  `lobbyfaktor_percent_max` tinyint NOT NULL,
+  `anzahl_mandat_tief_max` tinyint NOT NULL,
+  `anzahl_mandat_mittel_max` tinyint NOT NULL,
+  `anzahl_mandat_hoch_max` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -11173,13 +11637,14 @@ DROP TABLE IF EXISTS `v_zutrittsberechtigung_lobbyfaktor_max_raw`;
 DROP VIEW IF EXISTS `v_zutrittsberechtigung_lobbyfaktor_max_raw`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_zutrittsberechtigung_lobbyfaktor_max_raw` AS SELECT 
- 1 AS `id`,
- 1 AS `anzahl_mandat_tief_max`,
- 1 AS `anzahl_mandat_mittel_max`,
- 1 AS `anzahl_mandat_hoch_max`,
- 1 AS `lobbyfaktor_max`,
- 1 AS `refreshed_date`;
+CREATE TABLE `v_zutrittsberechtigung_lobbyfaktor_max_raw` (
+  `id` tinyint NOT NULL,
+  `anzahl_mandat_tief_max` tinyint NOT NULL,
+  `anzahl_mandat_mittel_max` tinyint NOT NULL,
+  `anzahl_mandat_hoch_max` tinyint NOT NULL,
+  `lobbyfaktor_max` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -11190,13 +11655,14 @@ DROP TABLE IF EXISTS `v_zutrittsberechtigung_lobbyfaktor_raw`;
 DROP VIEW IF EXISTS `v_zutrittsberechtigung_lobbyfaktor_raw`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_zutrittsberechtigung_lobbyfaktor_raw` AS SELECT 
- 1 AS `person_id`,
- 1 AS `anzahl_mandat_tief`,
- 1 AS `anzahl_mandat_mittel`,
- 1 AS `anzahl_mandat_hoch`,
- 1 AS `lobbyfaktor`,
- 1 AS `refreshed_date`;
+CREATE TABLE `v_zutrittsberechtigung_lobbyfaktor_raw` (
+  `person_id` tinyint NOT NULL,
+  `anzahl_mandat_tief` tinyint NOT NULL,
+  `anzahl_mandat_mittel` tinyint NOT NULL,
+  `anzahl_mandat_hoch` tinyint NOT NULL,
+  `lobbyfaktor` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -11207,100 +11673,101 @@ DROP TABLE IF EXISTS `v_zutrittsberechtigung_mandate`;
 DROP VIEW IF EXISTS `v_zutrittsberechtigung_mandate`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_zutrittsberechtigung_mandate` AS SELECT 
- 1 AS `parlamentarier_id`,
- 1 AS `organisation_name`,
- 1 AS `organisation_name_de`,
- 1 AS `organisation_name_fr`,
- 1 AS `name`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `name_it`,
- 1 AS `ort`,
- 1 AS `land_id`,
- 1 AS `interessenraum_id`,
- 1 AS `rechtsform`,
- 1 AS `typ`,
- 1 AS `vernehmlassung`,
- 1 AS `interessengruppe_id`,
- 1 AS `interessengruppe1_id`,
- 1 AS `interessengruppe2_id`,
- 1 AS `interessengruppe3_id`,
- 1 AS `homepage`,
- 1 AS `handelsregister_url`,
- 1 AS `twitter_name`,
- 1 AS `organisation_beschreibung`,
- 1 AS `adresse_strasse`,
- 1 AS `adresse_zusatz`,
- 1 AS `adresse_plz`,
- 1 AS `interessengruppe`,
- 1 AS `interessengruppe_branche`,
- 1 AS `interessengruppe_branche_id`,
- 1 AS `interessengruppe1`,
- 1 AS `interessengruppe1_branche`,
- 1 AS `interessengruppe1_branche_id`,
- 1 AS `interessengruppe2`,
- 1 AS `interessengruppe2_branche`,
- 1 AS `interessengruppe2_branche_id`,
- 1 AS `interessengruppe3`,
- 1 AS `interessengruppe3_branche`,
- 1 AS `interessengruppe3_branche_id`,
- 1 AS `land`,
- 1 AS `interessenraum`,
- 1 AS `organisation_jahr_id`,
- 1 AS `jahr`,
- 1 AS `umsatz`,
- 1 AS `gewinn`,
- 1 AS `kapital`,
- 1 AS `mitarbeiter_weltweit`,
- 1 AS `mitarbeiter_schweiz`,
- 1 AS `geschaeftsbericht_url`,
- 1 AS `zutrittsberechtigung_name`,
- 1 AS `funktion`,
- 1 AS `funktion_fr`,
- 1 AS `anzeige_name`,
- 1 AS `id`,
- 1 AS `person_id`,
- 1 AS `organisation_id`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `hauptberuflich`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `wirksamkeit`,
- 1 AS `wirksamkeit_index`,
- 1 AS `organisation_lobbyeinfluss`,
- 1 AS `refreshed_date`,
- 1 AS `verguetung`,
- 1 AS `verguetung_jahr`,
- 1 AS `verguetung_beschreibung`;
+CREATE TABLE `v_zutrittsberechtigung_mandate` (
+  `parlamentarier_id` tinyint NOT NULL,
+  `organisation_name` tinyint NOT NULL,
+  `organisation_name_de` tinyint NOT NULL,
+  `organisation_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `name_it` tinyint NOT NULL,
+  `ort` tinyint NOT NULL,
+  `land_id` tinyint NOT NULL,
+  `interessenraum_id` tinyint NOT NULL,
+  `rechtsform` tinyint NOT NULL,
+  `typ` tinyint NOT NULL,
+  `vernehmlassung` tinyint NOT NULL,
+  `interessengruppe_id` tinyint NOT NULL,
+  `interessengruppe1_id` tinyint NOT NULL,
+  `interessengruppe2_id` tinyint NOT NULL,
+  `interessengruppe3_id` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `handelsregister_url` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `organisation_beschreibung` tinyint NOT NULL,
+  `adresse_strasse` tinyint NOT NULL,
+  `adresse_zusatz` tinyint NOT NULL,
+  `adresse_plz` tinyint NOT NULL,
+  `interessengruppe` tinyint NOT NULL,
+  `interessengruppe_branche` tinyint NOT NULL,
+  `interessengruppe_branche_id` tinyint NOT NULL,
+  `interessengruppe1` tinyint NOT NULL,
+  `interessengruppe1_branche` tinyint NOT NULL,
+  `interessengruppe1_branche_id` tinyint NOT NULL,
+  `interessengruppe2` tinyint NOT NULL,
+  `interessengruppe2_branche` tinyint NOT NULL,
+  `interessengruppe2_branche_id` tinyint NOT NULL,
+  `interessengruppe3` tinyint NOT NULL,
+  `interessengruppe3_branche` tinyint NOT NULL,
+  `interessengruppe3_branche_id` tinyint NOT NULL,
+  `land` tinyint NOT NULL,
+  `interessenraum` tinyint NOT NULL,
+  `organisation_jahr_id` tinyint NOT NULL,
+  `jahr` tinyint NOT NULL,
+  `umsatz` tinyint NOT NULL,
+  `gewinn` tinyint NOT NULL,
+  `kapital` tinyint NOT NULL,
+  `mitarbeiter_weltweit` tinyint NOT NULL,
+  `mitarbeiter_schweiz` tinyint NOT NULL,
+  `geschaeftsbericht_url` tinyint NOT NULL,
+  `zutrittsberechtigung_name` tinyint NOT NULL,
+  `funktion` tinyint NOT NULL,
+  `funktion_fr` tinyint NOT NULL,
+  `anzeige_name` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `person_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `hauptberuflich` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `wirksamkeit` tinyint NOT NULL,
+  `wirksamkeit_index` tinyint NOT NULL,
+  `organisation_lobbyeinfluss` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL,
+  `verguetung` tinyint NOT NULL,
+  `verguetung_jahr` tinyint NOT NULL,
+  `verguetung_beschreibung` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -11311,91 +11778,92 @@ DROP TABLE IF EXISTS `v_zutrittsberechtigung_mit_mandaten`;
 DROP VIEW IF EXISTS `v_zutrittsberechtigung_mit_mandaten`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_zutrittsberechtigung_mit_mandaten` AS SELECT 
- 1 AS `organisation_name`,
- 1 AS `organisation_name_de`,
- 1 AS `organisation_name_fr`,
- 1 AS `name`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `name_it`,
- 1 AS `ort`,
- 1 AS `land_id`,
- 1 AS `interessenraum_id`,
- 1 AS `rechtsform`,
- 1 AS `typ`,
- 1 AS `vernehmlassung`,
- 1 AS `interessengruppe_id`,
- 1 AS `interessengruppe1_id`,
- 1 AS `interessengruppe2_id`,
- 1 AS `interessengruppe3_id`,
- 1 AS `homepage`,
- 1 AS `handelsregister_url`,
- 1 AS `twitter_name`,
- 1 AS `organisation_beschreibung`,
- 1 AS `adresse_strasse`,
- 1 AS `adresse_zusatz`,
- 1 AS `adresse_plz`,
- 1 AS `interessengruppe`,
- 1 AS `interessengruppe_branche`,
- 1 AS `interessengruppe_branche_id`,
- 1 AS `interessengruppe1`,
- 1 AS `interessengruppe1_branche`,
- 1 AS `interessengruppe1_branche_id`,
- 1 AS `interessengruppe2`,
- 1 AS `interessengruppe2_branche`,
- 1 AS `interessengruppe2_branche_id`,
- 1 AS `interessengruppe3`,
- 1 AS `interessengruppe3_branche`,
- 1 AS `interessengruppe3_branche_id`,
- 1 AS `land`,
- 1 AS `interessenraum`,
- 1 AS `organisation_jahr_id`,
- 1 AS `jahr`,
- 1 AS `umsatz`,
- 1 AS `gewinn`,
- 1 AS `kapital`,
- 1 AS `mitarbeiter_weltweit`,
- 1 AS `mitarbeiter_schweiz`,
- 1 AS `geschaeftsbericht_url`,
- 1 AS `zutrittsberechtigung_name`,
- 1 AS `funktion`,
- 1 AS `parlamentarier_id`,
- 1 AS `id`,
- 1 AS `person_id`,
- 1 AS `organisation_id`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `hauptberuflich`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_zutrittsberechtigung_mit_mandaten` (
+  `organisation_name` tinyint NOT NULL,
+  `organisation_name_de` tinyint NOT NULL,
+  `organisation_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `name_it` tinyint NOT NULL,
+  `ort` tinyint NOT NULL,
+  `land_id` tinyint NOT NULL,
+  `interessenraum_id` tinyint NOT NULL,
+  `rechtsform` tinyint NOT NULL,
+  `typ` tinyint NOT NULL,
+  `vernehmlassung` tinyint NOT NULL,
+  `interessengruppe_id` tinyint NOT NULL,
+  `interessengruppe1_id` tinyint NOT NULL,
+  `interessengruppe2_id` tinyint NOT NULL,
+  `interessengruppe3_id` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `handelsregister_url` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `organisation_beschreibung` tinyint NOT NULL,
+  `adresse_strasse` tinyint NOT NULL,
+  `adresse_zusatz` tinyint NOT NULL,
+  `adresse_plz` tinyint NOT NULL,
+  `interessengruppe` tinyint NOT NULL,
+  `interessengruppe_branche` tinyint NOT NULL,
+  `interessengruppe_branche_id` tinyint NOT NULL,
+  `interessengruppe1` tinyint NOT NULL,
+  `interessengruppe1_branche` tinyint NOT NULL,
+  `interessengruppe1_branche_id` tinyint NOT NULL,
+  `interessengruppe2` tinyint NOT NULL,
+  `interessengruppe2_branche` tinyint NOT NULL,
+  `interessengruppe2_branche_id` tinyint NOT NULL,
+  `interessengruppe3` tinyint NOT NULL,
+  `interessengruppe3_branche` tinyint NOT NULL,
+  `interessengruppe3_branche_id` tinyint NOT NULL,
+  `land` tinyint NOT NULL,
+  `interessenraum` tinyint NOT NULL,
+  `organisation_jahr_id` tinyint NOT NULL,
+  `jahr` tinyint NOT NULL,
+  `umsatz` tinyint NOT NULL,
+  `gewinn` tinyint NOT NULL,
+  `kapital` tinyint NOT NULL,
+  `mitarbeiter_weltweit` tinyint NOT NULL,
+  `mitarbeiter_schweiz` tinyint NOT NULL,
+  `geschaeftsbericht_url` tinyint NOT NULL,
+  `zutrittsberechtigung_name` tinyint NOT NULL,
+  `funktion` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `person_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `hauptberuflich` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -11406,92 +11874,93 @@ DROP TABLE IF EXISTS `v_zutrittsberechtigung_mit_mandaten_indirekt`;
 DROP VIEW IF EXISTS `v_zutrittsberechtigung_mit_mandaten_indirekt`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_zutrittsberechtigung_mit_mandaten_indirekt` AS SELECT 
- 1 AS `beziehung`,
- 1 AS `organisation_name`,
- 1 AS `organisation_name_de`,
- 1 AS `organisation_name_fr`,
- 1 AS `name`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `name_it`,
- 1 AS `ort`,
- 1 AS `land_id`,
- 1 AS `interessenraum_id`,
- 1 AS `rechtsform`,
- 1 AS `typ`,
- 1 AS `vernehmlassung`,
- 1 AS `interessengruppe_id`,
- 1 AS `interessengruppe1_id`,
- 1 AS `interessengruppe2_id`,
- 1 AS `interessengruppe3_id`,
- 1 AS `homepage`,
- 1 AS `handelsregister_url`,
- 1 AS `twitter_name`,
- 1 AS `organisation_beschreibung`,
- 1 AS `adresse_strasse`,
- 1 AS `adresse_zusatz`,
- 1 AS `adresse_plz`,
- 1 AS `interessengruppe`,
- 1 AS `interessengruppe_branche`,
- 1 AS `interessengruppe_branche_id`,
- 1 AS `interessengruppe1`,
- 1 AS `interessengruppe1_branche`,
- 1 AS `interessengruppe1_branche_id`,
- 1 AS `interessengruppe2`,
- 1 AS `interessengruppe2_branche`,
- 1 AS `interessengruppe2_branche_id`,
- 1 AS `interessengruppe3`,
- 1 AS `interessengruppe3_branche`,
- 1 AS `interessengruppe3_branche_id`,
- 1 AS `land`,
- 1 AS `interessenraum`,
- 1 AS `organisation_jahr_id`,
- 1 AS `jahr`,
- 1 AS `umsatz`,
- 1 AS `gewinn`,
- 1 AS `kapital`,
- 1 AS `mitarbeiter_weltweit`,
- 1 AS `mitarbeiter_schweiz`,
- 1 AS `geschaeftsbericht_url`,
- 1 AS `zutrittsberechtigung_name`,
- 1 AS `funktion`,
- 1 AS `parlamentarier_id`,
- 1 AS `id`,
- 1 AS `person_id`,
- 1 AS `organisation_id`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `hauptberuflich`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_zutrittsberechtigung_mit_mandaten_indirekt` (
+  `beziehung` tinyint NOT NULL,
+  `organisation_name` tinyint NOT NULL,
+  `organisation_name_de` tinyint NOT NULL,
+  `organisation_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `name_it` tinyint NOT NULL,
+  `ort` tinyint NOT NULL,
+  `land_id` tinyint NOT NULL,
+  `interessenraum_id` tinyint NOT NULL,
+  `rechtsform` tinyint NOT NULL,
+  `typ` tinyint NOT NULL,
+  `vernehmlassung` tinyint NOT NULL,
+  `interessengruppe_id` tinyint NOT NULL,
+  `interessengruppe1_id` tinyint NOT NULL,
+  `interessengruppe2_id` tinyint NOT NULL,
+  `interessengruppe3_id` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `handelsregister_url` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `organisation_beschreibung` tinyint NOT NULL,
+  `adresse_strasse` tinyint NOT NULL,
+  `adresse_zusatz` tinyint NOT NULL,
+  `adresse_plz` tinyint NOT NULL,
+  `interessengruppe` tinyint NOT NULL,
+  `interessengruppe_branche` tinyint NOT NULL,
+  `interessengruppe_branche_id` tinyint NOT NULL,
+  `interessengruppe1` tinyint NOT NULL,
+  `interessengruppe1_branche` tinyint NOT NULL,
+  `interessengruppe1_branche_id` tinyint NOT NULL,
+  `interessengruppe2` tinyint NOT NULL,
+  `interessengruppe2_branche` tinyint NOT NULL,
+  `interessengruppe2_branche_id` tinyint NOT NULL,
+  `interessengruppe3` tinyint NOT NULL,
+  `interessengruppe3_branche` tinyint NOT NULL,
+  `interessengruppe3_branche_id` tinyint NOT NULL,
+  `land` tinyint NOT NULL,
+  `interessenraum` tinyint NOT NULL,
+  `organisation_jahr_id` tinyint NOT NULL,
+  `jahr` tinyint NOT NULL,
+  `umsatz` tinyint NOT NULL,
+  `gewinn` tinyint NOT NULL,
+  `kapital` tinyint NOT NULL,
+  `mitarbeiter_weltweit` tinyint NOT NULL,
+  `mitarbeiter_schweiz` tinyint NOT NULL,
+  `geschaeftsbericht_url` tinyint NOT NULL,
+  `zutrittsberechtigung_name` tinyint NOT NULL,
+  `funktion` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `person_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `hauptberuflich` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -11502,99 +11971,100 @@ DROP TABLE IF EXISTS `v_zutrittsberechtigung_raw`;
 DROP VIEW IF EXISTS `v_zutrittsberechtigung_raw`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_zutrittsberechtigung_raw` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `name`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `id`,
- 1 AS `nachname`,
- 1 AS `vorname`,
- 1 AS `zweiter_vorname`,
- 1 AS `beschreibung_de`,
- 1 AS `beschreibung_fr`,
- 1 AS `parlamentarier_kommissionen`,
- 1 AS `parlamentarier_kommissionen_zutrittsberechtigung`,
- 1 AS `beruf`,
- 1 AS `beruf_fr`,
- 1 AS `beruf_interessengruppe_id`,
- 1 AS `partei_id`,
- 1 AS `geschlecht`,
- 1 AS `arbeitssprache`,
- 1 AS `email`,
- 1 AS `homepage`,
- 1 AS `twitter_name`,
- 1 AS `linkedin_profil_url`,
- 1 AS `xing_profil_name`,
- 1 AS `facebook_name`,
- 1 AS `telephon_1`,
- 1 AS `telephon_2`,
- 1 AS `erfasst`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa_person`,
- 1 AS `eingabe_abgeschlossen_datum_person`,
- 1 AS `kontrolliert_visa_person`,
- 1 AS `kontrolliert_datum_person`,
- 1 AS `autorisierung_verschickt_visa`,
- 1 AS `autorisierung_verschickt_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa_person`,
- 1 AS `freigabe_datum_person`,
- 1 AS `created_visa_person`,
- 1 AS `created_date_person`,
- 1 AS `updated_visa_person`,
- 1 AS `updated_date_person`,
- 1 AS `published_person`,
- 1 AS `created_date_unix_person`,
- 1 AS `updated_date_unix_person`,
- 1 AS `eingabe_abgeschlossen_datum_unix_person`,
- 1 AS `kontrolliert_datum_unix_person`,
- 1 AS `freigabe_datum_unix_person`,
- 1 AS `parlamentarier_id`,
- 1 AS `person_id`,
- 1 AS `zutrittsberechtigung_id`,
- 1 AS `funktion`,
- 1 AS `funktion_fr`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`,
- 1 AS `beruf_branche_id`,
- 1 AS `partei`,
- 1 AS `partei_de`,
- 1 AS `partei_fr`,
- 1 AS `parlamentarier_name`,
- 1 AS `parlamentarier_freigabe_datum`,
- 1 AS `parlamentarier_freigabe_datum_unix`,
- 1 AS `anzahl_mandat_tief`,
- 1 AS `anzahl_mandat_mittel`,
- 1 AS `anzahl_mandat_hoch`,
- 1 AS `lobbyfaktor`,
- 1 AS `lobbyfaktor_max`,
- 1 AS `lobbyfaktor_percent_max`,
- 1 AS `anzahl_mandat_tief_max`,
- 1 AS `anzahl_mandat_mittel_max`,
- 1 AS `anzahl_mandat_hoch_max`,
- 1 AS `refreshed_date`;
+CREATE TABLE `v_zutrittsberechtigung_raw` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `nachname` tinyint NOT NULL,
+  `vorname` tinyint NOT NULL,
+  `zweiter_vorname` tinyint NOT NULL,
+  `beschreibung_de` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `parlamentarier_kommissionen` tinyint NOT NULL,
+  `parlamentarier_kommissionen_zutrittsberechtigung` tinyint NOT NULL,
+  `beruf` tinyint NOT NULL,
+  `beruf_fr` tinyint NOT NULL,
+  `beruf_interessengruppe_id` tinyint NOT NULL,
+  `partei_id` tinyint NOT NULL,
+  `geschlecht` tinyint NOT NULL,
+  `arbeitssprache` tinyint NOT NULL,
+  `email` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `linkedin_profil_url` tinyint NOT NULL,
+  `xing_profil_name` tinyint NOT NULL,
+  `facebook_name` tinyint NOT NULL,
+  `telephon_1` tinyint NOT NULL,
+  `telephon_2` tinyint NOT NULL,
+  `erfasst` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa_person` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_person` tinyint NOT NULL,
+  `kontrolliert_visa_person` tinyint NOT NULL,
+  `kontrolliert_datum_person` tinyint NOT NULL,
+  `autorisierung_verschickt_visa` tinyint NOT NULL,
+  `autorisierung_verschickt_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa_person` tinyint NOT NULL,
+  `freigabe_datum_person` tinyint NOT NULL,
+  `created_visa_person` tinyint NOT NULL,
+  `created_date_person` tinyint NOT NULL,
+  `updated_visa_person` tinyint NOT NULL,
+  `updated_date_person` tinyint NOT NULL,
+  `published_person` tinyint NOT NULL,
+  `created_date_unix_person` tinyint NOT NULL,
+  `updated_date_unix_person` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix_person` tinyint NOT NULL,
+  `kontrolliert_datum_unix_person` tinyint NOT NULL,
+  `freigabe_datum_unix_person` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `person_id` tinyint NOT NULL,
+  `zutrittsberechtigung_id` tinyint NOT NULL,
+  `funktion` tinyint NOT NULL,
+  `funktion_fr` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `beruf_branche_id` tinyint NOT NULL,
+  `partei` tinyint NOT NULL,
+  `partei_de` tinyint NOT NULL,
+  `partei_fr` tinyint NOT NULL,
+  `parlamentarier_name` tinyint NOT NULL,
+  `parlamentarier_freigabe_datum` tinyint NOT NULL,
+  `parlamentarier_freigabe_datum_unix` tinyint NOT NULL,
+  `anzahl_mandat_tief` tinyint NOT NULL,
+  `anzahl_mandat_mittel` tinyint NOT NULL,
+  `anzahl_mandat_hoch` tinyint NOT NULL,
+  `lobbyfaktor` tinyint NOT NULL,
+  `lobbyfaktor_max` tinyint NOT NULL,
+  `lobbyfaktor_percent_max` tinyint NOT NULL,
+  `anzahl_mandat_tief_max` tinyint NOT NULL,
+  `anzahl_mandat_mittel_max` tinyint NOT NULL,
+  `anzahl_mandat_hoch_max` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -11605,38 +12075,39 @@ DROP TABLE IF EXISTS `v_zutrittsberechtigung_simple`;
 DROP VIEW IF EXISTS `v_zutrittsberechtigung_simple`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_zutrittsberechtigung_simple` AS SELECT 
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `person_id`,
- 1 AS `parlamentarier_kommissionen`,
- 1 AS `funktion`,
- 1 AS `funktion_fr`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `updated_by_import`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `aktiv`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_zutrittsberechtigung_simple` (
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `person_id` tinyint NOT NULL,
+  `parlamentarier_kommissionen` tinyint NOT NULL,
+  `funktion` tinyint NOT NULL,
+  `funktion_fr` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `updated_by_import` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `aktiv` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -11647,82 +12118,83 @@ DROP TABLE IF EXISTS `v_zutrittsberechtigung_simple_compat`;
 DROP VIEW IF EXISTS `v_zutrittsberechtigung_simple_compat`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `v_zutrittsberechtigung_simple_compat` AS SELECT 
- 1 AS `anzeige_name`,
- 1 AS `anzeige_name_de`,
- 1 AS `anzeige_name_fr`,
- 1 AS `name`,
- 1 AS `name_de`,
- 1 AS `name_fr`,
- 1 AS `id`,
- 1 AS `nachname`,
- 1 AS `vorname`,
- 1 AS `zweiter_vorname`,
- 1 AS `beschreibung_de`,
- 1 AS `beschreibung_fr`,
- 1 AS `parlamentarier_kommissionen`,
- 1 AS `parlamentarier_kommissionen_zutrittsberechtigung`,
- 1 AS `beruf`,
- 1 AS `beruf_fr`,
- 1 AS `beruf_interessengruppe_id`,
- 1 AS `partei_id`,
- 1 AS `geschlecht`,
- 1 AS `arbeitssprache`,
- 1 AS `email`,
- 1 AS `homepage`,
- 1 AS `twitter_name`,
- 1 AS `linkedin_profil_url`,
- 1 AS `xing_profil_name`,
- 1 AS `facebook_name`,
- 1 AS `telephon_1`,
- 1 AS `telephon_2`,
- 1 AS `erfasst`,
- 1 AS `notizen`,
- 1 AS `eingabe_abgeschlossen_visa_person`,
- 1 AS `eingabe_abgeschlossen_datum_person`,
- 1 AS `kontrolliert_visa_person`,
- 1 AS `kontrolliert_datum_person`,
- 1 AS `autorisierung_verschickt_visa`,
- 1 AS `autorisierung_verschickt_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa_person`,
- 1 AS `freigabe_datum_person`,
- 1 AS `created_visa_person`,
- 1 AS `created_date_person`,
- 1 AS `updated_visa_person`,
- 1 AS `updated_date_person`,
- 1 AS `published_person`,
- 1 AS `created_date_unix_person`,
- 1 AS `updated_date_unix_person`,
- 1 AS `eingabe_abgeschlossen_datum_unix_person`,
- 1 AS `kontrolliert_datum_unix_person`,
- 1 AS `freigabe_datum_unix_person`,
- 1 AS `parlamentarier_id`,
- 1 AS `person_id`,
- 1 AS `zutrittsberechtigung_id`,
- 1 AS `funktion`,
- 1 AS `funktion_fr`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `published`,
- 1 AS `bis_unix`,
- 1 AS `von_unix`,
- 1 AS `created_date_unix`,
- 1 AS `updated_date_unix`,
- 1 AS `eingabe_abgeschlossen_datum_unix`,
- 1 AS `kontrolliert_datum_unix`,
- 1 AS `freigabe_datum_unix`;
+CREATE TABLE `v_zutrittsberechtigung_simple_compat` (
+  `anzeige_name` tinyint NOT NULL,
+  `anzeige_name_de` tinyint NOT NULL,
+  `anzeige_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `nachname` tinyint NOT NULL,
+  `vorname` tinyint NOT NULL,
+  `zweiter_vorname` tinyint NOT NULL,
+  `beschreibung_de` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `parlamentarier_kommissionen` tinyint NOT NULL,
+  `parlamentarier_kommissionen_zutrittsberechtigung` tinyint NOT NULL,
+  `beruf` tinyint NOT NULL,
+  `beruf_fr` tinyint NOT NULL,
+  `beruf_interessengruppe_id` tinyint NOT NULL,
+  `partei_id` tinyint NOT NULL,
+  `geschlecht` tinyint NOT NULL,
+  `arbeitssprache` tinyint NOT NULL,
+  `email` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `linkedin_profil_url` tinyint NOT NULL,
+  `xing_profil_name` tinyint NOT NULL,
+  `facebook_name` tinyint NOT NULL,
+  `telephon_1` tinyint NOT NULL,
+  `telephon_2` tinyint NOT NULL,
+  `erfasst` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa_person` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_person` tinyint NOT NULL,
+  `kontrolliert_visa_person` tinyint NOT NULL,
+  `kontrolliert_datum_person` tinyint NOT NULL,
+  `autorisierung_verschickt_visa` tinyint NOT NULL,
+  `autorisierung_verschickt_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa_person` tinyint NOT NULL,
+  `freigabe_datum_person` tinyint NOT NULL,
+  `created_visa_person` tinyint NOT NULL,
+  `created_date_person` tinyint NOT NULL,
+  `updated_visa_person` tinyint NOT NULL,
+  `updated_date_person` tinyint NOT NULL,
+  `published_person` tinyint NOT NULL,
+  `created_date_unix_person` tinyint NOT NULL,
+  `updated_date_unix_person` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix_person` tinyint NOT NULL,
+  `kontrolliert_datum_unix_person` tinyint NOT NULL,
+  `freigabe_datum_unix_person` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `person_id` tinyint NOT NULL,
+  `zutrittsberechtigung_id` tinyint NOT NULL,
+  `funktion` tinyint NOT NULL,
+  `funktion_fr` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `published` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -11733,49 +12205,90 @@ DROP TABLE IF EXISTS `vf_interessenbindung`;
 DROP VIEW IF EXISTS `vf_interessenbindung`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE VIEW `vf_interessenbindung` AS SELECT 
- 1 AS `id`,
- 1 AS `parlamentarier_id`,
- 1 AS `organisation_id`,
- 1 AS `art`,
- 1 AS `funktion_im_gremium`,
- 1 AS `deklarationstyp`,
- 1 AS `status`,
- 1 AS `hauptberuflich`,
- 1 AS `behoerden_vertreter`,
- 1 AS `beschreibung`,
- 1 AS `beschreibung_fr`,
- 1 AS `quelle_url`,
- 1 AS `quelle_url_gueltig`,
- 1 AS `quelle`,
- 1 AS `von`,
- 1 AS `bis`,
- 1 AS `notizen`,
- 1 AS `updated_by_import`,
- 1 AS `eingabe_abgeschlossen_visa`,
- 1 AS `eingabe_abgeschlossen_datum`,
- 1 AS `kontrolliert_visa`,
- 1 AS `kontrolliert_datum`,
- 1 AS `autorisiert_visa`,
- 1 AS `autorisiert_datum`,
- 1 AS `freigabe_visa`,
- 1 AS `freigabe_datum`,
- 1 AS `created_visa`,
- 1 AS `created_date`,
- 1 AS `updated_visa`,
- 1 AS `updated_date`,
- 1 AS `verguetung`,
- 1 AS `verguetung_jahr`,
- 1 AS `verguetung_beschreibung`,
- 1 AS `verguetung_freigabe_datum`,
- 1 AS `jahr_minus_1_verguetung`,
- 1 AS `jahr_minus_1_verguetung_jahr`,
- 1 AS `jahr_minus_1_verguetung_beschreibung`,
- 1 AS `jahr_minus_1_verguetung_freigabe_datum`,
- 1 AS `jahr_minus_2_verguetung`,
- 1 AS `jahr_minus_2_verguetung_jahr`,
- 1 AS `jahr_minus_2_verguetung_beschreibung`,
- 1 AS `jahr_minus_2_verguetung_freigabe_datum`;
+CREATE TABLE `vf_interessenbindung` (
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `deklarationstyp` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `hauptberuflich` tinyint NOT NULL,
+  `behoerden_vertreter` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `beschreibung_fr` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `updated_by_import` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `verguetung` tinyint NOT NULL,
+  `verguetung_jahr` tinyint NOT NULL,
+  `verguetung_beschreibung` tinyint NOT NULL,
+  `verguetung_freigabe_datum` tinyint NOT NULL,
+  `jahr_minus_1_verguetung` tinyint NOT NULL,
+  `jahr_minus_1_verguetung_jahr` tinyint NOT NULL,
+  `jahr_minus_1_verguetung_beschreibung` tinyint NOT NULL,
+  `jahr_minus_1_verguetung_freigabe_datum` tinyint NOT NULL,
+  `jahr_minus_2_verguetung` tinyint NOT NULL,
+  `jahr_minus_2_verguetung_jahr` tinyint NOT NULL,
+  `jahr_minus_2_verguetung_beschreibung` tinyint NOT NULL,
+  `jahr_minus_2_verguetung_freigabe_datum` tinyint NOT NULL
+) ENGINE=MyISAM ;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `vf_parlamentarier_transparenz`
+--
+
+DROP TABLE IF EXISTS `vf_parlamentarier_transparenz`;
+DROP VIEW IF EXISTS `vf_parlamentarier_transparenz`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `vf_parlamentarier_transparenz` (
+  `id` tinyint NOT NULL,
+  `parlamentarier_id` tinyint NOT NULL,
+  `stichdatum` tinyint NOT NULL,
+  `in_liste` tinyint NOT NULL,
+  `verguetung_transparent` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `rat_id` tinyint NOT NULL,
+  `kanton_id` tinyint NOT NULL,
+  `partei_id` tinyint NOT NULL,
+  `fraktion_id` tinyint NOT NULL,
+  `kommissionen_abkuerzung` tinyint NOT NULL,
+  `militaerischer_grad_id` tinyint NOT NULL,
+  `geschlecht` tinyint NOT NULL,
+  `zivilstand` tinyint NOT NULL,
+  `anzahl_kinder` tinyint NOT NULL,
+  `geburtstag` tinyint NOT NULL,
+  `im_rat_seit` tinyint NOT NULL,
+  `im_rat_bis` tinyint NOT NULL
+) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -11816,7 +12329,7 @@ SET character_set_client  = utf8mb4  ;
 SET character_set_results = utf8mb4  ;
 SET collation_connection  = utf8mb4_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
-SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
 CREATE TRIGGER `trg_wissensartikel_link_log_ins` AFTER INSERT ON `wissensartikel_link`
 FOR EACH ROW
@@ -11837,7 +12350,7 @@ SET character_set_client  = utf8mb4  ;
 SET character_set_results = utf8mb4  ;
 SET collation_connection  = utf8mb4_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
-SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
 CREATE TRIGGER `trg_wissensartikel_link_log_upd` AFTER UPDATE ON `wissensartikel_link`
 FOR EACH ROW
@@ -11858,7 +12371,7 @@ SET character_set_client  = utf8mb4  ;
 SET character_set_results = utf8mb4  ;
 SET collation_connection  = utf8mb4_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
-SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
 CREATE TRIGGER `trg_wissensartikel_link_log_del_before` BEFORE DELETE ON `wissensartikel_link`
 FOR EACH ROW
@@ -11879,7 +12392,7 @@ SET character_set_client  = utf8mb4  ;
 SET character_set_results = utf8mb4  ;
 SET collation_connection  = utf8mb4_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
-SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
 CREATE TRIGGER `trg_wissensartikel_link_log_del_after` AFTER DELETE ON `wissensartikel_link`
 FOR EACH ROW
@@ -11964,7 +12477,7 @@ SET character_set_client  = utf8mb4  ;
 SET character_set_results = utf8mb4  ;
 SET collation_connection  = utf8mb4_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
-SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
 CREATE TRIGGER `trg_wissensartikelzieltabelle_log_ins` AFTER INSERT ON `wissensartikelzieltabelle`
 FOR EACH ROW
@@ -11985,7 +12498,7 @@ SET character_set_client  = utf8mb4  ;
 SET character_set_results = utf8mb4  ;
 SET collation_connection  = utf8mb4_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
-SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
 CREATE TRIGGER `trg_wissensartikelzieltabelle_log_upd` AFTER UPDATE ON `wissensartikelzieltabelle`
 FOR EACH ROW
@@ -12006,7 +12519,7 @@ SET character_set_client  = utf8mb4  ;
 SET character_set_results = utf8mb4  ;
 SET collation_connection  = utf8mb4_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
-SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
 CREATE TRIGGER `trg_wissensartikelzieltabelle_log_del_before` BEFORE DELETE ON `wissensartikelzieltabelle`
 FOR EACH ROW
@@ -12027,7 +12540,7 @@ SET character_set_client  = utf8mb4  ;
 SET character_set_results = utf8mb4  ;
 SET collation_connection  = utf8mb4_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
-SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'  ;
+SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
 CREATE TRIGGER `trg_wissensartikelzieltabelle_log_del_after` AFTER DELETE ON `wissensartikelzieltabelle`
 FOR EACH ROW
@@ -12672,6 +13185,7 @@ USE `lobbywatch`;
 -- Final view structure for view `uv_interessenbindung_jahr`
 --
 
+DROP TABLE IF EXISTS `uv_interessenbindung_jahr`;
 DROP VIEW IF EXISTS `uv_interessenbindung_jahr`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -12690,6 +13204,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `uv_wissensartikel_link`
 --
 
+DROP TABLE IF EXISTS `uv_wissensartikel_link`;
 DROP VIEW IF EXISTS `uv_wissensartikel_link`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -12708,6 +13223,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_all_entity_records`
 --
 
+DROP TABLE IF EXISTS `v_all_entity_records`;
 DROP VIEW IF EXISTS `v_all_entity_records`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -12726,6 +13242,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_branche`
 --
 
+DROP TABLE IF EXISTS `v_branche`;
 DROP VIEW IF EXISTS `v_branche`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -12744,6 +13261,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_branche_name_with_null`
 --
 
+DROP TABLE IF EXISTS `v_branche_name_with_null`;
 DROP VIEW IF EXISTS `v_branche_name_with_null`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -12762,6 +13280,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_branche_simple`
 --
 
+DROP TABLE IF EXISTS `v_branche_simple`;
 DROP VIEW IF EXISTS `v_branche_simple`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -12780,6 +13299,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_country`
 --
 
+DROP TABLE IF EXISTS `v_country`;
 DROP VIEW IF EXISTS `v_country`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -12798,6 +13318,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_d7_node`
 --
 
+DROP TABLE IF EXISTS `v_d7_node`;
 DROP VIEW IF EXISTS `v_d7_node`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -12807,7 +13328,7 @@ SET character_set_results     = utf8mb4 ;
 SET collation_connection      = utf8mb4_unicode_ci ;
 CREATE  
  
-VIEW `v_d7_node` AS select `node`.`anzeige_name` AS `anzeige_name`,`node`.`anzeige_name_lang` AS `anzeige_name_lang`,`node`.`anzeige_meta` AS `anzeige_meta`,`node`.`nid` AS `nid`,`node`.`vid` AS `vid`,`node`.`type` AS `type`,`node`.`language` AS `language`,`node`.`title` AS `title`,`node`.`uid` AS `uid`,`node`.`status` AS `status`,`node`.`created` AS `created`,`node`.`changed` AS `changed`,`node`.`comment` AS `comment`,`node`.`promote` AS `promote`,`node`.`sticky` AS `sticky`,`node`.`tnid` AS `tnid`,`node`.`translate` AS `translate` from `v_d7_node_simple` `node` ;
+VIEW `v_d7_node` AS select `node`.`anzeige_name` AS `anzeige_name`,`node`.`anzeige_name_lang` AS `anzeige_name_lang`,`node`.`anzeige_meta` AS `anzeige_meta`,`node`.`nid` AS `nid`,`node`.`vid` AS `vid`,`node`.`type` AS `type`,`node`.`language` AS `language`,`node`.`title` AS `title`,`node`.`uid` AS `uid`,`node`.`status` AS `status`,`node`.`created` AS `created`,`node`.`changed` AS `changed`,`node`.`comment` AS `comment`,`node`.`promote` AS `promote`,`node`.`sticky` AS `sticky`,`node`.`tnid` AS `tnid`,`node`.`translate` AS `translate`,(case when (`node`.`tnid` > 0) then `node`.`tnid` else `node`.`nid` end) AS `tnid_nid` from `v_d7_node_simple` `node` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -12816,6 +13337,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_d7_node_raw`
 --
 
+DROP TABLE IF EXISTS `v_d7_node_raw`;
 DROP VIEW IF EXISTS `v_d7_node_raw`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -12834,6 +13356,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_d7_node_simple`
 --
 
+DROP TABLE IF EXISTS `v_d7_node_simple`;
 DROP VIEW IF EXISTS `v_d7_node_simple`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -12852,6 +13375,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_fraktion`
 --
 
+DROP TABLE IF EXISTS `v_fraktion`;
 DROP VIEW IF EXISTS `v_fraktion`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -12870,6 +13394,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_in_kommission`
 --
 
+DROP TABLE IF EXISTS `v_in_kommission`;
 DROP VIEW IF EXISTS `v_in_kommission`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -12888,6 +13413,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_in_kommission_liste`
 --
 
+DROP TABLE IF EXISTS `v_in_kommission_liste`;
 DROP VIEW IF EXISTS `v_in_kommission_liste`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -12906,6 +13432,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_in_kommission_parlamentarier`
 --
 
+DROP TABLE IF EXISTS `v_in_kommission_parlamentarier`;
 DROP VIEW IF EXISTS `v_in_kommission_parlamentarier`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -12924,6 +13451,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_in_kommission_simple`
 --
 
+DROP TABLE IF EXISTS `v_in_kommission_simple`;
 DROP VIEW IF EXISTS `v_in_kommission_simple`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -12942,6 +13470,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_interessenbindung`
 --
 
+DROP TABLE IF EXISTS `v_interessenbindung`;
 DROP VIEW IF EXISTS `v_interessenbindung`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -12960,6 +13489,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_interessenbindung_jahr`
 --
 
+DROP TABLE IF EXISTS `v_interessenbindung_jahr`;
 DROP VIEW IF EXISTS `v_interessenbindung_jahr`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -12978,6 +13508,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_interessenbindung_jahr_current`
 --
 
+DROP TABLE IF EXISTS `v_interessenbindung_jahr_current`;
 DROP VIEW IF EXISTS `v_interessenbindung_jahr_current`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -12987,7 +13518,7 @@ SET character_set_results     = utf8mb4 ;
 SET collation_connection      = utf8mb4_unicode_ci ;
 CREATE  
  
-VIEW `v_interessenbindung_jahr_current` AS select `interessenbindung`.`id` AS `interessenbindung_id`,`interessenbindung_jahr`.`verguetung` AS `verguetung`,`interessenbindung_jahr`.`jahr` AS `verguetung_jahr`,`interessenbindung_jahr`.`beschreibung` AS `verguetung_beschreibung`,`interessenbindung_jahr`.`published` AS `published`,`interessenbindung_jahr`.`freigabe_datum` AS `freigabe_datum` from (`v_interessenbindung_simple` `interessenbindung` left join `v_interessenbindung_jahr` `interessenbindung_jahr` on(((`interessenbindung`.`id` = `interessenbindung_jahr`.`interessenbindung_id`) and (`interessenbindung_jahr`.`jahr` = year(now()))))) ;
+VIEW `v_interessenbindung_jahr_current` AS select `interessenbindung`.`id` AS `id`,`interessenbindung`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung`.`status` AS `status`,`interessenbindung`.`hauptberuflich` AS `hauptberuflich`,`interessenbindung`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`beschreibung_fr` AS `beschreibung_fr`,`interessenbindung`.`quelle_url` AS `quelle_url`,`interessenbindung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung`.`quelle` AS `quelle`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`notizen` AS `notizen`,`interessenbindung`.`updated_by_import` AS `updated_by_import`,`interessenbindung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung`.`created_visa` AS `created_visa`,`interessenbindung`.`created_date` AS `created_date`,`interessenbindung`.`updated_visa` AS `updated_visa`,`interessenbindung`.`updated_date` AS `updated_date`,`interessenbindung`.`aktiv` AS `aktiv`,`interessenbindung`.`published` AS `published`,`interessenbindung`.`bis_unix` AS `bis_unix`,`interessenbindung`.`von_unix` AS `von_unix`,`interessenbindung`.`created_date_unix` AS `created_date_unix`,`interessenbindung`.`updated_date_unix` AS `updated_date_unix`,`interessenbindung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`interessenbindung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`interessenbindung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`interessenbindung_jahr`.`verguetung` AS `verguetung`,`interessenbindung_jahr`.`jahr` AS `verguetung_jahr`,`interessenbindung_jahr`.`beschreibung` AS `verguetung_beschreibung`,`interessenbindung_jahr`.`published` AS `verguetung_published`,`interessenbindung_jahr`.`freigabe_datum` AS `verguetung_freigabe_datum` from (`v_interessenbindung_simple` `interessenbindung` left join `v_interessenbindung_jahr` `interessenbindung_jahr` on(((`interessenbindung`.`id` = `interessenbindung_jahr`.`interessenbindung_id`) and (`interessenbindung_jahr`.`jahr` = year(now()))))) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -12996,6 +13527,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_interessenbindung_jahr_last`
 --
 
+DROP TABLE IF EXISTS `v_interessenbindung_jahr_last`;
 DROP VIEW IF EXISTS `v_interessenbindung_jahr_last`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13014,6 +13546,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_interessenbindung_jahr_max`
 --
 
+DROP TABLE IF EXISTS `v_interessenbindung_jahr_max`;
 DROP VIEW IF EXISTS `v_interessenbindung_jahr_max`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13032,6 +13565,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_interessenbindung_jahr_raw`
 --
 
+DROP TABLE IF EXISTS `v_interessenbindung_jahr_raw`;
 DROP VIEW IF EXISTS `v_interessenbindung_jahr_raw`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13050,6 +13584,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_interessenbindung_liste`
 --
 
+DROP TABLE IF EXISTS `v_interessenbindung_liste`;
 DROP VIEW IF EXISTS `v_interessenbindung_liste`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13068,6 +13603,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_interessenbindung_liste_indirekt`
 --
 
+DROP TABLE IF EXISTS `v_interessenbindung_liste_indirekt`;
 DROP VIEW IF EXISTS `v_interessenbindung_liste_indirekt`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13086,6 +13622,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_interessenbindung_medium_raw`
 --
 
+DROP TABLE IF EXISTS `v_interessenbindung_medium_raw`;
 DROP VIEW IF EXISTS `v_interessenbindung_medium_raw`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13104,6 +13641,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_interessenbindung_raw`
 --
 
+DROP TABLE IF EXISTS `v_interessenbindung_raw`;
 DROP VIEW IF EXISTS `v_interessenbindung_raw`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13122,6 +13660,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_interessenbindung_simple`
 --
 
+DROP TABLE IF EXISTS `v_interessenbindung_simple`;
 DROP VIEW IF EXISTS `v_interessenbindung_simple`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13140,6 +13679,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_interessengruppe`
 --
 
+DROP TABLE IF EXISTS `v_interessengruppe`;
 DROP VIEW IF EXISTS `v_interessengruppe`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13158,6 +13698,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_interessengruppe_simple`
 --
 
+DROP TABLE IF EXISTS `v_interessengruppe_simple`;
 DROP VIEW IF EXISTS `v_interessengruppe_simple`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13176,6 +13717,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_interessenraum`
 --
 
+DROP TABLE IF EXISTS `v_interessenraum`;
 DROP VIEW IF EXISTS `v_interessenraum`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13194,6 +13736,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_kanton`
 --
 
+DROP TABLE IF EXISTS `v_kanton`;
 DROP VIEW IF EXISTS `v_kanton`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13212,6 +13755,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_kanton_jahr`
 --
 
+DROP TABLE IF EXISTS `v_kanton_jahr`;
 DROP VIEW IF EXISTS `v_kanton_jahr`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13230,6 +13774,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_kanton_jahr_last`
 --
 
+DROP TABLE IF EXISTS `v_kanton_jahr_last`;
 DROP VIEW IF EXISTS `v_kanton_jahr_last`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13248,6 +13793,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_kanton_simple`
 --
 
+DROP TABLE IF EXISTS `v_kanton_simple`;
 DROP VIEW IF EXISTS `v_kanton_simple`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13266,6 +13812,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_kommission`
 --
 
+DROP TABLE IF EXISTS `v_kommission`;
 DROP VIEW IF EXISTS `v_kommission`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13284,6 +13831,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_branche`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_branche`;
 DROP VIEW IF EXISTS `v_last_updated_branche`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13302,6 +13850,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_fraktion`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_fraktion`;
 DROP VIEW IF EXISTS `v_last_updated_fraktion`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13320,6 +13869,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_in_kommission`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_in_kommission`;
 DROP VIEW IF EXISTS `v_last_updated_in_kommission`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13338,6 +13888,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_interessenbindung`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_interessenbindung`;
 DROP VIEW IF EXISTS `v_last_updated_interessenbindung`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13356,6 +13907,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_interessenbindung_jahr`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_interessenbindung_jahr`;
 DROP VIEW IF EXISTS `v_last_updated_interessenbindung_jahr`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13374,6 +13926,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_interessengruppe`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_interessengruppe`;
 DROP VIEW IF EXISTS `v_last_updated_interessengruppe`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13392,6 +13945,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_kanton`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_kanton`;
 DROP VIEW IF EXISTS `v_last_updated_kanton`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13410,6 +13964,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_kanton_jahr`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_kanton_jahr`;
 DROP VIEW IF EXISTS `v_last_updated_kanton_jahr`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13428,6 +13983,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_kommission`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_kommission`;
 DROP VIEW IF EXISTS `v_last_updated_kommission`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13446,6 +14002,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_mandat`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_mandat`;
 DROP VIEW IF EXISTS `v_last_updated_mandat`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13464,6 +14021,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_mandat_jahr`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_mandat_jahr`;
 DROP VIEW IF EXISTS `v_last_updated_mandat_jahr`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13482,6 +14040,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_organisation`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_organisation`;
 DROP VIEW IF EXISTS `v_last_updated_organisation`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13500,6 +14059,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_organisation_anhang`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_organisation_anhang`;
 DROP VIEW IF EXISTS `v_last_updated_organisation_anhang`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13518,6 +14078,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_organisation_beziehung`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_organisation_beziehung`;
 DROP VIEW IF EXISTS `v_last_updated_organisation_beziehung`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13536,6 +14097,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_organisation_jahr`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_organisation_jahr`;
 DROP VIEW IF EXISTS `v_last_updated_organisation_jahr`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13554,6 +14116,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_parlamentarier`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_parlamentarier`;
 DROP VIEW IF EXISTS `v_last_updated_parlamentarier`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13572,6 +14135,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_parlamentarier_anhang`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_parlamentarier_anhang`;
 DROP VIEW IF EXISTS `v_last_updated_parlamentarier_anhang`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13590,6 +14154,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_parlamentarier_transparenz`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_parlamentarier_transparenz`;
 DROP VIEW IF EXISTS `v_last_updated_parlamentarier_transparenz`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13608,6 +14173,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_partei`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_partei`;
 DROP VIEW IF EXISTS `v_last_updated_partei`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13626,6 +14192,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_person`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_person`;
 DROP VIEW IF EXISTS `v_last_updated_person`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13644,6 +14211,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_person_anhang`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_person_anhang`;
 DROP VIEW IF EXISTS `v_last_updated_person_anhang`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13662,6 +14230,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_rat`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_rat`;
 DROP VIEW IF EXISTS `v_last_updated_rat`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13680,6 +14249,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_settings`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_settings`;
 DROP VIEW IF EXISTS `v_last_updated_settings`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13698,6 +14268,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_settings_category`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_settings_category`;
 DROP VIEW IF EXISTS `v_last_updated_settings_category`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13716,6 +14287,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_tables`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_tables`;
 DROP VIEW IF EXISTS `v_last_updated_tables`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13734,6 +14306,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_tables_unordered`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_tables_unordered`;
 DROP VIEW IF EXISTS `v_last_updated_tables_unordered`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13752,6 +14325,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_wissensartikel_link`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_wissensartikel_link`;
 DROP VIEW IF EXISTS `v_last_updated_wissensartikel_link`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13770,6 +14344,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_last_updated_zutrittsberechtigung`
 --
 
+DROP TABLE IF EXISTS `v_last_updated_zutrittsberechtigung`;
 DROP VIEW IF EXISTS `v_last_updated_zutrittsberechtigung`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13788,6 +14363,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_mandat`
 --
 
+DROP TABLE IF EXISTS `v_mandat`;
 DROP VIEW IF EXISTS `v_mandat`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13806,6 +14382,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_mandat_jahr`
 --
 
+DROP TABLE IF EXISTS `v_mandat_jahr`;
 DROP VIEW IF EXISTS `v_mandat_jahr`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13824,6 +14401,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_mandat_medium_raw`
 --
 
+DROP TABLE IF EXISTS `v_mandat_medium_raw`;
 DROP VIEW IF EXISTS `v_mandat_medium_raw`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13842,6 +14420,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_mandat_raw`
 --
 
+DROP TABLE IF EXISTS `v_mandat_raw`;
 DROP VIEW IF EXISTS `v_mandat_raw`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13860,6 +14439,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_mandat_simple`
 --
 
+DROP TABLE IF EXISTS `v_mandat_simple`;
 DROP VIEW IF EXISTS `v_mandat_simple`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13878,6 +14458,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_mil_grad`
 --
 
+DROP TABLE IF EXISTS `v_mil_grad`;
 DROP VIEW IF EXISTS `v_mil_grad`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13896,6 +14477,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation`
 --
 
+DROP TABLE IF EXISTS `v_organisation`;
 DROP VIEW IF EXISTS `v_organisation`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13914,6 +14496,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation_anhang`
 --
 
+DROP TABLE IF EXISTS `v_organisation_anhang`;
 DROP VIEW IF EXISTS `v_organisation_anhang`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13932,6 +14515,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation_beziehung`
 --
 
+DROP TABLE IF EXISTS `v_organisation_beziehung`;
 DROP VIEW IF EXISTS `v_organisation_beziehung`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13950,6 +14534,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation_beziehung_arbeitet_fuer`
 --
 
+DROP TABLE IF EXISTS `v_organisation_beziehung_arbeitet_fuer`;
 DROP VIEW IF EXISTS `v_organisation_beziehung_arbeitet_fuer`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13968,6 +14553,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation_beziehung_auftraggeber_fuer`
 --
 
+DROP TABLE IF EXISTS `v_organisation_beziehung_auftraggeber_fuer`;
 DROP VIEW IF EXISTS `v_organisation_beziehung_auftraggeber_fuer`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -13986,6 +14572,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation_beziehung_mitglied_von`
 --
 
+DROP TABLE IF EXISTS `v_organisation_beziehung_mitglied_von`;
 DROP VIEW IF EXISTS `v_organisation_beziehung_mitglied_von`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14004,6 +14591,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation_beziehung_mitglieder`
 --
 
+DROP TABLE IF EXISTS `v_organisation_beziehung_mitglieder`;
 DROP VIEW IF EXISTS `v_organisation_beziehung_mitglieder`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14022,6 +14610,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation_beziehung_muttergesellschaft`
 --
 
+DROP TABLE IF EXISTS `v_organisation_beziehung_muttergesellschaft`;
 DROP VIEW IF EXISTS `v_organisation_beziehung_muttergesellschaft`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14040,6 +14629,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation_beziehung_tochtergesellschaften`
 --
 
+DROP TABLE IF EXISTS `v_organisation_beziehung_tochtergesellschaften`;
 DROP VIEW IF EXISTS `v_organisation_beziehung_tochtergesellschaften`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14058,6 +14648,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation_jahr`
 --
 
+DROP TABLE IF EXISTS `v_organisation_jahr`;
 DROP VIEW IF EXISTS `v_organisation_jahr`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14076,6 +14667,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation_jahr_last`
 --
 
+DROP TABLE IF EXISTS `v_organisation_jahr_last`;
 DROP VIEW IF EXISTS `v_organisation_jahr_last`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14094,6 +14686,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation_lobbyeinfluss_raw`
 --
 
+DROP TABLE IF EXISTS `v_organisation_lobbyeinfluss_raw`;
 DROP VIEW IF EXISTS `v_organisation_lobbyeinfluss_raw`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14112,6 +14705,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation_medium_raw`
 --
 
+DROP TABLE IF EXISTS `v_organisation_medium_raw`;
 DROP VIEW IF EXISTS `v_organisation_medium_raw`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14130,6 +14724,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation_normalized_interessengruppe_raw`
 --
 
+DROP TABLE IF EXISTS `v_organisation_normalized_interessengruppe_raw`;
 DROP VIEW IF EXISTS `v_organisation_normalized_interessengruppe_raw`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14148,6 +14743,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation_parlamentarier`
 --
 
+DROP TABLE IF EXISTS `v_organisation_parlamentarier`;
 DROP VIEW IF EXISTS `v_organisation_parlamentarier`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14166,6 +14762,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation_parlamentarier_beide`
 --
 
+DROP TABLE IF EXISTS `v_organisation_parlamentarier_beide`;
 DROP VIEW IF EXISTS `v_organisation_parlamentarier_beide`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14184,6 +14781,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation_parlamentarier_beide_indirekt`
 --
 
+DROP TABLE IF EXISTS `v_organisation_parlamentarier_beide_indirekt`;
 DROP VIEW IF EXISTS `v_organisation_parlamentarier_beide_indirekt`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14202,6 +14800,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation_parlamentarier_indirekt`
 --
 
+DROP TABLE IF EXISTS `v_organisation_parlamentarier_indirekt`;
 DROP VIEW IF EXISTS `v_organisation_parlamentarier_indirekt`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14220,6 +14819,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation_raw`
 --
 
+DROP TABLE IF EXISTS `v_organisation_raw`;
 DROP VIEW IF EXISTS `v_organisation_raw`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14238,6 +14838,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation_simple`
 --
 
+DROP TABLE IF EXISTS `v_organisation_simple`;
 DROP VIEW IF EXISTS `v_organisation_simple`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14256,6 +14857,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_organisation_zutrittsberechtigung`
 --
 
+DROP TABLE IF EXISTS `v_organisation_zutrittsberechtigung`;
 DROP VIEW IF EXISTS `v_organisation_zutrittsberechtigung`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14274,6 +14876,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_parlamentarier`
 --
 
+DROP TABLE IF EXISTS `v_parlamentarier`;
 DROP VIEW IF EXISTS `v_parlamentarier`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14292,6 +14895,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_parlamentarier_anhang`
 --
 
+DROP TABLE IF EXISTS `v_parlamentarier_anhang`;
 DROP VIEW IF EXISTS `v_parlamentarier_anhang`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14310,6 +14914,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_parlamentarier_lobbyfaktor`
 --
 
+DROP TABLE IF EXISTS `v_parlamentarier_lobbyfaktor`;
 DROP VIEW IF EXISTS `v_parlamentarier_lobbyfaktor`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14328,6 +14933,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_parlamentarier_lobbyfaktor_max_raw`
 --
 
+DROP TABLE IF EXISTS `v_parlamentarier_lobbyfaktor_max_raw`;
 DROP VIEW IF EXISTS `v_parlamentarier_lobbyfaktor_max_raw`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14346,6 +14952,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_parlamentarier_lobbyfaktor_raw`
 --
 
+DROP TABLE IF EXISTS `v_parlamentarier_lobbyfaktor_raw`;
 DROP VIEW IF EXISTS `v_parlamentarier_lobbyfaktor_raw`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14364,6 +14971,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_parlamentarier_medium_raw`
 --
 
+DROP TABLE IF EXISTS `v_parlamentarier_medium_raw`;
 DROP VIEW IF EXISTS `v_parlamentarier_medium_raw`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14382,6 +14990,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_parlamentarier_raw`
 --
 
+DROP TABLE IF EXISTS `v_parlamentarier_raw`;
 DROP VIEW IF EXISTS `v_parlamentarier_raw`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14400,6 +15009,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_parlamentarier_simple`
 --
 
+DROP TABLE IF EXISTS `v_parlamentarier_simple`;
 DROP VIEW IF EXISTS `v_parlamentarier_simple`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14418,6 +15028,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_parlamentarier_transparenz`
 --
 
+DROP TABLE IF EXISTS `v_parlamentarier_transparenz`;
 DROP VIEW IF EXISTS `v_parlamentarier_transparenz`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14427,7 +15038,7 @@ SET character_set_results     = utf8mb4 ;
 SET collation_connection      = utf8mb4_unicode_ci ;
 CREATE  
  
-VIEW `v_parlamentarier_transparenz` AS select `parlamentarier_transparenz`.`id` AS `id`,`parlamentarier_transparenz`.`parlamentarier_id` AS `parlamentarier_id`,`parlamentarier_transparenz`.`stichdatum` AS `stichdatum`,`parlamentarier_transparenz`.`verguetung_transparent` AS `verguetung_transparent`,`parlamentarier_transparenz`.`notizen` AS `notizen`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`parlamentarier_transparenz`.`kontrolliert_visa` AS `kontrolliert_visa`,`parlamentarier_transparenz`.`kontrolliert_datum` AS `kontrolliert_datum`,`parlamentarier_transparenz`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier_transparenz`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier_transparenz`.`created_visa` AS `created_visa`,`parlamentarier_transparenz`.`created_date` AS `created_date`,`parlamentarier_transparenz`.`updated_visa` AS `updated_visa`,`parlamentarier_transparenz`.`updated_date` AS `updated_date`,ifnull((`parlamentarier_transparenz`.`freigabe_datum` <= now()),FALSE) AS `published`,unix_timestamp(`parlamentarier_transparenz`.`created_date`) AS `created_date_unix`,unix_timestamp(`parlamentarier_transparenz`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`parlamentarier_transparenz`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`parlamentarier_transparenz`.`freigabe_datum`) AS `freigabe_datum_unix` from `parlamentarier_transparenz` ;
+VIEW `v_parlamentarier_transparenz` AS select `parlamentarier_transparenz`.`id` AS `id`,`parlamentarier_transparenz`.`parlamentarier_id` AS `parlamentarier_id`,`parlamentarier_transparenz`.`stichdatum` AS `stichdatum`,`parlamentarier_transparenz`.`in_liste` AS `in_liste`,`parlamentarier_transparenz`.`verguetung_transparent` AS `verguetung_transparent`,`parlamentarier_transparenz`.`notizen` AS `notizen`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`parlamentarier_transparenz`.`kontrolliert_visa` AS `kontrolliert_visa`,`parlamentarier_transparenz`.`kontrolliert_datum` AS `kontrolliert_datum`,`parlamentarier_transparenz`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier_transparenz`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier_transparenz`.`created_visa` AS `created_visa`,`parlamentarier_transparenz`.`created_date` AS `created_date`,`parlamentarier_transparenz`.`updated_visa` AS `updated_visa`,`parlamentarier_transparenz`.`updated_date` AS `updated_date`,ifnull((`parlamentarier_transparenz`.`freigabe_datum` <= now()),FALSE) AS `published`,unix_timestamp(`parlamentarier_transparenz`.`created_date`) AS `created_date_unix`,unix_timestamp(`parlamentarier_transparenz`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`parlamentarier_transparenz`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`parlamentarier_transparenz`.`freigabe_datum`) AS `freigabe_datum_unix` from `parlamentarier_transparenz` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -14436,6 +15047,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_parlamentarier_transparenz_calculated`
 --
 
+DROP TABLE IF EXISTS `v_parlamentarier_transparenz_calculated`;
 DROP VIEW IF EXISTS `v_parlamentarier_transparenz_calculated`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14454,6 +15066,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_parlamentarier_transparenz_last_all`
 --
 
+DROP TABLE IF EXISTS `v_parlamentarier_transparenz_last_all`;
 DROP VIEW IF EXISTS `v_parlamentarier_transparenz_last_all`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14463,7 +15076,7 @@ SET character_set_results     = utf8mb4 ;
 SET collation_connection      = utf8mb4_unicode_ci ;
 CREATE  
  
-VIEW `v_parlamentarier_transparenz_last_all` AS select max(`parlamentarier_transparenz`.`stichdatum`) AS `max_stichdatum`,`parlamentarier_transparenz`.`id` AS `id`,`parlamentarier_transparenz`.`parlamentarier_id` AS `parlamentarier_id`,`parlamentarier_transparenz`.`stichdatum` AS `stichdatum`,`parlamentarier_transparenz`.`verguetung_transparent` AS `verguetung_transparent`,`parlamentarier_transparenz`.`notizen` AS `notizen`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`parlamentarier_transparenz`.`kontrolliert_visa` AS `kontrolliert_visa`,`parlamentarier_transparenz`.`kontrolliert_datum` AS `kontrolliert_datum`,`parlamentarier_transparenz`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier_transparenz`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier_transparenz`.`created_visa` AS `created_visa`,`parlamentarier_transparenz`.`created_date` AS `created_date`,`parlamentarier_transparenz`.`updated_visa` AS `updated_visa`,`parlamentarier_transparenz`.`updated_date` AS `updated_date`,`parlamentarier_transparenz`.`published` AS `published`,`parlamentarier_transparenz`.`created_date_unix` AS `created_date_unix`,`parlamentarier_transparenz`.`updated_date_unix` AS `updated_date_unix`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`parlamentarier_transparenz`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`parlamentarier_transparenz`.`freigabe_datum_unix` AS `freigabe_datum_unix` from `v_parlamentarier_transparenz` `parlamentarier_transparenz` group by `parlamentarier_transparenz`.`parlamentarier_id` ;
+VIEW `v_parlamentarier_transparenz_last_all` AS select max(`parlamentarier_transparenz`.`stichdatum`) AS `max_stichdatum`,`parlamentarier_transparenz`.`id` AS `id`,`parlamentarier_transparenz`.`parlamentarier_id` AS `parlamentarier_id`,`parlamentarier_transparenz`.`stichdatum` AS `stichdatum`,`parlamentarier_transparenz`.`in_liste` AS `in_liste`,`parlamentarier_transparenz`.`verguetung_transparent` AS `verguetung_transparent`,`parlamentarier_transparenz`.`notizen` AS `notizen`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`parlamentarier_transparenz`.`kontrolliert_visa` AS `kontrolliert_visa`,`parlamentarier_transparenz`.`kontrolliert_datum` AS `kontrolliert_datum`,`parlamentarier_transparenz`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier_transparenz`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier_transparenz`.`created_visa` AS `created_visa`,`parlamentarier_transparenz`.`created_date` AS `created_date`,`parlamentarier_transparenz`.`updated_visa` AS `updated_visa`,`parlamentarier_transparenz`.`updated_date` AS `updated_date`,`parlamentarier_transparenz`.`published` AS `published`,`parlamentarier_transparenz`.`created_date_unix` AS `created_date_unix`,`parlamentarier_transparenz`.`updated_date_unix` AS `updated_date_unix`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`parlamentarier_transparenz`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`parlamentarier_transparenz`.`freigabe_datum_unix` AS `freigabe_datum_unix` from `v_parlamentarier_transparenz` `parlamentarier_transparenz` group by `parlamentarier_transparenz`.`parlamentarier_id` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -14472,6 +15085,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_parlamentarier_transparenz_last_published`
 --
 
+DROP TABLE IF EXISTS `v_parlamentarier_transparenz_last_published`;
 DROP VIEW IF EXISTS `v_parlamentarier_transparenz_last_published`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14481,7 +15095,7 @@ SET character_set_results     = utf8mb4 ;
 SET collation_connection      = utf8mb4_unicode_ci ;
 CREATE  
  
-VIEW `v_parlamentarier_transparenz_last_published` AS select max(`parlamentarier_transparenz`.`stichdatum`) AS `max_stichdatum`,`parlamentarier_transparenz`.`id` AS `id`,`parlamentarier_transparenz`.`parlamentarier_id` AS `parlamentarier_id`,`parlamentarier_transparenz`.`stichdatum` AS `stichdatum`,`parlamentarier_transparenz`.`verguetung_transparent` AS `verguetung_transparent`,`parlamentarier_transparenz`.`notizen` AS `notizen`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`parlamentarier_transparenz`.`kontrolliert_visa` AS `kontrolliert_visa`,`parlamentarier_transparenz`.`kontrolliert_datum` AS `kontrolliert_datum`,`parlamentarier_transparenz`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier_transparenz`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier_transparenz`.`created_visa` AS `created_visa`,`parlamentarier_transparenz`.`created_date` AS `created_date`,`parlamentarier_transparenz`.`updated_visa` AS `updated_visa`,`parlamentarier_transparenz`.`updated_date` AS `updated_date`,`parlamentarier_transparenz`.`published` AS `published`,`parlamentarier_transparenz`.`created_date_unix` AS `created_date_unix`,`parlamentarier_transparenz`.`updated_date_unix` AS `updated_date_unix`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`parlamentarier_transparenz`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`parlamentarier_transparenz`.`freigabe_datum_unix` AS `freigabe_datum_unix` from `v_parlamentarier_transparenz` `parlamentarier_transparenz` where (`parlamentarier_transparenz`.`freigabe_datum` <= now()) group by `parlamentarier_transparenz`.`parlamentarier_id` ;
+VIEW `v_parlamentarier_transparenz_last_published` AS select max(`parlamentarier_transparenz`.`stichdatum`) AS `max_stichdatum`,`parlamentarier_transparenz`.`id` AS `id`,`parlamentarier_transparenz`.`parlamentarier_id` AS `parlamentarier_id`,`parlamentarier_transparenz`.`stichdatum` AS `stichdatum`,`parlamentarier_transparenz`.`in_liste` AS `in_liste`,`parlamentarier_transparenz`.`verguetung_transparent` AS `verguetung_transparent`,`parlamentarier_transparenz`.`notizen` AS `notizen`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`parlamentarier_transparenz`.`kontrolliert_visa` AS `kontrolliert_visa`,`parlamentarier_transparenz`.`kontrolliert_datum` AS `kontrolliert_datum`,`parlamentarier_transparenz`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier_transparenz`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier_transparenz`.`created_visa` AS `created_visa`,`parlamentarier_transparenz`.`created_date` AS `created_date`,`parlamentarier_transparenz`.`updated_visa` AS `updated_visa`,`parlamentarier_transparenz`.`updated_date` AS `updated_date`,`parlamentarier_transparenz`.`published` AS `published`,`parlamentarier_transparenz`.`created_date_unix` AS `created_date_unix`,`parlamentarier_transparenz`.`updated_date_unix` AS `updated_date_unix`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`parlamentarier_transparenz`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`parlamentarier_transparenz`.`freigabe_datum_unix` AS `freigabe_datum_unix` from `v_parlamentarier_transparenz` `parlamentarier_transparenz` where (`parlamentarier_transparenz`.`freigabe_datum` <= now()) group by `parlamentarier_transparenz`.`parlamentarier_id` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -14490,6 +15104,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_parlamentarier_transparenz_last_stichdatum_all`
 --
 
+DROP TABLE IF EXISTS `v_parlamentarier_transparenz_last_stichdatum_all`;
 DROP VIEW IF EXISTS `v_parlamentarier_transparenz_last_stichdatum_all`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14499,7 +15114,7 @@ SET character_set_results     = utf8mb4 ;
 SET collation_connection      = utf8mb4_unicode_ci ;
 CREATE  
  
-VIEW `v_parlamentarier_transparenz_last_stichdatum_all` AS select `parlamentarier_transparenz`.`id` AS `id`,`parlamentarier_transparenz`.`parlamentarier_id` AS `parlamentarier_id`,`parlamentarier_transparenz`.`stichdatum` AS `stichdatum`,`parlamentarier_transparenz`.`verguetung_transparent` AS `verguetung_transparent`,`parlamentarier_transparenz`.`notizen` AS `notizen`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`parlamentarier_transparenz`.`kontrolliert_visa` AS `kontrolliert_visa`,`parlamentarier_transparenz`.`kontrolliert_datum` AS `kontrolliert_datum`,`parlamentarier_transparenz`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier_transparenz`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier_transparenz`.`created_visa` AS `created_visa`,`parlamentarier_transparenz`.`created_date` AS `created_date`,`parlamentarier_transparenz`.`updated_visa` AS `updated_visa`,`parlamentarier_transparenz`.`updated_date` AS `updated_date`,`parlamentarier_transparenz`.`published` AS `published`,`parlamentarier_transparenz`.`created_date_unix` AS `created_date_unix`,`parlamentarier_transparenz`.`updated_date_unix` AS `updated_date_unix`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`parlamentarier_transparenz`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`parlamentarier_transparenz`.`freigabe_datum_unix` AS `freigabe_datum_unix` from `v_parlamentarier_transparenz` `parlamentarier_transparenz` where (`parlamentarier_transparenz`.`stichdatum` = (select max(`tpmax`.`stichdatum`) AS `max_stichdatum` from `parlamentarier_transparenz` `tpmax`)) ;
+VIEW `v_parlamentarier_transparenz_last_stichdatum_all` AS select `parlamentarier_transparenz`.`id` AS `id`,`parlamentarier_transparenz`.`parlamentarier_id` AS `parlamentarier_id`,`parlamentarier_transparenz`.`stichdatum` AS `stichdatum`,`parlamentarier_transparenz`.`in_liste` AS `in_liste`,`parlamentarier_transparenz`.`verguetung_transparent` AS `verguetung_transparent`,`parlamentarier_transparenz`.`notizen` AS `notizen`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`parlamentarier_transparenz`.`kontrolliert_visa` AS `kontrolliert_visa`,`parlamentarier_transparenz`.`kontrolliert_datum` AS `kontrolliert_datum`,`parlamentarier_transparenz`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier_transparenz`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier_transparenz`.`created_visa` AS `created_visa`,`parlamentarier_transparenz`.`created_date` AS `created_date`,`parlamentarier_transparenz`.`updated_visa` AS `updated_visa`,`parlamentarier_transparenz`.`updated_date` AS `updated_date`,`parlamentarier_transparenz`.`published` AS `published`,`parlamentarier_transparenz`.`created_date_unix` AS `created_date_unix`,`parlamentarier_transparenz`.`updated_date_unix` AS `updated_date_unix`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`parlamentarier_transparenz`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`parlamentarier_transparenz`.`freigabe_datum_unix` AS `freigabe_datum_unix` from `v_parlamentarier_transparenz` `parlamentarier_transparenz` where (`parlamentarier_transparenz`.`stichdatum` = (select max(`tpmax`.`stichdatum`) AS `max_stichdatum` from `parlamentarier_transparenz` `tpmax`)) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -14508,6 +15123,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_parlamentarier_transparenz_last_stichdatum_published`
 --
 
+DROP TABLE IF EXISTS `v_parlamentarier_transparenz_last_stichdatum_published`;
 DROP VIEW IF EXISTS `v_parlamentarier_transparenz_last_stichdatum_published`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14517,7 +15133,7 @@ SET character_set_results     = utf8mb4 ;
 SET collation_connection      = utf8mb4_unicode_ci ;
 CREATE  
  
-VIEW `v_parlamentarier_transparenz_last_stichdatum_published` AS select `parlamentarier_transparenz`.`id` AS `id`,`parlamentarier_transparenz`.`parlamentarier_id` AS `parlamentarier_id`,`parlamentarier_transparenz`.`stichdatum` AS `stichdatum`,`parlamentarier_transparenz`.`verguetung_transparent` AS `verguetung_transparent`,`parlamentarier_transparenz`.`notizen` AS `notizen`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`parlamentarier_transparenz`.`kontrolliert_visa` AS `kontrolliert_visa`,`parlamentarier_transparenz`.`kontrolliert_datum` AS `kontrolliert_datum`,`parlamentarier_transparenz`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier_transparenz`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier_transparenz`.`created_visa` AS `created_visa`,`parlamentarier_transparenz`.`created_date` AS `created_date`,`parlamentarier_transparenz`.`updated_visa` AS `updated_visa`,`parlamentarier_transparenz`.`updated_date` AS `updated_date`,`parlamentarier_transparenz`.`published` AS `published`,`parlamentarier_transparenz`.`created_date_unix` AS `created_date_unix`,`parlamentarier_transparenz`.`updated_date_unix` AS `updated_date_unix`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`parlamentarier_transparenz`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`parlamentarier_transparenz`.`freigabe_datum_unix` AS `freigabe_datum_unix` from `v_parlamentarier_transparenz` `parlamentarier_transparenz` where ((`parlamentarier_transparenz`.`stichdatum` = (select max(`tpmax`.`stichdatum`) AS `max_stichdatum` from `parlamentarier_transparenz` `tpmax` where (`tpmax`.`freigabe_datum` <= now()))) and (`parlamentarier_transparenz`.`freigabe_datum` <= now())) ;
+VIEW `v_parlamentarier_transparenz_last_stichdatum_published` AS select `parlamentarier_transparenz`.`id` AS `id`,`parlamentarier_transparenz`.`parlamentarier_id` AS `parlamentarier_id`,`parlamentarier_transparenz`.`stichdatum` AS `stichdatum`,`parlamentarier_transparenz`.`in_liste` AS `in_liste`,`parlamentarier_transparenz`.`verguetung_transparent` AS `verguetung_transparent`,`parlamentarier_transparenz`.`notizen` AS `notizen`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`parlamentarier_transparenz`.`kontrolliert_visa` AS `kontrolliert_visa`,`parlamentarier_transparenz`.`kontrolliert_datum` AS `kontrolliert_datum`,`parlamentarier_transparenz`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier_transparenz`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier_transparenz`.`created_visa` AS `created_visa`,`parlamentarier_transparenz`.`created_date` AS `created_date`,`parlamentarier_transparenz`.`updated_visa` AS `updated_visa`,`parlamentarier_transparenz`.`updated_date` AS `updated_date`,`parlamentarier_transparenz`.`published` AS `published`,`parlamentarier_transparenz`.`created_date_unix` AS `created_date_unix`,`parlamentarier_transparenz`.`updated_date_unix` AS `updated_date_unix`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`parlamentarier_transparenz`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`parlamentarier_transparenz`.`freigabe_datum_unix` AS `freigabe_datum_unix` from `v_parlamentarier_transparenz` `parlamentarier_transparenz` where ((`parlamentarier_transparenz`.`stichdatum` = (select max(`tpmax`.`stichdatum`) AS `max_stichdatum` from `parlamentarier_transparenz` `tpmax` where (`tpmax`.`freigabe_datum` <= now()))) and (`parlamentarier_transparenz`.`freigabe_datum` <= now())) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -14526,6 +15142,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_partei`
 --
 
+DROP TABLE IF EXISTS `v_partei`;
 DROP VIEW IF EXISTS `v_partei`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14544,6 +15161,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_person`
 --
 
+DROP TABLE IF EXISTS `v_person`;
 DROP VIEW IF EXISTS `v_person`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14562,6 +15180,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_person_anhang`
 --
 
+DROP TABLE IF EXISTS `v_person_anhang`;
 DROP VIEW IF EXISTS `v_person_anhang`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14580,6 +15199,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_person_mandate`
 --
 
+DROP TABLE IF EXISTS `v_person_mandate`;
 DROP VIEW IF EXISTS `v_person_mandate`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14598,6 +15218,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_person_simple`
 --
 
+DROP TABLE IF EXISTS `v_person_simple`;
 DROP VIEW IF EXISTS `v_person_simple`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14616,6 +15237,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_rat`
 --
 
+DROP TABLE IF EXISTS `v_rat`;
 DROP VIEW IF EXISTS `v_rat`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14634,6 +15256,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_search_table`
 --
 
+DROP TABLE IF EXISTS `v_search_table`;
 DROP VIEW IF EXISTS `v_search_table`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14652,6 +15275,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_search_table_raw`
 --
 
+DROP TABLE IF EXISTS `v_search_table_raw`;
 DROP VIEW IF EXISTS `v_search_table_raw`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14670,6 +15294,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_settings`
 --
 
+DROP TABLE IF EXISTS `v_settings`;
 DROP VIEW IF EXISTS `v_settings`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14688,6 +15313,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_settings_category`
 --
 
+DROP TABLE IF EXISTS `v_settings_category`;
 DROP VIEW IF EXISTS `v_settings_category`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14706,6 +15332,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_user`
 --
 
+DROP TABLE IF EXISTS `v_user`;
 DROP VIEW IF EXISTS `v_user`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14724,6 +15351,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_user_permission`
 --
 
+DROP TABLE IF EXISTS `v_user_permission`;
 DROP VIEW IF EXISTS `v_user_permission`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14742,6 +15370,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_wissensartikel_link`
 --
 
+DROP TABLE IF EXISTS `v_wissensartikel_link`;
 DROP VIEW IF EXISTS `v_wissensartikel_link`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14751,7 +15380,26 @@ SET character_set_results     = utf8mb4 ;
 SET collation_connection      = utf8mb4_unicode_ci ;
 CREATE  
  
-VIEW `v_wissensartikel_link` AS select `v_wissensartikel_link_simple`.`id` AS `id`,`v_wissensartikel_link_simple`.`node_id` AS `node_id`,`v_wissensartikel_link_simple`.`target_table_name` AS `target_table_name`,`v_wissensartikel_link_simple`.`target_id` AS `target_id`,`v_wissensartikel_link_simple`.`target_table_name_with_id` AS `target_table_name_with_id`,`v_wissensartikel_link_simple`.`notizen` AS `notizen`,`v_wissensartikel_link_simple`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`v_wissensartikel_link_simple`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`v_wissensartikel_link_simple`.`kontrolliert_visa` AS `kontrolliert_visa`,`v_wissensartikel_link_simple`.`kontrolliert_datum` AS `kontrolliert_datum`,`v_wissensartikel_link_simple`.`freigabe_visa` AS `freigabe_visa`,`v_wissensartikel_link_simple`.`freigabe_datum` AS `freigabe_datum`,`v_wissensartikel_link_simple`.`created_visa` AS `created_visa`,`v_wissensartikel_link_simple`.`created_date` AS `created_date`,`v_wissensartikel_link_simple`.`updated_visa` AS `updated_visa`,`v_wissensartikel_link_simple`.`updated_date` AS `updated_date`,`v_wissensartikel_link_simple`.`published` AS `published`,`v_wissensartikel_link_simple`.`created_date_unix` AS `created_date_unix`,`v_wissensartikel_link_simple`.`updated_date_unix` AS `updated_date_unix`,`v_wissensartikel_link_simple`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`v_wissensartikel_link_simple`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`v_wissensartikel_link_simple`.`freigabe_datum_unix` AS `freigabe_datum_unix` from `v_wissensartikel_link_simple` ;
+VIEW `v_wissensartikel_link` AS select `wissensartikel_link`.`id` AS `id`,`wissensartikel_link`.`node_id` AS `node_id`,`wissensartikel_link`.`target_table_name` AS `target_table_name`,`wissensartikel_link`.`target_id` AS `target_id`,`wissensartikel_link`.`target_table_name_with_id` AS `target_table_name_with_id`,`wissensartikel_link`.`notizen` AS `notizen`,`wissensartikel_link`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`wissensartikel_link`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`wissensartikel_link`.`kontrolliert_visa` AS `kontrolliert_visa`,`wissensartikel_link`.`kontrolliert_datum` AS `kontrolliert_datum`,`wissensartikel_link`.`freigabe_visa` AS `freigabe_visa`,`wissensartikel_link`.`freigabe_datum` AS `freigabe_datum`,`wissensartikel_link`.`created_visa` AS `created_visa`,`wissensartikel_link`.`created_date` AS `created_date`,`wissensartikel_link`.`updated_visa` AS `updated_visa`,`wissensartikel_link`.`updated_date` AS `updated_date`,`wissensartikel_link`.`published` AS `published`,`wissensartikel_link`.`created_date_unix` AS `created_date_unix`,`wissensartikel_link`.`updated_date_unix` AS `updated_date_unix`,`wissensartikel_link`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`wissensartikel_link`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`wissensartikel_link`.`freigabe_datum_unix` AS `freigabe_datum_unix` from `v_wissensartikel_link_simple` `wissensartikel_link` ;
+SET character_set_client      = @saved_cs_client ;
+SET character_set_results     = @saved_cs_results ;
+SET collation_connection      = @saved_col_connection ;
+
+--
+-- Final view structure for view `v_wissensartikel_link_node`
+--
+
+DROP TABLE IF EXISTS `v_wissensartikel_link_node`;
+DROP VIEW IF EXISTS `v_wissensartikel_link_node`;
+SET @saved_cs_client          = @@character_set_client ;
+SET @saved_cs_results         = @@character_set_results ;
+SET @saved_col_connection     = @@collation_connection ;
+SET character_set_client      = utf8mb4 ;
+SET character_set_results     = utf8mb4 ;
+SET collation_connection      = utf8mb4_unicode_ci ;
+CREATE  
+ 
+VIEW `v_wissensartikel_link_node` AS select `wissensartikel_link`.`id` AS `id`,`wissensartikel_link`.`node_id` AS `node_id`,`wissensartikel_link`.`target_table_name` AS `target_table_name`,`wissensartikel_link`.`target_id` AS `target_id`,`wissensartikel_link`.`target_table_name_with_id` AS `target_table_name_with_id`,`wissensartikel_link`.`notizen` AS `notizen`,`wissensartikel_link`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`wissensartikel_link`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`wissensartikel_link`.`kontrolliert_visa` AS `kontrolliert_visa`,`wissensartikel_link`.`kontrolliert_datum` AS `kontrolliert_datum`,`wissensartikel_link`.`freigabe_visa` AS `freigabe_visa`,`wissensartikel_link`.`freigabe_datum` AS `freigabe_datum`,`wissensartikel_link`.`created_visa` AS `created_visa`,`wissensartikel_link`.`created_date` AS `created_date`,`wissensartikel_link`.`updated_visa` AS `updated_visa`,`wissensartikel_link`.`updated_date` AS `updated_date`,`wissensartikel_link`.`published` AS `published`,`wissensartikel_link`.`created_date_unix` AS `created_date_unix`,`wissensartikel_link`.`updated_date_unix` AS `updated_date_unix`,`wissensartikel_link`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`wissensartikel_link`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`wissensartikel_link`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`node`.`language` AS `language`,`node`.`type` AS `type`,`node`.`status` AS `status`,`node`.`title` AS `title`,`node`.`nid` AS `nid`,`node`.`tnid` AS `tnid`,`node`.`tnid_nid` AS `tnid_nid` from (`v_wissensartikel_link_simple` `wissensartikel_link` join `v_d7_node` `node` on((`node`.`nid` = `wissensartikel_link`.`node_id`))) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -14760,6 +15408,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_wissensartikel_link_simple`
 --
 
+DROP TABLE IF EXISTS `v_wissensartikel_link_simple`;
 DROP VIEW IF EXISTS `v_wissensartikel_link_simple`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14778,6 +15427,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_wissensartikelzieltabelle`
 --
 
+DROP TABLE IF EXISTS `v_wissensartikelzieltabelle`;
 DROP VIEW IF EXISTS `v_wissensartikelzieltabelle`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14796,6 +15446,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_zutrittsberechtigung`
 --
 
+DROP TABLE IF EXISTS `v_zutrittsberechtigung`;
 DROP VIEW IF EXISTS `v_zutrittsberechtigung`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14814,6 +15465,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_zutrittsberechtigung_lobbyfaktor_max_raw`
 --
 
+DROP TABLE IF EXISTS `v_zutrittsberechtigung_lobbyfaktor_max_raw`;
 DROP VIEW IF EXISTS `v_zutrittsberechtigung_lobbyfaktor_max_raw`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14832,6 +15484,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_zutrittsberechtigung_lobbyfaktor_raw`
 --
 
+DROP TABLE IF EXISTS `v_zutrittsberechtigung_lobbyfaktor_raw`;
 DROP VIEW IF EXISTS `v_zutrittsberechtigung_lobbyfaktor_raw`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14850,6 +15503,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_zutrittsberechtigung_mandate`
 --
 
+DROP TABLE IF EXISTS `v_zutrittsberechtigung_mandate`;
 DROP VIEW IF EXISTS `v_zutrittsberechtigung_mandate`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14868,6 +15522,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_zutrittsberechtigung_mit_mandaten`
 --
 
+DROP TABLE IF EXISTS `v_zutrittsberechtigung_mit_mandaten`;
 DROP VIEW IF EXISTS `v_zutrittsberechtigung_mit_mandaten`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14886,6 +15541,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_zutrittsberechtigung_mit_mandaten_indirekt`
 --
 
+DROP TABLE IF EXISTS `v_zutrittsberechtigung_mit_mandaten_indirekt`;
 DROP VIEW IF EXISTS `v_zutrittsberechtigung_mit_mandaten_indirekt`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14904,6 +15560,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_zutrittsberechtigung_raw`
 --
 
+DROP TABLE IF EXISTS `v_zutrittsberechtigung_raw`;
 DROP VIEW IF EXISTS `v_zutrittsberechtigung_raw`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14922,6 +15579,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_zutrittsberechtigung_simple`
 --
 
+DROP TABLE IF EXISTS `v_zutrittsberechtigung_simple`;
 DROP VIEW IF EXISTS `v_zutrittsberechtigung_simple`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14940,6 +15598,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `v_zutrittsberechtigung_simple_compat`
 --
 
+DROP TABLE IF EXISTS `v_zutrittsberechtigung_simple_compat`;
 DROP VIEW IF EXISTS `v_zutrittsberechtigung_simple_compat`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14958,6 +15617,7 @@ SET collation_connection      = @saved_col_connection ;
 -- Final view structure for view `vf_interessenbindung`
 --
 
+DROP TABLE IF EXISTS `vf_interessenbindung`;
 DROP VIEW IF EXISTS `vf_interessenbindung`;
 SET @saved_cs_client          = @@character_set_client ;
 SET @saved_cs_results         = @@character_set_results ;
@@ -14967,7 +15627,26 @@ SET character_set_results     = utf8mb4 ;
 SET collation_connection      = utf8mb4_unicode_ci ;
 CREATE  
  
-VIEW `vf_interessenbindung` AS select `interessenbindung`.`id` AS `id`,`interessenbindung`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung`.`status` AS `status`,`interessenbindung`.`hauptberuflich` AS `hauptberuflich`,`interessenbindung`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`beschreibung_fr` AS `beschreibung_fr`,`interessenbindung`.`quelle_url` AS `quelle_url`,`interessenbindung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung`.`quelle` AS `quelle`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`notizen` AS `notizen`,`interessenbindung`.`updated_by_import` AS `updated_by_import`,`interessenbindung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung`.`created_visa` AS `created_visa`,`interessenbindung`.`created_date` AS `created_date`,`interessenbindung`.`updated_visa` AS `updated_visa`,`interessenbindung`.`updated_date` AS `updated_date`,`interessenbindung_jahr`.`verguetung` AS `verguetung`,`interessenbindung_jahr`.`jahr` AS `verguetung_jahr`,`interessenbindung_jahr`.`beschreibung` AS `verguetung_beschreibung`,`interessenbindung_jahr`.`freigabe_datum` AS `verguetung_freigabe_datum`,`interessenbindung_jahr_minus_1`.`verguetung` AS `jahr_minus_1_verguetung`,`interessenbindung_jahr_minus_1`.`jahr` AS `jahr_minus_1_verguetung_jahr`,`interessenbindung_jahr_minus_1`.`beschreibung` AS `jahr_minus_1_verguetung_beschreibung`,`interessenbindung_jahr_minus_1`.`freigabe_datum` AS `jahr_minus_1_verguetung_freigabe_datum`,`interessenbindung_jahr_minus_2`.`verguetung` AS `jahr_minus_2_verguetung`,`interessenbindung_jahr_minus_2`.`jahr` AS `jahr_minus_2_verguetung_jahr`,`interessenbindung_jahr_minus_2`.`beschreibung` AS `jahr_minus_2_verguetung_beschreibung`,`interessenbindung_jahr_minus_2`.`freigabe_datum` AS `jahr_minus_2_verguetung_freigabe_datum` from (((`interessenbindung` left join `interessenbindung_jahr` on(((`interessenbindung_jahr`.`interessenbindung_id` = `interessenbindung`.`id`) and (`interessenbindung_jahr`.`jahr` = year(now()))))) left join `interessenbindung_jahr` `interessenbindung_jahr_minus_1` on(((`interessenbindung_jahr_minus_1`.`interessenbindung_id` = `interessenbindung`.`id`) and (`interessenbindung_jahr`.`jahr` = (year(now()) - 1))))) left join `interessenbindung_jahr` `interessenbindung_jahr_minus_2` on(((`interessenbindung_jahr_minus_2`.`interessenbindung_id` = `interessenbindung`.`id`) and (`interessenbindung_jahr`.`jahr` = (year(now()) - 2))))) ;
+VIEW `vf_interessenbindung` AS select `interessenbindung`.`id` AS `id`,`interessenbindung`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung`.`status` AS `status`,`interessenbindung`.`hauptberuflich` AS `hauptberuflich`,`interessenbindung`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`beschreibung_fr` AS `beschreibung_fr`,`interessenbindung`.`quelle_url` AS `quelle_url`,`interessenbindung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung`.`quelle` AS `quelle`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`notizen` AS `notizen`,`interessenbindung`.`updated_by_import` AS `updated_by_import`,`interessenbindung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung`.`created_visa` AS `created_visa`,`interessenbindung`.`created_date` AS `created_date`,`interessenbindung`.`updated_visa` AS `updated_visa`,`interessenbindung`.`updated_date` AS `updated_date`,`interessenbindung_jahr`.`verguetung` AS `verguetung`,`interessenbindung_jahr`.`jahr` AS `verguetung_jahr`,`interessenbindung_jahr`.`beschreibung` AS `verguetung_beschreibung`,`interessenbindung_jahr`.`freigabe_datum` AS `verguetung_freigabe_datum`,`interessenbindung_jahr_minus_1`.`verguetung` AS `jahr_minus_1_verguetung`,`interessenbindung_jahr_minus_1`.`jahr` AS `jahr_minus_1_verguetung_jahr`,`interessenbindung_jahr_minus_1`.`beschreibung` AS `jahr_minus_1_verguetung_beschreibung`,`interessenbindung_jahr_minus_1`.`freigabe_datum` AS `jahr_minus_1_verguetung_freigabe_datum`,`interessenbindung_jahr_minus_2`.`verguetung` AS `jahr_minus_2_verguetung`,`interessenbindung_jahr_minus_2`.`jahr` AS `jahr_minus_2_verguetung_jahr`,`interessenbindung_jahr_minus_2`.`beschreibung` AS `jahr_minus_2_verguetung_beschreibung`,`interessenbindung_jahr_minus_2`.`freigabe_datum` AS `jahr_minus_2_verguetung_freigabe_datum` from (((`interessenbindung` left join `interessenbindung_jahr` on(((`interessenbindung_jahr`.`interessenbindung_id` = `interessenbindung`.`id`) and (`interessenbindung_jahr`.`jahr` = year(now()))))) left join `interessenbindung_jahr` `interessenbindung_jahr_minus_1` on(((`interessenbindung_jahr_minus_1`.`interessenbindung_id` = `interessenbindung`.`id`) and (`interessenbindung_jahr_minus_1`.`jahr` = (year(now()) - 1))))) left join `interessenbindung_jahr` `interessenbindung_jahr_minus_2` on(((`interessenbindung_jahr_minus_2`.`interessenbindung_id` = `interessenbindung`.`id`) and (`interessenbindung_jahr_minus_2`.`jahr` = (year(now()) - 2))))) ;
+SET character_set_client      = @saved_cs_client ;
+SET character_set_results     = @saved_cs_results ;
+SET collation_connection      = @saved_col_connection ;
+
+--
+-- Final view structure for view `vf_parlamentarier_transparenz`
+--
+
+DROP TABLE IF EXISTS `vf_parlamentarier_transparenz`;
+DROP VIEW IF EXISTS `vf_parlamentarier_transparenz`;
+SET @saved_cs_client          = @@character_set_client ;
+SET @saved_cs_results         = @@character_set_results ;
+SET @saved_col_connection     = @@collation_connection ;
+SET character_set_client      = utf8mb4 ;
+SET character_set_results     = utf8mb4 ;
+SET collation_connection      = utf8mb4_unicode_ci ;
+CREATE  
+ 
+VIEW `vf_parlamentarier_transparenz` AS select `parlamentarier_transparenz`.`id` AS `id`,`parlamentarier_transparenz`.`parlamentarier_id` AS `parlamentarier_id`,`parlamentarier_transparenz`.`stichdatum` AS `stichdatum`,`parlamentarier_transparenz`.`in_liste` AS `in_liste`,`parlamentarier_transparenz`.`verguetung_transparent` AS `verguetung_transparent`,`parlamentarier_transparenz`.`notizen` AS `notizen`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`parlamentarier_transparenz`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`parlamentarier_transparenz`.`kontrolliert_visa` AS `kontrolliert_visa`,`parlamentarier_transparenz`.`kontrolliert_datum` AS `kontrolliert_datum`,`parlamentarier_transparenz`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier_transparenz`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier_transparenz`.`created_visa` AS `created_visa`,`parlamentarier_transparenz`.`created_date` AS `created_date`,`parlamentarier_transparenz`.`updated_visa` AS `updated_visa`,`parlamentarier_transparenz`.`updated_date` AS `updated_date`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,group_concat(distinct `kommission`.`abkuerzung` order by `kommission`.`abkuerzung` ASC separator ', ') AS `kommissionen_abkuerzung`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis` from (((`parlamentarier_transparenz` join `parlamentarier` on((`parlamentarier`.`id` = `parlamentarier_transparenz`.`parlamentarier_id`))) left join `in_kommission` on(((`parlamentarier`.`id` = `in_kommission`.`parlamentarier_id`) and (isnull(`in_kommission`.`bis`) or (`in_kommission`.`bis` < now()))))) left join `kommission` on((`in_kommission`.`kommission_id` = `kommission`.`id`))) group by `parlamentarier_transparenz`.`id`,`parlamentarier`.`id` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -14981,4 +15660,4 @@ SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS ;
 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION ;
 SET SQL_NOTES=@OLD_SQL_NOTES ;
 
--- Dump completed on 2020-11-08 11:29:12
+-- Dump completed on 2020-11-27 18:47:11
