@@ -521,14 +521,14 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
     $id = $organisation_db->id;
     $uid = $uid_db = $organisation_db->uid;
     $name = $organisation_db->name_de;
-    $update = array();
-    $update_optional = array();
-    $fields = array();
+    $update = [];
+    $update_optional = [];
+    $fields = [];
     $different_db_values = false;
     // UID WS (BFS)
     if ($uidBFSenabled) {
         $dataUidBfs = initDataArray();
-      ws_get_organization_from_uid_bfs($uid, $clientUid, $dataUidBfs, $verbose); // Similar to _lobbywatch_fetch_ws_uid_bfs_data() in utils.php
+      ws_get_organization_from_uid_bfs($uid, $clientUid, $dataUidBfs, $verbose, 6); // Similar to _lobbywatch_fetch_ws_uid_bfs_data() in utils.php
       if (!$records_limit || $records_limit > 20) {
         sleep(3);
       }

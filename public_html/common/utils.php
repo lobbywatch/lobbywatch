@@ -2291,7 +2291,7 @@ function ws_get_organization_from_zefix_soap($uid_raw, $client, &$data, $verbose
   return $response;
 }
 
-function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose) {
+function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose, $num_retries = 2) {
   /* Invoke webservice method with your parameters. */
   $response = null;
   try {
@@ -2314,8 +2314,8 @@ function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose) {
           // print($e);
           // print("\nERROR: Abort\n");
           // exit(1);
-          if ($i < 3) {
-            sleep(5 * ($i + 1));
+          if ($i < $num_retries) {
+            sleep(pow(2, $i + 3));
           } else {
             throw $e;
           }
