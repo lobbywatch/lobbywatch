@@ -3797,22 +3797,77 @@
     
     
     
-    class parlamentarier_parlamentarier_transparenzPage extends DetailPage
+    class parlamentarier_vf_parlamentarier_transparenzPage extends DetailPage
     {
         protected function DoBeforeCreate()
         {
             $this->SetTitle('Parlamentarier Vergütungstransparenz');
             $this->SetMenuLabel('Parlamentarier Vergütungstransparenz');
     
-            $this->dataset = new TableDataset(
+            $insertSql = array('INSERT INTO parlamentarier_transparenz (
+            id,
+            parlamentarier_id,
+            stichdatum,
+            in_liste,
+            verguetung_transparent,
+            notizen,
+            eingabe_abgeschlossen_visa,
+            eingabe_abgeschlossen_datum,
+            kontrolliert_visa,
+            kontrolliert_datum,
+            freigabe_visa,
+            freigabe_datum,
+            created_visa,
+            created_date,
+            updated_visa,
+            updated_date
+            ) VALUES (
+            :id,
+            :parlamentarier_id,
+            :stichdatum,
+            :in_liste,
+            :verguetung_transparent,
+            :notizen,
+            :eingabe_abgeschlossen_visa,
+            :eingabe_abgeschlossen_datum,
+            :kontrolliert_visa,
+            :kontrolliert_datum,
+            :freigabe_visa,
+            :freigabe_datum,
+            :created_visa,
+            :created_date,
+            :updated_visa,
+            :updated_date
+            )');
+            $updateSql = array('UPDATE parlamentarier_transparenz SET
+            id = :id,
+            parlamentarier_id = :parlamentarier_id,
+            stichdatum = :stichdatum,
+            in_liste = :in_liste,
+            verguetung_transparent = :verguetung_transparent,
+            notizen = :notizen,
+            eingabe_abgeschlossen_visa = :eingabe_abgeschlossen_visa,
+            eingabe_abgeschlossen_datum = :eingabe_abgeschlossen_datum,
+            kontrolliert_visa = :kontrolliert_visa,
+            kontrolliert_datum = :kontrolliert_datum,
+            freigabe_visa = :freigabe_visa,
+            freigabe_datum = :freigabe_datum,
+            created_visa = :created_visa,
+            created_date = :created_date,
+            updated_visa = :updated_visa,
+            updated_date = :updated_date
+            WHERE id =:OLD_id');
+            $deleteSql = array('DELETE FROM parlamentarier_transparenz WHERE id = :id');
+            $this->dataset = new ViewBasedDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
-                '`parlamentarier_transparenz`');
+                '`vf_parlamentarier_transparenz`', $insertSql, $updateSql, $deleteSql);
             $this->dataset->addFields(
                 array(
                     new IntegerField('id', true, true, true),
                     new IntegerField('parlamentarier_id', true),
                     new DateField('stichdatum', true),
+                    new IntegerField('in_liste', true),
                     new StringField('verguetung_transparent'),
                     new StringField('notizen'),
                     new StringField('eingabe_abgeschlossen_visa'),
@@ -3824,7 +3879,19 @@
                     new StringField('created_visa', true),
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true)
+                    new DateTimeField('updated_date', true),
+                    new IntegerField('rat_id', true),
+                    new IntegerField('kanton_id', true),
+                    new IntegerField('partei_id'),
+                    new IntegerField('fraktion_id'),
+                    new StringField('kommissionen_abkuerzung'),
+                    new IntegerField('militaerischer_grad_id'),
+                    new StringField('geschlecht'),
+                    new StringField('zivilstand'),
+                    new IntegerField('anzahl_kinder'),
+                    new DateField('geburtstag'),
+                    new DateField('im_rat_seit', true),
+                    new DateField('im_rat_bis')
                 )
             );
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier'), 'parlamentarier_id_anzeige_name_v_parlamentarier');
@@ -3871,7 +3938,20 @@
                 new FilterColumn($this->dataset, 'created_visa', 'created_visa', 'Created Visa'),
                 new FilterColumn($this->dataset, 'created_date', 'created_date', 'Created Date'),
                 new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', 'Updated Visa'),
-                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date')
+                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date'),
+                new FilterColumn($this->dataset, 'in_liste', 'in_liste', 'In Liste'),
+                new FilterColumn($this->dataset, 'rat_id', 'rat_id', 'Rat Id'),
+                new FilterColumn($this->dataset, 'kanton_id', 'kanton_id', 'Kanton Id'),
+                new FilterColumn($this->dataset, 'partei_id', 'partei_id', 'Partei Id'),
+                new FilterColumn($this->dataset, 'fraktion_id', 'fraktion_id', 'Fraktion Id'),
+                new FilterColumn($this->dataset, 'kommissionen_abkuerzung', 'kommissionen_abkuerzung', 'Kommissionen Abkuerzung'),
+                new FilterColumn($this->dataset, 'militaerischer_grad_id', 'militaerischer_grad_id', 'Militaerischer Grad Id'),
+                new FilterColumn($this->dataset, 'geschlecht', 'geschlecht', 'Geschlecht'),
+                new FilterColumn($this->dataset, 'im_rat_seit', 'im_rat_seit', 'Im Rat Seit'),
+                new FilterColumn($this->dataset, 'im_rat_bis', 'im_rat_bis', 'Im Rat Bis'),
+                new FilterColumn($this->dataset, 'zivilstand', 'zivilstand', 'Zivilstand'),
+                new FilterColumn($this->dataset, 'anzahl_kinder', 'anzahl_kinder', 'Anzahl Kinder'),
+                new FilterColumn($this->dataset, 'geburtstag', 'geburtstag', 'Geburtstag')
             );
         }
     
@@ -3882,7 +3962,20 @@
                 ->addColumn($columns['parlamentarier_id'])
                 ->addColumn($columns['stichdatum'])
                 ->addColumn($columns['verguetung_transparent'])
-                ->addColumn($columns['notizen']);
+                ->addColumn($columns['notizen'])
+                ->addColumn($columns['in_liste'])
+                ->addColumn($columns['rat_id'])
+                ->addColumn($columns['kanton_id'])
+                ->addColumn($columns['partei_id'])
+                ->addColumn($columns['fraktion_id'])
+                ->addColumn($columns['kommissionen_abkuerzung'])
+                ->addColumn($columns['militaerischer_grad_id'])
+                ->addColumn($columns['geschlecht'])
+                ->addColumn($columns['im_rat_seit'])
+                ->addColumn($columns['im_rat_bis'])
+                ->addColumn($columns['zivilstand'])
+                ->addColumn($columns['anzahl_kinder'])
+                ->addColumn($columns['geburtstag']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -3895,7 +3988,12 @@
                 ->setOptionsFor('kontrolliert_datum')
                 ->setOptionsFor('freigabe_datum')
                 ->setOptionsFor('created_date')
-                ->setOptionsFor('updated_date');
+                ->setOptionsFor('updated_date')
+                ->setOptionsFor('geschlecht')
+                ->setOptionsFor('im_rat_seit')
+                ->setOptionsFor('im_rat_bis')
+                ->setOptionsFor('zivilstand')
+                ->setOptionsFor('geburtstag');
         }
     
         protected function setupFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
@@ -3922,10 +4020,10 @@
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_parlamentarier_parlamentarier_transparenz_parlamentarier_id_search');
+            $main_editor->SetHandlerName('filter_builder_parlamentarier_vf_parlamentarier_transparenz_parlamentarier_id_search');
             
             $multi_value_select_editor = new RemoteMultiValueSelect('parlamentarier_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_parlamentarier_transparenz_parlamentarier_id_search');
+            $multi_value_select_editor->SetHandlerName('filter_builder_parlamentarier_vf_parlamentarier_transparenz_parlamentarier_id_search');
             
             $text_editor = new TextEdit('parlamentarier_id');
             
@@ -4262,6 +4360,291 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('in_liste_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['in_liste'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('rat_id_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['rat_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('kanton_id_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['kanton_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('partei_id_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['partei_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('fraktion_id_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['fraktion_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('kommissionen_abkuerzung');
+            
+            $filterBuilder->addColumn(
+                $columns['kommissionen_abkuerzung'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('militaerischer_grad_id_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['militaerischer_grad_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $main_editor->addChoice('M', 'M');
+            $main_editor->addChoice('F', 'F');
+            $main_editor->SetAllowNullValue(false);
+            
+            $multi_value_select_editor = new MultiValueSelect('geschlecht');
+            $multi_value_select_editor->setChoices($main_editor->getChoices());
+            
+            $text_editor = new TextEdit('geschlecht');
+            
+            $filterBuilder->addColumn(
+                $columns['geschlecht'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $text_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $text_editor,
+                    FilterConditionOperator::BEGINS_WITH => $text_editor,
+                    FilterConditionOperator::ENDS_WITH => $text_editor,
+                    FilterConditionOperator::IS_LIKE => $text_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $text_editor,
+                    FilterConditionOperator::IN => $multi_value_select_editor,
+                    FilterConditionOperator::NOT_IN => $multi_value_select_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new DateTimeEdit('im_rat_seit_edit', false, 'd.m.Y');
+            
+            $filterBuilder->addColumn(
+                $columns['im_rat_seit'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::DATE_EQUALS => $main_editor,
+                    FilterConditionOperator::DATE_DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::TODAY => null,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new DateTimeEdit('im_rat_bis_edit', false, 'd.m.Y');
+            
+            $filterBuilder->addColumn(
+                $columns['im_rat_bis'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::DATE_EQUALS => $main_editor,
+                    FilterConditionOperator::DATE_DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::TODAY => null,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new ComboBox('zivilstand_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $main_editor->addChoice('ledig', 'ledig');
+            $main_editor->addChoice('verheiratet', 'verheiratet');
+            $main_editor->addChoice('geschieden', 'geschieden');
+            $main_editor->addChoice('eingetragene partnerschaft', 'eingetragene partnerschaft');
+            $main_editor->addChoice('getrennt', 'getrennt');
+            $main_editor->addChoice('verwitwet', 'verwitwet');
+            $main_editor->SetAllowNullValue(false);
+            
+            $multi_value_select_editor = new MultiValueSelect('zivilstand');
+            $multi_value_select_editor->setChoices($main_editor->getChoices());
+            
+            $text_editor = new TextEdit('zivilstand');
+            
+            $filterBuilder->addColumn(
+                $columns['zivilstand'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $text_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $text_editor,
+                    FilterConditionOperator::BEGINS_WITH => $text_editor,
+                    FilterConditionOperator::ENDS_WITH => $text_editor,
+                    FilterConditionOperator::IS_LIKE => $text_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $text_editor,
+                    FilterConditionOperator::IN => $multi_value_select_editor,
+                    FilterConditionOperator::NOT_IN => $multi_value_select_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('anzahl_kinder_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['anzahl_kinder'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new DateTimeEdit('geburtstag_edit', false, 'd.m.Y');
+            
+            $filterBuilder->addColumn(
+                $columns['geburtstag'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::DATE_EQUALS => $main_editor,
+                    FilterConditionOperator::DATE_DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::TODAY => null,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -4448,6 +4831,161 @@
             $column->SetDescription('Abgeändert am');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for in_liste field
+            //
+            $column = new NumberViewColumn('in_liste', 'in_liste', 'In Liste', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for rat_id field
+            //
+            $column = new NumberViewColumn('rat_id', 'rat_id', 'Rat Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for kanton_id field
+            //
+            $column = new NumberViewColumn('kanton_id', 'kanton_id', 'Kanton Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for partei_id field
+            //
+            $column = new NumberViewColumn('partei_id', 'partei_id', 'Partei Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for fraktion_id field
+            //
+            $column = new NumberViewColumn('fraktion_id', 'fraktion_id', 'Fraktion Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for kommissionen_abkuerzung field
+            //
+            $column = new TextViewColumn('kommissionen_abkuerzung', 'kommissionen_abkuerzung', 'Kommissionen Abkuerzung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for militaerischer_grad_id field
+            //
+            $column = new NumberViewColumn('militaerischer_grad_id', 'militaerischer_grad_id', 'Militaerischer Grad Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for geschlecht field
+            //
+            $column = new TextViewColumn('geschlecht', 'geschlecht', 'Geschlecht', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for im_rat_seit field
+            //
+            $column = new DateTimeViewColumn('im_rat_seit', 'im_rat_seit', 'Im Rat Seit', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for im_rat_bis field
+            //
+            $column = new DateTimeViewColumn('im_rat_bis', 'im_rat_bis', 'Im Rat Bis', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new NumberViewColumn('anzahl_kinder', 'anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for geburtstag field
+            //
+            $column = new DateTimeViewColumn('geburtstag', 'geburtstag', 'Geburtstag', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -4566,6 +5104,122 @@
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for in_liste field
+            //
+            $column = new NumberViewColumn('in_liste', 'in_liste', 'In Liste', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for rat_id field
+            //
+            $column = new NumberViewColumn('rat_id', 'rat_id', 'Rat Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for kanton_id field
+            //
+            $column = new NumberViewColumn('kanton_id', 'kanton_id', 'Kanton Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for partei_id field
+            //
+            $column = new NumberViewColumn('partei_id', 'partei_id', 'Partei Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for fraktion_id field
+            //
+            $column = new NumberViewColumn('fraktion_id', 'fraktion_id', 'Fraktion Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for kommissionen_abkuerzung field
+            //
+            $column = new TextViewColumn('kommissionen_abkuerzung', 'kommissionen_abkuerzung', 'Kommissionen Abkuerzung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for militaerischer_grad_id field
+            //
+            $column = new NumberViewColumn('militaerischer_grad_id', 'militaerischer_grad_id', 'Militaerischer Grad Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for geschlecht field
+            //
+            $column = new TextViewColumn('geschlecht', 'geschlecht', 'Geschlecht', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for im_rat_seit field
+            //
+            $column = new DateTimeViewColumn('im_rat_seit', 'im_rat_seit', 'Im Rat Seit', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for im_rat_bis field
+            //
+            $column = new DateTimeViewColumn('im_rat_bis', 'im_rat_bis', 'Im Rat Bis', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new NumberViewColumn('anzahl_kinder', 'anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for geburtstag field
+            //
+            $column = new DateTimeViewColumn('geburtstag', 'geburtstag', 'Geburtstag', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -4737,7 +5391,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'edit_parlamentarier_parlamentarier_transparenz_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'edit_parlamentarier_vf_parlamentarier_transparenz_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -4882,6 +5536,131 @@
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for in_liste field
+            //
+            $editor = new TextEdit('in_liste_edit');
+            $editColumn = new CustomEditColumn('In Liste', 'in_liste', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for rat_id field
+            //
+            $editor = new TextEdit('rat_id_edit');
+            $editColumn = new CustomEditColumn('Rat Id', 'rat_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for kanton_id field
+            //
+            $editor = new TextEdit('kanton_id_edit');
+            $editColumn = new CustomEditColumn('Kanton Id', 'kanton_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for partei_id field
+            //
+            $editor = new TextEdit('partei_id_edit');
+            $editColumn = new CustomEditColumn('Partei Id', 'partei_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for fraktion_id field
+            //
+            $editor = new TextEdit('fraktion_id_edit');
+            $editColumn = new CustomEditColumn('Fraktion Id', 'fraktion_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for kommissionen_abkuerzung field
+            //
+            $editor = new TextAreaEdit('kommissionen_abkuerzung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Kommissionen Abkuerzung', 'kommissionen_abkuerzung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for militaerischer_grad_id field
+            //
+            $editor = new TextEdit('militaerischer_grad_id_edit');
+            $editColumn = new CustomEditColumn('Militaerischer Grad Id', 'militaerischer_grad_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for geschlecht field
+            //
+            $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->addChoice('M', 'M');
+            $editor->addChoice('F', 'F');
+            $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for im_rat_seit field
+            //
+            $editor = new DateTimeEdit('im_rat_seit_edit', false, 'd.m.Y');
+            $editColumn = new CustomEditColumn('Im Rat Seit', 'im_rat_seit', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for im_rat_bis field
+            //
+            $editor = new DateTimeEdit('im_rat_bis_edit', false, 'd.m.Y');
+            $editColumn = new CustomEditColumn('Im Rat Bis', 'im_rat_bis', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for zivilstand field
+            //
+            $editor = new ComboBox('zivilstand_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->addChoice('ledig', 'ledig');
+            $editor->addChoice('verheiratet', 'verheiratet');
+            $editor->addChoice('geschieden', 'geschieden');
+            $editor->addChoice('eingetragene partnerschaft', 'eingetragene partnerschaft');
+            $editor->addChoice('getrennt', 'getrennt');
+            $editor->addChoice('verwitwet', 'verwitwet');
+            $editColumn = new CustomEditColumn('Zivilstand', 'zivilstand', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for anzahl_kinder field
+            //
+            $editor = new TextEdit('anzahl_kinder_edit');
+            $editColumn = new CustomEditColumn('Anzahl Kinder', 'anzahl_kinder', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for geburtstag field
+            //
+            $editor = new DateTimeEdit('geburtstag_edit', false, 'd.m.Y');
+            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
         }
@@ -5054,7 +5833,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'multi_edit_parlamentarier_parlamentarier_transparenz_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'multi_edit_parlamentarier_vf_parlamentarier_transparenz_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -5199,6 +5978,131 @@
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for in_liste field
+            //
+            $editor = new TextEdit('in_liste_edit');
+            $editColumn = new CustomEditColumn('In Liste', 'in_liste', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for rat_id field
+            //
+            $editor = new TextEdit('rat_id_edit');
+            $editColumn = new CustomEditColumn('Rat Id', 'rat_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for kanton_id field
+            //
+            $editor = new TextEdit('kanton_id_edit');
+            $editColumn = new CustomEditColumn('Kanton Id', 'kanton_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for partei_id field
+            //
+            $editor = new TextEdit('partei_id_edit');
+            $editColumn = new CustomEditColumn('Partei Id', 'partei_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for fraktion_id field
+            //
+            $editor = new TextEdit('fraktion_id_edit');
+            $editColumn = new CustomEditColumn('Fraktion Id', 'fraktion_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for kommissionen_abkuerzung field
+            //
+            $editor = new TextAreaEdit('kommissionen_abkuerzung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Kommissionen Abkuerzung', 'kommissionen_abkuerzung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for militaerischer_grad_id field
+            //
+            $editor = new TextEdit('militaerischer_grad_id_edit');
+            $editColumn = new CustomEditColumn('Militaerischer Grad Id', 'militaerischer_grad_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for geschlecht field
+            //
+            $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->addChoice('M', 'M');
+            $editor->addChoice('F', 'F');
+            $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for im_rat_seit field
+            //
+            $editor = new DateTimeEdit('im_rat_seit_edit', false, 'd.m.Y');
+            $editColumn = new CustomEditColumn('Im Rat Seit', 'im_rat_seit', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for im_rat_bis field
+            //
+            $editor = new DateTimeEdit('im_rat_bis_edit', false, 'd.m.Y');
+            $editColumn = new CustomEditColumn('Im Rat Bis', 'im_rat_bis', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for zivilstand field
+            //
+            $editor = new ComboBox('zivilstand_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->addChoice('ledig', 'ledig');
+            $editor->addChoice('verheiratet', 'verheiratet');
+            $editor->addChoice('geschieden', 'geschieden');
+            $editor->addChoice('eingetragene partnerschaft', 'eingetragene partnerschaft');
+            $editor->addChoice('getrennt', 'getrennt');
+            $editor->addChoice('verwitwet', 'verwitwet');
+            $editColumn = new CustomEditColumn('Zivilstand', 'zivilstand', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for anzahl_kinder field
+            //
+            $editor = new TextEdit('anzahl_kinder_edit');
+            $editColumn = new CustomEditColumn('Anzahl Kinder', 'anzahl_kinder', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for geburtstag field
+            //
+            $editor = new DateTimeEdit('geburtstag_edit', false, 'd.m.Y');
+            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
         }
@@ -5371,7 +6275,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'insert_parlamentarier_parlamentarier_transparenz_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'insert_parlamentarier_vf_parlamentarier_transparenz_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -5453,6 +6357,131 @@
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for in_liste field
+            //
+            $editor = new TextEdit('in_liste_edit');
+            $editColumn = new CustomEditColumn('In Liste', 'in_liste', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for rat_id field
+            //
+            $editor = new TextEdit('rat_id_edit');
+            $editColumn = new CustomEditColumn('Rat Id', 'rat_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for kanton_id field
+            //
+            $editor = new TextEdit('kanton_id_edit');
+            $editColumn = new CustomEditColumn('Kanton Id', 'kanton_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for partei_id field
+            //
+            $editor = new TextEdit('partei_id_edit');
+            $editColumn = new CustomEditColumn('Partei Id', 'partei_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for fraktion_id field
+            //
+            $editor = new TextEdit('fraktion_id_edit');
+            $editColumn = new CustomEditColumn('Fraktion Id', 'fraktion_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for kommissionen_abkuerzung field
+            //
+            $editor = new TextAreaEdit('kommissionen_abkuerzung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Kommissionen Abkuerzung', 'kommissionen_abkuerzung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for militaerischer_grad_id field
+            //
+            $editor = new TextEdit('militaerischer_grad_id_edit');
+            $editColumn = new CustomEditColumn('Militaerischer Grad Id', 'militaerischer_grad_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for geschlecht field
+            //
+            $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->addChoice('M', 'M');
+            $editor->addChoice('F', 'F');
+            $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for im_rat_seit field
+            //
+            $editor = new DateTimeEdit('im_rat_seit_edit', false, 'd.m.Y');
+            $editColumn = new CustomEditColumn('Im Rat Seit', 'im_rat_seit', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for im_rat_bis field
+            //
+            $editor = new DateTimeEdit('im_rat_bis_edit', false, 'd.m.Y');
+            $editColumn = new CustomEditColumn('Im Rat Bis', 'im_rat_bis', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for zivilstand field
+            //
+            $editor = new ComboBox('zivilstand_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->addChoice('ledig', 'ledig');
+            $editor->addChoice('verheiratet', 'verheiratet');
+            $editor->addChoice('geschieden', 'geschieden');
+            $editor->addChoice('eingetragene partnerschaft', 'eingetragene partnerschaft');
+            $editor->addChoice('getrennt', 'getrennt');
+            $editor->addChoice('verwitwet', 'verwitwet');
+            $editColumn = new CustomEditColumn('Zivilstand', 'zivilstand', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for anzahl_kinder field
+            //
+            $editor = new TextEdit('anzahl_kinder_edit');
+            $editColumn = new CustomEditColumn('Anzahl Kinder', 'anzahl_kinder', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for geburtstag field
+            //
+            $editor = new DateTimeEdit('geburtstag_edit', false, 'd.m.Y');
+            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
@@ -5580,6 +6609,122 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for in_liste field
+            //
+            $column = new NumberViewColumn('in_liste', 'in_liste', 'In Liste', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for rat_id field
+            //
+            $column = new NumberViewColumn('rat_id', 'rat_id', 'Rat Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for kanton_id field
+            //
+            $column = new NumberViewColumn('kanton_id', 'kanton_id', 'Kanton Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for partei_id field
+            //
+            $column = new NumberViewColumn('partei_id', 'partei_id', 'Partei Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for fraktion_id field
+            //
+            $column = new NumberViewColumn('fraktion_id', 'fraktion_id', 'Fraktion Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for kommissionen_abkuerzung field
+            //
+            $column = new TextViewColumn('kommissionen_abkuerzung', 'kommissionen_abkuerzung', 'Kommissionen Abkuerzung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for militaerischer_grad_id field
+            //
+            $column = new NumberViewColumn('militaerischer_grad_id', 'militaerischer_grad_id', 'Militaerischer Grad Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for geschlecht field
+            //
+            $column = new TextViewColumn('geschlecht', 'geschlecht', 'Geschlecht', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for im_rat_seit field
+            //
+            $column = new DateTimeViewColumn('im_rat_seit', 'im_rat_seit', 'Im Rat Seit', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for im_rat_bis field
+            //
+            $column = new DateTimeViewColumn('im_rat_bis', 'im_rat_bis', 'Im Rat Bis', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new NumberViewColumn('anzahl_kinder', 'anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for geburtstag field
+            //
+            $column = new DateTimeViewColumn('geburtstag', 'geburtstag', 'Geburtstag', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -5699,6 +6844,122 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
+            
+            //
+            // View column for in_liste field
+            //
+            $column = new NumberViewColumn('in_liste', 'in_liste', 'In Liste', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for rat_id field
+            //
+            $column = new NumberViewColumn('rat_id', 'rat_id', 'Rat Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for kanton_id field
+            //
+            $column = new NumberViewColumn('kanton_id', 'kanton_id', 'Kanton Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for partei_id field
+            //
+            $column = new NumberViewColumn('partei_id', 'partei_id', 'Partei Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for fraktion_id field
+            //
+            $column = new NumberViewColumn('fraktion_id', 'fraktion_id', 'Fraktion Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for kommissionen_abkuerzung field
+            //
+            $column = new TextViewColumn('kommissionen_abkuerzung', 'kommissionen_abkuerzung', 'Kommissionen Abkuerzung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for militaerischer_grad_id field
+            //
+            $column = new NumberViewColumn('militaerischer_grad_id', 'militaerischer_grad_id', 'Militaerischer Grad Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for geschlecht field
+            //
+            $column = new TextViewColumn('geschlecht', 'geschlecht', 'Geschlecht', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for im_rat_seit field
+            //
+            $column = new DateTimeViewColumn('im_rat_seit', 'im_rat_seit', 'Im Rat Seit', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for im_rat_bis field
+            //
+            $column = new DateTimeViewColumn('im_rat_bis', 'im_rat_bis', 'Im Rat Bis', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new NumberViewColumn('anzahl_kinder', 'anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for geburtstag field
+            //
+            $column = new DateTimeViewColumn('geburtstag', 'geburtstag', 'Geburtstag', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $grid->AddExportColumn($column);
         }
     
         private function AddCompareColumns(Grid $grid)
@@ -5807,6 +7068,122 @@
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for in_liste field
+            //
+            $column = new NumberViewColumn('in_liste', 'in_liste', 'In Liste', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for rat_id field
+            //
+            $column = new NumberViewColumn('rat_id', 'rat_id', 'Rat Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for kanton_id field
+            //
+            $column = new NumberViewColumn('kanton_id', 'kanton_id', 'Kanton Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for partei_id field
+            //
+            $column = new NumberViewColumn('partei_id', 'partei_id', 'Partei Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for fraktion_id field
+            //
+            $column = new NumberViewColumn('fraktion_id', 'fraktion_id', 'Fraktion Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for kommissionen_abkuerzung field
+            //
+            $column = new TextViewColumn('kommissionen_abkuerzung', 'kommissionen_abkuerzung', 'Kommissionen Abkuerzung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for militaerischer_grad_id field
+            //
+            $column = new NumberViewColumn('militaerischer_grad_id', 'militaerischer_grad_id', 'Militaerischer Grad Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for geschlecht field
+            //
+            $column = new TextViewColumn('geschlecht', 'geschlecht', 'Geschlecht', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for im_rat_seit field
+            //
+            $column = new DateTimeViewColumn('im_rat_seit', 'im_rat_seit', 'Im Rat Seit', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for im_rat_bis field
+            //
+            $column = new DateTimeViewColumn('im_rat_bis', 'im_rat_bis', 'Im Rat Bis', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new NumberViewColumn('anzahl_kinder', 'anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for geburtstag field
+            //
+            $column = new DateTimeViewColumn('geburtstag', 'geburtstag', 'Geburtstag', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
             $grid->AddCompareColumn($column);
         }
     
@@ -6064,7 +7441,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_parlamentarier_parlamentarier_transparenz_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_parlamentarier_vf_parlamentarier_transparenz_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6227,7 +7604,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_parlamentarier_transparenz_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_vf_parlamentarier_transparenz_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6390,7 +7767,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_parlamentarier_parlamentarier_transparenz_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_parlamentarier_vf_parlamentarier_transparenz_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6553,7 +7930,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_parlamentarier_parlamentarier_transparenz_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_parlamentarier_vf_parlamentarier_transparenz_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -49811,12 +51188,12 @@
             $grid->AddViewColumn($column);
             }
             
-            if (GetCurrentUserPermissionsForPage('parlamentarier.parlamentarier_transparenz')->HasViewGrant() && $withDetails)
+            if (GetCurrentUserPermissionsForPage('parlamentarier.vf_parlamentarier_transparenz')->HasViewGrant() && $withDetails)
             {
             //
-            // View column for parlamentarier_parlamentarier_transparenz detail
+            // View column for parlamentarier_vf_parlamentarier_transparenz detail
             //
-            $column = new DetailColumn(array('id'), 'parlamentarier.parlamentarier_transparenz', 'parlamentarier_parlamentarier_transparenz_handler', $this->dataset, 'Parlamentarier Vergütungstransparenz');
+            $column = new DetailColumn(array('id'), 'parlamentarier.vf_parlamentarier_transparenz', 'parlamentarier_vf_parlamentarier_transparenz_handler', $this->dataset, 'Parlamentarier Vergütungstransparenz');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $grid->AddViewColumn($column);
             }
@@ -55919,10 +57296,10 @@
             $handler = new PageHTTPHandler('parlamentarier_parlamentarier_anhang_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
-            $detailPage = new parlamentarier_parlamentarier_transparenzPage('parlamentarier_parlamentarier_transparenz', $this, array('parlamentarier_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('parlamentarier.parlamentarier_transparenz'), 'UTF-8');
-            $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.parlamentarier_transparenz'));
-            $detailPage->SetHttpHandlerName('parlamentarier_parlamentarier_transparenz_handler');
-            $handler = new PageHTTPHandler('parlamentarier_parlamentarier_transparenz_handler', $detailPage);
+            $detailPage = new parlamentarier_vf_parlamentarier_transparenzPage('parlamentarier_vf_parlamentarier_transparenz', $this, array('parlamentarier_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('parlamentarier.vf_parlamentarier_transparenz'), 'UTF-8');
+            $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.vf_parlamentarier_transparenz'));
+            $detailPage->SetHttpHandlerName('parlamentarier_vf_parlamentarier_transparenz_handler');
+            $handler = new PageHTTPHandler('parlamentarier_vf_parlamentarier_transparenz_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $detailPage = new parlamentarier_parlamentarier_logPage('parlamentarier_parlamentarier_log', $this, array('id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionsForPage('parlamentarier.parlamentarier_log'), 'UTF-8');

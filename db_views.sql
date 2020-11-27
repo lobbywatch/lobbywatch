@@ -1414,6 +1414,26 @@ IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(parlamentarier_transparenz.created_date) as created_date_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.updated_date) as updated_date_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.freigabe_datum) as freigabe_datum_unix
 FROM `parlamentarier_transparenz`;
 
+CREATE OR REPLACE VIEW `vf_parlamentarier_transparenz` AS
+SELECT parlamentarier_transparenz.*,
+parlamentarier.rat_id,
+parlamentarier.kanton_id,
+parlamentarier.partei_id,
+parlamentarier.fraktion_id,
+GROUP_CONCAT(DISTINCT kommission.abkuerzung ORDER BY kommission.abkuerzung SEPARATOR ', ') kommissionen_abkuerzung,
+parlamentarier.militaerischer_grad_id,
+parlamentarier.geschlecht,
+parlamentarier.zivilstand,
+parlamentarier.anzahl_kinder,
+parlamentarier.geburtstag,
+parlamentarier.im_rat_seit,
+parlamentarier.im_rat_bis
+FROM `parlamentarier_transparenz`
+INNER JOIN parlamentarier ON parlamentarier.id = parlamentarier_id
+LEFT JOIN in_kommission ON parlamentarier.id = in_kommission.parlamentarier_id AND (in_kommission.bis IS NULL OR in_kommission.bis < NOW())
+LEFT JOIN `kommission` kommission ON in_kommission.kommission_id=kommission.id
+GROUP BY parlamentarier_transparenz.id, parlamentarier.id;
+
 -- Unpublished and published entries from the last stichdatum are selected
 CREATE OR REPLACE VIEW `v_parlamentarier_transparenz_last_stichdatum_all` AS
 SELECT parlamentarier_transparenz.*

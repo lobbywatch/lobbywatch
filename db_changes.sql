@@ -3327,3 +3327,11 @@ INSERT INTO `wissensartikelzieltabelle` (`table_name`, `name_de`, `name_fr`, `cr
 ('partei', 'Partei', NULL, 'roland', 'roland'),
 ('fraktion', 'Fraktion', NULL, 'roland', 'roland'),
 ('kommission', 'Kommission', NULL, 'roland', 'roland');
+
+-- 27.11.2020 add parlamentarier_transparenz.in_liste
+
+ALTER TABLE `parlamentarier_transparenz`
+ADD `in_liste` BOOLEAN NOT NULL DEFAULT TRUE COMMENT 'Ist dieser Eintrag in der Transparenliste mit dem angegebenen Stichdatum enthalten? (Dieses Feld verhindert Transparenzlisteneinträge löschen zu müssen, wenn diese nicht in der Transparenzliste enthalten sind.)' AFTER `stichdatum`;
+
+ALTER TABLE `parlamentarier_transparenz_log`
+ADD `in_liste` BOOLEAN NOT NULL DEFAULT TRUE COMMENT 'Ist dieser Eintrag in der Transparenliste mit dem angegebenen Stichdatum enthalten? (Dieses Feld verhindert Transparenzlisteneinträge löschen zu müssen, wenn diese nicht in der Transparenzliste enthalten sind.)' AFTER `stichdatum`;

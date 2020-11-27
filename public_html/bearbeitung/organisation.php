@@ -43664,16 +43664,16 @@
             }');
             
             $grid->SetEditClientFormLoadedScript('if (editors[\'updated_by_import\'].getValue()) {
-               editors[\'name_de\'].setEnabled(false);  
-               editors[\'name_fr\'].setEnabled(false);  
-               editors[\'name_it\'].setEnabled(false);  
-               editors[\'alias_namen_de\'].setEnabled(false);  
-               editors[\'adresse_strasse\'].setEnabled(false);  
-               editors[\'adresse_zusatz\'].setEnabled(false);  
-               editors[\'adresse_plz\'].setEnabled(false);  
-               editors[\'ort\'].setEnabled(false);  
-               editors[\'homepage\'].setEnabled(false);  
-               editors[\'sekretariat\'].setEnabled(false);  
+               editors[\'name_de\'].setEnabled(false);
+               editors[\'name_fr\'].setEnabled(false);
+               editors[\'name_it\'].setEnabled(false);
+               editors[\'alias_namen_de\'].setEnabled(false);
+               editors[\'adresse_strasse\'].setEnabled(false);
+               editors[\'adresse_zusatz\'].setEnabled(false);
+               editors[\'adresse_plz\'].setEnabled(false);
+               editors[\'ort\'].setEnabled(false);
+               editors[\'homepage\'].setEnabled(false);
+               editors[\'sekretariat\'].setEnabled(false);
             }');
         }
     

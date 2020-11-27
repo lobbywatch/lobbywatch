@@ -716,13 +716,13 @@ DELETE FROM `person_log` WHERE `nachname` IN ('Herr', 'Frau', 'Madame', 'Monsieu
 
 SELECT CONCAT('interessenbindung.', COLUMN_NAME, ' AS interessenbindung_', COLUMN_NAME, ',') FROM information_schema.COLUMNS WHERE `TABLE_NAME`='interessenbindung' and `TABLE_SCHEMA`='lobbywatch' ORDER BY ORDINAL_POSITION;
 
--- 07.10.2020 q_interessenbindung
+-- 07.10.2020 vf_interessenbindung
 
 (SELECT CONCAT("SELECT interessenbindung.* FROM interessenbindung;"))
 UNION
-(SELECT CONCAT("UPDATE interessenbindung SET ", GROUP_CONCAT('\n', COLUMN_NAME, ' = :', COLUMN_NAME), '\nWHERE id =:OLD_id;') FROM information_schema.COLUMNS WHERE `TABLE_NAME`='interessenbindung' and `TABLE_SCHEMA`='lobbywatch' ORDER BY ORDINAL_POSITION)
-UNION
 (SELECT CONCAT("INSERT INTO interessenbindung (", GROUP_CONCAT('\n', COLUMN_NAME), '\n) VALUES (', GROUP_CONCAT('\n:', COLUMN_NAME), '\n);') FROM information_schema.COLUMNS WHERE `TABLE_NAME`='interessenbindung' and `TABLE_SCHEMA`='lobbywatch' ORDER BY ORDINAL_POSITION)
+UNION
+(SELECT CONCAT("UPDATE interessenbindung SET ", GROUP_CONCAT('\n', COLUMN_NAME, ' = :', COLUMN_NAME), '\nWHERE id =:OLD_id;') FROM information_schema.COLUMNS WHERE `TABLE_NAME`='interessenbindung' and `TABLE_SCHEMA`='lobbywatch' ORDER BY ORDINAL_POSITION)
 UNION
 (SELECT CONCAT("DELETE FROM interessenbindung WHERE id = :id;"));
 
@@ -843,3 +843,93 @@ updated_date = :updated_date
 WHERE id =:OLD_id;
 
 DELETE FROM interessenbindung WHERE id = :id;
+
+-- 07.10.2020 vf_parlamentarier_transparenz
+
+-- (SELECT CONCAT("SELECT parlamentarier_transparenz.* FROM parlamentarier_transparenz;"))
+-- UNION
+(SELECT CONCAT("INSERT INTO parlamentarier_transparenz (", GROUP_CONCAT('\n', COLUMN_NAME), '\n) VALUES (', GROUP_CONCAT('\n:', COLUMN_NAME), '\n);') FROM information_schema.COLUMNS WHERE `TABLE_NAME`='parlamentarier_transparenz' and `TABLE_SCHEMA`='lobbywatch' ORDER BY ORDINAL_POSITION)
+UNION
+(SELECT CONCAT("UPDATE parlamentarier_transparenz SET ", GROUP_CONCAT('\n', COLUMN_NAME, ' = :', COLUMN_NAME), '\nWHERE id =:OLD_id;') FROM information_schema.COLUMNS WHERE `TABLE_NAME`='parlamentarier_transparenz' and `TABLE_SCHEMA`='lobbywatch' ORDER BY ORDINAL_POSITION)
+UNION
+(SELECT CONCAT("DELETE FROM parlamentarier_transparenz WHERE id = :id;"));
+
+INSERT INTO parlamentarier_transparenz (
+id,
+parlamentarier_id,
+stichdatum,
+in_liste,
+verguetung_transparent,
+notizen,
+eingabe_abgeschlossen_visa,
+eingabe_abgeschlossen_datum,
+kontrolliert_visa,
+kontrolliert_datum,
+freigabe_visa,
+freigabe_datum,
+created_visa,
+created_date,
+updated_visa,
+updated_date
+) VALUES (
+:id,
+:parlamentarier_id,
+:stichdatum,
+:in_liste,
+:verguetung_transparent,
+:notizen,
+:eingabe_abgeschlossen_visa,
+:eingabe_abgeschlossen_datum,
+:kontrolliert_visa,
+:kontrolliert_datum,
+:freigabe_visa,
+:freigabe_datum,
+:created_visa,
+:created_date,
+:updated_visa,
+:updated_date
+);
+
+UPDATE parlamentarier_transparenz SET
+id = :id,
+parlamentarier_id = :parlamentarier_id,
+stichdatum = :stichdatum,
+in_liste = :in_liste,
+verguetung_transparent = :verguetung_transparent,
+notizen = :notizen,
+eingabe_abgeschlossen_visa = :eingabe_abgeschlossen_visa,
+eingabe_abgeschlossen_datum = :eingabe_abgeschlossen_datum,
+kontrolliert_visa = :kontrolliert_visa,
+kontrolliert_datum = :kontrolliert_datum,
+freigabe_visa = :freigabe_visa,
+freigabe_datum = :freigabe_datum,
+created_visa = :created_visa,
+created_date = :created_date,
+updated_visa = :updated_visa,
+updated_date = :updated_date
+WHERE id =:OLD_id;
+
+DELETE FROM parlamentarier_transparenz WHERE id = :id;
+
+-- 27.11.2020 chart-parlamentarier-transparenz
+
+SELECT
+fraktion.abkuerzung,
+fraktion.name,
+fraktion.farbcode,
+CONCAT(fraktion.name, ' (', alle.a_n, ')') x_label,
+IFNULL(transparent.t_n, 0),
+alle.a_n,
+(IFNULL(transparent.t_n, 0) / alle.a_n) ratio,
+ROUND(100 * IFNULL(transparent.t_n, 0) / alle.a_n) prozent,
+CONCAT(ROUND(100 * IFNULL(transparent.t_n, 0) / alle.a_n), '% (', IFNULL(transparent.t_n, 0), ' von ', alle.a_n, ')') col_label
+FROM
+    (SELECT parlamentarier_transparenz.fraktion_id, COUNT(parlamentarier_transparenz.parlamentarier_id) a_n
+    FROM (%source%) parlamentarier_transparenz
+    GROUP BY parlamentarier_transparenz.fraktion_id) alle
+LEFT JOIN (SELECT parlamentarier_transparenz.fraktion_id, COUNT(parlamentarier_transparenz.parlamentarier_id) t_n
+    FROM (%source%) parlamentarier_transparenz
+    WHERE parlamentarier_transparenz.verguetung_transparent='ja'
+    GROUP BY parlamentarier_transparenz.fraktion_id) transparent ON transparent.fraktion_id = alle.fraktion_id
+LEFT JOIN v_fraktion fraktion ON fraktion.id = alle.fraktion_id
+ORDER BY ratio DESC

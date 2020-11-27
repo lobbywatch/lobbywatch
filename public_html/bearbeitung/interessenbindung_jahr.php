@@ -2481,11 +2481,7 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.
-            -1 = bezahlendes Mitglied
-            0 = ehrenamtlich
-            1 = bezahlt
-            > 1 = Vergütung in CHF pro Jahr');
+            $column->SetDescription('Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion. -1 = bezahlendes Mitglied 0 = ehrenamtlich 1 = bezahlt > 1 = Vergütung in CHF pro Jahr');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
