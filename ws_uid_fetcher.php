@@ -493,8 +493,8 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
   print("rows = " . $stmt->rowCount() . "\n");
 
   if ($uidBFSenabled) {
-    $dataUid = initDataArray();
-    $clientUid = initSoapClient($dataUid, getUidBfsWsLogin($test_mode), $verbose, $ssl);
+    $dataUidBfs = initDataArray();
+    $clientUid = initSoapClient($dataUidBfs, getUidBfsWsLogin($test_mode), $verbose, $ssl);
   }
   if ($zefixSoapEnabled) {
     $dataZefix = initDataArray();
@@ -527,17 +527,20 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
     $different_db_values = false;
     // UID WS (BFS)
     if ($uidBFSenabled) {
-        $dataUid = initDataArray();
-      ws_get_organization_from_uid_bfs($uid, $clientUid, $dataUid, $verbose); // Similar to _lobbywatch_fetch_ws_uid_bfs_data() in utils.php
+        $dataUidBfs = initDataArray();
+      ws_get_organization_from_uid_bfs($uid, $clientUid, $dataUidBfs, $verbose); // Similar to _lobbywatch_fetch_ws_uid_bfs_data() in utils.php
       if (!$records_limit || $records_limit > 20) {
         sleep(3);
       }
-      if ($dataUid['success']) {
+      if ($dataUidBfs['success']) {
         // http://stackoverflow.com/questions/1869091/how-to-convert-an-array-to-object-in-php
-        $organisation_ws = (object) $dataUid['data'];
+        $organisation_ws = (object) $dataUidBfs['data'];
 
         $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
         $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, '_lobbywatch_ws_get_rechtsform');
+      } else {
+        // all uids must be available
+        $fields[] = "***UID@BFS ERROR (Request_limit_exceeded?)***";
       }
     }
 
@@ -613,7 +616,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
       }
     } else if ($different_db_values) {
       $sign = '~';
-    } else if (empty($dataUid['success']) && empty($dataZefix['success']) && empty($dataZefixRest['success'])) {
+    } else if (empty($dataUidBfs['success']) && empty($dataZefix['success']) && empty($dataZefixRest['success'])) {
       $sign = '!';
     } else {
       $sign = '=';
@@ -628,7 +631,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
       case '!': $n_not_found++; break;
     }
 
-    $ws_uid_found = !empty($dataUid['success']) && !empty($dataUid['data']);
+    $ws_uid_found = !empty($dataUidBfs['success']) && !empty($dataUidBfs['data']);
     $ws_zefix_found = !empty($dataZefix['success']) && !empty($dataZefix['data']);
     $ws_zefix_rest_found = !empty($dataZefixRest['success']) && !empty($dataZefixRest['data']);
 
@@ -644,7 +647,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
       $n_ws_zefix_rest_found++;
     }
 
-    print(str_repeat("\t", $level) . str_pad($i, 4, " ", STR_PAD_LEFT) . '|' . str_pad($id, 4, " ", STR_PAD_LEFT) . '|' . str_pad($uid_db, 15, " ", STR_PAD_LEFT) . ' |' . ($ws_uid_found ? 'U' : ' ') . ($ws_zefix_found ? 'Z' : ' ') . ($ws_zefix_rest_found ? 'R' : ' ') . mb_str_pad("| $sign | " . mb_substr($name, 0, 42), 50, " ") . "| " . implode(" | ", $fields) . "\n");
+    print(str_repeat("\t", $level) . str_pad($i, 4, " ", STR_PAD_LEFT) . '|' . str_pad($id, 4, " ", STR_PAD_LEFT) . '|' . str_pad($uid_db, 15, " ", STR_PAD_LEFT) . ' |' . ($ws_uid_found ? 'U' : ($uidBFSenabled ? 'u' : ' ')) . ($ws_zefix_found ? 'Z' : ' ') . ($ws_zefix_rest_found ? 'R' : ' ') . mb_str_pad("| $sign | " . mb_substr($name, 0, 42), 50, " ") . "| " . implode(" | ", $fields) . "\n");
   }
 
   print("\nU: $n_ws_uid_found");
