@@ -13,10 +13,10 @@ SET SESSION sql_mode='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_
 -- SET FOREIGN_KEY_CHECKS=1;
 -- SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT;
+SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS;
+SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION;
+SET NAMES utf8mb4;
 
 -- http://blog.mclaughlinsoftware.com/2012/07/03/placement-over-substance/
 -- SET SQL_MODE=(SELECT CONCAT(@@sql_mode,',IGNORE_SPACE'));
@@ -2642,9 +2642,115 @@ END
 //
 delimiter ;
 
+-- interessenraum triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_interessenraum_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_interessenraum_log_ins` AFTER INSERT ON `interessenraum`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessenraum_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `interessenraum` WHERE id = NEW.id ;
+END
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_interessenraum_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_interessenraum_log_upd` AFTER UPDATE ON `interessenraum`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessenraum_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `interessenraum` WHERE id = NEW.id ;
+END
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_interessenraum_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_interessenraum_log_del_before` BEFORE DELETE ON `interessenraum`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessenraum_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `interessenraum` WHERE id = OLD.id ;
+END
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_interessenraum_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_interessenraum_log_del_after` AFTER DELETE ON `interessenraum`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `interessenraum_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+END
+//
+delimiter ;
+
+-- country triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_country_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_country_log_ins` AFTER INSERT ON `country`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `country_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `country` WHERE id = NEW.id ;
+END
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_country_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_country_log_upd` AFTER UPDATE ON `country`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `country_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `country` WHERE id = NEW.id ;
+END
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_country_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_country_log_del_before` BEFORE DELETE ON `country`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `country_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `country` WHERE id = OLD.id ;
+END
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_country_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_country_log_del_after` AFTER DELETE ON `country`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `country_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+END
+//
+delimiter ;
+
 -- end
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT;
+SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS;
+SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION;
 SET SQL_MODE=@OLD_SQL_MODE;
