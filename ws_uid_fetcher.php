@@ -92,7 +92,7 @@ function main() {
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
-  $options = getopt('hsv::u:tsmo:n::fz:Z:a',array('docroot:','help', 'uid:', 'ssl', 'zefix:', 'zefix-rest:'));
+  $options = getopt('hsv::u:tsmo:n::fz:Z:a::',array('docroot:','help', 'uid:', 'ssl', 'zefix:', 'zefix-rest:'));
 
 //    var_dump($options);
 
@@ -190,7 +190,8 @@ function main() {
   }
 
   if (isset($options['a'])) {
-    actualise_organisations_having_an_UID($records_limit, $ssl, $test_mode);
+    $start_id = $options['a'];
+    actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, $test_mode);
   }
 
   if (isset($options['f'])) {
@@ -212,7 +213,7 @@ Parameters:
 -t                   Call test service (default: production)
 --ssl                Use SSL
 -m                   Migrate old hr-id to uid from handelsregister_url
--a                   Actualise organisations with UID from webservices
+-a [START_ID]        Actualise organisations with UID from webservices, optional starting from organisation START_ID
 -n number            Limit number of records
 -s                   Output SQL script
 -v[level]            Verbose, optional level, 1 = default
@@ -465,7 +466,7 @@ function migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode) {
   print("\n\n*/\n");
 }
 
-function actualise_organisations_having_an_UID($records_limit, $ssl, $test_mode) {
+function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, $test_mode) {
   global $script;
   global $context;
   global $show_sql;
@@ -482,7 +483,8 @@ function actualise_organisations_having_an_UID($records_limit, $ssl, $test_mode)
 
   $script[] = $comment = "\n-- Actualise organisations having an UID from webservices $transaction_date";
 
-  $sql = "SELECT id, name_de, handelsregister_url, uid, rechtsform, rechtsform_handelsregister, rechtsform_zefix, beschreibung, name_de, name_fr, ort, adresse_strasse, adresse_zusatz, adresse_plz FROM organisation WHERE uid IS NOT NULL ORDER BY id;"; //  WHERE handelsregister_url IS NOT NULL
+  $starting_id_sql = $start_id ? "AND id >= $start_id" : '';
+  $sql = "SELECT id, name_de, handelsregister_url, uid, rechtsform, rechtsform_handelsregister, rechtsform_zefix, beschreibung, name_de, name_fr, ort, adresse_strasse, adresse_zusatz, adresse_plz FROM organisation WHERE uid IS NOT NULL $starting_id_sql ORDER BY id;";
   $stmt = $db->prepare($sql);
 
   $stmt->execute(array());
