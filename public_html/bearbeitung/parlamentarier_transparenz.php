@@ -5855,6 +5855,7 @@
             
             Vergütungstransparenz der Parlamentarier.
             (Die Listen können gefiltert und mit dem Export-Button zur weiteren Bearbeitung exportiert werden.)
+            <br>Die Daten könnenmit der <a href="parlamentarier_overview.php">Vergütungstransparenzübersicht</a> überprüft werden.
             
             ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . '');
             $this->setDetailedDescription('Vergütungstransparenz der Parlamentarier');

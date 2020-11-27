@@ -19381,6 +19381,7 @@ $edit_header_message
 
 Vergütungstransparenz der Parlamentarier.
 (Die Listen können gefiltert und mit dem Export-Button zur weiteren Bearbeitung exportiert werden.)
+&lt;br&gt;Die Daten könnenmit der &lt;a href=&quot;parlamentarier_overview.php&quot;&gt;Vergütungstransparenzübersicht&lt;/a&gt; überprüft werden.
 
 $edit_general_hint        </BeforeGridText>
         <DetailedDescription>

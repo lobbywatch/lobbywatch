@@ -60,12 +60,32 @@ try
   FROM v_parlamentarier_transparenz parlamentarier_transparenz
   LIMIT 1");
   $stichtag = $result->fetchColumn();
+  $jahr = date("Y");
 
   $title = 'Vergütungstransparenzübersicht';
   $markup = "<h1>$title</h1>";
   $markup .= "<table border='1' class='tablesorter table-medium header-sticky-enabled'>
   <thead>
-  <tr><th>Nr</th><th>Name</th><th>ID</th><th>Partei</th><th>Rat</th><th>Kanton</th><th title='Beurteilung der Transparenz'>transp. $stichtag</th><th title='0: total intransparent, 0 < x < 1: teilweise transparent, ≥1: voll transparent'>Transparenz<br>(#V / #I<sub>NB</sub>)</th><th title='Anzahl Interessenbindungen'>#I</th><th title='Anzahl nicht berufliche Interessenbindungen'>#I<sub>NB</sub></th><th title='Anzahl erfasste Vergütungen'>#V</th><th title='Anzahl erfasste nicht berufliche Vergütungen'>#V<sub>NB<sub></th><th title='Gesamte Anzahl Interessenbindungen (gültige und beendete)'>#I<sub>all</sub></th><th>Interessenbindungen <small class='desc'>(id)</small></th></tr>
+  <tr>
+  <th>Nr</th>
+  <th>Name</th>
+  <th>ID</th>
+  <th>Partei</th>
+  <th>Rat</th>
+  <th>Kanton</th>
+  <th title='In Transparenzliste $stichtag?'>In Liste</th>
+  <th title='Beurteilung der Transparenz gemäss aktuelltester Transparenzliste'>Transparent $stichtag</th>
+  <th title='0: intransparent (Gesetzliches Minimum), 0 < x < 1: teilweise transparent, ≥1: voll transparent'>Berechnete Transparenz<br>(#V<sup>+</sup> / #I<sub>NB</sub>)<br><small>Anzahl Vergütungen von $jahr ohne Betrag 1 durch Anzahl nicht berufliche gültige Interessenbindungen</small></th>
+  <th title='Anzahl erfasste Vergütungen von $jahr'>#V</th>
+  <th title='Anzahl erfasste Vergütungen von $jahr ohne Betrag=1'><strong>#V<sup>+</sup></strong></th>
+  <!-- <th title='Anzahl erfasste nicht berufliche Vergütungen von $jahr'>#V<sub>NB<sub></th> -->
+  <th title='Anzahl gültige Interessenbindungen'>#I</th>
+  <th title='Anzahl gültige berufliche Interessenbindungen'>#I<sub>B</sub></th>
+  <th title='Anzahl gültige Interessenbindungen von parlamentarischen Gruppen'>#I<sub>PG</sub></th>
+  <th title='Anzahl nicht berufliche gültige Interessenbindungen ohne parlamentarische Gruppe'><strong>#I<sub>NB</sub></strong></th>
+  <th title='Gesamte Anzahl Interessenbindungen (gültige und beendete)'>#I<sub>all</sub></th>
+  <th>Interessenbindungen total<small class='desc'>(id)</small></th>
+  </tr>
   </thead>
   <tbody>";
 
@@ -86,9 +106,40 @@ try
       $rowData = get_parlamentarier($con, $id, date("Y"));
       $transparenzData = get_parlamentarier_transparenz($con, $id);
 
-      $markup .= '<tr' . (!$record->freigabe_datum_unix || $record->freigabe_datum_unix > time() ? ' class="unpublished"': '') . "><td>$i</td><td>" . (!$active ? '<s>': '') . '<a href="/daten/parlamentarier/' . check_plain($id) . '/' . _lobbywatch_clean_for_url($record->anzeige_name) . '">' . check_plain($record->anzeige_name) . '</a>' . (!$active ? '</s>': '') . '</td><td>' . $id . '</td><td>' . check_plain($record->partei) . '</td><td>' . check_plain($record->rat) . '</td><td>' . check_plain($record->kanton) .
-      "</td><td title='{$transparenzData['stichdatum']}'>" . ($transparenzData['verguetung_transparent'] ?? '-') . "</td><td>" . ($transparenzData['anzahl_nicht_hauptberufliche_interessenbindungen'] > 0 ? round($transparenzData['anzahl_erfasste_verguetungen'] / $transparenzData['anzahl_nicht_hauptberufliche_interessenbindungen'], 2) : '1') . "<td>{$transparenzData['anzahl_interessenbindungen']}</td><td>{$transparenzData['anzahl_nicht_hauptberufliche_interessenbindungen']}</td><td>{$transparenzData['anzahl_erfasste_verguetungen']}</td><td>{$transparenzData['anzahl_erfasste_nicht_hauptberufliche_verguetungen']}</td><td>{$transparenzData['anzahl_interessenbindungen_alle']}</td><td>" . $rowData['interessenbindungen']
-      . "</td></tr>\n";
+      $calcualted_transparency = $transparenzData['anzahl_nicht_hauptberufliche_nicht_parlgruppe_interessenbindungen'] > 0 ? round($transparenzData['anzahl_erfasste_verguetungen_ohne_betrag_eins'] / $transparenzData['anzahl_nicht_hauptberufliche_nicht_parlgruppe_interessenbindungen'], 2) : '1';
+      $lower_threshold = 0.25;
+      $upper_threshold = 1 - $lower_threshold;
+      $ok = !empty($transparenzData['verguetung_transparent']) && $transparenzData['in_liste'] &&
+      (($transparenzData['verguetung_transparent'] == 'ja' && $calcualted_transparency >= $upper_threshold) ||
+      ($transparenzData['verguetung_transparent'] == 'nein' && $calcualted_transparency <= $lower_threshold) ||
+      ($transparenzData['verguetung_transparent'] == 'teilweise' && ($calcualted_transparency >= $lower_threshold || $calcualted_transparency <= $upper_threshold))
+      );
+      $warn = !empty($transparenzData['verguetung_transparent']) && $transparenzData['in_liste'] &&
+      (($transparenzData['verguetung_transparent'] == 'ja' && $calcualted_transparency < $upper_threshold) ||
+      ($transparenzData['verguetung_transparent'] == 'nein' && $calcualted_transparency > $lower_threshold) ||
+      ($transparenzData['verguetung_transparent'] == 'teilweise' && ($calcualted_transparency < $lower_threshold || $calcualted_transparency > $upper_threshold))
+      );
+
+      $markup .= '<tr' . (!$record->freigabe_datum_unix || $record->freigabe_datum_unix > time() ? ' class="unpublished"': '') . ">" .
+      "<td>$i</td>" .
+      "<td>" . (!$active ? '<s>': '') . '<a href="/daten/parlamentarier/' . check_plain($id) . '/' . _lobbywatch_clean_for_url($record->anzeige_name) . '">' . check_plain($record->anzeige_name) . '</a>' . (!$active ? '</s>': '') . '</td>' .
+      '<td>' . $id . '</td>' .
+      '<td>' . check_plain($record->partei) . '</td>' .
+      '<td>' . check_plain($record->rat) . '</td>' .
+      '<td>' . check_plain($record->kanton) . "</td>" .
+      "<td>" . $transparenzData['in_liste'] . "</td>" .
+      "<td title='{$transparenzData['stichdatum']}' style='" . ($ok ? " background-color: green;" : '') . ($warn ? " background-color: yellow;" : '') . "'>" . ($transparenzData['verguetung_transparent'] ?? '-') . "</td>" .
+      "<td style='" . ($ok ? " background-color: green;" : '') . ($warn ? " background-color: yellow;" : '') . "'><strong>" . ($calcualted_transparency) . "</strong></td>" .
+      "<td>{$transparenzData['anzahl_erfasste_verguetungen']}</td>" .
+      "<td><strong>{$transparenzData['anzahl_erfasste_verguetungen_ohne_betrag_eins']}</strong></td>" .
+      // "<td>{$transparenzData['anzahl_erfasste_nicht_hauptberufliche_verguetungen']}</td>" .
+      "<td>{$transparenzData['anzahl_interessenbindungen']}</td>" .
+      "<td>{$transparenzData['anzahl_hauptberufliche_interessenbindungen']}</td>" .
+      "<td>{$transparenzData['anzahl_parlgruppe_interessenbindungen']}</td>" .
+      "<td><strong>{$transparenzData['anzahl_nicht_hauptberufliche_nicht_parlgruppe_interessenbindungen']}</strong></td>" .
+      "<td>{$transparenzData['anzahl_interessenbindungen_alle']}</td>" .
+      "<td>" . $rowData['interessenbindungen'] . "</td>" .
+      "</tr>\n";
     }
 
     $markup .= '</tbody></table>';

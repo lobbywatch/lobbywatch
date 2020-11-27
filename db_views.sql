@@ -1509,7 +1509,7 @@ SELECT
 , interessenbindung_jahr.freigabe_datum as verguetung_freigabe_datum
 FROM v_interessenbindung_simple interessenbindung
 LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
-  on interessenbindung.id = interessenbindung_jahr.interessenbindung_id AND interessenbindung_jahr.jahr = (
+  ON interessenbindung.id = interessenbindung_jahr.interessenbindung_id AND interessenbindung_jahr.jahr = (
     SELECT max(ijn.jahr)
     FROM v_interessenbindung_jahr ijn
     WHERE ijn.interessenbindung_id = interessenbindung.id
@@ -1553,13 +1553,14 @@ LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
       AND ijn.freigabe_datum <= NOW()
   )
 ;
+
 CREATE OR REPLACE VIEW `v_interessenbindung_jahr_current` AS
-SELECT interessenbindung.id AS interessenbindung_id
+SELECT interessenbindung.*
 , interessenbindung_jahr.verguetung
 , interessenbindung_jahr.jahr as verguetung_jahr
 , interessenbindung_jahr.beschreibung as verguetung_beschreibung
-, interessenbindung_jahr.published as published
-, interessenbindung_jahr.freigabe_datum as freigabe_datum
+, interessenbindung_jahr.published as verguetung_published
+, interessenbindung_jahr.freigabe_datum as verguetung_freigabe_datum
 FROM v_interessenbindung_simple interessenbindung
 LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
   ON interessenbindung.id = interessenbindung_jahr.interessenbindung_id AND interessenbindung_jahr.jahr = YEAR(NOW())

@@ -28,7 +28,9 @@ done
 
 dir="public_html/bearbeitung"
 
-[ -d "$dir/libs" ] && rm -r "$dir/libs"
+[ -d "$dir/libs" ] && rm -rf "$dir/libs"
+# needs rw for pdf export in forms
+[ -d "$dir/libs/mpdf/mpdf_8/mpdf/mpdf/tmp" ] && chmod 777 libs/mpdf/mpdf_8/mpdf/mpdf/tmp
 
 phpgen_version=$(head -n1 lobbywatch_bearbeitung.pgtm | grep -oP 'version="\K(.+?)(?=")')
 
