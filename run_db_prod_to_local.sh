@@ -21,9 +21,11 @@ for i in "$@" ; do
       case $i in
                 -h|--help)
                         echo "Import DB from production to local"
-                        echo " "
+                        echo
                         echo "$0 [options] [DB]"
-                        echo " "
+                        echo
+                        echo "DB=all or name, default lobbywatchtest"
+                        echo
                         echo "Options:"
                         echo "-f, --full-dump           Import full DB dump which replaces the current DB"
                         echo "-P, --progress            Show download progress"
