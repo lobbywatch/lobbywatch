@@ -3391,6 +3391,12 @@ function convertParlamentBerufJsonToHtml(array $parlament_beruf_objects): string
   return implode("\n", $new_parlament_beruf_html);
 }
 
+/** Converts a $json string to PHP datastructures (objects and arrays) */
+function decodeJson($json) {
+  $data = isset($json) ? json_decode($json, false, 512, JSON_THROW_ON_ERROR) : null;
+  return $data;
+}
+
 function get_parlamentarier_transparenz($con, $id) {
       $result = array();
 //       $sql = "SELECT parlamentarier.parlamentarier_id as id, parlamentarier.*

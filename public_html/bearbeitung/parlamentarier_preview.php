@@ -80,13 +80,13 @@ try {
     $cellClasses = [];
     customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);
 
-    $old_ib_html = normalizeParlamentInteressenbindungen($lastLogRowParlamentInteressenbindungen['parlament_interessenbindungen']);
+    $old_ib_html = normalizeParlamentInteressenbindungen($lastLogRowParlamentInteressenbindungen['parlament_interessenbindungen']) ?? '';
     $new_ib_html = normalizeParlamentInteressenbindungen($rowData['parlament_interessenbindungen']);
     $ib_diff_html = htmlDiffStyled($old_ib_html, $new_ib_html, false);
 
-    $old_beruf_html = $lastLogRowParlamentBeruf['parlament_beruf_json'] ?? '';
-    $new_beruf_html = $rowData['parlament_beruf_json'] ?? '';
-    $beruf_diff_html = htmlDiffStyled($old_beruf_html, $new_beruf_html, false);
+    $old_beruf = convertParlamentBerufJsonToHtml(decodeJson($lastLogRowParlamentBeruf['parlament_beruf_json']) ?? []);
+    $new_beruf = convertParlamentBerufJsonToHtml(decodeJson($rowData['parlament_beruf_json']) ?? []);
+    $beruf_diff_html = htmlDiffStyled($old_beruf, $new_beruf, false);
 
     $zbRetDetail = zutrittsberechtigteForParlamentarier($con, $id, false);
     $zbRet = zutrittsberechtigteForParlamentarier($con, $id, true);

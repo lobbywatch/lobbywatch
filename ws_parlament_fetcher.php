@@ -692,10 +692,10 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   // Import parlamentarier_ws_odata_PersonOccupation
   $ws_occupation = $parlamentarier_ws_odata_PersonOccupation->d->results ?? null;
 
-  $different_db_values |= $job_changed = checkField('parlament_beruf_json', $ws_occupation, $parlamentarier_db_obj, $ws_occupation, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentBerufJsonOdata', 'parlament_interessenbindungen_updated', null);
+  $different_db_values |= $job_changed = checkField('parlament_beruf_json', $ws_occupation, $parlamentarier_db_obj, $ws_occupation, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentBerufJsonOdata', 'parlament_interessenbindungen_updated', 'decodeJson');
 
   if ($job_changed) {
-    $old_parlament_beruf_html = convertParlamentBerufJsonToHtml($parlamentarier_db_obj->parlament_beruf_json ?? []);
+    $old_parlament_beruf_html = convertParlamentBerufJsonToHtml(decodeJson($parlamentarier_db_obj->parlament_beruf_json ?? ''));
     $new_parlament_beruf_objects = getParlamentBerufJsonOdata($ws_occupation);
     $new_parlament_beruf_html = convertParlamentBerufJsonToHtml($new_parlament_beruf_objects);
     $diff = htmlDiffStyled($old_parlament_beruf_html, $new_parlament_beruf_html, false);
@@ -1525,18 +1525,6 @@ function sortParlamentBerufObjects(?array $objects): array {
   if (empty($objects)) return [];
   usort($objects, function($a, $b) { return ($a->lang . $a->von . $a->beruf . $a->arbeitgeber . $a->jobtitel) <=> ($b->lang . $b->von . $b->beruf . $b->arbeitgeber . $b->jobtitel); });
   return $objects;
-}
-
-/** Converts a $json string to PHP datastructures (objects and arrays) */
-function decodeJson($json, $parlamentarier_db_obj) {
-  global $errors;
-  $data = isset($json) ? json_decode($json, false, 512, JSON_THROW_ON_ERROR) : null;
-
-  if (json_last_error() != 0) {
-    $errors[] = 'json_decode ERROR: ' . json_last_error() . ', ' . json_last_error_msg() . ", id=" . $parlamentarier_db_obj->id . " → '" . $json . "' / '" . $data . "'";
-  }
-
-  return $data;
 }
 
 function parlamentarierOhneBiografieID() {
