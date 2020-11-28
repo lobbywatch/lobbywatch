@@ -598,9 +598,9 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
       $img = "$img_path/gross/$filename";
       create_parent_dir_if_not_exists($img);
       if (file_exists("$img_path/original/$filename") && filesize("$img_path/original/$filename") > 0) {
-        exec("convert $img_path/original/$filename -filter Lanczos -resize 150x211 -quality 90 $img");
+        exec("/usr/bin/convert $img_path/original/$filename -filter Lanczos -resize 150x211 -quality 90 $img");
       } else {
-        exec("convert $img_path/portrait-260/$filename -filter Lanczos -resize 150x211 -quality 90 $img");
+        exec("/usr/bin/convert $img_path/portrait-260/$filename -filter Lanczos -resize 150x211 -quality 90 $img");
         $fields[] = "**originalImageMissing(convert)** ";
       }
 
