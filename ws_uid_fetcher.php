@@ -528,7 +528,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
     // UID WS (BFS)
     if ($uidBFSenabled) {
         $dataUidBfs = initDataArray();
-      ws_get_organization_from_uid_bfs($uid, $clientUid, $dataUidBfs, $verbose, 6); // Similar to _lobbywatch_fetch_ws_uid_bfs_data() in utils.php
+      ws_get_organization_from_uid_bfs($uid, $clientUid, $dataUidBfs, $verbose, 9); // Similar to _lobbywatch_fetch_ws_uid_bfs_data() in utils.php
       if (!$records_limit || $records_limit > 20) {
         sleep(3);
       }

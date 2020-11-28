@@ -2134,7 +2134,7 @@ function initSoapClient(&$data, $login, $verbose = 0, $ssl = true) {
   return $client;
 }
 
-function _lobbywatch_fetch_ws_uid_bfs_data($uid_raw, $verbose = 0, $ssl = true, $test_mode = false) {
+function _lobbywatch_fetch_ws_uid_bfs_data($uid_raw, $verbose = 0, $ssl = true, $test_mode = false, $num_retries = 0) {
   $data = initDataArray();
 
   if (!_lobbywatch_check_uid_format($uid_raw, $uid, $data['message'])) {
@@ -2184,7 +2184,7 @@ function _lobbywatch_fetch_ws_uid_bfs_data($uid_raw, $verbose = 0, $ssl = true, 
   </soapenv:Envelope>
   */
 
-  ws_get_organization_from_uid_bfs($uid, $client, $data, $verbose);
+  ws_get_organization_from_uid_bfs($uid, $client, $data, $verbose, $num_retries);
   return $data;
 }
 
@@ -2255,7 +2255,8 @@ function ws_get_organization_from_zefix_rest($uid_raw, &$data, $verbose, $test_m
       $data['sql'] = "uid=$uid";
     }
   } catch(Exception $e) {
-    $data['message'] .= _utils_get_exeption($e);
+    // $data['message'] .= _utils_get_exeption($e);
+    $data['message'] .= $e->GetMessage();
     $data['success'] = false;
     $data['sql'] = "uid=$uid";
   } finally {
@@ -2282,7 +2283,8 @@ function ws_get_organization_from_zefix_soap($uid_raw, $client, &$data, $verbose
       $data['sql'] = "uid=$uid";
     }
   } catch(Exception $e) {
-    $data['message'] .= _utils_get_exeption($e);
+    // $data['message'] .= _utils_get_exeption($e);
+    $data['message'] .= $e->GetMessage();
     $data['success'] = false;
     $data['sql'] = "uid=$uid";
   } finally {
@@ -2291,7 +2293,8 @@ function ws_get_organization_from_zefix_soap($uid_raw, $client, &$data, $verbose
   return $response;
 }
 
-function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose, $num_retries = 2) {
+/** Retries sleep time 2**($i + 3). $i = 9 -> totally 2.3h sleep ((2**13 - 1)  / 3600) */
+function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose, $num_retries = 0) {
   /* Invoke webservice method with your parameters. */
   $response = null;
   try {
@@ -2309,15 +2312,12 @@ function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose, $
         $response = $client->GetByUID($params);
       } catch (SoapFault $e) {
         if ($e->faultstring == 'Request_limit_exceeded') {
-          // $fault = (array) $e->detail->BusinessFault;
-          // print("${fault['Error']} [op=${fault['Operation']}]: ${fault['ErrorDetail']}\n");
-          // print($e);
-          // print("\nERROR: Abort\n");
-          // exit(1);
+          $fault = (array) $e->detail->BusinessFault;
           if ($i < $num_retries) {
-            sleep(pow(2, $i + 3));
+            // print("Waiting " . 2**($i + 3) . "s…\n");
+            sleep(2**($i + 3));
           } else {
-            throw $e;
+            throw new Exception("${fault['Error']} [op=${fault['Operation']}]: ${fault['ErrorDetail']}", $e->getCode(), $e);
           }
         }
       }
@@ -2331,7 +2331,8 @@ function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose, $
       $data['sql'] = "uid=$uid";
     }
   } catch(Exception $e) {
-    $data['message'] .= _utils_get_exeption($e);
+    // $data['message'] .= _utils_get_exeption($e);
+    $data['message'] .= $e->GetMessage();
     $data['success'] = false;
     $data['sql'] = "uid=$uid";
   } finally {
@@ -2366,7 +2367,8 @@ function _lobbywatch_fetch_ws_uid_data_from_old_hr_id($old_hr_id_raw, $verbose =
     $response = $client->Search($params);
     fillDataFromUidBfsResult($response->SearchResult, $data);
   } catch(Exception $e) {
-    $data['message'] .= _utils_get_exeption($e);
+    // $data['message'] .= _utils_get_exeption($e);
+    $data['message'] .= $e->GetMessage();
     $data['success'] = false;
   } finally {
     ws_verbose_logging($client, $response, $data, $verbose);
