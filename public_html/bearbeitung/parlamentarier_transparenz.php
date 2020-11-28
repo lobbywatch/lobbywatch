@@ -1757,6 +1757,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -2985,7 +2986,13 @@
             $column = new TextViewColumn('verguetung_transparent', 'verguetung_transparent', 'Transparent', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Ist der dieser Parlamentarier transparent bzgl seinen Vergütungen? ja, nein, teilweise (Leer/NULL bedeutet noch nicht eingetragen)');
+            $column->SetDescription('<p>Ist der dieser Parlamentarier transparent bzgl seinen Vergütungen? ja, nein, teilweise (Leer/NULL bedeutet noch nicht eingetragen)</p>
+            <ul>
+            <li>NEIN=Minimaltransparenz (= gesetzliches Minimum, bezahlt/ehrenamtlich)
+            <li>TEILWEISE=teilweise transparent (=gesetzl Minimum plus einzelne Entschädigungen als Betrag offengelegt)
+            <li>JA=transparent (=gesetzl. Minimum plus alles Entschädigungen offengelegt; Exkl. Entschädigung aus Hauptberuf)
+            </ul>
+            See <a href="https://cms.lobbywatch.ch/sites/lobbywatch.ch/wiki/Transparenzliste?page_ref_id=129">WIKI</a>');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -3513,6 +3520,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -4198,6 +4206,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -4883,6 +4892,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -5927,6 +5937,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -6090,6 +6101,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -6488,6 +6500,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -6886,6 +6899,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),

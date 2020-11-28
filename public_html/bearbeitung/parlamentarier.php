@@ -1658,6 +1658,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -1764,6 +1765,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -1870,6 +1872,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -2883,6 +2886,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -3520,6 +3524,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -3605,6 +3610,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -5283,6 +5289,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -5725,6 +5732,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -6167,6 +6175,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -7333,6 +7342,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -7496,6 +7506,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -7659,6 +7670,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -7822,6 +7834,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -8136,6 +8149,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -8252,6 +8266,7 @@
                 new FilterColumn($this->dataset, 'homepage_2', 'homepage_2', 'Homepage 2'),
                 new FilterColumn($this->dataset, 'parlament_biografie_id', 'parlament_biografie_id', 'Parlament Biografie Id'),
                 new FilterColumn($this->dataset, 'parlament_number', 'parlament_number', 'Parlament Number'),
+                new FilterColumn($this->dataset, 'parlament_beruf_json', 'parlament_beruf_json', 'Parlament Beruf Json'),
                 new FilterColumn($this->dataset, 'parlament_interessenbindungen', 'parlament_interessenbindungen', 'Parlament Interessenbindungen'),
                 new FilterColumn($this->dataset, 'parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json'),
                 new FilterColumn($this->dataset, 'parlament_interessenbindungen_updated', 'parlament_interessenbindungen_updated', 'Parlament Interessenbindungen Updated'),
@@ -8336,6 +8351,7 @@
                 ->addColumn($columns['homepage_2'])
                 ->addColumn($columns['parlament_biografie_id'])
                 ->addColumn($columns['parlament_number'])
+                ->addColumn($columns['parlament_beruf_json'])
                 ->addColumn($columns['parlament_interessenbindungen'])
                 ->addColumn($columns['parlament_interessenbindungen_json'])
                 ->addColumn($columns['parlament_interessenbindungen_updated'])
@@ -9401,6 +9417,30 @@
                     FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
                     FilterConditionOperator::IS_BETWEEN => $main_editor,
                     FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('parlament_beruf_json_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['parlament_beruf_json'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -10804,6 +10844,16 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for parlament_beruf_json field
+            //
+            $column = new TextViewColumn('parlament_beruf_json', 'parlament_beruf_json', 'Parlament Beruf Json', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Importierter Beruf des Parlamentariers: Beruf, Arbeitgeber, Jobtitel/Funktion, von, bis (von parlament.ch)');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for parlament_interessenbindungen field
             //
             $column = new TextViewColumn('parlament_interessenbindungen', 'parlament_interessenbindungen', 'Parlament Interessenbindungen', $this->dataset);
@@ -11517,6 +11567,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for parlament_beruf_json field
+            //
+            $column = new TextViewColumn('parlament_beruf_json', 'parlament_beruf_json', 'Parlament Beruf Json', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for parlament_interessenbindungen field
             //
             $column = new TextViewColumn('parlament_interessenbindungen', 'parlament_interessenbindungen', 'Parlament Interessenbindungen', $this->dataset);
@@ -12137,6 +12194,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for parlament_beruf_json field
+            //
+            $column = new TextViewColumn('parlament_beruf_json', 'parlament_beruf_json', 'Parlament Beruf Json', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for parlament_interessenbindungen field
             //
             $column = new TextViewColumn('parlament_interessenbindungen', 'parlament_interessenbindungen', 'Parlament Interessenbindungen', $this->dataset);
@@ -12736,6 +12800,13 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for parlament_beruf_json field
+            //
+            $column = new TextViewColumn('parlament_beruf_json', 'parlament_beruf_json', 'Parlament Beruf Json', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for parlament_interessenbindungen field
             //
             $column = new TextViewColumn('parlament_interessenbindungen', 'parlament_interessenbindungen', 'Parlament Interessenbindungen', $this->dataset);
@@ -13331,6 +13402,13 @@
             // View column for parlament_number field
             //
             $column = new TextViewColumn('parlament_number', 'parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for parlament_beruf_json field
+            //
+            $column = new TextViewColumn('parlament_beruf_json', 'parlament_beruf_json', 'Parlament Beruf Json', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             
@@ -19009,6 +19087,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -19390,6 +19469,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -19857,6 +19937,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -20703,6 +20784,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -20940,6 +21022,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -21177,6 +21260,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -21414,6 +21498,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -49153,6 +49238,7 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
@@ -49266,6 +49352,7 @@
                 new FilterColumn($this->dataset, 'homepage_2', 'homepage_2', '2. Homepage'),
                 new FilterColumn($this->dataset, 'parlament_biografie_id', 'parlament_biografie_id', 'Parlament.ch Biografie ID'),
                 new FilterColumn($this->dataset, 'parlament_number', 'parlament_number', 'Parlament Number'),
+                new FilterColumn($this->dataset, 'parlament_beruf_json', 'parlament_beruf_json', 'Parlament Beruf'),
                 new FilterColumn($this->dataset, 'parlament_interessenbindungen', 'parlament_interessenbindungen', 'Parlament Interessenbindungen'),
                 new FilterColumn($this->dataset, 'parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json'),
                 new FilterColumn($this->dataset, 'parlament_interessenbindungen_updated', 'parlament_interessenbindungen_updated', 'Parlament Interessenbindungen Updated'),
@@ -49329,6 +49416,7 @@
                 ->addColumn($columns['homepage_2'])
                 ->addColumn($columns['parlament_biografie_id'])
                 ->addColumn($columns['parlament_number'])
+                ->addColumn($columns['parlament_beruf_json'])
                 ->addColumn($columns['parlament_interessenbindungen'])
                 ->addColumn($columns['parlament_interessenbindungen_updated'])
                 ->addColumn($columns['twitter_name'])
@@ -50332,6 +50420,30 @@
                     FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
                     FilterConditionOperator::IN => $multi_value_select_editor,
                     FilterConditionOperator::NOT_IN => $multi_value_select_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('parlament_beruf_json_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['parlament_beruf_json'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -51646,6 +51758,16 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for parlament_beruf_json field
+            //
+            $column = new TextViewColumn('parlament_beruf_json', 'parlament_beruf_json', 'Parlament Beruf', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::LARGE_DESKTOP);
+            $column->SetDescription('Importierter Beruf des Parlamentariers: Beruf, Arbeitgeber, Jobtitel/Funktion, von, bis (von parlament.ch)');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for parlament_interessenbindungen field
             //
             $column = new TextViewColumn('parlament_interessenbindungen', 'parlament_interessenbindungen', 'Parlament Interessenbindungen', $this->dataset);
@@ -52240,6 +52362,13 @@
             // View column for parlament_number field
             //
             $column = new TextViewColumn('parlament_number', 'parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for parlament_beruf_json field
+            //
+            $column = new TextViewColumn('parlament_beruf_json', 'parlament_beruf_json', 'Parlament Beruf', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -53170,6 +53299,16 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for parlament_beruf_json field
+            //
+            $editor = new TextEdit('parlament_beruf_json_edit');
+            $editColumn = new CustomEditColumn('Parlament Beruf', 'parlament_beruf_json', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -54180,6 +54319,16 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for parlament_beruf_json field
+            //
+            $editor = new TextEdit('parlament_beruf_json_edit');
+            $editColumn = new CustomEditColumn('Parlament Beruf', 'parlament_beruf_json', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
             
@@ -55771,6 +55920,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for parlament_beruf_json field
+            //
+            $column = new TextViewColumn('parlament_beruf_json', 'parlament_beruf_json', 'Parlament Beruf', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for parlament_interessenbindungen field
             //
             $column = new TextViewColumn('parlament_interessenbindungen', 'parlament_interessenbindungen', 'Parlament Interessenbindungen', $this->dataset);
@@ -56317,6 +56473,13 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for parlament_beruf_json field
+            //
+            $column = new TextViewColumn('parlament_beruf_json', 'parlament_beruf_json', 'Parlament Beruf', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for parlament_interessenbindungen field
             //
             $column = new TextViewColumn('parlament_interessenbindungen', 'parlament_interessenbindungen', 'Parlament Interessenbindungen', $this->dataset);
@@ -56851,6 +57014,13 @@
             // View column for parlament_number field
             //
             $column = new TextViewColumn('parlament_number', 'parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for parlament_beruf_json field
+            //
+            $column = new TextViewColumn('parlament_beruf_json', 'parlament_beruf_json', 'Parlament Beruf', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             

@@ -378,7 +378,7 @@ function syncParlamentarier(string $img_path, bool $processRetired = true) {
 
   $script[] = $comment = "\n-- Parlamentarier $transaction_date";
 
-  $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, parlament_number, titel, aemter, weitere_aemter, kleinbild, kanton_id, rat_id, fraktion_id, fraktionsfunktion, partei_id, geburtstag, sprache, arbeitssprache, geschlecht, anzahl_kinder, zivilstand, beruf, militaerischer_grad_id, im_rat_seit, im_rat_bis, ratsunterbruch_von, ratsunterbruch_bis, ratswechsel, homepage, homepage_2, email, telephon_1, telephon_2, adresse_ort, adresse_strasse, adresse_plz, adresse_firma, parlament_interessenbindungen, parlament_interessenbindungen_json, parlament_interessenbindungen_updated FROM parlamentarier ORDER BY nachname, vorname;";
+  $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, parlament_number, titel, aemter, weitere_aemter, kleinbild, kanton_id, rat_id, fraktion_id, fraktionsfunktion, partei_id, geburtstag, sprache, arbeitssprache, geschlecht, anzahl_kinder, zivilstand, beruf, militaerischer_grad_id, im_rat_seit, im_rat_bis, ratsunterbruch_von, ratsunterbruch_bis, ratswechsel, homepage, homepage_2, email, telephon_1, telephon_2, adresse_ort, adresse_strasse, adresse_plz, adresse_firma, parlament_interessenbindungen, parlament_interessenbindungen_json, parlament_interessenbindungen_updated, parlament_beruf_json FROM parlamentarier ORDER BY nachname, vorname;";
   $stmt = $db->prepare($sql);
 
   $stmt->execute ( array() );
@@ -543,17 +543,19 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
     $max_output_length = 10;
   }
 
+  $fields_ignored = [];
 
   // TODO repeal and replace ws-old.parlament.ch, see https://www.parlament.ch/de/services/open-data-webservices
   // The new services should be available end of 2018
   $ws_parlament_url = "http://ws-old.parlament.ch/councillors/$biografie_id?format=json&lang=de";
   $parlamentarier_ws = get_object_from_json_url($ws_parlament_url);
 
-
   // https://ws.parlament.ch/odata.svc/Person?$filter=(PersonNumber+eq+1139)+and+(Language eq 'DE')
   // https://ws.parlament.ch/odata.svc/PersonInterest?$filter=(PersonNumber+eq+1139)+and+(Language eq 'DE')
   $ws_parlament_url_odata_PersonInterest = "https://ws.parlament.ch/odata.svc/PersonInterest?\$filter=" . urlencode("(Language eq 'DE') and (PersonNumber eq $biografie_id)") . "&\$orderby=SortOrder";
   $parlamentarier_ws_odata_PersonInterest = get_object_from_json_url($ws_parlament_url_odata_PersonInterest);
+  $ws_parlament_url_odata_PersonOccupation = "https://ws.parlament.ch/odata.svc/PersonOccupation?\$filter=" . urlencode("(Language eq 'DE') and (PersonNumber eq $biografie_id)") . "&\$orderby=" .  urlencode("StartDate desc");
+  $parlamentarier_ws_odata_PersonOccupation = get_object_from_json_url($ws_parlament_url_odata_PersonOccupation);
 
   $different_db_values = false;
 
@@ -679,10 +681,25 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   $different_db_values |= checkField('aemter', $parlamentarier_ws->mandate ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
   $different_db_values |= checkField('weitere_aemter', $parlamentarier_ws->additionalMandate ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
 
+  // IB from ws-old
   // $different_db_values |= $ib_changed = checkField('parlament_interessenbindungen', $parlamentarier_ws->concerns ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungen', 'parlament_interessenbindungen_updated', 'normalizeParlamentInteressenbindungen');
-  // $different_db_values |= $ib_json_changed = checkField('parlament_interessenbindungen_json', $parlamentarier_ws->concerns ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungenJson', 'parlament_interessenbindungen_updated', 'decodeJson');
-  $different_db_values |= $ib_changed = checkField('parlament_interessenbindungen', $parlamentarier_ws_odata_PersonInterest->d->results ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungenOdata', 'parlament_interessenbindungen_updated', 'normalizeParlamentInteressenbindungen');
-  $different_db_values |= $ib_json_changed = checkField('parlament_interessenbindungen_json', $parlamentarier_ws_odata_PersonInterest->d->results ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungenJsonOdata', 'parlament_interessenbindungen_updated', 'decodeJson');
+  // $different_db_values |= $ib_json_changed = checkField('parlament_interessenbindungen_json', $parlamentarier_ws->concerns ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields_ignored, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungenJson', 'parlament_interessenbindungen_updated', 'decodeJson');
+  // IB from $odata
+  $different_db_values |= $ib_changed = checkField('parlament_interessenbindungen', $parlamentarier_ws_odata_PersonInterest->d->results ?? null, $parlamentarier_db_obj, $parlamentarier_ws_odata_PersonInterest->d->results ?? null, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungenOdata', 'parlament_interessenbindungen_updated', 'normalizeParlamentInteressenbindungen');
+  $different_db_values |= $ib_json_changed = checkField('parlament_interessenbindungen_json', $parlamentarier_ws_odata_PersonInterest->d->results ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields_ignored, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungenJsonOdata', 'parlament_interessenbindungen_updated', 'decodeJson');
+
+  // Import parlamentarier_ws_odata_PersonOccupation
+  $ws_occupation = $parlamentarier_ws_odata_PersonOccupation->d->results ?? null;
+
+  $different_db_values |= $job_changed = checkField('parlament_beruf_json', $ws_occupation, $parlamentarier_db_obj, $ws_occupation, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentBerufJsonOdata', 'parlament_interessenbindungen_updated', null);
+
+  if ($job_changed) {
+    $old_parlament_beruf_html = convertParlamentBerufJsonToHtml($parlamentarier_db_obj->parlament_beruf_json ?? []);
+    $new_parlament_beruf_objects = getParlamentBerufJsonOdata($ws_occupation);
+    $new_parlament_beruf_html = convertParlamentBerufJsonToHtml($new_parlament_beruf_objects);
+    $diff = htmlDiffStyled($old_parlament_beruf_html, $new_parlament_beruf_html, false);
+    $delta[] = "Geänderter Beruf/Arbeitgeber bei <b>$parlamentarier_ws->lastName, $parlamentarier_ws->firstName</b>, biografie_id=$biografie_id, id=$id:\n$diff\n";
+  }
 
   if ($ib_changed) {
     // print("<p>p<ins>ins</ins><del>del</del><i>i</i><b>b</b><mark>mark</mark><s>s</s></p>");
@@ -1458,11 +1475,10 @@ function getParlamentInteressenbindungenJson($concerns) {
 }
 
 // Returns interessenbindungen as PHP data structures (arrays and objects)
-function getParlamentInteressenbindungenJsonOdata($concerns) {
+function getParlamentInteressenbindungenJsonOdata(array $concerns) {
   global $errors;
-  $interessenbindungen = [];
   $objects = null;
-  if (is_array($concerns) && !empty($concerns)) {
+  if (!empty($concerns) && is_array($concerns)) {
     $objects = [];
     foreach($concerns as $concern) {
 //       print_r($concern);
@@ -1478,6 +1494,35 @@ function getParlamentInteressenbindungenJsonOdata($concerns) {
       ];
     }
   }
+  return $objects;
+}
+
+// Returns beruf/arbeitgeber as PHP data structures (arrays and objects)
+function getParlamentBerufJsonOdata(array $occupations): array {
+  global $errors;
+  $beruf = [];
+  $objects = null;
+  if (!empty($occupations) &&is_array($occupations)) {
+    $objects = [];
+    foreach($occupations as $occupation) {
+//       print_r($concern);
+      $objects[] = (object) [
+        'beruf' => $occupation->OccupationName ?? null,
+        'arbeitgeber' => $occupation->Employer ?? null,
+        'jobtitel' => $occupation->JobTitle ?? null,
+        'von' => convertJsonDateToISODate($occupation->StartDate ?? null),
+        'bis' => convertJsonDateToISODate($occupation->EndDate ?? null),
+        'lang' => 'de',
+      ];
+    }
+  }
+  // sort to have a defined order which is useful for comparisons
+  return sortParlamentBerufObjects($objects);
+}
+
+function sortParlamentBerufObjects(?array $objects): array {
+  if (empty($objects)) return [];
+  usort($objects, function($a, $b) { return ($a->lang . $a->von . $a->beruf . $a->arbeitgeber . $a->jobtitel) <=> ($b->lang . $b->von . $b->beruf . $b->arbeitgeber . $b->jobtitel); });
   return $objects;
 }
 

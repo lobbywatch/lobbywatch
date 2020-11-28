@@ -198,6 +198,7 @@ function convert_ansi($text) {
   return ConvertTextToEncoding($text, 'UTF-8', GetAnsiEncoding());
 }
 
+// Comments on form fields
 function fillHintParams(Page $page, &$params) {
   // Fill info hints
   $hints = array();

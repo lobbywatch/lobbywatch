@@ -3335,3 +3335,20 @@ ADD `in_liste` BOOLEAN NOT NULL DEFAULT TRUE COMMENT 'Ist dieser Eintrag in der 
 
 ALTER TABLE `parlamentarier_transparenz_log`
 ADD `in_liste` BOOLEAN NOT NULL DEFAULT TRUE COMMENT 'Ist dieser Eintrag in der Transparenliste mit dem angegebenen Stichdatum enthalten? (Dieses Feld verhindert Transparenzlisteneinträge löschen zu müssen, wenn diese nicht in der Transparenzliste enthalten sind.)' AFTER `stichdatum`;
+
+-- 28.11.2020 enhance parlamentarier_transparenz.verguetung_transparent comment
+
+ALTER TABLE `parlamentarier_transparenz`
+CHANGE `verguetung_transparent` `verguetung_transparent` ENUM('ja','nein','teilweise') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Ist der dieser Parlamentarier transparent bzgl seinen Vergütungen? ja, nein, teilweise (Leer/NULL bedeutet noch nicht eingetragen): NEIN=Minimaltransparenz (= gesetzliches Minimum, bezahlt/ehrenamtlich); TEILWEISE=teilweise transparent (=gesetzl Minimum plus einzelne Entschädigungen als Betrag offengelegt); JA=transparent (=gesetzl. Minimum plus alles Entschädigungen offengelegt; Exkl. Entschädigung aus Hauptberuf)';
+
+ALTER TABLE `parlamentarier_transparenz_log`
+CHANGE `verguetung_transparent` `verguetung_transparent` ENUM('ja','nein','teilweise') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Ist der dieser Parlamentarier transparent bzgl seinen Vergütungen? ja, nein, teilweise (Leer/NULL bedeutet noch nicht eingetragen): NEIN=Minimaltransparenz (= gesetzliches Minimum, bezahlt/ehrenamtlich); TEILWEISE=teilweise transparent (=gesetzl Minimum plus einzelne Entschädigungen als Betrag offengelegt); JA=transparent (=gesetzl. Minimum plus alles Entschädigungen offengelegt; Exkl. Entschädigung aus Hauptberuf)';
+
+-- 28.11.2020 Add parlamentarier.parlament_beruf, parlament_arbeitgeber, parlament_jobtitel, parlament_beruf_modified
+
+ALTER TABLE `parlamentarier`
+ADD `parlament_beruf_json` JSON NULL DEFAULT NULL COMMENT 'Importierter Beruf des Parlamentariers: Beruf, Arbeitgeber, Jobtitel/Funktion, von, bis (von parlament.ch)' AFTER `parlament_number`;
+
+
+ALTER TABLE `parlamentarier_log`
+ADD `parlament_beruf_json` JSON NULL DEFAULT NULL COMMENT 'Importierter Beruf des Parlamentariers: Beruf, Arbeitgeber, Jobtitel/Funktion, von, bis (von parlament.ch)' AFTER `parlament_number`;

@@ -40,20 +40,24 @@ $transaction_date = date('d.m.Y H:i:s');
 $sql_transaction_date = "STR_TO_DATE('$transaction_date','%d.%m.%Y %T')";
 
 //Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
+// TODO remove after use of PHP 8
 function utils_startsWith($haystack, $needle, $case_sensitive = true) {
   return $needle === "" || is_string($haystack) && mb_strpos($case_sensitive ? $haystack : mb_strtolower($haystack), $case_sensitive ? $needle : mb_strtolower($needle)) === 0;
 }
 //Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
+// TODO remove after use of PHP 8
 function utils_endsWith($haystack, $needle, $case_sensitive = true) {
 //   dpm("endsWith " . mb_substr($case_sensitive ? $haystack : mb_strtolower($haystack), -mb_strlen($needle)) . " =? " . ($case_sensitive ? $needle : mb_strtolower($needle)));
   return $needle === "" || is_string($haystack) && mb_substr($case_sensitive ? $haystack : mb_strtolower($haystack), -mb_strlen($needle)) === ($case_sensitive ? $needle : mb_strtolower($needle));
 }
 
 //Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
+// TODO remove after use of PHP 8
 function starts_with($haystack, $needle, $case_sensitive = true) {
   return utils_startsWith($haystack, $needle, $case_sensitive);
 }
 //Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
+// TODO remove after use of PHP 8
 function ends_with($haystack, $needle, $case_sensitive = true) {
   return utils_endsWith($haystack, $needle, $case_sensitive);
 }
@@ -2806,8 +2810,48 @@ function getValueFromWSFieldName($ws_field, $parlamentarier_ws, $parlamentarier_
  * Convenience function.
  */
 function getValueFromWSFieldNameEmptyAsNull($ws_field, $parlamentarier_ws, $parlamentarier_db_obj, $field, $fields) {
-  if (trim($parlamentarier_ws->$ws_field) === '') return null;
+  if (empty($parlamentarier_ws->$ws_field) || trim($parlamentarier_ws->$ws_field) === '') return null;
   return trim($parlamentarier_ws->$ws_field);
+}
+
+/**
+ * id function which gets the field from the ws object using the $ws_field name.interessenbindung
+ * This function allows to use strings instead of direct values in checkField().
+ * JSON Dates /Date(123456789)/ will be converted to date
+ * Convenience function. id_function
+ */
+function getValueFromWSFieldNameConvertDateEmptyAsNull($ws_field, $parlamentarier_ws, $parlamentarier_db_obj, $field, $fields) {
+  if (empty($parlamentarier_ws->$ws_field) || ($field = trim($parlamentarier_ws->$ws_field)) === '') {
+    return null;
+  } else if ($date = convertJsonDateToISODate($field)) {
+    return $date;
+  } else {
+    return trim($parlamentarier_ws->$ws_field);
+  }
+}
+/**
+ * Returns false if not a JSON date string, otherwise false.
+ * "/Date(1448841600000)/" -> "2015-11-30"
+ */
+function convertJsonDateToISODate($json_date_str, $format = 'isodate') {
+  if (preg_match('%/Date\((\d+)([+-]\d{4})?\)/%', $json_date_str, $matches)) {
+    $unix_timesamp_s = $matches[1] / 1000;
+    if ($format == 'timestamp') {
+      return $unix_timesamp_s;
+    } else if ($format == 'isodate') {
+      return date('Y-m-d', $unix_timesamp_s);
+    } else if ($format == 'date') {
+      return date('d.m.Y', $unix_timesamp_s);
+    } else if ($format == 'isodatetime') {
+      return date('Y-m-d\TH:m:s', $unix_timesamp_s);
+    } else if ($format == 'datetime') {
+      return date('d.m.Y H:m:s', $unix_timesamp_s);
+    } else {
+      return $json_date_str;
+    }
+  } else {
+    return null;
+  }
 }
 
 function _lobbywatch_fetch_organisation_title($table, $id) {
@@ -3135,6 +3179,7 @@ function get_parlamentarier_lang($con, $id) {
 function get_parlamentarier($con, $id, $jahr, $include_parlamentarische_gruppen_members = true) {
       $result = array();
       $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.name as parlamentarier_name2, parlamentarier.email, parlamentarier.geschlecht, parlamentarier.beruf, parlamentarier.beruf_fr, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.kontrolliert_datum, parlamentarier.freigabe_datum, parlamentarier.autorisierung_verschickt_datum, parlamentarier.autorisiert_datum, parlamentarier.kontrolliert_visa, parlamentarier.eingabe_abgeschlossen_visa, parlamentarier.im_rat_bis, parlamentarier.sitzplatz, parlamentarier.geburtstag, parlamentarier.im_rat_bis, parlamentarier.kleinbild, parlamentarier.parlament_biografie_id, parlamentarier.arbeitssprache, parlamentarier.aemter, parlamentarier.weitere_aemter, parlamentarier.parlament_interessenbindungen, parlamentarier.parlament_interessenbindungen_updated, DATE_FORMAT(parlament_interessenbindungen_updated, '%d.%m.%Y') as parlament_interessenbindungen_updated_formatted,
+      parlament_beruf_json,
 GROUP_CONCAT(DISTINCT
     CONCAT('<li>',
     IF(interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW(), '<s>', ''),
@@ -3314,6 +3359,38 @@ LIMIT 1;
   return $rowData;
 }
 
+function get_parlamentarier_log_last_changed_parlament_beruf_json($con, $id) {
+  $result = array();
+  $sql = "SELECT parlamentarier.id parlamentarier_id, parlamentarier_log.*
+FROM parlamentarier LEFT OUTER JOIN `parlamentarier_log` ON parlamentarier.id = parlamentarier_log.id  AND parlamentarier.parlament_beruf_json <> parlamentarier_log.parlament_beruf_json
+WHERE parlamentarier.id=:id
+ORDER BY log_id DESC
+LIMIT 1;
+";
+//         df($sql);
+  $result = array();
+  $options = array(
+    'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
+  );
+  $result = lobbywatch_forms_db_query($sql, array(':id' => $id), $options)->fetchAll();
+
+  if (!$result) {
+//         df($eng_con->LastError());
+    throw new Exception("ID not found '$id'");
+  }
+  $rowData = $result[0];
+  return $rowData;
+}
+
+function convertParlamentBerufJsonToHtml(array $parlament_beruf_objects): string {
+  $job_format = "<p>%s seit %s%s</p>";
+  $new_parlament_beruf_html = [];
+  foreach ($parlament_beruf_objects as $beruf) {
+    $new_parlament_beruf_html[] = sprintf($job_format, implode(', ', array_filter([$beruf->arbeitgeber, $beruf->jobtitel, $beruf->beruf])), $beruf->von, $beruf->bis ? ' bis ' . $beruf->bis : '', );
+  }
+  return implode("\n", $new_parlament_beruf_html);
+}
+
 function get_parlamentarier_transparenz($con, $id) {
       $result = array();
 //       $sql = "SELECT parlamentarier.parlamentarier_id as id, parlamentarier.*
@@ -3396,7 +3473,7 @@ function normalizeParlamentInteressenbindungen($str) {
   return $normalized;
 }
 
-function htmlDiffStyled($old, $new, bool $cleanAbbr = true) {
+function htmlDiffStyled(string $old, string $new, bool $cleanAbbr = true) {
   $styled = $diff_raw = htmlDiffTd($old, $new, $cleanAbbr);
   $styled = preg_replace("%<(/?table|thead|/?tbody|/tr)[^>]*>%i", "$0\n", $styled);
   $styled = preg_replace("%^\s(.*)\s*$%im", "$1\n", $styled);
@@ -3423,11 +3500,11 @@ function htmlDiffTd($old, $new, bool $cleanAbbr = true) {
 }
 
 function styleIns($str) {
-  return preg_replace("%<tr>%i", "<tr style='font-style: italic; color: blue;'>", $str);
+  return preg_replace("%<((tr|p|div).*?)>%i", "<$2 style='font-style: italic; color: blue;'>", $str);
 }
 
 function styleDel($str) {
-  return preg_replace("%<tr>%i", "<tr style='font-style: normal; text-decoration: line-through; color: red;'>", $str);
+  return preg_replace("%<((tr|p|div).*?)>%i", "<$2 style='font-style: normal; text-decoration: line-through; color: red;'>", $str);
 }
 
 function getNotizenPlaceholder() {

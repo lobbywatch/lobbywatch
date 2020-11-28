@@ -14,7 +14,7 @@
     {if isset($Zutrittsberechtigter0.Id)}<li><a href="#email-zb0">Autorisierungs-E-Mail Zutrittsberechtiger 1</a></li>{/if}
     {if isset($Zutrittsberechtigter1.Id)}<li><a href="#email-zb1">Autorisierungs-E-Mail Zutrittsberechtiger 2</a></li>{/if}
   </ul>
-  
+
   <!-- First tab content.-->
   <div id="preview"{*class="row-fluid"*}>
 
@@ -24,7 +24,7 @@
 
         <div class="preview">
             <h3>{$Parlamentarier.Title}</h3>
-            
+
                         <div class="container-fluid">
 
               <div class="row-fluid">
@@ -40,19 +40,19 @@
                               Kontrolliert
                           </a>
                       </div>
-                               
+
                       <div class="btn-group">
                           <a class="btn btn-default" href="parlamentarier.php?operation=edit&pk0={$Parlamentarier.Id}">Bearbeiten</a>
                       </div>
-          
+
                       <div class="btn-group">
                           <a class="btn btn-default" href="parlamentarier.php?operation=view&pk0={$Parlamentarier.Id}">Ansehen</a>
                       </div>
-                      
+
                       <div class="btn-group">
                           <a class="btn btn-primary" href="parlamentarier.php?operation=return">{$Captions->GetMessageString('BackToList')}</a>
                       </div>
-                      
+
                   </div>
               </div>
             </div> {*container-fluid*}
@@ -69,22 +69,24 @@
             <hr>
             <h2>Parlament.ch</h2>
               <p>Importiert mit Webservice von ws.parlament.ch, Stand {$Parlamentarier.import_date_wsparlamentch}, siehe <a href="http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id={$Parlamentarier.parlament_biografie_id}">{$Parlamentarier.parlamentarier_name} ({$Parlamentarier.parlament_biografie_id})</a></p>
+              <h3>Parlament.ch Beruf und Arbeitgeber</h3>
+              <div class="parlament-ch-interessenbindungen"><div>{$Parlamentarier.parlament_beruf}</div>
               <h3>Parlament.ch Interessenbindungen</h3>
               <div class="parlament-ch-interessenbindungen"><div>{$Parlamentarier.parlament_interessenbindungen}</div>
               {if $Parlamentarier.parlament_interessenbindungen_updated}<br><div><i>Zuletzt geändert: {$Parlamentarier.parlament_interessenbindungen_updated}</i></div>{/if}</div>
               <h3>Ämter</h3>
               <div>{$Parlamentarier.aemter}</div>
               <h3>Weitere Ämter</h3>
-              <div>{$Parlamentarier.weitere aemter}</div>
+              <div>{$Parlamentarier.weitere_aemter}</div>
             </div>
 
         </div>
     </div>
   </div> <!-- end first tab content.-->
-  
+
   <!-- Second tab content.-->
   <div id="email-parlam" {*class="row-fluid"*}>
-    
+
     <div id="opsParlam" class="hide">
       <div class="pg-row-selected-sim">
         <input name="rec0" type="checkbox" checked>
@@ -98,59 +100,59 @@
 
         <div class="email">
             <h3>{$Parlamentarier.EmailTitle}</h3>
-            
+
             <div class="container-fluid">
 
               <div class="row-fluid">
                   <div class="btn-toolbar">
-          
+
                       <p><small>1. E-Mail selektieren/kopieren, 2. E-Mail öffnen, 3. E-Mail-Text einfügen und 4. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
-                  
+
                       <div class="btn-group">
                           <a id="email-select-button-parlam" class="btn btn-default" href="#" title="NEU! Ab Firefox 43 und Chrome 42 wird der selektierte Text direkt in die Zwischenablage kopiert.">
                               E-Mail kopieren
                           </a>
                       </div>
-          
+
                       <div class="btn-group">
                           <a id="email-open-parlam" class="btn btn-default" href="#">
                               E-Mail öffnen
                           </a>
                       </div>
-          
+
                       <div class="btn-group">
                           <a id="email-sent-parlam" class="btn btn-default" href="#">
                               <i class="pg-icon-authorization-sent-selected"></i>
                               Autorisierungsanfrage verschickt
                           </a>
                       </div>
-          
+
           {*        </div>
              </div>
-                      
+
               <div class="row-fluid">
                   <div class="btn-toolbar">
           *}
-                      
+
                       <div class="btn-group">
                           <a class="btn btn-default" href="parlamentarier.php?operation=edit&pk0={$Parlamentarier.Id}">Bearbeiten</a>
                       </div>
-          
+
                       <div class="btn-group">
                           <a class="btn btn-default" href="parlamentarier.php?operation=view&pk0={$Parlamentarier.Id}">Ansehen</a>
                       </div>
-                      
+
                       <div class="btn-group">
                           <a class="btn btn-primary" href="parlamentarier.php?operation=return">{$Captions->GetMessageString('BackToList')}</a>
                       </div>
-                      
+
                   </div>
               </div>
             </div> {*container-fluid*}
-            
+
             {* <button id="email-select-button">E-Mail selektieren</button>
             <button id="email-open-parlam">E-Mail öffnen</button>
-            <button id="email-sent-parlam">Autorisierungsanfrage verschickt</button> *} 
+            <button id="email-sent-parlam">Autorisierungsanfrage verschickt</button> *}
 
             <div {*style="padding-left: 20px;"*} class="span8">
               {$Parlamentarier.State}
@@ -166,7 +168,7 @@
   <!-- Third tab content.-->
   {if isset($Zutrittsberechtigter0.Id)}
   <div id="email-zb0" {*class="row-fluid"*}>
-    
+
     <div id="opsZb0" class="hide">
       <div class="pg-row-selected-sim">
         <input name="rec0" type="checkbox" checked>
@@ -180,59 +182,59 @@
 
         <div class="email">
             <h3>{$Zutrittsberechtigter0.EmailTitle}</h3>
-            
+
             <div class="container-fluid">
 
               <div class="row-fluid">
                   <div class="btn-toolbar">
-          
+
                       <p><small>1. E-Mail selektieren/kopieren, 2. E-Mail öffnen, 3. E-Mail-Text einfügen und 4. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
-                  
+
                       <div class="btn-group">
                           <a id="email-select-button-zb0" class="btn btn-default" href="#" title="NEU! Ab Firefox 43 und Chrome 42 wird der selektierte Text direkt in die Zwischenablage kopiert.">
                               E-Mail kopieren
                           </a>
                       </div>
-          
+
                       <div class="btn-group">
                           <a id="email-open-zb0" class="btn btn-default" href="#">
                               E-Mail öffnen
                           </a>
                       </div>
-          
+
                       <div class="btn-group">
                           <a id="email-sent-zb0" class="btn btn-default" href="#">
                               <i class="pg-icon-authorization-sent-selected"></i>
                               Autorisierungsanfrage verschickt
                           </a>
                       </div>
-          
+
           {*        </div>
              </div>
-                      
+
               <div class="row-fluid">
                   <div class="btn-toolbar">
           *}
-                      
+
                       <div class="btn-group">
                           <a class="btn btn-default" href="person.php?operation=edit&pk0={$Zutrittsberechtigter0.Id}">Bearbeiten</a>
                       </div>
-          
+
                       <div class="btn-group">
                           <a class="btn btn-default" href="person.php?operation=view&pk0={$Zutrittsberechtigter0.Id}">Ansehen</a>
                       </div>
-                      
+
                       <div class="btn-group">
                           <a class="btn btn-primary" href="parlamentarier.php?operation=return">{$Captions->GetMessageString('BackToList')}</a>
                       </div>
-                      
+
                   </div>
               </div>
             </div> {*container-fluid*}
-            
+
             {* <button id="email-select-button">E-Mail selektieren</button>
             <button id="email-open-zb0">E-Mail öffnen</button>
-            <button id="email-sent-zb0">Autorisierungsanfrage verschickt</button> *} 
+            <button id="email-sent-zb0">Autorisierungsanfrage verschickt</button> *}
 
             <div {*style="padding-left: 20px;"*} class="span8">
               {$Zutrittsberechtigter0.State}
@@ -249,7 +251,7 @@
   <!-- Fourth tab content.-->
   {if isset($Zutrittsberechtigter1.Id)}
   <div id="email-zb1" {*class="row-fluid"*}>
-    
+
     <div id="opsZb1" class="hide">
       <div class="pg-row-selected-sim">
         <input name="rec0" type="checkbox" checked>
@@ -263,59 +265,59 @@
 
         <div class="email">
             <h3>{$Zutrittsberechtigter1.EmailTitle}</h3>
-            
+
             <div class="container-fluid">
 
               <div class="row-fluid">
                   <div class="btn-toolbar">
-          
+
                       <p><small>1. E-Mail selektieren/kopieren, 2. E-Mail öffnen, 3. E-Mail-Text einfügen und 4. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
-                  
+
                       <div class="btn-group">
                           <a id="email-select-button-zb1" class="btn btn-default" href="#" title="NEU! Ab Firefox 43 und Chrome 42 wird der selektierte Text direkt in die Zwischenablage kopiert.">
                               E-Mail kopieren
                           </a>
                       </div>
-          
+
                       <div class="btn-group">
                           <a id="email-open-zb1" class="btn btn-default" href="#">
                               E-Mail öffnen
                           </a>
                       </div>
-          
+
                       <div class="btn-group">
                           <a id="email-sent-zb1" class="btn btn-default" href="#">
                               <i class="pg-icon-authorization-sent-selected"></i>
                               Autorisierungsanfrage verschickt
                           </a>
                       </div>
-          
+
           {*        </div>
              </div>
-                      
+
               <div class="row-fluid">
                   <div class="btn-toolbar">
           *}
-                      
+
                       <div class="btn-group">
                           <a class="btn btn-default" href="person.php?operation=edit&pk0={$Zutrittsberechtigter1.Id}">Bearbeiten</a>
                       </div>
-          
+
                       <div class="btn-group">
                           <a class="btn btn-default" href="person.php?operation=view&pk0={$Zutrittsberechtigter1.Id}">Ansehen</a>
                       </div>
-                      
+
                       <div class="btn-group">
                           <a class="btn btn-primary" href="parlamentarier.php?operation=return">{$Captions->GetMessageString('BackToList')}</a>
                       </div>
-                      
+
                   </div>
               </div>
             </div> {*container-fluid*}
-            
+
             {* <button id="email-select-button">E-Mail selektieren</button>
             <button id="email-open-zb1">E-Mail öffnen</button>
-            <button id="email-sent-zb1">Autorisierungsanfrage verschickt</button> *} 
+            <button id="email-sent-zb1">Autorisierungsanfrage verschickt</button> *}
 
             <div {*style="padding-left: 20px;"*} class="span8">
               {$Zutrittsberechtigter1.State}
@@ -336,20 +338,20 @@
       var doc = document
           , text = doc.getElementById(element)
           , range, selection
-      ;    
+      ;
       if (doc.body.createTextRange) { //ms
           range = doc.body.createTextRange();
           range.moveToElementText(text);
           range.select();
       } else if (window.getSelection) { //all others
-          selection = window.getSelection();        
+          selection = window.getSelection();
           range = doc.createRange();
           range.selectNodeContents(text);
           selection.removeAllRanges();
           selection.addRange(range);
       }
   }
-  
+
   jQuery.fn.selectText = function(){
       var doc = document
           , element = this[0]
@@ -360,14 +362,14 @@
           range.moveToElementText(element);
           range.select();
       } else if (window.getSelection) {
-          selection = window.getSelection();        
+          selection = window.getSelection();
           range = document.createRange();
           range.selectNodeContents(element);
           selection.removeAllRanges();
           selection.addRange(range);
       }
   };
-  
+
   // Adapted from pgui.grid.ops.js
   function operateRowAsSelected(action, operation, date, ids) {
     var selectedRows = $(ids)
@@ -392,7 +394,7 @@
     $form.append($('<input name="date" value="' + date + '">'));
     $form.submit();
   }
-  
+
   function countSelectedRows(ids) {
     var selectedRows = $(ids)
       .find('.pg-row-selected-sim')
@@ -408,7 +410,7 @@
       // setup ul.tabs to work as tabs for each div directly under div.panes
       // $(".css-tabs:first").tabs(".css-panes:first > div", { history: true });
       $("#tabs").tabs();
-      
+
       //$(".email-content").dblclick(function() {
       //  selectText('email-content');
       //});
@@ -457,7 +459,7 @@
 
       $("#email-sent-parlam").click(function() {
         require(['bootbox'], function() {
-    
+
           var ids = '#opsParlam';
           var nRows = countSelectedRows(ids);
           // bootbox.animate(false);
@@ -470,10 +472,10 @@
         });
         return false;
       });
-      
+
       $("#email-sent-zb0").click(function() {
         require(['bootbox'], function() {
-    
+
           var ids = '#opsZb0';
           var nRows = countSelectedRows(ids);
           // bootbox.animate(false);
@@ -486,10 +488,10 @@
         });
         return false;
       });
-      
+
       $("#email-sent-zb1").click(function() {
         require(['bootbox'], function() {
-    
+
           var ids = '#opsZb1';
           var nRows = countSelectedRows(ids);
           // bootbox.animate(false);
@@ -502,10 +504,10 @@
         });
         return false;
       });
-      
+
       $("#btn-eingabe-abgeschlossen-parlam").click(function() {
         require(['bootbox'], function() {
-    
+
           var ids = '#opsParlam';
           var nRows = countSelectedRows(ids);
           // bootbox.animate(false);
@@ -518,10 +520,10 @@
         });
         return false;
       });
-      
+
       $("#btn-kontrolliert-parlam").click(function() {
         require(['bootbox'], function() {
-    
+
           var ids = '#opsParlam';
           var nRows = countSelectedRows(ids);
           // bootbox.animate(false);

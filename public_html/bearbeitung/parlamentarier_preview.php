@@ -63,7 +63,8 @@ try {
 
     $rowData = get_parlamentarier($con, $id, $jahr);
     $rowData_no_pg_members = get_parlamentarier($con, $id, $jahr, false);
-    $lastLogRowData = get_parlamentarier_log_last_changed_parlament_interessenbindungen($con, $id);
+    $lastLogRowParlamentInteressenbindungen = get_parlamentarier_log_last_changed_parlament_interessenbindungen($con, $id);
+    $lastLogRowParlamentBeruf = get_parlamentarier_log_last_changed_parlament_beruf_json($con, $id);
 
     $reAuthorization = isset($rowData['autorisierung_verschickt_datum']);
 
@@ -79,9 +80,13 @@ try {
     $cellClasses = [];
     customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);
 
-    $old_ib_html = normalizeParlamentInteressenbindungen($lastLogRowData['parlament_interessenbindungen']);
+    $old_ib_html = normalizeParlamentInteressenbindungen($lastLogRowParlamentInteressenbindungen['parlament_interessenbindungen']);
     $new_ib_html = normalizeParlamentInteressenbindungen($rowData['parlament_interessenbindungen']);
     $ib_diff_html = htmlDiffStyled($old_ib_html, $new_ib_html, false);
+
+    $old_beruf_html = $lastLogRowParlamentBeruf['parlament_beruf_json'] ?? '';
+    $new_beruf_html = $rowData['parlament_beruf_json'] ?? '';
+    $beruf_diff_html = htmlDiffStyled($old_beruf_html, $new_beruf_html, false);
 
     $zbRetDetail = zutrittsberechtigteForParlamentarier($con, $id, false);
     $zbRet = zutrittsberechtigteForParlamentarier($con, $id, true);
@@ -160,6 +165,7 @@ try {
            'MailTo' => $mailtoParlam,
           'aemter' => $rowData['aemter'],
           'weitere_aemter' => $rowData['weitere_aemter'],
+          'parlament_beruf' => $beruf_diff_html,
           'parlament_interessenbindungen' => $ib_diff_html /*. "<br><p>_____________________________<br>Ohne Delta:</p>" . $new_ib_html*/,
           'parlament_interessenbindungen_updated' => $rowData['parlament_interessenbindungen_updated_formatted'],
           'parlament_biografie_id' => $rowData['parlament_biografie_id'],
