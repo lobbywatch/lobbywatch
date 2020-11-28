@@ -2124,19 +2124,22 @@ function customOnPreparePage(Page $page) {
  */
 function globalOnCustomizePageList(CommonPage $page, PageList $pageList) {
 //   df($pageList, '$pageList');
+  $pageList->AddGroup('Auswertungen');
+
+  $pageList->AddPage(new PageLink('<span class="overview">Vergütungsübersicht</span>', 'parlamentarier_overview.php', 'Parlamentarierübersicht auf einer Seite mit den Interessenbindungen inkl. Vergütung', false, false, 'Auswertungen'));
+  $pageList->AddPage(new PageLink('<span class="state">Erstellungsanteil</span>', 'anteil.php?option=erstellungsanteil', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false, 'Auswertungen'));
+  $pageList->AddPage(new PageLink('<span class="state">Bearbeitungsanteil</span>', 'anteil.php?option=bearbeitungsanteil', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false, 'Auswertungen'));
+  // $pageList->AddPage(new PageLink('<span class="auswertung"><s>Auswertung</s></span>', $GLOBALS['env_dir'] . 'auswertung', 'Auswertung ' . $GLOBALS['env'] , false, false, 'Auswertungen'));
+
   $pageList->AddGroup('Links');
 
   $pageList->AddPage(new PageLink('<span class="website">Website</span>', '/', 'Homepage', false, false, 'Links'));
   $pageList->AddPage(new PageLink('<span class="wiki">Wiki</span>', '/wiki', 'Wiki', false, false, 'Links'));
   $pageList->AddPage(new PageLink('<span class="kommissionen">Kommissionen</span>', '/de/daten/kommission', 'Kommissionen', false, false, 'Links'));
-  $pageList->AddPage(new PageLink('<span class="overview">Vergütungsübersicht</span>', 'parlamentarier_overview.php', 'Parlamentarierübersicht auf einer Seite mit den Interessenbindungen inkl. Vergütung', false, false, 'Links'));
-  $pageList->AddPage(new PageLink('<span class="auswertung"><s>Auswertung</s></span>', $GLOBALS['env_dir'] . 'auswertung', 'Auswertung ' . $GLOBALS['env'] , false, false, 'Links'));
   //   $pageList->AddPage(new PageLink('<span class="state">Stand SGK</span>', 'anteil.php?option=kommission&id=1&id2=47', 'Stand SGK', false, true, 'Links'));
   //   $pageList->AddPage(new PageLink('<span class="state">Stand UREK</span>', 'anteil.php?option=kommission&id=3&id2=48', 'Stand UREK', false, false, 'Links'));
   //   $pageList->AddPage(new PageLink('<span class="state">Stand WAK</span>', 'anteil.php?option=kommission&id=11&id2=52', 'Stand WAK', false, false, 'Links'));
   //   $pageList->AddPage(new PageLink('<span class="state">Stand SiK</span>', 'anteil.php?option=kommission&id=7&id2=50', 'Stand Sik', false, false, 'Links'));
-  $pageList->AddPage(new PageLink('<span class="state">Erstellungsanteil</span>', 'anteil.php?option=erstellungsanteil', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false, 'Links'));
-  $pageList->AddPage(new PageLink('<span class="state">Bearbeitungsanteil</span>', 'anteil.php?option=bearbeitungsanteil', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false, 'Links'));
 //   $pageList->AddPage(new PageLink('<span class="state">Erstellungsanteil (Zeitraum)</span>', 'anteil.php?option=erstellungsanteil-periode', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false, 'Links'));
 //   $pageList->AddPage(new PageLink('<span class="state">Bearbeitungsanteil (Zeitraum)</span>', 'anteil.php?option=bearbeitungsanteil-periode', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false, 'Links'));
 }
