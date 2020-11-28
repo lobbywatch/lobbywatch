@@ -226,6 +226,8 @@ function _lobbywatch_data_handle_lang_fields(&$items) {
   $fr_suffix = '_fr';
   $de_suffix = '_de';
 
+  $fields = [];
+
 //    df($items, 'fields before lang');
   foreach($items as &$fields) {
     foreach($fields as $key => $value) {
