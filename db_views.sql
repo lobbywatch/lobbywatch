@@ -868,9 +868,6 @@ ORDER BY `ranghoehe` ASC;
 CREATE OR REPLACE VIEW `v_organisation_medium_raw` AS
 SELECT
 organisation.*,
-branche.anzeige_name as branche_ALT, -- TODO XXX
-branche.anzeige_name_de as branche_de_ALT, -- TODO XXX
-branche.anzeige_name_de as branche_fr_ALT, -- TODO XXX
 interessengruppe1.anzeige_name as interessengruppe,
 interessengruppe1.anzeige_name_de as interessengruppe_de,
 interessengruppe1.anzeige_name_fr as interessengruppe_fr,
@@ -976,8 +973,6 @@ interessengruppe3.kommission2_name_de as interessengruppe3_branche_kommission2_n
 interessengruppe3.kommission2_name_fr as interessengruppe3_branche_kommission2_name_fr,
 NOW() as refreshed_date
 FROM `v_organisation_simple` organisation
-LEFT JOIN `v_branche` branche
-ON branche.id = organisation.ALT_branche_id
 LEFT JOIN `v_interessengruppe` interessengruppe1
 ON interessengruppe1.id = organisation.interessengruppe_id
 LEFT JOIN `v_interessengruppe` interessengruppe2
@@ -1187,7 +1182,7 @@ IF(organisation.vernehmlassung IN ('immer', 'punktuell')
     ON (in_kommission.kommission_id = branche.kommission_id OR in_kommission.kommission_id = branche.kommission2_id)
     WHERE (in_kommission.bis >= NOW() OR in_kommission.bis IS NULL)
     AND in_kommission.parlamentarier_id = parlamentarier.id
-    AND branche.id IN (organisation.ALT_branche_id, organisation.interessengruppe_branche_id, organisation.interessengruppe2_branche_id, organisation.interessengruppe3_branche_id)), 'hoch',
+    AND branche.id IN (organisation.interessengruppe_branche_id, organisation.interessengruppe2_branche_id, organisation.interessengruppe3_branche_id)), 'hoch',
   IF(organisation.vernehmlassung IN ('immer', 'punktuell')
     AND interessenbindung.art IN ('geschaeftsfuehrend','vorstand','taetig','beirat','finanziell'), 'mittel', 'tief')
 ) wirksamkeit,
@@ -1316,7 +1311,6 @@ ADD PRIMARY KEY (`id`),
 -- ADD KEY `idx_lobbyeinfluss` (`lobbyeinfluss`, `anzeige_name`, `freigabe_datum`),
 ADD KEY `idx_freigabe` (`freigabe_datum`),
 -- indexes for joins on web
-ADD KEY `idx_branche_freigabe` (`ALT_branche_id`, `freigabe_datum`),
 ADD KEY `idx_interessengruppe_freigabe` (`interessengruppe_id`, `freigabe_datum`),
 ADD KEY `idx_interessengruppe2_freigabe` (`interessengruppe2_id`, `freigabe_datum`),
 ADD KEY `idx_interessengruppe3_freigabe` (`interessengruppe3_id`, `freigabe_datum`),
