@@ -632,7 +632,9 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED || $PG_CHANGED); then
       echo -e "\n= PARLAMENTARIER\n" >> $tmp_mail_body
       cat $P_FILE |
       perl -p -e's%(/\*|\*/)%%' |
-      perl -0 -p -e's%^(Kommissionen \d{2}\.\d{2}\.\d{4} \d{2}:\d{2}:\d{2}).*?^(Kommissionen:)$%\1\n\2%gms' >> $tmp_mail_body
+      perl -0 -p -e's%^(Kommissionen \d{2}\.\d{2}\.\d{4} \d{2}:\d{2}:\d{2}).*?^(Kommissionen:)$%\1\n\2%gms' |
+      perl -0 -p -e's%^-- SQL-START.*-- SQL-END$%%gms' \
+      >> $tmp_mail_body
     fi
     # cat $tmp_mail_body
     echo "less $tmp_mail_body"

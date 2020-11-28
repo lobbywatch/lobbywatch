@@ -172,8 +172,9 @@ function main() {
   }
 
   if (isset($options['s'])) {
-    print("\n-- SQL:\n");
+    print("\n-- SQL-START:\n");
     print(implode("\n", $script));
+    print("\n-- SQL-END\n");
     print("\n");
   }
   if (isset($options['h']) || isset($options['help'])) {
