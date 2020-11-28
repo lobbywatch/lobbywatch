@@ -586,6 +586,7 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED || $PG_CHANGED); then
     echo > $tmp_mail_body
 
     fzb=""
+    ZB_PDFS=''
     if $ZB_CHANGED ; then
         fzb=$ZB_DELTA_FILE
         subject="$subject Zutrittsberechtigte"
@@ -607,6 +608,7 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED || $PG_CHANGED); then
     fi
 
     fpg=""
+    PG_PDFS=''
     if $PG_CHANGED ; then
         fpg=$PG_DELTA_FILE
         subject="$subject Parlamentarische Gruppen"
@@ -627,6 +629,7 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED || $PG_CHANGED); then
       (printf "%0.s*" {1..50} && echo) >> $tmp_mail_body
     fi
 
+    P_FILE=''
     if $P_CHANGED ; then
       subject="$subject Parlamentarier"
       echo -e "\n= PARLAMENTARIER\n" >> $tmp_mail_body
