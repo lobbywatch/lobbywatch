@@ -123,14 +123,14 @@ def sync_data(conn, filename, batch_time):
             if organisation_id:
                 handle_names(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date)
             else:
-                print('INFO: Organisation "{}" not found in DB'.format(name_de))
+                print('-- INFO: Organisation "{}" not found in DB'.format(name_de))
 
             handle_organisation(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date)
 
             processed_parlamentarier_ids = []
             for member, title in members:
                 names = get_names(member)
-                parlamentarier_id, parlamentarier_bis = db.get_parlamentarier_id_by_name(conn, names, title != None)
+                parlamentarier_id, parlamentarier_bis = db.get_parlamentarier_id_by_name(conn, names, False)
 
                 if not parlamentarier_id:
                     print("DATA INTEGRITY FAILURE: Parlamentarier '{}' of group '{}' not found in database.".format(member, name_de))
@@ -216,7 +216,7 @@ def handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_da
                             parlamentarier_id, parlamentarier_bis = parlamentarier_id_cache[parl_key]
                         else:
                             names = get_names(member)
-                            parlamentarier_id, parlamentarier_bis = db.get_parlamentarier_id_by_name(conn, names, title != None)
+                            parlamentarier_id, parlamentarier_bis = db.get_parlamentarier_id_by_name(conn, names, False)
                             parlamentarier_id_cache[parl_key] = (parlamentarier_id, parlamentarier_bis)
 
                         if not parlamentarier_id:
@@ -317,10 +317,12 @@ def handle_organisation(group, name_de, name_fr, name_it, organisation_id, summa
 
     if adresse_zusatz_list:
         adresse_zusatz = "; ".join(adresse_zusatz_list)
-        if len(adresse_zusatz) > 150:
-            print("ERROR 'adresse_zusatz' TOO LONG: " + str(len(adresse_zusatz)))
-            print("Line: " + line)
-            print("Adresse_zusatz: " + adresse_zusatz)
+        max_adresse_zusatz_len = 150
+        if len(adresse_zusatz) > max_adresse_zusatz_len:
+            print("-- WARN 'adresse_zusatz' TOO LONG: " + str(len(adresse_zusatz)))
+            print("-- Line: " + line)
+            print("-- Adresse_zusatz: " + adresse_zusatz)
+            adresse_zusatz = adresse_zusatz[:max_adresse_zusatz_len]
     else:
         adresse_zusatz = None
 

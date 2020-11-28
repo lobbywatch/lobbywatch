@@ -51,7 +51,7 @@ def extract_presidents(line):
     for keyword in literals.president_mapping:
         line = line.replace(keyword, '')
     names = re.split(r',| e |;', line)
-    names = [re.sub(r'(Nationalratspräsidentin|Nationalratspräsident|Nationalrätin|Nationalrat|CN|Conseillère nationale|Conseiller national|Cusseglier naziunal)\s', 'NR ', re.sub(r'(Ständeratspräsidentin|Ständeratspräsident|Ständerätin|Ständerat|CE|Conseillère aux Etats|Conseiller aux Etats)\s', 'SR ', re.sub(r'(Herr|Frau|Monsieur le|Madame la|Dr.|Co-)', '', name))).strip() for name in names if name.strip() not in ['', "vakant", "Vakant", "folgt", "Noch offen", "(wird angestrebt, 2. Person ist noch vakant)", "(wird angestrebt", "2. Person ist noch vakant)"]]
+    names = [re.sub(r'(Nationalratspräsidentin|Nationalratspräsident|Vizepräsident des Nationalrates|des Nationalrates|Vizepräsidentin des Nationalrates|Nationalrätin|Nationalrat|CN|Conseillère nationale|Conseiller national|Cusseglier naziunal)\s', 'NR ', re.sub(r'(Ständeratspräsidentin|Ständeratspräsident|Vizepräsident des Ständerates|Vizepräsidentin des Ständerates|des Ständerates|Ständerätin|Ständerat|CE|Conseillère aux Etats|Conseiller aux Etats)\s', 'SR ', re.sub(r'(Herr|Frau|Monsieur le|Madame la|Dr.|Co-)', '', name))).strip() for name in names if name.strip() not in ['', "vakant", "Vakant", "folgt", "Noch offen", "(wird angestrebt, 2. Person ist noch vakant)", "(wird angestrebt", "2. Person ist noch vakant)"]]
     return names
 
 
@@ -94,12 +94,14 @@ def read_groups(filename):
     lines = [clean_whitespace(clean_str(' '.join(row))) for row in rows if ''.join(row).strip() != '']
     for i, line in enumerate(lines):
 
+        match_page = re.search(r'Seite\s*(\d+)\s*/\s*\d+', line)
         if line == '' or line.startswith('Fortsetzung:') or line.lower() in ['folgt', 'vakant']:
             continue
-        elif line.isdigit():
+        elif match_page:
             new_page = True
-            assert page + 1 != line, "Page numbers not succeding, current={}, new={}".format(page, line)
-            page = int(line)
+            cur_page = match_page.group(1)
+            assert page + 1 != cur_page, "Page numbers not succeding, current={}, new={}".format(page, cur_page)
+            page = int(cur_page)
             continue
 
         if i < len(lines) - 2:

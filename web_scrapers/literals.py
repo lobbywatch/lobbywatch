@@ -26,6 +26,7 @@ president_mapping = {'Co-Präsidenten': ('praesident', ('Co-Präsident', 'Co-Pr�
                      'Co-PräsidentInnen': ('praesident', ('Co-Präsident', 'Co-Präsidentin'), ('Coprésident', 'Coprésidente')),
                      'PräsidentInnen': ('praesident', ('Präsident', 'Präsidentin'), ('Président', 'Présidente')),
                      'Vizepräsidentin': ('vizepraesident', ('Vizepräsident', 'Vizepräsidentin'), ('Vice-président', 'Vice-présidente')),
+                     'Vizepräsident/in': ('vizepraesident', ('Vizepräsident', 'Vizepräsidentin'), ('Vice-président', 'Vice-présidente')),
                      'Vizepräsident': ('vizepraesident', ('Vizepräsident', 'Vizepräsidentin'), ('Vice-président', 'Vice-présidente')),
                      'Vize-Präsident': ('vizepraesident', ('Vize-Präsident', 'Vize-Präsidentin'), ('Vice-président', 'Vice-présidente')),
                      'Vize-Präsidentin': ('vizepraesident', ('Vize-Präsident', 'Vize-Präsidentin'), ('Vice-président', 'Vice-présidente')),

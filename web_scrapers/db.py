@@ -129,7 +129,7 @@ def get_parlamentarier_id_by_name(database, names, prename_first: bool):
                 return parlamentarier_id, bis
 
         print(
-            "\n\nDATA INTEGRITY ERROR: Member of parliament '{}' referenced in PDF is not in database.\n{}".format(names, current_query))
+            "\n\nDATA INTEGRITY ERROR: Member of parliament '{}' referenced in PDF is not in database.\nNames: {}, Prename first: {}\nSQL:\n{}".format(names, names, prename_first, current_query))
     return None, None
 
 
@@ -463,8 +463,8 @@ def _generate_name_query(pattern, names, exact):
         if zweiter_vorname:
             query += " AND zweiter_vorname = '{}'".format(zweiter_vorname)
     else:
-        query = " AND vorname LIKE '{}%' AND (nachname LIKE '{}%' OR nachname LIKE '{}%' OR nachname LIKE '{}%')".format(
-            vorname, nachname, nachname.replace('-', ' '), re.sub(r'-.*', '', nachname))
+        query = " AND vorname LIKE '{}%' AND (nachname LIKE '{}%' OR nachname LIKE '{}%' OR nachname LIKE '{}%' OR nachname LIKE '%{}')".format(
+            vorname, nachname, nachname.replace('-', ' '), re.sub(r'-.*', '', nachname), nachname)
         if zweiter_vorname:
             query += " AND zweiter_vorname LIKE '{}%'".format(zweiter_vorname)
 
