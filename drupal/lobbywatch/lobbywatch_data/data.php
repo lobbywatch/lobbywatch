@@ -164,10 +164,10 @@ function js_execute_callback(&$delivery_callback = 'drupal_json_output') {
       // add the user module and the path include as a dependencies because they
       // are required by some core modules.
       if (empty($valid_callbacks[$callback]['dependencies'])) {
-        $valid_callbacks[$callback]['dependencies'] = array();
+        $valid_callbacks[$callback]['dependencies'] = [];
       }
       if (empty($valid_callbacks[$callback]['includes'])) {
-        $valid_callbacks[$callback]['includes'] = array();
+        $valid_callbacks[$callback]['includes'] = [];
       }
       if (!in_array('user', $valid_callbacks[$callback]['dependencies'])) {
         $valid_callbacks[$callback]['dependencies'][] = 'user';
@@ -259,7 +259,7 @@ function js_execute_callback(&$delivery_callback = 'drupal_json_output') {
         drupal_load('module', 'user');
       }
 
-      if (!call_user_func_array($valid_callbacks[$callback]['access callback'], js_replace_callback_args(!empty($valid_callbacks[$callback]['access arguments']) ? $valid_callbacks[$callback]['access arguments'] : array()))) {
+      if (!call_user_func_array($valid_callbacks[$callback]['access callback'], js_replace_callback_args(!empty($valid_callbacks[$callback]['access arguments']) ? $valid_callbacks[$callback]['access arguments'] : []))) {
 // 		    print 'XXX 259 JS_MENU_ACCESS_DENIED';
         return JS_MENU_ACCESS_DENIED;
       }
@@ -300,7 +300,7 @@ function js_execute_callback(&$delivery_callback = 'drupal_json_output') {
  * @return array
  *   The arguments array replaced with correct path values.
  */
-function js_replace_callback_args(array $args = array()) {
+function js_replace_callback_args(array $args = []) {
 //   df($args, '$args');
   // Retrieve the original arguments again, but strip first and second
   // arguments ('data' and 'module').

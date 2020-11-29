@@ -97,7 +97,7 @@ function _lobbywatch_visual_parlamentarier_id($name='', $check_unpublished = tru
 </form>
 ';
 
-  $build = array();
+  $build = [];
   $build['terms'] = array(
     '#weight' => -5,
     '#prefix' => '<div class="lobbywatch">',
@@ -145,7 +145,7 @@ function _lobbywatch_visual_organisation_id($name='', $check_unpublished = true)
 </div>
 ';
 
-  $build = array();
+  $build = [];
   $build['terms'] = array(
     '#weight' => -5,
     '#prefix' => '<div class="lobbywatch">',

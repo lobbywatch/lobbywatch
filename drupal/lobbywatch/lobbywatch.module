@@ -152,7 +152,7 @@ function lobbywatch_views_api() {
  */
 function lobbywatch_menu() {
 //   dpm('passed');
-  $items = array();
+  $items = [];
 
 //   $items['autocomplete/lobbywatch/search'] = array(
 //      'title' => 'Autocomplete Suche',
@@ -408,7 +408,7 @@ function lobbywatch_block_info() {
  * Implements hook_block_view().
  */
 function lobbywatch_block_view($delta = '') {
-  $block = array();
+  $block = [];
 
   switch ($delta) {
     case 'lobbywatch_search':
@@ -480,7 +480,7 @@ function lobbywatch_autocomplete_search_form($form, &$form_state) {
     // Autocomplete, autosubmit, ref: https://drupal.org/node/1772490
     '#attributes' => array('class' => array('auto_submit'), 'placeholder' => lt("Suche via Auswahlliste: Suchtext eingeben, eine Sekunde warten und auswählen"),
       'title' => lt("Suchtext eingeben, kurz warten und auswählen")),
-//     '#attributes' =>array()
+//     '#attributes' =>[]
 //     '#attributes' => array('class' => array('use-ajax-submit')),
   );
 
@@ -731,7 +731,7 @@ function lobbywatch_search_execute($keys = NULL, $conditions = NULL) {
   db_set_active('lobbywatch');
 
   try {
-    $find = array();
+    $find = [];
 
 //     dpm($keys, '$keys');
     $result_type = search_expression_extract($keys, 'type');
@@ -762,7 +762,7 @@ function lobbywatch_search_execute($keys = NULL, $conditions = NULL) {
 
     $lang_suffix = get_lang_suffix();
 
-    $results = array();
+    $results = [];
     while ($record = $query_result->fetchAssoc()) {
 //     foreach ($query_result as $record) {
 //        dpm($record, '$record');
@@ -806,7 +806,7 @@ function lobbywatch_search_execute($keys = NULL, $conditions = NULL) {
 //   db_set_active('lobbywatch');
 
 //   try {
-//     $table_sql = array();
+//     $table_sql = [];
 //     $table = 'parlamentarier';
 //     $table_sql[] = "SELECT '$table' as page, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
 //     $table = 'zutrittsberechtigung';
@@ -819,7 +819,7 @@ function lobbywatch_search_execute($keys = NULL, $conditions = NULL) {
 
 //     //   dpm($result, 'result');
 
-//     $items = array();
+//     $items = [];
 //     while($record = $result->fetchAssoc()) {
 //       $key = check_plain($record['name']) . " [" . check_plain($record['page']). '=' . check_plain($record['id']) . "]";
 //       $items[$key] = check_plain(ucfirst($record['page']) . ': ' . $record['name']);
@@ -1008,7 +1008,7 @@ function lobbywatch_cron() {
 //     if ($elapsed > 0) {
 //       watchdog('lobbywatch', 'Refreshed materialized views, execution time %elapsed s.', array('%elapsed' => $elapsed), WATCHDOG_INFO);
 //     } else {
-//       watchdog('lobbywatch', 'Materialized views are up-to-date.', array(), WATCHDOG_INFO);
+//       watchdog('lobbywatch', 'Materialized views are up-to-date.', [], WATCHDOG_INFO);
 //     }
 //   }
 }

@@ -15,7 +15,7 @@ class lobbywatch_handler_filter_parlamentarier_partei extends views_handler_filt
     if (!isset($this->value_options)) {
       $this->value_title = lt('Partei');
       $parteien = lobbywatch_get_parteien();
-      $options = array();
+      $options = [];
       foreach ($parteien as $partei => $info) {
         $options[$info['abkuerzung']] = translate_record_field($info, 'abkuerzung');
       }

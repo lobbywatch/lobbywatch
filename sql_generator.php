@@ -58,11 +58,11 @@ $tables = array_merge($workflow_tables, $meta_tables);
 // FROM
 // `$table` t)";
 
-$table_queries = array();
-$table_views = array();
-$view_queries = array();
-$snapshots = array();
-$worker = array();
+$table_queries = [];
+$table_views = [];
+$view_queries = [];
+$snapshots = [];
+$worker = [];
 foreach ($tables as $table => $name) {
   //$table_queries2[] = preg_replace('\$table', $table, $table_query);
   // verbose $table_queries version, seems to be generating a too big result for PHP Generator for MySQL
@@ -126,8 +126,8 @@ foreach ($tables as $table => $name) {
 //   )";
 }
 
-$freigaben = array();
-$entFreigeben = array();
+$freigaben = [];
+$entFreigeben = [];
 foreach ($workflow_tables as $table => $name) {
   $eingabe_abgeschlossen[] = "SELECT '$table' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM $table";
 

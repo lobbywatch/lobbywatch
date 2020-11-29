@@ -34,10 +34,10 @@ global $intern_fields;
 
 $show_sql = false;
 
-$script = array();
+$script = [];
 $script[] = "-- SQL script sql_migration " . date("d.m.Y");
 
-$errors = array();
+$errors = [];
 $verbose = 0;
 
 main();
@@ -182,7 +182,7 @@ function migrate_parlament_interessenbindungen_to_Json($table_name, $id_field, $
   $sql = "SELECT $id_field, nachname, parlament_interessenbindungen FROM $table_name ORDER BY $id_field;";
   $stmt = $db->prepare($sql);
 
-  $stmt->execute ( array() );
+  $stmt->execute ( [] );
 //   $organisation_list = $stmt->fetchAll(PDO::FETCH_CLASS);
 //   $organisation_list = $stmt->fetchAll(PDO::FETCH_CLASS);
 
@@ -294,17 +294,17 @@ function migrate_unused_user_visa($table_schema, $records_limit = false) {
 
   $sql = "SELECT TABLE_NAME, COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME like '%_visa' AND table_schema='$table_schema' AND table_catalog='def' AND TABLE_NAME NOT LIKE 'v_%' AND TABLE_NAME NOT LIKE 'mv_%' order by TABLE_NAME, COLUMN_NAME;";
   $stmt = $db->prepare($sql);
-  $stmt->execute ( array() );
+  $stmt->execute ( [] );
   $cols = $stmt->fetchAll();
 
   $sql = "SELECT id, name , nachname, vorname, last_login, last_access, email FROM $table_schema.user order by id;";
   $stmt = $db->prepare($sql);
-  $stmt->execute ( array() );
+  $stmt->execute ( [] );
   $users = $stmt->fetchAll();
 
   $sql = "SELECT user_id, count(*) FROM $table_schema.user_permission group by user_id;";
   $stmt = $db->prepare($sql);
-  $stmt->execute ( array() );
+  $stmt->execute ( [] );
   $user_permissions = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
 //   print_r($user_permissions);
 

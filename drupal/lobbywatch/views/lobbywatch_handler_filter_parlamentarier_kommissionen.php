@@ -18,13 +18,13 @@ class lobbywatch_handler_filter_parlamentarier_kommissionen extends views_handle
   function option_definition() {
     $options = parent::option_definition();
     // TODO Kommissionstypen
-//     $options['vocabularies'] = array('default' => array());
+//     $options['vocabularies'] = array('default' => []);
     return $options;
   }
 
   function options_form(&$form, &$form_state) {
 //     $vocabularies = taxonomy_get_vocabularies();
-//     $options = array();
+//     $options = [];
 //     foreach ($vocabularies as $voc) {
 //       $options[$voc->machine_name] = check_plain($voc->name);
 //     }

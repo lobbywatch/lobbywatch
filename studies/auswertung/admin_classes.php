@@ -101,17 +101,17 @@ class LobbyOrgSuche {
       if ($bedeutung == 1) { // hoch
                              // Kommissionsbezug fehlt noch
         $sql = "SELECT a.id,a.name_de as name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name FROM organisation a,branche b  WHERE a.branche_id=b.id  AND a.typ LIKE '%dezidierteLobby' AND (a.vernehmlassung='immer' OR a.vernehmlassung='punktuell') AND a.ALT_parlam_verbindung LIKE '%exekutiv%' ORDER BY b.name,a.name_de";
-        $param = array();
+        $param = [];
       }
       // mittel/0/0/0
       if ($bedeutung == 2) { // mittel
         $sql = "SELECT a.id,a.name_de as name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name FROM organisation a,branche b  WHERE a.branche_id=b.id  AND a.typ LIKE '%dezidierteLobby' AND a.vernehmlassung='punktuell'  AND a.ALT_parlam_verbindung LIKE '%exekutiv%' ORDER BY b.name,a.name_de";
-        $param = array();
+        $param = [];
       }
       // gering/000
       if ($bedeutung == 3) { // gering
         $sql = "SELECT a.id,a.name_de as name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name FROM organisation a,branche b  WHERE a.branche_id=b.id   AND a.vernehmlassung='nie'  ORDER BY b.name,a.name_de";
-        $param = array();
+        $param = [];
       }
     } else if ($bedeutung == 1 and $branche !== 'alle' and $lobbygroup == 'alle') {
       // hoch/1/0/0
@@ -1662,12 +1662,12 @@ if (isset ( $_GET ['beidekomm'] )) {
   $html .= "<h4 class='accord' style='clear:both;padding-top:20px;cursor:pointer'>Branchen und Interessengruppen <img src='icons/mouseclick_mini.jpg' /></h4>";
   $html .= "<ul>";
   // Vereinfachung f&uuml;r Gruppen und Typenvergleich
-  $ig = array();
+  $ig = [];
   dwXXX($typen, '$typen');
   dwXXX($gruppen, '$gruppen');
   foreach ( $typen as $wert ) {
     $typenar [] = $wert ['name'];
-    $ig[$wert ['name']]['igs'] = array();
+    $ig[$wert ['name']]['igs'] = [];
     $ig[$wert ['name']]['name'] = $wert ['name'];
   }
   // print_r($typenar); //Typen pro kommission

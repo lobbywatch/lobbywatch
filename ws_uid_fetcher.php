@@ -65,10 +65,10 @@ $context = stream_context_create($options);
 
 get_PDO_lobbywatch_DB_connection();
 
-$script = array();
+$script = [];
 $script[] = "-- SQL script from ws.uid.admin.ch " . date("d.m.Y");
 
-$errors = array();
+$errors = [];
 $verbose = 0;
 
 main();
@@ -320,7 +320,7 @@ function migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode) {
   $sql = "SELECT id, name_de, handelsregister_url, uid, rechtsform_handelsregister FROM organisation ORDER BY id;"; //  WHERE handelsregister_url IS NOT NULL
   $stmt = $db->prepare($sql);
 
-  $stmt->execute ( array() );
+  $stmt->execute ( [] );
 //   $organisation_list = $stmt->fetchAll(PDO::FETCH_CLASS);
 //   $organisation_list = $stmt->fetchAll(PDO::FETCH_CLASS);
 
@@ -359,7 +359,7 @@ function migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode) {
     $old_hr_id = null;
     $uid_ws = null;
     $rechtsform_handelsregister = null;
-    $matches = array();
+    $matches = [];
     if (preg_match('/chnr=(\d{10,11})/',$hr_url, $matches)) {
       $old_hr_id_raw = $matches[1];
       $old_hr_id = formatOldHandelsregisterID($old_hr_id_raw);
@@ -487,7 +487,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
   $sql = "SELECT id, name_de, handelsregister_url, uid, rechtsform, rechtsform_handelsregister, rechtsform_zefix, beschreibung, name_de, name_fr, ort, adresse_strasse, adresse_zusatz, adresse_plz FROM organisation WHERE uid IS NOT NULL $starting_id_sql ORDER BY id;";
   $stmt = $db->prepare($sql);
 
-  $stmt->execute(array());
+  $stmt->execute([]);
 
   echo "\n/*\nActualise organisations having an UID from webservices $transaction_date\n";
   print("rows = " . $stmt->rowCount() . "\n");
@@ -714,7 +714,7 @@ function search_name_and_set_uid($records_limit, $ssl, $test_mode) {
   $sql = "SELECT id, name_de, uid, adresse_plz, rechtsform FROM organisation WHERE uid IS NULL ORDER BY id;"; //  WHERE handelsregister_url IS NOT NULL
   $stmt = $db->prepare($sql);
 
-  $stmt->execute ( array() );
+  $stmt->execute ( [] );
 
   echo "\nSearch name and set UID $transaction_date\n";
   print("rows = " . $stmt->rowCount() . "\n");
@@ -743,7 +743,7 @@ function search_name_and_set_uid($records_limit, $ssl, $test_mode) {
     $plz_ws = null;
     $rechtsform_ws = null;
     $uid = $uid_db = $row['uid']; // always null
-    $matches = array();
+    $matches = [];
 
     $data = initDataArray();
     $uid = $uid_ws = ws_get_uid_from_name_search($name, $plz, $client, $data, $verbose);

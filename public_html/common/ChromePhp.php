@@ -94,13 +94,13 @@ class ChromePhp
     protected $_json = array(
         'version' => self::VERSION,
         'columns' => array('log', 'backtrace', 'type'),
-        'rows' => array()
+        'rows' => []
     );
 
     /**
      * @var array
      */
-    protected $_backtraces = array();
+    protected $_backtraces = [];
 
     /**
      * @var bool
@@ -124,7 +124,7 @@ class ChromePhp
      *
      * @var array
      */
-    protected $_processed = array();
+    protected $_processed = [];
 
     /**
      * constructor
@@ -256,9 +256,9 @@ class ChromePhp
 
         $logger = self::getInstance();
 
-        $logger->_processed = array();
+        $logger->_processed = [];
 
-        $logs = array();
+        $logs = [];
         foreach ($args as $arg) {
             $logs[] = $logger->_convert($arg);
         }
@@ -291,7 +291,7 @@ class ChromePhp
         //Also avoid recursion when objects refer to each other
         $this->_processed[] = $object;
 
-        $object_as_array = array();
+        $object_as_array = [];
 
         // first add the class name
         $object_as_array['___class_name'] = get_class($object);

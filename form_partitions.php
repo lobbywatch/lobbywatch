@@ -2,7 +2,7 @@
 
 // Organisation
 
-$tmp = array();
+$tmp = [];
 $this->GetConnection()->ExecQueryToArray("
 SELECT DISTINCT
 left(o.name_de, 1) as first_letter
@@ -20,7 +20,7 @@ $condition = "left(organisation.name_de, 1) = '$partitionKey'";
 
 // Parlamentarier
 
-$tmp = array();
+$tmp = [];
 $this->GetConnection()->ExecQueryToArray("
 SELECT DISTINCT
 left(p.nachname, 1) as first_letter
@@ -37,7 +37,7 @@ $condition = "left(parlamentarier.nachname, 1) = '$partitionKey'";
 
 // Interessengruppe
 
-$tmp = array();
+$tmp = [];
 $this->GetConnection()->ExecQueryToArray("
 SELECT DISTINCT
 left(i.name, 1) as first_letter
@@ -54,7 +54,7 @@ $condition = "left(interessengruppe.name, 1) = '$partitionKey'";
 
 // Interessenbindung
 
-$tmp = array();
+$tmp = [];
 $this->GetConnection()->ExecQueryToArray("
 SELECT DISTINCT
 left(p.nachname, 1) as first_letter
@@ -71,7 +71,7 @@ $condition = "interessenbindung.parlamentarier_id IN (SELECT `id` FROM `parlamen
 
 // Person
 
-$tmp = array();
+$tmp = [];
 $this->GetConnection()->ExecQueryToArray("
 SELECT DISTINCT
 left(i.nachname, 1) as first_letter
@@ -88,7 +88,7 @@ $condition = "left(person.nachname, 1) = '$partitionKey'";
 
 // Mandat
 
-$tmp = array();
+$tmp = [];
 $this->GetConnection()->ExecQueryToArray("
 SELECT DISTINCT
 left(p.nachname, 1) as first_letter
@@ -105,7 +105,7 @@ $condition = "mandat.zutrittsberechtigung_id IN (SELECT `id` FROM `zutrittsberec
 
 // Zutrittsberechtigung
 
-$tmp = array();
+$tmp = [];
 $this->GetConnection()->ExecQueryToArray("
 SELECT DISTINCT
 left(p.nachname, 1) as first_letter

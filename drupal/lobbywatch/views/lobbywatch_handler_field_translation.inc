@@ -13,7 +13,7 @@ class lobbywatch_handler_field_translation extends views_handler_field {
   function query() {
 //     $this->ensure_my_table();
 //     // Add the field.
-//     $params = $this->options['group_type'] != 'group' ? array('function' => $this->options['group_type']) : array();
+//     $params = $this->options['group_type'] != 'group' ? array('function' => $this->options['group_type']) : [];
 //     $this->field_alias = $this->query->add_field($this->table_alias, $this->real_field, NULL, $params);
 
 //     $this->add_additional_fields();

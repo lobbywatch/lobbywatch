@@ -45,7 +45,7 @@ function _lobbywatch_search_autocomplete($str = '') {
   $type = 'publ';
   if (!$str) {
 //     $str = preg_replace('|^/|', '', $_SERVER['PATH_INFO']);
-      $matches = array();
+      $matches = [];
       if (preg_match('%(/(de|fr)/(.+))?/(.*)%', $_SERVER['PATH_INFO'], $matches)) {
         $lang = $matches[2];
         $type = $matches[3];
@@ -63,7 +63,7 @@ function _lobbywatch_search_autocomplete($str = '') {
 
   //   dpm($result, 'result');
 
-    $items = array();
+    $items = [];
 //     while($record = $result->fetchAssoc()) {
     foreach($result as $record) {
       $key = $record["name$lang_suffix"] . " [" . common_check_plain($record['page']). '=' . common_check_plain($record['id']) . "]";
@@ -117,7 +117,7 @@ function get_translation_table() {
   static $translation_table;
   if (!$translation_table) {
     // i18n add translations
-    $translation_table = array('de' => array(), 'fr' => array());
+    $translation_table = array('de' => [], 'fr' => []);
     $translation_table['de']['organisation'] = 'Organisation';
     $translation_table['fr']['organisation'] = 'Organisation';
     $translation_table['de']['branche'] = 'Branche';

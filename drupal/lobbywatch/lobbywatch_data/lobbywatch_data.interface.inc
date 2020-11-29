@@ -149,7 +149,7 @@ function _lobbywatch_data_filter_field_SQL($table, $field) {
   $paramSingle = "filter_${field}";
   $paramList = "filter_${field}_list";
   $paramLike = "filter_${field}_like";
-  $matches = array();
+  $matches = [];
   if (isset($_GET[$paramSingle]) && is_numeric($_GET[$paramSingle])) {
     return " AND $table.${field} = " . intval($_GET[$paramSingle]);
   } else if (isset($_GET[$paramSingle])) {
@@ -168,7 +168,7 @@ function _lobbywatch_data_filter_fields_SQL($table) {
   $prefix = "filter_";
   // TODO filter fields not allowed
   foreach($_GET as $key => $value) {
-    $matches = array();
+    $matches = [];
     if (preg_match('/^filter_([a-z0-9_]+?)(_list|_like)?$/', $key, $matches) && !_lobbywatch_data_check_intern_field($matches[1])) {
       $sql .= _lobbywatch_data_filter_field_SQL($table, $matches[1]);
     }
@@ -189,7 +189,7 @@ function _lobbywatch_data_filter_limit_SQL() {
 function _lobbywatch_data_select_fields_SQL($table) {
 //   df($_GET['select_fields']);
 //   df(is_int($_GET['limit'] + 0), 'int?');
-  $matches = array();
+  $matches = [];
   if (isset($_GET['select_fields']) && $_GET['select_fields'] != '*' && preg_match_all('/([A-Za-z0-9_.,*\-]+)/', $_GET['select_fields'], $matches)) {
 //     df($matches, 'select');
 //     df(implode(', ', explode(', ', $matches[1][0])), 'fields');
@@ -233,7 +233,7 @@ function _lobbywatch_data_handle_lang_fields(&$items) {
     foreach($fields as $key => $value) {
 //       df($key, '$key');
 //       df($value, '$value');
-      $matches = array();
+      $matches = [];
       if (preg_match('/^(.+)_fr$/i', $key, $matches)) {
         $base_field_name = $matches[1];
 //         df($base_field_name, '$base_field_name');
@@ -259,7 +259,7 @@ function _lobbywatch_data_handle_lang_fields(&$items) {
 }
 
 function _lobbywatch_data_clean_records($result) {
-  $items = array();
+  $items = [];
   $includeHistorised = isset($_GET['includeInactive']) && $_GET['includeInactive'] == 1 && user_access('access lobbywatch unpublished content');
 
   // TODO test exclusion of historised records
@@ -390,7 +390,7 @@ function _lobbywatch_data_table_flat_list($table, $condition = '1', $json = true
         _lobbywatch_data_filter_limit_SQL() .
         ';';
 
-    $result = db_query($sql, array());
+    $result = db_query($sql, []);
 
     $items = _lobbywatch_data_clean_records($result);
 
@@ -445,7 +445,7 @@ function _lobbywatch_data_relation_flat_list($table, $condition = '1', $json = t
         _lobbywatch_data_filter_limit_SQL() .
         ';';
 
-    $result = db_query($sql, array());
+    $result = db_query($sql, []);
 
     $items = _lobbywatch_data_clean_records($result);
 
@@ -1213,7 +1213,7 @@ group by $table.partei
 order by count(*) desc, $table.partei asc "
     ;
 
-    $result = db_query($sql, array());
+    $result = db_query($sql, []);
 
     $items['totalMembers'] = 246;
     $items['parteien'] = _lobbywatch_data_clean_records($result);
@@ -1311,7 +1311,7 @@ and ma.art in ('vorstand', 'geschaeftsfuehrend')
 ) t", array('id' => $id))['0'];
 }
 
-function _lobbywatch_data_db_query($sql, $params = array()) {
+function _lobbywatch_data_db_query($sql, $params = []) {
   // Use the database we set up earlier
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
@@ -1492,7 +1492,7 @@ function _lobbywatch_data_router($path = '', $version = '', $data_type = '', $ca
 
   //   $items["v1/json/table/parlamentarier/aggregated/all"] = array(
   //       'page callback' => '_lobbywatch_data_table_parlamentarier_aggregated_list',
-  //       'page arguments' => array(),
+  //       'page arguments' => [],
   //       'access arguments' => array('access lobbywatch data general content'),
   //       'type' => MENU_CALLBACK,
   //       'file' => 'lobbywatch_data.interface.inc',

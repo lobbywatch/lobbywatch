@@ -31,7 +31,7 @@ export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlam
 // TODO parlamentarier kommissionen
 // TODO parlamentarier ratsmitgliedschaft
 
-// $kommission_ids = array();
+// $kommission_ids = [];
 
 // $url = 'http://ws-old.parlament.ch/committees?ids=1;2;3&mainOnly=false&permanentOnly=true&currentOnly=true&lang=de&pageNumber=1&format=xml';
 // $url = 'http://lobbywatch.ch/de/data/interface/v1/json/table/branche/flat/id/1';
@@ -77,12 +77,12 @@ $context = stream_context_create($options);
 // https://stackoverflow.com/questions/10236166/does-file-get-contents-have-a-timeout-setting
 ini_set('default_socket_timeout', REQUEST_TIMEOUT_S);
 
-$script = array();
+$script = [];
 $script[] = "-- SQL script from ws.parlament.ch $transaction_date";
 $script[] = "SET autocommit = 0;";
 $script[] = "START TRANSACTION;";
 
-$errors = array();
+$errors = [];
 $verbose = 0;
 $download_images = false;
 
@@ -237,7 +237,7 @@ function syncKommissionen() {
   $sql = "SELECT kommission.id, kommission.abkuerzung, kommission.name, kommission.abkuerzung_fr, kommission.name_fr,  kommission.typ, kommission.art, kommission.parlament_id, kommission.mutter_kommission_id, 'NOK' as status FROM kommission kommission WHERE bis IS NULL;";
   $stmt = $db->prepare($sql);
 
-  $stmt->execute ( array() );
+  $stmt->execute ( [] );
   $kommissionen_db = $stmt->fetchAll(PDO::FETCH_CLASS);
 
   $level = 0;
@@ -382,7 +382,7 @@ function syncParlamentarier(string $img_path, bool $processRetired = true) {
   $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, parlament_number, titel, aemter, weitere_aemter, kleinbild, kanton_id, rat_id, fraktion_id, fraktionsfunktion, partei_id, geburtstag, sprache, arbeitssprache, geschlecht, anzahl_kinder, zivilstand, beruf, militaerischer_grad_id, im_rat_seit, im_rat_bis, ratsunterbruch_von, ratsunterbruch_bis, ratswechsel, homepage, homepage_2, email, telephon_1, telephon_2, adresse_ort, adresse_strasse, adresse_plz, adresse_firma, parlament_interessenbindungen, parlament_interessenbindungen_json, parlament_interessenbindungen_updated, parlament_beruf_json FROM parlamentarier ORDER BY nachname, vorname;";
   $stmt = $db->prepare($sql);
 
-  $stmt->execute ( array() );
+  $stmt->execute ( [] );
   $parlamentarier_list_db = $stmt->fetchAll(PDO::FETCH_CLASS);
 
 //   var_dump($parlamentarier_list_db);
@@ -411,9 +411,9 @@ function syncParlamentarier(string $img_path, bool $processRetired = true) {
       $parlamentarier_db = search_objects($parlamentarier_list_db, 'parlament_biografie_id', $biografie_id);
 
       $sign = '!';
-      $update = array();
-      $update_optional = array();
-      $fields = array();
+      $update = [];
+      $update_optional = [];
+      $fields = [];
       if ($ok = ($n = count($parlamentarier_db)) == 0) {
 
         $id = findIDOfParlamentarierWithoutBiografieIDByName($parlamentarier_short_ws->lastName);
@@ -486,9 +486,9 @@ function syncParlamentarier(string $img_path, bool $processRetired = true) {
       $id = $parlamentarier_inactive->id;
       $sign = '!';
 
-      $update = array();
-      $update_optional = array();
-      $fields = array();
+      $update = [];
+      $update_optional = [];
+      $fields = [];
       if ($biografie_id = $parlamentarier_inactive->parlament_biografie_id) {
         updateParlamentarierFields($id, $biografie_id, $parlamentarier_inactive, $update, $update_optional, $fields, $sign, $img_path, $delta);
       } else {
@@ -1545,7 +1545,7 @@ function parlamentarierOhneBiografieID() {
 
   $sql = "SELECT id, vorname, nachname FROM parlamentarier WHERE parlament_biografie_id IS NULL;";
   $stmt = $db->prepare($sql);
-  $stmt->execute(array());
+  $stmt->execute([]);
   $res = $stmt->fetchAll(PDO::FETCH_CLASS);
 
   if (count($res) == 0) {
@@ -1568,7 +1568,7 @@ function findIDOfParlamentarierWithoutBiografieIDByName($nachname) {
 
   $sql = "SELECT id, vorname, nachname FROM parlamentarier WHERE parlament_biografie_id IS NULL AND nachname='" . escape_string($nachname) . "';";
   $stmt = $db->prepare($sql);
-  $stmt->execute(array());
+  $stmt->execute([]);
   $res = $stmt->fetchAll(PDO::FETCH_CLASS);
 
   foreach($res as $obj) {

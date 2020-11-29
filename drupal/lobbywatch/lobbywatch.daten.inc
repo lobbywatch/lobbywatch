@@ -17,7 +17,7 @@
 
 //   //   dpm($result, 'result');
 
-//     $items = array();
+//     $items = [];
 //     while($record = $result->fetchAssoc()) {
 //       $key = $record['name'] . " [" . check_plain($record['page']). '=' . check_plain($record['id']) . "]";
 //       $items[$key] = check_plain(ucfirst($record['page']) . ': ' . $record['name']);
@@ -80,7 +80,7 @@ function _lobbywatch_search_keyword_processing($str) {
 
 /** Currently not used */
 // function _lobbywatch_search_autocomplete_LIKE_UNION($str, $check_unpublished = true) {
-//   $table_sql = array();
+//   $table_sql = [];
 //   $table = 'parlamentarier';
 //   $page = 'parlamentarier';
 //   $table_sql[] = "SELECT '$page' as page, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
@@ -175,7 +175,7 @@ function _lobbywatch_search_keyword_processing($str) {
  * @return DatabaseStatementInterface
  */
 // function _lobbywatch_search_autocomplete_FULLTEXT($str, $check_unpublished = true) {
-//   $table_sql = array();
+//   $table_sql = [];
 //   $table = 'mv_parlamentarier_myisam';
 //   $page = 'parlamentarier';
 //   $table_sql[] = "SELECT '$page' as page, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, id FROM $table WHERE MATCH(`anzeige_name`) AGAINST(:str) " . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
@@ -213,7 +213,7 @@ function _lobbywatch_category_list($vid = 2) {
 //   $markup .= "<li>" . bergamotte_build_term_with_feed(t('Akteure [Politik, Regulation & Gesundheitswesen; Multiple Sklerose Gesellschaft; Schweizerische Multiple Sklerose Gesellschaft; DMSG; Pharma; Person; Institution; Patientenerfahrung]'), array(14, 15, 18, 19, 20, 21, 16, 17)) . "</li>\n";
 //   $markup .= "</ul>\n";
 
-  $build = array();
+  $build = [];
   $build['terms'] = array(
     '#weight' => -5,
     '#prefix' => '<div class="category-listing">',
@@ -238,7 +238,7 @@ function _lobbywatch_category_lobby_group_list($vid = 2) {
 //   $markup .= "<li>" . bergamotte_build_term_with_feed(t('Akteure [Politik, Regulation & Gesundheitswesen; Multiple Sklerose Gesellschaft; Schweizerische Multiple Sklerose Gesellschaft; DMSG; Pharma; Person; Institution; Patientenerfahrung]'), array(14, 15, 18, 19, 20, 21, 16, 17)) . "</li>\n";
 //   $markup .= "</ul>\n";
 
-  $build = array();
+  $build = [];
   $build['terms'] = array(
     '#weight' => -5,
     '#prefix' => '<div class="category-lobby-group-listing">',
@@ -285,7 +285,7 @@ function _lobbywatch_parlamentarier_list($check_unpublished = true) {
     db_set_active();
   }
 
-  $build = array();
+  $build = [];
   $build['lobbywatch_parlamentarier_list'] = array(
     '#weight' => -5,
     '#prefix' => '<div class="lobbywatch">',
@@ -414,7 +414,7 @@ ORDER BY zutrittsberechtigung.bis ASC;";
 
 //   dpm($sql);
 
-  $gaeste = array();
+  $gaeste = [];
 //   $sth = $con->prepare($sql);
 //   $sth->execute(array(':id' => $parlamentarier_id));
   $result = db_query($sql, array(':id' => $parlamentarier_id));
@@ -472,7 +472,7 @@ WHERE
 " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND branche.freigabe_datum <= NOW() ' : '') . "
 GROUP BY branche.id;";
 
-  $branchen = array();
+  $branchen = [];
 //   $sth = $con->prepare($sql);
 //   $sth->execute(array(':id' => $parlamentarier_id));
   $result = db_query($sql, array(':id' => $kommission_id));
@@ -776,7 +776,7 @@ jQuery(document).ready(function() {
     . '</div>'
     ;
 
-    $build = array();
+    $build = [];
     $build['lobbywatch_parlamentarier'] = array(
       '#weight' => -5,
       '#prefix' => '<div class="lobbywatch">',
@@ -919,7 +919,7 @@ FROM v_organisation organisation  WHERE 1 " . ($check_unpublished && !user_acces
   // otherwise Drupal will not be able to access it's own data later on.
   db_set_active();
 
-  $build = array();
+  $build = [];
   $build['lobbywatch_organisation_list'] = array(
     '#weight' => -5,
     '#prefix' => '<div class="lobbywatch">',
@@ -1051,7 +1051,7 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
   $result = db_query($sql, array(':id' => $id));
   $record = $result->fetchAssoc();
 
-  $relations = array();
+  $relations = [];
   $relations[] = array('art' => 'arbeitet fuer', 'directed' => true, 'transitiv_num' => $num_arbeitet_fuer, 'name_suffix' => 'arbeitet_fuer', 'name_reverse_suffix' => 'auftraggeber_fuer');
   $relations[] = array('art' => 'mitglied von', 'directed' => true, 'transitiv_num' => $num_mitglied_von, 'name_suffix' => 'mitglied_von', 'name_reverse_suffix' => 'mitglieder');
   $relations[] = array('art' => 'tochtergesellschaft von', 'directed' => true, 'transitiv_num' => $num_tochtergesellschaft_von, 'name_suffix' => 'muttergesellschaften', 'name_reverse_suffix' => 'tochtergesellschaften');
@@ -1144,7 +1144,7 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
     '</div>';
 
 
-    $build = array();
+    $build = [];
     $build['lobbywatch_organisation'] = array(
       '#weight' => -5,
       '#prefix' => '<div class="lobbywatch">',
@@ -1232,7 +1232,7 @@ function _lobbywatch_kommission_list($check_unpublished = true) {
   // otherwise Drupal will not be able to access it's own data later on.
   db_set_active();
 
-  $build = array();
+  $build = [];
   $build['lobbywatch_kommission_list'] = array(
     '#weight' => -5,
     '#prefix' => '<div class="lobbywatch">',
@@ -1396,7 +1396,7 @@ function _lobbywatch_kommission_id($id, $name = '') {
     . '</div>'
     ;
 
-    $build = array();
+    $build = [];
     $build['lobbywatch_kommission'] = array(
       '#weight' => -5,
       '#prefix' => '<div class="lobbywatch">',
@@ -1443,7 +1443,7 @@ function _lobbywatch_partei_list($check_unpublished = true) {
   // otherwise Drupal will not be able to access it's own data later on.
   db_set_active();
 
-  $build = array();
+  $build = [];
   $build['lobbywatch_partei_list'] = array(
     '#weight' => -5,
     '#prefix' => '<div class="lobbywatch">',
@@ -1527,7 +1527,7 @@ function _lobbywatch_partei_id($id, $name = '', $check_unpublished = true) {
       . '</div>'
     ;
 
-    $build = array();
+    $build = [];
     $build['lobbywatch_partei'] = array(
       '#weight' => -5,
       '#prefix' => '<div class="lobbywatch">',
@@ -1574,7 +1574,7 @@ function _lobbywatch_branche_list($check_unpublished = true) {
   // otherwise Drupal will not be able to access it's own data later on.
   db_set_active();
 
-  $build = array();
+  $build = [];
   $build['lobbywatch_branche_list'] = array(
     '#weight' => -5,
     '#prefix' => '<div class="lobbywatch">',
@@ -1660,7 +1660,7 @@ GROUP_CONCAT(DISTINCT
       . '</div>'
     ;
 
-    $build = array();
+    $build = [];
     $build['lobbywatch_branche'] = array(
       '#weight' => -5,
       '#prefix' => '<div class="lobbywatch">',
@@ -1706,7 +1706,7 @@ function _lobbywatch_interessengruppe_list($check_unpublished = true) {
   // otherwise Drupal will not be able to access it's own data later on.
   db_set_active();
 
-  $build = array();
+  $build = [];
   $build['lobbywatch_interessengruppe_list'] = array(
     '#weight' => -5,
     '#prefix' => '<div class="lobbywatch">',
@@ -1884,7 +1884,7 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
       . '</div>'
     ;
 
-    $build = array();
+    $build = [];
     $build['lobbywatch_interessengruppe'] = array(
       '#weight' => -5,
       '#prefix' => '<div class="lobbywatch">',
@@ -1984,7 +1984,7 @@ function _lobbywatch_zutrittsberechtigung_list($check_unpublished = true) {
   // otherwise Drupal will not be able to access it's own data later on.
   db_set_active();
 
-  $build = array();
+  $build = [];
   $build['lobbywatch_zutrittsberechtigung_list'] = array(
     '#weight' => -5,
     '#prefix' => '<div class="lobbywatch zutrittsberechtigung-list">',
@@ -2123,7 +2123,7 @@ LEFT JOIN v_parlamentarier parlamentarier
       . '</div>'
     ;
   }
-    $build = array();
+    $build = [];
     $build['lobbywatch_zutrittsberechtigung'] = array(
       '#weight' => -5,
       '#prefix' => '<div class="lobbywatch">',
@@ -2318,7 +2318,7 @@ function _lobbywatch_non_public_exports_page() {
   $markup .= "$header";
   $markup .= "<pre>$export_info</pre>";
 
-  $build = array();
+  $build = [];
   $build['lobbywatch_interessengruppe'] = array(
     '#weight' => -5,
     '#prefix' => '<div class="lobbywatch">',

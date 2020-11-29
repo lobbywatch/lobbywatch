@@ -36,7 +36,7 @@ abstract class AbstractCommitEditSelectedOperationValuesGridState extends Commit
     protected abstract function DoOperation($rowValues);
 
     public function ProcessMessages() {
-        // TODO $primaryKeyValuesSet = ArrayWrapper::createPostWrapper()->getValue('keys', array());
+        // TODO $primaryKeyValuesSet = ArrayWrapper::createPostWrapper()->getValue('keys', []);
         $primaryKeys = $this->getPrimaryKeys();
 
         // TODO $this->getDataset()->applyFilterBasedOnPrimaryKeyValuesSet($primaryKeyValuesSet);
@@ -78,11 +78,11 @@ abstract class AbstractCommitEditSelectedOperationValuesGridState extends Commit
 
     // Adapted form DeleteSelectedGridState
     private function getPrimaryKeys() {
-        $primaryKeysArray = array();
+        $primaryKeysArray = [];
 
         $i = 0;
         while (GetApplication()->IsPOSTValueSet('rec' . $i)) {
-            $primaryKeys = array();
+            $primaryKeys = [];
             $primaryKeyNames = $this->getDataset()->GetPrimaryKeyFieldNames();
             for ($j = 0; $j < count($primaryKeyNames); $j++)
                 $primaryKeys[] = GetApplication()->GetPOSTValue('rec' . $i . '_pk' . $j);

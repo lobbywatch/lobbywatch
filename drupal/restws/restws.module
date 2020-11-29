@@ -212,7 +212,7 @@ function _restws_determine_router_item() {
   if (strpos(request_path(), '.') === FALSE) {
     return;
   }
-  $menu_paths = array();
+  $menu_paths = [];
   foreach (restws_get_resource_info() as $resource => $info) {
     $menu_paths[] = isset($info['menu_path']) ? $info['menu_path'] : $resource;
   }
@@ -286,7 +286,7 @@ function restws_menu_alter(&$items) {
     if (isset($items[$menu_path])) {
       // Prepend the page callback and the resource to the page arguments.
       if (!isset($items[$menu_path]['page arguments'])) {
-        $items[$menu_path]['page arguments'] = array();
+        $items[$menu_path]['page arguments'] = [];
       }
       array_unshift($items[$menu_path]['page arguments'], $resource, $items[$menu_path]['page callback']);
       $items[$menu_path]['page callback'] = 'restws_page_callback';
@@ -306,7 +306,7 @@ function restws_menu_alter(&$items) {
       if (isset($items["$menu_path.$format"])) {
         // Prepend the page callback and the resource to the page arguments.
         if (!isset($items["$menu_path.$format"]['page arguments'])) {
-          $items["$menu_path.$format"]['page arguments'] = array();
+          $items["$menu_path.$format"]['page arguments'] = [];
         }
         array_unshift($items["$menu_path.$format"]['page arguments'], $resource, $items["$menu_path.$format"]['page callback']);
         $items["$menu_path.$format"]['page callback'] = 'restws_page_callback';
@@ -390,7 +390,7 @@ function restws_page_callback($resource, $page_callback) {
         // response.
         if ($format && !isset($_COOKIE[session_name()]) && variable_get('cache')) {
           // Redirect to the URL path containing the format name instead.
-          drupal_goto($_GET['q'] . '.' . $format->getName(), array(), 301);
+          drupal_goto($_GET['q'] . '.' . $format->getName(), [], 301);
         }
     }
   }
@@ -453,7 +453,7 @@ function restws_page_callback($resource, $page_callback) {
  * @param array $options
  *   Optional array that is passed to url().
  */
-function restws_resource_uri($resource, $id = NULL, array $options = array()) {
+function restws_resource_uri($resource, $id = NULL, array $options = []) {
   $info = restws_get_resource_info($resource);
   $basepath = isset($info['menu_path']) ? $info['menu_path'] : $resource;
   $sub_path = isset($id) ? "/$id" : '';
@@ -487,7 +487,7 @@ function restws_format_mimetype($mime) {
  * Implements hook_permission().
  */
 function restws_permission() {
-  $permissions = array();
+  $permissions = [];
   // Create service access permissions per resource type.
   foreach (restws_get_resource_info() as $type => $info) {
     $permissions['access resource ' . $type] = array(

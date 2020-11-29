@@ -5,7 +5,7 @@
  */
 function lobbywatch_visual_menu() {
 //   dpm('passed');
-  $items = array();
+  $items = [];
 
   $items['daten/grafik/parlamentarier'] = array(
   //     'title' => 'Parlamentarier',

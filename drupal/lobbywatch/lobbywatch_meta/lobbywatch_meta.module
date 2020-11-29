@@ -4,32 +4,32 @@
  * Implements hook_menu().
  */
 function lobbywatch_meta_menu() {
-  $items = array();
+  $items = [];
 
   $items['daten/meta'] = array(
     'page callback' => '_lobbywatch_meta',
-    'page arguments' => array(),
+    'page arguments' => [],
     'access arguments' => array('access lobbywatch meta content'),
     'type' => MENU_CALLBACK,
     'file' => 'lobbywatch_meta.inc',
   );
   $items['daten/page'] = array(
     'page callback' => '_lobbywatch_meta_page',
-    'page arguments' => array(),
+    'page arguments' => [],
     'access arguments' => array('access lobbywatch page content'),
     'type' => MENU_CALLBACK,
     'file' => 'lobbywatch_meta.inc',
   );
   $items['daten/articles'] = array(
     'page callback' => '_lobbywatch_meta_articles',
-    'page arguments' => array(),
+    'page arguments' => [],
     'access arguments' => array('access lobbywatch article content'),
     'type' => MENU_CALLBACK,
     'file' => 'lobbywatch_meta.inc',
   );
   $items['daten/knowledge_articles'] = array(
     'page callback' => '_lobbywatch_meta_knowledge_articles',
-    'page arguments' => array(),
+    'page arguments' => [],
     'access arguments' => array('access lobbywatch article content'),
     'type' => MENU_CALLBACK,
     'file' => 'lobbywatch_meta.inc',

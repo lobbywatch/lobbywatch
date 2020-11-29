@@ -17,7 +17,7 @@ class lobbywatch_handler_filter_parlamentarier_kanton extends views_handler_filt
       //TODO convert to table query
       $kantone = array('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH');
 //       $types = node_type_get_types();
-      $options = array();
+      $options = [];
       foreach ($kantone as $kanton) {
         $options[$kanton] = t($kanton);
       }

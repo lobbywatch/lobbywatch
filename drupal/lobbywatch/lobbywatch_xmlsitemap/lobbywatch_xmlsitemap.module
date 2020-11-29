@@ -5,16 +5,16 @@
 module_load_include('inc', 'lobbywatch_data', 'lobbywatch.interface');
 
 function lobbywatch_xmlsitemap_xmlsitemap_index_links($limit = 10000, $rebuild = true, $cron = false) {
-//   watchdog('lobbywatch_xmlsitemap', 'Lobbywatch start updateing sitemap.xml.', array());
+//   watchdog('lobbywatch_xmlsitemap', 'Lobbywatch start updateing sitemap.xml.', []);
 //   dpm('_lobbywatch_xmlsitemap_xmlsitemap_index_links');
-//   watchdog('lobbywatch_xmlsitemap', 'Lobbywatch start updateing sitemap.xml. ' . print_r(Constants::getAllEntities(), true), array());
+//   watchdog('lobbywatch_xmlsitemap', 'Lobbywatch start updateing sitemap.xml. ' . print_r(Constants::getAllEntities(), true), []);
   foreach (Constants::$entities_web_old as $table => $name) {
     _lobbywatch_xmlsitemap_xmlsitemap_delete_links($table, $name, $limit, $rebuild, $cron);
   }
   foreach (Constants::getAllEntities() as $table => $name) {
     _lobbywatch_xmlsitemap_xmlsitemap_index_links($table, $name, $limit, $rebuild, $cron);
   }
-//   watchdog('lobbywatch_xmlsitemap', 'Lobbywatch sitemap.xml updated.', array());
+//   watchdog('lobbywatch_xmlsitemap', 'Lobbywatch sitemap.xml updated.', []);
 }
 
 function _lobbywatch_xmlsitemap_xmlsitemap_delete_links($table, $name, $limit, $rebuild, $cron) {
@@ -36,8 +36,8 @@ function _lobbywatch_xmlsitemap_xmlsitemap_index_links($table, $name, $limit, $r
 //       lobbywatch_set_lang($lang);
       $sql = "SELECT x.id FROM {xmlsitemap} x WHERE x.type = 'lw_$table' AND x.language='$lang'";
       //$indexed = xmlsitemap_db_fetch_col($query);
-  //     $indexed = db_query_range($sql, 0, $limit, array())->fetchCol();
-      $indexed = db_query($sql, array())->fetchCol();
+  //     $indexed = db_query_range($sql, 0, $limit, [])->fetchCol();
+      $indexed = db_query($sql, [])->fetchCol();
 
       //there isn't a lot of stuff, it fits in memory, but fetching it is costly.
       $indexed = array_flip($indexed);
@@ -48,18 +48,18 @@ function _lobbywatch_xmlsitemap_xmlsitemap_index_links($table, $name, $limit, $r
           # new record
           xmlsitemap_link_save(_lobbywatch_xmlsitemap_xmlsitemap_make_link($table, $name, $rec, $lang));
           $i++;
-  //         watchdog('debug', '$rec[id]: ' . $rec['id'], array(), WATCHDOG_DEBUG);
+  //         watchdog('debug', '$rec[id]: ' . $rec['id'], [], WATCHDOG_DEBUG);
         }
 
         unset($indexed[_lobbywatch_xmlsitemap_calc_xml_id($rec['id'], $lang)]);
         if ($i == $limit)
           break;
       }
-  //     watchdog('debug', $data, array(), WATCHDOG_DEBUG);
-  //     watchdog('debug', "i: $i, limit: $limit", array(), WATCHDOG_DEBUG);
+  //     watchdog('debug', $data, [], WATCHDOG_DEBUG);
+  //     watchdog('debug', "i: $i, limit: $limit", [], WATCHDOG_DEBUG);
 
       $added = $i;
-      $deleted = array();
+      $deleted = [];
       #Done indexing new stuff;
       if ($indexed && $i < $limit) {
         $deleted = array_flip($indexed);
@@ -124,8 +124,8 @@ function lobbywatch_xmlsitemap_link_info() {
 //             'revision' => '',
 //         ),
 //         'load hook' => NULL,
-//         'view modes' => array(),
-//         'translation' => array(),
+//         'view modes' => [],
+//         'translation' => [],
 //         'schema_fields_sql' => array(
 //             'base table' => drupal_schema_fields_sql('menu_links'),
 //         ),
@@ -198,9 +198,9 @@ function _lobbywatch_xmlsitemap_calc_xml_id($table_id, $lang) {
  * Process old menu links not found in the {xmlsitemap} table.
  */
 function lobbywatch_xmlsitemap_cron() {
-//   watchdog('lobbywatch_xmlsitemap', 'Lobbywatch start updateing sitemap.xml.', array(), WATCHDOG_INFO);
+//   watchdog('lobbywatch_xmlsitemap', 'Lobbywatch start updateing sitemap.xml.', [], WATCHDOG_INFO);
   lobbywatch_xmlsitemap_xmlsitemap_index_links(xmlsitemap_var('batch_limit'), false, true);
-  watchdog('lobbywatch_xmlsitemap', 'Lobbywatch sitemap.xml updated.', array(), WATCHDOG_INFO);
+  watchdog('lobbywatch_xmlsitemap', 'Lobbywatch sitemap.xml updated.', [], WATCHDOG_INFO);
 }
 
 function _lobbywatch_sitemap_table_flat_list($table, $condition = '1') {
@@ -217,7 +217,7 @@ function _lobbywatch_sitemap_table_flat_list($table, $condition = '1') {
     WHERE $condition " .
     " AND $table.freigabe_datum < NOW()";
 
-    $result = db_query($sql, array());
+    $result = db_query($sql, []);
 
 //     $items = _lobbywatch_data_clean_records($result);
 

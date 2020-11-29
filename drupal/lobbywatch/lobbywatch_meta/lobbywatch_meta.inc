@@ -51,7 +51,7 @@ function _lobbywatch_meta() {
 }
 
 function _lobbywatch_meta_property_access_filter($wrapper) {
-  $filtered = array();
+  $filtered = [];
   foreach ($wrapper as $name => $property) {
     try {
       if ($property->access('view')) {
@@ -65,7 +65,7 @@ function _lobbywatch_meta_property_access_filter($wrapper) {
   return $filtered;
 }
 
-function _lobbywatch_meta_get_data($wrapper, $recursive = FALSE, $load_types = array(), $data = array()) {
+function _lobbywatch_meta_get_data($wrapper, $recursive = FALSE, $load_types = [], $data = []) {
   $filtered = _lobbywatch_meta_property_access_filter($wrapper);
 
   foreach ($filtered as $name => $property) {
@@ -104,7 +104,7 @@ function _lobbywatch_meta_get_node_data($values) {
 
   $load_types = isset($_GET['load-entity-refs'])
     ? explode(',', $_GET['load-entity-refs'])
-    : array();
+    : [];
 
   $data = _lobbywatch_meta_get_data($wrapper, TRUE, $load_types, array(
     'path' => drupal_get_path_alias('node/'.$values->nid),
@@ -158,7 +158,7 @@ function _lobbywatch_meta_articles() {
   catch (PDOException $exception) {
     throw new RestWSException('Query failed.', 400);
   }
-  $query_result = isset($query_result['node']) ? $query_result['node'] : array();
+  $query_result = isset($query_result['node']) ? $query_result['node'] : [];
 
   $articleIds = array_keys($query_result);
 
@@ -200,7 +200,7 @@ function _lobbywatch_meta_knowledge_articles() {
   catch (PDOException $exception) {
     throw new RestWSException('Query failed.', 400);
   }
-  $query_result = isset($query_result['node']) ? $query_result['node'] : array();
+  $query_result = isset($query_result['node']) ? $query_result['node'] : [];
 
   $articleIds = array_keys($query_result);
 

@@ -201,16 +201,16 @@ function convert_ansi($text) {
 // Comments on form fields
 function fillHintParams(Page $page, &$params) {
   // Fill info hints
-  $hints = array();
-  $minimal_fields = array();
-  $fr_field_names = array();
-  $fr_field_descriptions = array();
-  $form_translations = array();
+  $hints = [];
+  $minimal_fields = [];
+  $fr_field_names = [];
+  $fr_field_descriptions = [];
+  $form_translations = [];
 //   df($page->GetGrid()->GetDataset()->GetName(), '$page->GetGrid()->GetDataset()->GetName()');
 //    df($page->GetDataset()->GetName(), '$page->GetDataset()->GetName()');
   $table_name = getTableName($page);
   if ($params == null) {
-    $params = array();
+    $params = [];
   }
   foreach($page->GetGrid()->GetViewColumns() as $column) {
     $raw_name = $column->GetName();
@@ -271,7 +271,7 @@ function fillHintParams(Page $page, &$params) {
       $imported_fields = array('parlament_committee_function' => true, 'parlament_committee_function_name' => true, 'parlamentarier_id' => true, 'kommission_id' => true, 'von' => true, 'bis' => true, 'funktion' => true,);
       break;
     default :
-    $imported_fields = array();
+    $imported_fields = [];
   }
 
 //   df($table_name, '$table_name');
@@ -381,7 +381,7 @@ function before_render(Page $page) {
   applyDefaultFilters($page);
 
 //   // Fill info hints
-//   $hints = array();
+//   $hints = [];
 //   foreach($page->GetGrid()->GetViewColumns() as $column) {
 //     $raw_name = $column->GetName();
 //     $name = preg_replace('/^(.*?_id).*/', '\1', $raw_name);
@@ -525,7 +525,7 @@ function parlamentarier_remove_old_photo($page, &$rowData, &$cancel, &$message, 
     return false;
   }
 
-  $values = array();
+  $values = [];
   $page->GetConnection()->ExecQueryToArray("SELECT `id`, `photo` FROM $tableName WHERE `id`=$id", $values);
 //   df("SELECT `photo` FROM $tableName WHERE id=$id");
 //   df($values);
@@ -620,7 +620,7 @@ function symbol_remove_old($page, &$rowData, &$cancel, &$message, $tableName)
     return false;
   }
 
-  $values = array();
+  $values = [];
   $page->GetConnection()->ExecQueryToArray("SELECT `id`, `symbol_rel` FROM $tableName WHERE `id`=$id", $values);
   //   df("SELECT `photo` FROM $tableName WHERE id=$id");
   //   df($values);
@@ -821,7 +821,7 @@ class PrivateFileDownloadHTTPHandler extends AbstractHTTPHandler
 
   public function Render(Renderer $renderer)
   {
-    $primaryKeyValues = array();
+    $primaryKeyValues = [];
     ExtractPrimaryKeyValues($primaryKeyValues, METHOD_GET);
 
     $this->dataset->SetSingleRecordState($primaryKeyValues);
@@ -909,7 +909,7 @@ function DisplayTemplateSimple($TemplateName, $InputObjects, $InputValues, $disp
 //   AND zutrittsberechtigung.id=:id
 // GROUP BY zutrittsberechtigung.id;";
 //
-//   $result = array();
+//   $result = [];
 //   $sth = $con->prepare($sql);
 //   $sth->execute(array(':id' => $zutrittsberechtigte_id));
 //   $result = $sth->fetchAll();
@@ -1001,7 +1001,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles, &$ro
  * @param unknown $rowStyles
  */
 function drawWorkflowStyles($table_name, $rowData, &$rowCellStyles, &$rowStyles, &$rowClasses, &$cellClasses) {
-  $workflowStateColors = array();
+  $workflowStateColors = [];
   $workflowStateColors['freigabe'] = 'greenyellow';
   $workflowStateColors['autorisiert'] = 'lightblue';
   $workflowStateColors['autorisierung_verschickt'] = 'blue';
@@ -1435,9 +1435,9 @@ function zutrittsberechtigung_state($parlamentarier_id) {
     zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()
         ;";
 
-    $zbs = array();
+    $zbs = [];
     $sth = $con->prepare($sql);
-    $sth->execute(array());
+    $sth->execute([]);
     $zbs = $sth->fetchAll();
 
     // Connection will automatically be closed at the end of the request.
@@ -1460,7 +1460,7 @@ function zutrittsberechtigung_state($parlamentarier_id) {
     zutrittsberechtigung.parlamentarier_id=:id
     AND zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW();";
 
-    $zbs = array();
+    $zbs = [];
     $sth = $con->prepare($sql);
     $sth->execute(array(':id' => $parlamentarier_id));
     $zbs = $sth->fetchAll();
@@ -1491,7 +1491,7 @@ function parlamentarier_state($parlamentarier_id) {
   FROM v_parlamentarier_simple parlamentarier;";
 
     $sth = $con->prepare($sql);
-    $sth->execute(array());
+    $sth->execute([]);
     $zbs = $sth->fetchAll();
 
     // Connection will automatically be closed at the end of the request.
@@ -1514,7 +1514,7 @@ function parlamentarier_state($parlamentarier_id) {
   WHERE
     parlamentarier.id=:id;";
 
-    $zbs = array();
+    $zbs = [];
     $sth = $con->prepare($sql);
     $sth->execute(array(':id' => $parlamentarier_id));
     $zb = $sth->fetch();
@@ -1553,12 +1553,12 @@ function in_kommission_anzahl($kommission_id, $rat = null) {
 . ( $rat ? " AND in_kommission.rat='$rat'" : '')
 . "  GROUP BY in_kommission.kommission_id, in_kommission.rat;";
 
-//     $zbs = array();
+//     $zbs = [];
 //     $sth = $con->prepare($sql);
-//     $sth->execute(array());
+//     $sth->execute([]);
 //     $zbs = $sth->fetchAll();
 
-    $zbs = lobbywatch_forms_db_query($sql, array(), array('fetch' => PDO::FETCH_ASSOC))->fetchAll();
+    $zbs = lobbywatch_forms_db_query($sql, [], array('fetch' => PDO::FETCH_ASSOC))->fetchAll();
 
     // Connection will automatically be closed at the end of the request.
 //     $eng_con->Disconnect();
@@ -1582,7 +1582,7 @@ function in_kommission_anzahl($kommission_id, $rat = null) {
 //     zutrittsberechtigung.parlamentarier_id=:id
 //     AND zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW();";
 
-//     $zbs = array();
+//     $zbs = [];
 //     $sth = $con->prepare($sql);
 //     $sth->execute(array(':id' => $parlamentarier_id));
 //     $zbs = $sth->fetchAll();
@@ -2259,7 +2259,7 @@ function customOnGetCustomColumnGroup(Page $page, FixedKeysArray $columns, ViewC
 // Call: defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);
 function defaultOnGetCustomTemplate(Page $page, $part, $mode, &$result, &$params) {
   if ($params == null) {
-    $params = array();
+    $params = [];
   }
   // MIGR OnGetCustomTemplate()
   //   if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
@@ -2288,7 +2288,7 @@ function defaultOnGetCustomTemplate(Page $page, $part, $mode, &$result, &$params
  */
 function globalOnGetCustomTemplate($type, $part, $mode, &$result, &$params, CommonPage $page) {
   if ($params == null) {
-    $params = array();
+    $params = [];
   }
   if ($part === PagePart::Layout) {
     $params['PHPGenVersion'] = GENERATOR_VERSION;

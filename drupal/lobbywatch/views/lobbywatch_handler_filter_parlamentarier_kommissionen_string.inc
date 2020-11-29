@@ -15,7 +15,7 @@ class lobbywatch_handler_filter_parlamentarier_kommissionen_string extends views
 //     if (!isset($this->value_options)) {
 //       $this->value_title = t('Ratstyp');
 // //       $types = node_type_get_types();
-// //       $options = array();
+// //       $options = [];
 // //       foreach ($types as $type => $info) {
 // //         $options[$type] = t($info->name);
 // //       }
@@ -31,7 +31,7 @@ class lobbywatch_handler_filter_parlamentarier_kommissionen_string extends views
       $this->value_title = lt('Kommissionen');
       $kommissionen = lobbywatch_get_kommissionen();
 //       dpm($kommissionen);
-      $options = array();
+      $options = [];
       // See also in lobbywatch.module _lobbywatch_get_kommission_translated_name()
       foreach ($kommissionen as $id => $kommission) {
         // TODO A Hack: just delete -NR, -SR

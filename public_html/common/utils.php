@@ -159,7 +159,7 @@ function djXXX($msg, $text = null, $with_script_tags = true) {
 
 // http://stackoverflow.com/questions/11648396/php-search-for-a-value-in-an-array-which-contains-objects
 function search_objects(&$objects, $key, $value) {
-  $return = array();
+  $return = [];
   foreach ($objects as &$object) {
     $objVars = get_object_vars($object);
     if (isset($objVars[$key]) && $objVars[$key] == $value) {
@@ -346,7 +346,7 @@ function checkPasswordStrength($pwd) {
  * @see drupal_static_reset()
  */
 function &php_static_cache($name, $default_value = NULL, $reset = FALSE) {
-  static $data = array(), $default = array();
+  static $data = [], $default = [];
   // First check if dealing with a previously defined static variable.
   if (isset($data[$name]) || array_key_exists($name, $data)) {
     // Non-NULL $name and both $data[$name] and $default[$name] statics exist.
@@ -740,7 +740,7 @@ function lobbywatch_lang_field($field, $langcode = null) {
  * @see format_string()
  * @ingroup sanitization
  */
-function lt($string, array $args = array(), array $options = array()) {
+function lt($string, array $args = [], array $options = []) {
   global $language;
   static $custom_strings;
 
@@ -757,7 +757,7 @@ function lt($string, array $args = array(), array $options = array()) {
 //   // handful of string replacements. See settings.php for examples.
 //   // Cache the $custom_strings variable to improve performance.
 //   if (!isset($custom_strings[$options['langcode']])) {
-//     $custom_strings[$options['langcode']] = variable_get('locale_custom_strings_' . $options['langcode'], array());
+//     $custom_strings[$options['langcode']] = variable_get('locale_custom_strings_' . $options['langcode'], []);
 //   }
 //   // Custom strings work for English too, even if locale module is disabled.
 //   if (isset($custom_strings[$options['langcode']][$options['context']][$string])) {
@@ -786,7 +786,7 @@ function lt($string, array $args = array(), array $options = array()) {
  * @param array $options
  * @return string
  */
-function lts($string, array $args = array(), array $options = array()) {
+function lts($string, array $args = [], array $options = []) {
   return "'" . str_replace("'", "\'", lt($string, $args, $options)) . "'";
 }
 
@@ -825,7 +825,7 @@ function lts($string, array $args = array(), array $options = array()) {
  * @see t()
  * @ingroup sanitization
  */
-function lobbywatch_format_string($string, array $args = array()) {
+function lobbywatch_format_string($string, array $args = []) {
   // Transform arguments before inserting them.
   foreach ($args as $key => $value) {
     switch ($key[0]) {
@@ -911,7 +911,7 @@ function lobbywatch_placeholder($text) {
  * @see t()
  * @see format_string()
  */
-function lobbywatch_format_plural($count, $singular, $plural, array $args = array(), array $options = array()) {
+function lobbywatch_format_plural($count, $singular, $plural, array $args = [], array $options = []) {
   $args['@count'] = $count;
   if ($count == 1) {
     return lt($singular, $args, $options);
@@ -979,7 +979,7 @@ function lobbywatch_translate($string = NULL, $context = NULL, $langcode = NULL,
   // Store database cached translations in a static variable. Only build the
   // cache after $language has been set to avoid an unnecessary cache rebuild.
   if (!isset($locale_t[$langcode]) && isset($language)) {
-    $locale_t[$langcode] = array();
+    $locale_t[$langcode] = [];
     // Disabling the usage of string caching allows a module to watch for
     // the exact list of strings used on a page. From a performance
     // perspective that is a really bad idea, so we have no user
@@ -1138,11 +1138,11 @@ function lobbywatch_translate_reset() {
 //   global $language;
 
 //   // Used to locally cache the plural formulas for all languages.
-//   $plural_formulas = &drupal_static(__FUNCTION__, array());
+//   $plural_formulas = &drupal_static(__FUNCTION__, []);
 
 //   // Used to store precomputed plural indexes corresponding to numbers
 //   // individually for each language.
-//   $plural_indexes = &drupal_static(__FUNCTION__ . ':plurals', array());
+//   $plural_indexes = &drupal_static(__FUNCTION__ . ':plurals', []);
 
 //   $langcode = $langcode ? $langcode : $language->language;
 
@@ -1203,7 +1203,7 @@ function lobbywatch_translate_reset() {
 //     $languages = language_list('enabled');
 //     $languages = $languages[1];
 //   }
-//   $list = array();
+//   $list = [];
 //   foreach ($languages as $language) {
 //     $list[$language->language] = ($field == 'name') ? t($language->name) : $language->$field;
 //   }
@@ -1247,14 +1247,14 @@ function getSettingValue($key, $json = false, $defaultValue = null) {
   if (!isset($settings)) {
     // Initially, fetch all at once
 //     $eng_con = getDBConnection();
-    $values = array();
+    $values = [];
     try {
       $con = get_PDO_lobbywatch_DB_connection();
 //       $con->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
       $sql = "SELECT id, key_name, value FROM settings"; // v_settings does not work: SQLSTATE[HY000]: General error: 1615 Prepared statement needs to be re-prepared
 //       $values = $con->query($sql);
       $sth = $con->prepare($sql);
-      $sth->execute(array());
+      $sth->execute([]);
       $values = $sth->fetchAll();
     } finally {
       // Connection will automatically be closed at the end of the request.
@@ -1279,7 +1279,7 @@ function getSettingValue($key, $json = false, $defaultValue = null) {
     // index field, then execute code needed to index the information already
     // available in $settings by the desired field.
 //     $eng_con = getDBConnection();
-    $values = array();
+    $values = [];
     try {
       $con = get_PDO_lobbywatch_DB_connection();
       $sql = "SELECT id, value
@@ -1332,7 +1332,7 @@ function getSettingCategoryValues($categoryName, $defaultValue = null) {
   //   }
   if (!isset($settings[$categoryName])) {
 //     $eng_con = getDBConnection();
-    $values = array();
+    $values = [];
     try {
       $con = get_PDO_lobbywatch_DB_connection();
       // TODO close connection
@@ -1352,7 +1352,7 @@ function getSettingCategoryValues($categoryName, $defaultValue = null) {
       // Nothing found, return defaultValue
       $settings[$categoryName] = $defaultValue;
     } else {
-      $simple = array();
+      $simple = [];
       foreach ($values as $rec) {
         $simple[$rec['key_name']] = $rec['value'];
       }
@@ -1548,7 +1548,7 @@ function utils_set_db_session_parameters_exec($con) {
  *
  * @see DatabaseConnection::defaultOptions()
  */
-function lobbywatch_forms_db_query($query, array $args = array(), array $options = array()) {
+function lobbywatch_forms_db_query($query, array $args = [], array $options = []) {
 
 //   if (empty($options['target'])) {
 //     $options['target'] = 'default';
@@ -1629,7 +1629,7 @@ function lobbywatch_forms_db_query($query, array $args = array(), array $options
 
 
 //     //         df($sql);
-//     $result = array();
+//     $result = [];
 
 //     $result = $sth->fetchAll();
 
@@ -1662,8 +1662,8 @@ function lobbywatch_DB_setPrefix($prefix) {
 
   // Set up variables for use in prefixTables(). Replace table-specific
   // prefixes first.
-  $prefixSearch = array();
-  $prefixReplace = array();
+  $prefixSearch = [];
+  $prefixReplace = [];
   foreach ($prefixes as $key => $val) {
     if ($key != 'default') {
       $prefixSearch[] = '{' . $key . '}';
@@ -1703,8 +1703,8 @@ function lobbywatch_prefixTables($sql, $prefix = '') {
 
   // Set up variables for use in prefixTables(). Replace table-specific
   // prefixes first.
-  $prefixSearch = array();
-  $prefixReplace = array();
+  $prefixSearch = [];
+  $prefixReplace = [];
   foreach ($prefixes as $key => $val) {
     if ($key != 'default') {
       $prefixSearch[] = '{' . $key . '}';
@@ -1819,7 +1819,7 @@ function lobbywatch_DB_expandArguments(&$query, &$args) {
   // If the placeholder value to insert is an array, assume that we need
   // to expand it out into a comma-delimited set of placeholders.
   foreach (array_filter($args, 'is_array') as $key => $data) {
-    $new_keys = array();
+    $new_keys = [];
     foreach (array_values($data) as $i => $value) {
       // This assumes that there are no other placeholders that use the same
       // name.  For example, if the array placeholder is defined as :example
@@ -1988,7 +1988,7 @@ function _utils_get_exeption($e) {
 }
 
 function _lobbywatch_check_uid_format($uid_raw, &$uid, &$message) {
-    $matches = array();
+    $matches = [];
     $success = true;
     if (preg_match('/^CHE-(\d{3})\.(\d{3}).(\d{3})$/', $uid_raw, $matches)) {
       $uid = $matches[1] . $matches[2] . $matches[3];
@@ -2029,7 +2029,7 @@ function _lobbywatch_check_uid_check_digit($uid_number, &$message) {
 }
 
 function initDataArray() {
-  $data = array();
+  $data = [];
   $data['message'] = '';
   $data['sql'] = '';
   $data['data'] = [];
@@ -2142,7 +2142,7 @@ function _lobbywatch_fetch_ws_uid_bfs_data($uid_raw, $verbose = 0, $ssl = true, 
   $data = initDataArray();
 
   if (!_lobbywatch_check_uid_format($uid_raw, $uid, $data['message'])) {
-    $data['data'] = array();
+    $data['data'] = [];
     $data['success'] = false;
     return $data;
   }
@@ -2150,7 +2150,7 @@ function _lobbywatch_fetch_ws_uid_bfs_data($uid_raw, $verbose = 0, $ssl = true, 
   $data['sql'] .= "uid=$uid";
 
   if (!_lobbywatch_check_uid_check_digit($uid, $data['message'])) {
-    $data['data'] = array();
+    $data['data'] = [];
     $data['success'] = false;
     return $data;
   }
@@ -2196,7 +2196,7 @@ function _lobbywatch_fetch_ws_zefix_soap_data($uid_raw, $verbose = 0, $ssl = tru
   $data = initDataArray();
 
   if (!_lobbywatch_check_uid_format($uid_raw, $uid, $data['message'])) {
-    $data['data'] = array();
+    $data['data'] = [];
     $data['success'] = false;
     return $data;
   }
@@ -2204,7 +2204,7 @@ function _lobbywatch_fetch_ws_zefix_soap_data($uid_raw, $verbose = 0, $ssl = tru
   $data['sql'] .= "uid=$uid";
 
   if (!_lobbywatch_check_uid_check_digit($uid, $data['message'])) {
-    $data['data'] = array();
+    $data['data'] = [];
     $data['success'] = false;
     return $data;
   }
@@ -2219,7 +2219,7 @@ function _lobbywatch_fetch_ws_zefix_rest_data($uid_raw, $verbose = 0, $test_mode
   $data = initDataArray();
 
   if (!_lobbywatch_check_uid_format($uid_raw, $uid, $data['message'])) {
-    $data['data'] = array();
+    $data['data'] = [];
     $data['success'] = false;
     return $data;
   }
@@ -2227,7 +2227,7 @@ function _lobbywatch_fetch_ws_zefix_rest_data($uid_raw, $verbose = 0, $test_mode
   $data['sql'] .= "uid=$uid";
 
   if (!_lobbywatch_check_uid_check_digit($uid, $data['message'])) {
-    $data['data'] = array();
+    $data['data'] = [];
     $data['success'] = false;
     return $data;
   }
@@ -2596,7 +2596,7 @@ function getESRChecksum($nbr) {
 }
 
 function formatUID($uid_raw) {
-  $matches = array();
+  $matches = [];
   if (is_numeric($uid_raw) && strlen($uid_raw) == 8) {
     $check_digit = _lobbywatch_calculate_uid_check_digit($uid_raw);
     $uid_raw .= $check_digit;
@@ -2620,7 +2620,7 @@ function formatUID($uid_raw) {
 }
 
 function getUIDnumber($uid_raw) {
-  $matches = array();
+  $matches = [];
 
   if (is_numeric($uid_raw) && strlen($uid_raw) == 9) {
     return $uid_raw;
@@ -2647,7 +2647,7 @@ function formatUIDnumber($uid_number) {
 }
 
 function formatOldHandelsregisterID($old_hr_id_raw) {
-  $matches = array();
+  $matches = [];
   // TODO check
   if (is_numeric($old_hr_id_raw) && strlen($old_hr_id_raw) == 10) {
     $old_hr_id = 'CH' . $old_hr_id_raw . getESRChecksum($old_hr_id_raw);
@@ -2924,7 +2924,7 @@ function fillZutrittsberechtigterEmail($i) {
     lobbywatch_set_language($oldlang);
 
   } else {
-    $res = array();
+    $res = [];
   }
   return $res;
 }
@@ -3047,9 +3047,9 @@ GROUP BY zutrittsberechtigung.id;";
   //       $sth->execute(array(':id' => $id));
   $zbs = lobbywatch_forms_db_query($sql, array(':id' => $parlamentarier_id));
 
-  $gaeste = array();
+  $gaeste = [];
 
-  $organisationsbeziehungen = array();
+  $organisationsbeziehungen = [];
 
   foreach ($zbs as $zb) {
     $id = $zb->id;
@@ -3097,7 +3097,7 @@ GROUP BY zutrittsberechtigung.id;";
 
     //     df($sql, 'sql');
 
-    $res = array();
+    $res = [];
     $sth = $con->prepare($sql);
     $sth->execute(array(':id' => $id));
     $gast = $sth->fetchAll();
@@ -3177,7 +3177,7 @@ function get_parlamentarier_lang($con, $id) {
 }
 
 function get_parlamentarier($con, $id, $jahr, $include_parlamentarische_gruppen_members = true) {
-      $result = array();
+      $result = [];
       $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.name as parlamentarier_name2, parlamentarier.email, parlamentarier.geschlecht, parlamentarier.beruf, parlamentarier.beruf_fr, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.kontrolliert_datum, parlamentarier.freigabe_datum, parlamentarier.autorisierung_verschickt_datum, parlamentarier.autorisiert_datum, parlamentarier.kontrolliert_visa, parlamentarier.eingabe_abgeschlossen_visa, parlamentarier.im_rat_bis, parlamentarier.sitzplatz, parlamentarier.geburtstag, parlamentarier.im_rat_bis, parlamentarier.kleinbild, parlamentarier.parlament_biografie_id, parlamentarier.arbeitssprache, parlamentarier.aemter, parlamentarier.weitere_aemter, parlamentarier.parlament_interessenbindungen, parlamentarier.parlament_interessenbindungen_updated, DATE_FORMAT(parlament_interessenbindungen_updated, '%d.%m.%Y') as parlament_interessenbindungen_updated_formatted,
       parlament_beruf_json,
 GROUP_CONCAT(DISTINCT
@@ -3275,7 +3275,7 @@ WHERE
 " GROUP BY parlamentarier.id;";
 
         // df($sql);
-        $result = array();
+        $result = [];
 //         $eng_con->ExecQueryToArray($sql, $result);
 //          df($eng_con->LastError(), 'last error');
 //         $eng_con->Disconnect();
@@ -3337,7 +3337,7 @@ function _lobbywatch_interessenbindung_verguetung_SQL($jahr) {
 // ;
 
 function get_parlamentarier_log_last_changed_parlament_interessenbindungen($con, $id) {
-  $result = array();
+  $result = [];
   $sql = "SELECT parlamentarier.id parlamentarier_id, parlamentarier_log.*, REPLACE(REPLACE(REPLACE(parlamentarier_log.parlament_interessenbindungen, '\"', '\\''), '\\n', ''), '\\r', '') parlament_interessenbindungen_normalized
 FROM parlamentarier LEFT OUTER JOIN `parlamentarier_log` ON parlamentarier.id = parlamentarier_log.id  AND REPLACE(REPLACE(REPLACE(parlamentarier.parlament_interessenbindungen, '\"', '\\''), '\\n', ''), '\\r', '') != REPLACE(REPLACE(REPLACE(parlamentarier_log.parlament_interessenbindungen, '\"', '\\''), '\\n', ''), '\\r', '')
 WHERE parlamentarier.id=:id
@@ -3345,7 +3345,7 @@ ORDER BY log_id DESC
 LIMIT 1;
 ";
 //         df($sql);
-  $result = array();
+  $result = [];
   $options = array(
     'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
   );
@@ -3360,7 +3360,7 @@ LIMIT 1;
 }
 
 function get_parlamentarier_log_last_changed_parlament_beruf_json($con, $id) {
-  $result = array();
+  $result = [];
   $sql = "SELECT parlamentarier.id parlamentarier_id, parlamentarier_log.*
 FROM parlamentarier LEFT OUTER JOIN `parlamentarier_log` ON parlamentarier.id = parlamentarier_log.id  AND parlamentarier.parlament_beruf_json <> parlamentarier_log.parlament_beruf_json
 WHERE parlamentarier.id=:id
@@ -3368,7 +3368,7 @@ ORDER BY log_id DESC
 LIMIT 1;
 ";
 //         df($sql);
-  $result = array();
+  $result = [];
   $options = array(
     'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
   );
@@ -3398,7 +3398,7 @@ function decodeJson($json) {
 }
 
 function get_parlamentarier_transparenz($con, $id) {
-      $result = array();
+      $result = [];
 //       $sql = "SELECT parlamentarier.parlamentarier_id as id, parlamentarier.*
 //       FROM v_parlamentarier_transparenz_calculated parlamentarier
 //       WHERE parlamentarier.parlamentarier_id=:id;";
@@ -3440,7 +3440,7 @@ GROUP BY parlamentarier.id;";
 
 
 //         df($sql);
-  $result = array();
+  $result = [];
   $options = array(
     'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
   );
