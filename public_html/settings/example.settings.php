@@ -15,6 +15,7 @@ global $env_dir;
 global $env;
 global $debug;
 global $settings;
+global $allowed_uid_access_keys;
 
 global $drupal_running;
 global $lobbywatch_mode;
@@ -32,6 +33,10 @@ $zefix_ws_login = array(
   'password' => 'xyz', // Zefix WS login password
   'keys' => array('abc',), // Allowed key for accessing data interface REST webservice
 );
+
+$allowed_uid_access_keys = [
+  'a_long_random_key',
+];
 
 $db_connections = [
   'lobbywatch' => [
