@@ -338,7 +338,7 @@ if $backup_db ; then
     ./run_db_script.sh $local_DB $local_db_user dbdump_data interactive
   else
     if ! $quiet_mode ; then
-      askContinueYn "Backup REMOTE DB $local_DB?"
+      askContinueYn "Backup REMOTE DB $db_base_name$env_suffix?"
     fi
 
     echo "## Upload run_db_script.sh"
