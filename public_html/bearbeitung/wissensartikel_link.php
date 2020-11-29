@@ -3002,7 +3002,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\''));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\' AND language IN (\'de\', \'und\')'));
             $editColumn = new DynamicLookupEditColumn('Titel', 'node_id', 'node_id_anzeige_name', 'edit_uv_wissensartikel_link_node_id_search', $editor, $this->dataset, $lookupDataset, 'nid', 'anzeige_name', '%anzeige_name%<br><small>nid: %nid%, lang: %language%, published: %status%</small>');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -3237,7 +3237,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\''));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\' AND language IN (\'de\', \'und\')'));
             $editColumn = new DynamicLookupEditColumn('Titel', 'node_id', 'node_id_anzeige_name', 'multi_edit_uv_wissensartikel_link_node_id_search', $editor, $this->dataset, $lookupDataset, 'nid', 'anzeige_name', '%anzeige_name%<br><small>nid: %nid%, lang: %language%, published: %status%</small>');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -3472,7 +3472,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\''));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\' AND language IN (\'de\', \'und\')'));
             $editColumn = new DynamicLookupEditColumn('Titel', 'node_id', 'node_id_anzeige_name', 'insert_uv_wissensartikel_link_node_id_search', $editor, $this->dataset, $lookupDataset, 'nid', 'anzeige_name', '%anzeige_name%<br><small>nid: %nid%, lang: %language%, published: %status%</small>');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -4217,7 +4217,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\''));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\' AND language IN (\'de\', \'und\')'));
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_uv_wissensartikel_link_node_id_search', 'nid', 'anzeige_name', '%anzeige_name%<br><small>nid: %nid%, lang: %language%, published: %status%</small>', 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
@@ -4302,7 +4302,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\''));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\' AND language IN (\'de\', \'und\')'));
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_uv_wissensartikel_link_node_id_search', 'nid', 'anzeige_name', '%anzeige_name%<br><small>nid: %nid%, lang: %language%, published: %status%</small>', 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
@@ -4387,7 +4387,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\''));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\' AND language IN (\'de\', \'und\')'));
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_uv_wissensartikel_link_node_id_search', 'nid', 'anzeige_name', '%anzeige_name%<br><small>nid: %nid%, lang: %language%, published: %status%</small>', 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
@@ -4472,7 +4472,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\''));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'type=\'knowledge_article\' AND language IN (\'de\', \'und\')'));
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_uv_wissensartikel_link_node_id_search', 'nid', 'anzeige_name', '%anzeige_name%<br><small>nid: %nid%, lang: %language%, published: %status%</small>', 20);
             GetApplication()->RegisterHTTPHandler($handler);
             

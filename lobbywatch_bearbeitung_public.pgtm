@@ -50257,7 +50257,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="node_id" caption="Titel" headerHint="CMS Drupal 7 node id (nid) des Lobbypedia-Artikels" selectedFilterOperators="1573119">
-            <Lookup tableName="v_d7_node" linkFieldName="nid" displayFieldName="anzeige_name" lookupFilter="type='knowledge_article'" useLookupOrdering="true" lookupOrdering="0"/>
+            <Lookup tableName="v_d7_node" linkFieldName="nid" displayFieldName="anzeige_name" lookupFilter="type='knowledge_article' AND language IN ('de', 'und')" useLookupOrdering="true" lookupOrdering="0"/>
             <ViewProperties type="text"/>
             <Hyperlink template="https://cms.lobbywatch.ch/node/%node_id%" target=""/>
             <EditProperties type="dynamicCombobox" itemTemplate="%anzeige_name%&lt;br&gt;&lt;small&gt;nid: %nid%, lang: %language%, published: %status%&lt;/small&gt;"/>
