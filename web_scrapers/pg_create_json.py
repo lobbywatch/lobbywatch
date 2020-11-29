@@ -177,9 +177,6 @@ def read_groups(filename):
     if titles and presidents:
         groups.append((titles, presidents, sekretariat, konstituierung, zweck, art_der_aktivitaeten, mitglieder))
 
-    print('President titles:')
-    print(president_titles)
-
     # print counts for sanity check
     print("\n{} parlamentarische Gruppen\n"
           "{} total members of parlamentarische Gruppen".format(
