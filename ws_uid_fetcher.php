@@ -1,6 +1,7 @@
 <?php
 // Run: php -f ws_uid_fetcher.php -- -a --ssl -v1 -n20 -s -t
 // php -f ws_uid_fetcher.php -- -a --ssl -v2 -s > sql/20201129_ws_uid_fetcher.sql
+// ./run_update_ws_parlament.sh -v 1 -M -T -U -B
 
 /*
 # ./deploy.sh -b -B -p
@@ -17,6 +18,7 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
 // Change to forms root in order satisfy relative imports
+// TODO setup DB as in ws_parlament_fetcher.php
 $oldDir = getcwd();
 chdir(dirname(__FILE__) . '/public_html/bearbeitung');
 require_once dirname(__FILE__) . '/public_html/bearbeitung/database_engine/mysql_engine.php';
@@ -67,7 +69,9 @@ $context = stream_context_create($options);
 get_PDO_lobbywatch_DB_connection();
 
 $script = [];
-$script[] = "-- SQL script from ws.uid.admin.ch " . date("d.m.Y");
+$script[] = "-- SQL script from ws.parlament.ch $transaction_date";
+$script[] = "SET autocommit = 0;";
+$script[] = "START TRANSACTION;";
 
 $errors = [];
 $verbose = 0;
@@ -197,6 +201,13 @@ function main() {
 
   if (isset($options['f'])) {
     search_name_and_set_uid($records_limit, $ssl, $test_mode);
+  }
+
+  if (count($errors) > 0) {
+    echo "\nErrors:\n", implode("\n", $errors), "\n";
+    exit(1);
+  } else {
+    $script[] = "COMMIT;";
   }
 
   if (isset($options['s'])) {
@@ -652,7 +663,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
   }
 
   print("\nU: $n_ws_uid_found");
-  print("\nZ: $n_ws_zefix_found\n");
+  print("\nZ: $n_ws_zefix_found");
   print("\nR: $n_ws_zefix_rest_found\n");
 
   print("\n≠: $n_updated");
@@ -660,7 +671,10 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
   print("\n~: $n_different");
   print("\n!: $n_not_found");
   print("\nΣ: " . ($n_updated + $n_ok + $n_different + $n_not_found));
+
   print("\n\n*/\n");
+
+  print("\n-- UID-ORGANISATIONEN " . ($n_updated > 0 ? 'DATA CHANGED' : 'DATA UNCHANGED') . "\n\n");
 }
 
 /**

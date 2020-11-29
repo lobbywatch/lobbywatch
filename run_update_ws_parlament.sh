@@ -20,6 +20,7 @@
 enable_fail_onerror
 
 PHP=php
+LOCAL_PHP=php
 # PHP=/usr/bin/php
 if [[ "$HOSTNAME" =~ "rpialch" || "$HOSTNAME" =~ "rpiw" || "$HOSTNAME" =~ "abel" ]]; then
   # PHP="docker run -i --rm --name php74_execution --network=host -v $PWD:/usr/src/myapp -w /usr/src/myapp php74 php"
@@ -41,10 +42,12 @@ refresh=""
 progress="--progress"
 noparlam=false
 nozb=false
+uid=false
 nopg=false
 zb_script_path=web_scrapers
 pg_script_path=web_scrapers
 P_CHANGED=false
+U_CHANGED=false
 K_CHANGED=false
 ZB_CHANGED=false
 PG_CHANGED=false
@@ -92,6 +95,8 @@ while test $# -gt 0; do
                         echo "    --dl-images                  Download all images"
                         echo "-I, --noimageupload              Do not upload changed images"
                         echo "-Z, --nozb                       Do not run zutrittsberechtigten script"
+                        echo "-u, --uid                        Run update uid script"
+                        echo "-U, --onlyuid                    Run ONLY update uid script"
                         echo "-G, --nopg                       Do not run parlamentarische Gruppen script"
                         echo "-a, --automatic                  Automatic"
                         echo "-M, --nomail                     No email notification"
@@ -152,6 +157,17 @@ while test $# -gt 0; do
                         ;;
                 -Z|--nozb)
                         nozb=true
+                        shift
+                        ;;
+                -u|--uid)
+                        uid=true
+                        shift
+                        ;;
+                -U|--onlyuid)
+                        uid=true
+                        noparlam=true
+                        nozb=true
+                        nopg=true
                         shift
                         ;;
                 -G|--nopg)
@@ -433,6 +449,41 @@ if ! $nopg ; then
   fi
 fi
 
+U_FILE=''
+if $uid; then
+  if ! $automatic ; then
+    askContinueYn "Run ws_uid_fetcher.php for '$db' on '$HOSTNAME'?"
+  fi
+  mkdir -p sql
+  test_param=''
+  if $test; then
+    test_param='-n20'
+  fi
+  export U_FILE=sql/ws_uid_sync_`date +"%Y%m%dT%H%M%S"`.sql; $LOCAL_PHP -f ws_uid_fetcher.php -- -a --ssl -s $test_param --db=$db $verbose_mode | tee $U_FILE
+
+  if $verbose ; then
+    echo "Uid SQL: $U_FILE"
+  fi
+
+  grep -q "DATA CHANGED" $U_FILE && U_CHANGED=true
+  if $U_CHANGED ; then
+    if ! $automatic && ! $nosql ; then
+        beep
+        less $U_FILE
+        askContinueYn "Run SQL in LOCAL $db?"
+    fi
+    echo -e "\nUid data ${greenBold}CHANGED${reset}"
+  else
+    echo -e "\nUid data ${greenBold}UNCHANGED${reset}"
+  fi
+
+  if ! $nosql ; then
+    # Run anyway to set the imported date
+    # ./run_local_db_script.sh $db $U_FILE
+    ./deploy.sh -q -l=$db -s $U_FILE
+  fi
+fi
+
 # Run after import DB script for fixes
 if $enable_after_import_script && ! $nosql ; then
   if ! $automatic ; then
@@ -497,6 +548,14 @@ if ! $nopg && $PG_CHANGED && ! $nosql && $remote_op; then
   ./deploy.sh -q -s $PG_DELTA_FILE
 fi
 
+# Run parlam SQL in any case in order to set the imported data
+if $uid && $U_CHANGED && ! $nosql && $remote_op; then
+  if ! $automatic ; then
+    askContinueYn "Run uid SQL in REMOTE TEST?"
+  fi
+  ./deploy.sh -q -s $U_FILE
+fi
+
 # Run after import DB script for fixes
 if $enable_after_import_script && ! $nosql && $remote_op; then
   if ! $automatic ; then
@@ -548,9 +607,16 @@ fi
 
 if ! $nopg && $PG_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import && $remote_op; then
   if ! $automatic ; then
-    askContinueYn "Run pg SQL in remote PROD?"
+    askContinueYn "Run pg SQL in REMOTE PROD?"
   fi
   ./deploy.sh -p -q -s $PG_DELTA_FILE
+fi
+
+if $uid && $U_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import && $remote_op; then
+  if ! $automatic ; then
+    askContinueYn "Run uid SQL in REMOTE PROD?"
+  fi
+  ./deploy.sh -p -q -s $U_FILE
 fi
 
 # Run after import DB script for fixes
@@ -578,7 +644,7 @@ fi
 # P_CHANGED = true
 # ZB_CHANGED=true
 # echo "Mail state: $nomail $P_CHANGED $ZB_CHANGED"
-if ! $nomail && ($P_CHANGED || $ZB_CHANGED || $PG_CHANGED); then
+if ! $nomail && ($P_CHANGED || $ZB_CHANGED || $PG_CHANGED || $U_CHANGED); then
 
     if ! $automatic ; then
       askContinueYn "Send email?"
@@ -644,9 +710,18 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED || $PG_CHANGED); then
       perl -0 -p -e's%^(Kommissionen \d{2}\.\d{2}\.\d{4} \d{2}:\d{2}:\d{2}).*?^(Kommissionen:)$%\1\n\2%gms' |
       perl -0 -p -e's%^-- SQL-START.*-- SQL-END$%%gms' >> $tmp_mail_body
     fi
+
+    if $U_CHANGED ; then
+      subject="$subject Uid-Organisationen"
+      echo -e "\n= UID-ORGANISATIONEN\n" >> $tmp_mail_body
+      cat $U_FILE |
+      perl -p -e's%(/\*|\*/)%%' \
+      >> $tmp_mail_body
+    fi
+
     # cat $tmp_mail_body
     echo "less $tmp_mail_body"
-    cmd='cat $tmp_mail_body | $PHP -f mail_notification.php -- -s"$subject" -t"$to" "$P_FILE" "$fzb" "$fpg" $ZB_PDFS $PG_PDFS'
+    cmd='cat $tmp_mail_body | $PHP -f mail_notification.php -- -s"$subject" -t"$to" "$P_FILE" "$fzb" "$fpg" "$U_FILE" $ZB_PDFS $PG_PDFS'
     if $verbose; then echo "$cmd"; fi
     eval "$cmd"
 fi
