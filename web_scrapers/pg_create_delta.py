@@ -70,9 +70,13 @@ def get_organisation(group, conn):
     name_fr = normalize_organisation(group["name_fr"])
     name_it = normalize_organisation(group["name_it"])
 
+    # EXCEPTION: Migration code
     # Workaround for multiple results for 'Sport'
     if name_de == 'Sport':
         organisation_id = 1751
+    # Migration
+    elif name_de == 'lingua e cultura rumantscha':
+        organisation_id = 5964
     else:
         organisation_id = db.get_organisation_id(conn, name_de, name_fr, name_it)
 
