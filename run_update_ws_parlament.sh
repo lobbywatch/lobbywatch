@@ -287,6 +287,7 @@ fi
 # Local
 ###############################################################################
 
+P_FILE=''
 if ! $noparlam ; then
   if ! $automatic ; then
     askContinueYn "Run ws_parlament_fetcher.php for '$db' on '$HOSTNAME'?"
@@ -635,15 +636,13 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED || $PG_CHANGED); then
       (printf "%0.s*" {1..50} && echo) >> $tmp_mail_body
     fi
 
-    P_FILE=''
     if $P_CHANGED ; then
       subject="$subject Parlamentarier"
       echo -e "\n= PARLAMENTARIER\n" >> $tmp_mail_body
       cat $P_FILE |
       perl -p -e's%(/\*|\*/)%%' |
       perl -0 -p -e's%^(Kommissionen \d{2}\.\d{2}\.\d{4} \d{2}:\d{2}:\d{2}).*?^(Kommissionen:)$%\1\n\2%gms' |
-      perl -0 -p -e's%^-- SQL-START.*-- SQL-END$%%gms' \
-      >> $tmp_mail_body
+      perl -0 -p -e's%^-- SQL-START.*-- SQL-END$%%gms' >> $tmp_mail_body
     fi
     # cat $tmp_mail_body
     echo "less $tmp_mail_body"
