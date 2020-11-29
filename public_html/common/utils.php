@@ -3382,7 +3382,8 @@ LIMIT 1;
   return $rowData;
 }
 
-function convertParlamentBerufJsonToHtml(array $parlament_beruf_objects): string {
+function convertParlamentBerufJsonToHtml(?array $parlament_beruf_objects): string {
+  if (empty($parlament_beruf_objects)) return '';
   $job_format = "<p>%s seit %s%s</p>";
   $new_parlament_beruf_html = [];
   foreach ($parlament_beruf_objects as $beruf) {
@@ -3393,7 +3394,7 @@ function convertParlamentBerufJsonToHtml(array $parlament_beruf_objects): string
 
 /** Converts a $json string to PHP datastructures (objects and arrays) */
 function decodeJson($json) {
-  $data = isset($json) ? json_decode($json, false, 512, JSON_THROW_ON_ERROR) : null;
+  $data = !empty($json) ? json_decode($json, false, 512, JSON_THROW_ON_ERROR) : null;
   return $data;
 }
 
