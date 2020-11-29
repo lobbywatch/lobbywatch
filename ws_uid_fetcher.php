@@ -1,5 +1,6 @@
 <?php
 // Run: php -f ws_uid_fetcher.php -- -a --ssl -v1 -n20 -s -t
+// php -f ws_uid_fetcher.php -- -a --ssl -v2 -s > sql/20201129_ws_uid_fetcher.sql
 
 /*
 # ./deploy.sh -b -B -p

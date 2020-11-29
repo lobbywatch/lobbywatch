@@ -97,7 +97,7 @@ while test $# -gt 0; do
                         echo "-M, --nomail                     No email notification"
                         echo "-t, --test                       Test mode (no remote PROD changes)"
                         echo "-T, --no-remote                  Test mode (no remote changes), implies -t"
-                        echo "-v [LEVEL], --verbose [LEVEL]    Verbose mode (Default level=1)"
+                        echo "-v [LEVEL], --verbose [LEVEL]    Verbose mode, NEEDS a space (Default level=1)"
                         echo "-S, --nosql                      Do not execute SQL"
                         echo "-l[=DB], --local[=DB]            Local DB to use (Default: lobbywatchtest)"
                         echo "-L                               Local DB to use: lobbywatch"
