@@ -100,6 +100,7 @@ while test $# -gt 0; do
                         echo "-v [LEVEL], --verbose [LEVEL]    Verbose mode (Default level=1)"
                         echo "-S, --nosql                      Do not execute SQL"
                         echo "-l[=DB], --local[=DB]            Local DB to use (Default: lobbywatchtest)"
+                        echo "-L                               Local DB to use: lobbywatch"
                         quit
                         ;;
                 -B|--nobackup)
@@ -196,6 +197,11 @@ while test $# -gt 0; do
                         ;;
                 -l|--local)
                         db="lobbywatchtest"
+                        env="local_${db}"
+                        shift
+                        ;;
+                -L)
+                        db="lobbywatch"
                         env="local_${db}"
                         shift
                         ;;
