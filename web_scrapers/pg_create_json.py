@@ -79,7 +79,7 @@ def read_groups(filename):
     groups = []
     rows = csv.reader(open(filename, encoding="utf-8"))
 
-    new_page = True
+    is_new_page = True
     page = 1
     reading_mode = None
     titles = []
@@ -98,19 +98,23 @@ def read_groups(filename):
         if line == '' or line.startswith('Fortsetzung:') or line.lower() in ['folgt', 'vakant']:
             continue
         elif match_page:
-            new_page = True
-            cur_page = match_page.group(1)
-            assert page + 1 != cur_page, "Page numbers not succeding, current={}, new={}".format(page, cur_page)
-            page = int(cur_page)
+            is_new_page = True
+            new_page = match_page.group(1)
+            assert page + 1 != new_page, "Page numbers not succeding, current={}, new={}".format(page, new_page)
+            page = int(new_page)
             continue
 
         if i < len(lines) - 2:
             next_line = lines[i + 1]
 
-        if new_page:
-            new_page = False
+        if is_new_page:
+            is_new_page = False
             if line.startswith('Mitgliederliste'):
+                # not a new group on the new page
                 continue
+            elif line.startswith(('NR', 'SR')) or next_line.startswith(('NR', 'SR')):
+                # continue normally as it is a group member
+                pass
             else:
                 # save previous page
                 if titles and presidents:
