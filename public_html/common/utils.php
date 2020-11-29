@@ -2702,7 +2702,7 @@ function getCantonCodeFromZefixRegistryId($id) {
 /**
  * @return true: db values different, not overwritten, false: no difference
  */
-function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_ws, &$update, &$update_optional, &$fields, $mode = FIELD_MODE_OPTIONAL, $id_function = null, $updated_date_field = null, $db_normalize_function = null) {
+function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_ws, &$update, &$update_optional, &$fields, $mode = FIELD_MODE_OPTIONAL, $id_function = null, $updated_date_field = null, $decode_db_function = null) {
   global $verbose;
 
   // ----------------------------------------------------------
@@ -2722,8 +2722,8 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
   }
 
   $db_val_raw = $parlamentarier_db_obj->$field ?? null;
-  if ($db_normalize_function != null) {
-    $db_val = $db_normalize_function($db_val_raw, $parlamentarier_db_obj, $field, $fields);
+  if ($decode_db_function != null) {
+    $db_val = $decode_db_function($db_val_raw, $parlamentarier_db_obj, $field, $fields);
   } else {
     $db_val = $db_val_raw;
   }
@@ -3470,7 +3470,7 @@ function create_parent_dir_if_not_exists($filename) {
  * Convert " to ' in HTML.
  * Forms save it with " instead of '.
  */
-function normalizeParlamentInteressenbindungen($str) {
+function normalizeDBHtmlParlamentInteressenbindungen($str) {
   $normalized = str_replace(array("\r\n","\n","\r"), "\n", $str);
   $normalized = preg_replace('%<table border="0"><thead><tr><th>Name</th><th>Rechtsform</th><th><abbr title="Gremium">Gr.</abbr></th><th><abbr title="Funktion">F.</abbr></th></tr></thead>%',
       "<table border='0'><thead><tr><th>Name</th><th>Rechtsform</th><th><abbr title='Gremium'>Gr.</abbr></th><th><abbr title='Funktion'>F.</abbr></th></tr></thead>",

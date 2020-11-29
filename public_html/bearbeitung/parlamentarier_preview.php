@@ -80,8 +80,8 @@ try {
     $cellClasses = [];
     customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);
 
-    $old_ib_html = normalizeParlamentInteressenbindungen($lastLogRowParlamentInteressenbindungen['parlament_interessenbindungen']) ?? '';
-    $new_ib_html = normalizeParlamentInteressenbindungen($rowData['parlament_interessenbindungen']);
+    $old_ib_html = normalizeDBHtmlParlamentInteressenbindungen($lastLogRowParlamentInteressenbindungen['parlament_interessenbindungen']) ?? '';
+    $new_ib_html = normalizeDBHtmlParlamentInteressenbindungen($rowData['parlament_interessenbindungen']);
     $ib_diff_html = htmlDiffStyled($old_ib_html, $new_ib_html, false);
 
     $old_beruf = convertParlamentBerufJsonToHtml(decodeJson($lastLogRowParlamentBeruf['parlament_beruf_json']) ?? []);
