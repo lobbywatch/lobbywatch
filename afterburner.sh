@@ -257,8 +257,8 @@ for file in $dir/components/security/user_self_management.php
 do
   echo "Process $file";
   mv "$file" "$file.bak";
-  cat "$file.bak" |
-   perl -p -e's/^((\s*)\$this->ChangePassword\(\$newPassword\);)$/\2checkPasswordStrength(\$newPassword); \/\/ Afterburned\n\1/' \
+    cat "$file.bak" |
+    perl -p -e's/^((\s*)\$this->ChangePassword\(\$newPassword\);)$/\2checkPasswordStrength(\$newPassword); \/\/ Afterburned\n\1/' \
   > "$file";
 done
 
@@ -267,7 +267,8 @@ do
   echo "Process $file";
   mv "$file" "$file.bak";
   cat "$file.bak" |
-   perl -p -e's/^((\s*)return array\('\''id'\'' => \$userId, '\''name'\'' => \$userName, '\''password'\'' => '\''\*\*\*\*\*\*'\''\);)$/\n\2\$userId = \$userId == null || \$userId == '\'''\'' ? getDBConnection()->ExecScalarSQL('\''SELECT MAX(id) FROM user;'\'') : \$userId; \/\/ Afterburned\n\n\1\n/' \
+    perl -p -e's/^((\s*)return array\('\''id'\'' => \$userId, '\''name'\'' => \$userName, '\''password'\'' => '\''\*\*\*\*\*\*'\''\);)$/\n\2\$userId = \$userId == null || \$userId == '\'''\'' ? getDBConnection()->ExecScalarSQL('\''SELECT MAX(id) FROM user;'\'') : \$userId; \/\/ Afterburned\n\n\1\n/' |
+    perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
   > "$file";
 done
 
@@ -276,7 +277,18 @@ do
   echo "Process $file";
   mv "$file" "$file.bak";
   cat "$file.bak" |
- perl -p -e's/'\''UPPER\(%s\) LIKE UPPER\(%s\)'\''/'\''%s LIKE %s'\'' \/*afterburner: default is case insensitive (utf8mb4_unicode_ci), no need for UPPER function which stops indexes in MySQL*\//' \
+    perl -p -e's/'\''UPPER\(%s\) LIKE UPPER\(%s\)'\''/'\''%s LIKE %s'\'' \/*afterburner: default is case insensitive (utf8mb4_unicode_ci), no need for UPPER function which stops indexes in MySQL*\//' |
+    perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
+  > "$file";
+done
+
+for file in $dir/components/grid/columns/blob_image_view_column.php
+do
+  echo "Process $file";
+  mv "$file" "$file.bak";
+  cat "$file.bak" |
+    perl -p -e's%\$enablePictureZoom = true, \$handlerName\)%\$enablePictureZoom = true, \$handlerName = null)%' |
+    perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
   > "$file";
 done
 

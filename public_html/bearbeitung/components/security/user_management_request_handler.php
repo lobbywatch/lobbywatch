@@ -1,4 +1,7 @@
 <?php
+// Processed by afterburner.sh
+
+
 
 include_once dirname(__FILE__) . '/' . '../application.php';
 include_once dirname(__FILE__) . '/' . '../utils/request_router.php';

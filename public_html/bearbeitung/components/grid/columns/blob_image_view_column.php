@@ -1,4 +1,7 @@
 <?php
+// Processed by afterburner.sh
+
+
 
 include_once dirname(__FILE__) . '/image_view_column.php';
 
@@ -6,7 +9,7 @@ class BlobImageViewColumn extends ImageViewColumn
 {
     private $handlerName;
 
-    public function __construct($fieldName, $datasetFieldName, $caption, $dataset, $enablePictureZoom = true, $handlerName)
+    public function __construct($fieldName, $datasetFieldName, $caption, $dataset, $enablePictureZoom = true, $handlerName = null)
     {
         parent::__construct($fieldName, $datasetFieldName, $caption, $dataset);
         $this->handlerName = $handlerName;
