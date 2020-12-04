@@ -456,9 +456,9 @@ if $uid; then
   fi
   mkdir -p sql
   test_param=''
-  if $test; then
-    test_param='-n20'
-  fi
+  # if $test; then
+  #   test_param='-n20'
+  # fi
   export U_FILE=sql/ws_uid_sync_`date +"%Y%m%dT%H%M%S"`.sql; $PHP -f ws_uid_fetcher.php -- -a --ssl -s $test_param --db=$db $verbose_mode | tee $U_FILE
 
   if $verbose ; then
