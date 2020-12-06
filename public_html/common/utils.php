@@ -3384,7 +3384,7 @@ LIMIT 1;
 
 function convertParlamentBerufJsonToHtml(?array $parlament_beruf_objects): string {
   if (empty($parlament_beruf_objects)) return '';
-  $job_format = "<p>%s seit %s%s</p>";
+  $job_format = "<div>%s seit %s%s</div>";
   $new_parlament_beruf_html = [];
   foreach ($parlament_beruf_objects as $beruf) {
     $new_parlament_beruf_html[] = sprintf($job_format, implode(', ', array_filter([$beruf->arbeitgeber, $beruf->jobtitel, $beruf->beruf])), $beruf->von, $beruf->bis ? ' bis ' . $beruf->bis : '', );
