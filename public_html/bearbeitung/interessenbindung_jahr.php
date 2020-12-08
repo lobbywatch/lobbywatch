@@ -1365,10 +1365,79 @@
             $this->SetTitle('Interessenbindungsvergütungen');
             $this->SetMenuLabel('Interessenbindungsvergütungen');
     
-            $this->dataset = new TableDataset(
+            $insertSql = array('INSERT INTO interessenbindung_jahr (
+            id,
+            interessenbindung_id,
+            jahr,
+            verguetung,
+            beschreibung,
+            quelle_url,
+            quelle_url_gueltig,
+            quelle,
+            notizen,
+            eingabe_abgeschlossen_visa,
+            eingabe_abgeschlossen_datum,
+            kontrolliert_visa,
+            kontrolliert_datum,
+            autorisiert_visa,
+            autorisiert_datum,
+            freigabe_visa,
+            freigabe_datum,
+            created_visa,
+            created_date,
+            updated_visa,
+            updated_date
+            ) VALUES (
+            :id,
+            :interessenbindung_id,
+            :jahr,
+            :verguetung,
+            :beschreibung,
+            :quelle_url,
+            :quelle_url_gueltig,
+            :quelle,
+            :notizen,
+            :eingabe_abgeschlossen_visa,
+            :eingabe_abgeschlossen_datum,
+            :kontrolliert_visa,
+            :kontrolliert_datum,
+            :autorisiert_visa,
+            :autorisiert_datum,
+            :freigabe_visa,
+            :freigabe_datum,
+            :created_visa,
+            :created_date,
+            :updated_visa,
+            :updated_date
+            )');
+            $updateSql = array('UPDATE interessenbindung_jahr SET
+            id = :id,
+            interessenbindung_id = :interessenbindung_id,
+            jahr = :jahr,
+            verguetung = :verguetung,
+            beschreibung = :beschreibung,
+            quelle_url = :quelle_url,
+            quelle_url_gueltig = :quelle_url_gueltig,
+            quelle = :quelle,
+            notizen = :notizen,
+            eingabe_abgeschlossen_visa = :eingabe_abgeschlossen_visa,
+            eingabe_abgeschlossen_datum = :eingabe_abgeschlossen_datum,
+            kontrolliert_visa = :kontrolliert_visa,
+            kontrolliert_datum = :kontrolliert_datum,
+            autorisiert_visa = :autorisiert_visa,
+            autorisiert_datum = :autorisiert_datum,
+            freigabe_visa = :freigabe_visa,
+            freigabe_datum = :freigabe_datum,
+            created_visa = :created_visa,
+            created_date = :created_date,
+            updated_visa = :updated_visa,
+            updated_date = :updated_date
+            WHERE id =:OLD_id');
+            $deleteSql = array('DELETE FROM interessenbindung_jahr WHERE id = :id');
+            $this->dataset = new ViewBasedDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
-                '`uv_interessenbindung_jahr`');
+                '`uv_interessenbindung_jahr`', $insertSql, $updateSql, $deleteSql);
             $this->dataset->addFields(
                 array(
                     new IntegerField('id', true, true, true),

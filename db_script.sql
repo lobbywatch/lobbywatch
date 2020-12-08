@@ -620,7 +620,7 @@ ORDER BY interessenbindung.beschreibung;
 
 -- 09.09.2019 Fill verguetungstransparenz
 
-INSERT INTO `parlamentarier_transparenz` (parlamentarier_id, stichdatum, created_visa, updated_visa, created_date, updated_date)
+INSERT INTO `interessenbindung_jahr` (parlamentarier_id, stichdatum, created_visa, updated_visa, created_date, updated_date)
 SELECT id, '2019-09-02', 'roland', 'roland', NOW(), NOW()
 FROM parlamentarier
 WHERE (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())
@@ -933,3 +933,13 @@ LEFT JOIN (SELECT parlamentarier_transparenz.fraktion_id, COUNT(parlamentarier_t
     GROUP BY parlamentarier_transparenz.fraktion_id) transparent ON transparent.fraktion_id = alle.fraktion_id
 LEFT JOIN v_fraktion fraktion ON fraktion.id = alle.fraktion_id
 ORDER BY ratio DESC
+
+-- 08.12.2020 uv_interessenbindung_jahr
+
+-- (SELECT CONCAT("SELECT interessenbindung_jahr.* FROM interessenbindung_jahr;"))
+-- UNION
+(SELECT CONCAT("INSERT INTO interessenbindung_jahr (", GROUP_CONCAT('\n', COLUMN_NAME), '\n) VALUES (', GROUP_CONCAT('\n:', COLUMN_NAME), '\n);') FROM information_schema.COLUMNS WHERE `TABLE_NAME`='interessenbindung_jahr' and `TABLE_SCHEMA`='lobbywatch' ORDER BY ORDINAL_POSITION)
+UNION
+(SELECT CONCAT("UPDATE interessenbindung_jahr SET ", GROUP_CONCAT('\n', COLUMN_NAME, ' = :', COLUMN_NAME), '\nWHERE id =:OLD_id;') FROM information_schema.COLUMNS WHERE `TABLE_NAME`='interessenbindung_jahr' and `TABLE_SCHEMA`='lobbywatch' ORDER BY ORDINAL_POSITION)
+UNION
+(SELECT CONCAT("DELETE FROM interessenbindung_jahr WHERE id = :id;"));
