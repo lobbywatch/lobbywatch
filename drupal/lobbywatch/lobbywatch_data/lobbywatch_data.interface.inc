@@ -4,7 +4,7 @@ global $show_sql, $show_stacktrace;
 $show_sql = true;
 $show_stacktrace = true;
 
-const SUPPORTED_DB_CHARS = '-a-zA-Z0-9_.äöüÄÖÜéèàÉÈâ%';
+const SUPPORTED_DB_CHARS = '-a-zA-Z0-9_.äöüÄÖÜéèàÉÈâ%;,"\'';
 
 function _lobbywatch_data_table_flat_id($table, $id, $json = true) {
   global $show_sql;
