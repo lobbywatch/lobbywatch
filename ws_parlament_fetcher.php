@@ -555,6 +555,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   // https://ws.parlament.ch/odata.svc/PersonInterest?$filter=(PersonNumber+eq+1139)+and+(Language eq 'DE')
   $ws_parlament_url_odata_PersonInterest = "https://ws.parlament.ch/odata.svc/PersonInterest?\$filter=" . urlencode("(Language eq 'DE') and (PersonNumber eq $biografie_id)") . "&\$orderby=SortOrder";
   $parlamentarier_ws_odata_PersonInterest = get_object_from_json_url($ws_parlament_url_odata_PersonInterest);
+  // https://ws.parlament.ch/odata.svc/PersonOccupation?$filter=(PersonNumber+eq+1139)+and+(Language+eq+'DE')&$orderby=StartDate+desc
   $ws_parlament_url_odata_PersonOccupation = "https://ws.parlament.ch/odata.svc/PersonOccupation?\$filter=" . urlencode("(Language eq 'DE') and (PersonNumber eq $biografie_id)") . "&\$orderby=" .  urlencode("StartDate desc");
   $parlamentarier_ws_odata_PersonOccupation = get_object_from_json_url($ws_parlament_url_odata_PersonOccupation);
 
@@ -1589,7 +1590,7 @@ function get_object_from_json_url($url) {
   for ($i = 0; $i < $max_retry; $i++) {
     $json_str = get_web_data($url);
     try {
-      $obj = json_decode($json_str, false, 512, JSON_THROW_ON_ERROR);
+      $obj = decodeJson($json_str);
       $cleaned = clean_recursive_obj_from_json($obj);
       return $cleaned;
     } catch (JsonException $e) {

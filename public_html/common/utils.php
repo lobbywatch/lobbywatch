@@ -1316,7 +1316,7 @@ function getSettingValue($key, $json = false, $defaultValue = null) {
   // information.
   $setting = $settings[$key];
 
-  return $json ? json_decode($setting, true) : $setting;
+  return $json ? decodeJson($setting, true) : $setting;
 }
 
 /**
@@ -2250,7 +2250,7 @@ function ws_get_organization_from_zefix_rest($uid_raw, &$data, $verbose, $test_m
     $url = "$base_url/CHE$uid";
     $basicAuthUsernamePassword = "{$zefix_ws_login['username']}:${zefix_ws_login['password']}";
     $response_raw = callAPI('GET', $url, false, $basicAuthUsernamePassword);
-    $response_json = json_decode($response_raw, false, 512, JSON_THROW_ON_ERROR);
+    $response_json = decodeJson($response_raw);
     if (isset($response_json)) {
       fillDataFromZefixRestResult($response_json, $data);
     } else {
@@ -3393,8 +3393,8 @@ function convertParlamentBerufJsonToHtml(?array $parlament_beruf_objects): strin
 }
 
 /** Converts a $json string to PHP datastructures (objects and arrays) */
-function decodeJson($json, $associative = false) {
-  $data = !empty($json) ? json_decode($json, $associative, 512, JSON_THROW_ON_ERROR) : null;
+function decodeJson($json, $assoc = false) {
+  $data = !empty($json) ? json_decode($json, $assoc, 512, JSON_THROW_ON_ERROR) : null;
   return $data;
 }
 

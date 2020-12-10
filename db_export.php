@@ -1677,7 +1677,7 @@ class MarkdownExporter extends AggregatedTextExporter {
 function read_db_views_comments() {
   global $db_views_comments;
   try {
-    $db_views_comments = json_decode(file_get_contents(DB_VIEWS_COMMENTS_FILE), true, 512, JSON_THROW_ON_ERROR);
+    $db_views_comments = decodeJson(file_get_contents(DB_VIEWS_COMMENTS_FILE), true);
   } catch (JsonException $e) {
     print(sprintf("%s in JSON file\n", $e->getMessage()));
     print($e->getTraceAsString());
@@ -2682,7 +2682,7 @@ function export_rows(IExporter $exporter, string $id_alias, int $parent_id = nul
         $j = 0;
         foreach ($vals as $key => $val) {
           if ($data_types[$j++] == 'json' && $val !== null) {
-              $vals[$key] = json_decode($val, true);
+              $vals[$key] = decodeJson($val, true);
           }
           // TODO fix id is missing in rat.xml <rat>
           if (in_array($format, ['xml', 'attribute_array']) && in_array($key, [$table_meta['id'], 'anzeige_name'])) {
