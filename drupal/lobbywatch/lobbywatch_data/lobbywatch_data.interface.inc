@@ -309,6 +309,8 @@ function _lobbywatch_data_clean_fields($input_record) {
     // Clean intern fields
     if (preg_match('/_(BAD|OLD|ALT)$/i', $key)) {
       unset($record[$key]);
+    } else if (preg_match('/_json$/i', $key)) {
+      $record[$key] = decodeJson($value, true, 512, JSON_THROW_ON_ERROR);
     } else if (is_string($value)) {
       $clean = clean_str($value);
       // TODO move list of strip_tags exception to general location

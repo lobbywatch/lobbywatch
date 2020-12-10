@@ -3393,8 +3393,8 @@ function convertParlamentBerufJsonToHtml(?array $parlament_beruf_objects): strin
 }
 
 /** Converts a $json string to PHP datastructures (objects and arrays) */
-function decodeJson($json) {
-  $data = !empty($json) ? json_decode($json, false, 512, JSON_THROW_ON_ERROR) : null;
+function decodeJson($json, $associative = false) {
+  $data = !empty($json) ? json_decode($json, $associative, 512, JSON_THROW_ON_ERROR) : null;
   return $data;
 }
 
