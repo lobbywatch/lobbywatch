@@ -2298,7 +2298,7 @@ function ws_get_organization_from_zefix_soap($uid_raw, $client, &$data, $verbose
 }
 
 /** Retries sleep time 2**($i + 3). $i = 9 -> totally 2.3h sleep ((2**13 - 1)  / 3600) */
-function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose, $num_retries = 0) {
+function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose, $num_retries = 0, &$retry_log = '') {
   /* Invoke webservice method with your parameters. */
   $response = null;
   try {
@@ -2320,6 +2320,7 @@ function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose, $
           if ($i < $num_retries) {
             // print("Waiting " . 2**($i + 3) . "s…\n");
             sleep(2**($i + 3));
+            $retry_log .= '.';
           } else {
             throw new Exception("${fault['Error']} [op=${fault['Operation']}]: ${fault['ErrorDetail']}", $e->getCode(), $e);
           }
@@ -2330,7 +2331,7 @@ function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose, $
     if (isset($response->GetByUIDResult)) {
       fillDataFromUidBfsResult($response->GetByUIDResult, $data);
     } else {
-      $data['message'] .= 'No Result from uid webservice. ';
+      $data['message'] .= 'No Result from uid webservice.';
       $data['success'] = false;
       $data['sql'] = "uid=$uid";
     }

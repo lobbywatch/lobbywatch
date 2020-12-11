@@ -539,8 +539,10 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
     $different_db_values = false;
     // UID WS (BFS)
     if ($uidBFSenabled) {
-        $dataUidBfs = initDataArray();
-      ws_get_organization_from_uid_bfs($uid, $clientUid, $dataUidBfs, $verbose, 9); // Similar to _lobbywatch_fetch_ws_uid_bfs_data() in utils.php
+      $retry_log = '';
+      $dataUidBfs = initDataArray();
+      ws_get_organization_from_uid_bfs($uid, $clientUid, $dataUidBfs, $verbose, 9, $retry_log); // Similar to _lobbywatch_fetch_ws_uid_bfs_data() in utils.php
+      $fields[] = $retry_log;
       if (!$records_limit || $records_limit > 20) {
         sleep(3);
       }
@@ -552,7 +554,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
         $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, '_lobbywatch_ws_get_rechtsform');
       } else {
         // all uids must be available
-        $fields[] = "***UID@BFS ERROR (Request_limit_exceeded?)***";
+        $fields[] = "***UID@BFS ERROR [{$dataUidBfs['message']}]***";
       }
     }
 
