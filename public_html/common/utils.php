@@ -2419,6 +2419,7 @@ function fillDataFromUidBfsResult($object, &$data) {
         'alte_hr_id' => !empty($old_hr_id->organisationId) && substr($old_hr_id->organisationId, 0, 2) == 'CH' ? $old_hr_id->organisationId : null,
         'name' => trim($oid->organisationName),
         'name_de' => trim($oid->organisationName),
+        'abkuerzung_de' => extractAbkuerzung($oid->organisationName),
     // TODO 'name_fr' => $ot->organisation->organisationIdentification->organisationName,
         'rechtsform_handelsregister' => $legel_form,
         'rechtsform' => _lobbywatch_ws_get_rechtsform($legel_form),
@@ -2520,6 +2521,7 @@ function fillDataFromZefixRestResult($json, &$data) {
         'alte_hr_id' => $old_hr_id ?? null,
         'name' => trim($oid->name),
         'name_de' => trim($oid->name),
+        'abkuerzung_de' => extractAbkuerzung($oid->name),
     // TODO 'name_fr' => $ot->organisation->organisationIdentification->organisationName, TODO
         'rechtsform_handelsregister' => $legel_form_handelsregister_uid,
         'rechtsform' => _lobbywatch_ws_get_rechtsform($legel_form_handelsregister_uid),
@@ -2813,6 +2815,23 @@ function getValueFromWSFieldName($ws_field, $parlamentarier_ws, $parlamentarier_
 function getValueFromWSFieldNameEmptyAsNull($ws_field, $parlamentarier_ws, $parlamentarier_db_obj, $field, $fields) {
   if (empty($parlamentarier_ws->$ws_field) || trim($parlamentarier_ws->$ws_field) === '') return null;
   return trim($parlamentarier_ws->$ws_field);
+}
+
+function extractAbkuerzungFromWSFieldNameEmptyAsNull($ws_field, $parlamentarier_ws, $parlamentarier_db_obj, $field, $fields): ?string {
+  if (empty($parlamentarier_ws->$ws_field) || trim($parlamentarier_ws->$ws_field) === '') return null;
+  return extractAbkuerzung($parlamentarier_ws->$ws_field);
+}
+
+/** Extracts (aaa) or (AAA) or AAA. */
+function extractAbkuerzung(?string $str): ?string {
+  if (empty($str)) return null;
+  if (preg_match('%\(([a-z]{3}|[A-ZÄÖÜ]{3})\)%', $str, $matches)) {
+    return $matches[1];
+  } else if (preg_match('%\b([A-Z]{3})\b%', $str, $matches)) {
+    return $matches[1];
+  } else {
+    return null;
+  }
 }
 
 /**

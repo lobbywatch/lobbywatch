@@ -542,7 +542,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
       $retry_log = '';
       $dataUidBfs = initDataArray();
       ws_get_organization_from_uid_bfs($uid, $clientUid, $dataUidBfs, $verbose, 9, $retry_log); // Similar to _lobbywatch_fetch_ws_uid_bfs_data() in utils.php
-      $fields[] = $retry_log;
+      if (!empty($retry_log)) $fields[] = $retry_log;
       if (!$records_limit || $records_limit > 20) {
         sleep(3);
       }
@@ -550,6 +550,8 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
         // http://stackoverflow.com/questions/1869091/how-to-convert-an-array-to-object-in-php
         $organisation_ws = (object) $dataUidBfs['data'];
 
+        $different_db_values |= checkField('name_de', 'name_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+        $different_db_values |= checkField('abkuerzung_de', 'abkuerzung_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
         $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
         $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, '_lobbywatch_ws_get_rechtsform');
       } else {
@@ -588,6 +590,9 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
         // http://stackoverflow.com/questions/1869091/how-to-convert-an-array-to-object-in-php
         $organisation_ws = (object) $dataZefixRest['data'];
 
+        $different_db_values |= checkField('name_de', 'name_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+        $different_db_values |= checkField('abkuerzung_de', 'abkuerzung_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+        // $different_db_values |= checkField('abkuerzung_de', 'name_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'extractAbkuerzungFromWSFieldNameEmptyAsNull');
         $different_db_values |= checkField('rechtsform_zefix', 'rechtsform_zefix', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
         // Overwrite (re-set) if we have Zefix data (Many fields will be double set, but this is not a problem)
         $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
@@ -675,6 +680,8 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
   print("\nΣ: " . ($n_updated + $n_ok + $n_different + $n_not_found));
 
   print("\n\n*/\n");
+
+  $script[] = $comment = "\n-- Finished actualise organisations " . date('d.m.Y H:i:s');
 
   print("\n-- UID-ORGANISATIONEN " . ($n_updated > 0 ? 'DATA CHANGED' : 'DATA UNCHANGED') . "\n\n");
 }

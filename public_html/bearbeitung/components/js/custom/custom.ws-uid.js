@@ -90,6 +90,7 @@ $(function() {
           if (data && data.success && data.data) {
   //               alert('uid ws fetched successful: ' + textStatus);
             setWSValue('#' + formId + '_name_de_edit', data.data.name_de);
+            setWSValue('#' + formId + '_abkuerzung_de_edit', data.data.abkuerzung_de);
             setWSValue('#' + formId + '_land_id_edit', data.data.land_id);
             setWSValue('#' + formId + '_adresse_strasse_edit', data.data.adresse_strasse);
             setWSValue('#' + formId + '_adresse_zusatz_edit', data.data.adresse_zusatz);
