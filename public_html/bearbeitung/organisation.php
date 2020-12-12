@@ -37842,7 +37842,7 @@
         {
             return array(
                 new FilterColumn($this->dataset, 'id', 'id', 'Id'),
-                new FilterColumn($this->dataset, 'uid', 'uid', 'Handelsregister UID'),
+                new FilterColumn($this->dataset, 'uid', 'uid', 'UID'),
                 new FilterColumn($this->dataset, 'name_de', 'name_de', 'Name De'),
                 new FilterColumn($this->dataset, 'name_fr', 'name_fr', 'Name Fr'),
                 new FilterColumn($this->dataset, 'name_it', 'name_it', 'Name It'),
@@ -39347,13 +39347,13 @@
             //
             // View column for uid field
             //
-            $column = new TextViewColumn('uid', 'uid', 'Handelsregister UID', $this->dataset);
+            $column = new TextViewColumn('uid', 'uid', 'UID', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%');
+            $column->setHrefTemplate('https://www.uid.admin.ch/Detail.aspx?uid_id=%uid%');
             $column->setTarget('_blank');
             $column->SetEscapeHTMLSpecialChars(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999');
+            $column->SetDescription('Schweizweit eindeutige ID für Unternehmen und Organisation; Link zeigt auf UID-Register@BFS; Im Zefix sind nur jene Organisationen zu finden, die auch im Handelsregister eingetragen sind. Vereine, die z.B. Mehrwertsteuer zahlen oder Behörden sind nur im UID-Register@BFS zu finden (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -39829,9 +39829,9 @@
             //
             // View column for uid field
             //
-            $column = new TextViewColumn('uid', 'uid', 'Handelsregister UID', $this->dataset);
+            $column = new TextViewColumn('uid', 'uid', 'UID', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%');
+            $column->setHrefTemplate('https://www.uid.admin.ch/Detail.aspx?uid_id=%uid%');
             $column->setTarget('_blank');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddSingleRecordViewColumn($column);
@@ -40179,7 +40179,7 @@
             $editor = new TextEdit('uid_edit');
             $editor->SetMaxLength(15);
             $editor->SetPlaceholder('CHE-999.999.999 or CHE123456789 or 123456789');
-            $editColumn = new CustomEditColumn('Handelsregister UID', 'uid', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('UID', 'uid', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new CustomRegExpValidator('^(CHE-\d\d\d\.\d\d\d\.\d\d\d|)$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -41750,7 +41750,7 @@
             $editor = new TextEdit('uid_edit');
             $editor->SetMaxLength(15);
             $editor->SetPlaceholder('CHE-999.999.999 or CHE123456789 or 123456789');
-            $editColumn = new CustomEditColumn('Handelsregister UID', 'uid', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('UID', 'uid', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new CustomRegExpValidator('^(CHE-\d\d\d\.\d\d\d\.\d\d\d|)$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -42457,9 +42457,9 @@
             //
             // View column for uid field
             //
-            $column = new TextViewColumn('uid', 'uid', 'Handelsregister UID', $this->dataset);
+            $column = new TextViewColumn('uid', 'uid', 'UID', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%');
+            $column->setHrefTemplate('https://www.uid.admin.ch/Detail.aspx?uid_id=%uid%');
             $column->setTarget('_blank');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddPrintColumn($column);
@@ -42813,9 +42813,9 @@
             //
             // View column for uid field
             //
-            $column = new TextViewColumn('uid', 'uid', 'Handelsregister UID', $this->dataset);
+            $column = new TextViewColumn('uid', 'uid', 'UID', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%');
+            $column->setHrefTemplate('https://www.uid.admin.ch/Detail.aspx?uid_id=%uid%');
             $column->setTarget('_blank');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddExportColumn($column);
@@ -43169,9 +43169,9 @@
             //
             // View column for uid field
             //
-            $column = new TextViewColumn('uid', 'uid', 'Handelsregister UID', $this->dataset);
+            $column = new TextViewColumn('uid', 'uid', 'UID', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%');
+            $column->setHrefTemplate('https://www.uid.admin.ch/Detail.aspx?uid_id=%uid%');
             $column->setTarget('_blank');
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddCompareColumn($column);

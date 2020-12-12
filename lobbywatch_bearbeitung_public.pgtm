@@ -413,9 +413,9 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Hyperlink template="http://lobbywatch.ch/de/daten/organisation/%id%"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="uid" caption="Handelsregister UID" headerHint="UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="uid" caption="UID" headerHint="Schweizweit eindeutige ID für Unternehmen und Organisation; Link zeigt auf UID-Register@BFS; Im Zefix sind nur jene Organisationen zu finden, die auch im Handelsregister eingetragen sind. Vereine, die z.B. Mehrwertsteuer zahlen oder Behörden sind nur im UID-Register@BFS zu finden (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" escapeHTMLChars="true"/>
-            <Hyperlink template="http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%"/>
+            <Hyperlink template="https://www.uid.admin.ch/Detail.aspx?uid_id=%uid%"/>
             <EditProperties type="textBox" maxLength="15" placeholder="CHE-999.999.999 or CHE123456789 or 123456789"/>
             <Validators>
               <RegExpClientValidatorInfo enabled="true" expression="^(CHE-\d\d\d\.\d\d\d\.\d\d\d|)$"/>
