@@ -943,3 +943,9 @@ UNION
 (SELECT CONCAT("UPDATE interessenbindung_jahr SET ", GROUP_CONCAT('\n', COLUMN_NAME, ' = :', COLUMN_NAME), '\nWHERE id =:OLD_id;') FROM information_schema.COLUMNS WHERE `TABLE_NAME`='interessenbindung_jahr' and `TABLE_SCHEMA`='lobbywatch' ORDER BY ORDINAL_POSITION)
 UNION
 (SELECT CONCAT("DELETE FROM interessenbindung_jahr WHERE id = :id;"));
+
+-- 11.12.2020 Parlamentarier ohne Arbeitgeber, JSON query
+
+SELECT id, anzeige_name, parlament_beruf_json, JSON_LENGTH(parlament_beruf_json) as n, parlament_beruf_json->>'$[0].beruf', parlament_beruf_json->>'$[0].arbeitgeber', parlament_beruf_json->>'$[1].beruf', parlament_beruf_json->>'$[1].arbeitgeber', parlament_beruf_json->>'$[2].beruf', parlament_beruf_json->>'$[2].arbeitgeber', parlament_beruf_json->'$[*].arbeitgeber' FROM `v_parlamentarier` parlamentarier WHERE im_rat_bis IS NULL AND (parlament_beruf_json IS NULL OR JSON_CONTAINS(parlament_beruf_json, 'null', '$[0].arbeitgeber') OR JSON_CONTAINS(parlament_beruf_json, 'null', '$[1].arbeitgeber') OR JSON_CONTAINS(parlament_beruf_json, 'null', '$[2].arbeitgeber'));
+
+-- JSON_TABLE() is available since MySQL 8.0
