@@ -41,25 +41,39 @@ beep() {
 }
 
 # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
+# https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
 abort() {
-  line=$1
+  [ -z "$1" ] && logs='' || logs="Logs:\n---\n$1\n---\n"
+  [ -z "$2" ] && line='' || line=$2
   caller=$(caller)
-    echo '
+
+  echo -e "$logs" >&2
+
+  # https://wiki.bash-hackers.org/commands/builtin/caller
+  echo "Stacktrace:" >&2
+  local frame=0
+  while stack_frame=$(caller $frame); do
+    echo "    line $stack_frame" >&2
+    ((frame++));
+  done
+  # echo "$*" >&2
+
+  echo '
 ***************
 *** ABORTED ***
 ***************
 ' >&2
-    echo "An error occurred on line $caller. Exiting..." >&2
-    date -Iseconds >&2
-    beep
-    exit 1
+  echo "An error occurred on line $caller. Exiting..." >&2
+  date -Iseconds >&2
+  beep
+  exit 1
 }
 
 #quit or trap 'abort' 0 must be called, for sucessful exit
 enable_fail_onerror() {
   # Abort on errors
   # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
-  trap 'abort $LINENO' ERR
+  trap 'abort "Error trapped" $LINENO' ERR
   # https://sipb.mit.edu/doc/safe-shell/
   set -e -o pipefail
   # set -u
@@ -118,8 +132,7 @@ MYSQL_CONTAINER=mysql57
 charset=utf8mb4
 
 if [[ "$script" == "" ]]; then
-  echo "Parameter script is empty"
-  abort
+  abort "Parameter script is empty"
 fi
 
 docker exec -it $MYSQL_CONTAINER mysql --help >/dev/null 2>&1 && IS_DOCKER=true || IS_DOCKER=false
@@ -289,15 +302,16 @@ if (($OK != 0)); then
     echo -e "----------------------------------------\n*** ERROR, see $logfile ***"
     echo -e "\n${redBold}FAILED${reset}"
   else
-    echo -e "\n*** ERROR, see $logfile ***\n----------------------------------------"
-    tail -20 $logfile
-    echo -e "----------------------------------------\n*** ERROR, see $logfile ***"
-    echo -e "\nFAILED"
+    echo -e "\n*** ERROR, see $logfile ***\n----------------------------------------" >&2
+    tail -20 $logfile >&2
+    echo -e "----------------------------------------\n*** ERROR, see $logfile ***" >&2
+    echo -e "\nFAILED" >&2
   fi
 
   echo "less $logfile"
 
-  abort
+  logs=$(tail -20 $logfile)
+  abort "$logs"
 else
   if [[ "$script" == "dbdump" || "$script" == "dbdump_data" || "$script" == "dbdump_struct" ]] ; then
     if [[ "$script" == "dbdump_data" ]] ; then

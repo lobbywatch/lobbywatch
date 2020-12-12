@@ -265,24 +265,37 @@ ask_DB_PW() {
 
 # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
 abort() {
-  line=$1
+  [ -z "$1" ] && logs='' || logs="Logs:\n---\n$1\n---\n"
+  [ -z "$2" ] && line='' || line=$2
   caller=$(caller)
-    echo '
+
+  echo -e "$logs" >&2
+
+  # https://wiki.bash-hackers.org/commands/builtin/caller
+  echo "Stacktrace:" >&2
+  local frame=0
+  while stack_frame=$(caller $frame); do
+    echo "    line $stack_frame" >&2
+    ((frame++));
+  done
+  # echo "$*" >&2
+
+  echo '
 ***************
 *** ABORTED ***
 ***************
 ' >&2
-    echo "An error occurred on line $caller. Exiting..." >&2
-    date -Iseconds >&2
-    beep
-    exit 1
+  echo "An error occurred on line $caller. Exiting..." >&2
+  date -Iseconds >&2
+  beep
+  exit 1
 }
 
 #quit or trap 'abort' 0 must be called, for sucessful exit
 enable_fail_onerror() {
   # Abort on errors
   # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
-  trap 'abort $LINENO' ERR
+  trap 'abort "Error trapped" $LINENO' ERR
   # https://sipb.mit.edu/doc/safe-shell/
   set -e -u -o pipefail
   # set -u
@@ -291,7 +304,7 @@ enable_fail_onerror() {
 enable_fail_onerror_no_pipe() {
   # Abort on errors
   # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
-  trap 'abort $LINENO' ERR
+  trap 'abort "Error trapped" $LINENO' ERR
   # https://sipb.mit.edu/doc/safe-shell/
   set -e -u +o pipefail
 }
@@ -299,7 +312,7 @@ enable_fail_onerror_no_pipe() {
 disable_fail_onerror() {
   # Abort on errors
   # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
-  trap 'abort $LINENO' ERR
+  trap 'abort "Error trapped" $LINENO' ERR
   # https://sipb.mit.edu/doc/safe-shell/
   set +e +u +o pipefail
 }
