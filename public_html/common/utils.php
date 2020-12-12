@@ -2825,9 +2825,9 @@ function extractAbkuerzungFromWSFieldNameEmptyAsNull($ws_field, $parlamentarier_
 /** Extracts (aaa) or (AAA) or AAA. */
 function extractAbkuerzung(?string $str): ?string {
   if (empty($str)) return null;
-  if (preg_match('%\(([a-z]{3}|[A-ZÄÖÜ]{3})\)%', $str, $matches)) {
+  if (preg_match('%\(([a-z]{3}|[A-ZÄÖÜ]{3,4})\)%', $str, $matches)) {
     return $matches[1];
-  } else if (preg_match('%\b([A-Z]{3})\b%', $str, $matches)) {
+  } else if (mb_strtoupper($str) !== $str && preg_match('%\b([A-Z]{3})\b%', $str, $matches)) {
     return $matches[1];
   } else {
     return null;
