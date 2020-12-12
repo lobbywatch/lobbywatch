@@ -97,7 +97,28 @@ function main() {
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
-  $options = getopt('hsv::u:tsmo:n::fz:Z:a::',array('docroot:','help', 'uid:', 'ssl', 'zefix:', 'zefix-rest:'));
+  $options = getopt('hsv::u:b:tsmo:n::fz:Z:a::',array('docroot:','help', 'uid:', 'bfs:', 'ssl', 'zefix-soap:', 'zefix:', 'zefix-rest:'));
+
+  if (isset($options['h']) || isset($options['help'])) {
+    print("ws uid Fetcher for Lobbywatch.ch.
+Parameters:
+-u UID, --uid UID    Call UID (BFS and Zefix REST) WS, UID as 9-digit, CHE00000000, or CHE-000.000.000 string (default: $default_uid)
+-b UID, --bfs UID    Call UID-BFS-Register-WS (SOAP), UID as 9-digit, CHE00000000, or CHE-000.000.000 string (default: $default_uid)
+-Z UID, --zefix-soap Call UID Zefix SOAP WS, UID as 9-digit , CHE00000000, or CHE-000.000.000 string (default: $default_uid)
+-z , --zefix, --zefix-rest Call UID Zefix REST WS, UID as 9-digit , CHE00000000, or CHE-000.000.000 string (default: $default_uid)
+-o HR-ID             Search old HR-ID
+-t                   Call test service (default: production)
+--ssl                Use SSL
+-m                   Migrate old hr-id to uid from handelsregister_url
+-a [START_ID]        Actualise organisations with UID from webservices, optional starting from organisation START_ID
+-n number            Limit number of records
+-s                   Output SQL script
+-v[level]            Verbose, optional level, 1 = default
+-h, --help           This help
+--docroot path       Set the document root for images
+");
+    exit(0);
+  }
 
 //    var_dump($options);
 
@@ -154,16 +175,34 @@ function main() {
         $uid = $default_uid;
       }
       show_ws_uid_bfs_ws_data($uid, $ssl, $test_mode);
+      print("\n---\n");
+      show_ws_zefix_rest_ws_data($uid, $ssl, $test_mode);
   } else if (isset($options['u'])) {
       $uid = $options['u'];
       if (!$uid) {
         $uid = $default_uid;
       }
       show_ws_uid_bfs_ws_data($uid, $ssl, $test_mode);
+      print("\n---\n");
+      show_ws_zefix_rest_ws_data($uid, $ssl, $test_mode);
   }
 
-  if (isset($options['zefix'])) {
-      $uid = $options['zefix'];
+  if (isset($options['bfs'])) {
+      $uid = $options['bfs'];
+      if (!$uid) {
+        $uid = $default_uid;
+      }
+      show_ws_uid_bfs_ws_data($uid, $ssl, $test_mode);
+  } else if (isset($options['b'])) {
+      $uid = $options['b'];
+      if (!$uid) {
+        $uid = $default_uid;
+      }
+      show_ws_uid_bfs_ws_data($uid, $ssl, $test_mode);
+  }
+
+  if (isset($options['zefix-soap'])) {
+      $uid = $options['zefix-soap'];
       if (!$uid) {
         $uid = $default_uid;
       }
@@ -176,7 +215,13 @@ function main() {
       show_ws_zefix_soap_ws_data($uid, $ssl, $test_mode);
   }
 
-  if (isset($options['zefix-rest'])) {
+  if (isset($options['zefix'])) {
+      $uid = $options['zefix'];
+      if (!$uid) {
+        $uid = $default_uid;
+      }
+      show_ws_zefix_rest_ws_data($uid, $ssl, $test_mode);
+  } else if (isset($options['zefix-rest'])) {
       $uid = $options['zefix-rest'];
       if (!$uid) {
         $uid = $default_uid;
@@ -215,24 +260,6 @@ function main() {
     print(implode("\n", $script));
     print("\n");
   }
-  if (isset($options['h']) || isset($options['help'])) {
-    print("ws uid Fetcher for Lobbywatch.ch.
-Parameters:
--u UID, --uid UID    Call UID-Register-WS, UID as 9-digit, CHE00000000, or CHE-000.000.000 string (default: $default_uid)
--Z UID, --zefix      UID Call Zefix-WS, UID as 9-digit , CHE00000000, or CHE-000.000.000 string (default: $default_uid)
--z UID, --zefix-rest UID Call Zefix-WS, UID as 9-digit , CHE00000000, or CHE-000.000.000 string (default: $default_uid)
--o HR-ID             Search old HR-ID
--t                   Call test service (default: production)
---ssl                Use SSL
--m                   Migrate old hr-id to uid from handelsregister_url
--a [START_ID]        Actualise organisations with UID from webservices, optional starting from organisation START_ID
--n number            Limit number of records
--s                   Output SQL script
--v[level]            Verbose, optional level, 1 = default
--h, --help           This help
---docroot path       Set the document root for images
-");
-  }
 
   if (count($errors) > 0) {
     echo "\nErrors:\n", implode("\n", $errors), "\n";
@@ -260,6 +287,7 @@ function show_ws_uid_bfs_ws_data($uid, $ssl, $test_mode) {
 //   ini_set('soap.wsdl_cache_enabled',0);
 //   ini_set('soap.wsdl_cache_ttl',0);
 
+  print("UID-Register@BFS\n");
   print("UID=$uid\n");
   $data = _lobbywatch_fetch_ws_uid_bfs_data($uid, $verbose, $ssl, $test_mode);
   print_r($data);
@@ -274,6 +302,7 @@ function show_ws_zefix_rest_ws_data($uid, $ssl, $test_mode) {
   global $today;
   global $verbose;
 
+  print("Zefix REST\n");
   print("UID=$uid\n");
   $data = _lobbywatch_fetch_ws_zefix_rest_data($uid, $verbose, $ssl, $test_mode);
   print_r($data);
@@ -291,6 +320,7 @@ function show_ws_zefix_soap_ws_data($uid, $ssl, $test_mode) {
 //   ini_set('soap.wsdl_cache_enabled',0);
 //   ini_set('soap.wsdl_cache_ttl',0);
 
+  print("Zefix SOAP\n");
   print("UID=$uid\n");
   $data = _lobbywatch_fetch_ws_zefix_soap_data($uid, $verbose, $ssl, $test_mode);
   print_r($data);
