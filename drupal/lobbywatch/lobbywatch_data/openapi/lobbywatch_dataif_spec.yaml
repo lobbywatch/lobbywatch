@@ -1,0 +1,3824 @@
+openapi: 3.0.2
+# OpenAPI Spec: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md
+# Tutorial: https://lessthan12ms.com/openapi-with-php-documenting-and-testing-api-automatically.html
+# sudo npm install -g redoc-cli
+# sudo npm install -g openapi-sampler
+# redoc-cli bundle -o lobbywatch_dataif_spec.html lobbywatch_dataif_spec.yaml
+# redoc-cli serve -w lobbywatch_dataif_spec.yaml
+# JSON schema: https://tools.ietf.org/html/draft-wright-json-schema-00
+# JSON schema generator: https://extendsclass.com/json-schema-validator.html
+# TODO add ws calls
+info:
+  title: Lobbywatch Data Interface (dataIF)
+  description: |
+    Public data interface for accessing Lobbywatch data.
+
+    ## Introduction
+
+    The project Lobbywatch.ch maintains a database (DB) of Swiss parliamentarian and their relations to lobby organizations.
+
+    This document describes the Lobbywatch.ch data interface (dataIF). This data interface can be used for visualizations, e.g [d3](http://d3js.org/).
+
+    The data interface is close to the DB model.
+    The data interface is based on the views.
+    The data model is available as [1 page](https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/lobbywatch_datenmodell_1page.pdf) or on
+    [4 pages](https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/lobbywatch_datenmodell.pdf).
+    Additionally, there is a [simplified data model](https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/lobbywatch_datenmodell_simplified.pdf).
+    Usage of this data interface requires knowledge of the DB data model.
+
+    Data are delivered in JSON.
+
+    The data interface is written in a generic way from the data model.
+
+    All names and keys are always in minor case. Words are separated by `_`.
+
+    ## GraphQL
+
+    There is another interface to the Lobbywatch data.
+    Some data are provided as [GraphQL](https://graphql.org/).
+    The data of the Lobbywatch GraphQL interace are based on this data interface (dataIF).
+
+    * Human interface: [lobbywatch.ch/graphiql](https://lobbywatch.ch/graphiql)
+    * Machine interface: [lobbywatch.ch/graphql](https://lobbywatch.ch/graphql)
+
+    ## Examples
+
+    ### Example 1: Get data about Branche with Id 1
+
+    Call:<br>
+    <code>https://cms.lobbywatch.ch/de/data/interface/v1/json/table/branche/flat/id/1</code>
+
+    JSON Response:
+
+    ```json
+    {
+        "success" : true,
+        "count" : 1,
+        "message" : "1 record(s) found",
+        "sql" : "\n      SELECT branche.*\n      FROM v_branche branche\n      WHERE branche.id=:id",
+        "source": "branche",
+        "build secs": 0.15,
+        "data" : {
+        "anzeige_name" : "Gesundheit",
+        "id" : "1",
+        "name" : "Gesundheit",
+        "kommission_id" : "1",
+        "beschreibung" : "Akteure im Gesundheitswesen",
+        "angaben" : "Wie werden die ca. 60 Milliarden jährlich aufgeteilt",
+        "farbcode" : "blue",
+        "symbol_rel" : null,
+        "symbol_klein_rel" : "branche_symbole\/default_branche.png",
+        "symbol_dateiname_wo_ext" : null,
+        "symbol_dateierweiterung" : null,
+        "symbol_dateiname" : null,
+        "symbol_mime_type" : null,
+        "kommission" : "Kommissionen für soziale Sicherheit und Gesundheit (SGK)",
+        "symbol_path" : "\/test\/files\/branche_symbole\/default_branche.png",
+        "symbol_url" : "http:\/\/lobbywatch.ch\/\/test\/files\/branche_symbole\/default_branche.png"
+        }
+    }
+    ```
+
+    ### Example 2: Get all lobbygroups from Branche 1
+
+    Call:<br>
+    <code>https://cms.lobbywatch.ch/de/data/interface/v1/json/table/interessengruppe/flat/list?filter_branche_id=1</code>
+
+    JSON Response:
+
+    ```json
+    {
+        "success" : true,
+        "count" : 13,
+        "message" : "13 record(s) found",
+        "sql" : "\n    SELECT interessengruppe.*\n    FROM v_interessengruppe interessengruppe\n    WHERE 1  AND interessengruppe.branche_id = 1",
+        "source": "interessengruppe",
+        "build secs": 0.18,
+        "data" : [
+            {
+            "anzeige_name" : "Pharma",
+            "id" : "1",
+            "name" : "Pharma",
+            "branche_id" : "1",
+            "beschreibung" : "Medikamentenforschung, Medikamentenvertrieb, Pharmafirmen, Apotheken",
+            "branche" : "Gesundheit",
+            "kommission_id" : "1",
+            "kommission" : "Kommissionen für soziale Sicherheit und Gesundheit (SGK)"
+            },
+            {
+            "anzeige_name" : "Krankenkassen",
+            "id" : "2",
+            "name" : "Krankenkassen",
+            "branche_id" : "1",
+            "beschreibung" : "Krankenkassen, Dachorganisationen KK, Unterorganisationen KK",
+            "branche" : "Gesundheit",
+            "kommission_id" : "1",
+            "kommission" : "Kommissionen für soziale Sicherheit und Gesundheit (SGK)"
+            },
+            {"__comment" : "…"},
+            {
+            "anzeige_name" : "Dienstleistungen",
+            "id" : "88",
+            "name" : "Dienstleistungen",
+            "branche_id" : "1",
+            "beschreibung" : "Firmen mit Dienstleistungen explizit für das Gesundheitswesen, z.B. IT-Lösungen.",
+            "branche" : "Gesundheit",
+            "kommission_id" : "1",
+            "kommission" : "Kommissionen für soziale Sicherheit und Gesundheit (SGK)"
+            } ]
+    }
+    ```
+
+    ### Cross-origin resource sharing (CORS)
+
+    Browsers apply by default the same-origin policy for AJAX calls (XMLHttpRequest).
+    Thus, it is by default not possible to use cross-domain webservices in Javascript.
+
+    [Cross-origin resource sharing (CORS)](http://enable-cors.org) is a mechanism that allows restricted resources on a web page to be requested from another domain outside the domain from which the resource originated.
+
+    If you want to access the Lobbywatch data interface by AJAX/XHR calls, you need to add a CORS header.
+
+    The HTTP response header to set for dataIF JSON webservice calls:
+
+    ```
+    Access-Control-Allow-Origin: https://cms.lobbywatch.ch
+    ```
+
+    Please do not abuse the Lobbywatch Data Interface.
+
+    ### Fields
+
+    Information about fields
+
+    #### freigabe_datum
+
+    The `freigabe_datum` meta field gives the state of the record.
+
+    * `null`: not yet public, only listed for completness
+    * < now: published at the freigabe_datum
+    * > now: is public after freigabe_datum
+
+    #### anzeige_name
+
+    The `anzeige_name` is a formatted name of the record. This name is localized depending on the languge, see in chapter language.
+
+    #### *_unix
+
+    The fields ending with `*_unix` contain the date in the UNIX date format, seconds since 01.01.1970.
+
+    #### erfasst
+
+    If `erfasst` is `false` means the Parlamentarier, is not entered. This field is set to `false`, if it is known, that the Parlamentarier will not be available anymore for the parliament in the next election. The value `erfasst` is only fully reliable if the `freigabe_datum` is set.
+
+    ### Special Queries
+
+    Special queries (see filtering below):
+
+    #### Parlament-Partei
+
+    Parteien mit den Parlamentarieren und deren Anzahl Verbindungen.
+
+    <code>https://cms.lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggregated/list</code>
+
+    Example Name:
+
+    <code>https://cms.lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggregated/list?limit=10&select_fields=parlamentarier.anzeige_name</code>
+
+    Example number of interessenbindungen of parlamentarier (language dependent):
+
+    <code>https://cms.lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggregated/list?lang=fr&limit=none&select_fields=parlamentarier.anzeige_name,parlamentarier.anzahl_interessenbindung_tief,parlamentarier.anzahl_interessenbindung_mittel,parlamentarier.anzahl_interessenbindung_hoch,parlamentarier.kommissionen_abkuerzung_de,parlamentarier.kommissionen_abkuerzung_fr,parlamentarier.rat_de,parlamentarier.rat_fr,parlamentarier.freigabe_datum</code>
+
+    ### Filtering
+
+    Records of query calls can be filtered by one or several fields by appending URL parameters.
+
+    Filters work for all available fields in the base query view.
+
+    Format of filters:
+
+    #### Simple field
+
+    ````
+    filter_{FIELD}=value
+    ````
+
+    where `filter_` is the prefix, `{FIELD}` is the name of the field and
+
+    Example:
+
+    ````
+    filter_branche_id=1
+    ````
+
+    #### List
+
+    ````
+    filter_{FIELD}_list=value
+    ````
+
+    where `filter_` is the prefix, `_list` ist the suffix, `{FIELD}` is the
+    name of the field and `value` is a comma separated list of values.
+
+    Example:
+
+    ````
+    filter_branche_id_list=1,2,3
+    ````
+
+    Filters work for all available fields in the base query view.
+
+    #### Like
+
+    ````
+    filter_{FIELD}_like=value
+    ````
+
+    where `filter_` is the prefix, `_like` ist the suffix, `{FIELD}` is the
+    name of the field and `value` is filter value which can contain `%`
+    (matches any number of characters, even zero characters) or `_`
+    (matches exactly one character).
+
+    Example:
+
+    ````
+    filter_kommissionen=%SGK%
+    ````
+
+    Filters work for all available fields in the base query view.
+
+    ### Limit results
+
+    The number of results can be limited. The default is 10.
+
+    ````
+    limit=25
+    ````
+
+    Call:<br>
+    <code>https://cms.lobbywatch.ch/de/data/interface/v1/json/table/parlamentarier/flat/list?limit=25</code>
+
+    The parameter `limit`limits the number of results to the number.
+
+    ````
+    limit=none
+    ````
+
+    `limit=none` excludes the `LIMIT` SQL statement.
+
+    ### Fields select
+
+    The fields to be returned can be given in a parameter comma separeted list.
+    The list must not contain any spaces. The id is always included.
+
+    ````
+    select_fields=nachname
+    select_fields=nachname,vorname
+    select_fields=parlamentarier.nachname,parlamentarier.vorname
+    select_fields=parlamentarier.*
+    select_fields=name_de,name_fr
+    select_fields=*
+    ````
+
+    Call:<br>
+    <code>https://cms.lobbywatch.ch/de/data/interface/v1/json/table/parlamentarier/flat/list?select_fields=parlamentarier.nachname,parlamentarier.vorname</code>
+
+    Note: For a correct working, always the fields of all languages must be selected, e.g `name_de` and `name_fr`, sometimes the german field name is without suffix, e.g `name`.
+
+    ### Language
+
+    Data are only returned for one language.
+    If the language parameter `lang` is not set, German is the default.
+
+    Example:
+
+    ````
+    lang=fr
+    lang=de
+    ````
+
+    ### Options / Parameters
+
+    Queries can be modified by several options.
+    Some options are only available if permission is granted.
+
+    * `includeUnpublished`=1 (default): Show unpublished data? (Requires advanced permission)
+    * `includeInactive`=0 (default): Show historised data, e.g. retired parlamentarians? (Requires advanced permission)
+    * `includeConfidentialData`=0 (default): Show confidential data? (Requires advanced permission)
+    * `includeMetaData`=0 (default): Show meta data, e.g. from the workflow
+  version: 1.2
+  contact:
+    name: Lobbywatch
+    url: https://lobbywatch.ch/
+    email: info@lobbywatch.ch
+  x-logo:
+    url: https://cms.lobbywatch.ch/bearbeitung/lobbywatch-eye-transparent-bg-cut-75px-tiny.png
+    backgroundColor: #FFFFFF
+        altText: Lobbywatch Logo
+  license:
+    name: CC BY-SA 4.0
+    url: https://creativecommons.org/licenses/by-sa/4.0/deed.de
+externalDocs:
+  description: Original Lobbywatch Data Interface (dataIF) documentation
+  url: https://github.com/lobbywatch/lobbywatch/blob/master/drupal/lobbywatch/lobbywatch_data/data_interface_description.ado
+servers:
+  - url: https://cms.lobbywatch.ch/de/data/interface/v1/json
+    description: Production (default)
+  - url: http://cms.lobbywatch.local/de/data/interface/v1/json
+    description: Local development
+tags:
+  - name: List
+    description: Get a list of records (see filtering below)
+  - name: By ID
+    description: Get one record by id
+  - name: Aggregated
+    description: Aggregated data containing nested objects
+  - name: Flat
+    description: Data straight from DB tables
+  - name: Relation
+    description: Data based on DB views
+  - name: Tables
+    description: Lobbywatch.ch tables can be queried in several ways. The interfaces access the corresponding views of the tables. The views enrich the tables and make their usage more convenient.
+  - name: Search
+    description: Searches by name (see filtering below)
+components:
+  schemas:
+    GenericIdData:
+      type: object
+      description: A data interface call returns always a JSON response of the same base structure.
+      properties:
+        success:
+          type: boolean
+          description: True if call is successful
+        count:
+          type: integer
+          example: 1
+          description: Number of records, 0 in case of errors, never null
+        message:
+          type: string
+          example: 1 record(s) found
+          description: Messages, e.g. error messages, never null
+        sql:
+          type: string
+          description: SQL used in this call, never null
+          example: \n    SELECT interessengruppe.*\n    FROM v_interessengruppe interessengruppe\n    WHERE 1  AND interessengruppe.branche_id = 1
+        source:
+          type: string
+          description: Name of view, the prefix `v_` in the DB is omitted
+          example: branche
+        build secs:
+          type: string
+          description: Time in seconds required to process the request
+          example: 0.15
+        data:
+          type: object
+          nullable: true
+          description: Data of the call, data can be nested, null in case of errors or if nothing is found
+      required:
+        - success
+        - count
+        - message
+        - sql
+        - source
+        - build secs
+        - data
+    GenericListData:
+      type: object
+      description: A data interface call returns always a JSON response of the same base structure.
+      properties:
+        success:
+          type: boolean
+          description: True if call is successful
+        count:
+          type: integer
+          example: 1
+          description: Number of records, 0 in case of errors, never null
+        message:
+          type: string
+          example: 1 record(s) found
+          description: Messages, e.g. error messages, never null
+        sql:
+          type: string
+          description: SQL used in this call, never null
+          example: \n    SELECT interessengruppe.*\n    FROM v_interessengruppe interessengruppe\n    WHERE 1  AND interessengruppe.branche_id = 1
+        source:
+          type: string
+          description: Name of view, the prefix `v_` in the DB is omitted
+          example: branche
+        build secs:
+          type: string
+          description: Time in seconds required to process the request
+          example: 0.15
+        data:
+          type: array
+          nullable: true
+          description: Data of the call, data can be nested, null in case of errors or if nothing is found
+      required:
+        - success
+        - count
+        - message
+        - sql
+        - source
+        - build secs
+        - data
+  parameters:
+    idParam:
+      name: id
+      in: path
+      description: ID
+      required: true
+      schema:
+        type: integer
+    searchStrParam:
+      name: str
+      in: path
+      description: Search string for name
+      required: true
+      schema:
+        type: string
+        example: gesundheit
+    limitParam:
+      name: limit
+      in: query
+      description: Max records to return (integer or 'none'). `limit=none` excludes the LIMIT SQL statement.
+      required: false
+      schema:
+        type: string
+        # format: int32
+        default: 10
+    filterSimpleParam:
+      name: filter_{FIELD}
+      in: query
+      description: |
+        Simple field filter where `filter_` is the prefix, `{FIELD}` is the name of the field as of the DB schema. Filter value
+
+        Example:
+
+        ````
+        filter_branche_id=1
+        ````
+      required: false
+      schema:
+        type: string
+        example: 1
+    filterListParam:
+      name: filter_{FIELD}_list
+      in: query
+      description: |
+        List field filter where `filter_` is the prefix, `_list` is the suffix and `{FIELD}` is the name of the field as of the DB schema. Comma separated list of values (without any spaces)
+
+        Example:
+
+        ````
+        filter_branche_id_list=1,2,3
+        ````
+      required: false
+      schema:
+        type: string
+        example: 1,2,3
+    likeParam:
+      name: filter_{FIELD}_like
+      in: query
+      description: |
+        'Like' field filter where `filter_` is the prefix, `_like` ist the suffix and `{FIELD}` is the name of the field.
+        The value can can contain `%` (matches any number of characters, even zero characters) or `_` (matches exactly one character).
+
+        Example:
+
+        ````
+        filter_kommissionen=%SGK%
+        ````
+      required: false
+      schema:
+        type: string
+        example: "%SGK%"
+    selectFieldsParam:
+      name: select_fields
+      in: query
+      description: |
+        The fields to be returned can be given in a parameter comma separeted list. The list must not contain any spaces. The id is always included.
+
+        ````
+        select_fields=nachname
+        select_fields=nachname,vorname
+        select_fields=parlamentarier.nachname,parlamentarier.vorname
+        select_fields=parlamentarier.*
+        select_fields=name_de,name_fr
+        select_fields=*
+        ````
+
+        Note: For a correct working, always the fields of all languages must be selected, e.g `name_de` and `name_fr`, sometimes the german field name is without suffix, e.g `name`. Comma separated list of values (without any spaces)
+      required: false
+      schema:
+        type: string
+        example: parlamentarier.nachname,vorname
+    langParam:
+      name: lang
+      in: query
+      description: Data are only returned for one language. If the language parameter `lang` is not set, German is the default.
+      required: false
+      schema:
+        type: string
+        enum:
+          - de
+          - fr
+        example: fr
+        default: de
+    includeUnpublishedParam:
+      name: includeUnpublished
+      in: query
+      description: Show unpublished data? (Requires advanced permission)
+      required: false
+      schema:
+        type: integer
+        enum:
+          - 0
+          - 1
+        example: 0
+        default: 1
+    includeInactiveParam:
+      name: includeInactive
+      in: query
+      description: Show historised data, e.g. retired parlamentarians? (Requires advanced permission)
+      required: false
+      schema:
+        type: integer
+        enum:
+          - 0
+          - 1
+        example: 1
+        default: 0
+    includeConfidentialDataParam:
+      name: includeConfidentialData
+      in: query
+      description: Show confidential data? (Requires advanced permission)
+      required: false
+      schema:
+        type: integer
+        enum:
+          - 0
+          - 1
+        example: 1
+        default: 0
+    includeMetaDataParam:
+      name: includeMetaData
+      in: query
+      description: Show meta data, e.g. from the workflow
+      required: false
+      schema:
+        type: integer
+        enum:
+          - 0
+          - 1
+        example: 1
+        default: 0
+  examples:
+    Successful:
+      value:
+        success: true
+        count: 1
+        message: 1 record(s) found
+        sql: \n      SELECT table.*\n      FROM v_table table\n      WHERE table.id=:id
+        source: table
+        build secs: "0.15"
+    Error:
+      value:
+        success: false
+        count: 0
+        message: Error message
+        sql: \n      SELECT table.*\n      FROM v_table table\n      WHERE table.id=:id
+        source: table
+        build secs: "0.15"
+    404Error:
+      value:
+        success: false
+        count: 0
+        message: 404 Not Found. The requested URL \"/de/data/interface/v1/json/table/branche/flat/id/0\" was not found on this server.
+        sql: ""
+        source: ""
+        build secs: "0.02"
+  responses:
+    NotFound:
+      description: Entity not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericIdData'
+          example:
+            $ref: '#/components/examples/404Error'
+    IllegalInput:
+      description: Illegal input for operation.
+    GeneralError:
+      description: General Error
+
+paths:
+
+  /search/default/{str}:
+    get:
+      operationId: getDefaultSearch
+      summary: Search (Entity detection)
+      description: Search for entities having a certain string
+      tags:
+        - Search
+      parameters:
+        - name: str
+          in: path
+          description: Search string
+          required: true
+          schema:
+            type: string
+        - name: tables
+          in: query
+          description: |
+            Comma separated list of `table_name` to query. Available tables: `parlamentarier`, `zutrittsberechtigung`, `branche`, `interessengruppe`, `kommission`, `organisation`, `partei`. Default is 'all tables'.
+          required: false
+          schema:
+            type: string
+            example: parlamentarier,zutrittsberechtigung
+            default: parlamentarier,zutrittsberechtigung,branche,interessengruppe,kommission,organisation,partei
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Return a list search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  count:
+                    type: integer
+                  message:
+                    type: string
+                  sql:
+                    type: string
+                  source:
+                    type: string
+                  build secs:
+                    type: string
+                  data:
+                    type: array
+                    nullable: true
+                    #style: simple
+                    items:
+                      type: object
+                      description: Result object
+                      properties:
+                        id:
+                          type: integer
+                          example: 4649
+                          description: Lobbywatch DB id
+                        page:
+                          type: string
+                          example: organisation
+                          description: Entity name to construct an URL path, e.g. [`page`]/[`id`]
+                        table_name:
+                          type: string
+                          example: organisation
+                          description: Table name of the entity, aka technical name
+                        table_weight:
+                          type: integer
+                          example: 15
+                          description: Weight within the same table, e.g. historised data have a higher weight and come at the end. Value can be ignored. It is just for completeness added.
+                        weight:
+                          type: integer
+                          example: -1
+                          description: Weight of the table. This is used for sorting. Value can be ignored. It is just for completeness added.
+                        name :
+                          type: integer
+                          description: Translated name of the entity
+                          example: Novartis Pharma AG
+                      required:
+                        - id
+                        - page
+                        - table_name
+                        - table_weight
+                        - weight
+                        - name
+                required:
+                  - success
+                  - count
+                  - message
+                  - sql
+                  - source
+                  - build secs
+                  - data
+              examples:
+                Successful:
+                  value:
+                    success: true
+                    count: 2
+                    message: '2 record(s) found '
+                    sql: |
+                          SELECT id, page, table_name, name_de, name_fr, table_weight, weight
+                          -- , freigabe_datum, bis
+                          FROM v_search_table
+                          WHERE search_keywords_de LIKE :str AND (table_name='parlamentarier' OR table_name='zutrittsberechtigung' OR freigabe_datum <= NOW())ORDER BY table_weight, weight LIMIT 10 ;
+                    source: search_table
+                    build secs: '0.06'
+                    data:
+                    - id: '285'
+                      page: organisation
+                      table_name: organisation
+                      table_weight: '15'
+                      weight: \"-1\"
+                      name: Novartis International AG
+                    - id: '4649'
+                      page: organisation
+                      table_name: organisation
+                      table_weight: '15'
+                      weight: \"-1\"
+                      name: Novartis Pharma AG
+                Error:
+                  value:
+                    success: false
+                    count: 0
+                    message: '0 record(s) found '
+                    sql: |
+                          SELECT id, page, table_name, name_de, name_fr, table_weight, weight
+                          -- , freigabe_datum, bis
+                          FROM v_search_table
+                          WHERE search_keywords_de LIKE :str AND (table_name='parlamentarier' OR table_name='zutrittsberechtigung' OR freigabe_datum <= NOW())ORDER BY table_weight, weight LIMIT 10 ;
+                    source: search_table
+                    build secs: '0.11'
+                    data: []
+
+############################################
+############################################
+#### GENERATED by openapi_generator.php ####
+############################################
+############################################
+
+  /table/branche/flat/id/{id}:
+    get:
+      operationId: getFlatBrancheId
+      summary: Get Branche by ID
+      description: Return a single Branche
+      tags:
+        - By ID
+        - Flat
+        - Branche
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns Branche
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/branche/flat/list:
+    get:
+      operationId: getFlatBrancheList
+      summary: Get list of Branche
+      description: Return a list of Branche
+      tags:
+        - List
+        - Flat
+        - Branche
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Branche
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/branche/flat/list/{str}:
+    get:
+      operationId: getFlatBrancheList
+      summary: Get list of Branche
+      description: Return a list of Branche
+      tags:
+        - Search
+        - Flat
+        - Branche
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of Branche whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/interessenbindung/flat/id/{id}:
+    get:
+      operationId: getFlatInteressenbindungId
+      summary: Get Interessenbindung by ID
+      description: Return a single Interessenbindung
+      tags:
+        - By ID
+        - Flat
+        - Interessenbindung
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns Interessenbindung
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/interessenbindung/flat/list:
+    get:
+      operationId: getFlatInteressenbindungList
+      summary: Get list of Interessenbindung
+      description: Return a list of Interessenbindung
+      tags:
+        - List
+        - Flat
+        - Interessenbindung
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Interessenbindung
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/interessenbindung/flat/list/{str}:
+    get:
+      operationId: getFlatInteressenbindungList
+      summary: Get list of Interessenbindung
+      description: Return a list of Interessenbindung
+      tags:
+        - Search
+        - Flat
+        - Interessenbindung
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of Interessenbindung whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /table/interessenbindung_jahr/flat/id/{id}:
+    get:
+      operationId: getFlatInteressenbindung_jahrId
+      summary: Get Interessenbindungsvergütung by ID
+      description: Return a single Interessenbindungsvergütung
+      tags:
+        - By ID
+        - Flat
+        - Interessenbindungsvergütung
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns Interessenbindungsvergütung
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/interessenbindung_jahr/flat/list:
+    get:
+      operationId: getFlatInteressenbindung_jahrList
+      summary: Get list of Interessenbindungsvergütung
+      description: Return a list of Interessenbindungsvergütung
+      tags:
+        - List
+        - Flat
+        - Interessenbindungsvergütung
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Interessenbindungsvergütung
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/interessenbindung_jahr/flat/list/{str}:
+    get:
+      operationId: getFlatInteressenbindung_jahrList
+      summary: Get list of Interessenbindungsvergütung
+      description: Return a list of Interessenbindungsvergütung
+      tags:
+        - Search
+        - Flat
+        - Interessenbindungsvergütung
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of Interessenbindungsvergütung whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /table/interessengruppe/flat/id/{id}:
+    get:
+      operationId: getFlatInteressengruppeId
+      summary: Get Lobbygruppe (Interessengruppe) by ID
+      description: Return a single Lobbygruppe (Interessengruppe)
+      tags:
+        - By ID
+        - Flat
+        - Lobbygruppe (Interessengruppe)
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns Lobbygruppe (Interessengruppe)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/interessengruppe/flat/list:
+    get:
+      operationId: getFlatInteressengruppeList
+      summary: Get list of Lobbygruppe (Interessengruppe)
+      description: Return a list of Lobbygruppe (Interessengruppe)
+      tags:
+        - List
+        - Flat
+        - Lobbygruppe (Interessengruppe)
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Lobbygruppe (Interessengruppe)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/interessengruppe/flat/list/{str}:
+    get:
+      operationId: getFlatInteressengruppeList
+      summary: Get list of Lobbygruppe (Interessengruppe)
+      description: Return a list of Lobbygruppe (Interessengruppe)
+      tags:
+        - Search
+        - Flat
+        - Lobbygruppe (Interessengruppe)
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of Lobbygruppe (Interessengruppe) whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /table/in_kommission/flat/id/{id}:
+    get:
+      operationId: getFlatIn_kommissionId
+      summary: Get In Kommission by ID
+      description: Return a single In Kommission
+      tags:
+        - By ID
+        - Flat
+        - In Kommission
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns In Kommission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/in_kommission/flat/list:
+    get:
+      operationId: getFlatIn_kommissionList
+      summary: Get list of In Kommission
+      description: Return a list of In Kommission
+      tags:
+        - List
+        - Flat
+        - In Kommission
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of In Kommission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/in_kommission/flat/list/{str}:
+    get:
+      operationId: getFlatIn_kommissionList
+      summary: Get list of In Kommission
+      description: Return a list of In Kommission
+      tags:
+        - Search
+        - Flat
+        - In Kommission
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of In Kommission whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /table/kommission/flat/id/{id}:
+    get:
+      operationId: getFlatKommissionId
+      summary: Get Kommission by ID
+      description: Return a single Kommission
+      tags:
+        - By ID
+        - Flat
+        - Kommission
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns Kommission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/kommission/flat/list:
+    get:
+      operationId: getFlatKommissionList
+      summary: Get list of Kommission
+      description: Return a list of Kommission
+      tags:
+        - List
+        - Flat
+        - Kommission
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Kommission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/kommission/flat/list/{str}:
+    get:
+      operationId: getFlatKommissionList
+      summary: Get list of Kommission
+      description: Return a list of Kommission
+      tags:
+        - Search
+        - Flat
+        - Kommission
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of Kommission whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /table/mandat/flat/id/{id}:
+    get:
+      operationId: getFlatMandatId
+      summary: Get Mandat by ID
+      description: Return a single Mandat
+      tags:
+        - By ID
+        - Flat
+        - Mandat
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns Mandat
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/mandat/flat/list:
+    get:
+      operationId: getFlatMandatList
+      summary: Get list of Mandat
+      description: Return a list of Mandat
+      tags:
+        - List
+        - Flat
+        - Mandat
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Mandat
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/mandat/flat/list/{str}:
+    get:
+      operationId: getFlatMandatList
+      summary: Get list of Mandat
+      description: Return a list of Mandat
+      tags:
+        - Search
+        - Flat
+        - Mandat
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of Mandat whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /table/mandat_jahr/flat/id/{id}:
+    get:
+      operationId: getFlatMandat_jahrId
+      summary: Get Mandatsvergütung by ID
+      description: Return a single Mandatsvergütung
+      tags:
+        - By ID
+        - Flat
+        - Mandatsvergütung
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns Mandatsvergütung
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/mandat_jahr/flat/list:
+    get:
+      operationId: getFlatMandat_jahrList
+      summary: Get list of Mandatsvergütung
+      description: Return a list of Mandatsvergütung
+      tags:
+        - List
+        - Flat
+        - Mandatsvergütung
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Mandatsvergütung
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/mandat_jahr/flat/list/{str}:
+    get:
+      operationId: getFlatMandat_jahrList
+      summary: Get list of Mandatsvergütung
+      description: Return a list of Mandatsvergütung
+      tags:
+        - Search
+        - Flat
+        - Mandatsvergütung
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of Mandatsvergütung whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /table/organisation/flat/id/{id}:
+    get:
+      operationId: getFlatOrganisationId
+      summary: Get Organisation by ID
+      description: Return a single Organisation
+      tags:
+        - By ID
+        - Flat
+        - Organisation
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns Organisation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/organisation/flat/list:
+    get:
+      operationId: getFlatOrganisationList
+      summary: Get list of Organisation
+      description: Return a list of Organisation
+      tags:
+        - List
+        - Flat
+        - Organisation
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Organisation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/organisation/flat/list/{str}:
+    get:
+      operationId: getFlatOrganisationList
+      summary: Get list of Organisation
+      description: Return a list of Organisation
+      tags:
+        - Search
+        - Flat
+        - Organisation
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of Organisation whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /table/organisation_beziehung/flat/id/{id}:
+    get:
+      operationId: getFlatOrganisation_beziehungId
+      summary: Get Organisation Beziehung by ID
+      description: Return a single Organisation Beziehung
+      tags:
+        - By ID
+        - Flat
+        - Organisation Beziehung
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns Organisation Beziehung
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/organisation_beziehung/flat/list:
+    get:
+      operationId: getFlatOrganisation_beziehungList
+      summary: Get list of Organisation Beziehung
+      description: Return a list of Organisation Beziehung
+      tags:
+        - List
+        - Flat
+        - Organisation Beziehung
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Organisation Beziehung
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/organisation_beziehung/flat/list/{str}:
+    get:
+      operationId: getFlatOrganisation_beziehungList
+      summary: Get list of Organisation Beziehung
+      description: Return a list of Organisation Beziehung
+      tags:
+        - Search
+        - Flat
+        - Organisation Beziehung
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of Organisation Beziehung whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /table/organisation_jahr/flat/id/{id}:
+    get:
+      operationId: getFlatOrganisation_jahrId
+      summary: Get Organisationsjahr by ID
+      description: Return a single Organisationsjahr
+      tags:
+        - By ID
+        - Flat
+        - Organisationsjahr
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns Organisationsjahr
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/organisation_jahr/flat/list:
+    get:
+      operationId: getFlatOrganisation_jahrList
+      summary: Get list of Organisationsjahr
+      description: Return a list of Organisationsjahr
+      tags:
+        - List
+        - Flat
+        - Organisationsjahr
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Organisationsjahr
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/organisation_jahr/flat/list/{str}:
+    get:
+      operationId: getFlatOrganisation_jahrList
+      summary: Get list of Organisationsjahr
+      description: Return a list of Organisationsjahr
+      tags:
+        - Search
+        - Flat
+        - Organisationsjahr
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of Organisationsjahr whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /table/parlamentarier/flat/id/{id}:
+    get:
+      operationId: getFlatParlamentarierId
+      summary: Get Parlamentarier by ID
+      description: Return a single Parlamentarier
+      tags:
+        - By ID
+        - Flat
+        - Parlamentarier
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns Parlamentarier
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/parlamentarier/flat/list:
+    get:
+      operationId: getFlatParlamentarierList
+      summary: Get list of Parlamentarier
+      description: Return a list of Parlamentarier
+      tags:
+        - List
+        - Flat
+        - Parlamentarier
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Parlamentarier
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/parlamentarier/flat/list/{str}:
+    get:
+      operationId: getFlatParlamentarierList
+      summary: Get list of Parlamentarier
+      description: Return a list of Parlamentarier
+      tags:
+        - Search
+        - Flat
+        - Parlamentarier
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of Parlamentarier whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /table/parlamentarier_transparenz/flat/id/{id}:
+    get:
+      operationId: getFlatParlamentarier_transparenzId
+      summary: Get Parlamentariertransparenz by ID
+      description: Return a single Parlamentariertransparenz
+      tags:
+        - By ID
+        - Flat
+        - Parlamentariertransparenz
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns Parlamentariertransparenz
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/parlamentarier_transparenz/flat/list:
+    get:
+      operationId: getFlatParlamentarier_transparenzList
+      summary: Get list of Parlamentariertransparenz
+      description: Return a list of Parlamentariertransparenz
+      tags:
+        - List
+        - Flat
+        - Parlamentariertransparenz
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Parlamentariertransparenz
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/parlamentarier_transparenz/flat/list/{str}:
+    get:
+      operationId: getFlatParlamentarier_transparenzList
+      summary: Get list of Parlamentariertransparenz
+      description: Return a list of Parlamentariertransparenz
+      tags:
+        - Search
+        - Flat
+        - Parlamentariertransparenz
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of Parlamentariertransparenz whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /table/partei/flat/id/{id}:
+    get:
+      operationId: getFlatParteiId
+      summary: Get Partei by ID
+      description: Return a single Partei
+      tags:
+        - By ID
+        - Flat
+        - Partei
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns Partei
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/partei/flat/list:
+    get:
+      operationId: getFlatParteiList
+      summary: Get list of Partei
+      description: Return a list of Partei
+      tags:
+        - List
+        - Flat
+        - Partei
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Partei
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/partei/flat/list/{str}:
+    get:
+      operationId: getFlatParteiList
+      summary: Get list of Partei
+      description: Return a list of Partei
+      tags:
+        - Search
+        - Flat
+        - Partei
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of Partei whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /table/fraktion/flat/id/{id}:
+    get:
+      operationId: getFlatFraktionId
+      summary: Get Fraktion by ID
+      description: Return a single Fraktion
+      tags:
+        - By ID
+        - Flat
+        - Fraktion
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns Fraktion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/fraktion/flat/list:
+    get:
+      operationId: getFlatFraktionList
+      summary: Get list of Fraktion
+      description: Return a list of Fraktion
+      tags:
+        - List
+        - Flat
+        - Fraktion
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Fraktion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/fraktion/flat/list/{str}:
+    get:
+      operationId: getFlatFraktionList
+      summary: Get list of Fraktion
+      description: Return a list of Fraktion
+      tags:
+        - Search
+        - Flat
+        - Fraktion
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of Fraktion whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /table/rat/flat/id/{id}:
+    get:
+      operationId: getFlatRatId
+      summary: Get Rat by ID
+      description: Return a single Rat
+      tags:
+        - By ID
+        - Flat
+        - Rat
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns Rat
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/rat/flat/list:
+    get:
+      operationId: getFlatRatList
+      summary: Get list of Rat
+      description: Return a list of Rat
+      tags:
+        - List
+        - Flat
+        - Rat
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Rat
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/rat/flat/list/{str}:
+    get:
+      operationId: getFlatRatList
+      summary: Get list of Rat
+      description: Return a list of Rat
+      tags:
+        - Search
+        - Flat
+        - Rat
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of Rat whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /table/kanton/flat/id/{id}:
+    get:
+      operationId: getFlatKantonId
+      summary: Get Kanton by ID
+      description: Return a single Kanton
+      tags:
+        - By ID
+        - Flat
+        - Kanton
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns Kanton
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/kanton/flat/list:
+    get:
+      operationId: getFlatKantonList
+      summary: Get list of Kanton
+      description: Return a list of Kanton
+      tags:
+        - List
+        - Flat
+        - Kanton
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Kanton
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/kanton/flat/list/{str}:
+    get:
+      operationId: getFlatKantonList
+      summary: Get list of Kanton
+      description: Return a list of Kanton
+      tags:
+        - Search
+        - Flat
+        - Kanton
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of Kanton whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /table/kanton_jahr/flat/id/{id}:
+    get:
+      operationId: getFlatKanton_jahrId
+      summary: Get Kantonjahr by ID
+      description: Return a single Kantonjahr
+      tags:
+        - By ID
+        - Flat
+        - Kantonjahr
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns Kantonjahr
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/kanton_jahr/flat/list:
+    get:
+      operationId: getFlatKanton_jahrList
+      summary: Get list of Kantonjahr
+      description: Return a list of Kantonjahr
+      tags:
+        - List
+        - Flat
+        - Kantonjahr
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Kantonjahr
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/kanton_jahr/flat/list/{str}:
+    get:
+      operationId: getFlatKanton_jahrList
+      summary: Get list of Kantonjahr
+      description: Return a list of Kantonjahr
+      tags:
+        - Search
+        - Flat
+        - Kantonjahr
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of Kantonjahr whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /table/zutrittsberechtigung/flat/id/{id}:
+    get:
+      operationId: getFlatZutrittsberechtigungId
+      summary: Get Zutrittsberechtigter by ID
+      description: Return a single Zutrittsberechtigter
+      tags:
+        - By ID
+        - Flat
+        - Zutrittsberechtigter
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns Zutrittsberechtigter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/zutrittsberechtigung/flat/list:
+    get:
+      operationId: getFlatZutrittsberechtigungList
+      summary: Get list of Zutrittsberechtigter
+      description: Return a list of Zutrittsberechtigter
+      tags:
+        - List
+        - Flat
+        - Zutrittsberechtigter
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Zutrittsberechtigter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/zutrittsberechtigung/flat/list/{str}:
+    get:
+      operationId: getFlatZutrittsberechtigungList
+      summary: Get list of Zutrittsberechtigter
+      description: Return a list of Zutrittsberechtigter
+      tags:
+        - Search
+        - Flat
+        - Zutrittsberechtigter
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of Zutrittsberechtigter whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /table/person/flat/id/{id}:
+    get:
+      operationId: getFlatPersonId
+      summary: Get Person by ID
+      description: Return a single Person
+      tags:
+        - By ID
+        - Flat
+        - Person
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns Person
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/person/flat/list:
+    get:
+      operationId: getFlatPersonList
+      summary: Get list of Person
+      description: Return a list of Person
+      tags:
+        - List
+        - Flat
+        - Person
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Person
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/person/flat/list/{str}:
+    get:
+      operationId: getFlatPersonList
+      summary: Get list of Person
+      description: Return a list of Person
+      tags:
+        - Search
+        - Flat
+        - Person
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of Person whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /table/wissensartikel_link/flat/id/{id}:
+    get:
+      operationId: getFlatWissensartikel_linkId
+      summary: Get Lobbypediaverknüpfung by ID
+      description: Return a single Lobbypediaverknüpfung
+      tags:
+        - By ID
+        - Flat
+        - Lobbypediaverknüpfung
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns Lobbypediaverknüpfung
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /table/wissensartikel_link/flat/list:
+    get:
+      operationId: getFlatWissensartikel_linkList
+      summary: Get list of Lobbypediaverknüpfung
+      description: Return a list of Lobbypediaverknüpfung
+      tags:
+        - List
+        - Flat
+        - Lobbypediaverknüpfung
+        - Table
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Lobbypediaverknüpfung
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+  /table/wissensartikel_link/flat/list/{str}:
+    get:
+      operationId: getFlatWissensartikel_linkList
+      summary: Get list of Lobbypediaverknüpfung
+      description: Return a list of Lobbypediaverknüpfung
+      tags:
+        - Search
+        - Flat
+        - Lobbypediaverknüpfung
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/searchStrParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns list of Lobbypediaverknüpfung whose name contain the search string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /relation/in_kommission_parlamentarier/flat/list:
+    get:
+      operationId: getFlatIn_kommission_parlamentarierList
+      summary: Get list of Parlamenterier einer Kommission
+      description: Return a list of Parlamenterier einer Kommission
+      tags:
+        - List
+        - Flat
+        - Parlamenterier einer Kommission
+        - Relation
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Parlamenterier einer Kommission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /relation/in_kommission_liste/flat/list:
+    get:
+      operationId: getFlatIn_kommission_listeList
+      summary: Get list of Kommissionen für Parlamenterier
+      description: Return a list of Kommissionen für Parlamenterier
+      tags:
+        - List
+        - Flat
+        - Kommissionen für Parlamenterier
+        - Relation
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Kommissionen für Parlamenterier
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /relation/interessenbindung_liste/flat/list:
+    get:
+      operationId: getFlatInteressenbindung_listeList
+      summary: Get list of Interessenbindung eines Parlamenteriers
+      description: Return a list of Interessenbindung eines Parlamenteriers
+      tags:
+        - List
+        - Flat
+        - Interessenbindung eines Parlamenteriers
+        - Relation
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Interessenbindung eines Parlamenteriers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /relation/interessenbindung_liste_indirekt/flat/list:
+    get:
+      operationId: getFlatInteressenbindung_liste_indirektList
+      summary: Get list of Indirekte Interessenbindungen eines Parlamenteriers
+      description: Return a list of Indirekte Interessenbindungen eines Parlamenteriers
+      tags:
+        - List
+        - Flat
+        - Indirekte Interessenbindungen eines Parlamenteriers
+        - Relation
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Indirekte Interessenbindungen eines Parlamenteriers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /relation/zutrittsberechtigung_mandate/flat/list:
+    get:
+      operationId: getFlatZutrittsberechtigung_mandateList
+      summary: Get list of Mandate einer Zutrittsberechtigung (INNER JOIN)
+      description: Return a list of Mandate einer Zutrittsberechtigung (INNER JOIN)
+      tags:
+        - List
+        - Flat
+        - Mandate einer Zutrittsberechtigung (INNER JOIN)
+        - Relation
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Mandate einer Zutrittsberechtigung (INNER JOIN)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /relation/zutrittsberechtigung_mit_mandaten/flat/list:
+    get:
+      operationId: getFlatZutrittsberechtigung_mit_mandatenList
+      summary: Get list of Mandate einer Zutrittsberechtigung (LFET JOIN)
+      description: Return a list of Mandate einer Zutrittsberechtigung (LFET JOIN)
+      tags:
+        - List
+        - Flat
+        - Mandate einer Zutrittsberechtigung (LFET JOIN)
+        - Relation
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Mandate einer Zutrittsberechtigung (LFET JOIN)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /relation/zutrittsberechtigung_mit_mandaten_indirekt/flat/list:
+    get:
+      operationId: getFlatZutrittsberechtigung_mit_mandaten_indirektList
+      summary: Get list of Indirekte Mandate einer Zutrittsberechtigung (INNER JOIN)
+      description: Return a list of Indirekte Mandate einer Zutrittsberechtigung (INNER JOIN)
+      tags:
+        - List
+        - Flat
+        - Indirekte Mandate einer Zutrittsberechtigung (INNER JOIN)
+        - Relation
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Indirekte Mandate einer Zutrittsberechtigung (INNER JOIN)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /relation/organisation_parlamentarier/flat/list:
+    get:
+      operationId: getFlatOrganisation_parlamentarierList
+      summary: Get list of Parlamenterier, die eine Interessenbindung zu dieser Organisation haben
+      description: Return a list of Parlamenterier, die eine Interessenbindung zu dieser Organisation haben
+      tags:
+        - List
+        - Flat
+        - Parlamenterier, die eine Interessenbindung zu dieser Organisation haben
+        - Relation
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Parlamenterier, die eine Interessenbindung zu dieser Organisation haben
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /relation/organisation_parlamentarier_indirekt/flat/list:
+    get:
+      operationId: getFlatOrganisation_parlamentarier_indirektList
+      summary: Get list of Parlamenterier, die eine indirekte Interessenbindung zu dieser Organisation haben
+      description: Return a list of Parlamenterier, die eine indirekte Interessenbindung zu dieser Organisation haben
+      tags:
+        - List
+        - Flat
+        - Parlamenterier, die eine indirekte Interessenbindung zu dieser Organisation haben
+        - Relation
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Parlamenterier, die eine indirekte Interessenbindung zu dieser Organisation haben
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /relation/organisation_parlamentarier_beide/flat/list:
+    get:
+      operationId: getFlatOrganisation_parlamentarier_beideList
+      summary: Get list of Parlamenterier, die eine Zutrittsberechtiung mit Mandant oder Interessenbindung zu dieser Organisation haben
+      description: Return a list of Parlamenterier, die eine Zutrittsberechtiung mit Mandant oder Interessenbindung zu dieser Organisation haben
+      tags:
+        - List
+        - Flat
+        - Parlamenterier, die eine Zutrittsberechtiung mit Mandant oder Interessenbindung zu dieser Organisation haben
+        - Relation
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Parlamenterier, die eine Zutrittsberechtiung mit Mandant oder Interessenbindung zu dieser Organisation haben
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /relation/organisation_parlamentarier_beide_indirekt/flat/list:
+    get:
+      operationId: getFlatOrganisation_parlamentarier_beide_indirektList
+      summary: Get list of Parlamenterier, die eine indirekte Interessenbindung oder indirekte Zutrittsberechtiung mit Mandat zu dieser Organisation haben
+      description: Return a list of Parlamenterier, die eine indirekte Interessenbindung oder indirekte Zutrittsberechtiung mit Mandat zu dieser Organisation haben
+      tags:
+        - List
+        - Flat
+        - Parlamenterier, die eine indirekte Interessenbindung oder indirekte Zutrittsberechtiung mit Mandat zu dieser Organisation haben
+        - Relation
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Parlamenterier, die eine indirekte Interessenbindung oder indirekte Zutrittsberechtiung mit Mandat zu dieser Organisation haben
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /relation/organisation_beziehung_arbeitet_fuer/flat/list:
+    get:
+      operationId: getFlatOrganisation_beziehung_arbeitet_fuerList
+      summary: Get list of Organisationen für welche eine PR-Agentur arbeitet.
+      description: Return a list of Organisationen für welche eine PR-Agentur arbeitet.
+      tags:
+        - List
+        - Flat
+        - Organisationen für welche eine PR-Agentur arbeitet.
+        - Relation
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Organisationen für welche eine PR-Agentur arbeitet.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /relation/organisation_beziehung_mitglied_von/flat/list:
+    get:
+      operationId: getFlatOrganisation_beziehung_mitglied_vonList
+      summary: Get list of Organisationen, in welcher eine Organisation Mitglied ist
+      description: Return a list of Organisationen, in welcher eine Organisation Mitglied ist
+      tags:
+        - List
+        - Flat
+        - Organisationen, in welcher eine Organisation Mitglied ist
+        - Relation
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Organisationen, in welcher eine Organisation Mitglied ist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /relation/organisation_beziehung_muttergesellschaft/flat/list:
+    get:
+      operationId: getFlatOrganisation_beziehung_muttergesellschaftList
+      summary: Get list of Muttergesellschaften
+      description: Return a list of Muttergesellschaften
+      tags:
+        - List
+        - Flat
+        - Muttergesellschaften
+        - Relation
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Muttergesellschaften
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /relation/organisation_beziehung_auftraggeber_fuer/flat/list:
+    get:
+      operationId: getFlatOrganisation_beziehung_auftraggeber_fuerList
+      summary: Get list of Organisationen, die eine PR-Firma beauftragt haben
+      description: Return a list of Organisationen, die eine PR-Firma beauftragt haben
+      tags:
+        - List
+        - Flat
+        - Organisationen, die eine PR-Firma beauftragt haben
+        - Relation
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Organisationen, die eine PR-Firma beauftragt haben
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /relation/organisation_beziehung_mitglieder/flat/list:
+    get:
+      operationId: getFlatOrganisation_beziehung_mitgliederList
+      summary: Get list of Mitgliedsorganisationen
+      description: Return a list of Mitgliedsorganisationen
+      tags:
+        - List
+        - Flat
+        - Mitgliedsorganisationen
+        - Relation
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Mitgliedsorganisationen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /relation/organisation_beziehung_tochtergesellschaften/flat/list:
+    get:
+      operationId: getFlatOrganisation_beziehung_tochtergesellschaftenList
+      summary: Get list of Tochtergesellschaften
+      description: Return a list of Tochtergesellschaften
+      tags:
+        - List
+        - Flat
+        - Tochtergesellschaften
+        - Relation
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of Tochtergesellschaften
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+
+
+  /table/parlamentarier/aggregated/id/{id}:
+    get:
+      operationId: getAggregatedParlamentarierId
+      summary: Get aggregierter Parlamentarier by ID
+      description: Return a single aggregierter Parlamentarier
+      tags:
+        - By ID
+        - Aggregated
+        - Aggregierter Parlamentarier
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns aggregierter Parlamentarier
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+
+  /table/zutrittsberechtigung/aggregated/id/{id}:
+    get:
+      operationId: getAggregatedZutrittsberechtigungId
+      summary: Get aggregierter Gast by ID
+      description: Return a single aggregierter Gast
+      tags:
+        - By ID
+        - Aggregated
+        - Aggregierter Gast
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns aggregierter Gast
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+
+  /table/organisation/aggregated/id/{id}:
+    get:
+      operationId: getAggregatedOrganisationId
+      summary: Get aggregierte Organisation by ID
+      description: Return a single aggregierte Organisation
+      tags:
+        - By ID
+        - Aggregated
+        - Aggregierte Organisation
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns aggregierte Organisation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+
+  /table/interessengruppe/aggregated/id/{id}:
+    get:
+      operationId: getAggregatedInteressengruppeId
+      summary: Get aggregierte Lobbygruppe (Interessengruppe) by ID
+      description: Return a single aggregierte Lobbygruppe (Interessengruppe)
+      tags:
+        - By ID
+        - Aggregated
+        - Aggregierte Lobbygruppe (Interessengruppe)
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns aggregierte Lobbygruppe (Interessengruppe)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+
+  /table/branche/aggregated/id/{id}:
+    get:
+      operationId: getAggregatedBrancheId
+      summary: Get aggregierte Branche by ID
+      description: Return a single aggregierte Branche
+      tags:
+        - By ID
+        - Aggregated
+        - Aggregierte Branche
+        - Table
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/filterSimpleParam'
+        - $ref: '#/components/parameters/filterListParam'
+        - $ref: '#/components/parameters/likeParam'
+        - $ref: '#/components/parameters/selectFieldsParam'
+        - $ref: '#/components/parameters/langParam'
+        - $ref: '#/components/parameters/includeUnpublishedParam'
+        - $ref: '#/components/parameters/includeInactiveParam'
+        - $ref: '#/components/parameters/includeConfidentialDataParam'
+        - $ref: '#/components/parameters/includeMetaDataParam'
+      responses:
+        200:
+          description: Returns aggregierte Branche
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericIdData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+
+  /query/parlament-partei/aggregated/list:
+    get:
+      operationId: getAggregatedParlament-parteiList
+      summary: Get list of aggregierte Parlament-Partei
+      description: Return a list of aggregierte Parlament-Partei
+      tags:
+        - List
+        - Aggregated
+        - Aggregierte Parlament-Partei
+        - Query
+      parameters:
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/filterSimpleParam'
+      - $ref: '#/components/parameters/filterListParam'
+      - $ref: '#/components/parameters/likeParam'
+      - $ref: '#/components/parameters/selectFieldsParam'
+      - $ref: '#/components/parameters/langParam'
+      - $ref: '#/components/parameters/includeUnpublishedParam'
+      - $ref: '#/components/parameters/includeInactiveParam'
+      - $ref: '#/components/parameters/includeConfidentialDataParam'
+      - $ref: '#/components/parameters/includeMetaDataParam'
+    responses:
+        200:
+          description: Returns list of aggregierte Parlament-Partei
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericListData'
+              examples:
+                Successful:
+                  $ref: '#/components/examples/Successful'
+                Error:
+                  $ref: '#/components/examples/Error'

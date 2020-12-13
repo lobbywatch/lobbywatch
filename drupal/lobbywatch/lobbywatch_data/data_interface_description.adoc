@@ -1,6 +1,6 @@
 = Lobbywatch.ch Data Interface
 Roland Kurmann
-v1.1, 2017-05-26: Asciidoc improvements
+v1.2, 2020-12-13: add OpenAPI 3.0 link
 // Metadata
 :description: Documentation of the {lobbywatch-homepage}[Lobbywatch.ch] JSON data interface as RESTful webservice providing access to the conflict of interests (Interessenbindungen) of Swiss national parliamentarian.
 :keywords: lobbywatch, JSON, data interface, REST, RESTful, conflict of interests, COI, Swiss national parliament, Nationalrat, Ständerat, Interessenbindung
@@ -72,6 +72,10 @@ Data are delivered in JSON.
 The data interface is written in a generic way from the data model.
 
 All names and keys are always in minor case. Words are separated by `_`.
+
+== OpenAPI 3.0
+
+The data interface description is also available as https://cms.lobbywatch.ch/sites/all/modules/lobbywatch/lobbywatch_data/openapi/lobbywatch_dataif_sepc.html[OpenAPI 3.0 specification].
 
 == GraphQL
 
@@ -223,12 +227,13 @@ mechanism that allows restricted resources on a web page to be requested
 from another domain outside the domain from which the resource
 originated.
 
-The Lobbywatch Data Interface enables CORS for all domains.
+If you want to access the Lobbywatch data interface by AJAX/XHR calls, you
+need to add a CORS header.
 
-The HTTP response header sets for JSON webservice calls:
+The HTTP response header to set for dataIF JSON webservice calls:
 
 ....
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: https://cms.lobbywatch.ch
 ....
 
 Please do not abuse the Lobbywatch Data Interface.
@@ -372,7 +377,7 @@ Search for entities having a certain string:
 Result format:
 
 * `id`: ID of the entity
-* `table_name`: Table name of the entity, aka techical name
+* `table_name`: Table name of the entity, aka technical name
 * `page`: Entity name to construct an URL path, e.g. [`page`]/[`id`]
 * `name`: Translated name of the entity
 * `table_weight`: Weight of the table. This is used for sorting. Value
@@ -489,7 +494,7 @@ Special queries (see filtering below):
 
 ==== Parlament-Partei
 
-Parteien mit den Parlamentarieren und deren Anzahl Verbindugnen.
+Parteien mit den Parlamentarieren und deren Anzahl Verbindungen.
 
 `https://cms.lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggregated/list`
 
@@ -500,7 +505,7 @@ https://cms.lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggre
 ....
 
 Example number of interessenbindungen of parlamentarier (language
-depenedet:
+dependent):
 
 ....
 https://cms.lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggregated/list?lang=fr&limit=none&select_fields=parlamentarier.anzeige_name,parlamentarier.anzahl_interessenbindung_tief,parlamentarier.anzahl_interessenbindung_mittel,parlamentarier.anzahl_interessenbindung_hoch,parlamentarier.kommissionen_abkuerzung_de,parlamentarier.kommissionen_abkuerzung_fr,parlamentarier.rat_de,parlamentarier.rat_fr,parlamentarier.freigabe_datum
@@ -508,7 +513,7 @@ https://cms.lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggre
 
 === Filtering
 
-Records of query calls can be filtered by one or serveral fields by
+Records of query calls can be filtered by one or several fields by
 appending URL parameters.
 
 Filters work for all available fields in the base query view.
@@ -555,7 +560,7 @@ filter_${field}_like=$value
 
 where `filter_` is the prefix, `_like` ist the suffix, `$field` is the
 name of the field and `$value` is filter value which can contain `%`
-(matches any number of characters, even zero charachters) or `_`
+(matches any number of characters, even zero characters) or `_`
 (matches exactly one character).
 
 Example:
@@ -620,7 +625,7 @@ Example:
 
 === Options / Parameters
 
-Queries can be modified by serveral options. Some options are only
+Queries can be modified by several options. Some options are only
 available if permission is granted.
 
 * `includeUnpublished`=1 (default): Show unpublished data? (Requires

@@ -2,6 +2,7 @@
 
 // Run: /opt/lampp/bin/php -f sql_generator.php
 
+require_once dirname(__FILE__) . '/public_html/common/utils.php';
 
 // Query form database with
 /*
