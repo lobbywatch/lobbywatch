@@ -2706,7 +2706,7 @@ function getCantonCodeFromZefixRegistryId($id) {
 /**
  * @return true: db values different, not overwritten, false: no difference
  */
-function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_ws, &$update, &$update_optional, &$fields, $mode = FIELD_MODE_OPTIONAL, $id_function = null, $updated_date_field = null, $decode_db_function = null) {
+function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_ws, &$update, &$update_optional, &$fields, $mode = FIELD_MODE_OPTIONAL, $id_function = null, $updated_date_field = null, $decode_db_function = null, $max_length=false) {
   global $verbose;
 
   // ----------------------------------------------------------
@@ -2742,6 +2742,11 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
     $val = implode(', ', $val_raw);
   } else {
     $val = $val_raw;
+  }
+
+  if ($max_length) {
+    $db_val = cut($db_val, $max_length);
+    $val = cut($val, $max_length);
   }
 
   // TODO enhance to support also dates with time

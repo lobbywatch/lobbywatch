@@ -580,7 +580,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
         // http://stackoverflow.com/questions/1869091/how-to-convert-an-array-to-object-in-php
         $organisation_ws = (object) $dataUidBfs['data'];
 
-        $different_db_values |= checkField('name_de', 'name_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+        $different_db_values |= checkField('name_de', 'name_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull', null, null, 150);
         $different_db_values |= checkField('abkuerzung_de', 'abkuerzung_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
         $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
         $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, '_lobbywatch_ws_get_rechtsform');
@@ -620,7 +620,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
         // http://stackoverflow.com/questions/1869091/how-to-convert-an-array-to-object-in-php
         $organisation_ws = (object) $dataZefixRest['data'];
 
-        $different_db_values |= checkField('name_de', 'name_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+        $different_db_values |= checkField('name_de', 'name_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull', null, null, 150);
         $different_db_values |= checkField('abkuerzung_de', 'abkuerzung_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
         // $different_db_values |= checkField('abkuerzung_de', 'name_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'extractAbkuerzungFromWSFieldNameEmptyAsNull');
         $different_db_values |= checkField('rechtsform_zefix', 'rechtsform_zefix', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
