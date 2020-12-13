@@ -949,3 +949,7 @@ UNION
 SELECT id, anzeige_name, parlament_beruf_json, JSON_LENGTH(parlament_beruf_json) as n, parlament_beruf_json->>'$[0].beruf', parlament_beruf_json->>'$[0].arbeitgeber', parlament_beruf_json->>'$[1].beruf', parlament_beruf_json->>'$[1].arbeitgeber', parlament_beruf_json->>'$[2].beruf', parlament_beruf_json->>'$[2].arbeitgeber', parlament_beruf_json->'$[*].arbeitgeber' FROM `v_parlamentarier` parlamentarier WHERE im_rat_bis IS NULL AND (parlament_beruf_json IS NULL OR JSON_CONTAINS(parlament_beruf_json, 'null', '$[0].arbeitgeber') OR JSON_CONTAINS(parlament_beruf_json, 'null', '$[1].arbeitgeber') OR JSON_CONTAINS(parlament_beruf_json, 'null', '$[2].arbeitgeber'));
 
 -- JSON_TABLE() is available since MySQL 8.0
+
+-- 12.12.2020 Parlamentarier mit mehr als 2 Berufen
+
+SELECT id, anzeige_name, parlament_beruf_json, JSON_LENGTH(parlament_beruf_json) as n, parlament_beruf_json->>'$[0].beruf', parlament_beruf_json->>'$[0].arbeitgeber', parlament_beruf_json->>'$[1].beruf', parlament_beruf_json->>'$[1].arbeitgeber', parlament_beruf_json->>'$[2].beruf', parlament_beruf_json->>'$[2].arbeitgeber', parlament_beruf_json->>'$[*].arbeitgeber' FROM `v_parlamentarier` parlamentarier WHERE JSON_LENGTH(parlament_beruf_json) > 2
