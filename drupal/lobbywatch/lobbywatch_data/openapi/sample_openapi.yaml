@@ -1,4 +1,6 @@
 openapi: 3.0.0
+# Sample source: https://redocly.github.io/redoc/
+# Sample origin: https://petstore.swagger.io/
 servers:
   - url: //petstore.swagger.io/v2
     description: Default server

@@ -1,6 +1,9 @@
 openapi: 3.0.2
 # OpenAPI Spec: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md
+# Redoc OpenAPI vendor extensions: https://github.com/Redocly/redoc/blob/master/docs/redoc-vendor-extensions.md
+# Redoc tutorial: https://redoc.ly/docs/resources/learning-openapi/
 # Tutorial: https://lessthan12ms.com/openapi-with-php-documenting-and-testing-api-automatically.html
+# Redoc source: https://github.com/Redocly/redoc
 # sudo npm install -g redoc-cli
 # sudo npm install -g openapi-sampler
 # redoc-cli bundle -o lobbywatch_dataif_spec.html lobbywatch_dataif_spec.yaml
@@ -18,7 +21,7 @@ info:
   x-logo:
     url: https://cms.lobbywatch.ch/bearbeitung/lobbywatch-eye-transparent-bg-cut-75px-tiny.png
     backgroundColor: #FFFFFF
-        altText: Lobbywatch Logo
+    altText: Lobbywatch Logo
   license:
     name: CC BY-SA 4.0
     url: https://creativecommons.org/licenses/by-sa/4.0/deed.de
