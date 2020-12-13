@@ -579,15 +579,15 @@ function _lobbywatch_data_table_flat_list_search($table, $search_str, $json = tr
   try {
     if ($table === 'parlamentarier') {
       //TODO test check permissions
-      $sql = "SELECT " . _lobbywatch_data_select_fields_SQL($table) . " FROM v_$table WHERE anzeige_name LIKE :str" . (!(isset($_GET['includeInactive']) && $_GET['includeInactive'] != 0 && user_access('access lobbywatch unpublished content')) ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '')
+      $sql = "SELECT " . _lobbywatch_data_select_fields_SQL($table) . " FROM v_$table $table WHERE anzeige_name LIKE :str" . (!(isset($_GET['includeInactive']) && $_GET['includeInactive'] != 0 && user_access('access lobbywatch unpublished content')) ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '')
        . _lobbywatch_data_filter_unpublished_SQL($table) .
         _lobbywatch_data_filter_fields_SQL($table);
     } else if ($table === 'zutrittsberechtigung') {
-      $sql = "SELECT " . _lobbywatch_data_select_fields_SQL($table) . " FROM v_$table WHERE anzeige_name LIKE :str" . (!(isset($_GET['includeInactive']) && $_GET['includeInactive'] != 0 && !user_access('access lobbywatch unpublished content')) ? ' AND (bis IS NULL OR bis > NOW())' : '')
+      $sql = "SELECT " . _lobbywatch_data_select_fields_SQL($table) . " FROM v_$table $table WHERE anzeige_name LIKE :str" . (!(isset($_GET['includeInactive']) && $_GET['includeInactive'] != 0 && !user_access('access lobbywatch unpublished content')) ? ' AND (bis IS NULL OR bis > NOW())' : '')
        . _lobbywatch_data_filter_unpublished_SQL($table) .
         _lobbywatch_data_filter_fields_SQL($table);
     } else if (in_array($table, Constants::$entities_web)) {
-      $sql = "SELECT " . _lobbywatch_data_select_fields_SQL($table) . " FROM v_$table WHERE anzeige_name LIKE :str"
+      $sql = "SELECT " . _lobbywatch_data_select_fields_SQL($table) . " FROM v_$table $table WHERE anzeige_name LIKE :str"
            . _lobbywatch_data_filter_unpublished_SQL($table) .
         _lobbywatch_data_filter_fields_SQL($table);
     } else {
