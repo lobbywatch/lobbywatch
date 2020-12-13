@@ -75,7 +75,7 @@ All names and keys are always in minor case. Words are separated by `_`.
 
 == OpenAPI 3.0
 
-The data interface description is also available as https://cms.lobbywatch.ch/sites/all/modules/lobbywatch/lobbywatch_data/openapi/lobbywatch_dataif_sepc.html[OpenAPI 3.0 specification].
+The data interface description is also available as https://cms.lobbywatch.ch/sites/all/modules/lobbywatch/lobbywatch_data/openapi/lobbywatch_dataif_spec.html[Lobbywatch Data Interface (dataIF) OpenAPI 3.0 specification].
 
 == GraphQL
 

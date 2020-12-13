@@ -10,6 +10,18 @@ openapi: 3.0.2
 # TODO add ws calls
 info:
   title: Lobbywatch Data Interface (dataIF)
+  version: 1.2
+  contact:
+    name: Lobbywatch
+    url: https://lobbywatch.ch/
+    email: info@lobbywatch.ch
+  x-logo:
+    url: https://cms.lobbywatch.ch/bearbeitung/lobbywatch-eye-transparent-bg-cut-75px-tiny.png
+    backgroundColor: #FFFFFF
+        altText: Lobbywatch Logo
+  license:
+    name: CC BY-SA 4.0
+    url: https://creativecommons.org/licenses/by-sa/4.0/deed.de
   description: |
     Public data interface for accessing Lobbywatch data.
 
@@ -305,21 +317,9 @@ info:
     * `includeInactive`=0 (default): Show historised data, e.g. retired parlamentarians? (Requires advanced permission)
     * `includeConfidentialData`=0 (default): Show confidential data? (Requires advanced permission)
     * `includeMetaData`=0 (default): Show meta data, e.g. from the workflow
-  version: 1.2
-  contact:
-    name: Lobbywatch
-    url: https://lobbywatch.ch/
-    email: info@lobbywatch.ch
-  x-logo:
-    url: https://cms.lobbywatch.ch/bearbeitung/lobbywatch-eye-transparent-bg-cut-75px-tiny.png
-    backgroundColor: #FFFFFF
-        altText: Lobbywatch Logo
-  license:
-    name: CC BY-SA 4.0
-    url: https://creativecommons.org/licenses/by-sa/4.0/deed.de
 externalDocs:
   description: Original Lobbywatch Data Interface (dataIF) documentation
-  url: https://github.com/lobbywatch/lobbywatch/blob/master/drupal/lobbywatch/lobbywatch_data/data_interface_description.ado
+  url: https://github.com/lobbywatch/lobbywatch/blob/master/drupal/lobbywatch/lobbywatch_data/data_interface_description.adoc
 servers:
   - url: https://cms.lobbywatch.ch/de/data/interface/v1/json
     description: Production (default)
