@@ -31,6 +31,7 @@ enable_fail_onerror
 # done
 
 public_dir="$SCRIPT_DIR/public_html"    # compiled site directory
+drupal_dir="$SCRIPT_DIR/drupal"         # Lobbywatch Drupal modules
 db_dir="../data/"
 remote_db_dir="/home/lobbywat/sql_scripts"
 
@@ -40,6 +41,7 @@ ssh_port="22"
 db_base_name=lobbywat_lobbywatch
 db_user=lobbywat_script
 document_root="/home/lobbywat/public_html/d7/sites/lobbywatch.ch/app/"
+remote_drupal_modules="/home/lobbywat/public_html/d7/sites/all/modules/"
 rsync_delete=false
 deploy_default="rsync"
 run_sql=false
@@ -55,6 +57,7 @@ ask_execute_refresh_viws=true
 update_triggers=false
 backup_db=false
 upload_files=false
+upload_drupal=false
 sql_file=''
 compare_remote_db_structs=false
 compare_local_remote_db_structs=false
@@ -99,6 +102,7 @@ while test $# -gt 0; do
                         echo
                         echo "Options:"
                         echo "-u, --upload              Upload files"
+                        echo "-U, --upload-drupal       Upload Drupal modules"
                         echo "-p, --production          Deploy to production, otherwise test"
                         echo "-l[=DB], -L, --local[=DB] Set env local and local DB (-l only is 'lobbywatchtest', -L only is 'lobbywatch') (-l and -p are mutual exclusive, -l wins)"
                         echo "-w=PW, --pw=PW            Set DB password (Alternative: Setup ~/.my.cnf)"
@@ -131,6 +135,10 @@ while test $# -gt 0; do
                         ;;
                 -u|--upload)
                         upload_files=true
+                        shift
+                        ;;
+                -U|--upload-drupal)
+                        upload_drupal=true
                         shift
                         ;;
                 -f|--full)
@@ -314,12 +322,29 @@ if $upload_files ; then
   ./prepare_release.sh $env_suffix $env_dir $env_dir2
 
   echo "## Deploying DB forms via rsync"
-  cmd='rsync $verbose -avzce "ssh -p $ssh_port $quiet" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir'
+  cmd="rsync $verbose -avzce 'ssh -p $ssh_port $quiet' $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir"
   if $verbose_mode ; then
     # echo rsync $verbose -avzce "ssh -p $ssh_port $quiet" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir
     echo "$cmd"
   fi
   # rsync $verbose -avzce "ssh -p $ssh_port $quiet" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir
+  eval "$cmd"
+fi
+
+if $upload_drupal ; then
+  ensure_remote
+
+  echo -e "Drupal modules: $remote_drupal_modules\n"
+
+  if ! $quiet_mode ; then
+    askContinueYn "Upload Drupal modules to REMOTE PROD?"
+  fi
+
+  echo "## Deploying Drupal modules via rsync"
+  cmd="rsync $verbose -avzce 'ssh -p $ssh_port $quiet' $exclude --backup --backup-dir=bak $dry_run $drupal_dir/lobbywatch $ssh_user:$remote_drupal_modules"
+  if $verbose_mode ; then
+    echo "$cmd"
+  fi
   eval "$cmd"
 fi
 
