@@ -1,5 +1,5 @@
-openapi: 3.0.2
-# OpenAPI Spec: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md
+openapi: 3.0.3
+# OpenAPI Spec: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.3.md
 # Redoc OpenAPI vendor extensions: https://github.com/Redocly/redoc/blob/master/docs/redoc-vendor-extensions.md
 # Redoc tutorial: https://redoc.ly/docs/resources/learning-openapi/
 # Tutorial: https://lessthan12ms.com/openapi-with-php-documenting-and-testing-api-automatically.html
