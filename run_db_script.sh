@@ -43,8 +43,8 @@ beep() {
 # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
 # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
 abort() {
-  [ -z "$1" ] && logs='' || logs="Logs:\n---\n$1\n---\n"
-  [ -z "$2" ] && line='' || line=$2
+  [ -z "${1-}"  ] && logs='' || logs="Logs:\n---\n$1\n---\n"
+  [ -z "${2-}" ] && line='' || line=$2
   caller=$(caller)
 
   echo -e "$logs" >&2
