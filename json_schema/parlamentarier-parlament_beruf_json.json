@@ -1,0 +1,121 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lobbywatch.ch/json-schema/parlamentarier-parlament_beruf_json.json",
+  "title": "parlament_beruf_json",
+  "description": "Definition of parlamentarier.parlament_beruf_json DB field.",
+  "$comment": "Generated with https://extendsclass.com/json-schema-validator.html; Ref: https://json-schema.org/understanding-json-schema/index.html",
+  "type": "array",
+  "default": [],
+  "examples": [
+    [
+      {
+        "bis": null,
+        "von": "2017-06-15",
+        "lang": "de",
+        "beruf": "Maître d'Enseignement et de Recherche HEC - UNIL",
+        "jobtitel": null,
+        "arbeitgeber": "Université de Lausanne / EPFL"
+      },
+      {
+        "bis": null,
+        "von": "2019-10-29",
+        "lang": "de",
+        "beruf": "Administrateur",
+        "jobtitel": "Administrateur",
+        "arbeitgeber": "Banque Cantonale Neuchâteloise"
+      }
+    ]
+  ],
+  "items": {
+    "$id": "#/items",
+    "title": "Items",
+    "type": "object",
+    "required": [
+      "bis",
+      "von",
+      "lang",
+      "beruf",
+      "jobtitel",
+      "arbeitgeber"
+    ],
+    "properties": {
+      "bis": {
+        "$id": "#/items/bis",
+        "title": "Bis",
+        "type": [
+          "string",
+          "null"
+        ],
+        "default": null,
+        "examples": [
+          "2017-06-15"
+        ],
+        "format": "date",
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+      },
+      "von": {
+        "$id": "#/items/von",
+        "title": "Von",
+        "type": [
+          "string",
+          "null"
+        ],
+        "default": null,
+        "examples": [
+          "2017-06-15"
+        ],
+        "format": "date",
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+      },
+      "lang": {
+        "$id": "#/items/lang",
+        "title": "Lang",
+        "type": [
+          "string",
+          "null"
+        ],
+        "default": null,
+        "examples": [
+          "de"
+        ],
+        "pattern": "^(de|fr|it)$"
+      },
+      "beruf": {
+        "$id": "#/items/beruf",
+        "title": "Beruf",
+        "type": [
+          "string",
+          "null"
+        ],
+        "default": null,
+        "examples": [
+          "Maître d'Enseignement et de Recherche HEC - UNIL"
+        ],
+        "pattern": "^.*$"
+      },
+      "jobtitel": {
+        "$id": "#/items/jobtitel",
+        "title": "Jobtitel",
+        "type": [
+          "string",
+          "null"
+        ],
+        "default": null
+      },
+      "arbeitgeber": {
+        "$id": "#/items/arbeitgeber",
+        "title": "Arbeitgeber",
+        "type": [
+          "string",
+          "null"
+        ],
+        "default": null,
+        "examples": [
+          "Université de Lausanne / EPFL"
+        ],
+        "pattern": "^.*$"
+      }
+    }
+  }
+}
