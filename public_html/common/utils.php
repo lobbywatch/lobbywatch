@@ -2247,6 +2247,7 @@ function ws_get_organization_from_zefix_rest($uid_raw, &$data, $verbose, $test_m
     $params = array(
       'uid' => $uid,
     );
+    // OpenAPI: https://www.zefix.admin.ch/ZefixPublicREST/
     $base_url = $test_mode ? 'https://www.zefixintg.admin.ch/ZefixPublicREST/api/v1/company/uid' : 'https://www.zefix.admin.ch/ZefixPublicREST/api/v1/company/uid';
     $url = "$base_url/CHE$uid";
     $basicAuthUsernamePassword = "{$zefix_ws_login['username']}:${zefix_ws_login['password']}";
@@ -2281,7 +2282,7 @@ function ws_get_organization_from_zefix_soap($uid_raw, $client, &$data, $verbose
     );
     $response = $client->GetByUidFull($params);
     if (isset($response->result)) {
-      fillDataFromZefixResult($response->result, $data);
+      fillDataFromZefixSoapResult($response->result, $data);
     } else {
       $data['message'] .= 'No Result from zefix webservice. ';
       $data['success'] = false;
@@ -2408,6 +2409,36 @@ function fillDataFromUidBfsResult($object, &$data) {
         $data['count'] = 1;
       }
       $oid = $ot->organisation->organisationIdentification;
+      /*
+      commercialRegisterStatus (eCH-0108:commercialRegisterStatusType)
+      Status des Unternehmens im Handelsregister
+        1 = unbekannt (kommt im UID-Register nicht vor!)
+        2 = im HR eingetragen
+        3 = nicht im HR eingetragen
+        null = keine Einschränkung
+      */
+      $hr_status_code = $ot->commercialRegisterInformation->commercialRegisterStatus;
+      /*
+      commercialRegisterEntryStatus (eCH-0108:commercialRegisterEntryStatusType)
+      Status des Eintrags im HR
+        1 = aktiv
+        2 = gelöscht
+        3 = provisorisch
+        null = keine Einschränkung
+      */
+      $hr_status_entry_code = $ot->commercialRegisterInformation->commercialRegisterEntryStatus;
+      /*
+      uidregStatusEnterpriseDetail (eCH-0108:uidregStatusEnterpriseDetailType)
+      */
+      $uid_status_code = $ot->uidregInformation->uidregStatusEnterpriseDetail;
+      /*
+      uidregPublicStatus (eCH-0108:uidregPublicStatusType)
+      Ermöglicht die Eingrenzung auf öffentliche/nicht öffentliche UID-Einheiten
+        true = Es werden nur öffentliche UID-Einheiten gesucht
+        false = Es werden nur nicht-öffentliche UID-Einheiten gesucht
+        null = keine Einschränkung
+      */
+      $uid_public_status_code = $ot->uidregInformation->uidregPublicStatus;
       $uid_ws = $oid->uid->uidOrganisationId;
       $base_address = $ot->organisation->contact->address;
       $address = is_array($base_address) ? $base_address[0]->postalAddress->addressInformation : $base_address->postalAddress->addressInformation;
@@ -2432,6 +2463,8 @@ function fillDataFromUidBfsResult($object, &$data) {
         'land_id' => _lobbywatch_ws_get_land_id($address->country->countryIdISO2),
     //     'handelsregister_url' => ,
         'register_kanton' => $ot->cantonAbbreviationMainAddress,
+        'inaktiv' => $hr_status_entry_code == 2,
+        'handelsregister_eintrag' => $hr_status_code == 2,
       );
     } else {
       $data['message'] .= 'Nothing found';
@@ -2439,7 +2472,7 @@ function fillDataFromUidBfsResult($object, &$data) {
     }
 }
 
-function fillDataFromZefixResult($object, &$data) {
+function fillDataFromZefixSoapResult($object, &$data) {
     if (!empty((array) $object)) {
 //       print_r($object);
       if (is_array($object->companyInfo)) {
@@ -2493,6 +2526,7 @@ function fillDataFromZefixResult($object, &$data) {
 // https://www.zefixintg.admin.ch/ZefixPublicREST/api/v1/company/uid/CHE112133855
 // https://www.zefixintg.admin.ch/ZefixPublicREST/swagger-ui/index.html?configUrl=/ZefixPublicREST/v3/api-docs/swagger-config#/Company/showUID
 
+// OpenAPI: https://www.zefix.admin.ch/ZefixPublicREST/
 function fillDataFromZefixRestResult($json, &$data) {
     if (!empty((array) $json)) {
 //       print_r($object);
@@ -2505,6 +2539,10 @@ function fillDataFromZefixRestResult($json, &$data) {
       }
       $oid = $ot;
       $uid_ws = $oid->uid;
+      /*
+      ACTIVE, CANCELLED, BEING_CANCELLED
+      */
+      $status = $ot->status;
       if (!empty($ot->address)) {
         $base_address = $ot->address;
         // $address = $base_address[0] ?? $base_address;
@@ -2538,6 +2576,9 @@ function fillDataFromZefixRestResult($json, &$data) {
         'handelsregister_ws_url' => $ot->wsLink ?? null, // TODO what for?
         'zweck' => $ot->purpose ? "Zweck: " . trim($ot->purpose) : null,
         'register_kanton' => $ot->canton ?? null,
+        'inaktiv' => $status != 'ACTIVE',
+        'nominalkapital' => $ot->capitalNominal,
+        'handelsregister_eintrag' => true,
       );
     } else {
       $data['message'] .= 'Nothing found';
@@ -2821,6 +2862,11 @@ function getValueFromWSFieldName($ws_field, $parlamentarier_ws, $parlamentarier_
 function getValueFromWSFieldNameEmptyAsNull($ws_field, $parlamentarier_ws, $parlamentarier_db_obj, $field, $fields) {
   if (empty($parlamentarier_ws->$ws_field) || trim($parlamentarier_ws->$ws_field) === '') return null;
   return trim($parlamentarier_ws->$ws_field);
+}
+
+function getOrganisationNameFromWSFieldEmptyAsNull($ws_field, $parlamentarier_ws, $parlamentarier_db_obj, $field, $fields) {
+  if (empty($parlamentarier_ws->$ws_field) || trim($parlamentarier_ws->$ws_field) === '') return null;
+  return trim($parlamentarier_ws->$ws_field) . ($parlamentarier_ws->inaktiv ? ' [INAKTIV]' : '');
 }
 
 function extractAbkuerzungFromWSFieldNameEmptyAsNull($ws_field, $parlamentarier_ws, $parlamentarier_db_obj, $field, $fields): ?string {
