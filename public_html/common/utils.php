@@ -2417,7 +2417,7 @@ function fillDataFromUidBfsResult($object, &$data) {
         3 = nicht im HR eingetragen
         null = keine Einschränkung
       */
-      $hr_status_code = $ot->commercialRegisterInformation->commercialRegisterStatus;
+      $hr_status_code = $ot->commercialRegisterInformation->commercialRegisterStatus ?? null;
       /*
       commercialRegisterEntryStatus (eCH-0108:commercialRegisterEntryStatusType)
       Status des Eintrags im HR
@@ -2426,7 +2426,7 @@ function fillDataFromUidBfsResult($object, &$data) {
         3 = provisorisch
         null = keine Einschränkung
       */
-      $hr_status_entry_code = $ot->commercialRegisterInformation->commercialRegisterEntryStatus;
+      $hr_status_entry_code = $ot->commercialRegisterInformation->commercialRegisterEntryStatus ?? null;
       /*
       uidregStatusEnterpriseDetail (eCH-0108:uidregStatusEnterpriseDetailType)
       */
@@ -2463,7 +2463,7 @@ function fillDataFromUidBfsResult($object, &$data) {
         'land_id' => _lobbywatch_ws_get_land_id($address->country->countryIdISO2),
     //     'handelsregister_url' => ,
         'register_kanton' => $ot->cantonAbbreviationMainAddress,
-        'inaktiv' => $hr_status_entry_code == 2,
+        'inaktiv' => !empty($hr_status_entry_code) ? $hr_status_entry_code == 2 : null,
         'handelsregister_eintrag' => $hr_status_code == 2,
       );
     } else {
