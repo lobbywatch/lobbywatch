@@ -41,7 +41,7 @@ cd $SCRIPT_DIR
 echo -e "\nCron run" >> $LOG
 date -Iseconds >> $LOG
 . ~/.keychain/$(hostname)-sh
-./run_update_ws_parlament.sh -a -v -d -f -G -l=$DB $test_param >> $LOG
+./run_update_ws_parlament.sh -a -v -d -f -l=$DB $test_param >> $LOG
 echo "Cron end" >> $LOG
 date -Iseconds >> $LOG
 
