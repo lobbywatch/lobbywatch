@@ -1116,7 +1116,7 @@ function getMilGradId($militaryGrade) {
     case 'Brigadier': return 21;
     case 'Divisionär': return 22;
     case 'Korpskommandant': return 23;
-    case '': case null: return null;
+    case '': case '-': case null: return null;
     default: $errors[] = "Wrong MilGrad code '$militaryGrade'"; return "ERR $militaryGrade";
   }
 }
