@@ -862,6 +862,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -1007,6 +1009,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -1605,6 +1609,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -1674,6 +1680,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -3439,6 +3447,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -4322,6 +4332,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -4541,6 +4553,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -4634,6 +4648,8 @@
                 new FilterColumn($this->dataset, 'alias_namen_fr', 'alias_namen_fr', 'Alias Namen Fr'),
                 new FilterColumn($this->dataset, 'abkuerzung_it', 'abkuerzung_it', 'Abkuerzung It'),
                 new FilterColumn($this->dataset, 'alias_namen_it', 'alias_namen_it', 'Alias Namen It'),
+                new FilterColumn($this->dataset, 'in_handelsregister', 'in_handelsregister', 'In Handelsregister'),
+                new FilterColumn($this->dataset, 'inaktiv', 'inaktiv', 'Inaktiv'),
                 new FilterColumn($this->dataset, 'land_id', 'land_id_anzeige_name', 'Land Id'),
                 new FilterColumn($this->dataset, 'interessenraum_id', 'interessenraum_id_anzeige_name', 'Interessenraum Id'),
                 new FilterColumn($this->dataset, 'rechtsform', 'rechtsform', 'Rechtsform'),
@@ -4689,6 +4705,8 @@
                 ->addColumn($columns['alias_namen_fr'])
                 ->addColumn($columns['abkuerzung_it'])
                 ->addColumn($columns['alias_namen_it'])
+                ->addColumn($columns['in_handelsregister'])
+                ->addColumn($columns['inaktiv'])
                 ->addColumn($columns['land_id'])
                 ->addColumn($columns['interessenraum_id'])
                 ->addColumn($columns['rechtsform'])
@@ -5050,6 +5068,36 @@
                     FilterConditionOperator::ENDS_WITH => $main_editor,
                     FilterConditionOperator::IS_LIKE => $main_editor,
                     FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new ComboBox('in_handelsregister');
+            $main_editor->SetAllowNullValue(false);
+            $main_editor->addChoice(true, $this->GetLocalizerCaptions()->GetMessageString('True'));
+            $main_editor->addChoice(false, $this->GetLocalizerCaptions()->GetMessageString('False'));
+            
+            $filterBuilder->addColumn(
+                $columns['in_handelsregister'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new ComboBox('inaktiv');
+            $main_editor->SetAllowNullValue(false);
+            $main_editor->addChoice(true, $this->GetLocalizerCaptions()->GetMessageString('True'));
+            $main_editor->addChoice(false, $this->GetLocalizerCaptions()->GetMessageString('False'));
+            
+            $filterBuilder->addColumn(
+                $columns['inaktiv'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -6118,6 +6166,32 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for in_handelsregister field
+            //
+            $column = new NumberViewColumn('in_handelsregister', 'in_handelsregister', 'In Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Ist die Organisation im Handelsregister (Zefix) eingetragen?');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for inaktiv field
+            //
+            $column = new NumberViewColumn('inaktiv', 'inaktiv', 'Inaktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Gibt es die Organisation noch?');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('land_id', 'land_id_anzeige_name', 'Land Id', $this->dataset);
@@ -6594,6 +6668,26 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for in_handelsregister field
+            //
+            $column = new NumberViewColumn('in_handelsregister', 'in_handelsregister', 'In Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for inaktiv field
+            //
+            $column = new NumberViewColumn('inaktiv', 'inaktiv', 'Inaktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('land_id', 'land_id_anzeige_name', 'Land Id', $this->dataset);
@@ -6983,6 +7077,26 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for in_handelsregister field
+            //
+            $column = new NumberViewColumn('in_handelsregister', 'in_handelsregister', 'In Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for inaktiv field
+            //
+            $column = new NumberViewColumn('inaktiv', 'inaktiv', 'Inaktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('land_id', 'land_id_anzeige_name', 'Land Id', $this->dataset);
@@ -7351,6 +7465,26 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for in_handelsregister field
+            //
+            $column = new NumberViewColumn('in_handelsregister', 'in_handelsregister', 'In Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for inaktiv field
+            //
+            $column = new NumberViewColumn('inaktiv', 'inaktiv', 'Inaktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('land_id', 'land_id_anzeige_name', 'Land Id', $this->dataset);
@@ -7716,6 +7850,26 @@
             $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for in_handelsregister field
+            //
+            $column = new NumberViewColumn('in_handelsregister', 'in_handelsregister', 'In Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for inaktiv field
+            //
+            $column = new NumberViewColumn('inaktiv', 'inaktiv', 'Inaktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddCompareColumn($column);
             
             //
@@ -9911,6 +10065,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -10398,6 +10554,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -10932,6 +11090,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -11904,6 +12064,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -29417,6 +29579,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -29766,6 +29930,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -30201,6 +30367,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -30924,6 +31092,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -32631,6 +32801,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -33076,6 +33248,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -33549,6 +33723,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -34728,6 +34904,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -35996,6 +36174,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -36266,6 +36446,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -36649,6 +36831,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -37543,6 +37727,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -37759,6 +37945,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -37852,6 +38040,8 @@
                 new FilterColumn($this->dataset, 'alias_namen_de', 'alias_namen_de', 'Alias Namen De'),
                 new FilterColumn($this->dataset, 'alias_namen_fr', 'alias_namen_fr', 'Alias Namen Fr'),
                 new FilterColumn($this->dataset, 'alias_namen_it', 'alias_namen_it', 'Alias Namen It'),
+                new FilterColumn($this->dataset, 'in_handelsregister', 'in_handelsregister', 'In Handelsregister'),
+                new FilterColumn($this->dataset, 'inaktiv', 'inaktiv', 'Inaktiv'),
                 new FilterColumn($this->dataset, 'adresse_strasse', 'adresse_strasse', 'Adresse Strasse'),
                 new FilterColumn($this->dataset, 'adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz'),
                 new FilterColumn($this->dataset, 'adresse_plz', 'adresse_plz', 'Adresse PLZ'),
@@ -37930,7 +38120,8 @@
                 ->setOptionsFor('alias_namen_de')
                 ->setOptionsFor('alias_namen_fr')
                 ->setOptionsFor('alias_namen_it')
-                ->setOptionsFor('interessengruppe_id')
+                ->setOptionsFor('in_handelsregister')
+                ->setOptionsFor('inaktiv')
                 ->setOptionsFor('adresse_strasse')
                 ->setOptionsFor('adresse_zusatz')
                 ->setOptionsFor('adresse_plz')
@@ -37942,6 +38133,7 @@
                 ->setOptionsFor('rechtsform_zefix')
                 ->setOptionsFor('typ')
                 ->setOptionsFor('vernehmlassung')
+                ->setOptionsFor('interessengruppe_id')
                 ->setOptionsFor('beschreibung')
                 ->setOptionsFor('interessengruppe2_id')
                 ->setOptionsFor('interessengruppe3_id')
@@ -38228,6 +38420,36 @@
                     FilterConditionOperator::ENDS_WITH => $main_editor,
                     FilterConditionOperator::IS_LIKE => $main_editor,
                     FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new ComboBox('in_handelsregister');
+            $main_editor->SetAllowNullValue(false);
+            $main_editor->addChoice(true, $this->GetLocalizerCaptions()->GetMessageString('True'));
+            $main_editor->addChoice(false, $this->GetLocalizerCaptions()->GetMessageString('False'));
+            
+            $filterBuilder->addColumn(
+                $columns['in_handelsregister'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new ComboBox('inaktiv');
+            $main_editor->SetAllowNullValue(false);
+            $main_editor->addChoice(true, $this->GetLocalizerCaptions()->GetMessageString('True'));
+            $main_editor->addChoice(false, $this->GetLocalizerCaptions()->GetMessageString('False'));
+            
+            $filterBuilder->addColumn(
+                $columns['inaktiv'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -39462,27 +39684,24 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for anzeige_name_mixed field
+            // View column for in_handelsregister field
             //
-            $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_anzeige_name_mixed', 'Lobbygruppe', $this->dataset);
+            $column = new CheckboxViewColumn('in_handelsregister', 'in_handelsregister', 'In Handelsregister', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('interessengruppe.php?operation=view&pk0=%interessengruppe_id%');
-            $column->setTarget('_self');
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.');
+            $column->SetDescription('Ist die Organisation im Handelsregister (Zefix) eingetragen?');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
             //
-            // View column for homepage field
+            // View column for inaktiv field
             //
-            $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
+            $column = new CheckboxViewColumn('inaktiv', 'inaktiv', 'Inaktiv', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('%homepage%');
-            $column->setTarget('_blank');
-            $column->SetMaxLength(75);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Link zur Webseite');
+            $column->SetDescription('Gibt es die Organisation noch?');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -39598,6 +39817,31 @@
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Häufigkeit der Teilname an nationalen Vernehmlassungen');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name_mixed field
+            //
+            $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_anzeige_name_mixed', 'Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('interessengruppe.php?operation=view&pk0=%interessengruppe_id%');
+            $column->setTarget('_self');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for homepage field
+            //
+            $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('%homepage%');
+            $column->setTarget('_blank');
+            $column->SetMaxLength(75);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Link zur Webseite');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -39911,6 +40155,22 @@
             $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for in_handelsregister field
+            //
+            $column = new CheckboxViewColumn('in_handelsregister', 'in_handelsregister', 'In Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for inaktiv field
+            //
+            $column = new CheckboxViewColumn('inaktiv', 'inaktiv', 'Inaktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -40277,6 +40537,26 @@
             $editor->SetMaxLength(150);
             $editor->SetPlaceholder('Inoffizielle Bezeichnungen durch ; getrennt');
             $editColumn = new CustomEditColumn('Alias Namen It', 'alias_namen_it', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for in_handelsregister field
+            //
+            $editor = new CheckBox('in_handelsregister_edit');
+            $editColumn = new CustomEditColumn('In Handelsregister', 'in_handelsregister', $editor, $this->dataset);
+            $editColumn->setEnabled(false);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for inaktiv field
+            //
+            $editor = new CheckBox('inaktiv_edit');
+            $editColumn = new CustomEditColumn('Inaktiv', 'inaktiv', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -41040,6 +41320,26 @@
             $editor->SetMaxLength(150);
             $editor->SetPlaceholder('Inoffizielle Bezeichnungen durch ; getrennt');
             $editColumn = new CustomEditColumn('Alias Namen It', 'alias_namen_it', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for in_handelsregister field
+            //
+            $editor = new CheckBox('in_handelsregister_edit');
+            $editColumn = new CustomEditColumn('In Handelsregister', 'in_handelsregister', $editor, $this->dataset);
+            $editColumn->setEnabled(false);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for inaktiv field
+            //
+            $editor = new CheckBox('inaktiv_edit');
+            $editColumn = new CustomEditColumn('Inaktiv', 'inaktiv', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -41853,6 +42153,26 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for in_handelsregister field
+            //
+            $editor = new CheckBox('in_handelsregister_edit');
+            $editColumn = new CustomEditColumn('In Handelsregister', 'in_handelsregister', $editor, $this->dataset);
+            $editColumn->setEnabled(false);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for inaktiv field
+            //
+            $editor = new CheckBox('inaktiv_edit');
+            $editColumn = new CustomEditColumn('Inaktiv', 'inaktiv', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for adresse_strasse field
             //
             $editor = new TextEdit('adresse_strasse_edit');
@@ -42542,6 +42862,22 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for in_handelsregister field
+            //
+            $column = new CheckboxViewColumn('in_handelsregister', 'in_handelsregister', 'In Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for inaktiv field
+            //
+            $column = new CheckboxViewColumn('inaktiv', 'inaktiv', 'Inaktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for adresse_strasse field
             //
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
@@ -42898,6 +43234,22 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for in_handelsregister field
+            //
+            $column = new CheckboxViewColumn('in_handelsregister', 'in_handelsregister', 'In Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for inaktiv field
+            //
+            $column = new CheckboxViewColumn('inaktiv', 'inaktiv', 'Inaktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for adresse_strasse field
             //
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
@@ -43251,6 +43603,22 @@
             $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for in_handelsregister field
+            //
+            $column = new CheckboxViewColumn('in_handelsregister', 'in_handelsregister', 'In Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for inaktiv field
+            //
+            $column = new CheckboxViewColumn('inaktiv', 'inaktiv', 'Inaktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $grid->AddCompareColumn($column);
             
             //
@@ -43692,8 +44060,28 @@
                editors[\'adresse_zusatz\'].setEnabled(false);
                editors[\'adresse_plz\'].setEnabled(false);
                editors[\'ort\'].setEnabled(false);
+               editors[\'land_id\'].setEnabled(false);
                editors[\'homepage\'].setEnabled(false);
                editors[\'sekretariat\'].setEnabled(false);
+               editors[\'rechtsform\'].setEnabled(false);
+            }
+            if (editors[\'uid\'].getValue()) {
+               editors[\'name_de\'].setEnabled(false);
+               editors[\'abkuerzung_de\'].setEnabled(false);
+               // editors[\'name_fr\'].setEnabled(false);
+               // editors[\'name_it\'].setEnabled(false);
+               // editors[\'alias_namen_de\'].setEnabled(false);
+               editors[\'adresse_strasse\'].setEnabled(false);
+               editors[\'adresse_zusatz\'].setEnabled(false);
+               editors[\'adresse_plz\'].setEnabled(false);
+               editors[\'ort\'].setEnabled(false);
+               editors[\'land_id\'].setEnabled(false);
+               editors[\'rechtsform\'].setEnabled(false);
+               editors[\'rechtsform_handelsregister\'].setEnabled(false);
+               editors[\'rechtsform\'].setEnabled(false);
+               if (editors[\'in_handelsregister\'].getValue()) {
+                  editors[\'inaktiv\'].setEnabled(false);
+               }
             }');
         }
     

@@ -2464,7 +2464,7 @@ function fillDataFromUidBfsResult($object, &$data) {
     //     'handelsregister_url' => ,
         'register_kanton' => $ot->cantonAbbreviationMainAddress,
         'inaktiv' => !empty($hr_status_entry_code) ? $hr_status_entry_code == 2 : null,
-        'handelsregister_eintrag' => $hr_status_code == 2,
+        'in_handelsregister' => $hr_status_code == 2,
       );
     } else {
       $data['message'] .= 'Nothing found';
@@ -2578,7 +2578,7 @@ function fillDataFromZefixRestResult($json, &$data) {
         'register_kanton' => $ot->canton ?? null,
         'inaktiv' => $status != 'ACTIVE',
         'nominalkapital' => $ot->capitalNominal,
-        'handelsregister_eintrag' => true,
+        'in_handelsregister' => true,
       );
     } else {
       $data['message'] .= 'Nothing found';

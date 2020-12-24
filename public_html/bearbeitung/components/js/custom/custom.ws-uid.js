@@ -1,6 +1,7 @@
 $(function() {
 
-  function setWSValue(field, wsVal) {
+  function setWSValue(field, wsVal, field_name) {
+    var fieldType = $(field).attr('type');
     var oldVal = $(field).val();
   //       console.log(oldVal + ' | ' + wsVal);
     var isEmptyOldVal = !oldVal; // Workaround: check for empty values http://stackoverflow.com/questions/5515310/is-there-a-standard-function-to-check-for-null-undefined-or-blank-variables-in
@@ -8,17 +9,28 @@ $(function() {
     // console.log(field + ": " + oldVal + " (" + !isEmptyOldVal + ') → ' + wsVal + " (" + !isEmptyWsVal + ")");
     if (oldVal == wsVal || (isEmptyOldVal && isEmptyWsVal)) {
       $(field).removeClass('ws-changed-value');
+    } else if (fieldType === 'checkbox') {
+      oldVal = $(field).prop("checked");
+      if (oldVal !== wsVal) {
+        $(field).prop("checked", wsVal).addClass('ws-changed-value');
+        $(field).parent().addClass('ws-changed-value');
+        $('#info-message').append('<p><span class="ws-update-val ws-update-val-old">' + field_name + ': ' + oldVal + '</span> → <span class="ws-update-val ws-update-val-new">' + wsVal + '</span></p>').show();
+      }
     } else {
       // var wsValClean = typeof wsVal === 'string' || wsVal instanceof String ? wsVal.replace("'", "\\'") : wsVal;
       // val() works also for select dropdowns, http://stackoverflow.com/questions/1280499/jquery-set-select-index
-      $(field).val(wsVal).addClass('ws-changed-value').prop("disabled", false);
+      $(field).val(wsVal).addClass('ws-changed-value');
       // $(field).val(wsVal).addClass('ws-changed-value').prop("disabled", false).
       //   find("option[value='" + wsValClean + "'][disabled]").prop("disabled", false).prop("selected", true);
 //       $("option" + field + "[value='" + wsVal + "'][disabled]").prop("disabled", false);
       if (!isEmptyOldVal) {
-        $('#info-message').append('<p><span class="ws-update-val ws-update-val-old">' + oldVal + '</span> → <span class="ws-update-val ws-update-val-new">' + wsVal + '</span></p>').show();
+        $('#info-message').append('<p><span class="ws-update-val ws-update-val-old">' + field_name + ': ' + oldVal + '</span> → <span class="ws-update-val ws-update-val-new">' + wsVal + '</span></p>').show();
       }
     }
+  }
+
+  function setWSFieldValue(formId, field_name, wsVal) {
+    return setWSValue('#' + formId + '_' + field_name + '_edit', wsVal, field_name);
   }
 
   $('#btn-ws-uid').click(function() {
@@ -89,17 +101,19 @@ $(function() {
   //                alert(data.data);
           if (data && data.success && data.data) {
   //               alert('uid ws fetched successful: ' + textStatus);
-            setWSValue('#' + formId + '_name_de_edit', data.data.name_de);
-            setWSValue('#' + formId + '_abkuerzung_de_edit', data.data.abkuerzung_de);
-            setWSValue('#' + formId + '_land_id_edit', data.data.land_id);
-            setWSValue('#' + formId + '_adresse_strasse_edit', data.data.adresse_strasse);
-            setWSValue('#' + formId + '_adresse_zusatz_edit', data.data.adresse_zusatz);
-            setWSValue('#' + formId + '_adresse_plz_edit', data.data.adresse_plz);
-            setWSValue('#' + formId + '_ort_edit', data.data.ort);
-            setWSValue('#' + formId + '_rechtsform_edit', data.data.rechtsform);
-            setWSValue('#' + formId + '_rechtsform_zefix_edit', data.data.rechtsform_zefix);
-            setWSValue('#' + formId + '_rechtsform_handelsregister_edit', data.data.rechtsform_handelsregister);
-            setWSValue('#' + formId + '_beschreibung_edit', data.data.zweck);
+            setWSFieldValue(formId, 'name_de', data.data.name_de);
+            setWSFieldValue(formId, 'abkuerzung_de', data.data.abkuerzung_de);
+            setWSFieldValue(formId, 'in_handelsregister', data.data.in_handelsregister);
+            setWSFieldValue(formId, 'land_id', data.data.land_id);
+            setWSFieldValue(formId, 'adresse_strasse', data.data.adresse_strasse);
+            setWSFieldValue(formId, 'adresse_zusatz', data.data.adresse_zusatz);
+            setWSFieldValue(formId, 'adresse_plz', data.data.adresse_plz);
+            setWSFieldValue(formId, 'ort', data.data.ort);
+            setWSFieldValue(formId, 'rechtsform', data.data.rechtsform);
+            setWSFieldValue(formId, 'rechtsform_zefix', data.data.rechtsform_zefix);
+            setWSFieldValue(formId, 'rechtsform_handelsregister', data.data.rechtsform_handelsregister);
+            setWSFieldValue(formId, 'beschreibung', data.data.zweck);
+            if (data.data.inaktiv || data.data.inaktiv === false) setWSFieldValue(formId, 'inaktiv', data.data.inaktiv);
             $('#info-message').append('<p>State: ' + textStatus + '</p>').show();
           } else {
   //               alert('failed');

@@ -953,3 +953,62 @@ SELECT id, anzeige_name, parlament_beruf_json, JSON_LENGTH(parlament_beruf_json)
 -- 12.12.2020 Parlamentarier mit mehr als 2 Berufen
 
 SELECT id, anzeige_name, parlament_beruf_json, JSON_LENGTH(parlament_beruf_json) as n, parlament_beruf_json->>'$[0].beruf', parlament_beruf_json->>'$[0].arbeitgeber', parlament_beruf_json->>'$[1].beruf', parlament_beruf_json->>'$[1].arbeitgeber', parlament_beruf_json->>'$[2].beruf', parlament_beruf_json->>'$[2].arbeitgeber', parlament_beruf_json->>'$[*].arbeitgeber' FROM `v_parlamentarier` parlamentarier WHERE JSON_LENGTH(parlament_beruf_json) > 2
+
+-- 18.12.2020 generated columns, _log tables and _log table triggers
+
+SELECT * FROM `COLUMNS` WHERE `TABLE_SCHEMA`='lobbywatch' AND `TABLE_NAME` like '%_log';
+
+SELECT TABLE_NAME, SUBSTR(TABLE_NAME, 1, LENGTH(TABLE_NAME) - 4) AS SOURCE_TABLE FROM `TABLES` WHERE `TABLE_SCHEMA`='lobbywatch' AND `TABLE_NAME` like '%_log';
+
+SELECT * FROM information_schema.`COLUMNS` WHERE extra not like '%GENERATED' AND `TABLE_SCHEMA`='lobbywatchtest' AND `TABLE_NAME` IN (SELECT SUBSTR(TABLE_NAME, 1, LENGTH(TABLE_NAME) - 4) AS SOURCE_TABLE FROM information_schema.`TABLES` WHERE `TABLE_SCHEMA`='lobbywatchtest' AND `TABLE_NAME` like '%_log') ORDER BY TABLE_NAME, ORDINAL_POSITION;
+
+ALTER TABLE `branche`
+DROP `gen_test`,
+ADD `gen_test` VARCHAR(100) NOT NULL GENERATED ALWAYS AS (CONCAT(name, ' ', IFNULL(name_fr, '-'))) VIRTUAL COMMENT 'x' AFTER `name_fr`;
+
+ALTER TABLE `branche`
+DROP gen_test,
+DROP gen_test1,
+ADD `gen_test1` VARCHAR(100) GENERATED ALWAYS AS (CONCAT(name, ' ', IFNULL(name_fr, '-'))) VIRTUAL NOT NULL COMMENT 'x' AFTER `name_fr`,
+DROP gen_test2,
+ADD `gen_test2` VARCHAR(100) GENERATED ALWAYS AS (CONCAT(name, ' ', IFNULL(name_fr, '-'))) STORED NOT NULL COMMENT 'x' AFTER `name_fr`,
+DROP gen_test3,
+ADD `gen_test3` VARCHAR(100) GENERATED ALWAYS AS (CONCAT(name, ' ', IFNULL(name_fr, '-'))) NOT NULL COMMENT 'x' AFTER `name_fr`
+;
+
+ALTER TABLE `branche_log`
+DROP gen_test1,
+ADD `gen_test1` VARCHAR(0) AFTER `name_fr`,
+DROP gen_test2,
+ADD `gen_test2` VARCHAR(0) AFTER `name_fr`,
+DROP gen_test3,
+ADD `gen_test3` VARCHAR(0) AFTER `name_fr`
+;
+
+INSERT INTO branche (name, technischer_name, beschreibung, created_visa, updated_visa) VALUES ('test3', 't3', 'b1', 'r', 'r');
+
+SELECT * FROM branche_log ORDER BY id DESC;
+
+INSERT INTO branche (name, technischer_name, beschreibung, created_visa, updated_visa) VALUES ('test3', 't3', 'b1', 'r', 'r');
+
+INSERT INTO interessenbindung (art, parlamentarier_id, organisation_id, deklarationstyp, bis, created_visa, updated_visa) VALUES ('mitglied', 1, 2, 'deklarationspflichtig', NULL, 'r', 'r');
+
+INSERT INTO interessenbindung (art, parlamentarier_id, organisation_id, deklarationstyp, bis, created_visa, updated_visa) VALUES ('mitglied', 1, 2, 'deklarationspflichtig', '2020-12-01', 'r', 'r');
+
+SELECT parlamentarier.anzeige_name, organisation.anzeige_name,`art`, `parlamentarier_id`, `organisation_id`, interessenbindung.bis, count(*) anzahl, GROUP_CONCAT(interessenbindung.id SEPARATOR ', ') interessenbindung_ids FROM interessenbindung
+JOIN v_parlamentarier_simple parlamentarier ON parlamentarier_id=parlamentarier.id
+JOIN v_organisation_simple organisation ON organisation_id=organisation.id
+GROUP BY `art`, `parlamentarier_id`, `organisation_id`, interessenbindung.bis
+HAVING count(*) > 1;
+
+SELECT person.anzeige_name, organisation.anzeige_name,`art`, `person_id`, `organisation_id`, mandat.bis, count(*) anzahl, GROUP_CONCAT(mandat.id SEPARATOR ', ') mandat_ids FROM mandat
+JOIN v_person_simple person ON person_id=person.id
+JOIN v_organisation_simple organisation ON organisation_id=organisation.id
+GROUP BY `art`, `person_id`, `organisation_id`, mandat.bis
+HAVING count(*) > 1;
+
+SELECT organisation1.anzeige_name, organisation2.anzeige_name,`art`, `organisation_id`, `ziel_organisation_id`, organisation_beziehung.bis, count(*) anzahl, GROUP_CONCAT(organisation_beziehung.id SEPARATOR ', ') organisation_beziehung_ids FROM organisation_beziehung
+JOIN v_organisation_simple organisation1 ON organisation_id=organisation1.id
+JOIN v_organisation_simple organisation2 ON ziel_organisation_id=organisation2.id
+GROUP BY `art`, `organisation_id`, `ziel_organisation_id`, organisation_beziehung.bis
+HAVING count(*) > 1;

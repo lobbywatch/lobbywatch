@@ -3,8 +3,6 @@
 # Call for production
 # ./run_db_export.sh -v -t -d=lobbywat_lobbywatch --user-prefix=reader_ -p
 
-# TODO do not pass secret on cmd line
-
 # Include common functions
 . common.sh
 
@@ -129,6 +127,7 @@ while test $# -gt 0; do
   -s | -S)
     publish_to_secret_dir=true
     key=$(cat $2)
+    # Keyed-Hash Message Authentication Code (HMAC)
     # %Y: 4 digit year, %G: 4 digit year of ISO work week
     # %V     ISO week number, with Monday as first day of week (01..53)
     # %m: 2 digit month, %S: 2 digit seconds, %M: 2 digits minutes, %d: 2 digit day
@@ -137,6 +136,7 @@ while test $# -gt 0; do
     else
       sha_input="${key}_$(date +%Y-%m-%d)"
     fi
+    # TODO change to hash_hmac
     secret_dir=$($PHP -r "print(rtrim(strtr(base64_encode(sha1('$sha_input', true)), '+/', '-_'), '='));")
     shift
     shift

@@ -48,6 +48,7 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'person' => '<span class="entity important-entity">Person</span>',
 'person.person_anhang' => '<span class="entity important-entity">Person</span>->Person Anhang',
 'person.person_anhang.person_anhang_log' => '<span class="entity important-entity">Person</span>->Person Anhang->Person Anhang Log',
+'person.person_log' => '<span class="entity important-entity">Person</span>->Person Log',
 'person.v_zutrittsberechtigung_mandate' => '<span class="entity important-entity">Person</span>-><s>V Zutrittsberechtigung Mandate</s>',
 'person.mandat' => '<span class="entity important-entity">Person</span>-><s>Mandat</s>',
 'vf_interessenbindung' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbindungen von NR/SR</span>',

@@ -59,6 +59,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
                     new StringField('alias_namen_de'),
@@ -177,7 +179,9 @@
                 new FilterColumn($this->dataset, 'created_visa', 'created_visa', 'Created Visa'),
                 new FilterColumn($this->dataset, 'created_date', 'created_date', 'Created Date'),
                 new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', 'Updated Visa'),
-                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date')
+                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date'),
+                new FilterColumn($this->dataset, 'in_handelsregister', 'in_handelsregister', 'In Handelsregister'),
+                new FilterColumn($this->dataset, 'inaktiv', 'inaktiv', 'Inaktiv')
             );
         }
     
@@ -227,7 +231,9 @@
                 ->addColumn($columns['created_visa'])
                 ->addColumn($columns['created_date'])
                 ->addColumn($columns['updated_visa'])
-                ->addColumn($columns['updated_date']);
+                ->addColumn($columns['updated_date'])
+                ->addColumn($columns['in_handelsregister'])
+                ->addColumn($columns['inaktiv']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -1365,6 +1371,42 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new SpinEdit('in_handelsregister_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['in_handelsregister'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new SpinEdit('inaktiv_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['inaktiv'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -1831,6 +1873,32 @@
             $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for in_handelsregister field
+            //
+            $column = new NumberViewColumn('in_handelsregister', 'in_handelsregister', 'In Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for inaktiv field
+            //
+            $column = new NumberViewColumn('inaktiv', 'inaktiv', 'Inaktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -2159,6 +2227,26 @@
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for in_handelsregister field
+            //
+            $column = new NumberViewColumn('in_handelsregister', 'in_handelsregister', 'In Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for inaktiv field
+            //
+            $column = new NumberViewColumn('inaktiv', 'inaktiv', 'Inaktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -2779,6 +2867,26 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for in_handelsregister field
+            //
+            $editor = new SpinEdit('in_handelsregister_edit');
+            $editColumn = new CustomEditColumn('In Handelsregister', 'in_handelsregister', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for inaktiv field
+            //
+            $editor = new SpinEdit('inaktiv_edit');
+            $editColumn = new CustomEditColumn('Inaktiv', 'inaktiv', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3406,6 +3514,26 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for in_handelsregister field
+            //
+            $editor = new SpinEdit('in_handelsregister_edit');
+            $editColumn = new CustomEditColumn('In Handelsregister', 'in_handelsregister', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for inaktiv field
+            //
+            $editor = new SpinEdit('inaktiv_edit');
+            $editColumn = new CustomEditColumn('Inaktiv', 'inaktiv', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -4029,6 +4157,26 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for in_handelsregister field
+            //
+            $editor = new SpinEdit('in_handelsregister_edit');
+            $editColumn = new CustomEditColumn('In Handelsregister', 'in_handelsregister', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for inaktiv field
+            //
+            $editor = new SpinEdit('inaktiv_edit');
+            $editColumn = new CustomEditColumn('Inaktiv', 'inaktiv', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -4364,6 +4512,26 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for in_handelsregister field
+            //
+            $column = new NumberViewColumn('in_handelsregister', 'in_handelsregister', 'In Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for inaktiv field
+            //
+            $column = new NumberViewColumn('inaktiv', 'inaktiv', 'Inaktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -4693,6 +4861,26 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
+            
+            //
+            // View column for in_handelsregister field
+            //
+            $column = new NumberViewColumn('in_handelsregister', 'in_handelsregister', 'In Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for inaktiv field
+            //
+            $column = new NumberViewColumn('inaktiv', 'inaktiv', 'Inaktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
         }
     
         private function AddCompareColumns(Grid $grid)
@@ -5021,6 +5209,26 @@
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for in_handelsregister field
+            //
+            $column = new NumberViewColumn('in_handelsregister', 'in_handelsregister', 'In Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for inaktiv field
+            //
+            $column = new NumberViewColumn('inaktiv', 'inaktiv', 'Inaktiv', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddCompareColumn($column);
         }
     

@@ -3352,3 +3352,55 @@ ADD `parlament_beruf_json` JSON NULL DEFAULT NULL COMMENT 'Importierter Beruf de
 
 ALTER TABLE `parlamentarier_log`
 ADD `parlament_beruf_json` JSON NULL DEFAULT NULL COMMENT 'Importierter Beruf des Parlamentariers: Beruf, Arbeitgeber, Jobtitel/Funktion, von, bis (von parlament.ch)' AFTER `parlament_number`;
+
+-- 19.12.2020
+
+-- interessenbindung
+ALTER TABLE interessenbindung
+  DROP INDEX `interessenbindung_art_parlamentarier_organisation_unique`,
+  ADD `interessenbindung_parlamentarier_organisation_art_unique` VARCHAR(45) GENERATED ALWAYS AS (CONCAT_WS('_', `parlamentarier_id`, `organisation_id`, `art`, IFNULL(`bis`, '9999-12-31'))) VIRTUAL NOT NULL COMMENT 'Kombination aus parlamentarier_id, organisation_id, art und bis muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE;
+
+ALTER TABLE interessenbindung_log
+  ADD `interessenbindung_parlamentarier_organisation_art_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint';
+
+-- mandat
+ALTER TABLE mandat
+  DROP INDEX `mandat_person_organisation_art_unique`,
+  ADD `mandat_person_organisation_art_unique` VARCHAR(45) GENERATED ALWAYS AS (CONCAT_WS('_', `person_id`, `organisation_id`, `art`, IFNULL(`bis`, '9999-12-31'))) VIRTUAL NOT NULL COMMENT 'Kombination aus person_id, organisation_id, art und bis muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE;
+
+ALTER TABLE mandat_log
+  ADD `mandat_person_organisation_art_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint';
+
+-- organisation_beziehung
+ALTER TABLE organisation_beziehung
+  DROP INDEX `organisation_beziehung_organisation_zielorganisation_art_unique`,
+  ADD `organisation_beziehung_organisation_ziel_organisation_art_unique` VARCHAR(45) GENERATED ALWAYS AS (CONCAT_WS('_', `organisation_id`, `ziel_organisation_id`, `art`, IFNULL(`bis`, '9999-12-31'))) VIRTUAL NOT NULL COMMENT 'Kombination aus organisation_id, ziel_organisation_id, art und bis muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE;
+
+ALTER TABLE organisation_beziehung_log
+  ADD `organisation_beziehung_organisation_ziel_organisation_art_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint';
+
+-- in_kommission
+ALTER TABLE in_kommission
+  DROP INDEX `in_kommission_parlamentarier_kommission_funktion_unique`,
+  ADD `in_kommission_parlamentarier_kommission_funktion_unique` VARCHAR(45) GENERATED ALWAYS AS (CONCAT_WS('_', `parlamentarier_id`, `kommission_id`, `funktion`, IFNULL(`bis`, '9999-12-31'))) VIRTUAL NOT NULL COMMENT 'Kombination aus parlamentarier_id, kommission_id, funktion und bis muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE;
+
+ALTER TABLE in_kommission_log
+  ADD `in_kommission_parlamentarier_kommission_funktion_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint';
+
+-- zuttrittsberechtigung
+ALTER TABLE zutrittsberechtigung
+  DROP INDEX `parlamentarier_person_unique`,
+  ADD `zutrittsberechtigung_parlamentarier_person_unique` VARCHAR(45) GENERATED ALWAYS AS (CONCAT_WS('_', `parlamentarier_id`, `person_id`, IFNULL(`bis`, '9999-12-31'))) VIRTUAL NOT NULL COMMENT 'Kombination aus parlamentarier_id, person_id und bis muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE;
+
+ALTER TABLE zutrittsberechtigung_log
+  ADD `zutrittsberechtigung_parlamentarier_person_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint';
+
+-- organisation.inaktiv
+
+ALTER TABLE `organisation`
+  ADD `in_handelsregister` BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Ist die Organisation im Handelsregister (Zefix) eingetragen?' AFTER `uid`,
+  ADD `inaktiv` BOOLEAN NULL DEFAULT FALSE COMMENT 'Gibt es die Organisation noch?' AFTER `in_handelsregister`;
+
+ALTER TABLE `organisation_log`
+  ADD `in_handelsregister` BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Ist die Organisation im Handelsregister (Zefix) eingetragen?' AFTER `uid`,
+  ADD `inaktiv` BOOLEAN NULL DEFAULT FALSE COMMENT 'Gibt es die Organisation noch?' AFTER `in_handelsregister`;
