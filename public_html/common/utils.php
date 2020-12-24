@@ -2049,7 +2049,7 @@ function getUidBfsWsLogin($test_mode = false) {
   } else {
     $host = 'www.uid-wse.admin.ch';
   }
-  $wsdl = "https://$host/V3.0/PublicServices.svc?wsdl";
+  $wsdl = "https://$host/V5.0/PublicServices.svc?wsdl";
   $response = array(
     'wsdl' => $wsdl,
     'login' => null,
@@ -2335,7 +2335,7 @@ function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose, $
     }
 
     if (isset($response->GetByUIDResult)) {
-      fillDataFromUidBfsResult($response->GetByUIDResult, $data);
+      fillDataFromUidBfsResult50($response->GetByUIDResult, $data);
     } else {
       $data['message'] .= 'No Result from uid webservice.';
       $data['success'] = false;
@@ -2402,7 +2402,94 @@ function ws_verbose_logging($client, $response, &$data, $verbose) {
   }
 }
 
-function fillDataFromUidBfsResult($object, &$data) {
+function fillDataFromUidBfsResult50($object, &$data) {
+    if (!empty((array) $object)) {
+//       print_r($object);
+      if (is_array($object->organisationType)) {
+        $ot = $object->organisationType[0];
+        $data['count'] = count($object->organisationType);
+      } else {
+        $ot = $object->organisationType;
+        $data['count'] = 1;
+      }
+      $oid = $ot->organisation->organisationIdentification;
+      /*
+      commercialRegisterStatus (eCH-0108:commercialRegisterStatusType)
+      Status des Unternehmens im Handelsregister
+        1 = unbekannt (kommt im UID-Register nicht vor!)
+        2 = im HR eingetragen
+        3 = nicht im HR eingetragen
+        null = keine Einschränkung
+      */
+      $hr_status_code = $ot->commercialRegisterInformation->commercialRegisterStatus ?? null;
+      /*
+      commercialRegisterEntryStatus (eCH-0108:commercialRegisterEntryStatusType)
+      Status des Eintrags im HR
+        1 = aktiv
+        2 = gelöscht
+        3 = provisorisch
+        null = keine Einschränkung
+      */
+      $hr_status_entry_code = $ot->commercialRegisterInformation->commercialRegisterEntryStatus ?? null;
+      /*
+      uidregStatusEnterpriseDetail (eCH-0108:uidregStatusEnterpriseDetailType)
+      */
+      $uid_status_code = $ot->uidregInformation->uidregStatusEnterpriseDetail;
+      /*
+      uidregPublicStatus (eCH-0108:uidregPublicStatusType)
+      Ermöglicht die Eingrenzung auf öffentliche/nicht öffentliche UID-Einheiten
+        true = Es werden nur öffentliche UID-Einheiten gesucht
+        false = Es werden nur nicht-öffentliche UID-Einheiten gesucht
+        null = keine Einschränkung
+      */
+      $uid_public_status_code = $ot->uidregInformation->uidregPublicStatus;
+      $uid_ws = $oid->uid->uidOrganisationId;
+      $base_address = $ot->organisation->address;
+      $address = is_array($base_address) ? $base_address[0] : $base_address;
+      $address2 = is_array($base_address) && isset($base_address[1]) ? $base_address[1] : null;
+      $old_hr_id = !empty($oid->OtherOrganisationId) ? (is_array($oid->OtherOrganisationId) ? $oid->OtherOrganisationId[0] : $oid->OtherOrganisationId) : null;
+      $legel_form = !empty($oid->legalForm) ? $oid->legalForm : null;
+      if (!empty($address->street)) {
+        $adresse_strasse = trim($address->street) . (!empty($address->houseNumber) ? ' ' . trim($address->houseNumber) : '');
+        $adresse_zusatz = !empty($address->addressLine1) ? trim($address->addressLine1) : (!empty($address2->postOfficeBoxNumber) ? 'Postfach ' . trim($address2->postOfficeBoxNumber) : null);
+      } else {
+        $adresse_strasse = !empty($address->addressLine1) ? trim($address->addressLine1) : null;
+        $adresse_zusatz = !empty($address->addressLine2) ? trim($address->addressLine2) : null;
+      }
+      $data['data'] = array(
+        'uid' => formatUID($uid_ws),
+        'uid_raw' => $uid_ws,
+        'alte_hr_id' => !empty($old_hr_id->organisationId) && substr($old_hr_id->organisationId, 0, 2) == 'CH' ? $old_hr_id->organisationId : null,
+        'name' => trim($oid->organisationName),
+        'name_de' => trim($oid->organisationName),
+        'abkuerzung_de' => extractAbkuerzung($oid->organisationName),
+    // TODO 'name_fr' => $ot->organisation->organisationIdentification->organisationName,
+        'rechtsform_handelsregister' => $legel_form,
+        'rechtsform' => _lobbywatch_ws_get_rechtsform($legel_form),
+        'adresse_strasse' => $adresse_strasse,
+        'adresse_zusatz' => $adresse_zusatz,
+        'ort' => trim($address->town),
+        'bfs_gemeinde_id' => $address->municipalityId ?? null,
+        'eidg_gebaeude_id_egid' => $address->EGID ?? null,
+        'adresse_plz' => $address->swissZipCode,
+        'land_iso2' => $address->countryIdISO2,
+        'land_id' => _lobbywatch_ws_get_land_id($address->countryIdISO2),
+    //     'handelsregister_url' => ,
+        'register_kanton' => null,
+        'kanton' => $address->cantonAbbreviation,
+        'inaktiv' => !empty($hr_status_entry_code) ? $hr_status_entry_code == 2 : null,
+        'in_handelsregister' => $hr_status_code == 2,
+      );
+    } else {
+      $data['message'] .= 'Nothing found';
+      $data['success'] = false;
+    }
+}
+
+/**
+ * @deprecated
+ */
+function fillDataFromUidBfsResult30($object, &$data) {
     if (!empty((array) $object)) {
 //       print_r($object);
       if (is_array($object->organisationType)) {
