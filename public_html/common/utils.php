@@ -1367,7 +1367,7 @@ function getSettingCategoryValues($categoryName, $defaultValue = null) {
   return $settings[$categoryName];
 }
 
-function cut($str, $maxLength = 20) {
+function cut($str, $maxLength = 20, $show_dots = true) {
   if (!isset($str)) {
     $s = 'NULL';
   } elseif (is_array($str) || is_object($str)) {
@@ -1377,7 +1377,11 @@ function cut($str, $maxLength = 20) {
   }
 
   if (mb_strlen($s) > $maxLength) {
-    return mb_substr($s, 0, $maxLength) . '…';
+    if ($show_dots) {
+      return mb_substr($s, 0, $maxLength - 1) . '…';
+    } else {
+      return mb_substr($s, 0, $maxLength);
+    }
   } else {
     return $s;
   }
