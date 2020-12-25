@@ -27,24 +27,10 @@
 enable_fail_onerror
 
 # Set defaut DB if no parameter given
-if [[ $1 ]]; then
-  db=$1
-else
-  db=lobbywatchtest
-fi
-if [[ $2 ]]; then
-  script=$2
-#   less $script
-else
-  script=db_views.sql
-#   script=db_check.sql
-fi
-if [[ $3 ]]; then
-  mode=$3
-else
-  mode=interactive
-#   script=db_check.sql
-fi
+[ -z "${1-}"  ] && db=lobbywatchtest || db=$1
+[ -z "${2-}"  ] && script=db_views.sql || script=$2
+[ -z "${3-}"  ] && mode=interactive || mode=$3
+
 username=script
 
 checkLocalMySQLRunning
