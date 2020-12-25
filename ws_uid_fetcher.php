@@ -526,7 +526,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
   $script[] = $comment = "\n-- Actualise organisations having an UID from webservices $transaction_date";
 
   $starting_id_sql = $start_id ? "AND id >= $start_id" : '';
-  $sql = "SELECT id, name_de, handelsregister_url, uid, rechtsform, rechtsform_handelsregister, rechtsform_zefix, beschreibung, name_de, name_fr, ort, adresse_strasse, adresse_zusatz, adresse_plz FROM organisation WHERE uid IS NOT NULL $starting_id_sql ORDER BY id;";
+  $sql = "SELECT id, name_de, handelsregister_url, uid, rechtsform, rechtsform_handelsregister, rechtsform_zefix, beschreibung, name_de, abkuerzung_de, name_fr, ort, adresse_strasse, adresse_zusatz, adresse_plz FROM organisation WHERE uid IS NOT NULL $starting_id_sql ORDER BY id;";
   $stmt = $db->prepare($sql);
 
   $stmt->execute([]);
