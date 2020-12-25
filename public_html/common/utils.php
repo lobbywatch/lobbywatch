@@ -2322,12 +2322,12 @@ function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose, $
         $response = $client->GetByUID($params);
       } catch (SoapFault $e) {
         if ($e->faultstring == 'Request_limit_exceeded') {
-          $fault = (array) $e->detail->BusinessFault;
           if ($i < $num_retries) {
             // print("Waiting " . 2**($i + 3) . "s…\n");
             sleep(2**($i + 3));
             $retry_log .= '.';
           } else {
+            $fault = (array) $e->detail->BusinessFault;
             throw new Exception("${fault['Error']} [op=${fault['Operation']}]: ${fault['ErrorDetail']}", $e->getCode(), $e);
           }
         }
