@@ -91,6 +91,38 @@ askContinueYn() {
   fi
 }
 
+# Should we execute next operation, skip operation or abort completly?
+# y=execute (default)
+# s=skip
+# everything else means abort
+# askExecuteSkipAbort [msg] ["with_skip"]
+# msg: message to show or nothing, in case of nothing "Continue?" is shown
+# "with_skip": true=allow skip, nothing no skip option available
+# Example call 1: askExecuteSkipAbort
+# Example call 2: askExecuteSkipAbort "Modified files. Reset?"
+# Example call 3:
+# "Commit?" "with_skip" && skip=false || skip=true
+# if ! $skip; then
+#   echo "Commit"
+#   git commit
+# fi
+askExecuteSkipAbort() {
+  [ -z ${1+x} ] && msg="Continue?" || msg="$1"
+  [ -z ${2+x} ] && keyboard_options="[Yn]" || keyboard_options="[Ysn]"
+
+  # http://stackoverflow.com/questions/3231804/in-bash-how-to-add-are-you-sure-y-n-to-any-command-or-alias
+  read -e -p "${msg} $keyboard_options " response
+  response=${response,,}    # tolower
+  if [[ $response =~ ^(yes|y|)$ ]]; then
+    return 0
+  elif [[ $response =~ ^(skip|s)$ ]]; then
+    return 1
+  else
+    echo -e "$response pressed, abort"
+    abort
+  fi
+}
+
 # http://superuser.com/questions/878640/unix-script-wait-until-a-file-exists
 # Wait at most 5 seconds for the server.log file to appear
 #
