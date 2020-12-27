@@ -2323,13 +2323,15 @@ function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose, $
       } catch (SoapFault $e) {
         if ($e->faultstring == 'Request_limit_exceeded') {
           if ($i < $num_retries) {
-            // print("Waiting " . 2**($i + 3) . "s…\n");
-            sleep(2**($i + 3));
+            if ($verbose > 8) print("→" . 2**($i + 3) . "s…\n");
             $retry_log .= '.';
+            sleep(2**($i + 3));
           } else {
             $fault = (array) $e->detail->BusinessFault;
             throw new Exception("${fault['Error']} [op=${fault['Operation']}]: ${fault['ErrorDetail']}", $e->getCode(), $e);
           }
+        } else {
+          throw $e;
         }
       }
     }
@@ -2462,6 +2464,7 @@ function fillDataFromUidBfsResult50($object, &$data) {
         'alte_hr_id' => !empty($old_hr_id->organisationId) && substr($old_hr_id->organisationId, 0, 2) == 'CH' ? $old_hr_id->organisationId : null,
         'name' => trim($oid->organisationName),
         'name_de' => trim($oid->organisationName),
+        'alias_name' => $oid->organisationAdditionalName ?? null,
         'abkuerzung_de' => extractAbkuerzung($oid->organisationName),
     // TODO 'name_fr' => $ot->organisation->organisationIdentification->organisationName,
         'rechtsform_handelsregister' => $legel_form,
@@ -2477,8 +2480,10 @@ function fillDataFromUidBfsResult50($object, &$data) {
     //     'handelsregister_url' => ,
         'register_kanton' => null,
         'kanton' => $address->cantonAbbreviation,
-        'inaktiv' => !empty($hr_status_entry_code) ? $hr_status_entry_code == 2 : null,
+        'inaktiv' => !empty($hr_status_entry_code) ? $hr_status_entry_code == 2 : (!empty($ot->organisation->liquidation->uidregLiquidationDate) ? true : null),
         'in_handelsregister' => $hr_status_code == 2,
+        'gruendungsdatum' => $ot->organisation->foundationDate ?? null,
+        'uid_nachfolger' => $ot->uidregInformation->uidReplacement ?? null,
       );
     } else {
       $data['message'] .= 'Nothing found';
@@ -2970,7 +2975,7 @@ function extractAbkuerzung(?string $str): ?string {
   if (empty($str)) return null;
   if (preg_match('%\(([a-z]{3}|[A-ZÄÖÜ]{3,4})\)%', $str, $matches)) {
     return $matches[1];
-  } else if (mb_strtoupper($str) !== $str && preg_match('%\b([A-Z]{3})\b%', $str, $matches)) {
+  } else if (mb_strtoupper($str) !== $str && preg_match('%\b([A-Z]{3})\b(?!-)%', $str, $matches)) {
     return $matches[1];
   } else {
     return null;
