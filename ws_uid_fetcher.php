@@ -605,7 +605,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
           $bfs_throtteling_interval_start = time();
           $bfs_counter_in_interval = 1;
         } else {
-          sleep(0.5);
+          sleep(0.1);
         }
 
         $retry_log = '';
