@@ -739,13 +739,13 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
   print("\n=: $n_ok");
   print("\n~: $n_different");
   print("\n!: $n_not_found");
-  print("\nΣ: " . ($n_updated + $n_ok + $n_deleted + $n_different + $n_not_found));
+  print("\nΣ: " . ($n_updated + $n_ok + $n_different + $n_not_found));
 
   print("\n\n*/\n");
 
   $script[] = $comment = "\n-- Finished actualise organisations " . date('d.m.Y H:i:s');
 
-  print("\n-- UID-ORGANISATIONEN " . ($n_updated + $n_deleted > 0 ? 'DATA CHANGED' : 'DATA UNCHANGED') . "\n\n");
+  print("\n-- UID-ORGANISATIONEN " . ($n_updated > 0 ? 'DATA CHANGED' : 'DATA UNCHANGED') . "\n\n");
 }
 
 /**
