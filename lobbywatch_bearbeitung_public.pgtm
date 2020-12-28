@@ -8345,55 +8345,65 @@ check_organisation_interessengruppe_order($page, $rowData, $cancel, $message, $t
 customOnCustomRenderColumn('organisation', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
+          <OnBeforePageLoad enabled="true">
+window.format_uid = function (sender, editors) {
+    if (sender.getFieldName() == 'uid') {
+        const input = sender.getValue();
+        if (/(CHE)?(\d{9})/.test(input)) {
+            formatted = input.replace(/(CHE)?\s*(\d{3})(\d{3})(\d{3})/, 'CHE-$2.$3.$4');
+            sender.setValue(formatted);
+        }
+    }
+}
+
+window.disable_organisation_imported_fields = function (editors) {
+    if (editors['updated_by_import']?.getValue()) {
+        editors['name_de'].setEnabled(false);
+        editors['name_fr'].setEnabled(false);
+        editors['name_it'].setEnabled(false);
+        editors['alias_namen_de'].setEnabled(false);
+        editors['adresse_strasse'].setEnabled(false);
+        editors['adresse_zusatz'].setEnabled(false);
+        editors['adresse_plz'].setEnabled(false);
+        editors['ort'].setEnabled(false);
+        editors['land_id'].setEnabled(false);
+        editors['homepage'].setEnabled(false);
+        editors['sekretariat'].setEnabled(false);
+        editors['rechtsform'].setEnabled(false);
+    }
+    if (editors['uid'].getValue()) {
+        editors['name_de'].setEnabled(false);
+        editors['abkuerzung_de'].setEnabled(false);
+        // editors['name_fr'].setEnabled(false);
+        // editors['name_it'].setEnabled(false);
+        // editors['alias_namen_de'].setEnabled(false);
+        editors['adresse_strasse'].setEnabled(false);
+        editors['adresse_zusatz'].setEnabled(false);
+        editors['adresse_plz'].setEnabled(false);
+        editors['ort'].setEnabled(false);
+        editors['land_id'].setEnabled(false);
+        editors['rechtsform'].setEnabled(false);
+        editors['rechtsform_handelsregister'].setEnabled(false);
+        editors['rechtsform'].setEnabled(false);
+        if (editors['in_handelsregister'].getValue()) {
+            editors['inaktiv'].setEnabled(false);
+        }
+    }
+}          </OnBeforePageLoad>
           <OnInsertFormEditorValueChanged enabled="true">
+window.format_uid(sender, editors);
 if (sender.getFieldName() == 'uid') {
-  const input = sender.getValue();
-  if (/(CHE)?(\d{9})/.test(input)) {
-    formatted = input.replace(/(CHE)?\s*(\d{3})(\d{3})(\d{3})/, 'CHE-$2.$3.$4');
-    sender.setValue(formatted);
-  }
+   window.disable_organisation_imported_fields(editors);
 }          </OnInsertFormEditorValueChanged>
           <OnEditFormEditorValueChanged enabled="true">
+window.format_uid(sender, editors);
 if (sender.getFieldName() == 'uid') {
-  const input = sender.getValue();
-  if (/(CHE)?(\d{9})/.test(input)) {
-    formatted = input.replace(/(CHE)?\s*(\d{3})(\d{3})(\d{3})/, 'CHE-$2.$3.$4');
-    sender.setValue(formatted);
-  }
+   window.disable_organisation_imported_fields(editors);
 }          </OnEditFormEditorValueChanged>
+          <OnInsertFormLoaded enabled="true">
+window.disable_organisation_imported_fields(editors);          </OnInsertFormLoaded>
           <OnEditFormLoaded enabled="true">
-if (editors['updated_by_import'].getValue()) {
-   editors['name_de'].setEnabled(false);
-   editors['name_fr'].setEnabled(false);
-   editors['name_it'].setEnabled(false);
-   editors['alias_namen_de'].setEnabled(false);
-   editors['adresse_strasse'].setEnabled(false);
-   editors['adresse_zusatz'].setEnabled(false);
-   editors['adresse_plz'].setEnabled(false);
-   editors['ort'].setEnabled(false);
-   editors['land_id'].setEnabled(false);
-   editors['homepage'].setEnabled(false);
-   editors['sekretariat'].setEnabled(false);
-   editors['rechtsform'].setEnabled(false);
-}
-if (editors['uid'].getValue()) {
-   editors['name_de'].setEnabled(false);
-   editors['abkuerzung_de'].setEnabled(false);
-   // editors['name_fr'].setEnabled(false);
-   // editors['name_it'].setEnabled(false);
-   // editors['alias_namen_de'].setEnabled(false);
-   editors['adresse_strasse'].setEnabled(false);
-   editors['adresse_zusatz'].setEnabled(false);
-   editors['adresse_plz'].setEnabled(false);
-   editors['ort'].setEnabled(false);
-   editors['land_id'].setEnabled(false);
-   editors['rechtsform'].setEnabled(false);
-   editors['rechtsform_handelsregister'].setEnabled(false);
-   editors['rechtsform'].setEnabled(false);
-   if (editors['in_handelsregister'].getValue()) {
-      editors['inaktiv'].setEnabled(false);
-   }
-}          </OnEditFormLoaded>
+window.disable_organisation_imported_fields(editors);          </OnEditFormLoaded>
         </EventHandlers>
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators>

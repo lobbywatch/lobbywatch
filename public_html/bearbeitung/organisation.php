@@ -43925,7 +43925,50 @@
         
         function GetCustomClientScript()
         {
-            return ;
+            return 'window.format_uid = function (sender, editors) {'. "\n" .
+            '    if (sender.getFieldName() == \'uid\') {'. "\n" .
+            '        const input = sender.getValue();'. "\n" .
+            '        if (/(CHE)?(\d{9})/.test(input)) {'. "\n" .
+            '            formatted = input.replace(/(CHE)?\s*(\d{3})(\d{3})(\d{3})/, \'CHE-$2.$3.$4\');'. "\n" .
+            '            sender.setValue(formatted);'. "\n" .
+            '        }'. "\n" .
+            '    }'. "\n" .
+            '}'. "\n" .
+            ''. "\n" .
+            'window.disable_organisation_imported_fields = function (editors) {'. "\n" .
+            '    if (editors[\'updated_by_import\']?.getValue()) {'. "\n" .
+            '        editors[\'name_de\'].setEnabled(false);'. "\n" .
+            '        editors[\'name_fr\'].setEnabled(false);'. "\n" .
+            '        editors[\'name_it\'].setEnabled(false);'. "\n" .
+            '        editors[\'alias_namen_de\'].setEnabled(false);'. "\n" .
+            '        editors[\'adresse_strasse\'].setEnabled(false);'. "\n" .
+            '        editors[\'adresse_zusatz\'].setEnabled(false);'. "\n" .
+            '        editors[\'adresse_plz\'].setEnabled(false);'. "\n" .
+            '        editors[\'ort\'].setEnabled(false);'. "\n" .
+            '        editors[\'land_id\'].setEnabled(false);'. "\n" .
+            '        editors[\'homepage\'].setEnabled(false);'. "\n" .
+            '        editors[\'sekretariat\'].setEnabled(false);'. "\n" .
+            '        editors[\'rechtsform\'].setEnabled(false);'. "\n" .
+            '    }'. "\n" .
+            '    if (editors[\'uid\'].getValue()) {'. "\n" .
+            '        editors[\'name_de\'].setEnabled(false);'. "\n" .
+            '        editors[\'abkuerzung_de\'].setEnabled(false);'. "\n" .
+            '        // editors[\'name_fr\'].setEnabled(false);'. "\n" .
+            '        // editors[\'name_it\'].setEnabled(false);'. "\n" .
+            '        // editors[\'alias_namen_de\'].setEnabled(false);'. "\n" .
+            '        editors[\'adresse_strasse\'].setEnabled(false);'. "\n" .
+            '        editors[\'adresse_zusatz\'].setEnabled(false);'. "\n" .
+            '        editors[\'adresse_plz\'].setEnabled(false);'. "\n" .
+            '        editors[\'ort\'].setEnabled(false);'. "\n" .
+            '        editors[\'land_id\'].setEnabled(false);'. "\n" .
+            '        editors[\'rechtsform\'].setEnabled(false);'. "\n" .
+            '        editors[\'rechtsform_handelsregister\'].setEnabled(false);'. "\n" .
+            '        editors[\'rechtsform\'].setEnabled(false);'. "\n" .
+            '        if (editors[\'in_handelsregister\'].getValue()) {'. "\n" .
+            '            editors[\'inaktiv\'].setEnabled(false);'. "\n" .
+            '        }'. "\n" .
+            '    }'. "\n" .
+            '}';
         }
         
         function GetOnPageLoadedClientScript()
@@ -44035,54 +44078,19 @@
         }
      
         protected function setClientSideEvents(Grid $grid) {
-            $grid->SetInsertClientEditorValueChangedScript('if (sender.getFieldName() == \'uid\') {
-              const input = sender.getValue();
-              if (/(CHE)?(\d{9})/.test(input)) {
-                formatted = input.replace(/(CHE)?\s*(\d{3})(\d{3})(\d{3})/, \'CHE-$2.$3.$4\');
-                sender.setValue(formatted);
-              }
+            $grid->SetInsertClientEditorValueChangedScript('window.format_uid(sender, editors);
+            if (sender.getFieldName() == \'uid\') {
+               window.disable_organisation_imported_fields(editors);
             }');
             
-            $grid->SetEditClientEditorValueChangedScript('if (sender.getFieldName() == \'uid\') {
-              const input = sender.getValue();
-              if (/(CHE)?(\d{9})/.test(input)) {
-                formatted = input.replace(/(CHE)?\s*(\d{3})(\d{3})(\d{3})/, \'CHE-$2.$3.$4\');
-                sender.setValue(formatted);
-              }
+            $grid->SetEditClientEditorValueChangedScript('window.format_uid(sender, editors);
+            if (sender.getFieldName() == \'uid\') {
+               window.disable_organisation_imported_fields(editors);
             }');
             
-            $grid->SetEditClientFormLoadedScript('if (editors[\'updated_by_import\'].getValue()) {
-               editors[\'name_de\'].setEnabled(false);
-               editors[\'name_fr\'].setEnabled(false);
-               editors[\'name_it\'].setEnabled(false);
-               editors[\'alias_namen_de\'].setEnabled(false);
-               editors[\'adresse_strasse\'].setEnabled(false);
-               editors[\'adresse_zusatz\'].setEnabled(false);
-               editors[\'adresse_plz\'].setEnabled(false);
-               editors[\'ort\'].setEnabled(false);
-               editors[\'land_id\'].setEnabled(false);
-               editors[\'homepage\'].setEnabled(false);
-               editors[\'sekretariat\'].setEnabled(false);
-               editors[\'rechtsform\'].setEnabled(false);
-            }
-            if (editors[\'uid\'].getValue()) {
-               editors[\'name_de\'].setEnabled(false);
-               editors[\'abkuerzung_de\'].setEnabled(false);
-               // editors[\'name_fr\'].setEnabled(false);
-               // editors[\'name_it\'].setEnabled(false);
-               // editors[\'alias_namen_de\'].setEnabled(false);
-               editors[\'adresse_strasse\'].setEnabled(false);
-               editors[\'adresse_zusatz\'].setEnabled(false);
-               editors[\'adresse_plz\'].setEnabled(false);
-               editors[\'ort\'].setEnabled(false);
-               editors[\'land_id\'].setEnabled(false);
-               editors[\'rechtsform\'].setEnabled(false);
-               editors[\'rechtsform_handelsregister\'].setEnabled(false);
-               editors[\'rechtsform\'].setEnabled(false);
-               if (editors[\'in_handelsregister\'].getValue()) {
-                  editors[\'inaktiv\'].setEnabled(false);
-               }
-            }');
+            $grid->SetInsertClientFormLoadedScript('window.disable_organisation_imported_fields(editors);');
+            
+            $grid->SetEditClientFormLoadedScript('window.disable_organisation_imported_fields(editors);');
         }
     
         protected function doRegisterHandlers() {
