@@ -587,7 +587,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
         $remaining_interval_time = $bfs_throtteling_interval_start + intval(ceil(60 / $interval_splitter)) + 1 - time();
         if (++$bfs_counter_in_interval > intval(floor(20 / $interval_splitter)) && $remaining_interval_time >= 0 && (!$records_limit || $records_limit > 20)) {
           if ($verbose > 8) print("…${remaining_interval_time}s…\n");
-          if ($verbose > 0) $fields[] = "${remaining_interval_time}s…";
+          if ($verbose > 9) $fields[] = "${remaining_interval_time}s…";
           sleep($remaining_interval_time);
           $bfs_throtteling_interval_start = time();
           $bfs_counter_in_interval = 1;
@@ -601,7 +601,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
         $retry_log = '';
         $dataUidBfs = initDataArray();
         ws_get_organization_from_uid_bfs($uid, $clientUid, $dataUidBfs, $verbose, 9, $retry_log); // Similar to _lobbywatch_fetch_ws_uid_bfs_data() in utils.php
-        if ($verbose > 0 && !empty($retry_log)) $fields[] = $retry_log;
+        if ($verbose > 9 && !empty($retry_log)) $fields[] = $retry_log;
         if (!empty($retry_log)) {
           $bfs_throtteling_interval_start = time();
           $bfs_counter_in_interval = 1;
