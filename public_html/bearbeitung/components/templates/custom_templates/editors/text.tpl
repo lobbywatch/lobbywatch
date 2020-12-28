@@ -21,10 +21,11 @@
     >
 
     {if $Editor->GetHTMLValue()|strpos:'http'===0}<!-- Check starts with http -->
-        <a href="{$Editor->GetHTMLValue()}" target="_blank">Follow link: {$Editor->GetHTMLValue()}</a>
+        <a href="{$Editor->GetHTMLValue()}" title="Open this URL in a new tab" target="_blank">Follow link: {$Editor->GetHTMLValue()}</a>
     {/if}
     {if $Editor->GetHTMLValue()|strpos:'CHE-'===0}<!-- Check starts with CHE- -->
-        <a href="http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id={$Editor->GetHTMLValue()}" target="_blank">Follow link: {$Editor->GetHTMLValue()}</a>
+        <a href="https://www.uid.admin.ch/Detail.aspx?uid_id={$Editor->GetHTMLValue()}" title="Show this UID on UID-Register@BFS in a new tab" target="_blank">UID-Register@BFS</a> |
+        <a href="https://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id={$Editor->GetHTMLValue()}" title="Show this UID on Zefix in a new tab" target="_blank">Zefix</a>
     {/if}
 
 {/capture}
