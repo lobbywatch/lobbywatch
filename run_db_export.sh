@@ -577,6 +577,8 @@ if $publish; then
   # Clean up historised files as they consume a lot of memory
   # https://stackoverflow.com/questions/6363441/check-if-a-file-exists-with-wildcard-in-shell-script
   ls $EXPORT/202*hist*.*.zip 1> /dev/null 2>&1 && rm $EXPORT/202*hist*.*.zip
+  find $EXPORT/ -mindepth 1 -mtime +14 -type f -delete
+  # find . -depth -mindepth 1 -mtime +14 -type f -print
 fi
 
 quit
