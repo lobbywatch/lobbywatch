@@ -575,102 +575,110 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
       continue;
     }
 
-    // UID WS (BFS)
-    if ($uidBFSenabled && !$in_hr) {
-      // if (!$records_limit || $records_limit > 20) {
-      //   sleep(3);
-      // }
-      // 20 calls in 1min are allowed
-      $interval_splitter = 2;
-      $remaining_interval_time = $bfs_throtteling_interval_start + intval(ceil(60 / $interval_splitter)) + 1 - time();
-      if (++$bfs_counter_in_interval > intval(floor(20 / $interval_splitter)) && $remaining_interval_time >= 0 && (!$records_limit || $records_limit > 20)) {
-        if ($verbose > 8) print("…${remaining_interval_time}s…\n");
-        if ($verbose > 0) $fields[] = "${remaining_interval_time}s…";
-        sleep($remaining_interval_time);
-        $bfs_throtteling_interval_start = time();
-        $bfs_counter_in_interval = 1;
-      } else if ($remaining_interval_time < 0) {
-        $bfs_throtteling_interval_start = time();
-        $bfs_counter_in_interval = 1;
-      } else {
-        sleep(0.5);
-      }
+    for ($ok = false, $j = 0; !$ok && $j < 2; $j++) {
+      $ok = true;
+      // UID WS (BFS)
+      if ($uidBFSenabled && !$in_hr) {
+        // if (!$records_limit || $records_limit > 20) {
+        //   sleep(3);
+        // }
+        // 20 calls in 1min are allowed
+        $interval_splitter = 2;
+        $remaining_interval_time = $bfs_throtteling_interval_start + intval(ceil(60 / $interval_splitter)) + 1 - time();
+        if (++$bfs_counter_in_interval > intval(floor(20 / $interval_splitter)) && $remaining_interval_time >= 0 && (!$records_limit || $records_limit > 20)) {
+          if ($verbose > 8) print("…${remaining_interval_time}s…\n");
+          if ($verbose > 0) $fields[] = "${remaining_interval_time}s…";
+          sleep($remaining_interval_time);
+          $bfs_throtteling_interval_start = time();
+          $bfs_counter_in_interval = 1;
+        } else if ($remaining_interval_time < 0) {
+          $bfs_throtteling_interval_start = time();
+          $bfs_counter_in_interval = 1;
+        } else {
+          sleep(0.5);
+        }
 
-      $retry_log = '';
-      $dataUidBfs = initDataArray();
-      ws_get_organization_from_uid_bfs($uid, $clientUid, $dataUidBfs, $verbose, 9, $retry_log); // Similar to _lobbywatch_fetch_ws_uid_bfs_data() in utils.php
-      if ($verbose > 0 && !empty($retry_log)) $fields[] = $retry_log;
-      if (!empty($retry_log)) {
-        $bfs_throtteling_interval_start = time();
-        $bfs_counter_in_interval = 1;
-      }
-      if ($dataUidBfs['success']) {
+        $retry_log = '';
+        $dataUidBfs = initDataArray();
+        ws_get_organization_from_uid_bfs($uid, $clientUid, $dataUidBfs, $verbose, 9, $retry_log); // Similar to _lobbywatch_fetch_ws_uid_bfs_data() in utils.php
+        if ($verbose > 0 && !empty($retry_log)) $fields[] = $retry_log;
+        if (!empty($retry_log)) {
+          $bfs_throtteling_interval_start = time();
+          $bfs_counter_in_interval = 1;
+        }
         // http://stackoverflow.com/questions/1869091/how-to-convert-an-array-to-object-in-php
         $organisation_ws = (object) $dataUidBfs['data'];
+        if ($dataUidBfs['success']) {
+          if ($organisation_ws->inaktiv) {
+            // $fields[] = "bfs_deleted";
+            $deleted = true;
+          }
 
-        if ($organisation_ws->inaktiv) {
-          // $fields[] = "bfs_deleted";
-          $deleted = true;
+          // --------------------------------------------
+          // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT
+          // --------------------------------------------
+
+          $different_db_values |= checkField('name_de', 'name_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull', null, null, 150);
+          $different_db_values |= checkField('abkuerzung_de', 'abkuerzung_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+          $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+          $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, '_lobbywatch_ws_get_rechtsform');
+          $different_db_values |= checkField('in_handelsregister', 'in_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+          $different_db_values |= checkField('inaktiv', 'inaktiv', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+          $in_hr |= $organisation_ws->in_handelsregister;
+        } else if (empty((array) $organisation_ws)) {
+          if ($verbose > 0) $fields[] = "uid@bfs empty";
+          $in_hr = true;
+        } else {
+          // all uids must be available
+          $fields[] = "***UID@BFS ERROR [{$dataUidBfs['message']}]***";
         }
-
-        // --------------------------------------------
-        // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT
-        // --------------------------------------------
-
-        $different_db_values |= checkField('name_de', 'name_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull', null, null, 150);
-        $different_db_values |= checkField('abkuerzung_de', 'abkuerzung_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
-        $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
-        $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, '_lobbywatch_ws_get_rechtsform');
-        $different_db_values |= checkField('in_handelsregister', 'in_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
-        $different_db_values |= checkField('inaktiv', 'inaktiv', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
-        $in_hr |= $organisation_ws->in_handelsregister;
-      } else {
-        // all uids must be available
-        $fields[] = "***UID@BFS ERROR [{$dataUidBfs['message']}]***";
       }
-    }
 
-    // Zefix REST
-    if ($zefixRestEnabled && $in_hr) {
-      $dataZefixRest = initDataArray();
-      ws_get_organization_from_zefix_rest($uid, $dataZefixRest, $verbose, $test_mode); // Similar to _lobbywatch_fetch_ws_uid_bfs_data() in utils.php
-      if ($dataZefixRest['success']) {
+      // Zefix REST
+      if ($zefixRestEnabled && $in_hr) {
+        $dataZefixRest = initDataArray();
+        ws_get_organization_from_zefix_rest($uid, $dataZefixRest, $verbose, $test_mode); // Similar to _lobbywatch_fetch_ws_uid_bfs_data() in utils.php
         // http://stackoverflow.com/questions/1869091/how-to-convert-an-array-to-object-in-php
         $organisation_ws = (object) $dataZefixRest['data'];
+        if ($dataZefixRest['success']) {
+          if ($organisation_ws->inaktiv) {
+            // $fields[] = "hr_deleted";
+            $deleted = true;
+          }
 
-        if ($organisation_ws->inaktiv) {
-          // $fields[] = "hr_deleted";
-          $deleted = true;
+          // --------------------------------------------
+          // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT
+          // --------------------------------------------
+
+          $different_db_values |= checkField('name_de', 'name_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull', null, null, 150);
+          $different_db_values |= checkField('abkuerzung_de', 'abkuerzung_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+          // $different_db_values |= checkField('abkuerzung_de', 'name_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'extractAbkuerzungFromWSFieldNameEmptyAsNull');
+          $different_db_values |= checkField('rechtsform_zefix', 'rechtsform_zefix', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+          // Overwrite (re-set) if we have Zefix data (Many fields will be double set, but this is not a problem)
+          $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+          $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, '_lobbywatch_ws_get_rechtsform');
+          $different_db_values |= checkField('beschreibung', 'zweck', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, 'getValueFromWSFieldNameEmptyAsNull');
+          $different_db_values |= checkField('ort', 'ort', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+          $different_db_values |= checkField('adresse_strasse', 'adresse_strasse', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+          $different_db_values |= checkField('adresse_zusatz', 'adresse_zusatz', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+          $different_db_values |= checkField('adresse_plz', 'adresse_plz', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+          $different_db_values |= checkField('in_handelsregister', 'in_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+          $different_db_values |= checkField('inaktiv', 'inaktiv', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+
+          // --------------------------------------------
+          // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT
+          // --------------------------------------------
+
+      //     print_r($organisation_ws);
+      //     print("Check: $organisation_ws->rechtsform_handelsregister $organisation_db->rechtsform " . _lobbywatch_ws_get_rechtsform($organisation_ws->rechtsform_handelsregister));
+        } else if (empty((array) $organisation_ws)) {
+          if ($verbose > 0) $fields[] = "zefix empty";
+          $in_hr = false;
+          $ok = false;
+        } else {
+          // all uids in hr must be available
+          $fields[] = "***Zefix ERROR [{$dataZefixRest['message']}]***";
         }
-
-        // --------------------------------------------
-        // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT
-        // --------------------------------------------
-
-        $different_db_values |= checkField('name_de', 'name_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull', null, null, 150);
-        $different_db_values |= checkField('abkuerzung_de', 'abkuerzung_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
-        // $different_db_values |= checkField('abkuerzung_de', 'name_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'extractAbkuerzungFromWSFieldNameEmptyAsNull');
-        $different_db_values |= checkField('rechtsform_zefix', 'rechtsform_zefix', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
-        // Overwrite (re-set) if we have Zefix data (Many fields will be double set, but this is not a problem)
-        $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
-        $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, '_lobbywatch_ws_get_rechtsform');
-        $different_db_values |= checkField('beschreibung', 'zweck', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, 'getValueFromWSFieldNameEmptyAsNull');
-        $different_db_values |= checkField('ort', 'ort', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
-        $different_db_values |= checkField('adresse_strasse', 'adresse_strasse', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
-        $different_db_values |= checkField('adresse_zusatz', 'adresse_zusatz', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
-        $different_db_values |= checkField('adresse_plz', 'adresse_plz', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
-        $different_db_values |= checkField('in_handelsregister', 'in_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
-        $different_db_values |= checkField('inaktiv', 'inaktiv', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
-
-        // --------------------------------------------
-        // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT
-        // --------------------------------------------
-
-    //     print_r($organisation_ws);
-    //     print("Check: $organisation_ws->rechtsform_handelsregister $organisation_db->rechtsform " . _lobbywatch_ws_get_rechtsform($organisation_ws->rechtsform_handelsregister));
-      } else {
-        // all uids in hr must be available
-        $fields[] = "***Zefix ERROR [{$dataUidBfs['message']}]***";
       }
     }
 
@@ -713,12 +721,14 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
     if ($deleted) $n_deleted++;
 
     $ws_uid_found = !empty($dataUidBfs['success']) && !empty($dataUidBfs['data']);
+    $ws_uid_checked = isset($dataUidBfs['success']);
     $ws_zefix_rest_found = !empty($dataZefixRest['success']) && !empty($dataZefixRest['data']);
+    $ws_zefix_rest_checked = isset($dataZefixRest['success']);
 
     if ($ws_uid_found) $n_ws_uid_found++;
     if ($ws_zefix_rest_found) $n_ws_zefix_rest_found++;
 
-    print(str_repeat("\t", $level) . str_pad($i, 4, " ", STR_PAD_LEFT) . '|' . str_pad($id, 4, " ", STR_PAD_LEFT) . '|' . str_pad($uid_db, 15, " ", STR_PAD_LEFT) . ' |' . ($ws_uid_found ? 'U' : ' ') . ($ws_zefix_rest_found ? 'Z' : ' ') . mb_str_pad("| $sign | " . ($deleted ? 'x' : ' ') . " | " . mb_substr($name, 0, 42), 53, " ") . "| " . implode(" | ", $fields) . "\n");
+    print(str_repeat("\t", $level) . str_pad($i, 4, " ", STR_PAD_LEFT) . '|' . str_pad($id, 4, " ", STR_PAD_LEFT) . '|' . str_pad($uid_db, 15, " ", STR_PAD_LEFT) . ' |' . ($ws_uid_found ? 'U' : ($ws_uid_checked ? 'u' : ' ')) . ($ws_zefix_rest_found ? 'Z' : ($ws_zefix_rest_checked ? 'z' : ' ')) . mb_str_pad("| $sign | " . ($deleted ? 'x' : ' ') . " | " . mb_substr($name, 0, 42), 53, " ") . "| " . implode(" | ", $fields) . "\n");
   }
 
   print("\nU: $n_ws_uid_found");

@@ -2485,9 +2485,11 @@ function fillDataFromUidBfsResult50($object, &$data) {
         'gruendungsdatum' => $ot->organisation->foundationDate ?? null,
         'uid_nachfolger' => $ot->uidregInformation->uidReplacement ?? null,
       );
+      return $data['data'];
     } else {
       $data['message'] .= 'Nothing found';
       $data['success'] = false;
+      return false;
     }
 }
 
@@ -2568,6 +2570,9 @@ function fillDataFromUidBfsResult30($object, &$data) {
     }
 }
 
+/**
+ * @deprecated
+ */
 function fillDataFromZefixSoapResult($object, &$data) {
     if (!empty((array) $object)) {
 //       print_r($object);
@@ -2676,9 +2681,11 @@ function fillDataFromZefixRestResult($json, &$data) {
         'nominalkapital' => $ot->capitalNominal,
         'in_handelsregister' => true,
       );
+      return $data['data'];
     } else {
       $data['message'] .= 'Nothing found';
       $data['success'] = false;
+      return false;
     }
 }
 
