@@ -66,8 +66,6 @@ $options = array(
 
 $context = stream_context_create($options);
 
-get_PDO_lobbywatch_DB_connection();
-
 $script = [];
 $script[] = "-- SQL script from ws.parlament.ch $transaction_date";
 $script[] = "SET autocommit = 0;";
@@ -89,15 +87,16 @@ function main() {
   global $errors;
   global $verbose;
   global $env;
+  global $user;
+  global $db_name;
+  global $db_con;
 
   $docRoot = "./public_html";
   $default_uid = 'CHE-107.810.911';
 
-  print("-- $env: {$db_connection['database']}\n");
-
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
-  $options = getopt('hsv::u:b:tsmo:n::fz:Z:a::',array('docroot:','help', 'uid:', 'bfs:', 'ssl', 'zefix-soap:', 'zefix:', 'zefix-rest:'));
+  $options = getopt('hsv::u:b:tsmo:n::fz:Z:a::',array('docroot:','help', 'uid:', 'bfs:', 'ssl', 'zefix-soap:', 'zefix:', 'zefix-rest:', 'db:'));
 
   if (isset($options['h']) || isset($options['help'])) {
     print("ws uid Fetcher for Lobbywatch.ch.
@@ -114,8 +113,9 @@ Parameters:
 -n number            Limit number of records
 -s                   Output SQL script
 -v[level]            Verbose, optional level, 1 = default
--h, --help           This help
+--db=db_name         Name of DB to use
 --docroot path       Set the document root for images
+-h, --help           This help
 ");
     exit(0);
   }
@@ -160,6 +160,16 @@ Parameters:
   } else {
      $ssl = false;
   }
+
+  if (isset($options['db'])) {
+    $db_name = $options['db'];
+  } else {
+    $db_name = null;
+  }
+  get_PDO_lobbywatch_DB_connection($db_name);
+
+  print("-- $env: {$db_con['database']}\n");
+  print("-- Executing user=$user\n");
 
   if (isset($options['o'])) {
     $hr_id = $options['o'];
