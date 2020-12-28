@@ -3,13 +3,13 @@
 # Abort on errors
 set -e
 
-PHP=/opt/lampp/bin/php
-
 # diff -urw --exclude=".git" --exclude="*.bak" ../lobbydev_wo_afterburner/ . > afterburner_changes.diff
 
 # TODO use \ only where necessary http://stackoverflow.com/questions/1455988/commenting-in-bash-script
 
-clean=true;
+clean=true
+minify=true
+
 # Ref: http://stackoverflow.com/questions/7069682/how-to-get-arguments-with-flags-in-bash-script
 for i in "$@" ; do
       case $i in
@@ -19,12 +19,17 @@ for i in "$@" ; do
                         echo "$0 [options]"
                         echo " "
                         echo "options:"
-                        echo "-n, --noclean            Do not clean files"
+                        echo "-N, --noclean            Do not clean files"
+                        echo "-M, --nojsminify         Disable js minify"
                         exit 0
                         ;;
-                -n|--noclean)
+                -N|--noclean)
                         shift
-                        no_clean=false
+                        clean=false
+                        ;;
+                -M|--nominify)
+                        shift
+                        minify=false
                         ;;
                 *)
                         break
@@ -238,6 +243,12 @@ do
   > "$file";
 done
 
+if ! minify; then
+  minifyDisablePattern='s%(UseMinifiedJS\(\)\n\{\n    return )true%\1false%s'
+else
+  minifyDisablePattern='s%not_existing_value_182734078450238475029347850237845295%'
+fi
+
 for file in $dir/phpgen_settings.php
 do
   echo "Process $file";
@@ -245,6 +256,7 @@ do
   cat "$file.bak" |
    perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\nrequire_once dirname(__FILE__) . "\/..\/settings\/settings.php";\nrequire_once dirname(__FILE__) . "\/\.\.\/custom\/custom.php";\nrequire_once dirname(__FILE__) . "\/..\/custom\/build.php";\nrequire_once dirname(__FILE__) . "\/..\/common\/utils.php";/' |
    perl -0 -p -e's/(?<=GetGlobalConnectionOptions\(\)).*?(?=\})/\{\n    \/\/ Custom modification: Use \$db_connection from settings.php\n    global \$db_connection;\n    return \$db_connection;\n/s' |
+   perl -0 -p -e"$minifyDisablePattern" |
    perl -p -e's/(\/\/\s*?)(?=defineXXX)//' |
    perl -p -e's/(\/\/\s*?)(?=error_reportingXXX)//' |
    perl -p -e's/(\/\/\s*?)(?=ini_setXXX)//' |
