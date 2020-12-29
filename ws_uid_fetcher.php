@@ -96,7 +96,7 @@ function main() {
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
-  $options = getopt('hsv::u:b:tsmo:n::fz:Z:a::',array('docroot:','help', 'uid:', 'bfs:', 'ssl', 'zefix-soap:', 'zefix:', 'zefix-rest:', 'db:'));
+  $options = getopt('hsv::u:b:tsmo:n::f::z:Z:a::S::',array('docroot:','help', 'uid:', 'bfs:', 'ssl', 'zefix-soap:', 'zefix:', 'zefix-rest:', 'db:'));
 
   if (isset($options['h']) || isset($options['help'])) {
     print("ws uid Fetcher for Lobbywatch.ch.
@@ -110,6 +110,8 @@ Parameters:
 --ssl                Use SSL
 -m                   Migrate old hr-id to uid from handelsregister_url
 -a [START_ID]        Actualise organisations with UID from webservices, optional starting from organisation START_ID
+-S [START_ID]        Search UIDs from name via webservices, optional starting from organisation START_ID
+-f [START_ID]        Search name and set UID, optional starting from organisation START_ID
 -n number            Limit number of records
 -s                   Output SQL script
 -v[level]            Verbose, optional level, 1 = default
@@ -254,8 +256,14 @@ Parameters:
     actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, $test_mode);
   }
 
+  if (isset($options['S'])) {
+    $start_id = $options['S'];
+    search_uids_by_name($records_limit, $start_id, $ssl, $test_mode);
+  }
+
   if (isset($options['f'])) {
-    search_name_and_set_uid($records_limit, $ssl, $test_mode);
+    $start_id = $options['f'];
+    search_name_and_set_uid($records_limit, $start_id, $ssl, $test_mode);
   }
 
   if (count($errors) > 0) {
@@ -439,7 +447,7 @@ function migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode) {
       $n_new_uid++;
 
       $script[] = $comment = "-- Update " . mb_substr($name, 0, 45) . ", id = $id, $old_hr_id → $uid_ws";
-      $script[] = $command = "-- DISABLED UPDATE organisation SET uid='$uid_ws', updated_visa='import', updated_date=$sql_transaction_date WHERE id = $id;";
+      $script[] = $command = "-- DISABLED UPDATE organisation SET uid='$uid_ws', updated_visa='roland', updated_date=$sql_transaction_date WHERE id = $id;";
       if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
       if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
     } else if ($hr_url && !$uid_ws) {
@@ -450,7 +458,7 @@ function migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode) {
       $n_different_uid++;
 
       $script[] = $comment = "-- Update DIFFERENCE " . mb_substr($name, 0, 45) . ", id = $id, $old_hr_id → $uid_ws";
-      $script[] = $command = "-- UPDATE organisation SET uid='$uid_ws', updated_visa='import', updated_date=$sql_transaction_date WHERE id = $id;";
+      $script[] = $command = "-- UPDATE organisation SET uid='$uid_ws', updated_visa='roland', updated_date=$sql_transaction_date WHERE id = $id;";
       if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
       if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
     } else if ($uid_db && !$uid_ws && preg_match('/\d{3}[.]?\d{3}[.]?\d{2,3}/', $uid_db, $matches)) {
@@ -462,7 +470,7 @@ function migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode) {
         $uid = $uid_ws;
         $old_hr_id = $uid_db; // For logging set to other variable
         $script[] = $comment = "-- Update FIX UID" . mb_substr($name, 0, 45) . ", id = $id, $uid_db → $uid_ws";
-        $script[] = $command = "UPDATE organisation SET uid='$uid_ws', updated_visa='import', updated_date=$sql_transaction_date WHERE id = $id;";
+        $script[] = $command = "UPDATE organisation SET uid='$uid_ws', updated_visa='roland', updated_date=$sql_transaction_date WHERE id = $id;";
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
       } else if (!$uid_ws && $uid_db != $uid_ws) {
@@ -471,7 +479,7 @@ function migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode) {
         $uid = null;
         $old_hr_id = $uid_db; // For logging set to other variable
         $script[] = $comment = "-- Delete BAD UID " . mb_substr($name, 0, 45) . ", id = $id, $uid_db → NULL";
-        $script[] = $command = "UPDATE organisation SET uid=NULL, updated_visa='import', updated_date=$sql_transaction_date WHERE id = $id;";
+        $script[] = $command = "UPDATE organisation SET uid=NULL, updated_visa='roland', updated_date=$sql_transaction_date WHERE id = $id;";
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
       } else if ($uid_ws && $uid_db == $uid_ws) {
@@ -495,7 +503,7 @@ function migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode) {
       }
       if ($rechtsform_handelsregister && $rechtsform_handelsregister != $rechtsform_handelsregister_db) {
         $script[] = $comment = "-- Set rechtsform_handelsregister " . mb_substr($name, 0, 45) . ", id = $id, $uid, ";
-        $script[] = $command = "UPDATE organisation SET rechtsform_handelsregister='$rechtsform_handelsregister', updated_visa='import', updated_date=$sql_transaction_date WHERE id = $id;";
+        $script[] = $command = "UPDATE organisation SET rechtsform_handelsregister='$rechtsform_handelsregister', updated_visa='roland', updated_date=$sql_transaction_date WHERE id = $id;";
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
       }
@@ -518,6 +526,116 @@ function migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode) {
   print("\n\n*/\n");
 }
 
+function search_uids_by_name($records_limit, $start_id, $ssl, $test_mode) {
+  global $script;
+  global $context;
+  global $show_sql;
+  global $db;
+  global $today;
+  global $sql_today;
+  global $transaction_date;
+  global $sql_transaction_date;
+  global $verbose;
+
+  $uidBFSenabled = true;
+  $zefixRestEnabled = false;
+
+  $script[] = $comment = "\n-- Search UIDs from name via webservices $transaction_date";
+
+  $starting_id_sql = $start_id ? "AND id >= $start_id" : '';
+  $sql = "SELECT id, name_de, handelsregister_url, uid, rechtsform, rechtsform_handelsregister, abkuerzung_de, name_fr, ort, adresse_strasse, adresse_zusatz, adresse_plz, inaktiv FROM organisation WHERE uid IS NULL AND (rechtsform IS NULL OR rechtsform <> 'Parlamentarische Gruppe') $starting_id_sql ORDER BY id;";
+  $stmt = $db->prepare($sql);
+
+  $stmt->execute([]);
+
+  echo "\n/*\nSearch UIDs from name via webservices $transaction_date\n";
+  print("rows = " . $stmt->rowCount() . "\n");
+
+  if ($uidBFSenabled) {
+    $dataUidBfs = initDataArray();
+    $clientUid = initSoapClient($dataUidBfs, getUidBfsWsLogin($test_mode), $verbose, $ssl);
+  }
+
+  $level = 0;
+  $n_found = 0;
+  $n_not_found = 0;
+  $n_problems= 0;
+
+  $n_ws_uid_found = 0;
+  $n_ws_zefix_rest_found = 0;
+
+  $bfs_throtteling_interval_start = time();
+  $bfs_counter_in_interval = 0;
+
+  $i = 0;
+  while ($organisation_db = $stmt->fetch(PDO::FETCH_OBJ)) {
+    $i++;
+    if ($records_limit && $i > $records_limit) {
+      break;
+    }
+    $dataUidBfs = null;
+    $dataZefixRest = null;
+    $sign = '!';
+    $deleted = $organisation_db->inaktiv;
+    $id = $organisation_db->id;
+    $name = $organisation_db->name_de;
+    $rechtsform = $organisation_db->rechtsform;
+    $rechtsform_hr = _lobbywatch_ws_get_legalform_hr($rechtsform);
+    $ort = $organisation_db->ort;
+    $plz = $organisation_db->adresse_plz;
+    $update = [];
+    $uid_candiates = [];
+    $update_optional = [];
+    $fields = [];
+    $different_db_values = false;
+
+    // UID WS (BFS)
+    if ($uidBFSenabled) {
+      $retry_log = '';
+
+      $dataUidBfs = call_ws_search_uid_bfs('*', $name, $plz, $ort, $rechtsform_hr, $uid_candiates, $records_limit, $clientUid, $verbose, $retry_log);
+      $dataUidBfsNameOnly = call_ws_search_uid_bfs('-', $name,  null, null, null, $uid_candiates, $records_limit, $clientUid, $verbose, $retry_log);
+      if ($verbose > 9 && !empty($retry_log)) $fields[] = $retry_log;
+    }
+
+    if (count($uid_candiates) > 0) {
+      if ($sign == '!') {
+        $sign = '+';
+      }
+    } else if (!isset($dataUidBfs['success'])) {
+      $sign = '!';
+    } else {
+      $sign = ' ';
+    }
+
+    // -- End Update fields
+
+    switch ($sign) {
+      case '+': $n_found++; break;
+      case ' ': $n_not_found++; break;
+      case '!': $n_problems++; break;
+    }
+
+    $ws_uid_found = !empty($dataUidBfs['success']) && !empty($dataUidBfs['data']);
+    $ws_uid_checked = isset($dataUidBfs['success']);
+
+    if ($ws_uid_found) $n_ws_uid_found++;
+
+    print(str_repeat("\t", $level) . str_pad($i, 4, " ", STR_PAD_LEFT) . '|' . str_pad($id, 4, " ", STR_PAD_LEFT) . '|' . ($ws_uid_found ? 'U' : ($ws_uid_checked ? 'u' : ' ')) . "| $sign | " . ($deleted ? 'x' : ' ') . " | " . str_cut_pad($name, 52) . '| ' . str_cut_pad($rechtsform, 12) . '| ' . str_cut_pad($plz, 4) . ' ' . str_cut_pad($ort, 12) . "| " . implode(" | ", $fields) . "\n");
+    if (!empty($uid_candiates)) print(implode("\n", $uid_candiates) . "\n");
+  }
+
+  print("\nU: $n_ws_uid_found");
+
+  print("\n=: $n_found");
+  print("\n!: $n_not_found");
+  print("\nΣ: " . ($n_found + $n_problems + $n_not_found));
+
+  print("\n\n*/\n");
+
+  $script[] = $comment = "\n-- Finished propose uid " . date('d.m.Y H:i:s');
+}
+
 function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, $test_mode) {
   global $script;
   global $context;
@@ -535,7 +653,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
   $script[] = $comment = "\n-- Actualise organisations having an UID from webservices $transaction_date";
 
   $starting_id_sql = $start_id ? "AND id >= $start_id" : '';
-  $sql = "SELECT id, name_de, handelsregister_url, uid, rechtsform, rechtsform_handelsregister, rechtsform_zefix, beschreibung, name_de, abkuerzung_de, name_fr, ort, adresse_strasse, adresse_zusatz, adresse_plz, in_handelsregister, inaktiv FROM organisation WHERE uid IS NOT NULL $starting_id_sql ORDER BY id;";
+  $sql = "SELECT id, name_de, handelsregister_url, uid, rechtsform, rechtsform_handelsregister, rechtsform_zefix, beschreibung, abkuerzung_de, name_fr, ort, adresse_strasse, adresse_zusatz, adresse_plz, in_handelsregister, inaktiv FROM organisation WHERE uid IS NOT NULL $starting_id_sql ORDER BY id;";
   $stmt = $db->prepare($sql);
 
   $stmt->execute([]);
@@ -695,14 +813,14 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
     $name_short = mb_substr($name, 0, 42);
     if (count($update) > 0) {
       $script[] = $comment = "-- Update Organisation '$name_short', id=$id, uid=$uid, fields: " . implode(", ", $fields);
-      $script[] = $command = "UPDATE `organisation` SET " . implode(", ", $update) . ", updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update via uid ws',`notizen`) WHERE id=$id;";
+      $script[] = $command = "UPDATE `organisation` SET " . implode(", ", $update) . ", updated_visa='roland', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update via uid ws',`notizen`) WHERE id=$id;";
       if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
       if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
     }
 
     if (count($update_optional) > 0) {
       $script[] = $comment = "-- Optional update Organisation '$name_short', id=$id, uid=$uid, fields: " . implode(", ", $fields);
-      $script[] = $command = "-- UPDATE `organisation` SET " . implode(", ", $update) . ", updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update via uid ws',`notizen`) WHERE id=$id;";
+      $script[] = $command = "-- UPDATE `organisation` SET " . implode(", ", $update) . ", updated_visa='roland', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update via uid ws',`notizen`) WHERE id=$id;";
       if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
       if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
     }
@@ -738,7 +856,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
     if ($ws_uid_found) $n_ws_uid_found++;
     if ($ws_zefix_rest_found) $n_ws_zefix_rest_found++;
 
-    print(str_repeat("\t", $level) . str_pad($i, 4, " ", STR_PAD_LEFT) . '|' . str_pad($id, 4, " ", STR_PAD_LEFT) . '|' . str_pad($uid_db, 15, " ", STR_PAD_LEFT) . ' |' . ($ws_uid_found ? 'U' : ($ws_uid_checked ? 'u' : ' ')) . ($ws_zefix_rest_found ? 'Z' : ($ws_zefix_rest_checked ? 'z' : ' ')) . mb_str_pad("| $sign | " . ($deleted ? 'x' : ' ') . " | " . mb_substr($name, 0, 42), 53, " ") . "| " . implode(" | ", $fields) . "\n");
+    print(str_repeat("\t", $level) . str_cut_pad($i, 4, STR_PAD_LEFT) . '|' . str_cut_pad($id, 4, STR_PAD_LEFT) . '|' . str_cut_pad($uid_db, 15, STR_PAD_LEFT) . ' |' . ($ws_uid_found ? 'U' : ($ws_uid_checked ? 'u' : ' ')) . ($ws_zefix_rest_found ? 'Z' : ($ws_zefix_rest_checked ? 'z' : ' ')) . "| $sign | " . ($deleted ? 'x' : ' ') . " | " . str_cut_pad($name, 42). "| " . implode(" | ", $fields) . "\n");
   }
 
   print("\nU: $n_ws_uid_found");
@@ -786,7 +904,7 @@ function ws_get_uid_from_old_hr_id($old_hr_id, $client, &$data, $verbose) {
       return null;
     }
   } catch(Exception $e) {
-    $data['message'] .= _utils_get_exeption($e);
+    $data['message'] .= _utils_get_exception($e);
     $data['success'] = false;
     return null;
   } finally {
@@ -794,7 +912,7 @@ function ws_get_uid_from_old_hr_id($old_hr_id, $client, &$data, $verbose) {
   }
 }
 
-function search_name_and_set_uid($records_limit, $ssl, $test_mode) {
+function search_name_and_set_uid($records_limit, $start_id, $ssl, $test_mode) {
   global $script;
   global $context;
   global $show_sql;
@@ -807,7 +925,8 @@ function search_name_and_set_uid($records_limit, $ssl, $test_mode) {
 
   $script[] = $comment = "\n-- Organisation migrate old HR-ID to UID from handelsregister URL $transaction_date";
 
-  $sql = "SELECT id, name_de, uid, adresse_plz, rechtsform FROM organisation WHERE uid IS NULL ORDER BY id;"; //  WHERE handelsregister_url IS NOT NULL
+  $starting_id_sql = $start_id ? "AND id >= $start_id" : '';
+  $sql = "SELECT id, name_de, uid, adresse_plz, rechtsform, ort FROM organisation WHERE uid IS NULL AND (rechtsform IS NULL OR rechtsform <> 'Parlamentarische Gruppe') $starting_id_sql ORDER BY id;"; //  WHERE handelsregister_url IS NOT NULL
   $stmt = $db->prepare($sql);
 
   $stmt->execute ( [] );
@@ -832,37 +951,45 @@ function search_name_and_set_uid($records_limit, $ssl, $test_mode) {
     }
     $sign = ' ';
     $id = $row['id'];
-    $name = $row['name_de'];
+    $name_raw = $row['name_de'];
+    $name = preg_replace(['%\(?aufgelöst\)?\s*%ui'], '', $name_raw);
     $plz = $row['adresse_plz'];
+    $ort = $row['ort'];
     $rechtsform = $row['rechtsform'];
+    $rechtsform_hr = _lobbywatch_ws_get_legalform_hr($rechtsform);
     $name_ws = null;
     $plz_ws = null;
     $rechtsform_ws = null;
     $uid = $uid_db = $row['uid']; // always null
     $matches = [];
 
+    $retry_log = '';
     $data = initDataArray();
-    $uid = $uid_ws = ws_get_uid_from_name_search($name, $plz, $client, $data, $verbose);
+    $uid = $uid_ws = ws_get_uid_from_name_search($name, $plz, $ort, $rechtsform_hr, $client, $data, $verbose, 9, $retry_log);
+    if ($verbose > 9 && !empty($retry_log)) $fields[] = $retry_log;
+    if (!$records_limit || $records_limit > 20) sleep(3);
+    $uid_count = $data['total_count'];
+    $uid_rating = $data['data']['uid_rating'] ?? 0;
 
     if ($uid_db == $uid_ws && $uid_ws) {
       $sign = '=';
       $n_equal_uid++;
     } else if (!$uid_db && $uid_ws) {
-      $data = initDataArray();
-      ws_get_organization_from_uid_bfs($uid_ws, $client, $data, $verbose);
-      if (!$records_limit || $records_limit > 20) {
-        sleep(3);
-      }
-      @$plz_ws = $data['data']['adresse_plz'];
-      @$rechtsform_ws = $data['data']['rechtsform'];
-      $replace_pattern = '/[.,() "-/]/ui';
-      if ($data['success'] && preg_replace($replace_pattern, '', mb_strtolower($name_ws = $data['data']['name_de'])) == preg_replace($replace_pattern, '', mb_strtolower($name))) {
+      // $data = initDataArray();
+      // ws_get_organization_from_uid_bfs($uid_ws, $client, $data, $verbose);
+      // if (!$records_limit || $records_limit > 20) sleep(3);
+      $plz_ws = $data['data']['adresse_plz'] ?? null;
+      $ort_ws = $data['data']['ort'] ?? null;
+      $rechtsform_ws = $data['data']['rechtsform'] ?? null;
+      $replace_pattern = ['%ae%ui', '%oe%ui', '%ue%ui', '%&%ui', '%[-."/*+_\']%ui', '%\(\w+\)%ui', '%,\s*\w+$%ui', '%\s+[A-ZÄÖÜ]{3,4}(-[A-ZÄÖÜ]{3,4})?$%u', '%\s+%ui'];
+      $replace_replacement = ['ä', 'ö', 'ü', 'und'];
+      $ort_pattern = ['%\s*\d+%u'];
+      if ($data['success'] && mb_strtolower(preg_replace($replace_pattern, $replace_replacement, $name_ws = $data['data']['name_de'])) === mb_strtolower(preg_replace($replace_pattern, $replace_replacement, $name)) && (empty($ort) || preg_replace($ort_pattern, [], $ort) === preg_replace($ort_pattern, '', $ort_ws)) && (empty($rechtsform) || $rechtsform === $rechtsform_ws) && $uid_rating >= 95) {
         $sign = '+';
         $n_new_uid++;
 
-
         $script[] = $comment = "-- Set found uid " . mb_substr($name, 0, 45) . ", id = $id, $uid_ws";
-        $script[] = $command = "UPDATE organisation SET uid='$uid_ws', updated_visa='import', updated_date=$sql_transaction_date WHERE id = $id;";
+        $script[] = $command = "UPDATE organisation SET uid='$uid_ws', notizen=CONCAT_WS('\\n\\n', '$today/Roland: UID via UID-Register@BFS Webservice gesetzt',`notizen`), updated_visa='roland', updated_date=$sql_transaction_date WHERE id = $id;";
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
       } else {
@@ -874,8 +1001,8 @@ function search_name_and_set_uid($records_limit, $ssl, $test_mode) {
       $n_nothing_found++;
     }
 
-    $mgr_msg = str_pad($plz, 4, " ", STR_PAD_LEFT) . '  ' . str_pad(mb_substr($rechtsform, 0, 8), 8, " ", STR_PAD_RIGHT) . ' ' .  ($uid_ws ? "$uid_ws    " .  str_pad($plz_ws, 4, " ", STR_PAD_LEFT) . '  ' . str_pad(mb_substr($rechtsform_ws, 0, 8), 8, " ", STR_PAD_RIGHT) . '     ' . mb_str_pad(mb_substr($name_ws, 0, 62), 62, " ", STR_PAD_RIGHT): '');
-    print(str_repeat("\t", $level) . str_pad($i, 4, " ", STR_PAD_LEFT) . '|' . str_pad($id, 4, " ", STR_PAD_LEFT) . '|' . str_pad($uid_db, 15, " ", STR_PAD_LEFT) . mb_str_pad(" | $sign | " . mb_substr($name, 0, 62), 70, " ") . "| " . $mgr_msg . "\n");
+    $mgr_msg = str_cut_pad($plz, 4) . ' ' . str_cut_pad($ort, 10) . ' ' . str_cut_pad($rechtsform, 10) . ' > ' . str_cut_pad($uid_count, 2, STR_PAD_LEFT) . ' ' . str_cut_pad($uid_rating, 3, STR_PAD_LEFT) . ' ' . ($uid_ws ? "  $uid_ws    " .  str_cut_pad($plz_ws, 4) . ' ' . str_cut_pad($ort_ws, 10) . ' ' . str_cut_pad($rechtsform_ws, 10) . ' ' . str_cut_pad($name_ws, 62): '');
+    print(str_repeat("\t", $level) . str_cut_pad($i, 4, STR_PAD_LEFT) . '|' . str_cut_pad($id, 4, STR_PAD_LEFT) . '|' . str_cut_pad($uid_db, 15, STR_PAD_LEFT) . " | $sign | " . str_cut_pad($name, 62) . "| " . $mgr_msg . "\n");
   }
 
   print("\n+: $n_new_uid");
@@ -883,46 +1010,4 @@ function search_name_and_set_uid($records_limit, $ssl, $test_mode) {
   print("\n : $n_nothing_found");
   print("\nΣ: " . ($n_new_uid + $n_different_name + $n_nothing_found /*+ $n_only_uid + $n_fix_uid + $n_bad_uid + $n_equal_uid + $n_not_found*/));
   print("\n");
-}
-
-function ws_get_uid_from_name_search($name, $plz, $client, &$data, $verbose) {
-  $response = null;
-  try {
-//     $response = $client->__soapCall("GetByUID", array($params));
-    $params = array(
-      'searchParameters' => array(
-        'organisation' => array(
-          'organisationIdentification' => array(
-            'organisationName' => $name
-          )
-        )
-      ),
-    );
-    if ($plz) {
-      $params['searchParameters']['organisation']['contact'] = array(
-        'address' => array(
-          'postalAddress' => array(
-            'addressInformation' => array(
-              'swissZipCode' => $plz,
-            )
-          )
-        )
-      );
-//       print_r($params);
-    }
-    $response = $client->Search($params);
-    fillDataFromUIDResult($response->SearchResult, $data);
-//     print_r($data);
-    if ($data['success'] && !empty($data['data']['uid']) && $data['count']) {
-      return $data['data']['uid'];
-    } else {
-      return null;
-    }
-  } catch(Exception $e) {
-    $data['message'] .= _utils_get_exeption($e);
-    $data['success'] = false;
-    return null;
-  } finally {
-    ws_verbose_logging($client, $response, $data, $verbose);
-  }
 }

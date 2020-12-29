@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+   <s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <GetByUIDResponse xmlns="http://www.uid.admin.ch/xmlns/uid-wse">
+         <GetByUIDResult>
+            <organisationType>
+               <organisation xmlns="http://www.ech.ch/xmlns/eCH-0108/5">
+                  <organisationIdentification xmlns="http://www.ech.ch/xmlns/eCH-0098/5">
+                     <uid xmlns="http://www.ech.ch/xmlns/eCH-0097/5">
+                        <uidOrganisationIdCategorie>CHE</uidOrganisationIdCategorie>
+                        <uidOrganisationId>423681861</uidOrganisationId>
+                     </uid>
+                     <OtherOrganisationId xmlns="http://www.ech.ch/xmlns/eCH-0097/5">
+                        <organisationIdCategory>CH.HR</organisationIdCategory>
+                        <organisationId>CH02010616678</organisationId>
+                     </OtherOrganisationId>
+                     <OtherOrganisationId xmlns="http://www.ech.ch/xmlns/eCH-0097/5">
+                        <organisationIdCategory>CH.ESTVID</organisationIdCategory>
+                        <organisationId>052.0086.8623</organisationId>
+                     </OtherOrganisationId>
+                     <OtherOrganisationId xmlns="http://www.ech.ch/xmlns/eCH-0097/5">
+                        <organisationIdCategory>CH.EHRAID</organisationIdCategory>
+                        <organisationId>1028235</organisationId>
+                     </OtherOrganisationId>
+                     <organisationName xmlns="http://www.ech.ch/xmlns/eCH-0097/5">Jacqeline Fehr</organisationName>
+                     <organisationLegalName xmlns="http://www.ech.ch/xmlns/eCH-0097/5">Jacqeline Fehr</organisationLegalName>
+                     <organisationAdditionalName xmlns="http://www.ech.ch/xmlns/eCH-0097/5">atelier politique Fehr</organisationAdditionalName>
+                     <legalForm xmlns="http://www.ech.ch/xmlns/eCH-0097/5">0101</legalForm>
+                  </organisationIdentification>
+                  <address xmlns="http://www.ech.ch/xmlns/eCH-0098/5">
+                     <addressCategory>LEGAL</addressCategory>
+                     <street>Ackeretstrasse</street>
+                     <houseNumber>19</houseNumber>
+                     <town>Winterthur</town>
+                     <swissZipCode>8400</swissZipCode>
+                     <swissZipCodeAddOn>00</swissZipCodeAddOn>
+                     <municipalityId>230</municipalityId>
+                     <cantonAbbreviation>ZH</cantonAbbreviation>
+                     <EGID>1152573</EGID>
+                     <countryIdISO2>CH</countryIdISO2>
+                  </address>
+               </organisation>
+               <uidregInformation xmlns="http://www.ech.ch/xmlns/eCH-0108/5">
+                  <uidregStatusEnterpriseDetail>5</uidregStatusEnterpriseDetail>
+                  <uidregPublicStatus>1</uidregPublicStatus>
+                  <uidregUidService>false</uidregUidService>
+               </uidregInformation>
+               <commercialRegisterInformation xmlns="http://www.ech.ch/xmlns/eCH-0108/5">
+                  <commercialRegisterStatus>2</commercialRegisterStatus>
+                  <commercialRegisterEntryStatus>2</commercialRegisterEntryStatus>
+                  <commercialRegisterEnterpriseType>1</commercialRegisterEnterpriseType>
+               </commercialRegisterInformation>
+               <vatRegisterInformation xmlns="http://www.ech.ch/xmlns/eCH-0108/5">
+                  <vatStatus>2</vatStatus>
+                  <vatEntryStatus>2</vatEntryStatus>
+                  <vatEntryDate>2013-01-01</vatEntryDate>
+                  <vatLiquidationDate>2015-03-31</vatLiquidationDate>
+                  <uidVat>
+                     <uidOrganisationIdCategorie xmlns="http://www.ech.ch/xmlns/eCH-0097/5">CHE</uidOrganisationIdCategorie>
+                     <uidOrganisationId xmlns="http://www.ech.ch/xmlns/eCH-0097/5">423681861</uidOrganisationId>
+                  </uidVat>
+               </vatRegisterInformation>
+            </organisationType>
+         </GetByUIDResult>
+      </GetByUIDResponse>
+   </s:Body>
+</s:Envelope>

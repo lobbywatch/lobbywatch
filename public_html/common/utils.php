@@ -1899,6 +1899,52 @@ function _lobbywatch_ws_get_rechtsform($rechtsform_handelsregister) {
   return $val;
 }
 
+function _lobbywatch_ws_get_legalform_hr($rechtsform) {
+  switch($rechtsform) {
+        //  Rechtsformen des Privatrechts, im Handelsregister angewendet
+    case 'Einzelunternehmen': $val = '0101'; break; // 0101 Einzelunternehmen
+    case 'KG': $val = '0103'; break; // 0103 Kollektivgesellschaft
+        // 0104 Kommanditgesellschaft
+        // 0105 Kommanditaktiengesellschaft
+    case 'AG': $val = '0106'; break; // 0106 Aktiengesellschaft
+    case 'GmbH': $val = '0107'; break; // 0107 Gesellschaft mit beschränkter Haftung GMBH / SARL
+    case 'Genossenschaft': $val = '0108'; break; // 0108 Genossenschaft
+    case 'Verein': $val = '0109'; break; // 0109 Verein (hier werden auch staatlich anerkannte Kirchen geführt)
+    case 'Stiftung': $val = '0110'; break; // 0110 Stiftung
+        // 0111 Ausländische Niederlassung im Handelsregister eingetragen
+        // 0113 Besondere Rechtsform Rechtsformen, die unter keiner anderen Kategorie aufgeführt werden können.
+        // 0114 Kommanditgesellschaft für kollektive Kapitalanlagen
+        // 0115 Investmentgesellschaft mit variablem Kapital (SICAV)
+        // 0116 Investmentgesellschaft mit festem Kapital (SICAF)
+    case 'Oeffentlich-rechtlich': $val = '0117'; break; // 0117 Institut des öffentlichen Rechts
+        // 0118 Nichtkaufmännische Prokuren
+        // 0119 Haupt von Gemeinderschaften
+        // 0151 Schweizerische Zweigniederlassung im Handelsregister eingetragen
+        //  Rechtsformen des öffentlichen Rechts, nicht im Handelsregister angewendet
+    case 'Staatlich': $val = '02'; break; // 0220 Verwaltung des Bundes
+    // case '0221': $val = 'Staatlich'; break; // 0221 Verwaltung des Kantons
+    // case '0222': $val = 'Staatlich'; break; // 0222 Verwaltung des Bezirks
+    // case '0223': $val = 'Staatlich'; break; // 0223 Verwaltung der Gemeinde
+    // case '0224': $val = 'Staatlich'; break; // 0224 öffentlich-rechtliche Körperschaft (Verwaltung) Hier werden die öffentlich-rechtlichen Körperschaften aufgeführt, die nicht un-  ter den Punkten Verwaltung des Bundes, des Kantons, des Bezirks oder der  Gemeinde aufgelistet werden können. Z.B. Gemeindeverbände, Schulge-  meinden, Kreise und von mehreren Körperschaften geführte Verwaltungen.
+    // case '0230': $val = 'Staatlich'; break; // 0230 Unternehmen des Bundes
+    // case '0231': $val = 'Staatlich'; break; // 0231 Unternehmen des Kantons
+    // case '0232': $val = 'Staatlich'; break; // 0232 Unternehmen des Bezirks
+    // case '0233': $val = 'Staatlich'; break; // 0233 Unternehmen der Gemeinde
+    // case '0234': $val = 'Oeffentlich-rechtlich'; break; // 0234 öffentlich-rechtliche Körperschaft (Unternehmen) Hierzu zählen alle öffentlich-rechtlichen Unternehmen, die nicht unter den  Punkten Unternehmen des Bundes, des Kantons, des Bezirks oder der Ge-  meinde ausgelistet werden können, z.B. die Forstbetriebe von Ortsbürgerge-  meinden.
+        //  Andere  Rechtsformen nicht im Handelsregister angewendet
+    case 'Einfache Gesellschaft': $val = '0302'; break; // 0302 Einfache Gesellschaft
+        // 0312 Ausländische Niederlassung nicht im Handelsregister eingetragen
+        // 0327 Ausländisches öffentliches Unternehmen  Staatlich geführte ausländische Unternehmen, z.B. Niederlassungen von aus-  ländischen Eisenbahnen und Tourismusbehörden.
+        // 0328 Ausländische öffentliche Verwaltung  Insbesondere Botschaften, Missionen und Konsulate.
+        // 0329 Internationale Organisation
+        //  Ausländische Unternehmen
+        // 0441 Ausländische Unternehmen (Entreprise étrangère, impresa straniera)
+
+    default: $val = null;
+  }
+  return $val;
+}
+
 /**
  * Returns the description to the handelsregister rechtsform code.
  */
@@ -1979,7 +2025,7 @@ function _lobbywatch_ws_get_land_id($iso2) {
 //     $message .= count($items) . " record(s) found";
     $ret = $items;
   } catch(Exception $e) {
-//     $message .= _utils_get_exeption($e);
+//     $message .= _utils_get_exception($e);
 //     $success = false;
     $ret = null;
   } finally {
@@ -1987,7 +2033,7 @@ function _lobbywatch_ws_get_land_id($iso2) {
   return $ret;
 }
 
-function _utils_get_exeption($e) {
+function _utils_get_exception($e) {
   global $show_stacktrace;
   return $show_stacktrace ? $e->getMessage() . "\n------\n" . $e->getTraceAsString() : $e->getMessage();
 }
@@ -2049,6 +2095,7 @@ function getUidBfsWsLogin($test_mode = false) {
   } else {
     $host = 'www.uid-wse.admin.ch';
   }
+  // https://www.uid-wse.admin.ch/V5.0/PublicServices.svc?wsdl
   $wsdl = "https://$host/V5.0/PublicServices.svc?wsdl";
   $response = array(
     'wsdl' => $wsdl,
@@ -2265,7 +2312,7 @@ function ws_get_organization_from_zefix_rest($uid_raw, &$data, $verbose, $test_m
       $data['sql'] = "uid=$uid";
     }
   } catch(Exception $e) {
-    // $data['message'] .= _utils_get_exeption($e);
+    // $data['message'] .= _utils_get_exception($e);
     $data['message'] .= $e->GetMessage();
     $data['success'] = false;
     $data['sql'] = "uid=$uid";
@@ -2293,7 +2340,7 @@ function ws_get_organization_from_zefix_soap($uid_raw, $client, &$data, $verbose
       $data['sql'] = "uid=$uid";
     }
   } catch(Exception $e) {
-    // $data['message'] .= _utils_get_exeption($e);
+    // $data['message'] .= _utils_get_exception($e);
     $data['message'] .= $e->GetMessage();
     $data['success'] = false;
     $data['sql'] = "uid=$uid";
@@ -2344,7 +2391,7 @@ function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose, $
       $data['sql'] = "uid=$uid";
     }
   } catch(Exception $e) {
-    // $data['message'] .= _utils_get_exeption($e);
+    // $data['message'] .= _utils_get_exception($e);
     $data['message'] .= $e->GetMessage();
     $data['success'] = false;
     $data['sql'] = "uid=$uid";
@@ -2352,6 +2399,128 @@ function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose, $
     ws_verbose_logging($client, $response, $data, $verbose);
   }
   return $response;
+}
+
+/** Retries sleep time 2**($i + 3). $i = 9 -> totally 2.3h sleep ((2**13 - 1)  / 3600) */
+function ws_search_uid_bfs_raw($name, $plz, $ort, $rechtsform, $n = 50, $client, &$data, $verbose, $num_retries = 0, &$retry_log = '') {
+  /* Invoke webservice method with your parameters. */
+  $response = null;
+  try {
+    /* Set your parameters for the request */
+    $params = [
+      'searchParameters' => [
+        'uidEntitySearchParameters' => [
+          'organisationName' => $name,
+        ],
+      ],
+      'config' => [
+        // Auto, Normal, Fuzzy
+        'searchMode' => 'Auto',
+        'maxNumberOfRecords' => $n,
+        'searchNameAndAddressHistory' => true,
+      ],
+    ];
+    if ($plz && strlen($plz) === 4) {
+      $params['searchParameters']['uidEntitySearchParameters']['address']['swissZipCode'] = $plz;
+    }
+    if ($ort) {
+      $params['searchParameters']['uidEntitySearchParameters']['address']['town'] = $ort;
+    }
+    if ($rechtsform) {
+      $params['searchParameters']['uidEntitySearchParameters']['legalForm'] = $rechtsform;
+    }
+    for ($i = 0; !$response; $i++) {
+      try {
+        // $response = $client->__soapCall("GetByUID", array($params));
+        $response = $client->Search($params);
+      } catch (SoapFault $e) {
+        if ($e->faultstring == 'Request_limit_exceeded') {
+          if ($i < $num_retries) {
+            if ($verbose > 8) print("→" . 2**($i + 3) . "s…\n");
+            $retry_log .= '.';
+            sleep(2**($i + 3));
+          } else {
+            $fault = (array) $e->detail->BusinessFault;
+            throw new Exception("${fault['Error']} [op=${fault['Operation']}]: ${fault['ErrorDetail']}", $e->getCode(), $e);
+          }
+        } else {
+          throw $e;
+        }
+      }
+    }
+
+    if (isset($response->SearchResult->uidEntitySearchResultItem)) {
+        $data['data'] = is_array($response->SearchResult->uidEntitySearchResultItem)? $response->SearchResult->uidEntitySearchResultItem : [$response->SearchResult->uidEntitySearchResultItem];
+        $data['count'] = count($data['data']);
+    } else {
+      $data['message'] .= 'No UIDs found';
+      $data['success'] = false;
+      $data['sql'] = "search=$name";
+    }
+  } catch(Exception $e) {
+    // $data['message'] .= _utils_get_exception($e);
+    $data['message'] .= $e->GetMessage();
+    $data['success'] = false;
+    $data['sql'] = "search=$name";
+  } finally {
+    ws_verbose_logging($client, $response, $data, $verbose);
+  }
+  return $response;
+}
+
+function call_ws_search_uid_bfs(string $marker, string $name, ?string $plz, ?string $ort, ?string $rechtsform_hr, array &$uid_candiates, $records_limit, $clientUid, $verbose, &$retry_log): array {
+  // 20 calls in 1min are allowed
+  if (!$records_limit || $records_limit > 20) {
+    sleep(3);
+  }
+  $dataUidBfs = initDataArray();
+  ws_search_uid_bfs_raw($name, $plz, $ort, $rechtsform_hr, 50, $clientUid, $dataUidBfs, $verbose, 9, $retry_log); // Similar to _lobbywatch_fetch_ws_uid_bfs_data() in utils.php
+  // http://stackoverflow.com/questions/1869091/how-to-convert-an-array-to-object-in-php
+  $uid_list = $dataUidBfs['data'];
+  if ($dataUidBfs['success']) {
+    foreach($uid_list as $uid_item) {
+      $org = $uid_item->organisation->organisation;
+      $oid = $org->organisationIdentification;
+      $base_address = $org->address;
+      $address = is_array($base_address) ? $base_address[0] : $base_address;
+      $uid = formatUID($oid->uid->uidOrganisationId);
+      $uid_name = $oid->organisationName;
+      $uid_plz = $address->swissZipCode ?? $address->foreignZipCode ?? null;
+      $uid_ort = $address->town;
+      $uid_rechtsform = _lobbywatch_ws_get_rechtsform($oid->legalForm ?? null);
+      $uid_rating = $uid_item->rating;
+      $uid_historic = $uid_item->isHistoryMatch;
+      $uid_candiates[] = sprintf("    %s %s: %3d %s - %s - %s - %s %s", $marker, $uid, $uid_rating, $uid_historic ? 'H' :  ' ', $uid_name, $uid_rechtsform, $uid_plz, $uid_ort);
+    }
+  }
+  return $dataUidBfs;
+}
+
+function ws_get_uid_from_name_search($name, $plz, $ort, $rechtsform, $client, &$data, $verbose, $num_retries = 0, &$retry_log = '') {
+  try {
+    $data_raw = initDataArray();
+    ws_search_uid_bfs_raw($name, $plz, $ort, $rechtsform, 3, $client, $data_raw, $verbose, $num_retries, $retry_log);
+    $uid_list = $data_raw['data'];
+    if ($data_raw['success'] && count($uid_list) > 0) {
+      $uid_item = $uid_list[0];
+      fillDataFromUidBfsResult50($uid_item, $data);
+      $uid_rating = $uid_item->rating;
+      $data['data']['uid_rating'] = $uid_rating;
+      $data['total_count'] = count($uid_list);
+    }
+
+    if ($data['success'] && !empty($data['data']['uid']) && $data['count'] && $uid_rating > 75) {
+      return $data['data']['uid'];
+    } else {
+      return null;
+    }
+  } catch(Exception $e) {
+    $data['message'] .= _utils_get_exception($e);
+    $data['success'] = false;
+    return null;
+  } finally {
+    // ws_verbose_logging($client, $response, $data, $verbose);
+  }
 }
 
 function _lobbywatch_fetch_ws_uid_data_from_old_hr_id($old_hr_id_raw, $verbose = 0, $ssl = true, $test_mode = false) {
@@ -2380,7 +2549,7 @@ function _lobbywatch_fetch_ws_uid_data_from_old_hr_id($old_hr_id_raw, $verbose =
     $response = $client->Search($params);
     fillDataFromUidBfsResult($response->SearchResult, $data);
   } catch(Exception $e) {
-    // $data['message'] .= _utils_get_exeption($e);
+    // $data['message'] .= _utils_get_exception($e);
     $data['message'] .= $e->GetMessage();
     $data['success'] = false;
   } finally {
@@ -2407,11 +2576,17 @@ function ws_verbose_logging($client, $response, &$data, $verbose) {
 function fillDataFromUidBfsResult50($object, &$data) {
     if (!empty((array) $object)) {
 //       print_r($object);
-      if (is_array($object->organisationType)) {
+      if (is_array($object->organisationType ?? null)) {
         $ot = $object->organisationType[0];
         $data['count'] = count($object->organisationType);
-      } else {
+      } else if (!empty($object->organisationType)) {
         $ot = $object->organisationType;
+        $data['count'] = 1;
+      } else if (!empty($object->organisation)) {
+        $ot = $object->organisation;
+        $data['count'] = 1;
+      } else {
+        $ot = $object;
         $data['count'] = 1;
       }
       $oid = $ot->organisation->organisationIdentification;
@@ -3739,4 +3914,8 @@ function clean_recursive_obj_from_json($var) {
 } else {
     return $var;
   }
+}
+
+function str_cut_pad(?string $str, int $length, int $pad_type = STR_PAD_RIGHT): string {
+  return mb_str_pad(mb_substr($str, 0, $length), $length, " ", $pad_type);
 }
