@@ -2440,8 +2440,8 @@ function ws_search_uid_bfs_raw($name, $plz, $ort, $rechtsform, $n = 50, $client,
             $retry_log .= '.';
             sleep(2**($i + 3));
           } else {
-            $fault = (array) $e->detail->BusinessFault;
-            throw new Exception("${fault['Error']} [op=${fault['Operation']}]: ${fault['ErrorDetail']}", $e->getCode(), $e);
+            $fault = (array) $e->detail->businessFault;
+            throw new Exception("${fault['error']} [op=${fault['operation']}]: ${fault['errorDetail']}", $e->getCode(), $e);
           }
         } else {
           throw $e;
