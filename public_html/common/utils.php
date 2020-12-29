@@ -2435,6 +2435,13 @@ function fillDataFromUidBfsResult50($object, &$data) {
       $hr_status_entry_code = $ot->commercialRegisterInformation->commercialRegisterEntryStatus ?? null;
       /*
       uidregStatusEnterpriseDetail (eCH-0108:uidregStatusEnterpriseDetailType)
+        1 = provisorisch (UID durch das Unternehmensregister zugewiesen aber noch nicht geprüft)
+        2 = in Reaktivierung (Reaktivierung eines vormals gelöschten Eintrags)
+        3 = definitiv (Eintrag geprüft und UID zugewiesen)
+        4 = in Mutation (Mutation eines bereits existierenden Eintrags)
+        5 = gelöscht (Löschung eines Eintrags)
+        6 = definitiv gelöscht (Löschung eines Eintrags nach Ablauf der 10 jährigen Aufbewahrungsfrist)
+        7 = annulliert (wenn eine Dublette bei der Kontrolle entdeckt wurde)
       */
       $uid_status_code = $ot->uidregInformation->uidregStatusEnterpriseDetail;
       /*
@@ -2474,13 +2481,13 @@ function fillDataFromUidBfsResult50($object, &$data) {
         'ort' => trim($address->town),
         'bfs_gemeinde_id' => $address->municipalityId ?? null,
         'eidg_gebaeude_id_egid' => $address->EGID ?? null,
-        'adresse_plz' => $address->swissZipCode,
+        'adresse_plz' => $address->swissZipCode ?? $address->foreignZipCode ?? null,
         'land_iso2' => $address->countryIdISO2,
         'land_id' => _lobbywatch_ws_get_land_id($address->countryIdISO2),
     //     'handelsregister_url' => ,
         'register_kanton' => null,
         'kanton' => $address->cantonAbbreviation,
-        'inaktiv' => !empty($hr_status_entry_code) ? $hr_status_entry_code == 2 : (!empty($ot->organisation->liquidation->uidregLiquidationDate) ? true : null),
+        'inaktiv' => (!empty($uid_status_code) ? in_array($uid_status_code, [5, 6, 7]) : null) || (!empty($hr_status_entry_code) ? $hr_status_entry_code == 2 : (!empty($ot->organisation->liquidation->uidregLiquidationDate) ? true : null)),
         'in_handelsregister' => $hr_status_code == 2,
         'gruendungsdatum' => $ot->organisation->foundationDate ?? null,
         'uid_nachfolger' => $ot->uidregInformation->uidReplacement ?? null,
