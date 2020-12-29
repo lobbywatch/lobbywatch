@@ -621,8 +621,8 @@ function search_uids_by_name($records_limit, $start_id, $ssl, $test_mode) {
 
     if ($ws_uid_found) $n_ws_uid_found++;
 
-    print(str_repeat("\t", $level) . str_pad($i, 4, " ", STR_PAD_LEFT) . '|' . str_pad($id, 4, " ", STR_PAD_LEFT) . '|' . ($ws_uid_found ? 'U' : ($ws_uid_checked ? 'u' : ' ')) . "| $sign | " . ($deleted ? 'x' : ' ') . " | " . str_cut_pad($name, 52) . '| ' . str_cut_pad($rechtsform, 12) . '| ' . str_cut_pad($plz, 4) . ' ' . str_cut_pad($ort, 12) . "| " . implode(" | ", $fields) . "\n");
-    if (!empty($uid_candiates)) print(implode("\n", $uid_candiates) . "\n");
+    print("\n" . str_repeat("\t", $level) . str_pad($i, 4, " ", STR_PAD_LEFT) . '|' . str_pad($id, 4, " ", STR_PAD_LEFT) . '|' . ($ws_uid_found ? 'U' : ($ws_uid_checked ? 'u' : ' ')) . "| $sign | " . ($deleted ? 'x' : ' ') . " | " . str_cut_pad($name, 70) . '| ' . str_cut_pad($rechtsform, 12) . '| ' . str_cut_pad($plz, 4) . ' ' . str_cut_pad($ort, 12) . "| " . implode(" | ", $fields) . "\n");
+    if (!empty($uid_candiates)) print(implode("\n", array_map(function(string $item) {return str_repeat(" ", 11) . $item;}, $uid_candiates)) . "\n");
   }
 
   print("\nU: $n_ws_uid_found");
@@ -976,7 +976,7 @@ function search_name_and_set_uid($records_limit, $start_id, $ssl, $test_mode) {
       $n_equal_uid++;
     } else if (!$uid_db && $uid_ws) {
       // $data = initDataArray();
-      // ws_get_organization_from_uid_bfs($uid_ws, $client, $data, $verbose);
+      // ws_get_organization_from_uid_bfs($uid_ws, $client, $data, $verbose, 9, $retry_log);
       // if (!$records_limit || $records_limit > 20) sleep(3);
       $plz_ws = $data['data']['adresse_plz'] ?? null;
       $ort_ws = $data['data']['ort'] ?? null;

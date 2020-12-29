@@ -2490,7 +2490,8 @@ function call_ws_search_uid_bfs(string $marker, string $name, ?string $plz, ?str
       $uid_rechtsform = _lobbywatch_ws_get_rechtsform($oid->legalForm ?? null);
       $uid_rating = $uid_item->rating;
       $uid_historic = $uid_item->isHistoryMatch;
-      $uid_candiates[] = sprintf("    %s %s: %3d %s - %s - %s - %s %s", $marker, $uid, $uid_rating, $uid_historic ? 'H' :  ' ', $uid_name, $uid_rechtsform, $uid_plz, $uid_ort);
+      // $uid_candiates[] = sprintf("    %s %s: %3d %s - %s - %s - %s %s", $marker, $uid, $uid_rating, $uid_historic ? 'H' :  ' ', $uid_name, $uid_rechtsform, $uid_plz, $uid_ort);
+      $uid_candiates[] = sprintf("%s %3d %s | %s| %s| %s %s| %s", $marker, $uid_rating, $uid_historic ? 'H' :  ' ', str_cut_pad($uid_name, 70),str_cut_pad($uid_rechtsform, 12), str_cut_pad($uid_plz, 4), str_cut_pad($uid_ort, 12), $uid);
     }
   }
   return $dataUidBfs;
@@ -2499,7 +2500,7 @@ function call_ws_search_uid_bfs(string $marker, string $name, ?string $plz, ?str
 function ws_get_uid_from_name_search($name, $plz, $ort, $rechtsform, $client, &$data, $verbose, $num_retries = 0, &$retry_log = '') {
   try {
     $data_raw = initDataArray();
-    ws_search_uid_bfs_raw($name, $plz, $ort, $rechtsform, 3, $client, $data_raw, $verbose, $num_retries, $retry_log);
+    ws_search_uid_bfs_raw($name, $plz, $ort, $rechtsform, 30, $client, $data_raw, $verbose, $num_retries, $retry_log);
     $uid_list = $data_raw['data'];
     if ($data_raw['success'] && count($uid_list) > 0) {
       $uid_item = $uid_list[0];
