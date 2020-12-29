@@ -243,10 +243,10 @@ do
   > "$file";
 done
 
-if ! minify; then
+if ! $minify; then
   minifyDisablePattern='s%(UseMinifiedJS\(\)\n\{\n    return )true%\1false%s'
 else
-  minifyDisablePattern='s%not_existing_value_182734078450238475029347850237845295%'
+  minifyDisablePattern='s%not_existing_value_182734078450238475029347850237845295%%'
 fi
 
 for file in $dir/phpgen_settings.php
