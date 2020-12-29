@@ -43964,9 +43964,9 @@
             '        editors[\'rechtsform\'].setEnabled(false);'. "\n" .
             '        editors[\'rechtsform_handelsregister\'].setEnabled(false);'. "\n" .
             '        editors[\'rechtsform\'].setEnabled(false);'. "\n" .
-            '        if (editors[\'in_handelsregister\'].getValue()) {'. "\n" .
+            '        // if (editors[\'in_handelsregister\'].getValue()) {'. "\n" .
             '            editors[\'inaktiv\'].setEnabled(false);'. "\n" .
-            '        }'. "\n" .
+            '        // }'. "\n" .
             '    }'. "\n" .
             '}';
         }

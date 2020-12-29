@@ -8385,9 +8385,9 @@ window.disable_organisation_imported_fields = function (editors) {
         editors['rechtsform'].setEnabled(false);
         editors['rechtsform_handelsregister'].setEnabled(false);
         editors['rechtsform'].setEnabled(false);
-        if (editors['in_handelsregister'].getValue()) {
+        // if (editors['in_handelsregister'].getValue()) {
             editors['inaktiv'].setEnabled(false);
-        }
+        // }
     }
 }          </OnBeforePageLoad>
           <OnInsertFormEditorValueChanged enabled="true">
