@@ -2491,7 +2491,7 @@ function call_ws_search_uid_bfs(string $marker, string $name, ?string $plz, ?str
       $uid_rating = $uid_item->rating;
       $uid_historic = $uid_item->isHistoryMatch;
       // $uid_candiates[] = sprintf("    %s %s: %3d %s - %s - %s - %s %s", $marker, $uid, $uid_rating, $uid_historic ? 'H' :  ' ', $uid_name, $uid_rechtsform, $uid_plz, $uid_ort);
-      $uid_candiates[] = sprintf("%s %3d %s | %s| %s| %s %s| %s", $marker, $uid_rating, $uid_historic ? 'H' :  ' ', str_cut_pad($uid_name, 70),str_cut_pad($uid_rechtsform, 12), str_cut_pad($uid_plz, 4), str_cut_pad($uid_ort, 12), $uid);
+      $uid_candiates[] = sprintf("%s |%3d | %s | %s| %s| %s %s| %s", $marker, $uid_rating, $uid_historic ? 'H' :  ' ', str_cut_pad($uid_name, 70),str_cut_pad($uid_rechtsform, 12), str_cut_pad($uid_plz, 4), str_cut_pad($uid_ort, 12), $uid);
     }
   }
   return $dataUidBfs;
