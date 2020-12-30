@@ -54349,6 +54349,17 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
+            // Edit column for parlament_biografie_id field
+            //
+            $editor = new TextEdit('parlament_biografie_id_edit');
+            $editColumn = new CustomEditColumn('Parlament.ch Biografie ID', 'parlament_biografie_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
             // Edit column for parlament_number field
             //
             $editor = new RadioEdit('parlament_number_edit');
@@ -55417,17 +55428,6 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for parlament_interessenbindungen field
-            //
-            $editor = new HtmlWysiwygEditor('parlament_interessenbindungen_edit');
-            $editColumn = new CustomEditColumn('Parlament Interessenbindungen', 'parlament_interessenbindungen', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
-            $editColumn->setEnabled(false);
-            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -57384,7 +57384,47 @@
         
         function GetCustomClientScript()
         {
-            return ;
+            return 'window.disable_parlamentarier_imported_fields = function (editors) {'. "\n" .
+            '    if (editors[\'parlament_biografie_id\']?.getValue()) {'. "\n" .
+            '        editors[\'photo\'].setEnabled(false);'. "\n" .
+            '        editors[\'kleinbild\'].setEnabled(false);'. "\n" .
+            '        editors[\'parlament_number\'].setEnabled(false);'. "\n" .
+            '        editors[\'im_rat_bis\'].setEnabled(false);'. "\n" .
+            '        editors[\'im_rat_seit\'].setEnabled(false);'. "\n" .
+            '        editors[\'ratsunterbruch_von\'].setEnabled(false);'. "\n" .
+            '        editors[\'ratsunterbruch_bis\'].setEnabled(false);'. "\n" .
+            '        editors[\'ratswechsel\'].setEnabled(false);'. "\n" .
+            '        editors[\'rat_id\'].setEnabled(false);'. "\n" .
+            '        // editors[\'homepage\'].setEnabled(false);'. "\n" .
+            '        // editors[\'homepage_2\'].setEnabled(false);'. "\n" .
+            '        editors[\'email\'].setEnabled(false);'. "\n" .
+            '        editors[\'telephon_1\'].setEnabled(false);'. "\n" .
+            '        editors[\'telephon_2\'].setEnabled(false);'. "\n" .
+            '        editors[\'titel\'].setEnabled(false);'. "\n" .
+            '        editors[\'sprache\'].setEnabled(false);'. "\n" .
+            '        editors[\'nachname\'].setEnabled(false);'. "\n" .
+            '        // vorname'. "\n" .
+            '        // kanton_id'. "\n" .
+            '        editors[\'fraktion_id\'].setEnabled(false);'. "\n" .
+            '        editors[\'fraktionsfunktion\'].setEnabled(false);'. "\n" .
+            '        editors[\'geburtstag\'].setEnabled(false);'. "\n" .
+            '        editors[\'arbeitssprache\'].setEnabled(false);'. "\n" .
+            '        editors[\'geschlecht\'].setEnabled(false);'. "\n" .
+            '        editors[\'anzahl_kinder\'].setEnabled(false);'. "\n" .
+            '        editors[\'zivilstand\'].setEnabled(false);'. "\n" .
+            '        // beruf'. "\n" .
+            '        editors[\'militaerischer_grad_id\'].setEnabled(false);'. "\n" .
+            '        editors[\'adresse_firma\'].setEnabled(false);'. "\n" .
+            '        editors[\'adresse_strasse\'].setEnabled(false);'. "\n" .
+            '        editors[\'adresse_plz\'].setEnabled(false);'. "\n" .
+            '        editors[\'adresse_ort\'].setEnabled(false);'. "\n" .
+            '        editors[\'aemter\'].setEnabled(false);'. "\n" .
+            '        editors[\'weitere_aemter\'].setEnabled(false);'. "\n" .
+            '        // parlament_beruf_json'. "\n" .
+            '        // parlament_interessenbindungen'. "\n" .
+            '        // parlament_interessenbindungen_json'. "\n" .
+            '    }'. "\n" .
+            '}';
         }
         
         function GetOnPageLoadedClientScript()
@@ -57494,7 +57534,7 @@
         }
      
         protected function setClientSideEvents(Grid $grid) {
-    
+            $grid->SetEditClientFormLoadedScript('window.disable_parlamentarier_imported_fields(editors);');
         }
     
         protected function doRegisterHandlers() {

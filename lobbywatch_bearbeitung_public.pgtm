@@ -9129,7 +9129,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="parlament_biografie_id"/>
             <Column fieldName="parlament_number"/>
             <Column fieldName="parlament_beruf_json" visible="false"/>
-            <Column fieldName="parlament_interessenbindungen"/>
+            <Column fieldName="parlament_interessenbindungen" visible="false"/>
             <Column fieldName="parlament_interessenbindungen_json" visible="false"/>
             <Column fieldName="parlament_interessenbindungen_updated"/>
             <Column fieldName="twitter_name"/>
@@ -9582,7 +9582,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="email"/>
             <Column fieldName="homepage"/>
             <Column fieldName="homepage_2"/>
-            <Column fieldName="parlament_biografie_id" visible="false"/>
+            <Column fieldName="parlament_biografie_id"/>
             <Column fieldName="parlament_number"/>
             <Column fieldName="parlament_beruf_json"/>
             <Column fieldName="parlament_interessenbindungen"/>
@@ -19549,6 +19549,51 @@ parlamentarier_update_photo_metadata($page, $rowData, $cancel, $message, $tableN
 customOnCustomRenderColumn('parlamentarier', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
+          <OnBeforePageLoad enabled="true">
+window.disable_parlamentarier_imported_fields = function (editors) {
+    if (editors['parlament_biografie_id']?.getValue()) {
+        editors['photo'].setEnabled(false);
+        editors['kleinbild'].setEnabled(false);
+        editors['parlament_number'].setEnabled(false);
+        editors['im_rat_bis'].setEnabled(false);
+        editors['im_rat_seit'].setEnabled(false);
+        editors['ratsunterbruch_von'].setEnabled(false);
+        editors['ratsunterbruch_bis'].setEnabled(false);
+        editors['ratswechsel'].setEnabled(false);
+        editors['rat_id'].setEnabled(false);
+        // editors['homepage'].setEnabled(false);
+        // editors['homepage_2'].setEnabled(false);
+        editors['email'].setEnabled(false);
+        editors['telephon_1'].setEnabled(false);
+        editors['telephon_2'].setEnabled(false);
+        editors['titel'].setEnabled(false);
+        editors['sprache'].setEnabled(false);
+        editors['nachname'].setEnabled(false);
+        // vorname
+        // kanton_id
+        editors['fraktion_id'].setEnabled(false);
+        editors['fraktionsfunktion'].setEnabled(false);
+        editors['geburtstag'].setEnabled(false);
+        editors['arbeitssprache'].setEnabled(false);
+        editors['geschlecht'].setEnabled(false);
+        editors['anzahl_kinder'].setEnabled(false);
+        editors['zivilstand'].setEnabled(false);
+        // beruf
+        editors['militaerischer_grad_id'].setEnabled(false);
+        editors['adresse_firma'].setEnabled(false);
+        editors['adresse_strasse'].setEnabled(false);
+        editors['adresse_plz'].setEnabled(false);
+        editors['adresse_ort'].setEnabled(false);
+        editors['aemter'].setEnabled(false);
+        editors['weitere_aemter'].setEnabled(false);
+        // parlament_beruf_json
+        // parlament_interessenbindungen
+        // parlament_interessenbindungen_json
+    }
+}
+          </OnBeforePageLoad>
+          <OnEditFormLoaded enabled="true">
+window.disable_parlamentarier_imported_fields(editors);          </OnEditFormLoaded>
         </EventHandlers>
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators>
