@@ -41,7 +41,7 @@ $(function() {
       var uid_raw = $('#' + formId + '_uid_edit').val();
 
       if (!uid_raw) {
-        $('#error-message').append('<p>Failed: Empty UID</p>').show();
+        $('#error-message').append('<p>Failed: Empty UID.<br>Search UID on <a href="https://www.uid.admin.ch/" title="Opens UID-Register@BFS webpage" target="_blank">UID-Register</a>.</p>').show();
         return;
       }
 
