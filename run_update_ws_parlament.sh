@@ -22,16 +22,18 @@ enable_fail_onerror
 PHP=php
 LOCAL_PHP=php
 # PHP=/usr/bin/php
-if [[ "$HOSTNAME" =~ "rpialch" || "$HOSTNAME" =~ "rpiw" || "$HOSTNAME" =~ "abel" ]]; then
-  # PHP="docker run -i --rm --name php74_execution --network=host -v $PWD:/usr/src/myapp -w /usr/src/myapp php74 php"
-  # PHP="docker run -i --rm --name php80_execution -p 127.0.0.1:9003:9003 --v $PWD:/usr/src/myapp -w /usr/src/myapp php80 php"
-  # PHP="docker run -i --rm --name php80_execution --env XDEBUG_CONFIG='start_with_request=yes' --network=host -v $PWD:/usr/src/myapp -w /usr/src/myapp php80 php"
-  # PHP="docker run -i --rm --name php80_execution --network=host -v $PWD:/usr/src/myapp -w /usr/src/myapp php80 php -d'xdebug.start_with_request=yes'"
-  # PHP="docker run -i --rm --name php80_execution --network=host -v $PWD:/usr/src/myapp -w /usr/src/myapp php80 php"
-  PHP="docker run -i --rm --name php80_execution --env XDEBUG_TRIGGER=PHP_DEBUG --network=host -v $PWD:/usr/src/myapp -w /usr/src/myapp php80 php"
-  # PHP="docker run -i --rm --name php80_execution --network=host -v $PWD:/usr/src/myapp -w /usr/src/myapp php80 php"
-  echo "Use docker PHP"
-fi
+# if [[ "$HOSTNAME" =~ "rpialch" || "$HOSTNAME" =~ "rpiw" || "$HOSTNAME" =~ "abel" ]]; then
+#   # add --init for Ctrl-C support, https://stackoverflow.com/questions/41097652/how-to-fix-ctrlc-inside-a-docker-container
+#   # PHP="docker run -i --rm --name php74_execution --network=host -v $PWD:/usr/src/myapp -w /usr/src/myapp php74 php"
+#   # PHP="docker run -i --rm --name php80_execution -p 127.0.0.1:9003:9003 --v $PWD:/usr/src/myapp -w /usr/src/myapp php80 php"
+#   # PHP="docker run -i --rm --name php80_execution --env XDEBUG_CONFIG='start_with_request=yes' --network=host -v $PWD:/usr/src/myapp -w /usr/src/myapp php80 php"
+#   # PHP="docker run -i --rm --name php80_execution --network=host -v $PWD:/usr/src/myapp -w /usr/src/myapp php80 php -d'xdebug.start_with_request=yes'"
+#   # PHP="docker run -i --rm --name php80_execution --network=host -v $PWD:/usr/src/myapp -w /usr/src/myapp php80 php"
+#   # PHP="docker run -i --rm --name php80_execution --env XDEBUG_TRIGGER=PHP_DEBUG --network=host -v $PWD:/usr/src/myapp -w /usr/src/myapp php80 php"
+#   PHP="docker run -i --init --rm --name php80_execution --env XDEBUG_TRIGGER=PHP_DEBUG --network=host -v $PWD:/usr/src/myapp -w /usr/src/myapp php80 php"
+#   # PHP="docker run -i --rm --name php80_execution --network=host -v $PWD:/usr/src/myapp -w /usr/src/myapp php80 php"
+#   echo "Use docker PHP"
+# fi
 
 db=lobbywatchtest
 env="local_${db}"
