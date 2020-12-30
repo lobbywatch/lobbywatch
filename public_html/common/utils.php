@@ -2484,9 +2484,9 @@ function call_ws_search_uid_bfs(string $marker, string $name, ?string $plz, ?str
       $base_address = $org->address;
       $address = is_array($base_address) ? $base_address[0] : $base_address;
       $uid = formatUID($oid->uid->uidOrganisationId);
-      $uid_name = $oid->organisationName;
+      $uid_name = clean_str($oid->organisationName);
       $uid_plz = $address->swissZipCode ?? $address->foreignZipCode ?? null;
-      $uid_ort = $address->town;
+      $uid_ort = clean_str($address->town);
       $uid_rechtsform = _lobbywatch_ws_get_rechtsform($oid->legalForm ?? null);
       $uid_rating = $uid_item->rating;
       $uid_historic = $uid_item->isHistoryMatch;
@@ -2645,16 +2645,16 @@ function fillDataFromUidBfsResult50($object, &$data) {
         'uid' => formatUID($uid_ws),
         'uid_raw' => $uid_ws,
         'alte_hr_id' => !empty($old_hr_id->organisationId) && substr($old_hr_id->organisationId, 0, 2) == 'CH' ? $old_hr_id->organisationId : null,
-        'name' => trim($oid->organisationName),
-        'name_de' => trim($oid->organisationName),
-        'alias_name' => $oid->organisationAdditionalName ?? null,
+        'name' => clean_str($oid->organisationName),
+        'name_de' => clean_str($oid->organisationName),
+        'alias_name' => clean_str($oid->organisationAdditionalName ?? null),
         'abkuerzung_de' => extractAbkuerzung($oid->organisationName),
     // TODO 'name_fr' => $ot->organisation->organisationIdentification->organisationName,
         'rechtsform_handelsregister' => $legel_form,
         'rechtsform' => _lobbywatch_ws_get_rechtsform($legel_form),
-        'adresse_strasse' => $adresse_strasse,
-        'adresse_zusatz' => $adresse_zusatz,
-        'ort' => trim($address->town),
+        'adresse_strasse' => clean_str($adresse_strasse),
+        'adresse_zusatz' => clean_str($adresse_zusatz),
+        'ort' => clean_str($address->town),
         'bfs_gemeinde_id' => $address->municipalityId ?? null,
         'eidg_gebaeude_id_egid' => $address->EGID ?? null,
         'adresse_plz' => $address->swissZipCode ?? $address->foreignZipCode ?? null,
@@ -2730,15 +2730,15 @@ function fillDataFromUidBfsResult30($object, &$data) {
         'uid' => formatUID($uid_ws),
         'uid_raw' => $uid_ws,
         'alte_hr_id' => !empty($old_hr_id->organisationId) && substr($old_hr_id->organisationId, 0, 2) == 'CH' ? $old_hr_id->organisationId : null,
-        'name' => trim($oid->organisationName),
-        'name_de' => trim($oid->organisationName),
+        'name' => clean_str($oid->organisationName),
+        'name_de' => clean_str($oid->organisationName),
         'abkuerzung_de' => extractAbkuerzung($oid->organisationName),
     // TODO 'name_fr' => $ot->organisation->organisationIdentification->organisationName,
         'rechtsform_handelsregister' => $legel_form,
         'rechtsform' => _lobbywatch_ws_get_rechtsform($legel_form),
-        'adresse_strasse' => trim($address->street) . (!empty($address->houseNumber) ? ' ' . trim($address->houseNumber) : ''),
-        'adresse_zusatz' => !empty($address->addressLine1) ? trim($address->addressLine1) : (!empty($address2->postOfficeBoxNumber) ? 'Postfach ' . trim($address2->postOfficeBoxNumber) : null),
-        'ort' => trim($address->town),
+        'adresse_strasse' => clean_str($address->street) . (!empty($address->houseNumber) ? ' ' . clean_str($address->houseNumber) : ''),
+        'adresse_zusatz' => !empty($address->addressLine1) ? trim($address->addressLine1) : (!empty($address2->postOfficeBoxNumber) ? 'Postfach ' . clean_str($address2->postOfficeBoxNumber) : null),
+        'ort' => clean_str($address->town),
         'adresse_plz' => +$address->swissZipCode,
         'land_iso2' => $address->country->countryIdISO2,
         'land_id' => _lobbywatch_ws_get_land_id($address->country->countryIdISO2),
@@ -2842,23 +2842,23 @@ function fillDataFromZefixRestResult($json, &$data) {
         'uid' => formatUID($uid_ws),
         'uid_raw' => $uid_ws,
         'alte_hr_id' => $old_hr_id ?? null,
-        'name' => trim($oid->name),
-        'name_de' => trim($oid->name),
+        'name' => clean_str($oid->name),
+        'name_de' => clean_str($oid->name),
         'abkuerzung_de' => extractAbkuerzung($oid->name),
     // TODO 'name_fr' => $ot->organisation->organisationIdentification->organisationName, TODO
         'rechtsform_handelsregister' => $legel_form_handelsregister_uid,
         'rechtsform' => _lobbywatch_ws_get_rechtsform($legel_form_handelsregister_uid),
         'rechtsform_zefix' => $oid->legalForm->id ?? null,
-        'adresse_strasse' => !empty($address->street) ? (trim($address->street) . (!empty($address->houseNumber) ? ' ' . trim($address->houseNumber) : '')) : null,
+        'adresse_strasse' => !empty($address->street) ? (clean_str($address->street) . (!empty($address->houseNumber) ? ' ' . clean_str($address->houseNumber) : '')) : null,
         // 'adresse_zusatz' => (!empty($address->addon) ? $address->addon : null) ?? ('Postfach ' . $address->poBox) ?? ('Postfach ' . $address2->poBox) ?? null,
-        'adresse_zusatz' => !empty($address->addon) ? trim($address->addon) : (!empty($address->poBox) ? 'Postfach ' . trim($address->poBox) : (!empty($address2->poBox) ? 'Postfach ' . trim($address2->poBox) : null)),
-        'ort' => $address->city ? trim($address->city) : null,
+        'adresse_zusatz' => !empty($address->addon) ? clean_str($address->addon) : (!empty($address->poBox) ? 'Postfach ' . clean_str($address->poBox) : (!empty($address2->poBox) ? 'Postfach ' . clean_str($address2->poBox) : null)),
+        'ort' => $address->city ? clean_str($address->city) : null,
         'adresse_plz' => !empty($address->swissZipCode) && is_numeric($address->swissZipCode) ? +$address->swissZipCode : null,
         'land_iso2' => 'CH' ?? null,
         'land_id' => _lobbywatch_ws_get_land_id('CH') ?? null,
         'handelsregister_url' => $ot->cantonalExcerptWeb ? trim($ot->cantonalExcerptWeb) : null,
         'handelsregister_ws_url' => $ot->wsLink ?? null, // TODO what for?
-        'zweck' => $ot->purpose ? "Zweck: " . trim($ot->purpose) : null,
+        'zweck' => $ot->purpose ? "Zweck: " . clean_str($ot->purpose) : null,
         'register_kanton' => $ot->canton ?? null,
         'inaktiv' => $status != 'ACTIVE',
         'nominalkapital' => $ot->capitalNominal,
@@ -3887,13 +3887,11 @@ function camelize($input, $separator = '_', $capitalizeFirstCharacter = true) {
   return $str;
 }
 
-function clean_str(string $str) {
+function clean_str(?string $str): ?string {
+  if (!isset($str)) return null;
   $cleaned = Normalizer::normalize($str, Normalizer::FORM_C);
   // replace typographic chars
-  $cleaned = preg_replace('/[«»“”„]/ui', '"', $cleaned);
-  $cleaned = preg_replace('/[`‘’‚]/ui', "'", $cleaned);
-  $cleaned = trim($cleaned);
-  return $cleaned;
+  return trim(preg_replace(['%[«»“”„]%ui', '%[`‘’‚]%ui', '%[-–—]+%ui', '%[®]%ui'], ['"', "'", "-"], $cleaned));
 }
 
 /**
