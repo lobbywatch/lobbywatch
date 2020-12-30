@@ -478,6 +478,9 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
           <ColumnPresentation fieldName="adresse_plz" caption="Adresse PLZ" headerHint="Postleitzahl der Organisation" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
+            <Validators>
+              <RegExpClientValidatorInfo enabled="true" expression="\d{4}|^$"/>
+            </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="ort" caption="Ort" headerHint="Ort der Organisation" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75" escapeHTMLChars="true"/>

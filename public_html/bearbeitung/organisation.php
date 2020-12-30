@@ -40588,6 +40588,8 @@
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Adresse PLZ', 'adresse_plz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('\d{4}|^$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -41371,6 +41373,8 @@
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Adresse PLZ', 'adresse_plz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('\d{4}|^$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
             
@@ -42199,6 +42203,8 @@
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Adresse PLZ', 'adresse_plz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('\d{4}|^$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
