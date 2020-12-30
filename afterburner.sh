@@ -320,6 +320,7 @@ do
    perl -p -e's%('\''|")(forms/form_footer.tpl)\1%\1custom_templates/\2\1%g' |
    perl -p -e's%('\''|")(forms/actions_edit.tpl)\1%\1custom_templates/\2\1%g' |
    perl -p -e's%('\''|")(list/grid_toolbar_selection_button.tpl)\1%\1custom_templates/\2\1%g' |
+   perl -p -e's%\{if \$id\}id="\{\$id\}"\{/if\}%{if \$id}id="{\$id}" {/if}%' |
    perl -p -e's%('\''|")(list/grid_column_header.tpl)\1%\1custom_templates/\2\1%g' \
   > "$file";
 done

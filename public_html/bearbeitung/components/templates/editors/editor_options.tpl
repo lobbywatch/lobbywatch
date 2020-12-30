@@ -1,4 +1,4 @@
-{if $id}id="{$id}"{/if}
+{if $id}id="{$id}" {/if}
 name="{$Editor->GetName()}{if $Multiple}[]{/if}"
 data-editor="{$Editor->getEditorName()}"
 data-field-name="{$Editor->GetFieldName()}"

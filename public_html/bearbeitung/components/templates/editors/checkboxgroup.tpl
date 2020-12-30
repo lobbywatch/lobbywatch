@@ -1,6 +1,6 @@
 {strip}
 <div
-    {n}{if $id}id="{$id}"{/if}
+    {n}{if $id}id="{$id}" {/if}
     {n}data-editor="{$Editor->getEditorName()}"
     {n}data-editor-name="{$Editor->GetName()}"
     {n}data-field-name="{$Editor->GetFieldName()}"
