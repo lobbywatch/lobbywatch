@@ -3411,8 +3411,8 @@ ALTER TABLE zutrittsberechtigung_log
 -- organisation
 ALTER TABLE organisation
   CHANGE `land_id` `land_id` INT(11) NULL DEFAULT '191' COMMENT 'Land der Organisation',
-  DROP INDEX `uid_unique`,
-  ADD `organisation_uid_unique` VARCHAR(15) GENERATED ALWAYS AS (CONCAT_WS('_', IFNULL(`uid`, CONCAT('UNIQUE_', id)))) VIRTUAL NOT NULL COMMENT 'uid muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE,
+  -- DROP INDEX `uid_unique`,
+  -- ADD `organisation_uid_unique` VARCHAR(15) GENERATED ALWAYS AS (CONCAT_WS('_', IFNULL(`uid`, CONCAT('UNIQUE_', id)))) VIRTUAL NOT NULL COMMENT 'uid muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE,
   DROP INDEX `organisation_name_de_unique`,
   ADD `organisation_name_de_rechtsform_unique` VARCHAR(190) GENERATED ALWAYS AS (CONCAT_WS('_', name_de, IFNULL(`rechtsform`, '-'))) VIRTUAL NOT NULL COMMENT 'Kombination aus name_de und rechtsform muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE,
   DROP INDEX `organisation_name_fr_unique`,
@@ -3422,7 +3422,7 @@ ALTER TABLE organisation
 
 ALTER TABLE organisation_log
   CHANGE `land_id` `land_id` INT(11) NULL DEFAULT '191' COMMENT 'Land der Organisation',
-  ADD `organisation_uid_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint',
+  -- ADD `organisation_uid_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint',
   ADD `organisation_name_de_rechtsform_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint',
   ADD `organisation_name_fr_rechtsform_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint',
   ADD `organisation_name_it_rechtsform_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint';
