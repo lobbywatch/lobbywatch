@@ -543,7 +543,7 @@ function search_uids_by_name($records_limit, $start_id, $ssl, $test_mode) {
   $script[] = $comment = "\n-- Search UIDs from name via webservices $transaction_date";
 
   $starting_id_sql = $start_id ? "AND id >= $start_id" : '';
-  $sql = "SELECT id, name_de, handelsregister_url, uid, rechtsform, rechtsform_handelsregister, abkuerzung_de, name_fr, ort, adresse_strasse, adresse_zusatz, adresse_plz, inaktiv FROM organisation WHERE uid IS NULL AND (rechtsform IS NULL OR rechtsform <> 'Parlamentarische Gruppe') $starting_id_sql ORDER BY id;";
+  $sql = "SELECT id, name_de, handelsregister_url, uid, rechtsform, rechtsform_handelsregister, abkuerzung_de, name_fr, ort, adresse_strasse, adresse_zusatz, adresse_plz, inaktiv FROM organisation WHERE uid IS NULL AND (rechtsform IS NULL OR rechtsform <> 'Parlamentarische Gruppe') AND (land_id IS NULL OR land_id = 191) $starting_id_sql ORDER BY id;";
   $stmt = $db->prepare($sql);
 
   $stmt->execute([]);
@@ -926,7 +926,7 @@ function search_name_and_set_uid($records_limit, $start_id, $ssl, $test_mode) {
   $script[] = $comment = "\n-- Organisation migrate old HR-ID to UID from handelsregister URL $transaction_date";
 
   $starting_id_sql = $start_id ? "AND id >= $start_id" : '';
-  $sql = "SELECT id, name_de, uid, adresse_plz, rechtsform, ort FROM organisation WHERE uid IS NULL AND (rechtsform IS NULL OR rechtsform <> 'Parlamentarische Gruppe') $starting_id_sql ORDER BY id;"; //  WHERE handelsregister_url IS NOT NULL
+  $sql = "SELECT id, name_de, uid, adresse_plz, rechtsform, ort FROM organisation WHERE uid IS NULL AND (rechtsform IS NULL OR rechtsform <> 'Parlamentarische Gruppe') AND (land_id IS NULL OR land_id = 191) $starting_id_sql ORDER BY id;"; //  WHERE handelsregister_url IS NOT NULL
   $stmt = $db->prepare($sql);
 
   $stmt->execute ( [] );
@@ -981,10 +981,21 @@ function search_name_and_set_uid($records_limit, $start_id, $ssl, $test_mode) {
       $plz_ws = $data['data']['adresse_plz'] ?? null;
       $ort_ws = $data['data']['ort'] ?? null;
       $rechtsform_ws = $data['data']['rechtsform'] ?? null;
-      $replace_pattern = ['%ae%ui', '%oe%ui', '%ue%ui', '%&%ui', '%[-."/*+_\']%ui', '%\(\w+\)%ui', '%,\s*\w+$%ui', '%\s+[A-ZÄÖÜ]{3,4}(-[A-ZÄÖÜ]{3,4})?$%u', '%\s+%ui'];
-      $replace_replacement = ['ä', 'ö', 'ü', 'und'];
-      $ort_pattern = ['%\s*\d+%u'];
-      if ($data['success'] && mb_strtolower(preg_replace($replace_pattern, $replace_replacement, $name_ws = $data['data']['name_de'])) === mb_strtolower(preg_replace($replace_pattern, $replace_replacement, $name)) && (empty($ort) || preg_replace($ort_pattern, [], $ort) === preg_replace($ort_pattern, '', $ort_ws)) && (empty($rechtsform) || $rechtsform === $rechtsform_ws) && $uid_rating >= 95) {
+      // TODO also remove ort from name in a 2nd step
+      $replace_pattern = ['%ae%ui', '%oe%ui', '%ue%ui', '%[âà]%ui', '%[éèë]%ui', '%ç%ui', '%[&+]|\bund\b|\bet\b%ui', '%Schweizerischer|Schweizerischen|Schweizerische|Schweizer|Schweiz\.%ui','%\b(der|die|L\'|La|Le|du|des|zu)\s+%ui', '%(vereinigung|Verein|Associazione|Association|Assoc\.|Zunft|Società|Schweiz|Suisse|Svizzera|Swiss)\b%ui', '%\(\w+\)%ui', '%,\s*\w+$%ui', '%\s+(AG\SA|GmbH)(\s+in Liquidation|\s+in liquidazione)?$%ui', '%\s+[A-ZÄÖÜ]{2,4}(\s*-\s*[A-ZÄÖÜ]{3,4})?$%u', '%^[A-ZÄÖÜ]{2,4}(-[A-ZÄÖÜ]{3,4})?\b%u', '%[-–—;.,"/*_\'®:]%ui', '%\s+%ui'];
+      $replace_replacement = ['ä', 'ö', 'ü', 'a', 'e', 'c', '+', 'ch'];
+      $ort_pattern = ['%Genf%u', '%Neuenburg%u', '%\s*\d+%u', '%\s+[A-Z]{2}$%u', '%[/]%u', '%\s+(bei|b\.)\s+.+$%u'];
+      $ort_replacement = ['Genève', 'Neuchâtel'];
+      if ($data['success']
+      && mb_strtolower(preg_replace($replace_pattern, $replace_replacement, $name_ws = $data['data']['name_de'])) === mb_strtolower(preg_replace($replace_pattern, $replace_replacement, $name))
+      && (
+        (!empty($ort) && trim(preg_replace($ort_pattern, $ort_replacement, $ort)) === trim(preg_replace($ort_pattern, $ort_replacement, $ort_ws)))
+        || (!empty($plz) && $plz == $plz_ws)
+        || (empty($plz) && empty($ort))
+        )
+      && (empty($rechtsform) || str_replace(['Informelle Gruppe'], ['Verein'], $rechtsform) === $rechtsform_ws)
+      && $uid_rating >= 95
+      ) {
         $sign = '+';
         $n_new_uid++;
 
@@ -1001,7 +1012,7 @@ function search_name_and_set_uid($records_limit, $start_id, $ssl, $test_mode) {
       $n_nothing_found++;
     }
 
-    $mgr_msg = str_cut_pad($plz, 4) . ' ' . str_cut_pad($ort, 10) . ' ' . str_cut_pad($rechtsform, 10) . ' > ' . str_cut_pad($uid_count, 2, STR_PAD_LEFT) . ' ' . str_cut_pad($uid_rating, 3, STR_PAD_LEFT) . ' ' . ($uid_ws ? "  $uid_ws    " .  str_cut_pad($plz_ws, 4) . ' ' . str_cut_pad($ort_ws, 10) . ' ' . str_cut_pad($rechtsform_ws, 10) . ' ' . str_cut_pad($name_ws, 62): '');
+    $mgr_msg = str_cut_pad($plz, 4) . ' ' . str_cut_pad($ort, 15) . ' ' . str_cut_pad($rechtsform, 10) . ' > ' . str_cut_pad($uid_count, 2, STR_PAD_LEFT) . ' ' . str_cut_pad($uid_rating, 3, STR_PAD_LEFT) . ' ' . ($uid_ws ? "  $uid_ws    " .  str_cut_pad($plz_ws, 4) . ' ' . str_cut_pad($ort_ws, 15) . ' ' . str_cut_pad($rechtsform_ws, 10) . ' ' . str_cut_pad($name_ws, 62): '');
     print(str_repeat("\t", $level) . str_cut_pad($i, 4, STR_PAD_LEFT) . '|' . str_cut_pad($id, 4, STR_PAD_LEFT) . '|' . str_cut_pad($uid_db, 15, STR_PAD_LEFT) . " | $sign | " . str_cut_pad($name, 62) . "| " . $mgr_msg . "\n");
   }
 
