@@ -96,7 +96,7 @@ function main() {
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
-  $options = getopt('hsv::u:b:tsmo:n::f::z:Z:a::S::',array('docroot:','help', 'uid:', 'bfs:', 'ssl', 'zefix-soap:', 'zefix:', 'zefix-rest:', 'db:'));
+  $options = getopt('hsv::u:b:tsmo:n::f::z:Z:a::S::', ['docroot:','help', 'uid:', 'bfs:', 'ssl', 'zefix-soap:', 'zefix:', 'zefix-rest:', 'db:']);
 
   if (isset($options['h']) || isset($options['help'])) {
     print("ws uid Fetcher for Lobbywatch.ch.

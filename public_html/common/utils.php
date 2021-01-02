@@ -1463,7 +1463,7 @@ function escape_string($string) {
   // return mysql_escape_string($string);
   // mysql_real_escape_string requires the connection
 
-  $replacements = array(
+  $replacements = [
       "\x00" => '\x00',
       "\n" => '\n',
       "\r" => '\r',
@@ -1471,7 +1471,7 @@ function escape_string($string) {
       "'" => "\'",
       '"' => '\"',
       "\x1a" => '\x1a'
-  );
+  ];
   return strtr($string, $replacements);
 }
 
@@ -3071,7 +3071,11 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
     $val = $val_raw;
   }
 
-  if ($max_length) {
+  if (is_string($val)) {
+    $val = clean_str($val);
+  }
+
+  if (is_string($db_val) && $max_length) {
     $db_val = cut($db_val, $max_length);
     $val = cut($val, $max_length);
   }
@@ -3893,7 +3897,10 @@ function clean_str(?string $str): ?string {
   // replace typographic chars
   // https://stackoverflow.com/questions/26458654/regular-expressions-for-a-range-of-unicode-points-php
   // https://www.compart.com/en/unicode/block/U+2000
-  return trim(preg_replace(['%[\x{201C}-\x{201F}«»“”„]%ui', '%[\x{2018}-\x{201B}`‘’‚‹›]%ui', '%[-\x{2010}-\x{2014}\x{202F}]%ui', "%[ \x{2000}-\x{200A}]%ui", '%[®\x{2028}\x{2029}\x{200B}\x{2063}]%ui'], ['"', "'", "-", " " , ''], $cleaned));
+  // https://www.php.net/manual/de/migration70.new-features.php#migration70.new-features.unicode-codepoint-escape-syntax
+  // \x{} is part of PCRE
+  // TODO test \r, \\r, \\\\r, \R
+  return trim(preg_replace(['%[\x{201C}-\x{201F}«»“”„]%ui', '%[\x{2018}-\x{201B}`‘’‚‹›]%ui', '%[-\x{2010}-\x{2014}\x{202F}]%ui', "%[ \x{2000}-\x{200A}]%ui", '%\R%u', '%[\x{2028}\x{2029}\x{200B}\x{2063}]%ui'], ['"', "'", '-', ' ' , "\n", ''], $cleaned));
 }
 
 /**
@@ -3919,4 +3926,50 @@ function clean_recursive_obj_from_json($var) {
 
 function str_cut_pad(?string $str, int $length, int $pad_type = STR_PAD_RIGHT): string {
   return mb_str_pad(mb_substr($str, 0, $length), $length, " ", $pad_type);
+}
+
+// http://stackoverflow.com/questions/7106470/utf-8-to-unicode-code-points
+function get_unicode_code_point($str) {
+  $codes = [];
+  foreach(mb_str_split($str) as $char_to) {
+      $codes[] = sprintf('U+%04X', IntlChar::ord($char_to));
+  }
+  return implode(' ', $codes);
+}
+
+function get_hex($str) {
+  $code = "";
+  for ($i = 0; $i < strlen($str); $i++){
+      $code .= sprintf('%02X', ord($str[$i]));
+  }
+  return $code;
+}
+
+/*
+MySQL Special Character Escape Sequences
+https://dev.mysql.com/doc/refman/5.7/en/string-literals.html
+
+\0  An ASCII NUL (X'00') character
+\'  A single quote (') character
+\"  A double quote (") character
+\b  A backspace character
+\n  A newline (linefeed) character
+\r  A carriage return character
+\t  A tab character
+\Z  ASCII 26 (Control+Z); see note following the table
+\\  A backslash (\) character
+\%  A % character; see note following the table
+\_  A _ character; see note following the table
+*/
+function clean_for_display(string $str): string {
+  return ($cleaned = strtr($str, [
+    "\u{2028}" => '\u2028',
+    "\u{2029}" => '\u2029',
+    "\r" => '\r',
+    "\n" => '\n',
+    // "'" => "\\'",
+    // '"' => '\\"',
+    // ' ' => '" "',
+    ]
+    )) !== '' ? $cleaned : '';
 }

@@ -62,6 +62,23 @@ function main() {
   // :: -> optional parameter
   $options = getopt('hv::En::jJu::', ['help','utf8mb4::', 'user-prefix:', 'db:']);
 
+  if (isset($options['h']) || isset($options['help'])) {
+    print("SQL Migration.
+Parameters:
+-j                  Migrate parlamentarier.parlament_intressenbindungen to JSON
+-J                  Migrate parlamentarier_log.parlament_intressenbindungen to JSON
+-u[=SCHEMA]         Migrate user visa (default SCHEMA: lobbywatchtest)
+--utf8mb4[=SCHEMA]  Migrate utf8mb4 (default SCHEMA: lobbywatchtest)
+-n[=NUMBER]         Limit number of records
+-E                  Execute script
+--user-prefix=USER  Prefix for db user in settings.php (default: reader_)
+--db=DB             DB name for settings.php
+-v[=LEVEL]         Verbose, optional level, 1 = default
+-h, --help          This help
+");
+  exit(0);
+  }
+
 //    var_dump($options);
 
   if (isset($options['v'])) {
@@ -110,23 +127,6 @@ function main() {
     $execute = true;
   } else {
     $execute = false;
-  }
-
-  if (isset($options['h']) || isset($options['help'])) {
-    print("SQL Migration.
-Parameters:
--j                  Migrate parlamentarier.parlament_intressenbindungen to JSON
--J                  Migrate parlamentarier_log.parlament_intressenbindungen to JSON
--u[=SCHEMA]         Migrate user visa (default SCHEMA: lobbywatchtest)
---utf8mb4[=SCHEMA]  Migrate utf8mb4 (default SCHEMA: lobbywatchtest)
--n[=NUMBER]         Limit number of records
--E                  Execute script
---user-prefix=USER  Prefix for db user in settings.php (default: reader_)
---db=DB             DB name for settings.php
--v[=LEVEL]         Verbose, optional level, 1 = default
--h, --help          This help
-");
-  exit(0);
   }
 
   if (isset($options['j'])) {

@@ -27,13 +27,12 @@ def escape_newlines(str):
 def _date_as_sql_string(date):
     return "{0:02d}.{1:02d}.{2}".format(date.day, date.month, date.year)
 
-
 def _datetime_as_sql_string(date):
     return "{0:02d}.{1:02d}.{2} {3:02d}:{4:02d}:{5:02d}".format(date.day, date.month, date.year, date.hour, date.minute, date.second)
 
 def clean_str(str):
     if str == None: return None
-    return re.sub(r'<[^<]+?>', '', re.sub(r'[«»“”„]', '"', re.sub(r"[–—]", "-", re.sub(r"[`‘’‚]", "'", ud.normalize('NFC', str))))).strip()
+    return re.sub('[\u2028\u2029\u200B\u2063]', '', re.sub(r'[           ]', ' ', re.sub(r'<[^<]+?>', '', re.sub(r'[«»“”„‟]', '"', re.sub(r"[‐‑‒–—]", "-", re.sub(r"[`‘’‚‹›‛]", "'", ud.normalize('NFC', str))))))).replace("\r\n", "\n").replace("\r", "\n").strip()
 
 def replace_bullets(str):
     if str == None: return None
