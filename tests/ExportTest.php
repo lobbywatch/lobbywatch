@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 
@@ -16,7 +16,7 @@ final class ExportTest extends TestCase {
 
     public function testNeo4jCsvExporter(): void {
         $exporter = new Neo4jCsvExporter();
-        $this->assertSame($exporter->getFormat(), 'csv_neo4j');
+        $this->assertSame($exporter->getFormat(), 'neo4j_csv');
         $this->assertSame($exporter->getFileSuffix(), 'csv');
         $this->assertSame($exporter->getQuoteEscape(), '"');
         $this->assertSame($exporter->getFieldSeparator(), "\t");
