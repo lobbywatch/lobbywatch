@@ -19,8 +19,8 @@
 
 enable_fail_onerror
 
-PHP=php
-LOCAL_PHP=php
+PHP="php -d error_reporting=E_ALL"
+LOCAL_PHP="php -d error_reporting=E_ALL"
 # PHP=/usr/bin/php
 # if [[ "$HOSTNAME" =~ "rpialch" || "$HOSTNAME" =~ "rpiw" || "$HOSTNAME" =~ "abel" ]]; then
 #   # add --init for Ctrl-C support, https://stackoverflow.com/questions/41097652/how-to-fix-ctrlc-inside-a-docker-container
