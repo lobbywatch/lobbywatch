@@ -643,18 +643,25 @@ function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = t
     $sql .= ' | ' . $zutrittsberechtigung['sql'];
     $success = $success && $zutrittsberechtigung['success'];
 
+    $last_modified_date = $aggregated['updated_date'];
+    $last_modified_date_unix = $aggregated['updated_date_unix'];
+
     if ($success) {
       $mandate = _lobbywatch_data_table_flat_list('person_mandate', "person_mandate.person_id = $id", false);
       $aggregated['mandate'] = $mandate['data'];
       $message .= ' | ' . $mandate['message'] . '';
       $sql .= ' | ' . $mandate['sql'] . '';
       // $success = $success && $mandate['success'];
+      $last_modified_date = max($last_modified_date, max_attribute_in_array($aggregated['mandate'], 'updated_date'));
+      $last_modified_date_unix = max($last_modified_date_unix, max_attribute_in_array($aggregated['mandate'], 'updated_date_unix'));
 
       foreach ($aggregated['mandate'] as $key => $value) {
         $verguetungen = _lobbywatch_data_table_flat_list('mandat_jahr', "mandat_jahr.mandat_id = ${value['id']}", false, 'ORDER BY jahr DESC');
         $message .= ' | ' . $verguetungen['message'];
         $sql .= ' | ' . $verguetungen['sql'];
         _add_verguetungen($aggregated['mandate'][$key], $verguetungen, $value['von']);
+        $last_modified_date = max($last_modified_date, max_attribute_in_array($verguetungen['data'], 'updated_date'));
+        $last_modified_date_unix = max($last_modified_date_unix, max_attribute_in_array($verguetungen['data'], 'updated_date_unix'));
       }
 
   //     dpm($zutrittsberechtigung, '$zutrittsberechtigung');
@@ -668,6 +675,11 @@ function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = t
       $success = $success && $parlamentarier['success'];
 
       _lobbywatch_add_wissensartikel($table, $id, $aggregated, $message, $sql);
+
+      if (!empty($last_modified_date)) {
+        $aggregated['last_modified_date'] = $last_modified_date;
+        $aggregated['last_modified_date_unix'] = $last_modified_date_unix;
+      }
     }
 
     $count = $zutrittsberechtigung['count'];
@@ -743,6 +755,9 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
     $sql .= ' | ' . $parlamentarier['sql'];
     $success = $success && $parlamentarier['success'];
 
+    $last_modified_date = $aggregated['updated_date'];
+    $last_modified_date_unix = $aggregated['updated_date_unix'];
+
 //     df($parlamentarier);
 
     // load aggregated data only if main object is there
@@ -758,12 +773,16 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
       $message .= ' | ' . $interessenbindungen['message'];
       $sql .= ' | ' . $interessenbindungen['sql'];
       // $success = $success && $interessenbindungen['success'];
+      $last_modified_date = max($last_modified_date, max_attribute_in_array($aggregated['interessenbindungen'], 'updated_date'));
+      $last_modified_date_unix = max($last_modified_date_unix, max_attribute_in_array($aggregated['interessenbindungen'], 'updated_date_unix'));
 
       foreach ($aggregated['interessenbindungen'] as $key => $value) {
         $verguetungen = _lobbywatch_data_table_flat_list('interessenbindung_jahr', "interessenbindung_jahr.interessenbindung_id = ${value['id']}", false, 'ORDER BY jahr DESC');
         $message .= ' | ' . $verguetungen['message'];
         $sql .= ' | ' . $verguetungen['sql'];
         _add_verguetungen($aggregated['interessenbindungen'][$key], $verguetungen, $value['von'], $parlamentarier['data']['im_rat_seit']);
+        $last_modified_date = max($last_modified_date, max_attribute_in_array($verguetungen['data'], 'updated_date'));
+        $last_modified_date_unix = max($last_modified_date_unix, max_attribute_in_array($verguetungen['data'], 'updated_date_unix'));
       }
 
       $verguetungs_tranparenz = _lobbywatch_data_table_flat_list('parlamentarier_transparenz', "parlamentarier_transparenz.parlamentarier_id = $id", false);
@@ -777,6 +796,8 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
       $message .= ' | ' . $zutrittsberechtigungen['message'];
       $sql .= ' | ' . $zutrittsberechtigungen['sql'];
       // $success = $success && $zutrittsberechtigungen['success'];
+      $last_modified_date = max($last_modified_date, max_attribute_in_array($aggregated['zutrittsberechtigungen'], 'updated_date'));
+      $last_modified_date_unix = max($last_modified_date_unix, max_attribute_in_array($aggregated['zutrittsberechtigungen'], 'updated_date_unix'));
 
       foreach ($aggregated['zutrittsberechtigungen'] as $key => $value) {
         $mandate = _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($value['id'], false);
@@ -787,6 +808,11 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
       }
 
       _lobbywatch_add_wissensartikel($table, $id, $aggregated, $message, $sql);
+
+      if (!empty($last_modified_date)) {
+        $aggregated['last_modified_date'] = $last_modified_date;
+        $aggregated['last_modified_date_unix'] = $last_modified_date_unix;
+      }
     }
 
 //     $count = count($aggregated);
