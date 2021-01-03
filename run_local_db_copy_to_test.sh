@@ -37,7 +37,8 @@ charset="utf8mb4"
 
 MYSQL_CONTAINER=mysql57
 
-docker exec -it $MYSQL_CONTAINER mysql --help >/dev/null 2>&1 && IS_DOCKER=true || IS_DOCKER=false
+# docker exec -it $MYSQL_CONTAINER mysql --help >/dev/null 2>&1 && IS_DOCKER=true || IS_DOCKER=false
+IS_DOCKER=false
 if $IS_DOCKER ; then
   MYSQLDUMP="docker exec -it $MYSQL_CONTAINER mysqldump --default-character-set=$charset"
   MYSQL="docker exec -i $MYSQL_CONTAINER mysql --default-character-set=$charset"
