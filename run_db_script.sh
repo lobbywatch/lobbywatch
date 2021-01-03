@@ -219,6 +219,8 @@ if [[ "$script" == "dbdump" ]] ; then
   # Add --skip-quote-names http://www.iheavy.com/2012/08/09/5-things-you-overlooked-with-mysql-dumps/
   # http://unix.stackexchange.com/questions/20573/sed-insert-something-to-the-last-line
   # --opt is the default which is --add-drop-table, --add-locks, --create-options, --disable-keys, --extended-insert, --lock-tables, --quick, and --set-charset
+  # --opt is enabled by default:  --add-drop-table --add-locks --create-options --disable-keys --extended-insert --lock-tables --quick --set-charset
+  # --no-autocommit for SET autocommit = 0 and COMMIT per dumped table
   (set -o pipefail; $MYSQLDUMP -h $HOST -P $PORT -u$username $PW --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --routines --add-drop-trigger --log-error=$logfile --default-character-set=$charset 2>>$logfile |
    sed -r "s/$PATTERN_USE/$CREATED\0$BEGIN_SETTINGS/i" |
    sed -e "\$a$END_SETTINGS" |
