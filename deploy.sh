@@ -535,7 +535,7 @@ if $run_sql ; then
   fi
   if ! $quiet_mode ; then
     if [[ $sql_file == *.gz ]] ; then
-      zcat $sql_file | less
+      zcat $sql_file | less || true # || true to avoid failure when quitting big files that are not fully loaded yet
     else
       less $sql_file
     fi
