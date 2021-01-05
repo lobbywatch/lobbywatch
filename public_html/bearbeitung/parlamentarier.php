@@ -57386,40 +57386,40 @@
         {
             return 'window.disable_parlamentarier_imported_fields = function (editors) {'. "\n" .
             '    if (editors[\'parlament_biografie_id\']?.getValue()) {'. "\n" .
-            '        editors[\'photo\'].setEnabled(false);'. "\n" .
-            '        editors[\'kleinbild\'].setEnabled(false);'. "\n" .
-            '        editors[\'parlament_number\'].setEnabled(false);'. "\n" .
-            '        editors[\'im_rat_bis\'].setEnabled(false);'. "\n" .
-            '        editors[\'im_rat_seit\'].setEnabled(false);'. "\n" .
-            '        editors[\'ratsunterbruch_von\'].setEnabled(false);'. "\n" .
-            '        editors[\'ratsunterbruch_bis\'].setEnabled(false);'. "\n" .
-            '        editors[\'ratswechsel\'].setEnabled(false);'. "\n" .
-            '        editors[\'rat_id\'].setEnabled(false);'. "\n" .
-            '        // editors[\'homepage\'].setEnabled(false);'. "\n" .
-            '        // editors[\'homepage_2\'].setEnabled(false);'. "\n" .
-            '        editors[\'email\'].setEnabled(false);'. "\n" .
-            '        editors[\'telephon_1\'].setEnabled(false);'. "\n" .
-            '        editors[\'telephon_2\'].setEnabled(false);'. "\n" .
-            '        editors[\'titel\'].setEnabled(false);'. "\n" .
-            '        editors[\'sprache\'].setEnabled(false);'. "\n" .
-            '        editors[\'nachname\'].setEnabled(false);'. "\n" .
+            '        editors[\'photo\'].setReadonly(true);'. "\n" .
+            '        editors[\'kleinbild\'].setReadonly(true);'. "\n" .
+            '        editors[\'parlament_number\'].setReadonly(true);'. "\n" .
+            '        editors[\'im_rat_bis\'].setReadonly(true);'. "\n" .
+            '        editors[\'im_rat_seit\'].setReadonly(true);'. "\n" .
+            '        editors[\'ratsunterbruch_von\'].setReadonly(true);'. "\n" .
+            '        editors[\'ratsunterbruch_bis\'].setReadonly(true);'. "\n" .
+            '        editors[\'ratswechsel\'].setReadonly(true);'. "\n" .
+            '        editors[\'rat_id\'].setReadonly(true);'. "\n" .
+            '        // editors[\'homepage\'].setReadonly(true);'. "\n" .
+            '        // editors[\'homepage_2\'].setReadonly(true);'. "\n" .
+            '        editors[\'email\'].setReadonly(true);'. "\n" .
+            '        editors[\'telephon_1\'].setReadonly(true);'. "\n" .
+            '        editors[\'telephon_2\'].setReadonly(true);'. "\n" .
+            '        editors[\'titel\'].setReadonly(true);'. "\n" .
+            '        editors[\'sprache\'].setReadonly(true);'. "\n" .
+            '        editors[\'nachname\'].setReadonly(true);'. "\n" .
             '        // vorname'. "\n" .
             '        // kanton_id'. "\n" .
-            '        editors[\'fraktion_id\'].setEnabled(false);'. "\n" .
-            '        editors[\'fraktionsfunktion\'].setEnabled(false);'. "\n" .
-            '        editors[\'geburtstag\'].setEnabled(false);'. "\n" .
-            '        editors[\'arbeitssprache\'].setEnabled(false);'. "\n" .
-            '        editors[\'geschlecht\'].setEnabled(false);'. "\n" .
-            '        editors[\'anzahl_kinder\'].setEnabled(false);'. "\n" .
-            '        editors[\'zivilstand\'].setEnabled(false);'. "\n" .
+            '        editors[\'fraktion_id\'].setReadonly(true);'. "\n" .
+            '        editors[\'fraktionsfunktion\'].setReadonly(true);'. "\n" .
+            '        editors[\'geburtstag\'].setReadonly(true);'. "\n" .
+            '        editors[\'arbeitssprache\'].setReadonly(true);'. "\n" .
+            '        editors[\'geschlecht\'].setReadonly(true);'. "\n" .
+            '        editors[\'anzahl_kinder\'].setReadonly(true);'. "\n" .
+            '        editors[\'zivilstand\'].setReadonly(true);'. "\n" .
             '        // beruf'. "\n" .
-            '        editors[\'militaerischer_grad_id\'].setEnabled(false);'. "\n" .
-            '        editors[\'adresse_firma\'].setEnabled(false);'. "\n" .
-            '        editors[\'adresse_strasse\'].setEnabled(false);'. "\n" .
-            '        editors[\'adresse_plz\'].setEnabled(false);'. "\n" .
-            '        editors[\'adresse_ort\'].setEnabled(false);'. "\n" .
-            '        editors[\'aemter\'].setEnabled(false);'. "\n" .
-            '        editors[\'weitere_aemter\'].setEnabled(false);'. "\n" .
+            '        editors[\'militaerischer_grad_id\'].setReadonly(true);'. "\n" .
+            '        editors[\'adresse_firma\'].setReadonly(true);'. "\n" .
+            '        editors[\'adresse_strasse\'].setReadonly(true);'. "\n" .
+            '        editors[\'adresse_plz\'].setReadonly(true);'. "\n" .
+            '        editors[\'adresse_ort\'].setReadonly(true);'. "\n" .
+            '        editors[\'aemter\'].setReadonly(true);'. "\n" .
+            '        editors[\'weitere_aemter\'].setReadonly(true);'. "\n" .
             '        // parlament_beruf_json'. "\n" .
             '        // parlament_interessenbindungen'. "\n" .
             '        // parlament_interessenbindungen_json'. "\n" .

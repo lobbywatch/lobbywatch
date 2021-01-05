@@ -8361,35 +8361,35 @@ window.format_uid = function (sender, editors) {
 
 window.disable_organisation_imported_fields = function (editors) {
     if (editors['updated_by_import']?.getValue()) {
-        editors['name_de'].setEnabled(false);
-        editors['name_fr'].setEnabled(false);
-        editors['name_it'].setEnabled(false);
-        editors['alias_namen_de'].setEnabled(false);
-        editors['adresse_strasse'].setEnabled(false);
-        editors['adresse_zusatz'].setEnabled(false);
-        editors['adresse_plz'].setEnabled(false);
-        editors['ort'].setEnabled(false);
-        editors['land_id'].setEnabled(false);
-        editors['homepage'].setEnabled(false);
-        editors['sekretariat'].setEnabled(false);
-        editors['rechtsform'].setEnabled(false);
+        editors['name_de'].setReadonly(true);
+        editors['name_fr'].setReadonly(true);
+        editors['name_it'].setReadonly(true);
+        editors['alias_namen_de'].setReadonly(true);
+        editors['adresse_strasse'].setReadonly(true);
+        editors['adresse_zusatz'].setReadonly(true);
+        editors['adresse_plz'].setReadonly(true);
+        editors['ort'].setReadonly(true);
+        editors['land_id'].setReadonly(true);
+        editors['homepage'].setReadonly(true);
+        editors['sekretariat'].setReadonly(true);
+        editors['rechtsform'].setReadonly(true);
     }
     if (editors['uid'].getValue()) {
-        editors['name_de'].setEnabled(false);
-        editors['abkuerzung_de'].setEnabled(false);
-        // editors['name_fr'].setEnabled(false);
-        // editors['name_it'].setEnabled(false);
-        // editors['alias_namen_de'].setEnabled(false);
-        editors['adresse_strasse'].setEnabled(false);
-        editors['adresse_zusatz'].setEnabled(false);
-        editors['adresse_plz'].setEnabled(false);
-        editors['ort'].setEnabled(false);
-        editors['land_id'].setEnabled(false);
-        editors['rechtsform'].setEnabled(false);
-        editors['rechtsform_handelsregister'].setEnabled(false);
-        editors['rechtsform'].setEnabled(false);
+        editors['name_de'].setReadonly(true);
+        editors['abkuerzung_de'].setReadonly(true);
+        // editors['name_fr'].setReadonly(true);
+        // editors['name_it'].setReadonly(true);
+        // editors['alias_namen_de'].setReadonly(true);
+        editors['adresse_strasse'].setReadonly(true);
+        editors['adresse_zusatz'].setReadonly(true);
+        editors['adresse_plz'].setReadonly(true);
+        editors['ort'].setReadonly(true);
+        editors['land_id'].setReadonly(true);
+        // TODO &quot;Rechtsform is required.&quot; despite being filled by ws.uid 
+        // editors['rechtsform'].setReadonly(true);
+        editors['rechtsform_handelsregister'].setReadonly(true);
+        editors['inaktiv'].setReadonly(true);
         // if (editors['in_handelsregister'].getValue()) {
-            editors['inaktiv'].setEnabled(false);
         // }
     }
 }          </OnBeforePageLoad>
@@ -19552,46 +19552,45 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
           <OnBeforePageLoad enabled="true">
 window.disable_parlamentarier_imported_fields = function (editors) {
     if (editors['parlament_biografie_id']?.getValue()) {
-        editors['photo'].setEnabled(false);
-        editors['kleinbild'].setEnabled(false);
-        editors['parlament_number'].setEnabled(false);
-        editors['im_rat_bis'].setEnabled(false);
-        editors['im_rat_seit'].setEnabled(false);
-        editors['ratsunterbruch_von'].setEnabled(false);
-        editors['ratsunterbruch_bis'].setEnabled(false);
-        editors['ratswechsel'].setEnabled(false);
-        editors['rat_id'].setEnabled(false);
-        // editors['homepage'].setEnabled(false);
-        // editors['homepage_2'].setEnabled(false);
-        editors['email'].setEnabled(false);
-        editors['telephon_1'].setEnabled(false);
-        editors['telephon_2'].setEnabled(false);
-        editors['titel'].setEnabled(false);
-        editors['sprache'].setEnabled(false);
-        editors['nachname'].setEnabled(false);
+        editors['photo'].setReadonly(true);
+        editors['kleinbild'].setReadonly(true);
+        editors['parlament_number'].setReadonly(true);
+        editors['im_rat_bis'].setReadonly(true);
+        editors['im_rat_seit'].setReadonly(true);
+        editors['ratsunterbruch_von'].setReadonly(true);
+        editors['ratsunterbruch_bis'].setReadonly(true);
+        editors['ratswechsel'].setReadonly(true);
+        editors['rat_id'].setReadonly(true);
+        // editors['homepage'].setReadonly(true);
+        // editors['homepage_2'].setReadonly(true);
+        editors['email'].setReadonly(true);
+        editors['telephon_1'].setReadonly(true);
+        editors['telephon_2'].setReadonly(true);
+        editors['titel'].setReadonly(true);
+        editors['sprache'].setReadonly(true);
+        editors['nachname'].setReadonly(true);
         // vorname
         // kanton_id
-        editors['fraktion_id'].setEnabled(false);
-        editors['fraktionsfunktion'].setEnabled(false);
-        editors['geburtstag'].setEnabled(false);
-        editors['arbeitssprache'].setEnabled(false);
-        editors['geschlecht'].setEnabled(false);
-        editors['anzahl_kinder'].setEnabled(false);
-        editors['zivilstand'].setEnabled(false);
+        editors['fraktion_id'].setReadonly(true);
+        editors['fraktionsfunktion'].setReadonly(true);
+        editors['geburtstag'].setReadonly(true);
+        editors['arbeitssprache'].setReadonly(true);
+        editors['geschlecht'].setReadonly(true);
+        editors['anzahl_kinder'].setReadonly(true);
+        editors['zivilstand'].setReadonly(true);
         // beruf
-        editors['militaerischer_grad_id'].setEnabled(false);
-        editors['adresse_firma'].setEnabled(false);
-        editors['adresse_strasse'].setEnabled(false);
-        editors['adresse_plz'].setEnabled(false);
-        editors['adresse_ort'].setEnabled(false);
-        editors['aemter'].setEnabled(false);
-        editors['weitere_aemter'].setEnabled(false);
+        editors['militaerischer_grad_id'].setReadonly(true);
+        editors['adresse_firma'].setReadonly(true);
+        editors['adresse_strasse'].setReadonly(true);
+        editors['adresse_plz'].setReadonly(true);
+        editors['adresse_ort'].setReadonly(true);
+        editors['aemter'].setReadonly(true);
+        editors['weitere_aemter'].setReadonly(true);
         // parlament_beruf_json
         // parlament_interessenbindungen
         // parlament_interessenbindungen_json
     }
-}
-          </OnBeforePageLoad>
+}          </OnBeforePageLoad>
           <OnEditFormLoaded enabled="true">
 window.disable_parlamentarier_imported_fields(editors);          </OnEditFormLoaded>
         </EventHandlers>

@@ -43943,35 +43943,35 @@
             ''. "\n" .
             'window.disable_organisation_imported_fields = function (editors) {'. "\n" .
             '    if (editors[\'updated_by_import\']?.getValue()) {'. "\n" .
-            '        editors[\'name_de\'].setEnabled(false);'. "\n" .
-            '        editors[\'name_fr\'].setEnabled(false);'. "\n" .
-            '        editors[\'name_it\'].setEnabled(false);'. "\n" .
-            '        editors[\'alias_namen_de\'].setEnabled(false);'. "\n" .
-            '        editors[\'adresse_strasse\'].setEnabled(false);'. "\n" .
-            '        editors[\'adresse_zusatz\'].setEnabled(false);'. "\n" .
-            '        editors[\'adresse_plz\'].setEnabled(false);'. "\n" .
-            '        editors[\'ort\'].setEnabled(false);'. "\n" .
-            '        editors[\'land_id\'].setEnabled(false);'. "\n" .
-            '        editors[\'homepage\'].setEnabled(false);'. "\n" .
-            '        editors[\'sekretariat\'].setEnabled(false);'. "\n" .
-            '        editors[\'rechtsform\'].setEnabled(false);'. "\n" .
+            '        editors[\'name_de\'].setReadonly(true);'. "\n" .
+            '        editors[\'name_fr\'].setReadonly(true);'. "\n" .
+            '        editors[\'name_it\'].setReadonly(true);'. "\n" .
+            '        editors[\'alias_namen_de\'].setReadonly(true);'. "\n" .
+            '        editors[\'adresse_strasse\'].setReadonly(true);'. "\n" .
+            '        editors[\'adresse_zusatz\'].setReadonly(true);'. "\n" .
+            '        editors[\'adresse_plz\'].setReadonly(true);'. "\n" .
+            '        editors[\'ort\'].setReadonly(true);'. "\n" .
+            '        editors[\'land_id\'].setReadonly(true);'. "\n" .
+            '        editors[\'homepage\'].setReadonly(true);'. "\n" .
+            '        editors[\'sekretariat\'].setReadonly(true);'. "\n" .
+            '        editors[\'rechtsform\'].setReadonly(true);'. "\n" .
             '    }'. "\n" .
             '    if (editors[\'uid\'].getValue()) {'. "\n" .
-            '        editors[\'name_de\'].setEnabled(false);'. "\n" .
-            '        editors[\'abkuerzung_de\'].setEnabled(false);'. "\n" .
-            '        // editors[\'name_fr\'].setEnabled(false);'. "\n" .
-            '        // editors[\'name_it\'].setEnabled(false);'. "\n" .
-            '        // editors[\'alias_namen_de\'].setEnabled(false);'. "\n" .
-            '        editors[\'adresse_strasse\'].setEnabled(false);'. "\n" .
-            '        editors[\'adresse_zusatz\'].setEnabled(false);'. "\n" .
-            '        editors[\'adresse_plz\'].setEnabled(false);'. "\n" .
-            '        editors[\'ort\'].setEnabled(false);'. "\n" .
-            '        editors[\'land_id\'].setEnabled(false);'. "\n" .
-            '        editors[\'rechtsform\'].setEnabled(false);'. "\n" .
-            '        editors[\'rechtsform_handelsregister\'].setEnabled(false);'. "\n" .
-            '        editors[\'rechtsform\'].setEnabled(false);'. "\n" .
+            '        editors[\'name_de\'].setReadonly(true);'. "\n" .
+            '        editors[\'abkuerzung_de\'].setReadonly(true);'. "\n" .
+            '        // editors[\'name_fr\'].setReadonly(true);'. "\n" .
+            '        // editors[\'name_it\'].setReadonly(true);'. "\n" .
+            '        // editors[\'alias_namen_de\'].setReadonly(true);'. "\n" .
+            '        editors[\'adresse_strasse\'].setReadonly(true);'. "\n" .
+            '        editors[\'adresse_zusatz\'].setReadonly(true);'. "\n" .
+            '        editors[\'adresse_plz\'].setReadonly(true);'. "\n" .
+            '        editors[\'ort\'].setReadonly(true);'. "\n" .
+            '        editors[\'land_id\'].setReadonly(true);'. "\n" .
+            '        // TODO "Rechtsform is required." despite being filled by ws.uid '. "\n" .
+            '        // editors[\'rechtsform\'].setReadonly(true);'. "\n" .
+            '        editors[\'rechtsform_handelsregister\'].setReadonly(true);'. "\n" .
+            '        editors[\'inaktiv\'].setReadonly(true);'. "\n" .
             '        // if (editors[\'in_handelsregister\'].getValue()) {'. "\n" .
-            '            editors[\'inaktiv\'].setEnabled(false);'. "\n" .
             '        // }'. "\n" .
             '    }'. "\n" .
             '}';
