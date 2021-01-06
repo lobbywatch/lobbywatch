@@ -1492,7 +1492,7 @@
                     new DateTimeField('interessenbindung_updated_date', true)
                 )
             );
-            $this->dataset->AddLookupField('interessenbindung_id', 'v_interessenbindung', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'interessenbindung_id_anzeige_name', 'interessenbindung_id_anzeige_name_v_interessenbindung'), 'interessenbindung_id_anzeige_name_v_interessenbindung');
+            $this->dataset->AddLookupField('interessenbindung_id', 'v_interessenbindung_medium_raw', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'interessenbindung_id_anzeige_name', 'interessenbindung_id_anzeige_name_v_interessenbindung_medium_raw'), 'interessenbindung_id_anzeige_name_v_interessenbindung_medium_raw');
             $this->dataset->AddLookupField('interessenbindung_parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'interessenbindung_parlamentarier_id_anzeige_name', 'interessenbindung_parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'interessenbindung_parlamentarier_id_anzeige_name_v_parlamentarier_simple');
             $this->dataset->AddLookupField('interessenbindung_organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('anzeige_mixed', false, false, false, false, 'interessenbindung_organisation_id_anzeige_mixed', 'interessenbindung_organisation_id_anzeige_mixed_v_organisation_simple'), 'interessenbindung_organisation_id_anzeige_mixed_v_organisation_simple');
         }
@@ -3149,7 +3149,7 @@
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
-                '`v_interessenbindung`');
+                '`v_interessenbindung_medium_raw`');
             $lookupDataset->addFields(
                 array(
                     new StringField('anzeige_name'),
@@ -3193,10 +3193,7 @@
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
                     new StringField('wirksamkeit', true),
-                    new DateField('parlamentarier_im_rat_seit', true),
-                    new IntegerField('wirksamkeit_index', true),
-                    new StringField('organisation_lobbyeinfluss'),
-                    new DateTimeField('refreshed_date', true)
+                    new DateField('parlamentarier_im_rat_seit', true)
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
@@ -3760,7 +3757,7 @@
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
-                '`v_interessenbindung`');
+                '`v_interessenbindung_medium_raw`');
             $lookupDataset->addFields(
                 array(
                     new StringField('anzeige_name'),
@@ -3804,10 +3801,7 @@
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
                     new StringField('wirksamkeit', true),
-                    new DateField('parlamentarier_im_rat_seit', true),
-                    new IntegerField('wirksamkeit_index', true),
-                    new StringField('organisation_lobbyeinfluss'),
-                    new DateTimeField('refreshed_date', true)
+                    new DateField('parlamentarier_im_rat_seit', true)
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
@@ -4029,7 +4023,7 @@
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
-                '`v_interessenbindung`');
+                '`v_interessenbindung_medium_raw`');
             $lookupDataset->addFields(
                 array(
                     new StringField('anzeige_name'),
@@ -4073,10 +4067,7 @@
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
                     new StringField('wirksamkeit', true),
-                    new DateField('parlamentarier_im_rat_seit', true),
-                    new IntegerField('wirksamkeit_index', true),
-                    new StringField('organisation_lobbyeinfluss'),
-                    new DateTimeField('refreshed_date', true)
+                    new DateField('parlamentarier_im_rat_seit', true)
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
@@ -5079,7 +5070,7 @@
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
-                '`v_interessenbindung`');
+                '`v_interessenbindung_medium_raw`');
             $lookupDataset->addFields(
                 array(
                     new StringField('anzeige_name'),
@@ -5123,10 +5114,7 @@
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
                     new StringField('wirksamkeit', true),
-                    new DateField('parlamentarier_im_rat_seit', true),
-                    new IntegerField('wirksamkeit_index', true),
-                    new StringField('organisation_lobbyeinfluss'),
-                    new DateTimeField('refreshed_date', true)
+                    new DateField('parlamentarier_im_rat_seit', true)
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
@@ -5136,7 +5124,7 @@
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
-                '`v_interessenbindung`');
+                '`v_interessenbindung_medium_raw`');
             $lookupDataset->addFields(
                 array(
                     new StringField('anzeige_name'),
@@ -5180,10 +5168,7 @@
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
                     new StringField('wirksamkeit', true),
-                    new DateField('parlamentarier_im_rat_seit', true),
-                    new IntegerField('wirksamkeit_index', true),
-                    new StringField('organisation_lobbyeinfluss'),
-                    new DateTimeField('refreshed_date', true)
+                    new DateField('parlamentarier_im_rat_seit', true)
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
@@ -5371,7 +5356,7 @@
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
-                '`v_interessenbindung`');
+                '`v_interessenbindung_medium_raw`');
             $lookupDataset->addFields(
                 array(
                     new StringField('anzeige_name'),
@@ -5415,10 +5400,7 @@
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
                     new StringField('wirksamkeit', true),
-                    new DateField('parlamentarier_im_rat_seit', true),
-                    new IntegerField('wirksamkeit_index', true),
-                    new StringField('organisation_lobbyeinfluss'),
-                    new DateTimeField('refreshed_date', true)
+                    new DateField('parlamentarier_im_rat_seit', true)
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
@@ -5606,7 +5588,7 @@
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
-                '`v_interessenbindung`');
+                '`v_interessenbindung_medium_raw`');
             $lookupDataset->addFields(
                 array(
                     new StringField('anzeige_name'),
@@ -5650,10 +5632,7 @@
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
                     new StringField('wirksamkeit', true),
-                    new DateField('parlamentarier_im_rat_seit', true),
-                    new IntegerField('wirksamkeit_index', true),
-                    new StringField('organisation_lobbyeinfluss'),
-                    new DateTimeField('refreshed_date', true)
+                    new DateField('parlamentarier_im_rat_seit', true)
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
