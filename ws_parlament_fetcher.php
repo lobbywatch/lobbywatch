@@ -1500,10 +1500,8 @@ function getParlamentInteressenbindungenJsonOdata(array $concerns) {
 }
 
 // Returns beruf/arbeitgeber as PHP data structures (arrays and objects)
-function getParlamentBerufJsonOdata(array $occupations): array {
+function getParlamentBerufJsonOdata(?array $occupations): array {
   global $errors;
-  $beruf = [];
-  $objects = null;
   if (!empty($occupations) &&is_array($occupations)) {
     $objects = [];
     foreach($occupations as $occupation) {
@@ -1517,9 +1515,11 @@ function getParlamentBerufJsonOdata(array $occupations): array {
         'lang' => 'de',
       ];
     }
+    // sort to have a defined order which is useful for comparisons
+    return sortParlamentBerufObjects($objects);
+  } else {
+    return [];
   }
-  // sort to have a defined order which is useful for comparisons
-  return sortParlamentBerufObjects($objects);
 }
 
 function sortParlamentBerufObjects(?array $objects): array {
