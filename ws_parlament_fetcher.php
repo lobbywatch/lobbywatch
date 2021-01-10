@@ -700,7 +700,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
     $new_parlament_beruf_objects = getParlamentBerufJsonOdata($ws_occupation);
     $new_parlament_beruf_html = convertParlamentBerufJsonToHtml($new_parlament_beruf_objects);
     $diff = htmlDiffStyled($old_parlament_beruf_html, $new_parlament_beruf_html, false);
-    $delta[] = "Geänderter Beruf/Arbeitgeber bei <b>$parlamentarier_ws->lastName, $parlamentarier_ws->firstName</b>, biografie_id=$biografie_id, id=$id:\n$diff\n";
+    $delta[] = "Geänderter Beruf/Arbeitgeber bei <b>$parlamentarier_ws->lastName, $parlamentarier_ws->firstName</b>, biografie_id=$biografie_id, id=$id:\n$diff\n<small><a href='https://cms.lobbywatch.ch/bearbeitung/parlamentarier.php?operation=edit&pk0=$id'>Edit Parlamentarier $id</a></small>\n";
   }
 
   if ($ib_changed) {
