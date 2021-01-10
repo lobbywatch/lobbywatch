@@ -459,7 +459,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="150" placeholder="Inoffizielle Bezeichnungen durch ; getrennt"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="in_handelsregister" caption="In Handelsregister" headerHint="Ist die Organisation im Handelsregister (Zefix) eingetragen?" enabled="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="in_handelsregister" caption="In Handelsregister" headerHint="Ist die Organisation im Handelsregister (Zefix) eingetragen?" readOnly="true" selectedFilterOperators="1573119">
             <ViewProperties type="checkBox" displayType="image"/>
             <EditProperties type="checkBox"/>
           </ColumnPresentation>
