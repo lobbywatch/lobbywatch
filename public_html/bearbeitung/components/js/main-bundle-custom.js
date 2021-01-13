@@ -33241,14 +33241,14 @@ define("custom/custom.hints", function(){});
 
 $(function() {
 
-  function setWSValue(field, wsVal, field_name) {
-    var fieldType = $(field).attr('type');
+  function setWSValue(field, wsVal, field_name, overwrite) {
+    const fieldType = $(field).attr('type');
     var oldVal = $(field).val();
   //       console.log(oldVal + ' | ' + wsVal);
-    var isEmptyOldVal = !oldVal; // Workaround: check for empty values http://stackoverflow.com/questions/5515310/is-there-a-standard-function-to-check-for-null-undefined-or-blank-variables-in
-    var isEmptyWsVal = !wsVal;
+    const isEmptyOldVal = !oldVal; // Workaround: check for empty values http://stackoverflow.com/questions/5515310/is-there-a-standard-function-to-check-for-null-undefined-or-blank-variables-in
+    const isEmptyWsVal = !wsVal;
     // console.log(field + ": " + oldVal + " (" + !isEmptyOldVal + ') → ' + wsVal + " (" + !isEmptyWsVal + ")");
-    if (oldVal == wsVal || (isEmptyOldVal && isEmptyWsVal)) {
+    if (oldVal == wsVal || (isEmptyOldVal && isEmptyWsVal) || (!overwrite && !isEmptyOldVal)) {
       $(field).removeClass('ws-changed-value');
     } else if (fieldType === 'checkbox') {
       oldVal = $(field).prop("checked");
@@ -33270,16 +33270,16 @@ $(function() {
     }
   }
 
-  function setWSFieldValue(formId, field_name, wsVal) {
-    return setWSValue('#' + formId + '_' + field_name + '_edit', wsVal, field_name);
+  function setWSFieldValue(formId, field_name, wsVal, overwrite = true) {
+    return setWSValue('#' + formId + '_' + field_name + '_edit', wsVal, field_name, overwrite);
   }
 
   $('#btn-ws-uid').click(function() {
 
     $(".row form").each(function() {
-      var formId = $(this).attr("id");
+      const formId = $(this).attr("id");
 //      console.log("FormId: " + formId);
-      var uid_raw = $('#' + formId + '_uid_edit').val();
+      const uid_raw = $('#' + formId + '_uid_edit').val();
 
       if (!uid_raw) {
         $('#error-message').append('<p>Failed: Empty UID.<br>Search UID on <a href="https://www.uid.admin.ch/" title="Opens UID-Register@BFS webpage" target="_blank">UID-Register</a>.</p>').show();
@@ -33353,7 +33353,7 @@ $(function() {
             setWSFieldValue(formId, 'rechtsform', data.data.rechtsform);
             setWSFieldValue(formId, 'rechtsform_zefix', data.data.rechtsform_zefix);
             setWSFieldValue(formId, 'rechtsform_handelsregister', data.data.rechtsform_handelsregister);
-            setWSFieldValue(formId, 'beschreibung', data.data.zweck);
+            setWSFieldValue(formId, 'beschreibung', data.data.zweck, false);
             if (data.data.inaktiv || data.data.inaktiv === false) setWSFieldValue(formId, 'inaktiv', data.data.inaktiv);
             $('#info-message').append('<p>State: ' + textStatus + '</p>').show();
           } else {
@@ -33362,7 +33362,7 @@ $(function() {
           }
         })
         .fail(function( jqxhr, textStatus, error ) {
-          var err = textStatus + ", " + error;
+          const err = textStatus + ", " + error;
           // console.log( "Request Failed: " + err );
           $('#error-message').append('<p>Request failed: ' + err + '</p>').show();
         })
