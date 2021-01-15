@@ -8619,8 +8619,8 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <ViewProperties type="text"/>
             <EditProperties type="imageUploadToFolder" directoryToUpload="$public_files_dir/parlamentarier_photos/%id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true" thumbnailResizeType="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="kleinbild" caption="Kleinbild" headerHint="Bild 44x62 px oder leer.png" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-            <ViewProperties type="externalImage" hintTemplate="%kleinbild%" sourcePrefix="files/parlamentarier_photos/klein/"/>
+          <ColumnPresentation fieldName="kleinbild" caption="Kleinbild" headerHint="Bild 44x62 px oder leer.png" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+            <ViewProperties type="externalImage" hintTemplate="%kleinbild%" sourcePrefix="https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/files/parlamentarier_photos/klein/" originalImageFieldName="kleinbild" originalImagePrefix="https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/files/parlamentarier_photos/original/"/>
             <EditProperties type="textBox" maxLength="80"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="sitzplatz" caption="Sitzplatz" headerHint="Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
@@ -8659,9 +8659,9 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
               <DigitsClientValidatorInfo enabled="true"/>
             </Validators>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="parlament_number" caption="Parlament Number" headerHint="Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet." canSetNull="true" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="parlament_number" caption="Parlament Number" headerHint="Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet." canSetNull="true" readOnly="true" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
-            <EditProperties type="radioEdit" displayMode="0"/>
+            <EditProperties type="textBox" maxLength="0"/>
             <Validators>
               <DigitsClientValidatorInfo enabled="true"/>
             </Validators>
@@ -8845,19 +8845,19 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="photo_dateiname" caption="Photo Dateiname" headerHint="Photodateiname ohne Erweiterung" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="photo_dateiname" caption="Photo Dateiname" headerHint="Photodateiname ohne Erweiterung" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
-            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+            <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="photo_dateierweiterung" caption="Photo Dateierweiterung" headerHint="Erweiterung der Photodatei" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="photo_dateierweiterung" caption="Photo Dateierweiterung" headerHint="Erweiterung der Photodatei" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="15"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="photo_dateiname_voll" caption="Photo Dateiname Voll" headerHint="Photodateiname mit Erweiterung" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="photo_dateiname_voll" caption="Photo Dateiname Voll" headerHint="Photodateiname mit Erweiterung" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
-            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+            <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="photo_mime_type" caption="Photo Mime Type" headerHint="MIME Type des Photos" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="photo_mime_type" caption="Photo Mime Type" headerHint="MIME Type des Photos" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
@@ -8892,7 +8892,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="zivilstand"/>
             <Column fieldName="anzahl_kinder"/>
             <Column fieldName="militaerischer_grad_id"/>
-            <Column fieldName="photo"/>
+            <Column fieldName="photo" visible="false"/>
             <Column fieldName="kleinbild"/>
             <Column fieldName="sitzplatz"/>
             <Column fieldName="email"/>
@@ -8968,7 +8968,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="zivilstand"/>
             <Column fieldName="anzahl_kinder"/>
             <Column fieldName="militaerischer_grad_id"/>
-            <Column fieldName="photo"/>
+            <Column fieldName="photo" visible="false"/>
             <Column fieldName="kleinbild"/>
             <Column fieldName="sitzplatz"/>
             <Column fieldName="email"/>
@@ -9044,8 +9044,8 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="zivilstand"/>
             <Column fieldName="anzahl_kinder"/>
             <Column fieldName="militaerischer_grad_id"/>
-            <Column fieldName="photo"/>
-            <Column fieldName="kleinbild"/>
+            <Column fieldName="photo" visible="false"/>
+            <Column fieldName="kleinbild" visible="false"/>
             <Column fieldName="sitzplatz"/>
             <Column fieldName="email"/>
             <Column fieldName="homepage"/>
@@ -9120,7 +9120,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="zivilstand"/>
             <Column fieldName="anzahl_kinder"/>
             <Column fieldName="militaerischer_grad_id"/>
-            <Column fieldName="photo"/>
+            <Column fieldName="photo" visible="false"/>
             <Column fieldName="kleinbild" visible="false"/>
             <Column fieldName="sitzplatz"/>
             <Column fieldName="email"/>
@@ -9272,8 +9272,8 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="zivilstand"/>
             <Column fieldName="anzahl_kinder"/>
             <Column fieldName="militaerischer_grad_id"/>
-            <Column fieldName="photo"/>
-            <Column fieldName="kleinbild"/>
+            <Column fieldName="photo" visible="false"/>
+            <Column fieldName="kleinbild" visible="false"/>
             <Column fieldName="sitzplatz"/>
             <Column fieldName="email"/>
             <Column fieldName="homepage"/>
@@ -9348,7 +9348,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="zivilstand"/>
             <Column fieldName="anzahl_kinder"/>
             <Column fieldName="militaerischer_grad_id"/>
-            <Column fieldName="photo"/>
+            <Column fieldName="photo" visible="false"/>
             <Column fieldName="kleinbild"/>
             <Column fieldName="sitzplatz"/>
             <Column fieldName="email"/>
@@ -9392,7 +9392,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="updated_date"/>
             <Column fieldName="photo_dateiname" visible="false"/>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
-            <Column fieldName="photo_dateiname_voll"/>
+            <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
           </Print>
           <Export>
@@ -9424,7 +9424,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="zivilstand"/>
             <Column fieldName="anzahl_kinder"/>
             <Column fieldName="militaerischer_grad_id"/>
-            <Column fieldName="photo"/>
+            <Column fieldName="photo" visible="false"/>
             <Column fieldName="kleinbild"/>
             <Column fieldName="sitzplatz"/>
             <Column fieldName="email"/>
@@ -9500,7 +9500,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="zivilstand"/>
             <Column fieldName="anzahl_kinder"/>
             <Column fieldName="militaerischer_grad_id"/>
-            <Column fieldName="photo"/>
+            <Column fieldName="photo" visible="false"/>
             <Column fieldName="kleinbild"/>
             <Column fieldName="sitzplatz"/>
             <Column fieldName="email"/>
@@ -9542,10 +9542,10 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="photo_dateiname"/>
-            <Column fieldName="photo_dateierweiterung"/>
-            <Column fieldName="photo_dateiname_voll"/>
-            <Column fieldName="photo_mime_type"/>
+            <Column fieldName="photo_dateiname" visible="false"/>
+            <Column fieldName="photo_dateierweiterung" visible="false"/>
+            <Column fieldName="photo_dateiname_voll" visible="false"/>
+            <Column fieldName="photo_mime_type" visible="false"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -9576,8 +9576,8 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="zivilstand"/>
             <Column fieldName="anzahl_kinder"/>
             <Column fieldName="militaerischer_grad_id"/>
-            <Column fieldName="photo"/>
-            <Column fieldName="kleinbild"/>
+            <Column fieldName="photo" visible="false"/>
+            <Column fieldName="kleinbild" visible="false"/>
             <Column fieldName="sitzplatz"/>
             <Column fieldName="email"/>
             <Column fieldName="homepage"/>
@@ -9618,10 +9618,10 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="photo_dateiname"/>
-            <Column fieldName="photo_dateierweiterung"/>
-            <Column fieldName="photo_dateiname_voll"/>
-            <Column fieldName="photo_mime_type"/>
+            <Column fieldName="photo_dateiname" visible="false"/>
+            <Column fieldName="photo_dateierweiterung" visible="false"/>
+            <Column fieldName="photo_dateiname_voll" visible="false"/>
+            <Column fieldName="photo_mime_type" visible="false"/>
           </MultiEdit>
         </Columns>
         <Details>
@@ -19551,6 +19551,9 @@ customOnCustomRenderColumn('parlamentarier', $fieldName, $fieldData, $rowData, $
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
           <OnBeforePageLoad enabled="true">
 window.disable_parlamentarier_imported_fields = function (editors) {
+    if (editors['arbeitssprache']?.getValue()) {
+        editors['parlament_biografie_id'].setReadonly(true);
+    }
     if (editors['parlament_biografie_id']?.getValue()) {
         editors['photo'].setReadonly(true);
         editors['kleinbild'].setReadonly(true);
@@ -19563,9 +19566,9 @@ window.disable_parlamentarier_imported_fields = function (editors) {
         editors['rat_id'].setReadonly(true);
         // editors['homepage'].setReadonly(true);
         // editors['homepage_2'].setReadonly(true);
-        editors['email'].setReadonly(true);
-        editors['telephon_1'].setReadonly(true);
-        editors['telephon_2'].setReadonly(true);
+        // editors['email'].setReadonly(true);
+        // editors['telephon_1'].setReadonly(true);
+        // editors['telephon_2'].setReadonly(true);
         editors['titel'].setReadonly(true);
         editors['sprache'].setReadonly(true);
         editors['nachname'].setReadonly(true);

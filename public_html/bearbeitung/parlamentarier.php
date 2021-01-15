@@ -50279,55 +50279,6 @@
                 )
             );
             
-            $main_editor = new TextEdit('photo');
-            
-            $filterBuilder->addColumn(
-                $columns['photo'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
-                    FilterConditionOperator::BEGINS_WITH => $main_editor,
-                    FilterConditionOperator::ENDS_WITH => $main_editor,
-                    FilterConditionOperator::IS_LIKE => $main_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
-            
-            $main_editor = new TextEdit('kleinbild_edit');
-            $main_editor->SetMaxLength(80);
-            
-            $filterBuilder->addColumn(
-                $columns['kleinbild'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
-                    FilterConditionOperator::BEGINS_WITH => $main_editor,
-                    FilterConditionOperator::ENDS_WITH => $main_editor,
-                    FilterConditionOperator::IS_LIKE => $main_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
-            
             $main_editor = new TextEdit('sitzplatz_edit');
             
             $filterBuilder->addColumn(
@@ -50439,11 +50390,7 @@
                 )
             );
             
-            $main_editor = new ComboBox('parlament_number');
-            $main_editor->SetAllowNullValue(false);
-            
-            $multi_value_select_editor = new MultiValueSelect('parlament_number');
-            $multi_value_select_editor->setChoices($main_editor->getChoices());
+            $main_editor = new TextEdit('parlament_number_edit');
             
             $filterBuilder->addColumn(
                 $columns['parlament_number'],
@@ -50456,8 +50403,6 @@
                     FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
                     FilterConditionOperator::IS_BETWEEN => $main_editor,
                     FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::IN => $multi_value_select_editor,
-                    FilterConditionOperator::NOT_IN => $multi_value_select_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -51703,22 +51648,13 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for photo field
-            //
-            $column = new TextViewColumn('photo', 'photo', 'Photo', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Photo des Parlamentariers (JPEG/jpg)');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for kleinbild field
             //
             $column = new ExternalImageViewColumn('kleinbild', 'kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
-            $column->setSourcePrefixTemplate('files/parlamentarier_photos/klein/');
+            $column->setSourcePrefixTemplate('https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/files/parlamentarier_photos/klein/');
             $column->setImageHintTemplate('%kleinbild%');
+            $column->setOriginalImageInfo('kleinbild', 'https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/files/parlamentarier_photos/original/', '');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Bild 44x62 px oder leer.png');
             $column->SetFixedWidth(null);
@@ -52335,19 +52271,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for photo field
-            //
-            $column = new TextViewColumn('photo', 'photo', 'Photo', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for kleinbild field
             //
             $column = new ExternalImageViewColumn('kleinbild', 'kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
-            $column->setSourcePrefixTemplate('files/parlamentarier_photos/klein/');
+            $column->setSourcePrefixTemplate('https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/files/parlamentarier_photos/klein/');
             $column->setImageHintTemplate('%kleinbild%');
+            $column->setOriginalImageInfo('kleinbild', 'https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/files/parlamentarier_photos/original/', '');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -53252,27 +53182,6 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for photo field
-            //
-            $editor = new ImageUploader('photo_edit');
-            $editor->SetShowImage(true);
-            $editColumn = new UploadFileToFolderColumn('Photo', 'photo', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir"] /*afterburner*/  . '/parlamentarier_photos/%id%', '%original_file_name%', $this->OnFileUpload, false);
-            $editColumn->SetReplaceUploadedFileIfExist(true);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for kleinbild field
-            //
-            $editor = new TextEdit('kleinbild_edit');
-            $editor->SetMaxLength(80);
-            $editColumn = new CustomEditColumn('Kleinbild', 'kleinbild', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
             // Edit column for sitzplatz field
             //
             $editor = new TextEdit('sitzplatz_edit');
@@ -53331,9 +53240,9 @@
             //
             // Edit column for parlament_number field
             //
-            $editor = new RadioEdit('parlament_number_edit');
-            $editor->SetDisplayMode(RadioEdit::StackedMode);
+            $editor = new TextEdit('parlament_number_edit');
             $editColumn = new CustomEditColumn('Parlament Number', 'parlament_number', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -54283,27 +54192,6 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
-            // Edit column for photo field
-            //
-            $editor = new ImageUploader('photo_edit');
-            $editor->SetShowImage(true);
-            $editColumn = new UploadFileToFolderColumn('Photo', 'photo', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir"] /*afterburner*/  . '/parlamentarier_photos/%id%', '%original_file_name%', $this->OnFileUpload, false);
-            $editColumn->SetReplaceUploadedFileIfExist(true);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for kleinbild field
-            //
-            $editor = new TextEdit('kleinbild_edit');
-            $editor->SetMaxLength(80);
-            $editColumn = new CustomEditColumn('Kleinbild', 'kleinbild', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
             // Edit column for sitzplatz field
             //
             $editor = new TextEdit('sitzplatz_edit');
@@ -54362,9 +54250,9 @@
             //
             // Edit column for parlament_number field
             //
-            $editor = new RadioEdit('parlament_number_edit');
-            $editor->SetDisplayMode(RadioEdit::StackedMode);
+            $editor = new TextEdit('parlament_number_edit');
             $editColumn = new CustomEditColumn('Parlament Number', 'parlament_number', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -54719,44 +54607,6 @@
             $editor = new DateTimeEdit('updated_date_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for photo_dateiname field
-            //
-            $editor = new TextAreaEdit('photo_dateiname_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Photo Dateiname', 'photo_dateiname', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for photo_dateierweiterung field
-            //
-            $editor = new TextEdit('photo_dateierweiterung_edit');
-            $editor->SetMaxLength(15);
-            $editColumn = new CustomEditColumn('Photo Dateierweiterung', 'photo_dateierweiterung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for photo_dateiname_voll field
-            //
-            $editor = new TextAreaEdit('photo_dateiname_voll_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Photo Dateiname Voll', 'photo_dateiname_voll', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for photo_mime_type field
-            //
-            $editor = new TextEdit('photo_mime_type_edit');
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Photo Mime Type', 'photo_mime_type', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -55353,17 +55203,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for photo field
-            //
-            $editor = new ImageUploader('photo_edit');
-            $editor->SetShowImage(true);
-            $editColumn = new UploadFileToFolderColumn('Photo', 'photo', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir"] /*afterburner*/  . '/parlamentarier_photos/%id%', '%original_file_name%', $this->OnFileUpload, false);
-            $editColumn->SetReplaceUploadedFileIfExist(true);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for sitzplatz field
             //
             $editor = new TextEdit('sitzplatz_edit');
@@ -55422,9 +55261,9 @@
             //
             // Edit column for parlament_number field
             //
-            $editor = new RadioEdit('parlament_number_edit');
-            $editor->SetDisplayMode(RadioEdit::StackedMode);
+            $editor = new TextEdit('parlament_number_edit');
             $editColumn = new CustomEditColumn('Parlament Number', 'parlament_number', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -55889,19 +55728,13 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for photo field
-            //
-            $column = new TextViewColumn('photo', 'photo', 'Photo', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for kleinbild field
             //
             $column = new ExternalImageViewColumn('kleinbild', 'kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
-            $column->setSourcePrefixTemplate('files/parlamentarier_photos/klein/');
+            $column->setSourcePrefixTemplate('https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/files/parlamentarier_photos/klein/');
             $column->setImageHintTemplate('%kleinbild%');
+            $column->setOriginalImageInfo('kleinbild', 'https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/files/parlamentarier_photos/original/', '');
             $grid->AddPrintColumn($column);
             
             //
@@ -56207,14 +56040,6 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
-            
-            //
-            // View column for photo_dateiname_voll field
-            //
-            $column = new TextViewColumn('photo_dateiname_voll', 'photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -56442,19 +56267,13 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for photo field
-            //
-            $column = new TextViewColumn('photo', 'photo', 'Photo', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
             // View column for kleinbild field
             //
             $column = new ExternalImageViewColumn('kleinbild', 'kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
-            $column->setSourcePrefixTemplate('files/parlamentarier_photos/klein/');
+            $column->setSourcePrefixTemplate('https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/files/parlamentarier_photos/klein/');
             $column->setImageHintTemplate('%kleinbild%');
+            $column->setOriginalImageInfo('kleinbild', 'https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/files/parlamentarier_photos/original/', '');
             $grid->AddExportColumn($column);
             
             //
@@ -56987,19 +56806,13 @@
             $grid->AddCompareColumn($column);
             
             //
-            // View column for photo field
-            //
-            $column = new TextViewColumn('photo', 'photo', 'Photo', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddCompareColumn($column);
-            
-            //
             // View column for kleinbild field
             //
             $column = new ExternalImageViewColumn('kleinbild', 'kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
-            $column->setSourcePrefixTemplate('files/parlamentarier_photos/klein/');
+            $column->setSourcePrefixTemplate('https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/files/parlamentarier_photos/klein/');
             $column->setImageHintTemplate('%kleinbild%');
+            $column->setOriginalImageInfo('kleinbild', 'https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/files/parlamentarier_photos/original/', '');
             $grid->AddCompareColumn($column);
             
             //
@@ -57305,37 +57118,6 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
-            
-            //
-            // View column for photo_dateiname field
-            //
-            $column = new TextViewColumn('photo_dateiname', 'photo_dateiname', 'Photo Dateiname', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for photo_dateierweiterung field
-            //
-            $column = new TextViewColumn('photo_dateierweiterung', 'photo_dateierweiterung', 'Photo Dateierweiterung', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for photo_dateiname_voll field
-            //
-            $column = new TextViewColumn('photo_dateiname_voll', 'photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for photo_mime_type field
-            //
-            $column = new TextViewColumn('photo_mime_type', 'photo_mime_type', 'Photo Mime Type', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $grid->AddCompareColumn($column);
         }
     
         private function AddCompareHeaderColumns(Grid $grid)
@@ -57385,6 +57167,9 @@
         function GetCustomClientScript()
         {
             return 'window.disable_parlamentarier_imported_fields = function (editors) {'. "\n" .
+            '    if (editors[\'arbeitssprache\']?.getValue()) {'. "\n" .
+            '        editors[\'parlament_biografie_id\'].setReadonly(true);'. "\n" .
+            '    }'. "\n" .
             '    if (editors[\'parlament_biografie_id\']?.getValue()) {'. "\n" .
             '        editors[\'photo\'].setReadonly(true);'. "\n" .
             '        editors[\'kleinbild\'].setReadonly(true);'. "\n" .
@@ -57397,9 +57182,9 @@
             '        editors[\'rat_id\'].setReadonly(true);'. "\n" .
             '        // editors[\'homepage\'].setReadonly(true);'. "\n" .
             '        // editors[\'homepage_2\'].setReadonly(true);'. "\n" .
-            '        editors[\'email\'].setReadonly(true);'. "\n" .
-            '        editors[\'telephon_1\'].setReadonly(true);'. "\n" .
-            '        editors[\'telephon_2\'].setReadonly(true);'. "\n" .
+            '        // editors[\'email\'].setReadonly(true);'. "\n" .
+            '        // editors[\'telephon_1\'].setReadonly(true);'. "\n" .
+            '        // editors[\'telephon_2\'].setReadonly(true);'. "\n" .
             '        editors[\'titel\'].setReadonly(true);'. "\n" .
             '        editors[\'sprache\'].setReadonly(true);'. "\n" .
             '        editors[\'nachname\'].setReadonly(true);'. "\n" .
@@ -57854,34 +57639,6 @@
             );
             $lookupDataset->setOrderByField('anzeige_name_mixed', 'ASC');
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_beruf_interessengruppe_id_search', 'id', 'anzeige_name_mixed', null, 20);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            $lookupDataset = new TableDataset(
-                MyPDOConnectionFactory::getInstance(),
-                GetConnectionOptions(),
-                '`v_mil_grad`');
-            $lookupDataset->addFields(
-                array(
-                    new IntegerField('id', true),
-                    new StringField('name', true),
-                    new StringField('name_fr'),
-                    new StringField('abkuerzung', true),
-                    new StringField('abkuerzung_fr'),
-                    new StringField('typ', true),
-                    new IntegerField('ranghoehe', true),
-                    new IntegerField('anzeigestufe', true),
-                    new StringField('created_visa', true),
-                    new DateTimeField('created_date', true),
-                    new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true),
-                    new StringField('name_de', true),
-                    new StringField('abkuerzung_de', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true)
-                )
-            );
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'anzeigestufe > 0'));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_militaerischer_grad_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
