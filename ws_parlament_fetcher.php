@@ -1461,7 +1461,7 @@ function getParlamentInteressenbindungenJson($concerns) {
   global $errors;
   $interessenbindungen = [];
   $objects = null;
-  if (is_array($concerns) && !empty($concerns)) {
+  if (!empty($concerns) && is_array($concerns)) {
     $objects = [];
     foreach($concerns as $concern) {
 //       print_r($concern);
@@ -1477,7 +1477,7 @@ function getParlamentInteressenbindungenJson($concerns) {
 }
 
 // Returns interessenbindungen as PHP data structures (arrays and objects)
-function getParlamentInteressenbindungenJsonOdata(array $concerns) {
+function getParlamentInteressenbindungenJsonOdata(?array $concerns): ?array {
   global $errors;
   $objects = null;
   if (!empty($concerns) && is_array($concerns)) {
@@ -1500,9 +1500,8 @@ function getParlamentInteressenbindungenJsonOdata(array $concerns) {
 }
 
 // Returns beruf/arbeitgeber as PHP data structures (arrays and objects)
-function getParlamentBerufJsonOdata(?array $occupations): array {
-  global $errors;
-  if (!empty($occupations) &&is_array($occupations)) {
+function getParlamentBerufJsonOdata(?array $occupations): ?array {
+  if (!empty($occupations) && is_array($occupations)) {
     $objects = [];
     foreach($occupations as $occupation) {
 //       print_r($concern);
