@@ -3540,7 +3540,7 @@ function get_parlamentarier_lang($con, $id) {
 
 function get_parlamentarier($con, $id, $jahr, $include_parlamentarische_gruppen_members = true) {
       $result = [];
-      $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.name as parlamentarier_name2, parlamentarier.email, parlamentarier.geschlecht, parlamentarier.beruf, parlamentarier.beruf_fr, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.kontrolliert_datum, parlamentarier.freigabe_datum, parlamentarier.autorisierung_verschickt_datum, parlamentarier.autorisiert_datum, parlamentarier.kontrolliert_visa, parlamentarier.eingabe_abgeschlossen_visa, parlamentarier.im_rat_bis, parlamentarier.sitzplatz, parlamentarier.geburtstag, parlamentarier.im_rat_bis, parlamentarier.kleinbild, parlamentarier.parlament_biografie_id, parlamentarier.arbeitssprache, parlamentarier.aemter, parlamentarier.weitere_aemter, parlamentarier.parlament_interessenbindungen, parlamentarier.parlament_interessenbindungen_updated, DATE_FORMAT(parlament_interessenbindungen_updated, '%d.%m.%Y') as parlament_interessenbindungen_updated_formatted,
+      $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.name as parlamentarier_name2, parlamentarier.email, parlamentarier.geschlecht, parlamentarier.beruf, parlamentarier.beruf_fr, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.kontrolliert_datum, parlamentarier.freigabe_datum, parlamentarier.autorisierung_verschickt_datum, parlamentarier.autorisiert_datum, parlamentarier.kontrolliert_visa, parlamentarier.eingabe_abgeschlossen_visa, parlamentarier.im_rat_bis, parlamentarier.sitzplatz, parlamentarier.geburtstag, parlamentarier.im_rat_bis, parlamentarier.kleinbild, parlamentarier.parlament_biografie_id, parlamentarier.arbeitssprache, parlamentarier.aemter, parlamentarier.weitere_aemter, parlamentarier.parlament_interessenbindungen, parlamentarier.parlament_interessenbindungen_json, parlamentarier.parlament_interessenbindungen_updated, DATE_FORMAT(parlament_interessenbindungen_updated, '%d.%m.%Y') as parlament_interessenbindungen_updated_formatted,
       parlament_beruf_json,
 GROUP_CONCAT(DISTINCT
     CONCAT('<li>',
@@ -3752,6 +3752,19 @@ function convertParlamentBerufJsonToHtml(?array $parlament_beruf_objects): strin
     $new_parlament_beruf_html[] = sprintf($job_format, implode(', ', array_filter([$beruf->arbeitgeber, $beruf->jobtitel, $beruf->beruf])), $beruf->von, $beruf->bis ? ' bis ' . $beruf->bis : '', );
   }
   return implode("\n", $new_parlament_beruf_html);
+}
+
+function convertParlamentInteressenbindungenJsonToHtml(?array $parlament_interessenbindungen_objects): string {
+  if (empty($parlament_interessenbindungen_objects)) return '';
+  $interessenbindungen = [];
+  foreach ($parlament_interessenbindungen_objects as $ib) {
+    $paid = $ib->Bezahlung ? 1 : 0;
+    $interessenbindungen[] = "<tr><td>$ib->Name</td><td><abbr title='$ib->RechtsformLong'>$ib->Rechtsform</abbr></td><td><abbr title='$ib->GremiumLong'>$ib->Gremium</abbr></td><td><abbr title='$ib->FunktionLong'>$ib->Funktion</abbr></td><td><abbr title='". ($paid ? 'bezahlt' : 'ehrenamtlich') . "'>$paid</abbr></td></tr>";
+  }
+  $html = "<table border='0'>" .
+  "<thead><tr><th>Name</th><th>Rechtsform</th><th><abbr title='Gremium'>Gr.</abbr></th><th><abbr title='Funktion'>F.</abbr></th><th><abbr title='Bezahlung: 0=ehrenamtlich, 1=bezahlt'>Bez.</abbr></th></tr></thead>\n" .
+  "<tbody>\n" . implode("\n", $interessenbindungen) . "\n</tbody>\n</table>";
+  return $html;
 }
 
 /** Converts a $json string to PHP datastructures (objects and arrays) */

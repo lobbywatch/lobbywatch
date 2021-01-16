@@ -60,7 +60,7 @@ try
   FROM v_parlamentarier_transparenz parlamentarier_transparenz
   LIMIT 1");
   $stichtag = $result->fetchColumn();
-  $jahr = date("Y");
+  $jahr = getRechercheJahrFromSettings();
 
   $title = 'Vergütungstransparenzübersicht';
   $markup = "<h1>$title</h1>";
@@ -76,6 +76,7 @@ try
   <th title='In Transparenzliste $stichtag?'>In Liste</th>
   <th title='Beurteilung der Transparenz gemäss aktuelltester Transparenzliste'>Transparent $stichtag</th>
   <th title='0: intransparent (Gesetzliches Minimum), 0 < x < 1: teilweise transparent, ≥1: voll transparent'>Berechnete Transparenz<br>(#V<sup>+</sup> / #I<sub>NB</sub>)<br><small>Anzahl Vergütungen von $jahr ohne Betrag 1 durch Anzahl nicht berufliche gültige Interessenbindungen</small></th>
+  <th title='Vergleichstatus, 1=grün, 0=gelb, 0.5=weiss'>Stat</th>
   <th title='Anzahl erfasste Vergütungen von $jahr'>#V</th>
   <th title='Anzahl erfasste Vergütungen von $jahr ohne Betrag=1'><strong>#V<sup>+</sup></strong></th>
   <!-- <th title='Anzahl erfasste nicht berufliche Vergütungen von $jahr'>#V<sub>NB<sub></th> -->
@@ -85,6 +86,7 @@ try
   <th title='Anzahl nicht berufliche gültige Interessenbindungen ohne parlamentarische Gruppe'><strong>#I<sub>NB</sub></strong></th>
   <th title='Gesamte Anzahl Interessenbindungen (gültige und beendete)'>#I<sub>all</sub></th>
   <th>Interessenbindungen total<small class='desc'>(id)</small></th>
+  <th title='\"Offizielle\" Daten von Parlament'>\"Offiziell\"</th>
   </tr>
   </thead>
   <tbody>";
@@ -122,14 +124,15 @@ try
 
       $markup .= '<tr' . (!$record->freigabe_datum_unix || $record->freigabe_datum_unix > time() ? ' class="unpublished"': '') . ">" .
       "<td>$i</td>" .
-      "<td>" . (!$active ? '<s>': '') . '<a href="/daten/parlamentarier/' . check_plain($id) . '/' . _lobbywatch_clean_for_url($record->anzeige_name) . '">' . check_plain($record->anzeige_name) . '</a>' . (!$active ? '</s>': '') . '</td>' .
-      '<td>' . $id . '</td>' .
+      "<td>" . (!$active ? '<s>': '') . '<a href="https://lobbywatch.ch/de/daten/parlamentarier/' . check_plain($id) . '/' . _lobbywatch_clean_for_url($record->anzeige_name) . '">' . check_plain($record->anzeige_name) . '</a>' . (!$active ? '</s>': '') . '</td>' .
+      '<td><a href="https://cms.lobbywatch.ch/bearbeitung/parlamentarier.php?operation=view&pk0=' . check_plain($id) . '">' . check_plain($id) . '</a></td>' .
       '<td>' . check_plain($record->partei) . '</td>' .
       '<td>' . check_plain($record->rat) . '</td>' .
       '<td>' . check_plain($record->kanton) . "</td>" .
       "<td>" . $transparenzData['in_liste'] . "</td>" .
       "<td title='{$transparenzData['stichdatum']}' style='" . ($ok ? " background-color: green;" : '') . ($warn ? " background-color: yellow;" : '') . "'>" . ($transparenzData['verguetung_transparent'] ?? '-') . "</td>" .
       "<td style='" . ($ok ? " background-color: green;" : '') . ($warn ? " background-color: yellow;" : '') . "'><strong>" . ($calcualted_transparency) . "</strong></td>" .
+      "<td style='" . ($ok ? " background-color: green;" : '') . ($warn ? " background-color: yellow;" : '') . "'>" . ($ok ? "1" : ($warn ? "0" : '0.5')) . "</td>" .
       "<td>{$transparenzData['anzahl_erfasste_verguetungen']}</td>" .
       "<td><strong>{$transparenzData['anzahl_erfasste_verguetungen_ohne_betrag_eins']}</strong></td>" .
       // "<td>{$transparenzData['anzahl_erfasste_nicht_hauptberufliche_verguetungen']}</td>" .
@@ -139,6 +142,7 @@ try
       "<td><strong>{$transparenzData['anzahl_nicht_hauptberufliche_nicht_parlgruppe_interessenbindungen']}</strong></td>" .
       "<td>{$transparenzData['anzahl_interessenbindungen_alle']}</td>" .
       "<td>" . $rowData['interessenbindungen'] . "</td>" .
+      "<td style='font-size: x-small;'><div><strong>Beruf</strong>:" . convertParlamentBerufJsonToHtml(decodeJson($rowData['parlament_beruf_json']) ?? []) . '</div><p><div class="parlament-ch-interessenbindungen">' . convertParlamentInteressenbindungenJsonToHtml(decodeJson($rowData['parlament_interessenbindungen_json']) ?? []) . "</div></td>" .
       "</tr>\n";
     }
 
@@ -181,6 +185,14 @@ ul.jahr {
 [title] {
   text-decoration: underline dotted;
 }
+
+.parlament-ch-interessenbindungen table {
+  text-align: left;
+}
+
+/*.parlament-ch-interessenbindungen small {
+  font-size: x-small;
+}*/
 
 body {
   padding-top: 0;
