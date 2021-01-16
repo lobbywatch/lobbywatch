@@ -3363,26 +3363,26 @@ ALTER TABLE `organisation_log`
   ADD `in_handelsregister` BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'Ist die Organisation im Handelsregister (Zefix) eingetragen?' AFTER `uid`,
   ADD `inaktiv` BOOLEAN NULL DEFAULT FALSE COMMENT 'Gibt es die Organisation noch?' AFTER `in_handelsregister`;
 
--- 29.12.2020
+-- 29.12.2020 unique index with NULLs
 
 -- https://dba.stackexchange.com/questions/156498/mysql-unique-index-with-nulls-actual-solution-anyone
 -- https://lobbywatch.slack.com/archives/CLXU2R9V0/p1606640182011100
 
 -- interessenbindung
-ALTER TABLE interessenbindung
+/* ALTER TABLE interessenbindung
   DROP INDEX `interessenbindung_art_parlamentarier_organisation_unique`,
   ADD `interessenbindung_parlamentarier_organisation_art_unique` VARCHAR(45) GENERATED ALWAYS AS (CONCAT_WS('_', `parlamentarier_id`, `organisation_id`, `art`, IFNULL(`bis`, '9999-12-31'))) VIRTUAL NOT NULL COMMENT 'Kombination aus parlamentarier_id, organisation_id, art und bis muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE;
 
 ALTER TABLE interessenbindung_log
-  ADD `interessenbindung_parlamentarier_organisation_art_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint';
+  ADD `interessenbindung_parlamentarier_organisation_art_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint'; */
 
 -- mandat
-ALTER TABLE mandat
+/* ALTER TABLE mandat
   DROP INDEX `mandat_person_organisation_art_unique`,
   ADD `mandat_person_organisation_art_unique` VARCHAR(45) GENERATED ALWAYS AS (CONCAT_WS('_', `person_id`, `organisation_id`, `art`, IFNULL(`bis`, '9999-12-31'))) VIRTUAL NOT NULL COMMENT 'Kombination aus person_id, organisation_id, art und bis muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE;
 
 ALTER TABLE mandat_log
-  ADD `mandat_person_organisation_art_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint';
+  ADD `mandat_person_organisation_art_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint'; */
 
 -- organisation_beziehung
 ALTER TABLE organisation_beziehung
@@ -3402,7 +3402,7 @@ ALTER TABLE in_kommission_log
 
 -- zuttrittsberechtigung
 ALTER TABLE zutrittsberechtigung
-  DROP INDEX `parlamentarier_person_unique`,
+  -- DROP INDEX `parlamentarier_person_unique`, used for fk_
   ADD `zutrittsberechtigung_parlamentarier_person_unique` VARCHAR(35) GENERATED ALWAYS AS (CONCAT_WS('_', `parlamentarier_id`, `person_id`, IFNULL(`bis`, '9999-12-31'))) VIRTUAL NOT NULL COMMENT 'Kombination aus parlamentarier_id, person_id und bis muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE;
 
 ALTER TABLE zutrittsberechtigung_log
@@ -3410,22 +3410,22 @@ ALTER TABLE zutrittsberechtigung_log
 
 -- organisation
 ALTER TABLE organisation
-  CHANGE `land_id` `land_id` INT(11) NULL DEFAULT '191' COMMENT 'Land der Organisation',
+  CHANGE `land_id` `land_id` INT(11) NULL DEFAULT '191' COMMENT 'Land der Organisation';
   -- DROP INDEX `uid_unique`,
   -- ADD `organisation_uid_unique` VARCHAR(15) GENERATED ALWAYS AS (CONCAT_WS('_', IFNULL(`uid`, CONCAT('UNIQUE_', id)))) VIRTUAL NOT NULL COMMENT 'uid muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE,
-  DROP INDEX `organisation_name_de_unique`,
-  ADD `organisation_name_de_rechtsform_unique` VARCHAR(190) GENERATED ALWAYS AS (CONCAT_WS('_', name_de, IFNULL(`rechtsform`, '-'))) VIRTUAL NOT NULL COMMENT 'Kombination aus name_de und rechtsform muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE,
-  DROP INDEX `organisation_name_fr_unique`,
-  ADD `organisation_name_fr_rechtsform_unique` VARCHAR(190) GENERATED ALWAYS AS (CONCAT_WS('_', name_fr, IFNULL(`rechtsform`, '-'))) VIRTUAL NOT NULL COMMENT 'Kombination aus name_fr und rechtsform muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE,
-  DROP INDEX `organisation_name_it_unique`,
-  ADD `organisation_name_it_rechtsform_unique` VARCHAR(190) GENERATED ALWAYS AS (CONCAT_WS('_', name_it, IFNULL(`rechtsform`, '-'))) VIRTUAL NOT NULL COMMENT 'Kombination aus name_it und rechtsform muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE;
+  -- DROP INDEX `organisation_name_de_unique`,
+  -- ADD `organisation_name_de_rechtsform_unique` VARCHAR(190) GENERATED ALWAYS AS (CONCAT_WS('_', name_de, IFNULL(`rechtsform`, '-'))) VIRTUAL NOT -- NULL COMMENT 'Kombination aus name_de und rechtsform muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE,
+  -- DROP INDEX `organisation_name_fr_unique`,
+  -- ADD `organisation_name_fr_rechtsform_unique` VARCHAR(190) GENERATED ALWAYS AS (CONCAT_WS('_', name_fr, IFNULL(`rechtsform`, '-'))) VIRTUAL NOT -- NULL COMMENT 'Kombination aus name_fr und rechtsform muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE,
+  -- DROP INDEX `organisation_name_it_unique`,
+  -- ADD `organisation_name_it_rechtsform_unique` VARCHAR(190) GENERATED ALWAYS AS (CONCAT_WS('_', name_it, IFNULL(`rechtsform`, '-'))) VIRTUAL NOT -- NULL COMMENT 'Kombination aus name_it und rechtsform muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE
 
 ALTER TABLE organisation_log
-  CHANGE `land_id` `land_id` INT(11) NULL DEFAULT '191' COMMENT 'Land der Organisation',
+  CHANGE `land_id` `land_id` INT(11) NULL DEFAULT '191' COMMENT 'Land der Organisation';
   -- ADD `organisation_uid_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint',
-  ADD `organisation_name_de_rechtsform_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint',
-  ADD `organisation_name_fr_rechtsform_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint',
-  ADD `organisation_name_it_rechtsform_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint';
+  -- ADD `organisation_name_de_rechtsform_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint',
+  -- ADD `organisation_name_fr_rechtsform_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint',
+  -- ADD `organisation_name_it_rechtsform_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint'
 
 -- person
 ALTER TABLE person
@@ -3434,11 +3434,3 @@ ALTER TABLE person
 
 ALTER TABLE person_log
   ADD `person_nachname_zweiter_name_vorname_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint';
-
--- zutrittsberechtigung
-ALTER TABLE zutrittsberechtigung
-  DROP INDEX `parlamentarier_person_unique`,
-  ADD `zutrittsberechtigung_parlamentarier_person_unique` VARCHAR(35) GENERATED ALWAYS AS (CONCAT_WS('_', `parlamentarier_id`, `person_id`, IFNULL(`bis`, '9999-12-31'))) VIRTUAL NOT NULL COMMENT 'Kombination aus parlamentarier_id, person_id und bis muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE;
-
-ALTER TABLE zutrittsberechtigung_log
-  ADD `zutrittsberechtigung_parlamentarier_person_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint';
