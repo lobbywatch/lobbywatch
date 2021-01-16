@@ -3977,3 +3977,14 @@ function clean_for_display(string $str): string {
 function max_attribute_in_array($array, $prop) {
   return max(array_column($array, $prop));
 }
+
+function getRechercheJahrFromSettings(): int {
+  $year_raw = getSettingValue('rechercheJahr', false, 'auto');
+  $cur_year = (int) date("Y");
+  if ($year_raw <= $cur_year + 1 && $year_raw >= $cur_year - 1) {
+    $year = (int) $year_raw;
+  } else {
+    $year = $cur_year;
+  }
+  return $year;
+}

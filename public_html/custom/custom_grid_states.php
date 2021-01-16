@@ -228,7 +228,7 @@ class SetEhrenamtlichSelectedGridState extends AbstractCommitEditSelectedOperati
     $sql_date = "STR_TO_DATE('$this->transactionDateTime','%d-%m-%Y %T')";
     $table_raw = preg_replace('/[`]/i', '', $this->grid->GetDataset()->GetName());
     $table = preg_replace('/^vf_/i', '', $table_raw);
-    $year = date("Y");
+    $year = getRechercheJahrFromSettings();
     $desc = !empty($this->text1) && $this->text1 != 'null' && $this->text1 != 'undefined' ? "'{$this->text1}'" : "'Ehrenamtlich'";
     $src = !empty($this->text2) && $this->text2 != 'null' && $this->text2 != 'undefined' ? "'{$this->text2}'" : 'NULL';
     $url = !empty($this->text3) && $this->text3 != 'null' && $this->text3 != 'undefined' ? "'{$this->text3}'" : 'NULL';
@@ -249,7 +249,7 @@ class SetBezahltSelectedGridState extends AbstractCommitEditSelectedOperationVal
     $sql_date = "STR_TO_DATE('$this->transactionDateTime','%d-%m-%Y %T')";
     $table_raw = preg_replace('/[`]/i', '', $this->grid->GetDataset()->GetName());
     $table = preg_replace('/^vf_/i', '', $table_raw);
-    $year = date("Y");
+    $year = getRechercheJahrFromSettings();
     df($this->text1, '$this->text1');
     $desc = !empty($this->text1) && $this->text1 != 'null' && $this->text1 != 'undefined' ? "'{$this->text1}'" : "'Bezahlt'";
     $src = !empty($this->text2) && $this->text2 != 'null' && $this->text2 != 'undefined' ? "'{$this->text2}'" : 'NULL';
@@ -271,7 +271,7 @@ class SetZahlendSelectedGridState extends AbstractCommitEditSelectedOperationVal
     $sql_date = "STR_TO_DATE('$this->transactionDateTime','%d-%m-%Y %T')";
     $table_raw = preg_replace('/[`]/i', '', $this->grid->GetDataset()->GetName());
     $table = preg_replace('/^vf_/i', '', $table_raw);
-    $year = date("Y");
+    $year = getRechercheJahrFromSettings();
     $desc = !empty($this->text1) && $this->text1 != 'null' && $this->text1 != 'undefined' ? "'{$this->text1}'" : "'Bezahlendes Mitglied'";
     $src = !empty($this->text2) && $this->text2 != 'null' && $this->text2 != 'undefined' ? "'{$this->text2}'" : 'NULL';
     $url = !empty($this->text3) && $this->text3 != 'null' && $this->text3 != 'undefined' ? "'{$this->text3}'" : 'NULL';
