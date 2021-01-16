@@ -93,7 +93,7 @@ while test $# -gt 0; do
                         echo "-o, --onlydownloadlastbak        No remote prod backup, only download (and import) last remote prod backup (useful for development, production update not possible)"
                         echo "-d, --downloadallbak             Download all remote backups"
                         echo "-f, --full-dump                  Import full DB dump which replaces the current DB"
-                        echo "-i, --import                     Import last remote prod backup, no backup (implies -B, production update not possible)"
+                        echo "-i, --onlyimport                 Import last remote prod backup, no backup (implies -B, production update not possible)"
                         echo "-D, --no-dl-pdf                  No download PDFs, use last PDFs"
                         echo "-r, --refresh                    Refresh views"
                         echo "-P, --noparlam                   Do not run parlamentarier script"
@@ -150,7 +150,7 @@ while test $# -gt 0; do
                         processRetired='-R'
                         shift
                         ;;
-                -i|--import)
+                -i|--onlyimport)
                         import=true
                         shift
                         ;;

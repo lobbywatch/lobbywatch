@@ -15,6 +15,8 @@ DUMP_FILE=prod_bak/last_dbdump_data.txt
 FULL_DUMP=false
 DUMP_TYPE_PARAMETER='-o'
 progress=""
+backup_param='-b'
+onlyimport=false
 
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 for i in "$@" ; do
@@ -29,6 +31,8 @@ for i in "$@" ; do
                         echo "Options:"
                         echo "-f, --full-dump           Import full DB dump which replaces the current DB"
                         echo "-P, --progress            Show download progress"
+                        echo "-B, --nobackup            Show download progress"
+                        echo "-i, --onlyimport          Import last remote prod backup, no backup (implies -B, production update not possible)"
                         quit
                         ;;
                 -f|--full-dump)
@@ -39,6 +43,14 @@ for i in "$@" ; do
                         ;;
                 -P|--progress)
                         progress="--progress"
+                        shift
+                        ;;
+                -B|--nobackup)
+                        backup_param=''
+                        shift
+                        ;;
+                -i|--onlyimport)
+                        onlyimport=true
                         shift
                         ;;
                 *)
@@ -57,7 +69,6 @@ elif [[ "$DB_PARAM" == "lobbywatch" ]] && $FULL_DUMP && [[ "$HOSTNAME" =~ "abel"
   exit 1
 fi
 
-
 # Set defaut DB if no parameter given
 if [[ "$DB_PARAM" == "all" ]]; then
   db=lobbywatchtest
@@ -67,7 +78,9 @@ else
   db=lobbywatchtest
 fi
 
-./deploy.sh -q -b -p $DUMP_TYPE_PARAMETER $progress
+if ! $onlyimport ; then
+  ./deploy.sh -q $backup_param -p $DUMP_TYPE_PARAMETER $progress
+fi
 
 # ./run_local_db_script.sh $db prod_bak/`cat $DUMP_FILE`
 ./deploy.sh -q -l=$db -s prod_bak/`cat $DUMP_FILE`
