@@ -2124,16 +2124,17 @@ function customOnPreparePage(Page $page) {
  */
 function globalOnCustomizePageList(CommonPage $page, PageList $pageList) {
 //   df($pageList, '$pageList');
-  $pageList->AddGroup('Auswertungen');
+  // $pageList->AddGroup('Auswertungen');
 
-  $pageList->AddPage(new PageLink('<span class="overview">Vergütungsübersicht</span>', 'parlamentarier_overview.php', 'Parlamentarierübersicht auf einer Seite mit den Interessenbindungen inkl. Vergütung', false, false, 'Auswertungen'));
-  $pageList->AddPage(new PageLink('<span class="state">Erstellungsanteil</span>', 'anteil.php?option=erstellungsanteil', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false, 'Auswertungen'));
-  $pageList->AddPage(new PageLink('<span class="state">Bearbeitungsanteil</span>', 'anteil.php?option=bearbeitungsanteil', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false, 'Auswertungen'));
+  $pageList->AddPageAt(new PageLink('<span class="overview">Vergütungsübersicht</span>', 'parlamentarier_overview.php', 'Parlamentarierübersicht auf einer Seite mit den Interessenbindungen inkl. Vergütung', false, false, 'Auswertungen'), 0);
+  $pageList->AddPageAt(new PageLink('<span class="state">Erstellungsanteil</span>', 'anteil.php?option=erstellungsanteil', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false, 'Auswertungen'), 1);
+  $pageList->AddPageAt(new PageLink('<span class="state">Bearbeitungsanteil</span>', 'anteil.php?option=bearbeitungsanteil', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false, 'Auswertungen'), 2);
   // $pageList->AddPage(new PageLink('<span class="auswertung"><s>Auswertung</s></span>', $GLOBALS['env_dir'] . 'auswertung', 'Auswertung ' . $GLOBALS['env'] , false, false, 'Auswertungen'));
 
   $pageList->AddGroup('Links');
 
-  $pageList->AddPage(new PageLink('<span class="website">Website</span>', '/', 'Homepage', false, false, 'Links'));
+  $pageList->AddPage(new PageLink('<span class="website">Frontend</span>', 'https://lobbywatch.ch', 'Frontend', false, false, 'Links'));
+  $pageList->AddPage(new PageLink('<span class="website">CMS</span>', '/', 'CMS', false, false, 'Links'));
   $pageList->AddPage(new PageLink('<span class="wiki">Wiki</span>', '/wiki', 'Wiki', false, false, 'Links'));
   $pageList->AddPage(new PageLink('<span class="kommissionen">Kommissionen</span>', '/de/daten/kommission', 'Kommissionen', false, false, 'Links'));
   //   $pageList->AddPage(new PageLink('<span class="state">Stand SGK</span>', 'anteil.php?option=kommission&id=1&id2=47', 'Stand SGK', false, true, 'Links'));

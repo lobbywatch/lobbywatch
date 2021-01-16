@@ -21759,6 +21759,7 @@
                     new DateTimeField('created_date', true, true),
                     new StringField('updated_visa', false, true),
                     new DateTimeField('updated_date', true, true),
+                    new StringField('in_kommission_parlamentarier_kommission_funktion_unique', true, true),
                     new IntegerField('aktiv', false, true),
                     new IntegerField('published', true, true),
                     new IntegerField('bis_unix', false, true),
@@ -21837,7 +21838,8 @@
                 new FilterColumn($this->dataset, 'abkuerzung_fr', 'abkuerzung_fr', 'Abkuerzung Fr'),
                 new FilterColumn($this->dataset, 'name_fr', 'name_fr', 'Name Fr'),
                 new FilterColumn($this->dataset, 'aktiv', 'aktiv', 'Aktiv'),
-                new FilterColumn($this->dataset, 'published', 'published', 'Published')
+                new FilterColumn($this->dataset, 'published', 'published', 'Published'),
+                new FilterColumn($this->dataset, 'in_kommission_parlamentarier_kommission_funktion_unique', 'in_kommission_parlamentarier_kommission_funktion_unique', 'In Kommission Parlamentarier Kommission Funktion Unique')
             );
         }
     
@@ -21867,7 +21869,8 @@
                 ->addColumn($columns['abkuerzung_fr'])
                 ->addColumn($columns['name_fr'])
                 ->addColumn($columns['aktiv'])
-                ->addColumn($columns['published']);
+                ->addColumn($columns['published'])
+                ->addColumn($columns['in_kommission_parlamentarier_kommission_funktion_unique']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -22448,6 +22451,31 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('in_kommission_parlamentarier_kommission_funktion_unique_edit');
+            $main_editor->SetMaxLength(45);
+            
+            $filterBuilder->addColumn(
+                $columns['in_kommission_parlamentarier_kommission_funktion_unique'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -22724,6 +22752,16 @@
             $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for in_kommission_parlamentarier_kommission_funktion_unique field
+            //
+            $column = new TextViewColumn('in_kommission_parlamentarier_kommission_funktion_unique', 'in_kommission_parlamentarier_kommission_funktion_unique', 'In Kommission Parlamentarier Kommission Funktion Unique', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -22922,6 +22960,13 @@
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for in_kommission_parlamentarier_kommission_funktion_unique field
+            //
+            $column = new TextViewColumn('in_kommission_parlamentarier_kommission_funktion_unique', 'in_kommission_parlamentarier_kommission_funktion_unique', 'In Kommission Parlamentarier Kommission Funktion Unique', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -23220,6 +23265,17 @@
             //
             $editor = new TextEdit('published_edit');
             $editColumn = new CustomEditColumn('Published', 'published', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for in_kommission_parlamentarier_kommission_funktion_unique field
+            //
+            $editor = new TextEdit('in_kommission_parlamentarier_kommission_funktion_unique_edit');
+            $editor->SetMaxLength(45);
+            $editColumn = new CustomEditColumn('In Kommission Parlamentarier Kommission Funktion Unique', 'in_kommission_parlamentarier_kommission_funktion_unique', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -23664,6 +23720,17 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for in_kommission_parlamentarier_kommission_funktion_unique field
+            //
+            $editor = new TextEdit('in_kommission_parlamentarier_kommission_funktion_unique_edit');
+            $editor->SetMaxLength(45);
+            $editColumn = new CustomEditColumn('In Kommission Parlamentarier Kommission Funktion Unique', 'in_kommission_parlamentarier_kommission_funktion_unique', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -23965,6 +24032,17 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for in_kommission_parlamentarier_kommission_funktion_unique field
+            //
+            $editor = new TextEdit('in_kommission_parlamentarier_kommission_funktion_unique_edit');
+            $editor->SetMaxLength(45);
+            $editColumn = new CustomEditColumn('In Kommission Parlamentarier Kommission Funktion Unique', 'in_kommission_parlamentarier_kommission_funktion_unique', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -24170,6 +24248,13 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for in_kommission_parlamentarier_kommission_funktion_unique field
+            //
+            $column = new TextViewColumn('in_kommission_parlamentarier_kommission_funktion_unique', 'in_kommission_parlamentarier_kommission_funktion_unique', 'In Kommission Parlamentarier Kommission Funktion Unique', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -24368,6 +24453,13 @@
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for in_kommission_parlamentarier_kommission_funktion_unique field
+            //
+            $column = new TextViewColumn('in_kommission_parlamentarier_kommission_funktion_unique', 'in_kommission_parlamentarier_kommission_funktion_unique', 'In Kommission Parlamentarier Kommission Funktion Unique', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
     
@@ -24668,6 +24760,13 @@
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for in_kommission_parlamentarier_kommission_funktion_unique field
+            //
+            $column = new TextViewColumn('in_kommission_parlamentarier_kommission_funktion_unique', 'in_kommission_parlamentarier_kommission_funktion_unique', 'In Kommission Parlamentarier Kommission Funktion Unique', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
         }
     
@@ -49462,7 +49561,6 @@
                 ->addColumn($columns['xing_profil_name'])
                 ->addColumn($columns['facebook_name'])
                 ->addColumn($columns['wikipedia'])
-                ->addColumn($columns['sprache'])
                 ->addColumn($columns['adresse_plz'])
                 ->addColumn($columns['adresse_ort'])
                 ->addColumn($columns['telephon_1'])

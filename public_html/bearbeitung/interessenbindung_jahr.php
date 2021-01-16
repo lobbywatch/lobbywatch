@@ -1363,7 +1363,7 @@
         protected function DoBeforeCreate()
         {
             $this->SetTitle('Interessenbindungsvergütungen');
-            $this->SetMenuLabel('Interessenbindungsvergütungen');
+            $this->SetMenuLabel('<span class="relation">Interessenbindungsvergütungen</span>');
     
             $insertSql = array('INSERT INTO interessenbindung_jahr (
             id,

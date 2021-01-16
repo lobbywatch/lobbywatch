@@ -1983,7 +1983,7 @@
         protected function DoBeforeCreate()
         {
             $this->SetTitle('Parlamentarier Vergütungstransparenz');
-            $this->SetMenuLabel('<span class="relation" title="Interessenbindungen der Parlamentarier">Parlamentarier Vergütungstransparenz</span>');
+            $this->SetMenuLabel('<span class="entity" title="Interessenbindungen der Parlamentarier">Parlamentarier Vergütungstransparenz</span>');
     
             $insertSql = array('INSERT INTO parlamentarier_transparenz (
             id,
@@ -5863,9 +5863,11 @@
             $this->setExportOneRecordAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
             $this->setDescription('' . $GLOBALS["edit_header_message"] /*afterburner*/  . '
             
-            Vergütungstransparenz der Parlamentarier.
-            (Die Listen können gefiltert und mit dem Export-Button zur weiteren Bearbeitung exportiert werden.)
-            <br>Die Daten könnenmit der <a href="parlamentarier_overview.php">Vergütungstransparenzübersicht</a> überprüft werden.
+            Vergütungstransparenz der Parlamentarier. Die Liste bezieht sich immer auf einen bestimmten Stichttag und ist daher eine <i>Momentaufnahme</i>.
+            (Die Listen können gefiltert und mit dem <i>Export-Button</i> zur weiteren Bearbeitung exportiert werden.)
+            <br>Die Daten können mit der <a href="parlamentarier_overview.php">Vergütungstransparenzübersicht</a> überprüft werden.
+            <br>Eine neue Transparenzliste kann auf der <a href="parlamentarier.php">Parlamentarierseite</a> mit dem Knopf "Erstelle Vergütungstransparenzliste" erzeugt werden.
+            <br>Nur freigegebene Einträge werden exportiert und sind sichtbar. Wenn eine Transparenzliste veröffentlicht wird, müssen die Einträge der Liste daher freigegeben werden.
             
             ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . '');
             $this->setDetailedDescription('Vergütungstransparenz der Parlamentarier');

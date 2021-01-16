@@ -211,69 +211,69 @@ h3.box-title,
 
 /* naviation */
 
-.pg-page-list > li > a > .page-list-icon {
+/* .nav li > a > .page-list-icon {
   background-image:none;
 }
 
-.pg-page-list > li > a .entity {
-  background-image: url("../../img/icons/fugue/database.png");
+.nav li > a .entity {
+  background-image: url("../../../../img/icons/fugue/database.png");
   background-position: left;
   background-repeat: no-repeat;
   padding-left: 20px;
   margin-left: -20px;
 }
 
-.pg-page-list > li > a .relation {
-  background-image: url("../../img/icons/fugue/databases-relation.png");
+.nav li > a .relation {
+  background-image: url("../../../../img/icons/fugue/databases-relation.png");
   background-position: left;
   background-repeat: no-repeat;
   padding-left: 20px;
   margin-left: -20px;
 }
 
-.pg-page-list > li > a .view {
-  background-image: url("../../img/icons/fugue/document.png");
+.nav li > a .view {
+  background-image: url("../../../../img/icons/fugue/document.png");
   background-position: left;
   background-repeat: no-repeat;
   padding-left: 20px;
   margin-left: -20px;
 }
 
-.pg-page-list > li > a .settings {
-  background-image: url("../../img/icons/fugue/application-block.png");
+.nav li > a .settings {
+  background-image: url("../../../../img/icons/fugue/application-block.png");
   background-position: left;
   background-repeat: no-repeat;
   padding-left: 20px;
   margin-left: -20px;
 }
 
-.pg-page-list > li > a .website,
-.pg-page-list > li > a .kommissionen {
-  background-image: url("../../img/favicon.png");
+.nav li > a .website,
+.nav li > a .kommissionen {
+  background-image: url("../../../../img/favicon.png");
   background-position: left;
   background-repeat: no-repeat;
   padding-left: 20px;
   margin-left: -20px;
 }
-.pg-page-list > li > a .auswertung {
+.nav li > a .auswertung {
   text-decoration: line-through;
 }
 
-.pg-page-list > li > a .wiki {
-  background-image: url("../../img/tiki_favicon.png");
+.nav li > a .wiki {
+  background-image: url("../../../../img/tiki_favicon.png");
   background-position: left;
   background-repeat: no-repeat;
   padding-left: 20px;
   margin-left: -20px;
 }
 
-.pg-page-list > li > a .state {
-  background-image: url("../../img/icons/fugue/chart-pie.png");
+.nav li > a .state {
+  background-image: url("../../../../img/icons/fugue/chart-pie.png");
   background-position: left;
   background-repeat: no-repeat;
   padding-left: 20px;
   margin-left: -20px;
-}
+} */
 
 /* Header */
 #site-name {
@@ -402,7 +402,7 @@ small.desc {
   position: relative;
   width: 16px;
   height: 16px;
-  background: transparent url('../../img/loading.gif') no-repeat center center;
+  background: transparent url('../../../../img/loading.gif') no-repeat center center;
   float: left;
 }
 
@@ -410,7 +410,7 @@ small.desc {
   position: relative;
   width: 48px;
   height: 48px;
-  background: transparent url('../../img/loading.gif') no-repeat center center;
+  background: transparent url('../../../../img/loading.gif') no-repeat center center;
   float: left;
 }
 
