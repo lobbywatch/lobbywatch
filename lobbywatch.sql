@@ -747,12 +747,12 @@ CREATE TABLE `in_kommission_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `in_kommission_parlamentarier_kommission_funktion_unique` varchar(0) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint',
   `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  `in_kommission_parlamentarier_kommission_funktion_unique` varchar(0) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint',
   PRIMARY KEY (`log_id`),
   KEY `fk_in_kommission_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_in_kommission_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
@@ -803,7 +803,7 @@ CREATE TABLE `interessenbindung` (
   KEY `organisation_id` (`organisation_id`,`parlamentarier_id`),
   CONSTRAINT `fk_ib_org` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`),
   CONSTRAINT `fk_ib_parlam` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11441 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Interessenbindungen von Parlamentariern';
+) ENGINE=InnoDB AUTO_INCREMENT=11449 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Interessenbindungen von Parlamentariern';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -971,7 +971,7 @@ CREATE TABLE `interessenbindung_jahr` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_jahr_unique` (`interessenbindung_id`,`jahr`) COMMENT 'Fachlicher unique constraint',
   CONSTRAINT `fk_interessenbindung_id` FOREIGN KEY (`interessenbindung_id`) REFERENCES `interessenbindung` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6002 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Jahresvergütung durch Interessenbindungen';
+) ENGINE=InnoDB AUTO_INCREMENT=6019 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Jahresvergütung durch Interessenbindungen';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -1096,7 +1096,7 @@ CREATE TABLE `interessenbindung_jahr_log` (
   PRIMARY KEY (`log_id`),
   KEY `fk_interessenbindung_jahr_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_interessenbindung_jahr_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26141 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Jahresvergütung durch Interessenbindungen';
+) ENGINE=InnoDB AUTO_INCREMENT=26229 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Jahresvergütung durch Interessenbindungen';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -1145,7 +1145,7 @@ CREATE TABLE `interessenbindung_log` (
   PRIMARY KEY (`log_id`),
   KEY `fk_interessenbindung_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_interessenbindung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=112416 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Interessenbindungen von Parlamentariern';
+) ENGINE=InnoDB AUTO_INCREMENT=112523 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Interessenbindungen von Parlamentariern';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -3797,12 +3797,12 @@ CREATE TABLE `organisation_beziehung_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `organisation_beziehung_organisation_ziel_organisation_art_unique` varchar(0) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint',
   `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  `organisation_beziehung_organisation_ziel_organisation_art_unique` varchar(0) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint',
   PRIMARY KEY (`log_id`),
   KEY `fk_organisation_beziehung_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_organisation_beziehung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
@@ -4036,7 +4036,7 @@ CREATE TABLE `organisation_log` (
   PRIMARY KEY (`log_id`),
   KEY `fk_organisation_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_organisation_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=103686 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Liste der Lobbyorganisationen';
+) ENGINE=InnoDB AUTO_INCREMENT=103897 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Liste der Lobbyorganisationen';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -4327,7 +4327,7 @@ CREATE TABLE `parlamentarier_anhang` (
   PRIMARY KEY (`id`),
   KEY `parlamentarier_id` (`parlamentarier_id`),
   CONSTRAINT `fk_parlam_anhang` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=967 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Anhänge zu Parlamentariern';
+) ENGINE=InnoDB AUTO_INCREMENT=968 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Anhänge zu Parlamentariern';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -4446,7 +4446,7 @@ CREATE TABLE `parlamentarier_anhang_log` (
   PRIMARY KEY (`log_id`),
   KEY `fk_parlamentarier_anhang_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_parlamentarier_anhang_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1937 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Anhänge zu Parlamentariern';
+) ENGINE=InnoDB AUTO_INCREMENT=1938 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Anhänge zu Parlamentariern';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -4540,7 +4540,7 @@ CREATE TABLE `parlamentarier_log` (
   KEY `fk_parlamentarier_log_snapshot_id` (`snapshot_id`),
   KEY `idx_id` (`id`) USING BTREE COMMENT 'Index on old primary key',
   CONSTRAINT `fk_parlamentarier_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16880 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Liste der Parlamentarier';
+) ENGINE=InnoDB AUTO_INCREMENT=16902 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Liste der Parlamentarier';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -12889,12 +12889,12 @@ CREATE TABLE `zutrittsberechtigung_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `zutrittsberechtigung_parlamentarier_person_unique` varchar(0) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint',
   `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  `zutrittsberechtigung_parlamentarier_person_unique` varchar(0) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint',
   PRIMARY KEY (`log_id`),
   KEY `fk_zutrittsberechtigung_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_zutrittsberechtigung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
@@ -15683,4 +15683,4 @@ SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS ;
 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION ;
 SET SQL_NOTES=@OLD_SQL_NOTES ;
 
--- Dump completed on 2021-01-16 12:59:40
+-- Dump completed on 2021-01-20 22:59:07

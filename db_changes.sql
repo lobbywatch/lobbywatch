@@ -3434,3 +3434,14 @@ ALTER TABLE person
 
 ALTER TABLE person_log
   ADD `person_nachname_zweiter_name_vorname_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint';
+
+-- 20.01.2021 fix position of unique cols
+
+ALTER TABLE `organisation_beziehung_log`
+  CHANGE `organisation_beziehung_organisation_ziel_organisation_art_unique` `organisation_beziehung_organisation_ziel_organisation_art_unique` VARCHAR(0) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+
+ALTER TABLE `in_kommission_log`
+  CHANGE `in_kommission_parlamentarier_kommission_funktion_unique` `in_kommission_parlamentarier_kommission_funktion_unique` VARCHAR(0) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+
+ALTER TABLE `zutrittsberechtigung_log`
+  CHANGE `zutrittsberechtigung_parlamentarier_person_unique` `zutrittsberechtigung_parlamentarier_person_unique` VARCHAR(0) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
