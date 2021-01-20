@@ -27251,7 +27251,7 @@ $edit_header_message
 $edit_general_hint        </BeforeGridText>
         <DetailedDescription/>
         <ColumnPresentations>
-          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Zutrittsberechtigung" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Zutrittsberechtigung" enabled="false" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
@@ -27372,7 +27372,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique"/>
+            <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique" visible="false"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -27397,7 +27397,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique"/>
+            <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique" visible="false"/>
           </View>
           <Edit>
             <Column fieldName="id" visible="false"/>
@@ -27422,7 +27422,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique"/>
+            <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique" visible="false"/>
           </Edit>
           <Insert>
             <Column fieldName="id" visible="false"/>
@@ -27447,7 +27447,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique"/>
+            <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique" visible="false"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -27472,7 +27472,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa" visible="false"/>
             <Column fieldName="updated_date" visible="false"/>
             <Column fieldName="updated_by_import"/>
-            <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique"/>
+            <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique" visible="false"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -27497,7 +27497,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique"/>
+            <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique" visible="false"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -27522,7 +27522,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique"/>
+            <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique" visible="false"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -27547,7 +27547,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique"/>
+            <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique" visible="false"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -27572,7 +27572,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique"/>
+            <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique" visible="false"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -27597,7 +27597,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique"/>
+            <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique" visible="false"/>
           </MultiEdit>
         </Columns>
         <Details>
@@ -29422,7 +29422,7 @@ $edit_header_message
 $edit_general_hint        </BeforeGridText>
         <DetailedDescription/>
         <ColumnPresentations>
-          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel einer Kommissionszugehörigkeit" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel einer Kommissionszugehörigkeit" enabled="false" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
@@ -29535,7 +29535,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique"/>
+            <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique" visible="false"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -29557,7 +29557,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique"/>
+            <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique" visible="false"/>
           </View>
           <Edit>
             <Column fieldName="id" visible="false"/>
@@ -29579,7 +29579,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique"/>
+            <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique" visible="false"/>
           </Edit>
           <Insert>
             <Column fieldName="id" visible="false"/>
@@ -29601,7 +29601,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique"/>
+            <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique" visible="false"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -29623,7 +29623,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" visible="false"/>
             <Column fieldName="updated_visa" visible="false"/>
             <Column fieldName="updated_date" visible="false"/>
-            <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique"/>
+            <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique" visible="false"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -29645,7 +29645,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique"/>
+            <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique" visible="false"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -29667,7 +29667,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique"/>
+            <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique" visible="false"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -29689,7 +29689,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique"/>
+            <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique" visible="false"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -29711,7 +29711,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique"/>
+            <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique" visible="false"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -29733,7 +29733,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique"/>
+            <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique" visible="false"/>
           </MultiEdit>
         </Columns>
         <Details>
@@ -30193,7 +30193,7 @@ $edit_header_message
 $edit_general_hint        </BeforeGridText>
         <DetailedDescription/>
         <ColumnPresentations>
-          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel einer Organisationsbeziehung" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel einer Organisationsbeziehung" enabled="false" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
@@ -30326,7 +30326,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique"/>
+            <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" visible="false"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -30351,7 +30351,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique"/>
+            <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" visible="false"/>
           </View>
           <Edit>
             <Column fieldName="id" visible="false"/>
@@ -30376,7 +30376,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique"/>
+            <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" visible="false"/>
           </Edit>
           <Insert>
             <Column fieldName="id" visible="false"/>
@@ -30401,7 +30401,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique"/>
+            <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" visible="false"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -30426,7 +30426,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_date" visible="false"/>
             <Column fieldName="beschreibung"/>
             <Column fieldName="beschreibung_fr"/>
-            <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique"/>
+            <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" visible="false"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -30451,7 +30451,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique"/>
+            <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" visible="false"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -30476,7 +30476,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique"/>
+            <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" visible="false"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -30501,7 +30501,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique"/>
+            <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" visible="false"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -30526,7 +30526,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique"/>
+            <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" visible="false"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -30551,7 +30551,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique"/>
+            <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" visible="false"/>
           </MultiEdit>
         </Columns>
         <Details>
