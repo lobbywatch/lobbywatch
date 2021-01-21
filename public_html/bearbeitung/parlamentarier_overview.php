@@ -97,6 +97,7 @@ try
     . " (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW()) /* AND parlamentarier.freigabe_datum <= NOW()*/" . "
   ORDER BY parlamentarier.anzeige_name");
 
+  $jahr = getRechercheJahrFromSettings();
   $i = 0;
   foreach ($result as $record) {
     // while ($record = $result->fetchAssoc()) {
@@ -105,7 +106,7 @@ try
       $id = $record->id;
       $i++;
 
-      $rowData = get_parlamentarier($con, $id, date("Y"));
+      $rowData = get_parlamentarier($con, $id, $jahr);
       $transparenzData = get_parlamentarier_transparenz($con, $id);
 
       $calcualted_transparency = $transparenzData['anzahl_nicht_hauptberufliche_nicht_parlgruppe_interessenbindungen'] > 0 ? round($transparenzData['anzahl_erfasste_verguetungen_ohne_betrag_eins'] / $transparenzData['anzahl_nicht_hauptberufliche_nicht_parlgruppe_interessenbindungen'], 2) : '1';
