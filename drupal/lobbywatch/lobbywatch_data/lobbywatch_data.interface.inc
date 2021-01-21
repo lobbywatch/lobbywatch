@@ -719,7 +719,7 @@ function _add_verguetungen(&$arr, $verguetungen, $ib_von, $im_rat_seit = null) {
     $verguetungen_jahr[$jval['jahr']] = $jval;
   }
 
-  $this_year = date("Y");
+  $this_year = getRechercheJahrFromSettings();
   $start_years = [$this_year - 5];
   if ($ib_von) {
     $start_years[] = date_parse($ib_von)['year'];
