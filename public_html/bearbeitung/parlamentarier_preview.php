@@ -59,7 +59,7 @@ try {
     $lang = $parlamentarier_lang = get_parlamentarier_lang($con, $id);
     lobbywatch_set_language($lang);
     $lang_suffix = get_lang_suffix($lang);
-    $jahr = date("Y");
+    $jahr = getRechercheJahrFromSettings();
 
     $rowData = get_parlamentarier($con, $id, $jahr);
     $rowData_no_pg_members = get_parlamentarier($con, $id, $jahr, false);
