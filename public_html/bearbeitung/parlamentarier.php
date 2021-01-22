@@ -49593,6 +49593,11 @@
                 ->setOptionsFor('parlament_biografie_id')
                 ->setOptionsFor('parlament_number')
                 ->setOptionsFor('parlament_interessenbindungen_updated')
+                ->setOptionsFor('twitter_name')
+                ->setOptionsFor('linkedin_profil_url')
+                ->setOptionsFor('xing_profil_name')
+                ->setOptionsFor('facebook_name')
+                ->setOptionsFor('wikipedia')
                 ->setOptionsFor('arbeitssprache')
                 ->setOptionsFor('sprache')
                 ->setOptionsFor('adresse_plz')
@@ -51917,6 +51922,8 @@
             //
             $column = new TextViewColumn('wikipedia', 'wikipedia', 'Wikipedia', $this->dataset);
             $column->SetOrderable(true);
+            $column->setHrefTemplate('%wikipedia%');
+            $column->setTarget('_blank');
             $column->SetMaxLength(75);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Link zum Wkipedia-Eintrag des Parlamentariers');
@@ -52498,6 +52505,8 @@
             //
             $column = new TextViewColumn('wikipedia', 'wikipedia', 'Wikipedia', $this->dataset);
             $column->SetOrderable(true);
+            $column->setHrefTemplate('%wikipedia%');
+            $column->setTarget('_blank');
             $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -55955,6 +55964,8 @@
             //
             $column = new TextViewColumn('wikipedia', 'wikipedia', 'Wikipedia', $this->dataset);
             $column->SetOrderable(true);
+            $column->setHrefTemplate('%wikipedia%');
+            $column->setTarget('_blank');
             $column->SetMaxLength(75);
             $grid->AddPrintColumn($column);
             
@@ -56494,6 +56505,8 @@
             //
             $column = new TextViewColumn('wikipedia', 'wikipedia', 'Wikipedia', $this->dataset);
             $column->SetOrderable(true);
+            $column->setHrefTemplate('%wikipedia%');
+            $column->setTarget('_blank');
             $column->SetMaxLength(75);
             $grid->AddExportColumn($column);
             
@@ -57033,6 +57046,8 @@
             //
             $column = new TextViewColumn('wikipedia', 'wikipedia', 'Wikipedia', $this->dataset);
             $column->SetOrderable(true);
+            $column->setHrefTemplate('%wikipedia%');
+            $column->setTarget('_blank');
             $column->SetMaxLength(75);
             $grid->AddCompareColumn($column);
             

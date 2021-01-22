@@ -8682,7 +8682,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="twitter_name" caption="Twitter Name" headerHint="Twittername, nur Name, ohne https://twitter.com/" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="twitter_name" caption="Twitter Name" headerHint="Twittername, nur Name, ohne https://twitter.com/" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <Hyperlink template="https://twitter.com/%twitter_name%"/>
             <EditProperties type="textBox" maxLength="50" prefix="@"/>
@@ -8690,7 +8690,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
               <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@)).*$"/>
             </Validators>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="linkedin_profil_url" caption="Linkedin Profil Url" headerHint="URL zum LinkedIn-Profil" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="linkedin_profil_url" caption="Linkedin Profil Url" headerHint="URL zum LinkedIn-Profil" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <Hyperlink template="%linkedin_profil_url%"/>
             <EditProperties type="textBox" maxLength="255"/>
@@ -8698,7 +8698,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
               <UrlClientValidatorInfo enabled="true"/>
             </Validators>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="xing_profil_name" caption="Xing Profil Name" headerHint="Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="xing_profil_name" caption="Xing Profil Name" headerHint="Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <Hyperlink template="https://www.xing.com/profile/%xing_profil_name%"/>
             <EditProperties type="textBox" maxLength="150"/>
@@ -8706,7 +8706,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
               <RegExpClientValidatorInfo enabled="true" expression="^(?!http).*$"/>
             </Validators>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="facebook_name" caption="Facebook Name" headerHint="Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="facebook_name" caption="Facebook Name" headerHint="Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <Hyperlink template="https://www.facebook.com/%facebook_name%"/>
             <EditProperties type="textBox" maxLength="150"/>
@@ -8714,8 +8714,9 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
               <RegExpClientValidatorInfo enabled="true" expression="^(?!http).*$"/>
             </Validators>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="wikipedia" caption="Wikipedia" headerHint="Link zum Wkipedia-Eintrag des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="wikipedia" caption="Wikipedia" headerHint="Link zum Wkipedia-Eintrag des Parlamentariers" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
+            <Hyperlink template="%wikipedia%"/>
             <EditProperties type="textBox" maxLength="255"/>
             <Validators>
               <UrlClientValidatorInfo enabled="true"/>
