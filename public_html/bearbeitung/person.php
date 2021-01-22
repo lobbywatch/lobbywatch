@@ -3644,12 +3644,12 @@
                     new DateTimeField('created_date'),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date'),
+                    new StringField('person_nachname_zweiter_name_vorname_unique'),
                     new IntegerField('log_id', true, true, true),
                     new StringField('action', true),
                     new StringField('state'),
                     new DateTimeField('action_date', true),
-                    new IntegerField('snapshot_id'),
-                    new StringField('person_nachname_zweiter_name_vorname_unique')
+                    new IntegerField('snapshot_id')
                 )
             );
             $this->dataset->AddLookupField('beruf_interessengruppe_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'beruf_interessengruppe_id_anzeige_name', 'beruf_interessengruppe_id_anzeige_name_v_interessengruppe_simple'), 'beruf_interessengruppe_id_anzeige_name_v_interessengruppe_simple');
@@ -3782,8 +3782,7 @@
                 ->addColumn($columns['action'])
                 ->addColumn($columns['state'])
                 ->addColumn($columns['action_date'])
-                ->addColumn($columns['snapshot_id'])
-                ->addColumn($columns['person_nachname_zweiter_name_vorname_unique']);
+                ->addColumn($columns['snapshot_id']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -4957,30 +4956,6 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
-            
-            $main_editor = new TextEdit('person_nachname_zweiter_name_vorname_unique_edit');
-            
-            $filterBuilder->addColumn(
-                $columns['person_nachname_zweiter_name_vorname_unique'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
-                    FilterConditionOperator::BEGINS_WITH => $main_editor,
-                    FilterConditionOperator::ENDS_WITH => $main_editor,
-                    FilterConditionOperator::IS_LIKE => $main_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -5484,16 +5459,6 @@
             $column->SetDescription('Fremdschlüssel zu einem Snapshot');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
-            //
-            // View column for person_nachname_zweiter_name_vorname_unique field
-            //
-            $column = new TextViewColumn('person_nachname_zweiter_name_vorname_unique', 'person_nachname_zweiter_name_vorname_unique', 'Person Nachname Zweiter Name Vorname Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Platzhalter für fachlichen unique constraint');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -5845,49 +5810,21 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for person_nachname_zweiter_name_vorname_unique field
-            //
-            $column = new TextViewColumn('person_nachname_zweiter_name_vorname_unique', 'person_nachname_zweiter_name_vorname_unique', 'Person Nachname Zweiter Name Vorname Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
         }
     
         protected function AddEditColumns(Grid $grid)
         {
-            //
-            // Edit column for person_nachname_zweiter_name_vorname_unique field
-            //
-            $editor = new TextEdit('person_nachname_zweiter_name_vorname_unique_edit');
-            $editColumn = new CustomEditColumn('Person Nachname Zweiter Name Vorname Unique', 'person_nachname_zweiter_name_vorname_unique', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
+    
         }
     
         protected function AddMultiEditColumns(Grid $grid)
         {
-            //
-            // Edit column for person_nachname_zweiter_name_vorname_unique field
-            //
-            $editor = new TextEdit('person_nachname_zweiter_name_vorname_unique_edit');
-            $editColumn = new CustomEditColumn('Person Nachname Zweiter Name Vorname Unique', 'person_nachname_zweiter_name_vorname_unique', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
+    
         }
     
         protected function AddInsertColumns(Grid $grid)
         {
-            //
-            // Edit column for person_nachname_zweiter_name_vorname_unique field
-            //
-            $editor = new TextEdit('person_nachname_zweiter_name_vorname_unique_edit');
-            $editColumn = new CustomEditColumn('Person Nachname Zweiter Name Vorname Unique', 'person_nachname_zweiter_name_vorname_unique', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
+    
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -6245,13 +6182,6 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddPrintColumn($column);
-            
-            //
-            // View column for person_nachname_zweiter_name_vorname_unique field
-            //
-            $column = new TextViewColumn('person_nachname_zweiter_name_vorname_unique', 'person_nachname_zweiter_name_vorname_unique', 'Person Nachname Zweiter Name Vorname Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -6603,13 +6533,6 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddExportColumn($column);
-            
-            //
-            // View column for person_nachname_zweiter_name_vorname_unique field
-            //
-            $column = new TextViewColumn('person_nachname_zweiter_name_vorname_unique', 'person_nachname_zweiter_name_vorname_unique', 'Person Nachname Zweiter Name Vorname Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
         }
     
         private function AddCompareColumns(Grid $grid)
@@ -6950,13 +6873,6 @@
             $column = new TextViewColumn('snapshot_id', 'snapshot_id_beschreibung', 'Snapshot Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for person_nachname_zweiter_name_vorname_unique field
-            //
-            $column = new TextViewColumn('person_nachname_zweiter_name_vorname_unique', 'person_nachname_zweiter_name_vorname_unique', 'Person Nachname Zweiter Name Vorname Unique', $this->dataset);
-            $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
         }
     
@@ -17282,8 +17198,7 @@
                 ->addColumn($columns['beschreibung_fr'])
                 ->addColumn($columns['notizen'])
                 ->addColumn($columns['created_visa'])
-                ->addColumn($columns['created_date'])
-                ->addColumn($columns['person_nachname_zweiter_name_vorname_unique']);
+                ->addColumn($columns['created_date']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -18321,30 +18236,6 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
-            
-            $main_editor = new TextEdit('person_nachname_zweiter_name_vorname_unique');
-            
-            $filterBuilder->addColumn(
-                $columns['person_nachname_zweiter_name_vorname_unique'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
-                    FilterConditionOperator::BEGINS_WITH => $main_editor,
-                    FilterConditionOperator::ENDS_WITH => $main_editor,
-                    FilterConditionOperator::IS_LIKE => $main_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -18869,17 +18760,6 @@
             $column->SetDescription('Abgeändert am');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
-            //
-            // View column for person_nachname_zweiter_name_vorname_unique field
-            //
-            $column = new TextViewColumn('person_nachname_zweiter_name_vorname_unique', 'person_nachname_zweiter_name_vorname_unique', 'Person Nachname Zweiter Name Vorname Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Kombination aus nachname, vorname, zweiter_vorname und namensunterscheidung muss eindeutig sein. (Fachlicher unique constraint)');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -19211,14 +19091,6 @@
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for person_nachname_zweiter_name_vorname_unique field
-            //
-            $column = new TextViewColumn('person_nachname_zweiter_name_vorname_unique', 'person_nachname_zweiter_name_vorname_unique', 'Person Nachname Zweiter Name Vorname Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -19767,16 +19639,6 @@
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for person_nachname_zweiter_name_vorname_unique field
-            //
-            $editor = new TextAreaEdit('person_nachname_zweiter_name_vorname_unique_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Person Nachname Zweiter Name Vorname Unique', 'person_nachname_zweiter_name_vorname_unique', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
-            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
         }
@@ -20328,16 +20190,6 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for person_nachname_zweiter_name_vorname_unique field
-            //
-            $editor = new TextAreaEdit('person_nachname_zweiter_name_vorname_unique_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Person Nachname Zweiter Name Vorname Unique', 'person_nachname_zweiter_name_vorname_unique', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -20783,16 +20635,6 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for person_nachname_zweiter_name_vorname_unique field
-            //
-            $editor = new TextAreaEdit('person_nachname_zweiter_name_vorname_unique_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Person Nachname Zweiter Name Vorname Unique', 'person_nachname_zweiter_name_vorname_unique', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(true && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -21131,14 +20973,6 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
-            
-            //
-            // View column for person_nachname_zweiter_name_vorname_unique field
-            //
-            $column = new TextViewColumn('person_nachname_zweiter_name_vorname_unique', 'person_nachname_zweiter_name_vorname_unique', 'Person Nachname Zweiter Name Vorname Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -21471,14 +21305,6 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
-            
-            //
-            // View column for person_nachname_zweiter_name_vorname_unique field
-            //
-            $column = new TextViewColumn('person_nachname_zweiter_name_vorname_unique', 'person_nachname_zweiter_name_vorname_unique', 'Person Nachname Zweiter Name Vorname Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $grid->AddExportColumn($column);
         }
     
         private function AddCompareColumns(Grid $grid)
@@ -21810,14 +21636,6 @@
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for person_nachname_zweiter_name_vorname_unique field
-            //
-            $column = new TextViewColumn('person_nachname_zweiter_name_vorname_unique', 'person_nachname_zweiter_name_vorname_unique', 'Person Nachname Zweiter Name Vorname Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
             $grid->AddCompareColumn($column);
         }
     

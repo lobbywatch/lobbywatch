@@ -3445,3 +3445,8 @@ ALTER TABLE `in_kommission_log`
 
 ALTER TABLE `zutrittsberechtigung_log`
   CHANGE `zutrittsberechtigung_parlamentarier_person_unique` `zutrittsberechtigung_parlamentarier_person_unique` VARCHAR(0) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+
+-- 22.01.2021 fix position of unique cols
+
+ALTER TABLE `person_log`
+  CHANGE `person_nachname_zweiter_name_vorname_unique` `person_nachname_zweiter_name_vorname_unique` VARCHAR(0) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;

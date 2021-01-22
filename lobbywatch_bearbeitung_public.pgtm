@@ -20733,7 +20733,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="person_nachname_zweiter_name_vorname_unique" caption="Person Nachname Zweiter Name Vorname Unique" headerHint="Kombination aus nachname, vorname, zweiter_vorname und namensunterscheidung muss eindeutig sein. (Fachlicher unique constraint)" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="person_nachname_zweiter_name_vorname_unique" caption="Person Nachname Zweiter Name Vorname Unique" headerHint="Kombination aus nachname, vorname, zweiter_vorname und namensunterscheidung muss eindeutig sein. (Fachlicher unique constraint)" showColumnFilter="false" canSetNull="true" readOnly="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
@@ -20781,7 +20781,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="person_nachname_zweiter_name_vorname_unique"/>
+            <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -20825,7 +20825,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="person_nachname_zweiter_name_vorname_unique"/>
+            <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
           </View>
           <Edit>
             <Column fieldName="id" visible="false"/>
@@ -20869,7 +20869,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="person_nachname_zweiter_name_vorname_unique"/>
+            <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
           </Edit>
           <Insert>
             <Column fieldName="id" visible="false"/>
@@ -20913,7 +20913,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="person_nachname_zweiter_name_vorname_unique"/>
+            <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -20957,7 +20957,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="updated_date" visible="false"/>
             <Column fieldName="updated_by_import" visible="false"/>
             <Column fieldName="namensunterscheidung"/>
-            <Column fieldName="person_nachname_zweiter_name_vorname_unique"/>
+            <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -21001,7 +21001,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="person_nachname_zweiter_name_vorname_unique"/>
+            <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -21045,7 +21045,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="person_nachname_zweiter_name_vorname_unique"/>
+            <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -21089,7 +21089,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="person_nachname_zweiter_name_vorname_unique"/>
+            <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -21133,7 +21133,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="person_nachname_zweiter_name_vorname_unique"/>
+            <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -21177,7 +21177,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="person_nachname_zweiter_name_vorname_unique"/>
+            <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
           </MultiEdit>
         </Columns>
         <Details>
@@ -21997,7 +21997,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="dynamicCombobox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="person_nachname_zweiter_name_vorname_unique" caption="Person Nachname Zweiter Name Vorname Unique" headerHint="Platzhalter für fachlichen unique constraint" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="person_nachname_zweiter_name_vorname_unique" caption="Person Nachname Zweiter Name Vorname Unique" headerHint="Platzhalter für fachlichen unique constraint" showColumnFilter="false" canSetNull="true" readOnly="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
@@ -22050,7 +22050,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="person_nachname_zweiter_name_vorname_unique"/>
+                  <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -22099,7 +22099,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="person_nachname_zweiter_name_vorname_unique"/>
+                  <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
                 </View>
                 <Edit>
                   <Column fieldName="id" visible="false"/>
@@ -22148,7 +22148,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
-                  <Column fieldName="person_nachname_zweiter_name_vorname_unique"/>
+                  <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="id" visible="false"/>
@@ -22197,7 +22197,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
-                  <Column fieldName="person_nachname_zweiter_name_vorname_unique"/>
+                  <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -22246,7 +22246,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="person_nachname_zweiter_name_vorname_unique"/>
+                  <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -22295,7 +22295,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="person_nachname_zweiter_name_vorname_unique"/>
+                  <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -22344,7 +22344,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="person_nachname_zweiter_name_vorname_unique"/>
+                  <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -22393,7 +22393,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="person_nachname_zweiter_name_vorname_unique"/>
+                  <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -22442,7 +22442,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="person_nachname_zweiter_name_vorname_unique"/>
+                  <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -22491,7 +22491,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
-                  <Column fieldName="person_nachname_zweiter_name_vorname_unique"/>
+                  <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -27343,7 +27343,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="zutrittsberechtigung_parlamentarier_person_unique" caption="Zutrittsberechtigung Parlamentarier Person Unique" headerHint="Kombination aus parlamentarier_id, person_id und bis muss eindeutig sein. (Fachlicher unique constraint)" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="zutrittsberechtigung_parlamentarier_person_unique" caption="Zutrittsberechtigung Parlamentarier Person Unique" headerHint="Kombination aus parlamentarier_id, person_id und bis muss eindeutig sein. (Fachlicher unique constraint)" showColumnFilter="false" canSetNull="true" readOnly="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="35"/>
           </ColumnPresentation>
@@ -27727,7 +27727,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="dynamicCombobox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="zutrittsberechtigung_parlamentarier_person_unique" caption="Zutrittsberechtigung Parlamentarier Person Unique" headerHint="Platzhalter für fachlichen unique constraint" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="zutrittsberechtigung_parlamentarier_person_unique" caption="Zutrittsberechtigung Parlamentarier Person Unique" headerHint="Platzhalter für fachlichen unique constraint" showColumnFilter="false" canSetNull="true" readOnly="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
@@ -29509,7 +29509,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="in_kommission_parlamentarier_kommission_funktion_unique" caption="In Kommission Parlamentarier Kommission Funktion Unique" headerHint="Kombination aus parlamentarier_id, kommission_id, funktion und bis muss eindeutig sein. (Fachlicher unique constraint)" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="in_kommission_parlamentarier_kommission_funktion_unique" caption="In Kommission Parlamentarier Kommission Funktion Unique" headerHint="Kombination aus parlamentarier_id, kommission_id, funktion und bis muss eindeutig sein. (Fachlicher unique constraint)" showColumnFilter="false" canSetNull="true" readOnly="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="45"/>
           </ColumnPresentation>
@@ -29860,7 +29860,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="dynamicCombobox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="in_kommission_parlamentarier_kommission_funktion_unique" caption="In Kommission Parlamentarier Kommission Funktion Unique" headerHint="Platzhalter für fachlichen unique constraint" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="in_kommission_parlamentarier_kommission_funktion_unique" caption="In Kommission Parlamentarier Kommission Funktion Unique" headerHint="Platzhalter für fachlichen unique constraint" showColumnFilter="false" canSetNull="true" readOnly="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
@@ -30297,7 +30297,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" caption="Organisation Beziehung Organisation Ziel Organisation Art Unique" headerHint="Kombination aus organisation_id, ziel_organisation_id, art und bis muss eindeutig sein. (Fachlicher unique constraint)" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" caption="Organisation Beziehung Organisation Ziel Organisation Art Unique" headerHint="Kombination aus organisation_id, ziel_organisation_id, art und bis muss eindeutig sein. (Fachlicher unique constraint)" showColumnFilter="false" canSetNull="true" readOnly="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="45"/>
           </ColumnPresentation>
@@ -30691,7 +30691,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="dynamicCombobox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" caption="Organisation Beziehung Organisation Ziel Organisation Art Unique" headerHint="Platzhalter für fachlichen unique constraint" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" caption="Organisation Beziehung Organisation Ziel Organisation Art Unique" headerHint="Platzhalter für fachlichen unique constraint" showColumnFilter="false" canSetNull="true" readOnly="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
