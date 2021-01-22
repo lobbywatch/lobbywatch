@@ -43958,7 +43958,7 @@
             '    }'. "\n" .
             '    if (editors[\'uid\'].getValue()) {'. "\n" .
             '        editors[\'name_de\'].setReadonly(true);'. "\n" .
-            '        editors[\'abkuerzung_de\'].setReadonly(true);'. "\n" .
+            '        // editors[\'abkuerzung_de\'].setReadonly(true);'. "\n" .
             '        // editors[\'name_fr\'].setReadonly(true);'. "\n" .
             '        // editors[\'name_it\'].setReadonly(true);'. "\n" .
             '        // editors[\'alias_namen_de\'].setReadonly(true);'. "\n" .

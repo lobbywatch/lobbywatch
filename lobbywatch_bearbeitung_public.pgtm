@@ -8376,7 +8376,7 @@ window.disable_organisation_imported_fields = function (editors) {
     }
     if (editors['uid'].getValue()) {
         editors['name_de'].setReadonly(true);
-        editors['abkuerzung_de'].setReadonly(true);
+        // editors['abkuerzung_de'].setReadonly(true);
         // editors['name_fr'].setReadonly(true);
         // editors['name_it'].setReadonly(true);
         // editors['alias_namen_de'].setReadonly(true);
@@ -27761,7 +27761,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique"/>
+                  <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique" visible="false"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -27791,7 +27791,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique"/>
+                  <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique" visible="false"/>
                 </View>
                 <Edit>
                   <Column fieldName="id" visible="false"/>
@@ -27821,7 +27821,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
-                  <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique"/>
+                  <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique" visible="false"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="id" visible="false"/>
@@ -27851,7 +27851,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
-                  <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique"/>
+                  <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique" visible="false"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -27881,7 +27881,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique"/>
+                  <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique" visible="false"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -27911,7 +27911,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique"/>
+                  <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique" visible="false"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -27941,7 +27941,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique"/>
+                  <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique" visible="false"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -27971,7 +27971,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique"/>
+                  <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique" visible="false"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -28001,7 +28001,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique"/>
+                  <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique" visible="false"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -28031,7 +28031,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
-                  <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique"/>
+                  <Column fieldName="zutrittsberechtigung_parlamentarier_person_unique" visible="false"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -29891,7 +29891,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique"/>
+                  <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique" visible="false"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -29918,7 +29918,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique"/>
+                  <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique" visible="false"/>
                 </View>
                 <Edit>
                   <Column fieldName="id" visible="false"/>
@@ -29945,7 +29945,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
-                  <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique"/>
+                  <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique" visible="false"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="id" visible="false"/>
@@ -29972,7 +29972,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
-                  <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique"/>
+                  <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique" visible="false"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -29999,7 +29999,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique"/>
+                  <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique" visible="false"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -30026,7 +30026,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique"/>
+                  <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique" visible="false"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -30053,7 +30053,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique"/>
+                  <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique" visible="false"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -30080,7 +30080,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique"/>
+                  <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique" visible="false"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -30107,7 +30107,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique"/>
+                  <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique" visible="false"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -30134,7 +30134,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
-                  <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique"/>
+                  <Column fieldName="in_kommission_parlamentarier_kommission_funktion_unique" visible="false"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -30725,7 +30725,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique"/>
+                  <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" visible="false"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -30755,7 +30755,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique"/>
+                  <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" visible="false"/>
                 </View>
                 <Edit>
                   <Column fieldName="id" visible="false"/>
@@ -30785,7 +30785,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
-                  <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique"/>
+                  <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" visible="false"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="id" visible="false"/>
@@ -30815,7 +30815,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
-                  <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique"/>
+                  <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" visible="false"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -30845,7 +30845,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique"/>
+                  <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" visible="false"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -30875,7 +30875,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique"/>
+                  <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" visible="false"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -30905,7 +30905,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique"/>
+                  <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" visible="false"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -30935,7 +30935,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique"/>
+                  <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" visible="false"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -30965,7 +30965,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique"/>
+                  <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" visible="false"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -30995,7 +30995,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
-                  <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique"/>
+                  <Column fieldName="organisation_beziehung_organisation_ziel_organisation_art_unique" visible="false"/>
                 </MultiEdit>
               </Columns>
               <Details/>
