@@ -3450,3 +3450,313 @@ ALTER TABLE `zutrittsberechtigung_log`
 
 ALTER TABLE `person_log`
   CHANGE `person_nachname_zweiter_name_vorname_unique` `person_nachname_zweiter_name_vorname_unique` VARCHAR(0) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+
+-- 29.01.2021 add new DB fields
+
+-- TODO wikipedia
+-- TODO wikidata
+-- TODO isicv4
+-- TODO instagram
+-- TODO IB/mandat unterscheidung
+-- TODO _log
+-- TODO forms
+-- TODO _log forms
+
+-- remove
+ALTER TABLE `branche`
+  DROP `isicv4`,
+  DROP `wikipedia`,
+  DROP `wikidata_qid`;
+
+ALTER TABLE `branche_log`
+  DROP `isicv4`,
+  DROP `wikipedia`,
+  DROP `wikidata_qid`;
+
+ALTER TABLE `country`
+  DROP `type`,
+  DROP `wikipedia`,
+  DROP `wikidata_qid`,
+  DROP `notizen`;
+
+ALTER TABLE `country_log`
+  DROP `type`,
+  DROP `wikipedia`,
+  DROP `wikidata_qid`,
+  DROP `notizen`;
+
+ALTER TABLE `fraktion`
+  DROP `wikipedia`,
+  DROP `wikidata_qid`;
+
+ALTER TABLE `fraktion_log`
+  DROP `wikipedia`,
+  DROP `wikidata_qid`;
+
+-- ALTER TABLE `in_kommission`
+ALTER TABLE `interessenbindung`
+  DROP `unterscheidung`;
+
+ALTER TABLE `interessenbindung_log`
+  DROP `unterscheidung`;
+
+-- ALTER TABLE `interessenbindung_jahr`
+ALTER TABLE `interessengruppe`
+  DROP `isicv4`,
+  DROP `wikipedia`,
+  DROP `wikidata_qid`;
+
+ALTER TABLE `interessengruppe_log`
+  DROP `isicv4`,
+  DROP `wikipedia`,
+  DROP `wikidata_qid`;
+
+ALTER TABLE `interessenraum`
+  DROP `wikipedia`,
+  DROP `wikidata_qid`;
+
+ALTER TABLE `interessenraum_log`
+  DROP `wikipedia`,
+  DROP `wikidata_qid`;
+
+ALTER TABLE `kanton`
+  DROP `wikipedia`,
+  DROP `wikidata_qid`;
+
+ALTER TABLE `kanton_log`
+  DROP `wikipedia`,
+  DROP `wikidata_qid`;
+
+-- ALTER TABLE `kanton_jahr`
+-- ALTER TABLE `knowledge_article_link`
+ALTER TABLE `kommission`
+  DROP `wikipedia`,
+  DROP `wikidata_qid`;
+
+ALTER TABLE `kommission_log`
+  DROP `wikipedia`,
+  DROP `wikidata_qid`;
+
+ALTER TABLE `mandat`
+  DROP `unterscheidung`;
+
+ALTER TABLE `mandat_log`
+  DROP `unterscheidung`;
+
+-- ALTER TABLE `mandat_jahr`
+ALTER TABLE `mil_grad`
+  DROP `wikipedia`,
+  DROP `wikidata_qid`,
+  DROP `notizen`;
+
+ALTER TABLE `mil_grad_log`
+  DROP `wikipedia`,
+  DROP `wikidata_qid`,
+  DROP `notizen`;
+
+ALTER TABLE `organisation`
+  DROP `instagram_profil`,
+  DROP `wikipedia`,
+  DROP `wikidata_qid`;
+
+ALTER TABLE `organisation_log`
+  DROP `instagram_profil`,
+  DROP `wikipedia`,
+  DROP `wikidata_qid`;
+
+-- ALTER TABLE `organisation_anhang`
+-- ALTER TABLE `organisation_beziehung`
+-- ALTER TABLE `organisation_jahr`
+ALTER TABLE `parlamentarier`
+  DROP `instagram_profil`,
+  DROP `wikidata_qid`;
+
+ALTER TABLE `parlamentarier_log`
+  DROP `instagram_profil`,
+  DROP `wikidata_qid`;
+
+-- ALTER TABLE `parlamentarier_anhang`
+-- ALTER TABLE `parlamentarier_transparenz`
+ALTER TABLE `partei`
+  DROP `instagram_profil`,
+  DROP `wikipedia`,
+  DROP `wikidata_qid`;
+
+ALTER TABLE `partei_log`
+  DROP `instagram_profil`,
+  DROP `wikipedia`,
+  DROP `wikidata_qid`;
+
+ALTER TABLE `person`
+  DROP `instagram_profil`,
+  DROP `wikipedia`,
+  DROP `wikidata_qid`,
+  DROP `vorname_kurz`;
+
+ALTER TABLE `person_log`
+  DROP `instagram_profil`,
+  DROP `wikipedia`,
+  DROP `wikidata_qid`,
+  DROP `vorname_kurz`;
+
+-- ALTER TABLE `person_anhang`
+ALTER TABLE `rat`
+  DROP `wikipedia`,
+  DROP `wikidata_qid`;
+
+ALTER TABLE `rat_log`
+  DROP `wikipedia`,
+  DROP `wikidata_qid`;
+
+-- add
+
+ALTER TABLE `branche`
+  ADD `isicv4` VARCHAR(25) NULL DEFAULT NULL COMMENT 'ISICv4-Codes, getrennt durch Leerzeichen. "International Standard of Industrial Classification of All Economic Activities (ISIC), Revision 4" ist ein Einteilungsstandard von Unternehmen der UNO, siehe https://unstats.un.org/unsd/publication/SeriesM/seriesm_4rev4e.pdf' AFTER `angaben_fr`,
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `isicv4`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
+
+ALTER TABLE `branche_log`
+  ADD `isicv4` VARCHAR(25) NULL DEFAULT NULL COMMENT 'ISICv4-Codes, getrennt durch Leerzeichen. "International Standard of Industrial Classification of All Economic Activities (ISIC), Revision 4" ist ein Einteilungsstandard von Unternehmen der UNO, siehe https://unstats.un.org/unsd/publication/SeriesM/seriesm_4rev4e.pdf' AFTER `angaben_fr`,
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `isicv4`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
+
+ALTER TABLE `country`
+  CHANGE `continent` `continent` ENUM('Antarctica','Australia','Africa','North America','South America','Europe','Asia','Global') NOT NULL COMMENT 'Kontinent',
+  ADD `type` ENUM('country','supra_national','extra_territory') NOT NULL DEFAULT 'country' COMMENT 'Art Territoriums' AFTER `official_name_de`,
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `show_level`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`,
+  ADD `notizen` mediumtext COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.' AFTER `wikidata_qid`;
+
+ALTER TABLE `country_log`
+  CHANGE `continent` `continent` ENUM('Antarctica','Australia','Africa','North America','South America','Europe','Asia','Global') NOT NULL COMMENT 'Kontinent',
+  ADD `type` ENUM('country','supra_national','extra_territory') NOT NULL DEFAULT 'country' COMMENT 'Art Territoriums' AFTER `official_name_de`,
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `show_level`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`,
+  ADD `notizen` mediumtext COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.' AFTER `wikidata_qid`;
+
+ALTER TABLE `fraktion`
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `bis`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
+
+ALTER TABLE `fraktion_log`
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `bis`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
+
+-- ALTER TABLE `in_kommission`
+ALTER TABLE `interessenbindung`
+  ADD `unterscheidung` varchar(15) DEFAULT NULL COMMENT 'Unterscheidungsfeld für ansonsten gleiche Interessenbindungen (parlamentarier_id, organisation_id, art und bis). NUR ANGEBEN WO NÖTIG.' AFTER `bis`;
+
+ALTER TABLE `interessenbindung_log`
+  ADD `unterscheidung` varchar(15) DEFAULT NULL COMMENT 'Unterscheidungsfeld für ansonsten gleiche Interessenbindungen (parlamentarier_id, organisation_id, art und bis). NUR ANGEBEN WO NÖTIG.' AFTER `bis`;
+
+-- ALTER TABLE `interessenbindung_jahr`
+ALTER TABLE `interessengruppe`
+  ADD `isicv4` VARCHAR(25) NULL DEFAULT NULL COMMENT 'ISICv4-Codes, getrennt durch Leerzeichen. International Standard of Industrial Classification of All Economic Activities (ISIC), Revision 4 ist ein Einteilungsstandard der UNO, siehe https://unstats.un.org/unsd/publication/SeriesM/seriesm_4rev4e.pdf' AFTER `alias_namen_fr`,
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `isicv4`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
+
+ALTER TABLE `interessengruppe_log`
+  ADD `isicv4` VARCHAR(25) NULL DEFAULT NULL COMMENT 'ISICv4-Codes, getrennt durch Leerzeichen. International Standard of Industrial Classification of All Economic Activities (ISIC), Revision 4 ist ein Einteilungsstandard der UNO, siehe https://unstats.un.org/unsd/publication/SeriesM/seriesm_4rev4e.pdf' AFTER `alias_namen_fr`,
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `isicv4`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
+
+ALTER TABLE `interessenraum`
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `reihenfolge`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
+
+ALTER TABLE `interessenraum_log`
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `reihenfolge`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
+
+ALTER TABLE `kanton`
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `beschreibung`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
+
+ALTER TABLE `kanton_log`
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `beschreibung`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
+
+-- ALTER TABLE `kanton_jahr`
+-- ALTER TABLE `knowledge_article_link`
+ALTER TABLE `kommission`
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `parlament_type_code`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
+
+ALTER TABLE `kommission_log`
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `parlament_type_code`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
+
+ALTER TABLE `mandat`
+  ADD `unterscheidung` varchar(15) DEFAULT NULL COMMENT 'Unterscheidungsfeld für ansonsten gleiche Mandate (person_id, organisation_id, art und bis). NUR ANGEBEN WO NÖTIG.' AFTER `bis`;
+
+ALTER TABLE `mandat_log`
+  ADD `unterscheidung` varchar(15) DEFAULT NULL COMMENT 'Unterscheidungsfeld für ansonsten gleiche Mandate (person_id, organisation_id, art und bis). NUR ANGEBEN WO NÖTIG.' AFTER `bis`;
+
+-- ALTER TABLE `mandat_jahr`
+ALTER TABLE `mil_grad`
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `anzeigestufe`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`,
+  ADD `notizen` mediumtext COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.' AFTER `wikidata_qid`;
+
+ALTER TABLE `mil_grad_log`
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `anzeigestufe`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`,
+  ADD `notizen` mediumtext COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.' AFTER `wikidata_qid`;
+
+ALTER TABLE `organisation`
+  ADD `instagram_profil` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Instagramprofil-ID' AFTER `twitter_name`,
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `adresse_plz`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
+
+ALTER TABLE `organisation_log`
+  ADD `instagram_profil` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Instagramprofil-ID' AFTER `twitter_name`,
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `adresse_plz`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
+
+-- ALTER TABLE `organisation_anhang`
+-- ALTER TABLE `organisation_beziehung`
+-- ALTER TABLE `organisation_jahr`
+ALTER TABLE `parlamentarier`
+  ADD `instagram_profil` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Instagramprofil-ID' AFTER `twitter_name`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
+
+ALTER TABLE `parlamentarier_log`
+  ADD `instagram_profil` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Instagramprofil-ID' AFTER `twitter_name`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
+
+-- ALTER TABLE `parlamentarier_anhang`
+-- ALTER TABLE `parlamentarier_transparenz`
+ALTER TABLE `partei`
+  ADD `instagram_profil` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Instagramprofil-ID' AFTER `twitter_name`,
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `beschreibung_fr`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
+
+ALTER TABLE `partei_log`
+  ADD `instagram_profil` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Instagramprofil-ID' AFTER `twitter_name`,
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `beschreibung_fr`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
+
+ALTER TABLE `person`
+  ADD `instagram_profil` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Instagramprofil-ID' AFTER `twitter_name`,
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `telephon_2`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`,
+  ADD `vorname_kurz` varchar(15) DEFAULT NULL COMMENT 'Alltagsvorname oder gebräuchlicher Spitzname, z.B. Nik für Niklaus' AFTER `vorname`;
+
+ALTER TABLE `person_log`
+  ADD `instagram_profil` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Instagramprofil-ID' AFTER `twitter_name`,
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `telephon_2`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`,
+  ADD `vorname_kurz` varchar(15) DEFAULT NULL COMMENT 'Alltagsvorname oder gebräuchlicher Spitzname, z.B. Nik für Niklaus' AFTER `vorname`;
+
+-- ALTER TABLE `person_anhang`
+ALTER TABLE `rat`
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `parlament_type`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
+
+ALTER TABLE `rat_log`
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `parlament_type`,
+  ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
+
+-- ALTER TABLE `wissensartikel_link`
+-- ALTER TABLE `wissensartikelzieltabelle`
+-- ALTER TABLE `zutrittsberechtigung`

@@ -191,7 +191,7 @@ function updateWikidata(string $schema, $records_limit = false) {
   $script[] = $comment = "\n-- Update Wikidata $transaction_date";
   echo "\n/*\nUpdate Wikidata $transaction_date\n";
 
-  $sql = "SELECT `TABLE_NAME` AS TABLE_NAME FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `COLUMN_NAME`='wikidata_qid' AND `TABLE_SCHEMA`='$schema' AND TABLE_NAME NOT LIKE '%_log' ORDER BY TABLE_NAME;";
+  $sql = "SELECT `TABLE_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `COLUMN_NAME`='wikidata_qid' AND `TABLE_SCHEMA`='$schema' AND TABLE_NAME NOT LIKE '%_log' AND TABLE_NAME NOT LIKE 'mv_%' AND TABLE_NAME NOT LIKE 'v_%'AND TABLE_NAME NOT LIKE 'uv_%'AND TABLE_NAME NOT LIKE 'vf_%' ORDER BY TABLE_NAME;";
   $stmt = $db->prepare($sql);
   $stmt->execute([]);
   $wikidata_tables = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);

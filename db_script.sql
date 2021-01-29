@@ -1012,3 +1012,9 @@ JOIN v_organisation_simple organisation1 ON organisation_id=organisation1.id
 JOIN v_organisation_simple organisation2 ON ziel_organisation_id=organisation2.id
 GROUP BY `art`, `organisation_id`, `ziel_organisation_id`, organisation_beziehung.bis
 HAVING count(*) > 1;
+
+-- List of tables
+
+grep -e "CREATE TABLE \`.*" lobbywatch.sql | grep -v -E -e "(\`v_|\`vf_|\`uv_|\`mv_|_log\`)"
+
+SELECT `TABLE_SCHEMA`, `TABLE_NAME` FROM `COLUMNS` WHERE `COLUMN_NAME`='wikidata_qid' AND `TABLE_SCHEMA`='lobbywatchtest';
