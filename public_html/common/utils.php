@@ -1403,7 +1403,7 @@ function cut($str, $maxLength = 20, $show_dots = true) {
 // }
 
 // http://stackoverflow.com/questions/17851138/strpad-with-non-english-characters
-function mb_str_pad ($input, $pad_length, $pad_string = null, $pad_style = STR_PAD_RIGHT, $encoding="UTF-8") {
+function mb_str_pad ($input, $pad_length, $pad_string = ' ', $pad_style = STR_PAD_RIGHT, $encoding="UTF-8") {
   return str_pad($input,
       strlen($input) - mb_strlen($input, $encoding) + $pad_length,
       $pad_string, $pad_style);
@@ -4000,4 +4000,109 @@ function getRechercheJahrFromSettings(): int {
     $year = $cur_year;
   }
   return $year;
+}
+
+function get_web_data($url) {
+//   print("Call $url\n");
+  $data = get_web_data_fgc_retry($url);
+//   print_r($url . "→ " . $data);
+  return $data;
+}
+
+function get_object_from_json_url($url) {
+  $max_retry = 3;
+  for ($i = 0; $i < $max_retry; $i++) {
+    $json_str = get_web_data($url);
+    try {
+      $obj = decodeJson($json_str);
+      $cleaned = clean_recursive_obj_from_json($obj);
+      return $cleaned;
+    } catch (JsonException $e) {
+      var_dump($e->getTraceAsString());
+      print($json_str);
+      sleep(1);
+      print("Retry...");
+    }
+  }
+  print("Could not fetch json object from $url in $max_retry.");
+  print("Abort!");
+  exit(3);
+}
+
+// $response = get_web_data('http://images.google.com/images?hl=en&q=' . urlencode ($query) . '&imgsz=' . $size . '&imgtype=' . $type . '&start=' . (($page - 1) * 21));
+// https://stackoverflow.com/questions/11920026/replace-file-get-content-with-curl
+// https://stackoverflow.com/questions/8540800/how-to-use-curl-instead-of-file-get-contents
+function get_web_data_curl($url) {
+  $ch = curl_init();
+  $timeout = 10;
+  curl_setopt($ch, CURLOPT_URL, $url);
+//   curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Content-Type: application/json'));
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json',
+                                             'Content-Type: application/json',));
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+  curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
+  curl_setopt($ch, CURLOPT_HEADER, 0);
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+  $data = curl_exec($ch);
+  curl_close($ch);
+  return $data;
+}
+
+function get_web_data_fgc_retry($url) {
+  global $context;
+  global $verbose;
+  $num_retry = 25;
+  for ($i = 1; $i <= $num_retry; $i++) {
+    $data = @file_get_contents($url, false, $context);
+    // $http_response_header is automatically populated, see https://www.php.net/manual/en/reserved.variables.httpresponseheader.php
+    if (empty($http_response_header)) {
+      if ($verbose > 1) print("\$http_response_header is not set, retry $i\n");
+      return false;
+    }
+    $code = get_http_code($http_response_header);
+//     print("Code: $code\n");
+    if ($code == 200) {
+//       print("$url: OK\n");
+      return $data;
+    } else if ($code == 404) {
+      if ($verbose > 1) print("$url not found: $code, retry $i\n");
+      return false;
+    } else if ($code == 500) {
+      if ($verbose > 1) print("$url failed with $code, retry $i\n");
+      sleep(1);
+    } else {
+      if ($verbose > 1) print("WARNING: $url failed with $code, retry $i\n");
+      // print_r($http_response_header);
+      sleep(1);
+      // return $data;
+    }
+  }
+  print("\nERROR: $url failed $num_retry times\n");
+  exit(2);
+}
+
+function get_web_data_fgc($url) {
+  global $context;
+  $data = file_get_contents($url, false, $context);
+  return $data;
+}
+
+// @file_get_contents("http://example.com");
+// $code=getHttpCode($http_response_header);
+// https://stackoverflow.com/questions/15620124/http-requests-with-file-get-contents-getting-the-response-code
+function get_http_code($http_response_header) {
+  if(is_array($http_response_header)) {
+    $parts = @explode(' ', $http_response_header[0]);
+    if (count($parts) > 1) {//HTTP/1.0 <code> <text>
+      return intval($parts[1]); //Get code
+    }
+  }
+  return 0;
+}
+
+// https://stackoverflow.com/questions/9322302/how-to-get-database-name-in-pdo
+function get_DB_name(): string {
+  global $db;
+  return $db->query('select database()')->fetchColumn();
 }
