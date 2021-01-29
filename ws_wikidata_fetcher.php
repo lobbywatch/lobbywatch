@@ -81,6 +81,7 @@ function main() {
   global $user;
   global $db_name;
   global $db_con;
+  global $db_schema;
 
   $docRoot = "./public_html";
 
@@ -136,7 +137,7 @@ export SYNC_FILE=sql/ws_parlament_ch_sync_`date +\"%Y%m%d\"`.sql; php -f ws_parl
     $records_limit = null;
   }
 
-  $schema = get_DB_name();
+  $schema = $db_schema;
   print("-- Schema: $schema\n");
 
   updateWikidata($schema, $records_limit);

@@ -384,6 +384,7 @@ function get_PDO_lobbywatch_DB_connection($db_name = null, $user_prefix = 'reade
   global $db_connections;
   global $db_con;
   global $db;
+  global $db_schema;
   global $mysql_client_version;
   global $mysql_server_version;
   if (empty($db)) {
@@ -399,7 +400,8 @@ function get_PDO_lobbywatch_DB_connection($db_name = null, $user_prefix = 'reade
     $initArr = [];
     $initArr[PDO::ATTR_PERSISTENT] = true;
     if ($utc) $initArr[PDO::MYSQL_ATTR_INIT_COMMAND] = "SET time_zone = '+00:00'";
-    $db = new PDO("mysql:host={$db_con['server']};port={$db_con['port']};dbname={$db_con['database']};charset=utf8mb4", $db_con["{$user_prefix}username"], $db_con["${user_prefix}password"], $initArr);
+    $db_schema = $db_con['database'];
+    $db = new PDO("mysql:host={$db_con['server']};port={$db_con['port']};dbname=$db_schema;charset=utf8mb4", $db_con["{$user_prefix}username"], $db_con["${user_prefix}password"], $initArr);
     // Disable prepared statement emulation, http://stackoverflow.com/questions/60174/how-can-i-prevent-sql-injection-in-php
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
