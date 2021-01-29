@@ -17,7 +17,7 @@
 # Include common functions
 . common.sh
 
-enable_fail_onerror
+enable_fail_onerror_no_vars_check
 
 PHP="php -d error_reporting=E_ALL"
 LOCAL_PHP="php -d error_reporting=E_ALL"
@@ -50,11 +50,13 @@ progress="--progress"
 noparlam=false
 nozb=false
 uid=false
+wikidata=false
 nopg=false
 zb_script_path=web_scrapers
 pg_script_path=web_scrapers
 P_CHANGED=false
 U_CHANGED=false
+W_CHANGED=false
 K_CHANGED=false
 ZB_CHANGED=false
 PG_CHANGED=false
@@ -70,6 +72,8 @@ kommissionen="k"
 verbose=false
 verbose_level=0
 verbose_mode=""
+limit=""
+limit_parameter=""
 download_images=""
 tmp_mail_body=/tmp/mail_body.txt
 after_import_DB_script=after_import_DB.sql
@@ -104,6 +108,8 @@ while test $# -gt 0; do
                         echo "-Z, --nozb                       Do not run zutrittsberechtigten script"
                         echo "-u, --uid                        Run update uid script"
                         echo "-U, --onlyuid                    Run ONLY update uid script"
+                        echo "-w, --wikidata               Run ONLY update wikidata script"
+                        echo "-W, --onlywikidata               Run ONLY update wikidata script"
                         echo "-G, --nopg                       Do not run parlamentarische Gruppen script"
                         echo "-a, --automatic                  Automatic"
                         echo "-M, --nomail                     No email notification"
@@ -113,6 +119,7 @@ while test $# -gt 0; do
                         echo "-S, --nosql                      Do not execute SQL"
                         echo "-l[=DB], --local[=DB]            Local DB to use (Default: lobbywatchtest)"
                         echo "-L                               Local DB to use: lobbywatch"
+                        echo "-n [NUM], --limit [NUM]          Limit number of records (Default NUM=10), default no limit set"
                         quit
                         ;;
                 -B|--nobackup)
@@ -177,6 +184,17 @@ while test $# -gt 0; do
                         nopg=true
                         shift
                         ;;
+                -w|--wikidata)
+                        wikidata=true
+                        shift
+                        ;;
+                -W|--onlywikidata)
+                        wikidata=true
+                        noparlam=true
+                        nozb=true
+                        nopg=true
+                        shift
+                        ;;
                 -G|--nopg)
                         nopg=true
                         shift
@@ -234,6 +252,16 @@ while test $# -gt 0; do
                           db="lobbywatchtest"
                         fi
                         env="local_${db}"
+                        shift
+                        ;;
+                -n|--limit)
+                        if [[ $2 =~ ^-?[0-9]+$ ]]; then
+                          limit=$2
+                          shift
+                        else
+                          limit=10
+                        fi
+                        limit_parameter="-n$limit"
                         shift
                         ;;
                 *)
@@ -462,11 +490,7 @@ if $uid; then
     askContinueYn "Run ws_uid_fetcher.php for '$db' on '$HOSTNAME'?"
   fi
   mkdir -p sql
-  test_param=''
-  # if $test; then
-  #   test_param='-n20'
-  # fi
-  export U_FILE=sql/ws_uid_sync_`date +"%Y%m%dT%H%M%S"`.sql; $LOCAL_PHP -f ws_uid_fetcher.php -- -a --ssl -s $test_param --db=$db $verbose_mode | tee $U_FILE
+  export U_FILE=sql/ws_uid_sync_`date +"%Y%m%dT%H%M%S"`.sql; $LOCAL_PHP -f ws_uid_fetcher.php -- -a --ssl -s $limit_parameter --db=$db $verbose_mode | tee $U_FILE
 
   if $verbose ; then
     echo "Uid SQL: $U_FILE"
@@ -488,6 +512,38 @@ if $uid; then
     # Run anyway to set the imported date
     # ./run_local_db_script.sh $db $U_FILE
     ./deploy.sh -q -l=$db -s $U_FILE
+  fi
+fi
+
+W_FILE=''
+if $wikidata; then
+  if ! $automatic ; then
+    askContinueYn "Run ws_wikidata_fetcher.php for '$db' on '$HOSTNAME'?"
+  fi
+  mkdir -p sql
+  echo "Limit: $limit_parameter"
+  export W_FILE=sql/ws_wikidata_sync_`date +"%Y%m%dT%H%M%S"`.sql; $LOCAL_PHP -f ws_wikidata_fetcher.php -- -s $limit_parameter --db=$db $verbose_mode | tee $W_FILE
+
+  if $verbose ; then
+    echo "wikidata SQL: $W_FILE"
+  fi
+
+  grep -q "DATA CHANGED" $W_FILE && W_CHANGED=true
+  if $W_CHANGED ; then
+    if ! $automatic && ! $nosql ; then
+        beep
+        less $W_FILE
+        askContinueYn "Run SQL in LOCAL $db?"
+    fi
+    echo -e "\nwikidata data ${greenBold}CHANGED${reset}"
+  else
+    echo -e "\nwikidata data ${greenBold}UNCHANGED${reset}"
+  fi
+
+  if ! $nosql ; then
+    # Run anyway to set the imported date
+    # ./run_local_db_script.sh $db $W_FILE
+    ./deploy.sh -q -l=$db -s $W_FILE
   fi
 fi
 
@@ -563,6 +619,14 @@ if $uid && $U_CHANGED && ! $nosql && $remote_op; then
   ./deploy.sh -q -s $U_FILE
 fi
 
+# Run parlam SQL in any case in order to set the imported data
+if $wikidata && $W_CHANGED && ! $nosql && $remote_op; then
+  if ! $automatic ; then
+    askContinueYn "Run wikidata SQL in REMOTE TEST?"
+  fi
+  ./deploy.sh -q -s $W_FILE
+fi
+
 # Run after import DB script for fixes
 if $enable_after_import_script && ! $nosql && $remote_op; then
   if ! $automatic ; then
@@ -626,6 +690,13 @@ if $uid && $U_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $imp
   ./deploy.sh -p -q -s $U_FILE
 fi
 
+if $wikidata && $W_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import && $remote_op; then
+  if ! $automatic ; then
+    askContinueYn "Run wikidata SQL in REMOTE PROD?"
+  fi
+  ./deploy.sh -p -q -s $W_FILE
+fi
+
 # Run after import DB script for fixes
 if $enable_after_import_script && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import && $remote_op; then
   if ! $automatic ; then
@@ -651,7 +722,7 @@ fi
 # P_CHANGED = true
 # ZB_CHANGED=true
 # echo "Mail state: $nomail $P_CHANGED $ZB_CHANGED"
-if ! $nomail && ($P_CHANGED || $ZB_CHANGED || $PG_CHANGED || $U_CHANGED); then
+if ! $nomail && ($P_CHANGED || $ZB_CHANGED || $PG_CHANGED || $U_CHANGED || $W_CHANGED); then
 
     if ! $automatic ; then
       askContinueYn "Send email?"
@@ -660,6 +731,8 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED || $PG_CHANGED || $U_CHANGED); then
     if $test ; then
       to="test@lobbywatch.ch"
       subject="$subject [TEST]"
+    elif $W_CHANGED ; then
+      to="admin@lobbywatch.ch"
     else
       to=$MAIL_TO
     fi
@@ -726,9 +799,17 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED || $PG_CHANGED || $U_CHANGED); then
       >> $tmp_mail_body
     fi
 
+    if $W_CHANGED ; then
+      subject="$subject wikidata changed"
+      echo -e "\n= WIKIDATA\n" >> $tmp_mail_body
+      cat $W_FILE |
+      perl -p -e's%(/\*|\*/)%%' \
+      >> $tmp_mail_body
+    fi
+
     # cat $tmp_mail_body
     echo "less $tmp_mail_body"
-    cmd='cat $tmp_mail_body | $PHP -f mail_notification.php -- -s"$subject" -t"$to" "$P_FILE" "$fzb" "$fpg" "$U_FILE" $ZB_PDFS $PG_PDFS'
+    cmd='cat $tmp_mail_body | $PHP -f mail_notification.php -- -s"$subject" -t"$to" "$P_FILE" "$fzb" "$fpg" "$U_FILE" "$W_FILE" $ZB_PDFS $PG_PDFS'
     if $verbose; then echo "$cmd"; fi
     eval "$cmd"
 fi

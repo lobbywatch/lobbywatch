@@ -1775,6 +1775,7 @@ function main() {
   } else {
     $schema = 'lobbywatchtest';
   }
+  // TODO $schema = get_DB_name();
   print("-- Schema: $schema\n");
 
   if (!file_exists($path . '/' . DOCU) && !is_dir($path . '/' . DOCU)) {

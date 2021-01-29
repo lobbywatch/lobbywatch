@@ -332,6 +332,15 @@ enable_fail_onerror() {
   set -e -u -o pipefail
   # set -u
 }
+#quit or trap 'abort' 0 must be called, for sucessful exit
+enable_fail_onerror_no_vars_check() {
+  # Abort on errors
+  # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
+  trap 'abort "Error trapped" $LINENO' ERR
+  # https://sipb.mit.edu/doc/safe-shell/
+  set -e -o pipefail
+  # set -u
+}
 
 enable_fail_onerror_no_pipe() {
   # Abort on errors

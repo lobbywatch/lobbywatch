@@ -101,18 +101,18 @@ function main() {
   if (isset($options['h']) || isset($options['help'])) {
     print("ws uid Fetcher for Lobbywatch.ch.
 Parameters:
--u UID, --uid UID    Call UID (BFS and Zefix REST) WS, UID as 9-digit, CHE00000000, or CHE-000.000.000 string (default: $default_uid)
--b UID, --bfs UID    Call UID-BFS-Register-WS (SOAP), UID as 9-digit, CHE00000000, or CHE-000.000.000 string (default: $default_uid)
--Z UID, --zefix-soap Call UID Zefix SOAP WS, UID as 9-digit , CHE00000000, or CHE-000.000.000 string (default: $default_uid)
+-uUID, --uidUID    Call UID (BFS and Zefix REST) WS, UID as 9-digit, CHE00000000, or CHE-000.000.000 string (default: $default_uid)
+-bUID, --bfsUID    Call UID-BFS-Register-WS (SOAP), UID as 9-digit, CHE00000000, or CHE-000.000.000 string (default: $default_uid)
+-ZUID, --zefix-soap Call UID Zefix SOAP WS, UID as 9-digit , CHE00000000, or CHE-000.000.000 string (default: $default_uid)
 -z , --zefix, --zefix-rest Call UID Zefix REST WS, UID as 9-digit , CHE00000000, or CHE-000.000.000 string (default: $default_uid)
--o HR-ID             Search old HR-ID
+-oHR-ID             Search old HR-ID
 -t                   Call test service (default: production)
 --ssl                Use SSL
 -m                   Migrate old hr-id to uid from handelsregister_url
--a [START_ID]        Actualise organisations with UID from webservices, optional starting from organisation START_ID
--S [START_ID]        Search UIDs from name via webservices, optional starting from organisation START_ID
--f [START_ID]        Search name and set UID, optional starting from organisation START_ID
--n number            Limit number of records
+-a[START_ID]        Actualise organisations with UID from webservices, optional starting from organisation START_ID
+-S[START_ID]        Search UIDs from name via webservices, optional starting from organisation START_ID
+-f[START_ID]        Search name and set UID, optional starting from organisation START_ID
+-n[NUM]             Limit number of records
 -s                   Output SQL script
 -v[level]            Verbose, optional level, 1 = default
 --db=db_name         Name of DB to use
@@ -420,7 +420,7 @@ function migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode) {
     $uid_ws = null;
     $rechtsform_handelsregister = null;
     $matches = [];
-    if (preg_match('/chnr=(\d{10,11})/',$hr_url, $matches)) {
+    if (preg_match('/chnr=(\d{10,11})/', $hr_url, $matches)) {
       $old_hr_id_raw = $matches[1];
       $old_hr_id = formatOldHandelsregisterID($old_hr_id_raw);
     } else if (preg_match('/CH-?\d{3}[.-]?\d[.-]?\d{3}[.-]?\d{3}[-]?\d/', $hr_url, $matches)) {
