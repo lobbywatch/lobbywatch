@@ -3457,6 +3457,8 @@ ALTER TABLE `person_log`
 -- TODO wikidata
 -- TODO isicv4
 -- TODO instagram
+-- TODO youtube
+-- TODO FB
 -- TODO IB/mandat unterscheidung
 -- TODO _log
 -- TODO forms
@@ -3556,11 +3558,15 @@ ALTER TABLE `mil_grad_log`
 
 ALTER TABLE `organisation`
   DROP `instagram_profil`,
+  DROP `youtube_user`,
+  DROP `facebook_name`,
   DROP `wikipedia`,
   DROP `wikidata_qid`;
 
 ALTER TABLE `organisation_log`
   DROP `instagram_profil`,
+  DROP `youtube_user`,
+  DROP `facebook_name`,
   DROP `wikipedia`,
   DROP `wikidata_qid`;
 
@@ -3569,32 +3575,40 @@ ALTER TABLE `organisation_log`
 -- ALTER TABLE `organisation_jahr`
 ALTER TABLE `parlamentarier`
   DROP `instagram_profil`,
+  DROP `youtube_user`,
   DROP `wikidata_qid`;
 
 ALTER TABLE `parlamentarier_log`
   DROP `instagram_profil`,
+  DROP `youtube_user`,
   DROP `wikidata_qid`;
 
 -- ALTER TABLE `parlamentarier_anhang`
 -- ALTER TABLE `parlamentarier_transparenz`
 ALTER TABLE `partei`
   DROP `instagram_profil`,
+  DROP `youtube_user`,
+  DROP `facebook_name`,
   DROP `wikipedia`,
   DROP `wikidata_qid`;
 
 ALTER TABLE `partei_log`
   DROP `instagram_profil`,
+  DROP `youtube_user`,
+  DROP `facebook_name`,
   DROP `wikipedia`,
   DROP `wikidata_qid`;
 
 ALTER TABLE `person`
   DROP `instagram_profil`,
+  DROP `youtube_user`,
   DROP `wikipedia`,
   DROP `wikidata_qid`,
   DROP `vorname_kurz`;
 
 ALTER TABLE `person_log`
   DROP `instagram_profil`,
+  DROP `youtube_user`,
   DROP `wikipedia`,
   DROP `wikidata_qid`,
   DROP `vorname_kurz`;
@@ -3704,12 +3718,19 @@ ALTER TABLE `mil_grad_log`
   ADD `notizen` mediumtext COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.' AFTER `wikidata_qid`;
 
 ALTER TABLE `organisation`
-  ADD `instagram_profil` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Instagramprofil-ID' AFTER `twitter_name`,
+  CHANGE `twitter_name` `twitter_name` VARCHAR(15) NULL DEFAULT NULL COMMENT 'Twittername',
+  ADD `instagram_profil` VARCHAR(30) NULL DEFAULT NULL COMMENT 'Instagram Username (Profil)' AFTER `twitter_name`,
+  ADD `youtube_user` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Youtube Username' AFTER `instagram_profil`,
+  ADD `facebook_name` varchar(150) DEFAULT NULL COMMENT 'Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt' AFTER `youtube_user`,
   ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `adresse_plz`,
   ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
 
+UPDATE `organisation_log` SET twitter_name = SUBSTRING(twitter_name, 1, 15) WHERE LENGTH(twitter_name) > 15;
 ALTER TABLE `organisation_log`
-  ADD `instagram_profil` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Instagramprofil-ID' AFTER `twitter_name`,
+  CHANGE `twitter_name` `twitter_name` VARCHAR(15) NULL DEFAULT NULL COMMENT 'Twittername',
+  ADD `instagram_profil` VARCHAR(30) NULL DEFAULT NULL COMMENT 'Instagram Username (Profil)' AFTER `twitter_name`,
+  ADD `youtube_user` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Youtube Username' AFTER `instagram_profil`,
+  ADD `facebook_name` varchar(150) DEFAULT NULL COMMENT 'Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt' AFTER `youtube_user`,
   ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `adresse_plz`,
   ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
 
@@ -3717,33 +3738,49 @@ ALTER TABLE `organisation_log`
 -- ALTER TABLE `organisation_beziehung`
 -- ALTER TABLE `organisation_jahr`
 ALTER TABLE `parlamentarier`
-  ADD `instagram_profil` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Instagramprofil-ID' AFTER `twitter_name`,
+  CHANGE `twitter_name` `twitter_name` VARCHAR(15) NULL DEFAULT NULL COMMENT 'Twittername',
+  ADD `instagram_profil` VARCHAR(30) NULL DEFAULT NULL COMMENT 'Instagram Username (Profil)' AFTER `twitter_name`,
+  ADD `youtube_user` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Youtube Username' AFTER `instagram_profil`,
   ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
 
+UPDATE `parlamentarier_log` SET twitter_name = SUBSTRING(twitter_name, 1, 15) WHERE LENGTH(twitter_name) > 15;
 ALTER TABLE `parlamentarier_log`
-  ADD `instagram_profil` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Instagramprofil-ID' AFTER `twitter_name`,
+  CHANGE `twitter_name` `twitter_name` VARCHAR(15) NULL DEFAULT NULL COMMENT 'Twittername',
+  ADD `instagram_profil` VARCHAR(30) NULL DEFAULT NULL COMMENT 'Instagram Username (Profil)' AFTER `twitter_name`,
+  ADD `youtube_user` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Youtube Username' AFTER `instagram_profil`,
   ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
 
 -- ALTER TABLE `parlamentarier_anhang`
 -- ALTER TABLE `parlamentarier_transparenz`
 ALTER TABLE `partei`
-  ADD `instagram_profil` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Instagramprofil-ID' AFTER `twitter_name`,
+  CHANGE `twitter_name` `twitter_name` VARCHAR(15) NULL DEFAULT NULL COMMENT 'Twittername',
+  ADD `instagram_profil` VARCHAR(30) NULL DEFAULT NULL COMMENT 'Instagram Username (Profil)' AFTER `twitter_name`,
+  ADD `youtube_user` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Youtube Username' AFTER `instagram_profil`,
+  ADD `facebook_name` varchar(150) DEFAULT NULL COMMENT 'Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt' AFTER `youtube_user`,
   ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `beschreibung_fr`,
   ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
 
 ALTER TABLE `partei_log`
-  ADD `instagram_profil` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Instagramprofil-ID' AFTER `twitter_name`,
+  CHANGE `twitter_name` `twitter_name` VARCHAR(15) NULL DEFAULT NULL COMMENT 'Twittername',
+  ADD `instagram_profil` VARCHAR(30) NULL DEFAULT NULL COMMENT 'Instagram Username (Profil)' AFTER `twitter_name`,
+  ADD `youtube_user` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Youtube Username' AFTER `instagram_profil`,
+  ADD `facebook_name` varchar(150) DEFAULT NULL COMMENT 'Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt' AFTER `youtube_user`,
   ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `beschreibung_fr`,
   ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
 
 ALTER TABLE `person`
-  ADD `instagram_profil` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Instagramprofil-ID' AFTER `twitter_name`,
+  CHANGE `twitter_name` `twitter_name` VARCHAR(15) NULL DEFAULT NULL COMMENT 'Twittername',
+  ADD `instagram_profil` VARCHAR(30) NULL DEFAULT NULL COMMENT 'Instagram Username (Profil)' AFTER `twitter_name`,
+  ADD `youtube_user` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Youtube Username' AFTER `instagram_profil`,
   ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `telephon_2`,
   ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`,
   ADD `vorname_kurz` varchar(15) DEFAULT NULL COMMENT 'Alltagsvorname oder gebräuchlicher Spitzname, z.B. Nik für Niklaus' AFTER `vorname`;
 
+UPDATE `person_log` SET twitter_name = SUBSTRING(twitter_name, 1, 15) WHERE LENGTH(twitter_name) > 15;
 ALTER TABLE `person_log`
-  ADD `instagram_profil` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Instagramprofil-ID' AFTER `twitter_name`,
+  CHANGE `twitter_name` `twitter_name` VARCHAR(15) NULL DEFAULT NULL COMMENT 'Twittername',
+  ADD `instagram_profil` VARCHAR(30) NULL DEFAULT NULL COMMENT 'Instagram Username (Profil)' AFTER `twitter_name`,
+  ADD `youtube_user` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Youtube Username' AFTER `instagram_profil`,
   ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `telephon_2`,
   ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`,
   ADD `vorname_kurz` varchar(15) DEFAULT NULL COMMENT 'Alltagsvorname oder gebräuchlicher Spitzname, z.B. Nik für Niklaus' AFTER `vorname`;

@@ -1018,3 +1018,6 @@ HAVING count(*) > 1;
 grep -e "CREATE TABLE \`.*" lobbywatch.sql | grep -v -E -e "(\`v_|\`vf_|\`uv_|\`mv_|_log\`)"
 
 SELECT `TABLE_SCHEMA`, `TABLE_NAME` FROM `COLUMNS` WHERE `COLUMN_NAME`='wikidata_qid' AND `TABLE_SCHEMA`='lobbywatchtest';
+
+SELECT LENGTH(`twitter_name`), SUBSTRING(twitter_name, 1, 15) AS twitter_name_cut, `twitter_name`, `id` FROM organisation WHERE LENGTH(`twitter_name`) > 15;
+UPDATE `parlamentarier_log` SET twitter_name = SUBSTRING(twitter_name, 1, 15) WHERE LENGTH(twitter_name) > 15;

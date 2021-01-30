@@ -59,6 +59,8 @@ for i in "$@" ; do
         esac
 done
 
+set -- "${POSITIONAL[@]}" # restore positional parameters
+
 DB_PARAM=$1
 
 if [[ "$DB_PARAM" == "all" ]] && $FULL_DUMP && [[ "$HOSTNAME" =~ "abel" ]]; then
