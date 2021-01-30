@@ -217,7 +217,13 @@ function updateWikidata(string $schema, $records_limit = false) {
       $webpage = get_web_data($wikipedia_url);
       $matches = [];
       $msg = [];
-      if (preg_match('%https://www.wikidata.org/wiki/Special:EntityPage/(Q\d+)%', $webpage, $matches)) {
+      $wikidata_qid = null;
+
+      if (empty($webpage)) {
+        $msg[] = "Wikipedia not found";
+        $sign = '!';
+        $wikidata_empty_count++;
+      } else if (preg_match('%https://www.wikidata.org/wiki/Special:EntityPage/(Q\d+)%', $webpage, $matches)) {
         if (count($matches) > 2) {
           $msg[] = "Too many results";
         }
@@ -250,7 +256,8 @@ function updateWikidata(string $schema, $records_limit = false) {
           if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
         }
       } else {
-        $msg[] = 'Qid not found for $wikipedia_url';
+        $msg[] = "Qid not found";
+        $sign = '!';
         $wikidata_empty_count++;
       }
       print(str_repeat("\t", $level) . str_pad($i, 5, " ", STR_PAD_LEFT) . "| $sign | " . mb_str_pad("$wikidata_table", 25) . "|" . str_pad($id, 4, " ", STR_PAD_LEFT) . "| " . mb_str_pad($wikipedia_url, 75) . "| " . mb_str_pad($wikidata_qid_db, 12) . " | " . mb_str_pad($wikidata_qid, 12) . " | " . implode(" | ", $msg) . "\n");
