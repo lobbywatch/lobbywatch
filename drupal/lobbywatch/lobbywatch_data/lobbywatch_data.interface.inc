@@ -270,13 +270,29 @@ function _lobbywatch_data_clean_records($result) {
       && (!array_key_exists('zutrittsberechtigung_bis_unix', $record) || (is_null($record['zutrittsberechtigung_bis_unix']) || $record['zutrittsberechtigung_bis_unix'] > time()))
       || $includeHistorised
     ) {
-      $items[] = _lobbywatch_data_clean_fields($record);
+      $fields = _lobbywatch_data_clean_fields($record);
+      _lobbywatch_data_enrich_fields($fields);
+      $items[] = $fields;
     }
   }
 
   _lobbywatch_data_handle_lang_fields($items);
 
   return $items;
+}
+
+function _lobbywatch_data_enrich_fields(array &$items) {
+  if (!empty($qid = $items['wikidata_qid'])) {
+    $items['wikidata_item_url'] = "https://www.wikidata.org/wiki/$qid";
+  }
+
+  if (!empty($id = $items['parlament_biografie_id'])) {
+    $items['parlament_biografie_url'] = "https://www.parlament.ch/de/biografie/name/$id";
+  }
+
+  if (!empty($isicv4_codes = $items['isicv4'])) {
+    $items['isicv4'] = explode(" ", $isicv4_codes);
+  }
 }
 
 function _lobbywatch_data_clean_fields($input_record) {
