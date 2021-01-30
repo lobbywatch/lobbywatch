@@ -1255,6 +1255,7 @@
                     new StringField('quelle'),
                     new DateField('von'),
                     new DateField('bis'),
+                    new StringField('unterscheidung'),
                     new StringField('notizen'),
                     new DateTimeField('updated_by_import'),
                     new StringField('eingabe_abgeschlossen_visa'),
@@ -2193,6 +2194,7 @@
                     new StringField('quelle'),
                     new DateField('von'),
                     new DateField('bis'),
+                    new StringField('unterscheidung'),
                     new StringField('notizen'),
                     new DateTimeField('updated_by_import'),
                     new StringField('eingabe_abgeschlossen_visa'),
@@ -2247,6 +2249,7 @@
                     new StringField('quelle'),
                     new DateField('von'),
                     new DateField('bis'),
+                    new StringField('unterscheidung'),
                     new StringField('notizen'),
                     new DateTimeField('updated_by_import'),
                     new StringField('eingabe_abgeschlossen_visa'),
@@ -2458,6 +2461,7 @@
                     new StringField('quelle'),
                     new DateField('von'),
                     new DateField('bis'),
+                    new StringField('unterscheidung'),
                     new StringField('notizen'),
                     new DateTimeField('updated_by_import'),
                     new StringField('eingabe_abgeschlossen_visa'),
@@ -2528,6 +2532,7 @@
                 new FilterColumn($this->dataset, 'von', 'von', 'Von'),
                 new FilterColumn($this->dataset, 'bis', 'bis', 'Bis'),
                 new FilterColumn($this->dataset, 'notizen', 'notizen', 'Notizen'),
+                new FilterColumn($this->dataset, 'unterscheidung', 'unterscheidung', 'Unterscheidung'),
                 new FilterColumn($this->dataset, 'updated_by_import', 'updated_by_import', 'Updated By Import'),
                 new FilterColumn($this->dataset, 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa'),
                 new FilterColumn($this->dataset, 'eingabe_abgeschlossen_datum', 'eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum'),
@@ -2569,6 +2574,7 @@
                 ->addColumn($columns['von'])
                 ->addColumn($columns['bis'])
                 ->addColumn($columns['notizen'])
+                ->addColumn($columns['unterscheidung'])
                 ->addColumn($columns['updated_by_import'])
                 ->addColumn($columns['eingabe_abgeschlossen_visa'])
                 ->addColumn($columns['eingabe_abgeschlossen_datum'])
@@ -3049,6 +3055,31 @@
             
             $filterBuilder->addColumn(
                 $columns['notizen'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('unterscheidung_edit');
+            $main_editor->SetMaxLength(15);
+            
+            $filterBuilder->addColumn(
+                $columns['unterscheidung'],
                 array(
                     FilterConditionOperator::EQUALS => $main_editor,
                     FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
@@ -3702,6 +3733,16 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for unterscheidung field
+            //
+            $column = new TextViewColumn('unterscheidung', 'unterscheidung', 'Unterscheidung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Unterscheidungsfeld für ansonsten gleiche Interessenbindungen (parlamentarier_id, organisation_id, art und bis). NUR ANGEBEN WO NÖTIG.');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for updated_by_import field
             //
             $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
@@ -4029,6 +4070,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for unterscheidung field
+            //
+            $column = new TextViewColumn('unterscheidung', 'unterscheidung', 'Unterscheidung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for updated_by_import field
             //
             $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
@@ -4323,6 +4371,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for unterscheidung field
+            //
+            $column = new TextViewColumn('unterscheidung', 'unterscheidung', 'Unterscheidung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for updated_by_import field
             //
             $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
@@ -4596,6 +4651,13 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for unterscheidung field
+            //
+            $column = new TextViewColumn('unterscheidung', 'unterscheidung', 'Unterscheidung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for updated_by_import field
             //
             $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
@@ -4866,6 +4928,13 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for unterscheidung field
+            //
+            $column = new TextViewColumn('unterscheidung', 'unterscheidung', 'Unterscheidung', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             
             //
@@ -5149,10 +5218,13 @@
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
                     new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
                     new StringField('linkedin_profil_url'),
                     new StringField('xing_profil_name'),
                     new StringField('facebook_name'),
                     new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
                     new StringField('sprache'),
                     new StringField('arbeitssprache'),
                     new StringField('adresse_firma'),
@@ -5240,12 +5312,17 @@
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
+                    new StringField('facebook_name'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
                     new StringField('sekretariat'),
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
                     new StringField('notizen'),
                     new DateTimeField('updated_by_import'),
                     new StringField('eingabe_abgeschlossen_visa'),
@@ -5558,6 +5635,7 @@
                     new StringField('quelle'),
                     new DateField('von'),
                     new DateField('bis'),
+                    new StringField('unterscheidung'),
                     new StringField('notizen'),
                     new DateTimeField('updated_by_import'),
                     new StringField('eingabe_abgeschlossen_visa'),
@@ -5642,6 +5720,7 @@
                 new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr'),
                 new FilterColumn($this->dataset, 'quelle_url', 'quelle_url', 'Quelle Url'),
                 new FilterColumn($this->dataset, 'quelle', 'quelle', 'Quelle'),
+                new FilterColumn($this->dataset, 'unterscheidung', 'unterscheidung', 'Unterscheidung'),
                 new FilterColumn($this->dataset, 'notizen', 'notizen', 'Notizen'),
                 new FilterColumn($this->dataset, 'updated_by_import', 'updated_by_import', 'Updated By Import'),
                 new FilterColumn($this->dataset, 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa'),
@@ -5683,6 +5762,7 @@
                 ->addColumn($columns['beschreibung_fr'])
                 ->addColumn($columns['quelle_url'])
                 ->addColumn($columns['quelle'])
+                ->addColumn($columns['unterscheidung'])
                 ->addColumn($columns['notizen'])
                 ->addColumn($columns['updated_by_import']);
         }
@@ -5704,6 +5784,7 @@
                 ->setOptionsFor('verguetung')
                 ->setOptionsFor('von')
                 ->setOptionsFor('bis')
+                ->setOptionsFor('unterscheidung')
                 ->setOptionsFor('updated_by_import')
                 ->setOptionsFor('eingabe_abgeschlossen_visa')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
@@ -6176,6 +6257,31 @@
             
             $filterBuilder->addColumn(
                 $columns['quelle'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('unterscheidung_edit');
+            $main_editor->SetMaxLength(15);
+            
+            $filterBuilder->addColumn(
+                $columns['unterscheidung'],
                 array(
                     FilterConditionOperator::EQUALS => $main_editor,
                     FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
@@ -6784,6 +6890,16 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for unterscheidung field
+            //
+            $column = new TextViewColumn('unterscheidung', 'unterscheidung', 'Unterscheidung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Unterscheidungsfeld für ansonsten gleiche Interessenbindungen (parlamentarier_id, organisation_id, art und bis). NUR ANGEBEN WO NÖTIG.');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
@@ -7086,6 +7202,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for unterscheidung field
+            //
+            $column = new TextViewColumn('unterscheidung', 'unterscheidung', 'Unterscheidung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
@@ -7258,10 +7381,13 @@
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
                     new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
                     new StringField('linkedin_profil_url'),
                     new StringField('xing_profil_name'),
                     new StringField('facebook_name'),
                     new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
                     new StringField('sprache'),
                     new StringField('arbeitssprache'),
                     new StringField('adresse_firma'),
@@ -7358,12 +7484,17 @@
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
+                    new StringField('facebook_name'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
                     new StringField('sekretariat'),
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
                     new StringField('notizen'),
                     new DateTimeField('updated_by_import'),
                     new StringField('eingabe_abgeschlossen_visa'),
@@ -7521,6 +7652,16 @@
             $editor = new TextEdit('quelle_edit');
             $editor->SetMaxLength(80);
             $editColumn = new CustomEditColumn('Quelle', 'quelle', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for unterscheidung field
+            //
+            $editor = new TextEdit('unterscheidung_edit');
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Unterscheidung', 'unterscheidung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -7737,10 +7878,13 @@
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
                     new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
                     new StringField('linkedin_profil_url'),
                     new StringField('xing_profil_name'),
                     new StringField('facebook_name'),
                     new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
                     new StringField('sprache'),
                     new StringField('arbeitssprache'),
                     new StringField('adresse_firma'),
@@ -7837,12 +7981,17 @@
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
+                    new StringField('facebook_name'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
                     new StringField('sekretariat'),
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
                     new StringField('notizen'),
                     new DateTimeField('updated_by_import'),
                     new StringField('eingabe_abgeschlossen_visa'),
@@ -8000,6 +8149,16 @@
             $editor = new TextEdit('quelle_edit');
             $editor->SetMaxLength(80);
             $editColumn = new CustomEditColumn('Quelle', 'quelle', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for unterscheidung field
+            //
+            $editor = new TextEdit('unterscheidung_edit');
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Unterscheidung', 'unterscheidung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -8225,10 +8384,13 @@
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
                     new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
                     new StringField('linkedin_profil_url'),
                     new StringField('xing_profil_name'),
                     new StringField('facebook_name'),
                     new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
                     new StringField('sprache'),
                     new StringField('arbeitssprache'),
                     new StringField('adresse_firma'),
@@ -8325,12 +8487,17 @@
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
+                    new StringField('facebook_name'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
                     new StringField('sekretariat'),
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
                     new StringField('notizen'),
                     new DateTimeField('updated_by_import'),
                     new StringField('eingabe_abgeschlossen_visa'),
@@ -8488,6 +8655,16 @@
             $editor = new TextEdit('quelle_edit');
             $editor->SetMaxLength(80);
             $editColumn = new CustomEditColumn('Quelle', 'quelle', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for unterscheidung field
+            //
+            $editor = new TextEdit('unterscheidung_edit');
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Unterscheidung', 'unterscheidung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -8711,6 +8888,13 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for unterscheidung field
+            //
+            $column = new TextViewColumn('unterscheidung', 'unterscheidung', 'Unterscheidung', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
@@ -8974,6 +9158,13 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for unterscheidung field
+            //
+            $column = new TextViewColumn('unterscheidung', 'unterscheidung', 'Unterscheidung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
@@ -9231,6 +9422,13 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for unterscheidung field
+            //
+            $column = new TextViewColumn('unterscheidung', 'unterscheidung', 'Unterscheidung', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             
             //
@@ -9566,10 +9764,13 @@
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
                     new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
                     new StringField('linkedin_profil_url'),
                     new StringField('xing_profil_name'),
                     new StringField('facebook_name'),
                     new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
                     new StringField('sprache'),
                     new StringField('arbeitssprache'),
                     new StringField('adresse_firma'),
@@ -9657,12 +9858,17 @@
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
+                    new StringField('facebook_name'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
                     new StringField('sekretariat'),
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
                     new StringField('notizen'),
                     new DateTimeField('updated_by_import'),
                     new StringField('eingabe_abgeschlossen_visa'),
@@ -9744,10 +9950,13 @@
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
                     new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
                     new StringField('linkedin_profil_url'),
                     new StringField('xing_profil_name'),
                     new StringField('facebook_name'),
                     new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
                     new StringField('sprache'),
                     new StringField('arbeitssprache'),
                     new StringField('adresse_firma'),
@@ -9835,12 +10044,17 @@
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
+                    new StringField('facebook_name'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
                     new StringField('sekretariat'),
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
                     new StringField('notizen'),
                     new DateTimeField('updated_by_import'),
                     new StringField('eingabe_abgeschlossen_visa'),
@@ -9922,10 +10136,13 @@
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
                     new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
                     new StringField('linkedin_profil_url'),
                     new StringField('xing_profil_name'),
                     new StringField('facebook_name'),
                     new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
                     new StringField('sprache'),
                     new StringField('arbeitssprache'),
                     new StringField('adresse_firma'),
@@ -10013,12 +10230,17 @@
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
+                    new StringField('facebook_name'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
                     new StringField('sekretariat'),
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
                     new StringField('notizen'),
                     new DateTimeField('updated_by_import'),
                     new StringField('eingabe_abgeschlossen_visa'),
@@ -10100,10 +10322,13 @@
                     new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
                     new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
                     new StringField('linkedin_profil_url'),
                     new StringField('xing_profil_name'),
                     new StringField('facebook_name'),
                     new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
                     new StringField('sprache'),
                     new StringField('arbeitssprache'),
                     new StringField('adresse_firma'),
@@ -10191,12 +10416,17 @@
                     new StringField('homepage'),
                     new StringField('handelsregister_url'),
                     new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
+                    new StringField('facebook_name'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
                     new StringField('sekretariat'),
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
                     new StringField('notizen'),
                     new DateTimeField('updated_by_import'),
                     new StringField('eingabe_abgeschlossen_visa'),

@@ -1951,6 +1951,34 @@ function globalOnPreparePage(Page $page) {
       <img src="img/icons/book_open.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16">
       <span>Hinweis</span></div>
       <div class="rbox-data">Bitte die Bearbeitungsdokumentation (vor einer Bearbeitung) beachten und bei Unklarheiten anpassen, siehe <a href="https://cms.lobbywatch.ch/wiki/tiki-index.php?page=Datenerfassung&structure=Lobbywatch-Wiki" target="_blank">Wiki Datenbearbeitung</a> und <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell_simplified.pdf">Vereinfachtes Datenmodell</a> (Komplex: <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell_1page.pdf">1&nbsp;Seite</a> / <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell.pdf">4&nbsp;Seiten</a>).</div></div>';
+
+
+  $isicv4_doc = '
+  <h4>ISICv4<br>
+  International Standard of Industrial Classification of All Economic Activities (ISIC), Revision 4</h4>
+
+  <blockquote>
+  Die International Standard Industrial Classification (ISIC, dt. &quot;Internationale Standardklassifikation der Wirtschaftszweige&quot;) ist eine Klassifikation der UNO zur Gliederung von Wirtschaftsbereichen und Industriezweigen.
+  Dabei wird jede Branche aus dem primären, sekundären und tertiärer Wirtschaftssektor einer von 21 Hauptgruppen zugeordnet, die wiederum in Untergruppen aufgeteilt sind.
+  </blockquote>
+
+  <p>
+  <span style="font-size: 2em"><strong><a href="https://unstats.un.org/unsd/publication/SeriesM/seriesm_4rev4e.pdf">ISICv4 PDF</a></strong></span>
+
+  <ul>
+  <li><a href="https://en.wikipedia.org/wiki/International_Standard_Industrial_Classification">Wiki DE: International Standard of Industrial Classification</a>
+  <li><a href="https://de.wikipedia.org/wiki/International_Standard_Industrial_Classification">Wiki EN: International Standard of Industrial Classification</a>
+  </ul>
+
+  <h4>NACE/NOGA<br>
+  Nomenclature statistique des activités économiques dans la Communauté européenne (NACE)</h4>
+  <a href="https://de.wikipedia.org/wiki/Statistische_Systematik_der_Wirtschaftszweige_in_der_Europ%C3%A4ischen_Gemeinschaft">Wiki DE: NACE</a>
+
+  <blockquote>
+  Die Statistische Systematik der Wirtschaftszweige in der Europäischen Gemeinschaft (französisch Nomenclature statistique des activités économiques dans la Communauté européenne), meist nur als NACE bezeichnet, ist ein System zur Klassifizierung von Wirtschaftszweigen, das von Seiten der Europäischen Union auf Basis der ISIC (International Standard Industrial Classification of all Economic Activities) der Vereinten Nationen[1] entworfen wurde. Ihr entspricht auch die Schweizerische Nomenclature Générale des Activités économiques (NOGA).
+  </blockquote>
+';
+
   switch ($page->GetPageId()) {
   case 'organisation':
       $page->setDetailedDescription('<div class="wiki-table-help">
@@ -1992,10 +2020,13 @@ function globalOnPreparePage(Page $page) {
       $page->setDescription("${edit_header_message}Diese Tabelle enthält Lobbyisten und Leute mit Zugang ins Parlament. Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint");
       break;
   case 'interessenbindung':
-      $page->setDetailedDescription('<div class="wiki-table-help">
+      $page->setDetailedDescription('
+<div class="wiki-table-help">
 <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Das Feld Interessenbindung.beschreibung soll den Bearbeitern einen Hinweis geben. Das Feld wird nicht automatisch ausgewertet.</div></div><a id="plugin-edit-remarksbox10" href="javascript:void(1)" class="editplugin"><img src="img/icons/wiki_plugin_edit.png" alt="Edit Plugin:remarksbox" title="Edit Plugin:remarksbox" class="icon" width="16" height="16"></a>
 </div>
-  ' . $general_detailed_desc);
+'
+. $isicv4_doc
+. $general_detailed_desc);
       $page->setDescription($edit_header_message . 'Zuordnung der Interessenbindungen der <a class="wiki external" target="_blank" href="https://www.parlament.ch/centers/documents/de/interessen-nr.pdf" rel="_blank external nofollow">National</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" width="15" height="14">- und <a class="wiki external" target="_blank" href="https://www.parlament.ch/centers/documents/de/interessen-sr.pdf" rel="_blank external nofollow">Ständeräte</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" width="15" height="14">.' . " Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint");
       break;
   case 'zutrittsberechtigung':
@@ -2040,7 +2071,9 @@ function globalOnPreparePage(Page $page) {
   case 'branche':
       $page->setDetailedDescription('<div class="wiki-table-help">
 <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Branchen sollen einer zuständigen Kommission zugeordnet werden.</div></div><a id="plugin-edit-remarksbox14" href="javascript:void(1)" class="editplugin"><img src="img/icons/wiki_plugin_edit.png" alt="Edit Plugin:remarksbox" title="Edit Plugin:remarksbox" class="icon" width="16" height="16"></a>
-</div>' . $general_detailed_desc);
+</div>'
+. $isicv4_doc
+. $general_detailed_desc);
       $page->setDescription($edit_header_message . 'Tabelle der Wirtschaftsbranchen.' . " Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint");
       break;
   case 'interessengruppe':
