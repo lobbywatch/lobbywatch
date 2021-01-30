@@ -3797,3 +3797,30 @@ ALTER TABLE `rat_log`
 -- ALTER TABLE `wissensartikel_link`
 -- ALTER TABLE `wissensartikelzieltabelle`
 -- ALTER TABLE `zutrittsberechtigung`
+
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Aargau' WHERE abkuerzung='AG';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Appenzell_Ausserrhoden' WHERE abkuerzung='AR';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Appenzell_Innerrhoden' WHERE abkuerzung='AI';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Basel-Landschaft' WHERE abkuerzung='BL';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Basel-Stadt' WHERE abkuerzung='BS';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Bern' WHERE abkuerzung='BE';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Freiburg' WHERE abkuerzung='FR';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Genf' WHERE abkuerzung='GE';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Glarus' WHERE abkuerzung='GL';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Graub%C3%BCnden' WHERE abkuerzung='GR';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Jura' WHERE abkuerzung='JU';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Luzern' WHERE abkuerzung='LU';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Neuenburg' WHERE abkuerzung='NE';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Nidwalden' WHERE abkuerzung='NW';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Obwalden' WHERE abkuerzung='OW';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Schaffhausen' WHERE abkuerzung='SH';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Schwyz' WHERE abkuerzung='SZ';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_St._Gallen' WHERE abkuerzung='SO';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Solothurn' WHERE abkuerzung='SG';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Tessin' WHERE abkuerzung='TI';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Thurgau' WHERE abkuerzung='TG';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Uri' WHERE abkuerzung='UR';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Waadt' WHERE abkuerzung='VD';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Wallis' WHERE abkuerzung='VS';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Zug' WHERE abkuerzung='ZG';
+UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Z%C3%BCrich' WHERE abkuerzung='ZH';
