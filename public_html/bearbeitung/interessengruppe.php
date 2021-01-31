@@ -2582,6 +2582,8 @@
                     new StringField('instagram_profil'),
                     new StringField('youtube_user'),
                     new StringField('facebook_name'),
+                    new StringField('linkedin_profil_url'),
+                    new StringField('xing_profil_name'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
                     new StringField('sekretariat'),
@@ -2688,7 +2690,9 @@
                 new FilterColumn($this->dataset, 'youtube_user', 'youtube_user', 'Youtube User'),
                 new FilterColumn($this->dataset, 'facebook_name', 'facebook_name', 'Facebook Name'),
                 new FilterColumn($this->dataset, 'wikipedia', 'wikipedia', 'Wikipedia'),
-                new FilterColumn($this->dataset, 'wikidata_qid', 'wikidata_qid', 'Wikidata Qid')
+                new FilterColumn($this->dataset, 'wikidata_qid', 'wikidata_qid', 'Wikidata Qid'),
+                new FilterColumn($this->dataset, 'linkedin_profil_url', 'linkedin_profil_url', 'Linkedin Profil Url'),
+                new FilterColumn($this->dataset, 'xing_profil_name', 'xing_profil_name', 'Xing Profil Name')
             );
         }
     
@@ -2739,7 +2743,9 @@
                 ->addColumn($columns['youtube_user'])
                 ->addColumn($columns['facebook_name'])
                 ->addColumn($columns['wikipedia'])
-                ->addColumn($columns['wikidata_qid']);
+                ->addColumn($columns['wikidata_qid'])
+                ->addColumn($columns['linkedin_profil_url'])
+                ->addColumn($columns['xing_profil_name']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -3868,6 +3874,54 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('linkedin_profil_url');
+            
+            $filterBuilder->addColumn(
+                $columns['linkedin_profil_url'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('xing_profil_name');
+            
+            $filterBuilder->addColumn(
+                $columns['xing_profil_name'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -4371,6 +4425,28 @@
             $column->SetDescription('Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('URL zum LinkedIn-Profil');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -4733,6 +4809,22 @@
             //
             $column = new TextViewColumn('wikidata_qid', 'wikidata_qid', 'Wikidata Qid', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -5312,6 +5404,24 @@
             $editor = new TextEdit('wikidata_qid_edit');
             $editor->SetMaxLength(12);
             $editColumn = new CustomEditColumn('Wikidata Qid', 'wikidata_qid', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for linkedin_profil_url field
+            //
+            $editor = new TextAreaEdit('linkedin_profil_url_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Linkedin Profil Url', 'linkedin_profil_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for xing_profil_name field
+            //
+            $editor = new TextAreaEdit('xing_profil_name_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Xing Profil Name', 'xing_profil_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -5992,6 +6102,24 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for linkedin_profil_url field
+            //
+            $editor = new TextAreaEdit('linkedin_profil_url_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Linkedin Profil Url', 'linkedin_profil_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for xing_profil_name field
+            //
+            $editor = new TextAreaEdit('xing_profil_name_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Xing Profil Name', 'xing_profil_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -6573,6 +6701,24 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for linkedin_profil_url field
+            //
+            $editor = new TextAreaEdit('linkedin_profil_url_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Linkedin Profil Url', 'linkedin_profil_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for xing_profil_name field
+            //
+            $editor = new TextAreaEdit('xing_profil_name_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Xing Profil Name', 'xing_profil_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -6942,6 +7088,22 @@
             $column = new TextViewColumn('wikidata_qid', 'wikidata_qid', 'Wikidata Qid', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -7304,6 +7466,22 @@
             //
             $column = new TextViewColumn('wikidata_qid', 'wikidata_qid', 'Wikidata Qid', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
             $grid->AddExportColumn($column);
         }
     
@@ -7711,6 +7889,22 @@
             //
             $column = new TextViewColumn('wikidata_qid', 'wikidata_qid', 'Wikidata Qid', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
             $grid->AddCompareColumn($column);
         }
     

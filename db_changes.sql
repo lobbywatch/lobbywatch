@@ -3560,6 +3560,8 @@ ALTER TABLE `organisation`
   DROP `instagram_profil`,
   DROP `youtube_user`,
   DROP `facebook_name`,
+  DROP `linkedin_profil_url`,
+  DROP `xing_profil_name`,
   DROP `wikipedia`,
   DROP `wikidata_qid`;
 
@@ -3722,6 +3724,8 @@ ALTER TABLE `organisation`
   ADD `instagram_profil` VARCHAR(30) NULL DEFAULT NULL COMMENT 'Instagram Username (Profil)' AFTER `twitter_name`,
   ADD `youtube_user` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Youtube Username' AFTER `instagram_profil`,
   ADD `facebook_name` varchar(150) DEFAULT NULL COMMENT 'Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt' AFTER `youtube_user`,
+  ADD `linkedin_profil_url` varchar(255) DEFAULT NULL COMMENT 'URL zum LinkedIn-Profil' AFTER `facebook_name`,
+  ADD `xing_profil_name` varchar(150) DEFAULT NULL COMMENT 'Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link' AFTER `linkedin_profil_url`,
   ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `adresse_plz`,
   ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
 
@@ -3731,6 +3735,8 @@ ALTER TABLE `organisation_log`
   ADD `instagram_profil` VARCHAR(30) NULL DEFAULT NULL COMMENT 'Instagram Username (Profil)' AFTER `twitter_name`,
   ADD `youtube_user` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Youtube Username' AFTER `instagram_profil`,
   ADD `facebook_name` varchar(150) DEFAULT NULL COMMENT 'Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt' AFTER `youtube_user`,
+  ADD `linkedin_profil_url` varchar(255) DEFAULT NULL COMMENT 'URL zum LinkedIn-Profil' AFTER `facebook_name`,
+  ADD `xing_profil_name` varchar(150) DEFAULT NULL COMMENT 'Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link' AFTER `linkedin_profil_url`,
   ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wikipedia-Eintrag' AFTER `adresse_plz`,
   ADD `wikidata_qid` VARCHAR(12) NULL DEFAULT NULL COMMENT 'Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.' AFTER `wikipedia`;
 

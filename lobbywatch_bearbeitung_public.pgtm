@@ -674,6 +674,22 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
               <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))"/>
             </Validators>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="linkedin_profil_url" caption="Linkedin Url" headerHint="URL zum LinkedIn-Profil" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <Hyperlink template="%linkedin_profil_url%" target=""/>
+            <EditProperties type="textBox" maxLength="0"/>
+            <Validators>
+              <RegExpClientValidatorInfo enabled="true" expression="^https://"/>
+            </Validators>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="xing_profil_name" caption="Xing Profilname" headerHint="Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <Hyperlink template="https://www.xing.com/profile/%xing_profil_name%" target=""/>
+            <EditProperties type="textBox" maxLength="0"/>
+            <Validators>
+              <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))"/>
+            </Validators>
+          </ColumnPresentation>
           <ColumnPresentation fieldName="youtube_user" caption="Youtube User" headerHint="Youtube Username" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <Hyperlink template="https://www.youtube.com/user/%youtube_user%" target=""/>
@@ -811,6 +827,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="twitter_name"/>
             <Column fieldName="instagram_profil"/>
             <Column fieldName="facebook_name"/>
+            <Column fieldName="linkedin_profil_url"/>
+            <Column fieldName="xing_profil_name"/>
             <Column fieldName="youtube_user"/>
             <Column fieldName="beschreibung"/>
             <Column fieldName="beschreibung_fr"/>
@@ -864,6 +882,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="twitter_name"/>
             <Column fieldName="instagram_profil"/>
             <Column fieldName="facebook_name"/>
+            <Column fieldName="linkedin_profil_url"/>
+            <Column fieldName="xing_profil_name"/>
             <Column fieldName="youtube_user"/>
             <Column fieldName="beschreibung"/>
             <Column fieldName="beschreibung_fr"/>
@@ -917,6 +937,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="twitter_name"/>
             <Column fieldName="instagram_profil"/>
             <Column fieldName="facebook_name"/>
+            <Column fieldName="linkedin_profil_url"/>
+            <Column fieldName="xing_profil_name"/>
             <Column fieldName="youtube_user"/>
             <Column fieldName="beschreibung"/>
             <Column fieldName="beschreibung_fr"/>
@@ -970,6 +992,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="twitter_name"/>
             <Column fieldName="instagram_profil"/>
             <Column fieldName="facebook_name"/>
+            <Column fieldName="linkedin_profil_url"/>
+            <Column fieldName="xing_profil_name"/>
             <Column fieldName="youtube_user"/>
             <Column fieldName="beschreibung"/>
             <Column fieldName="beschreibung_fr"/>
@@ -1044,6 +1068,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="facebook_name"/>
             <Column fieldName="wikipedia" visible="false"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="linkedin_profil_url"/>
+            <Column fieldName="xing_profil_name"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -1076,6 +1102,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="twitter_name"/>
             <Column fieldName="instagram_profil"/>
             <Column fieldName="facebook_name"/>
+            <Column fieldName="linkedin_profil_url"/>
+            <Column fieldName="xing_profil_name"/>
             <Column fieldName="youtube_user"/>
             <Column fieldName="beschreibung"/>
             <Column fieldName="beschreibung_fr"/>
@@ -1129,6 +1157,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="twitter_name"/>
             <Column fieldName="instagram_profil"/>
             <Column fieldName="facebook_name"/>
+            <Column fieldName="linkedin_profil_url"/>
+            <Column fieldName="xing_profil_name"/>
             <Column fieldName="youtube_user"/>
             <Column fieldName="beschreibung"/>
             <Column fieldName="beschreibung_fr"/>
@@ -1182,6 +1212,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="twitter_name"/>
             <Column fieldName="instagram_profil"/>
             <Column fieldName="facebook_name"/>
+            <Column fieldName="linkedin_profil_url"/>
+            <Column fieldName="xing_profil_name"/>
             <Column fieldName="youtube_user"/>
             <Column fieldName="beschreibung"/>
             <Column fieldName="beschreibung_fr"/>
@@ -1235,6 +1267,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="twitter_name"/>
             <Column fieldName="instagram_profil"/>
             <Column fieldName="facebook_name"/>
+            <Column fieldName="linkedin_profil_url"/>
+            <Column fieldName="xing_profil_name"/>
             <Column fieldName="youtube_user"/>
             <Column fieldName="beschreibung"/>
             <Column fieldName="beschreibung_fr"/>
@@ -1288,6 +1322,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="twitter_name"/>
             <Column fieldName="instagram_profil"/>
             <Column fieldName="facebook_name"/>
+            <Column fieldName="linkedin_profil_url"/>
+            <Column fieldName="xing_profil_name"/>
             <Column fieldName="youtube_user"/>
             <Column fieldName="beschreibung"/>
             <Column fieldName="beschreibung_fr"/>
@@ -2163,6 +2199,14 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="50"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="linkedin_profil_url" caption="Linkedin Profil Url" headerHint="URL zum LinkedIn-Profil" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="xing_profil_name" caption="Xing Profil Name" headerHint="Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
                 <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Beschreibung der Organisation, Zweck gemäss Handelsregister oder  Statuten" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
@@ -2307,6 +2351,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                   <Column fieldName="beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="sekretariat"/>
@@ -2365,6 +2411,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                   <Column fieldName="beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="sekretariat"/>
@@ -2423,6 +2471,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="facebook_name" visible="false"/>
                   <Column fieldName="instagram_profil" visible="false"/>
                   <Column fieldName="youtube_user" visible="false"/>
+                  <Column fieldName="linkedin_profil_url" visible="false"/>
+                  <Column fieldName="xing_profil_name" visible="false"/>
                   <Column fieldName="beschreibung" visible="false"/>
                   <Column fieldName="beschreibung_fr" visible="false"/>
                   <Column fieldName="sekretariat" visible="false"/>
@@ -2481,6 +2531,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="facebook_name" visible="false"/>
                   <Column fieldName="instagram_profil" visible="false"/>
                   <Column fieldName="youtube_user" visible="false"/>
+                  <Column fieldName="linkedin_profil_url" visible="false"/>
+                  <Column fieldName="xing_profil_name" visible="false"/>
                   <Column fieldName="beschreibung" visible="false"/>
                   <Column fieldName="beschreibung_fr" visible="false"/>
                   <Column fieldName="sekretariat" visible="false"/>
@@ -2564,6 +2616,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -2597,6 +2651,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                   <Column fieldName="beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="sekretariat"/>
@@ -2655,6 +2711,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                   <Column fieldName="beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="sekretariat"/>
@@ -2713,6 +2771,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                   <Column fieldName="beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="sekretariat"/>
@@ -2771,6 +2831,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                   <Column fieldName="beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="sekretariat"/>
@@ -2829,6 +2891,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="facebook_name" visible="false"/>
                   <Column fieldName="instagram_profil" visible="false"/>
                   <Column fieldName="youtube_user" visible="false"/>
+                  <Column fieldName="linkedin_profil_url" visible="false"/>
+                  <Column fieldName="xing_profil_name" visible="false"/>
                   <Column fieldName="beschreibung" visible="false"/>
                   <Column fieldName="beschreibung_fr" visible="false"/>
                   <Column fieldName="sekretariat" visible="false"/>
@@ -33625,6 +33689,14 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="12"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="linkedin_profil_url" caption="Linkedin Profil Url" headerHint="URL zum LinkedIn-Profil" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="xing_profil_name" caption="Xing Profil Name" headerHint="Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -33679,6 +33751,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -33732,6 +33806,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </View>
                 <Edit>
                   <Column fieldName="name_de"/>
@@ -33785,6 +33861,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="name_de"/>
@@ -33838,6 +33916,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -33891,6 +33971,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -33944,6 +34026,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -33997,6 +34081,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -34050,6 +34136,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -34103,6 +34191,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -34156,6 +34246,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -35803,6 +35895,14 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="12"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="linkedin_profil_url" caption="Linkedin Profil Url" headerHint="URL zum LinkedIn-Profil" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="xing_profil_name" caption="Xing Profil Name" headerHint="Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -35857,6 +35957,8 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -35910,6 +36012,8 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </View>
                 <Edit>
                   <Column fieldName="name_de"/>
@@ -35963,6 +36067,8 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="name_de"/>
@@ -36016,6 +36122,8 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -36069,6 +36177,8 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -36122,6 +36232,8 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -36175,6 +36287,8 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -36228,6 +36342,8 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -36281,6 +36397,8 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -36334,6 +36452,8 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="facebook_name"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="linkedin_profil_url"/>
+                  <Column fieldName="xing_profil_name"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -52983,6 +53103,14 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="linkedin_profil_url" caption="Linkedin Profil Url" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="xing_profil_name" caption="Xing Profil Name" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -53037,6 +53165,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="facebook_name"/>
             <Column fieldName="wikipedia"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="linkedin_profil_url"/>
+            <Column fieldName="xing_profil_name"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -53090,6 +53220,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="facebook_name"/>
             <Column fieldName="wikipedia"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="linkedin_profil_url"/>
+            <Column fieldName="xing_profil_name"/>
           </View>
           <Edit>
             <Column fieldName="id"/>
@@ -53143,6 +53275,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="facebook_name"/>
             <Column fieldName="wikipedia"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="linkedin_profil_url"/>
+            <Column fieldName="xing_profil_name"/>
           </Edit>
           <Insert>
             <Column fieldName="id"/>
@@ -53196,6 +53330,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="facebook_name"/>
             <Column fieldName="wikipedia"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="linkedin_profil_url"/>
+            <Column fieldName="xing_profil_name"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -53249,6 +53385,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="facebook_name"/>
             <Column fieldName="wikipedia"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="linkedin_profil_url"/>
+            <Column fieldName="xing_profil_name"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -53302,6 +53440,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="facebook_name"/>
             <Column fieldName="wikipedia"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="linkedin_profil_url"/>
+            <Column fieldName="xing_profil_name"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -53355,6 +53495,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="facebook_name"/>
             <Column fieldName="wikipedia"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="linkedin_profil_url"/>
+            <Column fieldName="xing_profil_name"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -53408,6 +53550,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="facebook_name"/>
             <Column fieldName="wikipedia"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="linkedin_profil_url"/>
+            <Column fieldName="xing_profil_name"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -53461,6 +53605,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="facebook_name"/>
             <Column fieldName="wikipedia"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="linkedin_profil_url"/>
+            <Column fieldName="xing_profil_name"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id"/>
@@ -53514,6 +53660,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="facebook_name"/>
             <Column fieldName="wikipedia"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="linkedin_profil_url"/>
+            <Column fieldName="xing_profil_name"/>
           </MultiEdit>
         </Columns>
         <Details/>

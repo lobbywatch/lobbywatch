@@ -1837,7 +1837,7 @@ CREATE TABLE `kanton_log` (
   PRIMARY KEY (`log_id`),
   KEY `fk_kanton_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_kanton_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=271 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Kantone der Schweiz';
+) ENGINE=InnoDB AUTO_INCREMENT=297 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Kantone der Schweiz';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -3380,6 +3380,8 @@ CREATE TABLE `organisation` (
   `instagram_profil` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Instagram Username (Profil)',
   `youtube_user` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Youtube Username',
   `facebook_name` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt',
+  `linkedin_profil_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'URL zum LinkedIn-Profil',
+  `xing_profil_name` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link',
   `beschreibung` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Beschreibung der Organisation, Zweck gemäss Handelsregister oder  Statuten',
   `beschreibung_fr` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Französische Beschreibung',
   `sekretariat` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Für parlamentarische Gruppen: Ansprechsperson, Adresse, Telephonnummer, usw. des Sekretariats der parlamentarischen Gruppen (wird importiert)',
@@ -4074,6 +4076,8 @@ CREATE TABLE `organisation_log` (
   `instagram_profil` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Instagram Username (Profil)',
   `youtube_user` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Youtube Username',
   `facebook_name` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt',
+  `linkedin_profil_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'URL zum LinkedIn-Profil',
+  `xing_profil_name` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link',
   `beschreibung` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Beschreibung der Organisation, Zweck gemäss Handelsregister oder  Statuten',
   `beschreibung_fr` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Französische Beschreibung',
   `sekretariat` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Für parlamentarische Gruppen: Ansprechsperson, Adresse, Telephonnummer, usw. des Sekretariats der parlamentarischen Gruppen (wird importiert)',
@@ -15867,4 +15871,4 @@ SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS ;
 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION ;
 SET SQL_NOTES=@OLD_SQL_NOTES ;
 
--- Dump completed on 2021-01-30 11:58:51
+-- Dump completed on 2021-01-31  8:30:11

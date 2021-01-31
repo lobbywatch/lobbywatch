@@ -1253,6 +1253,9 @@ CREATE OR REPLACE VIEW `v_organisation_raw` AS
 SELECT
 organisation.*,
 country.name_de as land,
+country.name_en as land_en,
+country.iso2 as land_iso2,
+country.iso3 as land_iso3,
 interessenraum.anzeige_name as interessenraum,
 interessenraum.anzeige_name_de as interessenraum_de,
 interessenraum.anzeige_name_fr as interessenraum_fr,
