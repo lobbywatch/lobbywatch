@@ -282,16 +282,26 @@ function _lobbywatch_data_clean_records($result) {
 }
 
 function _lobbywatch_data_enrich_fields(array &$items) {
-  if (!empty($qid = $items['wikidata_qid'])) {
-    $items['wikidata_item_url'] = "https://www.wikidata.org/wiki/$qid";
+  // empty($qid = $items['wikidata_qid']) is extremly slow in PHP 7.4! 5s instead of 0.1ms
+  // if (!empty($qid = $items['wikidata_qid'])) {
+  if (!empty($items['wikidata_qid'])) {
+    $items['wikidata_item_url'] = "https://www.wikidata.org/wiki/" . $items['wikidata_qid'];
   }
 
-  if (!empty($id = $items['parlament_biografie_id'])) {
-    $items['parlament_biografie_url'] = "https://www.parlament.ch/de/biografie/name/$id";
+  if (!empty($items['parlament_biografie_id'])) {
+    $items['parlament_biografie_url'] = "https://www.parlament.ch/de/biografie/name/" . $items['parlament_biografie_id'];
   }
 
-  if (!empty($isicv4_codes = $items['isicv4'])) {
-    $items['isicv4'] = explode(" ", $isicv4_codes);
+  if (!empty($items['twitter_name'])) {
+    $items['twitter_url'] = "https://twitter.com/" . $items['twitter_name'];
+  }
+
+  if (!empty($items['facebook_name'])) {
+    $items['facebook_url'] = "https://www.facebook.com/" . $items['facebook_name'];
+  }
+
+  if (!empty($items['isicv4'])) {
+    $items['isicv4_list'] = explode(" ", $items['isicv4']);
   }
 }
 
