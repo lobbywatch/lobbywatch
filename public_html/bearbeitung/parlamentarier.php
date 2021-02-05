@@ -54369,7 +54369,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new MinLengthValidator(4, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinlengthValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_]+$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_]*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -54405,7 +54405,7 @@
             $editor->SetMaxLength(30);
             $editColumn = new CustomEditColumn('Instagram', 'instagram_profil', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_.]+$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_.]*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -55433,7 +55433,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new MinLengthValidator(4, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinlengthValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_]+$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_]*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -55469,7 +55469,7 @@
             $editor->SetMaxLength(30);
             $editColumn = new CustomEditColumn('Instagram', 'instagram_profil', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_.]+$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_.]*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -56454,7 +56454,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new MinLengthValidator(4, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinlengthValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_]+$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_]*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -56490,7 +56490,7 @@
             $editor->SetMaxLength(30);
             $editColumn = new CustomEditColumn('Instagram', 'instagram_profil', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_.]+$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_.]*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);

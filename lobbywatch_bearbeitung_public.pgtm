@@ -656,7 +656,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <EditProperties type="textBox" maxLength="15" prefix="@"/>
             <Validators>
               <LengthRangeClientValidatorInfo enabled="true" maxValue="15" minValue="4"/>
-              <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))[\w\d_]+$"/>
+              <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))[\w\d_]*$"/>
             </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="instagram_profil" caption="Instagram" headerHint="Instagram Username (Profil)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
@@ -664,7 +664,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Hyperlink template="https://www.instagram.com/%instagram_profil%" target=""/>
             <EditProperties type="textBox" maxLength="30"/>
             <Validators>
-              <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))[\w\d_.]+$"/>
+              <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))[\w\d_.]*$"/>
             </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="facebook_name" caption="Facebook" headerHint="Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
@@ -679,7 +679,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Hyperlink template="%linkedin_profil_url%" target=""/>
             <EditProperties type="textBox" maxLength="0"/>
             <Validators>
-              <RegExpClientValidatorInfo enabled="true" expression="^https://"/>
+              <UrlClientValidatorInfo enabled="true"/>
+              <RegExpClientValidatorInfo expression="^(https://|$)"/>
             </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="xing_profil_name" caption="Xing Profilname" headerHint="Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
@@ -732,7 +733,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Hyperlink template="%wikipedia%" target=""/>
             <EditProperties type="textBox" maxLength="0"/>
             <Validators>
-              <RegExpClientValidatorInfo enabled="true" expression="^https://\w{2}\.wikipedia.org/wiki/"/>
+              <RegExpClientValidatorInfo enabled="true" expression="^(https://\w{2}\.wikipedia.org/wiki/|$)"/>
             </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="wikidata_qid" caption="Wikidata" headerHint="Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt." showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
@@ -8659,7 +8660,7 @@ window.disable_organisation_imported_fields = function (editors) {
         editors['adresse_plz'].setReadonly(true);
         editors['ort'].setReadonly(true);
         editors['land_id'].setReadonly(true);
-        // TODO &quot;Rechtsform is required.&quot; despite being filled by ws.uid 
+        // TODO &quot;Rechtsform is required.&quot; despite being filled by ws.uid
         // editors['rechtsform'].setReadonly(true);
         editors['rechtsform_handelsregister'].setReadonly(true);
         editors['inaktiv'].setReadonly(true);
@@ -8962,7 +8963,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <EditProperties type="textBox" maxLength="15" prefix="@"/>
             <Validators>
               <LengthRangeClientValidatorInfo enabled="true" maxValue="15" minValue="4"/>
-              <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))[\w\d_]+$"/>
+              <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))[\w\d_]*$"/>
             </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="linkedin_profil_url" caption="Linkedin Profil Url" headerHint="URL zum LinkedIn-Profil" canSetNull="true" selectedFilterOperators="1589247">
@@ -8986,7 +8987,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Hyperlink template="https://www.instagram.com/%instagram_profil%" target=""/>
             <EditProperties type="textBox" maxLength="30"/>
             <Validators>
-              <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))[\w\d_.]+$"/>
+              <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))[\w\d_.]*$"/>
             </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="facebook_name" caption="Facebook" headerHint="Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt" canSetNull="true" selectedFilterOperators="1589247">
@@ -21046,13 +21047,16 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <EditProperties type="textBox" maxLength="15" prefix="@"/>
             <Validators>
               <LengthRangeClientValidatorInfo enabled="true" maxValue="15" minValue="4"/>
-              <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))[\w\d_]+$"/>
+              <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))[\w\d_]*$"/>
             </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="linkedin_profil_url" caption="Linkedin Profil Url" headerHint="URL zum LinkedIn-Profil" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <Hyperlink template="%linkedin_profil_url%"/>
             <EditProperties type="textBox" maxLength="255"/>
+            <Validators>
+              <UrlClientValidatorInfo enabled="true"/>
+            </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="xing_profil_name" caption="Xing Profil Name" headerHint="Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
@@ -21075,7 +21079,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Hyperlink template="https://www.instagram.com/%instagram_profil%" target=""/>
             <EditProperties type="textBox" maxLength="30"/>
             <Validators>
-              <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))[\w\d_.]+$"/>
+              <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))[\w\d_.]*$"/>
             </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="youtube_user" caption="Youtube" headerHint="Youtube Username" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
@@ -32655,7 +32659,7 @@ $edit_general_hint        </BeforeGridText>
             <EditProperties type="textBox" maxLength="25" placeholder="01 012 0123, siehe Seitenhilfe"/>
             <Validators>
               <LengthRangeClientValidatorInfo maxValue="25" minValue="2"/>
-              <RegExpClientValidatorInfo enabled="true" expression="^\d{2,4}( \d{2,4})*$"/>
+              <RegExpClientValidatorInfo enabled="true" expression="^(\d{2,4}( \d{2,4})*)?$"/>
             </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="farbcode" caption="Farbcode" headerHint="HTML-Farbcode, z.B. red oder #23FF23" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
@@ -32671,7 +32675,7 @@ $edit_general_hint        </BeforeGridText>
             <Hyperlink template="%wikipedia%" target=""/>
             <EditProperties type="textBox" maxLength="0"/>
             <Validators>
-              <RegExpClientValidatorInfo enabled="true" expression="^https://\w{2}\.wikipedia.org/wiki/"/>
+              <RegExpClientValidatorInfo enabled="true" expression="^(https://\w{2}\.wikipedia.org/wiki/|$)"/>
             </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="wikidata_qid" caption="Wikidata" headerHint="Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt." showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
@@ -34910,7 +34914,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="25" placeholder="01 012 0123, siehe Seitenhilfe"/>
             <Validators>
-              <RegExpClientValidatorInfo enabled="true" expression="^\d{2,4}( \d{2,4})*$"/>
+              <RegExpClientValidatorInfo enabled="true" expression="^(\d{2,4}( \d{2,4})*)?$"/>
             </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="wikipedia" caption="Wikipedia URL" headerHint="Link zum Wikipedia-Eintrag" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
@@ -34918,7 +34922,7 @@ $edit_general_hint        </BeforeGridText>
             <Hyperlink template="%wikipedia%" target=""/>
             <EditProperties type="textBox" maxLength="0"/>
             <Validators>
-              <RegExpClientValidatorInfo enabled="true" expression="^https://\w{2}\.wikipedia.org/wiki/"/>
+              <RegExpClientValidatorInfo enabled="true" expression="^(https://\w{2}\.wikipedia.org/wiki/|$)"/>
             </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="wikidata_qid" caption="Wikidata" headerHint="Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt." showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
@@ -37830,7 +37834,7 @@ $edit_general_hint        </BeforeGridText>
             <Hyperlink template="%wikipedia%" target=""/>
             <EditProperties type="textBox" maxLength="0"/>
             <Validators>
-              <RegExpClientValidatorInfo enabled="true" expression="^https://\w{2}\.wikipedia.org/wiki/"/>
+              <RegExpClientValidatorInfo enabled="true" expression="^(https://\w{2}\.wikipedia.org/wiki/|$)"/>
             </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="wikidata_qid" caption="Wikidata" headerHint="Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt." showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
@@ -40290,7 +40294,7 @@ Tabelle der Parteien        </homePageDescription>
             <EditProperties type="textBox" maxLength="15" prefix="@"/>
             <Validators>
               <LengthRangeClientValidatorInfo enabled="true" maxValue="15" minValue="4"/>
-              <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))[\w\d_]+$"/>
+              <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))[\w\d_]*$"/>
             </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="twitter_name_fr" caption="Twitter Fr" headerHint="Französischer Twittername" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
@@ -40299,7 +40303,7 @@ Tabelle der Parteien        </homePageDescription>
             <EditProperties type="textBox" maxLength="15" prefix="@"/>
             <Validators>
               <LengthRangeClientValidatorInfo enabled="true" maxValue="15" minValue="4"/>
-              <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))[\w\d_]+$"/>
+              <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))[\w\d_]*$"/>
             </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="instagram_profil" caption="Instagram" headerHint="Instagram Username (Profil)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
@@ -40307,7 +40311,7 @@ Tabelle der Parteien        </homePageDescription>
             <Hyperlink template="https://www.instagram.com/%instagram_profil%" target=""/>
             <EditProperties type="textBox" maxLength="30"/>
             <Validators>
-              <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))[\w\d_.]+$"/>
+              <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))[\w\d_.]*$"/>
             </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="youtube_user" caption="Youtube" headerHint="Youtube Username" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
@@ -42965,7 +42969,7 @@ $edit_general_hint        </BeforeGridText>
             <Hyperlink template="%wikipedia%" target=""/>
             <EditProperties type="textBox" maxLength="0"/>
             <Validators>
-              <RegExpClientValidatorInfo enabled="true" expression="^https://\w{2}\.wikipedia.org/wiki/"/>
+              <RegExpClientValidatorInfo enabled="true" expression="^(https://\w{2}\.wikipedia.org/wiki/|$)"/>
             </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="wikidata_qid" caption="Wikidata" headerHint="Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt." showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
@@ -45477,7 +45481,7 @@ $edit_general_hint        </BeforeGridText>
               </Values>
             </EditProperties>
             <Validators>
-              <LengthRangeClientValidatorInfo enabled="true" maxValue="2" minValue="2"/>
+              <LengthRangeClientValidatorInfo maxValue="2" minValue="2"/>
             </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="kantonsnr" caption="Kantonsnr" headerHint="Nummer des Kantons gemäss Verfassung" showColumnFilter="false" selectedFilterOperators="1573119">
@@ -45587,7 +45591,7 @@ $edit_general_hint        </BeforeGridText>
             <Hyperlink template="%wikipedia%" target=""/>
             <EditProperties type="textBox" maxLength="0"/>
             <Validators>
-              <RegExpClientValidatorInfo enabled="true" expression="^https://\w{2}\.wikipedia.org/wiki/"/>
+              <RegExpClientValidatorInfo enabled="true" expression="^(https://\w{2}\.wikipedia.org/wiki/|$)"/>
             </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="wikidata_qid" caption="Wikidata" headerHint="Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt." showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">

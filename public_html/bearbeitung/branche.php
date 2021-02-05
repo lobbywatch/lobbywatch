@@ -7439,7 +7439,7 @@
             $editor->SetPlaceholder('01 012 0123, siehe Seitenhilfe');
             $editColumn = new CustomEditColumn('ISICv4 Codes', 'isicv4', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^\d{2,4}( \d{2,4})*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(\d{2,4}( \d{2,4})*)?$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -7469,7 +7469,7 @@
             $editor = new TextEdit('wikipedia_edit');
             $editColumn = new CustomEditColumn('Wikipedia URL', 'wikipedia', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^https://\w{2}\.wikipedia.org/wiki/', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(https://\w{2}\.wikipedia.org/wiki/|$)', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -7834,7 +7834,7 @@
             $editor->SetPlaceholder('01 012 0123, siehe Seitenhilfe');
             $editColumn = new CustomEditColumn('ISICv4 Codes', 'isicv4', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^\d{2,4}( \d{2,4})*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(\d{2,4}( \d{2,4})*)?$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -8269,7 +8269,7 @@
             $editor->SetPlaceholder('01 012 0123, siehe Seitenhilfe');
             $editColumn = new CustomEditColumn('ISICv4 Codes', 'isicv4', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^\d{2,4}( \d{2,4})*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(\d{2,4}( \d{2,4})*)?$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -8290,7 +8290,7 @@
             $editor = new TextEdit('wikipedia_edit');
             $editColumn = new CustomEditColumn('Wikipedia URL', 'wikipedia', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^https://\w{2}\.wikipedia.org/wiki/', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(https://\w{2}\.wikipedia.org/wiki/|$)', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);

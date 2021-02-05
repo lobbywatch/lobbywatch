@@ -13423,7 +13423,7 @@
             $editor = new TextEdit('wikipedia_edit');
             $editColumn = new CustomEditColumn('Wikipedia URL', 'wikipedia', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^https://\w{2}\.wikipedia.org/wiki/', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(https://\w{2}\.wikipedia.org/wiki/|$)', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -14493,7 +14493,7 @@
             $editor = new TextEdit('wikipedia_edit');
             $editColumn = new CustomEditColumn('Wikipedia URL', 'wikipedia', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^https://\w{2}\.wikipedia.org/wiki/', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(https://\w{2}\.wikipedia.org/wiki/|$)', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);

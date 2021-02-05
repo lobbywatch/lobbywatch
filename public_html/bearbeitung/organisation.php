@@ -42426,7 +42426,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new MinLengthValidator(4, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinlengthValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_]+$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_]*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -42438,7 +42438,7 @@
             $editor->SetMaxLength(30);
             $editColumn = new CustomEditColumn('Instagram', 'instagram_profil', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_.]+$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_.]*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -42460,7 +42460,7 @@
             $editor = new TextEdit('linkedin_profil_url_edit');
             $editColumn = new CustomEditColumn('Linkedin Url', 'linkedin_profil_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^https://', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -42674,7 +42674,7 @@
             $editor = new TextEdit('wikipedia_edit');
             $editColumn = new CustomEditColumn('Wikipedia URL', 'wikipedia', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^https://\w{2}\.wikipedia.org/wiki/', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(https://\w{2}\.wikipedia.org/wiki/|$)', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -43307,7 +43307,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new MinLengthValidator(4, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinlengthValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_]+$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_]*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -43319,7 +43319,7 @@
             $editor->SetMaxLength(30);
             $editColumn = new CustomEditColumn('Instagram', 'instagram_profil', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_.]+$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_.]*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -43341,7 +43341,7 @@
             $editor = new TextEdit('linkedin_profil_url_edit');
             $editColumn = new CustomEditColumn('Linkedin Url', 'linkedin_profil_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^https://', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -44213,7 +44213,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new MinLengthValidator(4, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinlengthValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_]+$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_]*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -44225,7 +44225,7 @@
             $editor->SetMaxLength(30);
             $editColumn = new CustomEditColumn('Instagram', 'instagram_profil', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_.]+$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(?!(http|@))[\w\d_.]*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -44247,7 +44247,7 @@
             $editor = new TextEdit('linkedin_profil_url_edit');
             $editColumn = new CustomEditColumn('Linkedin Url', 'linkedin_profil_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^https://', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -44461,7 +44461,7 @@
             $editor = new TextEdit('wikipedia_edit');
             $editColumn = new CustomEditColumn('Wikipedia URL', 'wikipedia', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^https://\w{2}\.wikipedia.org/wiki/', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $validator = new CustomRegExpValidator('^(https://\w{2}\.wikipedia.org/wiki/|$)', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -45876,7 +45876,7 @@
             '        editors[\'adresse_plz\'].setReadonly(true);'. "\n" .
             '        editors[\'ort\'].setReadonly(true);'. "\n" .
             '        editors[\'land_id\'].setReadonly(true);'. "\n" .
-            '        // TODO "Rechtsform is required." despite being filled by ws.uid '. "\n" .
+            '        // TODO "Rechtsform is required." despite being filled by ws.uid'. "\n" .
             '        // editors[\'rechtsform\'].setReadonly(true);'. "\n" .
             '        editors[\'rechtsform_handelsregister\'].setReadonly(true);'. "\n" .
             '        editors[\'inaktiv\'].setReadonly(true);'. "\n" .
