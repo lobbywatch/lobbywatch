@@ -3453,17 +3453,6 @@ ALTER TABLE `person_log`
 
 -- 29.01.2021 add new DB fields
 
--- TODO wikipedia
--- TODO wikidata
--- TODO isicv4
--- TODO instagram
--- TODO youtube
--- TODO FB
--- TODO IB/mandat unterscheidung
--- TODO _log
--- TODO forms
--- TODO _log forms
-
 -- remove
 ALTER TABLE `branche`
   DROP `isicv4`,
@@ -3569,6 +3558,8 @@ ALTER TABLE `organisation_log`
   DROP `instagram_profil`,
   DROP `youtube_user`,
   DROP `facebook_name`,
+  DROP `linkedin_profil_url`,
+  DROP `xing_profil_name`,
   DROP `wikipedia`,
   DROP `wikidata_qid`;
 
