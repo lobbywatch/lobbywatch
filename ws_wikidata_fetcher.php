@@ -265,7 +265,7 @@ function updateWikidata(string $schema, bool $fast, $records_limit = false) {
         $sign = '!';
         $wikidata_empty_count++;
       }
-      print(str_repeat("\t", $level) . str_pad($i, 5, " ", STR_PAD_LEFT) . "| $sign | " . mb_str_pad("$wikidata_table", 25) . "|" . str_pad($id, 4, " ", STR_PAD_LEFT) . "| " . mb_str_pad($wikipedia_url, 75) . "| " . mb_str_pad($wikidata_qid_db, 12) . " | " . mb_str_pad($wikidata_qid, 12) . " | " . implode(" | ", $msg) . "\n");
+      print(str_repeat("\t", $level) . str_pad($i, 5, " ", STR_PAD_LEFT) . "| $sign | " . str_cut_pad("$wikidata_table", 25) . "|" . str_pad($id, 4, " ", STR_PAD_LEFT) . "| " . str_cut_pad($wikipedia_url, 80) . "| " . mb_str_pad($wikidata_qid_db, 12) . " | " . mb_str_pad($wikidata_qid, 12) . " | " . implode(" | ", $msg) . "\n");
     }
   }
 
