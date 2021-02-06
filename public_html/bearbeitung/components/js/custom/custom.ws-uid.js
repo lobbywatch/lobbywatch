@@ -113,7 +113,7 @@ $(function() {
             setWSFieldValue(formId, 'rechtsform_zefix', data.data.rechtsform_zefix);
             setWSFieldValue(formId, 'rechtsform_handelsregister', data.data.rechtsform_handelsregister);
             setWSFieldValue(formId, 'beschreibung', data.data.zweck, false);
-            if (data.data.inaktiv || data.data.inaktiv === false) setWSFieldValue(formId, 'inaktiv', data.data.inaktiv);
+            if (data.data.inaktiv || data.data.inaktiv === false) setWSFieldValue(formId, 'inaktiv', data.data.inaktiv, false);
             $('#info-message').append('<p>State: ' + textStatus + '</p>').show();
           } else {
   //               alert('failed');

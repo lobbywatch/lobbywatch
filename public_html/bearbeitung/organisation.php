@@ -45879,9 +45879,9 @@
             '        // TODO "Rechtsform is required." despite being filled by ws.uid'. "\n" .
             '        // editors[\'rechtsform\'].setReadonly(true);'. "\n" .
             '        editors[\'rechtsform_handelsregister\'].setReadonly(true);'. "\n" .
-            '        editors[\'inaktiv\'].setReadonly(true);'. "\n" .
-            '        // if (editors[\'in_handelsregister\'].getValue()) {'. "\n" .
-            '        // }'. "\n" .
+            '        if (editors[\'in_handelsregister\'].getValue()) {'. "\n" .
+            '          editors[\'inaktiv\'].setReadonly(true);'. "\n" .
+            '        }'. "\n" .
             '    }'. "\n" .
             '}';
         }

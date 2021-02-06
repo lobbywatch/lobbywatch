@@ -8663,9 +8663,9 @@ window.disable_organisation_imported_fields = function (editors) {
         // TODO &quot;Rechtsform is required.&quot; despite being filled by ws.uid
         // editors['rechtsform'].setReadonly(true);
         editors['rechtsform_handelsregister'].setReadonly(true);
-        editors['inaktiv'].setReadonly(true);
-        // if (editors['in_handelsregister'].getValue()) {
-        // }
+        if (editors['in_handelsregister'].getValue()) {
+          editors['inaktiv'].setReadonly(true);
+        }
     }
 }          </OnBeforePageLoad>
           <OnInsertFormEditorValueChanged enabled="true">
