@@ -123,10 +123,10 @@ def sync_data(conn, filename, batch_time):
             organisation_id, name_de, name_fr, name_it = get_organisation(group, conn)
 
             # Skip duplicate groups: Aktive Mobilität and Langsamverkehr are twice in 23.11.2020 PDF
-            if organisation_id in handled_organisation_ids:
+            if organisation_id and organisation_id in handled_organisation_ids:
                 print('-- WARN: Organisation "{}" ID={} twice in PDF. Skipped'.format(name_de, organisation_id))
                 continue
-            else:
+            elif organisation_id: # do not add None
                 handled_organisation_ids.append(organisation_id)
 
             if organisation_id:
