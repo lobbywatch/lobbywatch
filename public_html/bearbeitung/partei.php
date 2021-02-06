@@ -135,6 +135,9 @@
                 new FilterColumn($this->dataset, 'email_fr', 'email_fr', 'Email Fr'),
                 new FilterColumn($this->dataset, 'twitter_name', 'twitter_name', 'Twitter Name'),
                 new FilterColumn($this->dataset, 'twitter_name_fr', 'twitter_name_fr', 'Twitter Name Fr'),
+                new FilterColumn($this->dataset, 'facebook_name', 'facebook_name', 'Facebook Name'),
+                new FilterColumn($this->dataset, 'instagram_profil', 'instagram_profil', 'Instagram Profil'),
+                new FilterColumn($this->dataset, 'youtube_user', 'youtube_user', 'Youtube User'),
                 new FilterColumn($this->dataset, 'beschreibung', 'beschreibung', 'Beschreibung'),
                 new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr'),
                 new FilterColumn($this->dataset, 'wikipedia', 'wikipedia', 'Wikipedia'),
@@ -154,10 +157,7 @@
                 new FilterColumn($this->dataset, 'action', 'action', 'Action'),
                 new FilterColumn($this->dataset, 'state', 'state', 'State'),
                 new FilterColumn($this->dataset, 'action_date', 'action_date', 'Action Date'),
-                new FilterColumn($this->dataset, 'snapshot_id', 'snapshot_id_beschreibung', 'Snapshot Id'),
-                new FilterColumn($this->dataset, 'instagram_profil', 'instagram_profil', 'Instagram Profil'),
-                new FilterColumn($this->dataset, 'youtube_user', 'youtube_user', 'Youtube User'),
-                new FilterColumn($this->dataset, 'facebook_name', 'facebook_name', 'Facebook Name')
+                new FilterColumn($this->dataset, 'snapshot_id', 'snapshot_id_beschreibung', 'Snapshot Id')
             );
         }
     
@@ -179,6 +179,9 @@
                 ->addColumn($columns['email_fr'])
                 ->addColumn($columns['twitter_name'])
                 ->addColumn($columns['twitter_name_fr'])
+                ->addColumn($columns['facebook_name'])
+                ->addColumn($columns['instagram_profil'])
+                ->addColumn($columns['youtube_user'])
                 ->addColumn($columns['beschreibung'])
                 ->addColumn($columns['beschreibung_fr'])
                 ->addColumn($columns['wikipedia'])
@@ -198,10 +201,7 @@
                 ->addColumn($columns['action'])
                 ->addColumn($columns['state'])
                 ->addColumn($columns['action_date'])
-                ->addColumn($columns['snapshot_id'])
-                ->addColumn($columns['instagram_profil'])
-                ->addColumn($columns['youtube_user'])
-                ->addColumn($columns['facebook_name']);
+                ->addColumn($columns['snapshot_id']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -581,6 +581,80 @@
             
             $filterBuilder->addColumn(
                 $columns['twitter_name_fr'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('facebook_name');
+            
+            $filterBuilder->addColumn(
+                $columns['facebook_name'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('instagram_profil_edit');
+            $main_editor->SetMaxLength(30);
+            
+            $filterBuilder->addColumn(
+                $columns['instagram_profil'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('youtube_user_edit');
+            $main_editor->SetMaxLength(50);
+            
+            $filterBuilder->addColumn(
+                $columns['youtube_user'],
                 array(
                     FilterConditionOperator::EQUALS => $main_editor,
                     FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
@@ -1086,80 +1160,6 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
-            
-            $main_editor = new TextEdit('instagram_profil_edit');
-            $main_editor->SetMaxLength(30);
-            
-            $filterBuilder->addColumn(
-                $columns['instagram_profil'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
-                    FilterConditionOperator::BEGINS_WITH => $main_editor,
-                    FilterConditionOperator::ENDS_WITH => $main_editor,
-                    FilterConditionOperator::IS_LIKE => $main_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
-            
-            $main_editor = new TextEdit('youtube_user_edit');
-            $main_editor->SetMaxLength(50);
-            
-            $filterBuilder->addColumn(
-                $columns['youtube_user'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
-                    FilterConditionOperator::BEGINS_WITH => $main_editor,
-                    FilterConditionOperator::ENDS_WITH => $main_editor,
-                    FilterConditionOperator::IS_LIKE => $main_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
-            
-            $main_editor = new TextEdit('facebook_name');
-            
-            $filterBuilder->addColumn(
-                $columns['facebook_name'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
-                    FilterConditionOperator::BEGINS_WITH => $main_editor,
-                    FilterConditionOperator::ENDS_WITH => $main_editor,
-                    FilterConditionOperator::IS_LIKE => $main_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -1332,6 +1332,37 @@
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Französischer Twittername');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for instagram_profil field
+            //
+            $column = new TextViewColumn('instagram_profil', 'instagram_profil', 'Instagram Profil', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Instagram Username (Profil)');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for youtube_user field
+            //
+            $column = new TextViewColumn('youtube_user', 'youtube_user', 'Youtube User', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Youtube Username');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1545,37 +1576,6 @@
             $column->SetDescription('Fremdschlüssel zu einem Snapshot');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
-            //
-            // View column for instagram_profil field
-            //
-            $column = new TextViewColumn('instagram_profil', 'instagram_profil', 'Instagram Profil', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Instagram Username (Profil)');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for youtube_user field
-            //
-            $column = new TextViewColumn('youtube_user', 'youtube_user', 'Youtube User', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Youtube Username');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for facebook_name field
-            //
-            $column = new TextViewColumn('facebook_name', 'facebook_name', 'Facebook Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -1689,6 +1689,28 @@
             // View column for twitter_name_fr field
             //
             $column = new TextViewColumn('twitter_name_fr', 'twitter_name_fr', 'Twitter Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for instagram_profil field
+            //
+            $column = new TextViewColumn('instagram_profil', 'instagram_profil', 'Instagram Profil', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for youtube_user field
+            //
+            $column = new TextViewColumn('youtube_user', 'youtube_user', 'Youtube User', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1842,124 +1864,21 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for instagram_profil field
-            //
-            $column = new TextViewColumn('instagram_profil', 'instagram_profil', 'Instagram Profil', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for youtube_user field
-            //
-            $column = new TextViewColumn('youtube_user', 'youtube_user', 'Youtube User', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for facebook_name field
-            //
-            $column = new TextViewColumn('facebook_name', 'facebook_name', 'Facebook Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $grid->AddSingleRecordViewColumn($column);
         }
     
         protected function AddEditColumns(Grid $grid)
         {
-            //
-            // Edit column for instagram_profil field
-            //
-            $editor = new TextEdit('instagram_profil_edit');
-            $editor->SetMaxLength(30);
-            $editColumn = new CustomEditColumn('Instagram Profil', 'instagram_profil', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for youtube_user field
-            //
-            $editor = new TextEdit('youtube_user_edit');
-            $editor->SetMaxLength(50);
-            $editColumn = new CustomEditColumn('Youtube User', 'youtube_user', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for facebook_name field
-            //
-            $editor = new TextAreaEdit('facebook_name_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Facebook Name', 'facebook_name', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
+    
         }
     
         protected function AddMultiEditColumns(Grid $grid)
         {
-            //
-            // Edit column for instagram_profil field
-            //
-            $editor = new TextEdit('instagram_profil_edit');
-            $editor->SetMaxLength(30);
-            $editColumn = new CustomEditColumn('Instagram Profil', 'instagram_profil', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for youtube_user field
-            //
-            $editor = new TextEdit('youtube_user_edit');
-            $editor->SetMaxLength(50);
-            $editColumn = new CustomEditColumn('Youtube User', 'youtube_user', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for facebook_name field
-            //
-            $editor = new TextAreaEdit('facebook_name_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Facebook Name', 'facebook_name', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
+    
         }
     
         protected function AddInsertColumns(Grid $grid)
         {
-            //
-            // Edit column for instagram_profil field
-            //
-            $editor = new TextEdit('instagram_profil_edit');
-            $editor->SetMaxLength(30);
-            $editColumn = new CustomEditColumn('Instagram Profil', 'instagram_profil', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for youtube_user field
-            //
-            $editor = new TextEdit('youtube_user_edit');
-            $editor->SetMaxLength(50);
-            $editColumn = new CustomEditColumn('Youtube User', 'youtube_user', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for facebook_name field
-            //
-            $editor = new TextAreaEdit('facebook_name_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Facebook Name', 'facebook_name', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
+    
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -2083,6 +2002,28 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for instagram_profil field
+            //
+            $column = new TextViewColumn('instagram_profil', 'instagram_profil', 'Instagram Profil', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for youtube_user field
+            //
+            $column = new TextViewColumn('youtube_user', 'youtube_user', 'Youtube User', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
@@ -2229,28 +2170,6 @@
             // View column for beschreibung field
             //
             $column = new TextViewColumn('snapshot_id', 'snapshot_id_beschreibung', 'Snapshot Id', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for instagram_profil field
-            //
-            $column = new TextViewColumn('instagram_profil', 'instagram_profil', 'Instagram Profil', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for youtube_user field
-            //
-            $column = new TextViewColumn('youtube_user', 'youtube_user', 'Youtube User', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for facebook_name field
-            //
-            $column = new TextViewColumn('facebook_name', 'facebook_name', 'Facebook Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddPrintColumn($column);
@@ -2371,6 +2290,28 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for instagram_profil field
+            //
+            $column = new TextViewColumn('instagram_profil', 'instagram_profil', 'Instagram Profil', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for youtube_user field
+            //
+            $column = new TextViewColumn('youtube_user', 'youtube_user', 'Youtube User', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
@@ -2520,28 +2461,6 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddExportColumn($column);
-            
-            //
-            // View column for instagram_profil field
-            //
-            $column = new TextViewColumn('instagram_profil', 'instagram_profil', 'Instagram Profil', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for youtube_user field
-            //
-            $column = new TextViewColumn('youtube_user', 'youtube_user', 'Youtube User', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for facebook_name field
-            //
-            $column = new TextViewColumn('facebook_name', 'facebook_name', 'Facebook Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $grid->AddExportColumn($column);
         }
     
         private function AddCompareColumns(Grid $grid)
@@ -2655,6 +2574,28 @@
             // View column for twitter_name_fr field
             //
             $column = new TextViewColumn('twitter_name_fr', 'twitter_name_fr', 'Twitter Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for instagram_profil field
+            //
+            $column = new TextViewColumn('instagram_profil', 'instagram_profil', 'Instagram Profil', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for youtube_user field
+            //
+            $column = new TextViewColumn('youtube_user', 'youtube_user', 'Youtube User', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             
@@ -2798,28 +2739,6 @@
             // View column for beschreibung field
             //
             $column = new TextViewColumn('snapshot_id', 'snapshot_id_beschreibung', 'Snapshot Id', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for instagram_profil field
-            //
-            $column = new TextViewColumn('instagram_profil', 'instagram_profil', 'Instagram Profil', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for youtube_user field
-            //
-            $column = new TextViewColumn('youtube_user', 'youtube_user', 'Youtube User', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for facebook_name field
-            //
-            $column = new TextViewColumn('facebook_name', 'facebook_name', 'Facebook Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddCompareColumn($column);
@@ -13388,6 +13307,7 @@
                 new FilterColumn($this->dataset, 'name_fr', 'name_fr', 'Name Fr'),
                 new FilterColumn($this->dataset, 'beschreibung', 'beschreibung', 'Beschreibung'),
                 new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr'),
+                new FilterColumn($this->dataset, 'fraktion_id', 'fraktion_id_anzeige_name', 'Fraktion'),
                 new FilterColumn($this->dataset, 'gruendung', 'gruendung', 'Gruendung'),
                 new FilterColumn($this->dataset, 'position', 'position', 'Position'),
                 new FilterColumn($this->dataset, 'farbcode', 'farbcode', 'Farbcode'),
@@ -13400,7 +13320,6 @@
                 new FilterColumn($this->dataset, 'instagram_profil', 'instagram_profil', 'Instagram'),
                 new FilterColumn($this->dataset, 'youtube_user', 'youtube_user', 'Youtube'),
                 new FilterColumn($this->dataset, 'facebook_name', 'facebook_name', 'Facebook'),
-                new FilterColumn($this->dataset, 'fraktion_id', 'fraktion_id_anzeige_name', 'Fraktion'),
                 new FilterColumn($this->dataset, 'wikipedia', 'wikipedia', 'Wikipedia'),
                 new FilterColumn($this->dataset, 'wikidata_qid', 'wikidata_qid', 'Wikidata'),
                 new FilterColumn($this->dataset, 'notizen', 'notizen', 'Notizen'),
@@ -13427,6 +13346,7 @@
                 ->addColumn($columns['name_fr'])
                 ->addColumn($columns['beschreibung'])
                 ->addColumn($columns['beschreibung_fr'])
+                ->addColumn($columns['fraktion_id'])
                 ->addColumn($columns['gruendung'])
                 ->addColumn($columns['position'])
                 ->addColumn($columns['homepage'])
@@ -13438,7 +13358,6 @@
                 ->addColumn($columns['instagram_profil'])
                 ->addColumn($columns['youtube_user'])
                 ->addColumn($columns['facebook_name'])
-                ->addColumn($columns['fraktion_id'])
                 ->addColumn($columns['wikidata_qid'])
                 ->addColumn($columns['notizen']);
         }
@@ -13450,9 +13369,9 @@
                 ->setOptionsFor('abkuerzung')
                 ->setOptionsFor('abkuerzung_fr')
                 ->setOptionsFor('name_fr')
+                ->setOptionsFor('fraktion_id')
                 ->setOptionsFor('gruendung')
                 ->setOptionsFor('position')
-                ->setOptionsFor('fraktion_id')
                 ->setOptionsFor('eingabe_abgeschlossen_visa')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
                 ->setOptionsFor('kontrolliert_visa')
@@ -13628,6 +13547,41 @@
                     FilterConditionOperator::ENDS_WITH => $main_editor,
                     FilterConditionOperator::IS_LIKE => $main_editor,
                     FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new DynamicCombobox('fraktion_id_edit', $this->CreateLinkBuilder());
+            $main_editor->setAllowClear(true);
+            $main_editor->setMinimumInputLength(0);
+            $main_editor->SetAllowNullValue(false);
+            $main_editor->SetHandlerName('filter_builder_partei_fraktion_id_search');
+            
+            $multi_value_select_editor = new RemoteMultiValueSelect('fraktion_id', $this->CreateLinkBuilder());
+            $multi_value_select_editor->SetHandlerName('filter_builder_partei_fraktion_id_search');
+            
+            $text_editor = new TextEdit('fraktion_id');
+            
+            $filterBuilder->addColumn(
+                $columns['fraktion_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $text_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $text_editor,
+                    FilterConditionOperator::BEGINS_WITH => $text_editor,
+                    FilterConditionOperator::ENDS_WITH => $text_editor,
+                    FilterConditionOperator::IS_LIKE => $text_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $text_editor,
+                    FilterConditionOperator::IN => $multi_value_select_editor,
+                    FilterConditionOperator::NOT_IN => $multi_value_select_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -13940,42 +13894,7 @@
                 )
             );
             
-            $main_editor = new DynamicCombobox('fraktion_id_edit', $this->CreateLinkBuilder());
-            $main_editor->setAllowClear(true);
-            $main_editor->setMinimumInputLength(0);
-            $main_editor->SetAllowNullValue(false);
-            $main_editor->SetHandlerName('filter_builder_partei_fraktion_id_search');
-            
-            $multi_value_select_editor = new RemoteMultiValueSelect('fraktion_id', $this->CreateLinkBuilder());
-            $multi_value_select_editor->SetHandlerName('filter_builder_partei_fraktion_id_search');
-            
-            $text_editor = new TextEdit('fraktion_id');
-            
-            $filterBuilder->addColumn(
-                $columns['fraktion_id'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $text_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $text_editor,
-                    FilterConditionOperator::BEGINS_WITH => $text_editor,
-                    FilterConditionOperator::ENDS_WITH => $text_editor,
-                    FilterConditionOperator::IS_LIKE => $text_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $text_editor,
-                    FilterConditionOperator::IN => $multi_value_select_editor,
-                    FilterConditionOperator::NOT_IN => $multi_value_select_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
-            
-            $main_editor = new TextEdit('wikipedia');
+            $main_editor = new TextEdit('wikipedia_edit');
             
             $filterBuilder->addColumn(
                 $columns['wikipedia'],
@@ -14428,6 +14347,18 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('fraktion_id', 'fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('fraktion.php?operation=edit&pk0=%fraktion_id%');
+            $column->setTarget('_self');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Fraktionszugehörigkeit der Partei im nationalen Parlament');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for gruendung field
             //
             $column = new DateTimeViewColumn('gruendung', 'gruendung', 'Gruendung', $this->dataset);
@@ -14566,18 +14497,6 @@
             $column->SetMaxLength(75);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('fraktion_id', 'fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('fraktion.php?operation=edit&pk0=%fraktion_id%');
-            $column->setTarget('_self');
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Fraktionszugehörigkeit der Partei im nationalen Parlament');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -14782,6 +14701,15 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('fraktion_id', 'fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('fraktion.php?operation=edit&pk0=%fraktion_id%');
+            $column->setTarget('_self');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for gruendung field
             //
             $column = new DateTimeViewColumn('gruendung', 'gruendung', 'Gruendung', $this->dataset);
@@ -14885,15 +14813,6 @@
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('');
             $column->SetMaxLength(75);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('fraktion_id', 'fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('fraktion.php?operation=edit&pk0=%fraktion_id%');
-            $column->setTarget('_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -15060,6 +14979,63 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for fraktion_id field
+            //
+            $editor = new ComboBox('fraktion_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_fraktion`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('anzeige_name_mixed'),
+                    new IntegerField('id', true),
+                    new StringField('abkuerzung', true),
+                    new StringField('name'),
+                    new StringField('name_fr'),
+                    new StringField('position'),
+                    new StringField('farbcode'),
+                    new StringField('beschreibung'),
+                    new StringField('beschreibung_fr'),
+                    new DateField('von'),
+                    new DateField('bis'),
+                    new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('name_de'),
+                    new StringField('beschreibung_de'),
+                    new IntegerField('published', true),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
+            $editColumn = new LookUpEditColumn(
+                'Fraktion', 
+                'fraktion_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for gruendung field
             //
             $editor = new DateTimeEdit('gruendung_edit', false, 'd.m.Y');
@@ -15200,72 +15176,19 @@
             $editor = new TextEdit('facebook_name_edit');
             $editColumn = new CustomEditColumn('Facebook', 'facebook_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for fraktion_id field
-            //
-            $editor = new ComboBox('fraktion_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                MyPDOConnectionFactory::getInstance(),
-                GetConnectionOptions(),
-                '`v_fraktion`');
-            $lookupDataset->addFields(
-                array(
-                    new StringField('anzeige_name'),
-                    new StringField('anzeige_name_de'),
-                    new StringField('anzeige_name_fr'),
-                    new StringField('anzeige_name_mixed'),
-                    new IntegerField('id', true),
-                    new StringField('abkuerzung', true),
-                    new StringField('name'),
-                    new StringField('name_fr'),
-                    new StringField('position'),
-                    new StringField('farbcode'),
-                    new StringField('beschreibung'),
-                    new StringField('beschreibung_fr'),
-                    new DateField('von'),
-                    new DateField('bis'),
-                    new StringField('wikipedia'),
-                    new StringField('wikidata_qid'),
-                    new StringField('notizen'),
-                    new StringField('eingabe_abgeschlossen_visa'),
-                    new DateTimeField('eingabe_abgeschlossen_datum'),
-                    new StringField('kontrolliert_visa'),
-                    new DateTimeField('kontrolliert_datum'),
-                    new StringField('freigabe_visa'),
-                    new DateTimeField('freigabe_datum'),
-                    new StringField('created_visa', true),
-                    new DateTimeField('created_date', true),
-                    new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true),
-                    new StringField('name_de'),
-                    new StringField('beschreibung_de'),
-                    new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
-                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
-                    new IntegerField('kontrolliert_datum_unix'),
-                    new IntegerField('freigabe_datum_unix')
-                )
-            );
-            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new LookUpEditColumn(
-                'Fraktion', 
-                'fraktion_id', 
-                $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
             //
             // Edit column for wikipedia field
             //
-            $editor = new TextAreaEdit('wikipedia_edit', 50, 8);
+            $editor = new TextEdit('wikipedia_edit');
             $editColumn = new CustomEditColumn('Wikipedia', 'wikipedia', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(https://\w{2}\.wikipedia.org/wiki/|$)', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -15436,6 +15359,63 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
+            // Edit column for fraktion_id field
+            //
+            $editor = new ComboBox('fraktion_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_fraktion`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('anzeige_name_mixed'),
+                    new IntegerField('id', true),
+                    new StringField('abkuerzung', true),
+                    new StringField('name'),
+                    new StringField('name_fr'),
+                    new StringField('position'),
+                    new StringField('farbcode'),
+                    new StringField('beschreibung'),
+                    new StringField('beschreibung_fr'),
+                    new DateField('von'),
+                    new DateField('bis'),
+                    new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('name_de'),
+                    new StringField('beschreibung_de'),
+                    new IntegerField('published', true),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
+            $editColumn = new LookUpEditColumn(
+                'Fraktion', 
+                'fraktion_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
             // Edit column for gruendung field
             //
             $editor = new DateTimeEdit('gruendung_edit', false, 'd.m.Y');
@@ -15576,63 +15556,8 @@
             $editor = new TextEdit('facebook_name_edit');
             $editColumn = new CustomEditColumn('Facebook', 'facebook_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for fraktion_id field
-            //
-            $editor = new ComboBox('fraktion_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                MyPDOConnectionFactory::getInstance(),
-                GetConnectionOptions(),
-                '`v_fraktion`');
-            $lookupDataset->addFields(
-                array(
-                    new StringField('anzeige_name'),
-                    new StringField('anzeige_name_de'),
-                    new StringField('anzeige_name_fr'),
-                    new StringField('anzeige_name_mixed'),
-                    new IntegerField('id', true),
-                    new StringField('abkuerzung', true),
-                    new StringField('name'),
-                    new StringField('name_fr'),
-                    new StringField('position'),
-                    new StringField('farbcode'),
-                    new StringField('beschreibung'),
-                    new StringField('beschreibung_fr'),
-                    new DateField('von'),
-                    new DateField('bis'),
-                    new StringField('wikipedia'),
-                    new StringField('wikidata_qid'),
-                    new StringField('notizen'),
-                    new StringField('eingabe_abgeschlossen_visa'),
-                    new DateTimeField('eingabe_abgeschlossen_datum'),
-                    new StringField('kontrolliert_visa'),
-                    new DateTimeField('kontrolliert_datum'),
-                    new StringField('freigabe_visa'),
-                    new DateTimeField('freigabe_datum'),
-                    new StringField('created_visa', true),
-                    new DateTimeField('created_date', true),
-                    new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true),
-                    new StringField('name_de'),
-                    new StringField('beschreibung_de'),
-                    new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
-                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
-                    new IntegerField('kontrolliert_datum_unix'),
-                    new IntegerField('freigabe_datum_unix')
-                )
-            );
-            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new LookUpEditColumn(
-                'Fraktion', 
-                'fraktion_id', 
-                $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
             
@@ -15813,6 +15738,63 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for fraktion_id field
+            //
+            $editor = new ComboBox('fraktion_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_fraktion`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('anzeige_name_mixed'),
+                    new IntegerField('id', true),
+                    new StringField('abkuerzung', true),
+                    new StringField('name'),
+                    new StringField('name_fr'),
+                    new StringField('position'),
+                    new StringField('farbcode'),
+                    new StringField('beschreibung'),
+                    new StringField('beschreibung_fr'),
+                    new DateField('von'),
+                    new DateField('bis'),
+                    new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('name_de'),
+                    new StringField('beschreibung_de'),
+                    new IntegerField('published', true),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
+            $editColumn = new LookUpEditColumn(
+                'Fraktion', 
+                'fraktion_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for gruendung field
             //
             $editor = new DateTimeEdit('gruendung_edit', false, 'd.m.Y');
@@ -15953,72 +15935,19 @@
             $editor = new TextEdit('facebook_name_edit');
             $editColumn = new CustomEditColumn('Facebook', 'facebook_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for fraktion_id field
-            //
-            $editor = new ComboBox('fraktion_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                MyPDOConnectionFactory::getInstance(),
-                GetConnectionOptions(),
-                '`v_fraktion`');
-            $lookupDataset->addFields(
-                array(
-                    new StringField('anzeige_name'),
-                    new StringField('anzeige_name_de'),
-                    new StringField('anzeige_name_fr'),
-                    new StringField('anzeige_name_mixed'),
-                    new IntegerField('id', true),
-                    new StringField('abkuerzung', true),
-                    new StringField('name'),
-                    new StringField('name_fr'),
-                    new StringField('position'),
-                    new StringField('farbcode'),
-                    new StringField('beschreibung'),
-                    new StringField('beschreibung_fr'),
-                    new DateField('von'),
-                    new DateField('bis'),
-                    new StringField('wikipedia'),
-                    new StringField('wikidata_qid'),
-                    new StringField('notizen'),
-                    new StringField('eingabe_abgeschlossen_visa'),
-                    new DateTimeField('eingabe_abgeschlossen_datum'),
-                    new StringField('kontrolliert_visa'),
-                    new DateTimeField('kontrolliert_datum'),
-                    new StringField('freigabe_visa'),
-                    new DateTimeField('freigabe_datum'),
-                    new StringField('created_visa', true),
-                    new DateTimeField('created_date', true),
-                    new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true),
-                    new StringField('name_de'),
-                    new StringField('beschreibung_de'),
-                    new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
-                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
-                    new IntegerField('kontrolliert_datum_unix'),
-                    new IntegerField('freigabe_datum_unix')
-                )
-            );
-            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $editColumn = new LookUpEditColumn(
-                'Fraktion', 
-                'fraktion_id', 
-                $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
             //
             // Edit column for wikipedia field
             //
-            $editor = new TextAreaEdit('wikipedia_edit', 50, 8);
+            $editor = new TextEdit('wikipedia_edit');
             $editColumn = new CustomEditColumn('Wikipedia', 'wikipedia', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(https://\w{2}\.wikipedia.org/wiki/|$)', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -16141,6 +16070,15 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('fraktion_id', 'fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('fraktion.php?operation=edit&pk0=%fraktion_id%');
+            $column->setTarget('_self');
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for gruendung field
             //
             $column = new DateTimeViewColumn('gruendung', 'gruendung', 'Gruendung', $this->dataset);
@@ -16244,15 +16182,6 @@
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('');
             $column->SetMaxLength(75);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('fraktion_id', 'fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('fraktion.php?operation=edit&pk0=%fraktion_id%');
-            $column->setTarget('_self');
             $grid->AddPrintColumn($column);
             
             //
@@ -16417,6 +16346,15 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('fraktion_id', 'fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('fraktion.php?operation=edit&pk0=%fraktion_id%');
+            $column->setTarget('_self');
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for gruendung field
             //
             $column = new DateTimeViewColumn('gruendung', 'gruendung', 'Gruendung', $this->dataset);
@@ -16520,15 +16458,6 @@
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('');
             $column->SetMaxLength(75);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('fraktion_id', 'fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('fraktion.php?operation=edit&pk0=%fraktion_id%');
-            $column->setTarget('_self');
             $grid->AddExportColumn($column);
             
             //
@@ -16693,6 +16622,15 @@
             $grid->AddCompareColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('fraktion_id', 'fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('fraktion.php?operation=edit&pk0=%fraktion_id%');
+            $column->setTarget('_self');
+            $grid->AddCompareColumn($column);
+            
+            //
             // View column for gruendung field
             //
             $column = new DateTimeViewColumn('gruendung', 'gruendung', 'Gruendung', $this->dataset);
@@ -16796,15 +16734,6 @@
             $column->setHrefTemplate('https://www.facebook.com/%facebook_name%');
             $column->setTarget('');
             $column->SetMaxLength(75);
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('fraktion_id', 'fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('fraktion.php?operation=edit&pk0=%fraktion_id%');
-            $column->setTarget('_self');
             $grid->AddCompareColumn($column);
             
             //
@@ -17051,53 +16980,6 @@
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('partei.fraktion'));
             $detailPage->SetHttpHandlerName('partei_fraktion_handler');
             $handler = new PageHTTPHandler('partei_fraktion_handler', $detailPage);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            $lookupDataset = new TableDataset(
-                MyPDOConnectionFactory::getInstance(),
-                GetConnectionOptions(),
-                '`v_fraktion`');
-            $lookupDataset->addFields(
-                array(
-                    new StringField('anzeige_name'),
-                    new StringField('anzeige_name_de'),
-                    new StringField('anzeige_name_fr'),
-                    new StringField('anzeige_name_mixed'),
-                    new IntegerField('id', true),
-                    new StringField('abkuerzung', true),
-                    new StringField('name'),
-                    new StringField('name_fr'),
-                    new StringField('position'),
-                    new StringField('farbcode'),
-                    new StringField('beschreibung'),
-                    new StringField('beschreibung_fr'),
-                    new DateField('von'),
-                    new DateField('bis'),
-                    new StringField('wikipedia'),
-                    new StringField('wikidata_qid'),
-                    new StringField('notizen'),
-                    new StringField('eingabe_abgeschlossen_visa'),
-                    new DateTimeField('eingabe_abgeschlossen_datum'),
-                    new StringField('kontrolliert_visa'),
-                    new DateTimeField('kontrolliert_datum'),
-                    new StringField('freigabe_visa'),
-                    new DateTimeField('freigabe_datum'),
-                    new StringField('created_visa', true),
-                    new DateTimeField('created_date', true),
-                    new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true),
-                    new StringField('name_de'),
-                    new StringField('beschreibung_de'),
-                    new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
-                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
-                    new IntegerField('kontrolliert_datum_unix'),
-                    new IntegerField('freigabe_datum_unix')
-                )
-            );
-            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_partei_fraktion_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
