@@ -1896,7 +1896,7 @@ function _lobbywatch_ws_get_rechtsform($rechtsform_handelsregister) {
         //  Ausländische Unternehmen
         // 0441 Ausländische Unternehmen (Entreprise étrangère, impresa straniera)
 
-    default: $val = '';
+    default: $val = null;
   }
   return $val;
 }
@@ -3163,8 +3163,12 @@ function getValueFromWSFieldName($ws_field, $parlamentarier_ws, $parlamentarier_
  * Convenience function.
  */
 function getValueFromWSFieldNameEmptyAsNull($ws_field, $parlamentarier_ws, $parlamentarier_db_obj, $field, $fields) {
-  if (empty($parlamentarier_ws->$ws_field) || trim($parlamentarier_ws->$ws_field) === '') return null;
-  return trim($parlamentarier_ws->$ws_field);
+}
+
+// id_function
+function getRechtsformFromWSFieldNameEmptyAsNull($ws_field, $parlamentarier_ws, $parlamentarier_db_obj, $field, $fields): ?string {
+  if (!isset($parlamentarier_ws->$ws_field) || (is_string($parlamentarier_ws->$ws_field) && trim($parlamentarier_ws->$ws_field) === '')) return null;
+  return _lobbywatch_ws_get_rechtsform($parlamentarier_ws->$ws_field);
 }
 
 // id_function
