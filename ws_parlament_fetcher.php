@@ -1126,7 +1126,7 @@ function convertGeschlecht($genderCode) {
 }
 
 function convertURL($url) {
-  return starts_with($url, 'www.') ? "http://$url" : $url;
+  return starts_with($url, 'www.') ? "https://$url" : $url;
 }
 
 /*
