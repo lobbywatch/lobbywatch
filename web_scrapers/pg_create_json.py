@@ -256,6 +256,7 @@ def scrape():
     filename = "parlamentarische-gruppen.json"
 
     script_path = os.path.dirname(os.path.realpath(__file__))
+    stripped_file_name = None
     try:
         import_date = datetime.now().replace(microsecond=0)
         raw_pdf_name = url.split("/")[-1]
@@ -300,8 +301,8 @@ def scrape():
         os.rename(pdf_name, script_path + "/backup/{}".format(pdf_name))
         backup_filename = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, filename)
         copyfile(filename, script_path + "/backup/{}".format(backup_filename))
-        os.remove(stripped_file_name)
-        os.remove("pg_data.csv")
+        if stripped_file_name and os.path.isfile(stripped_file_name): os.remove(stripped_file_name)
+        if os.path.isfile("pg_data.csv"): os.remove("pg_data.csv")
 
 
 #main method

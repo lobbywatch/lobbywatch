@@ -197,6 +197,7 @@ def get_script_path():
 # then parse the file into json and save the json files to disk
 def scrape_pdf(url, local_pdf, filename):
     script_path = get_script_path()
+    stripped_file_name = None
     try:
         raw_pdf_name = url.split("/")[-1]
         import_date = datetime.now().replace(microsecond=0)
@@ -239,8 +240,8 @@ def scrape_pdf(url, local_pdf, filename):
         os.rename(pdf_name, script_path + "/backup/{}".format(pdf_name))
         backup_filename = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, filename)
         copyfile(filename, script_path + "/backup/{}".format(backup_filename))
-        os.remove(stripped_file_name)
-        os.remove("zb_data.csv")
+        if stripped_file_name and os.path.isfile(stripped_file_name): os.remove(stripped_file_name)
+        if os.path.isfile("zb_data.csv"): os.remove("zb_data.csv")
 
 # scrape the nationalrat and ständerat guest lists and write them to
 # structured JSON files
