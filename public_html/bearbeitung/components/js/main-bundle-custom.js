@@ -33241,7 +33241,7 @@ define("custom/custom.hints", function(){});
 
 $(function() {
 
-  function setWSValue(field, wsVal, field_name, overwrite) {
+  function setWSValue(field, wsVal, field_name, overwrite, ignore_new_empty) {
     const fieldType = $(field).attr('type');
     var oldVal = $(field).val();
   //       console.log(oldVal + ' | ' + wsVal);
@@ -33257,7 +33257,7 @@ $(function() {
         $(field).parent().addClass('ws-changed-value');
         $('#info-message').append('<p><span class="ws-update-val ws-update-val-old">' + field_name + ': ' + oldVal + '</span> → <span class="ws-update-val ws-update-val-new">' + wsVal + '</span></p>').show();
       }
-    } else {
+    } else if (!ignore_new_empty || !isEmptyWsVal) {
       // var wsValClean = typeof wsVal === 'string' || wsVal instanceof String ? wsVal.replace("'", "\\'") : wsVal;
       // val() works also for select dropdowns, http://stackoverflow.com/questions/1280499/jquery-set-select-index
       $(field).val(wsVal).addClass('ws-changed-value');
@@ -33270,8 +33270,8 @@ $(function() {
     }
   }
 
-  function setWSFieldValue(formId, field_name, wsVal, overwrite = true) {
-    return setWSValue('#' + formId + '_' + field_name + '_edit', wsVal, field_name, overwrite);
+  function setWSFieldValue(formId, field_name, wsVal, overwrite = true, ignore_new_empty = true) {
+    return setWSValue('#' + formId + '_' + field_name + '_edit', wsVal, field_name, overwrite, ignore_new_empty);
   }
 
   $('#btn-ws-uid').click(function() {
