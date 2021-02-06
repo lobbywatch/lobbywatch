@@ -17798,7 +17798,7 @@
     {
         protected function DoBeforeCreate()
         {
-            $this->SetTitle('Person');
+            $this->SetTitle('Person (Lobbyist)');
             $this->SetMenuLabel('<span class="entity important-entity">Person</span>');
     
             $this->dataset = new TableDataset(
