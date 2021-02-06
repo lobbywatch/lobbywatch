@@ -3094,8 +3094,8 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
   }
 
   // TODO enhance to support also dates with time
-  if ((!empty($val) && (empty($db_val) || ($db_val != $val && !starts_with($val, 'STR_TO_DATE(')) || (is_string($db_val) && "STR_TO_DATE('{$db_val}','%Y-%m-%d')" != $val && starts_with($val, 'STR_TO_DATE('))))
-      || ($mode == FIELD_MODE_OVERWRITE_NULL && is_null($val) && isset($db_val))) {
+  if ((isset($val) && (empty($db_val) || ($db_val != $val && !starts_with($val, 'STR_TO_DATE(')) || (is_string($db_val) && "STR_TO_DATE('{$db_val}','%Y-%m-%d')" != $val && starts_with($val, 'STR_TO_DATE('))))
+      || ($mode == FIELD_MODE_OVERWRITE_NULL && !isset($val) && isset($db_val))) {
     $msg = $verbose || $mode == FIELD_MODE_OVERWRITE_MARK_LOG ? " (" . (isset($db_val) ? cut($db_val, $max_output_length) . " → " : '') . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '';
     if ($mode == FIELD_MODE_OPTIONAL && !empty($db_val)) {
       $fields[] = "[{$field}{$msg}]";
@@ -3127,7 +3127,9 @@ global $errors;
 
   $db_val = $parlamentarier_db_obj->$field ?? null;
 
-  if ($val == null) {
+  if (is_bool($val)) {
+    $update[$field] = "$field = " . ($val ? 1 : 0);
+  } else if ($val === null) {
     $update[$field] = "$field = NULL";
   } elseif ((!empty($db_val) && is_int($db_val)) || starts_with($val, 'STR_TO_DATE(')) {
     $update[$field] = "$field = $val";
@@ -3151,7 +3153,7 @@ global $errors;
 /**
  * id function which gets the field from the ws object using the $ws_field name.interessenbindung
  * This function allows to use strings instead of direct values in checkField().
- * Convenience function.
+ * Convenience function. id_function
  */
 function getValueFromWSFieldName($ws_field, $parlamentarier_ws, $parlamentarier_db_obj, $field, $fields) {
   return $parlamentarier_ws->$ws_field;
@@ -3160,9 +3162,11 @@ function getValueFromWSFieldName($ws_field, $parlamentarier_ws, $parlamentarier_
 /**
  * id function which gets the field from the ws object using the $ws_field name.interessenbindung
  * This function allows to use strings instead of direct values in checkField().
- * Convenience function.
+ * Convenience function. id_function
  */
 function getValueFromWSFieldNameEmptyAsNull($ws_field, $parlamentarier_ws, $parlamentarier_db_obj, $field, $fields) {
+  if (!isset($parlamentarier_ws->$ws_field) || (is_string($parlamentarier_ws->$ws_field) && trim($parlamentarier_ws->$ws_field) === '')) return null;
+  return $parlamentarier_ws->$ws_field;
 }
 
 // id_function
@@ -3183,6 +3187,7 @@ function getOrganisationNameFromWSFieldEmptyAsNull($ws_field, $parlamentarier_ws
   return trim($parlamentarier_ws->$ws_field) . ($parlamentarier_ws->inaktiv ? ' [INAKTIV]' : '');
 }
 
+// id_function
 function extractAbkuerzungFromWSFieldNameEmptyAsNull($ws_field, $parlamentarier_ws, $parlamentarier_db_obj, $field, $fields): ?string {
   if (empty($parlamentarier_ws->$ws_field) || trim($parlamentarier_ws->$ws_field) === '') return null;
   return extractAbkuerzung($parlamentarier_ws->$ws_field);
@@ -3929,7 +3934,7 @@ function camelize($input, $separator = '_', $capitalizeFirstCharacter = true) {
 }
 
 function clean_str(?string $str): ?string {
-  if (!isset($str)) return null;
+  if (empty($str)) return null;
   $cleaned = Normalizer::normalize($str, Normalizer::FORM_C);
   // replace typographic chars
   // https://stackoverflow.com/questions/26458654/regular-expressions-for-a-range-of-unicode-points-php
