@@ -3821,3 +3821,12 @@ UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Waadt' WHERE a
 UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Wallis' WHERE abkuerzung='VS';
 UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Zug' WHERE abkuerzung='ZG';
 UPDATE kanton SET wikipedia='https://de.wikipedia.org/wiki/Kanton_Z%C3%BCrich' WHERE abkuerzung='ZH';
+
+-- 06.02.2021 add person.ist_parlamentarier_id
+
+ALTER TABLE `person`
+  ADD `ist_parlamentarier_id` INT NULL DEFAULT NULL COMMENT 'Verknüpfung zu Parlamentarier_in, falls diese Person einmal im Parlament war' AFTER `telephon_2`,
+  ADD CONSTRAINT `fk_ist_parlamentarier_id` FOREIGN KEY (`ist_parlamentarier_id`) REFERENCES `parlamentarier` (`id`);
+
+ALTER TABLE `person_log`
+  ADD `ist_parlamentarier_id` INT NULL DEFAULT NULL COMMENT 'Verknüpfung zu Parlamentarier_in, falls diese Person einmal im Parlament war' AFTER `telephon_2`;

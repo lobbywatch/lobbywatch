@@ -21106,6 +21106,12 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textArea" columnCount="50" rowCount="4" placeholder=""/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="ist_parlamentarier_id" caption="Ist Parlamentarier" headerHint="Verknüpfung zu Parlamentarier_in, falls diese Person einmal im Parlament war" canSetNull="true" selectedFilterOperators="1589247">
+            <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <ViewProperties type="text" maxLength="75"/>
+            <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%ist_parlamentarier_id%" target=""/>
+            <EditProperties type="dynamicCombobox"/>
+          </ColumnPresentation>
           <ColumnPresentation fieldName="erfasst" caption="Erfasst" headerHint="Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden. NULL bedeutet Status unklar." canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
@@ -21223,6 +21229,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="telephon_2"/>
             <Column fieldName="beschreibung_de"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="ist_parlamentarier_id"/>
             <Column fieldName="erfasst"/>
             <Column fieldName="wikipedia"/>
             <Column fieldName="wikidata_qid"/>
@@ -21272,6 +21279,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="telephon_2"/>
             <Column fieldName="beschreibung_de"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="ist_parlamentarier_id"/>
             <Column fieldName="erfasst"/>
             <Column fieldName="wikipedia"/>
             <Column fieldName="wikidata_qid"/>
@@ -21321,6 +21329,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="telephon_2"/>
             <Column fieldName="beschreibung_de"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="ist_parlamentarier_id"/>
             <Column fieldName="erfasst"/>
             <Column fieldName="wikipedia"/>
             <Column fieldName="wikidata_qid"/>
@@ -21370,6 +21379,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="telephon_2"/>
             <Column fieldName="beschreibung_de"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="ist_parlamentarier_id"/>
             <Column fieldName="erfasst"/>
             <Column fieldName="wikipedia"/>
             <Column fieldName="wikidata_qid" visible="false"/>
@@ -21439,6 +21449,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikipedia" visible="false"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="ist_parlamentarier_id"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -21468,6 +21479,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="telephon_2"/>
             <Column fieldName="beschreibung_de"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="ist_parlamentarier_id"/>
             <Column fieldName="erfasst" visible="false"/>
             <Column fieldName="wikipedia"/>
             <Column fieldName="wikidata_qid"/>
@@ -21517,6 +21529,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="telephon_2"/>
             <Column fieldName="beschreibung_de"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="ist_parlamentarier_id"/>
             <Column fieldName="erfasst"/>
             <Column fieldName="wikipedia"/>
             <Column fieldName="wikidata_qid"/>
@@ -21566,6 +21579,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="telephon_2"/>
             <Column fieldName="beschreibung_de"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="ist_parlamentarier_id"/>
             <Column fieldName="erfasst"/>
             <Column fieldName="wikipedia"/>
             <Column fieldName="wikidata_qid"/>
@@ -21615,6 +21629,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="telephon_2"/>
             <Column fieldName="beschreibung_de"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="ist_parlamentarier_id"/>
             <Column fieldName="erfasst"/>
             <Column fieldName="wikipedia"/>
             <Column fieldName="wikidata_qid"/>
@@ -21664,6 +21679,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="telephon_2"/>
             <Column fieldName="beschreibung_de"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="ist_parlamentarier_id"/>
             <Column fieldName="erfasst"/>
             <Column fieldName="wikipedia" visible="false"/>
             <Column fieldName="wikidata_qid" visible="false"/>
@@ -22412,6 +22428,11 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="25"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="ist_parlamentarier_id" caption="Ist Parlamentarier" headerHint="Verknüpfung zu Parlamentarier_in, falls diese Person einmal im Parlament war" canSetNull="true" selectedFilterOperators="1573119">
+                  <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <ViewProperties type="text"/>
+                  <EditProperties type="dynamicCombobox"/>
+                </ColumnPresentation>
                 <ColumnPresentation fieldName="updated_by_import" caption="Updated By Import" headerHint="Datum, wann die Person durch einen Import zu letzt aktualisiert wurde." canSetNull="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
@@ -22557,6 +22578,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
+                  <Column fieldName="ist_parlamentarier_id"/>
                   <Column fieldName="updated_by_import"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="wikipedia"/>
@@ -22611,6 +22633,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
+                  <Column fieldName="ist_parlamentarier_id"/>
                   <Column fieldName="updated_by_import"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="wikipedia"/>
@@ -22665,6 +22688,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user" visible="false"/>
                   <Column fieldName="telephon_1" visible="false"/>
                   <Column fieldName="telephon_2" visible="false"/>
+                  <Column fieldName="ist_parlamentarier_id" visible="false"/>
                   <Column fieldName="updated_by_import" visible="false"/>
                   <Column fieldName="erfasst" visible="false"/>
                   <Column fieldName="wikipedia" visible="false"/>
@@ -22719,6 +22743,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user" visible="false"/>
                   <Column fieldName="telephon_1" visible="false"/>
                   <Column fieldName="telephon_2" visible="false"/>
+                  <Column fieldName="ist_parlamentarier_id" visible="false"/>
                   <Column fieldName="updated_by_import" visible="false"/>
                   <Column fieldName="erfasst" visible="false"/>
                   <Column fieldName="wikipedia" visible="false"/>
@@ -22798,6 +22823,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="ist_parlamentarier_id"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -22827,6 +22853,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
+                  <Column fieldName="ist_parlamentarier_id"/>
                   <Column fieldName="updated_by_import"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="wikipedia"/>
@@ -22881,6 +22908,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
+                  <Column fieldName="ist_parlamentarier_id"/>
                   <Column fieldName="updated_by_import"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="wikipedia"/>
@@ -22935,6 +22963,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
+                  <Column fieldName="ist_parlamentarier_id"/>
                   <Column fieldName="updated_by_import"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="wikipedia"/>
@@ -22989,6 +23018,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
+                  <Column fieldName="ist_parlamentarier_id"/>
                   <Column fieldName="updated_by_import"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="wikipedia"/>
@@ -23043,6 +23073,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user" visible="false"/>
                   <Column fieldName="telephon_1" visible="false"/>
                   <Column fieldName="telephon_2" visible="false"/>
+                  <Column fieldName="ist_parlamentarier_id" visible="false"/>
                   <Column fieldName="updated_by_import" visible="false"/>
                   <Column fieldName="erfasst" visible="false"/>
                   <Column fieldName="wikipedia" visible="false"/>

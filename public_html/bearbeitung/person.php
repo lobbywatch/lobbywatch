@@ -3630,6 +3630,7 @@
                     new StringField('facebook_name'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
+                    new IntegerField('ist_parlamentarier_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new DateTimeField('updated_by_import'),
@@ -3659,6 +3660,7 @@
             );
             $this->dataset->AddLookupField('beruf_interessengruppe_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'beruf_interessengruppe_id_anzeige_name', 'beruf_interessengruppe_id_anzeige_name_v_interessengruppe_simple'), 'beruf_interessengruppe_id_anzeige_name_v_interessengruppe_simple');
             $this->dataset->AddLookupField('partei_id', 'v_partei', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'partei_id_anzeige_name', 'partei_id_anzeige_name_v_partei'), 'partei_id_anzeige_name_v_partei');
+            $this->dataset->AddLookupField('ist_parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'ist_parlamentarier_id_anzeige_name', 'ist_parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'ist_parlamentarier_id_anzeige_name_v_parlamentarier_simple');
             $this->dataset->AddLookupField('snapshot_id', '`snapshot`', new IntegerField('id'), new StringField('beschreibung', false, false, false, false, 'snapshot_id_beschreibung', 'snapshot_id_beschreibung_snapshot'), 'snapshot_id_beschreibung_snapshot');
         }
     
@@ -3716,6 +3718,7 @@
                 new FilterColumn($this->dataset, 'youtube_user', 'youtube_user', 'Youtube User'),
                 new FilterColumn($this->dataset, 'telephon_1', 'telephon_1', 'Telephon 1'),
                 new FilterColumn($this->dataset, 'telephon_2', 'telephon_2', 'Telephon 2'),
+                new FilterColumn($this->dataset, 'ist_parlamentarier_id', 'ist_parlamentarier_id_anzeige_name', 'Ist Parlamentarier'),
                 new FilterColumn($this->dataset, 'updated_by_import', 'updated_by_import', 'Updated By Import'),
                 new FilterColumn($this->dataset, 'erfasst', 'erfasst', 'Erfasst'),
                 new FilterColumn($this->dataset, 'wikipedia', 'wikipedia', 'Wikipedia'),
@@ -3774,6 +3777,7 @@
                 ->addColumn($columns['youtube_user'])
                 ->addColumn($columns['telephon_1'])
                 ->addColumn($columns['telephon_2'])
+                ->addColumn($columns['ist_parlamentarier_id'])
                 ->addColumn($columns['updated_by_import'])
                 ->addColumn($columns['erfasst'])
                 ->addColumn($columns['wikipedia'])
@@ -3807,6 +3811,7 @@
                 ->setOptionsFor('partei_id')
                 ->setOptionsFor('geschlecht')
                 ->setOptionsFor('arbeitssprache')
+                ->setOptionsFor('ist_parlamentarier_id')
                 ->setOptionsFor('updated_by_import')
                 ->setOptionsFor('erfasst')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
@@ -4506,6 +4511,33 @@
                     FilterConditionOperator::ENDS_WITH => $main_editor,
                     FilterConditionOperator::IS_LIKE => $main_editor,
                     FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new DynamicCombobox('ist_parlamentarier_id_edit', $this->CreateLinkBuilder());
+            $main_editor->setAllowClear(true);
+            $main_editor->setMinimumInputLength(0);
+            $main_editor->SetAllowNullValue(false);
+            $main_editor->SetHandlerName('filter_builder_person_person_log_ist_parlamentarier_id_search');
+            
+            $multi_value_select_editor = new RemoteMultiValueSelect('ist_parlamentarier_id', $this->CreateLinkBuilder());
+            $multi_value_select_editor->SetHandlerName('filter_builder_person_person_log_ist_parlamentarier_id_search');
+            
+            $filterBuilder->addColumn(
+                $columns['ist_parlamentarier_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IN => $multi_value_select_editor,
+                    FilterConditionOperator::NOT_IN => $multi_value_select_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -5396,6 +5428,16 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('ist_parlamentarier_id', 'ist_parlamentarier_id_anzeige_name', 'Ist Parlamentarier', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Verknüpfung zu Parlamentarier_in, falls diese Person einmal im Parlament war');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for updated_by_import field
             //
             $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
@@ -5855,6 +5897,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('ist_parlamentarier_id', 'ist_parlamentarier_id_anzeige_name', 'Ist Parlamentarier', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for updated_by_import field
             //
             $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
@@ -6263,6 +6312,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('ist_parlamentarier_id', 'ist_parlamentarier_id_anzeige_name', 'Ist Parlamentarier', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for updated_by_import field
             //
             $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
@@ -6646,6 +6702,13 @@
             // View column for telephon_2 field
             //
             $column = new TextViewColumn('telephon_2', 'telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('ist_parlamentarier_id', 'ist_parlamentarier_id_anzeige_name', 'Ist Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -7037,6 +7100,13 @@
             $grid->AddCompareColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('ist_parlamentarier_id', 'ist_parlamentarier_id_anzeige_name', 'Ist Parlamentarier', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
             // View column for updated_by_import field
             //
             $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
@@ -7412,6 +7482,116 @@
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_person_log_partei_id_search', 'id', 'anzeige_name', null, 20);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_parlamentarier_simple`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('name'),
+                    new StringField('name_de'),
+                    new StringField('name_fr'),
+                    new IntegerField('id', true),
+                    new StringField('nachname', true),
+                    new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
+                    new StringField('zweiter_vorname'),
+                    new IntegerField('rat_id', true),
+                    new IntegerField('kanton_id', true),
+                    new StringField('kommissionen'),
+                    new IntegerField('partei_id'),
+                    new StringField('parteifunktion', true),
+                    new IntegerField('fraktion_id'),
+                    new StringField('fraktionsfunktion'),
+                    new DateField('im_rat_seit', true),
+                    new DateField('im_rat_bis'),
+                    new DateField('ratswechsel'),
+                    new DateField('ratsunterbruch_von'),
+                    new DateField('ratsunterbruch_bis'),
+                    new StringField('beruf'),
+                    new StringField('beruf_fr'),
+                    new IntegerField('beruf_interessengruppe_id'),
+                    new StringField('titel'),
+                    new StringField('aemter'),
+                    new StringField('weitere_aemter'),
+                    new StringField('zivilstand'),
+                    new IntegerField('anzahl_kinder'),
+                    new IntegerField('militaerischer_grad_id'),
+                    new StringField('geschlecht'),
+                    new DateField('geburtstag'),
+                    new StringField('photo'),
+                    new StringField('photo_dateiname'),
+                    new StringField('photo_dateierweiterung'),
+                    new StringField('photo_dateiname_voll'),
+                    new StringField('photo_mime_type'),
+                    new StringField('kleinbild'),
+                    new IntegerField('sitzplatz'),
+                    new StringField('email'),
+                    new StringField('homepage'),
+                    new StringField('homepage_2'),
+                    new IntegerField('parlament_biografie_id'),
+                    new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
+                    new StringField('parlament_interessenbindungen'),
+                    new StringField('parlament_interessenbindungen_json'),
+                    new DateTimeField('parlament_interessenbindungen_updated'),
+                    new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
+                    new StringField('linkedin_profil_url'),
+                    new StringField('xing_profil_name'),
+                    new StringField('facebook_name'),
+                    new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
+                    new StringField('sprache'),
+                    new StringField('arbeitssprache'),
+                    new StringField('adresse_firma'),
+                    new StringField('adresse_strasse'),
+                    new StringField('adresse_zusatz'),
+                    new StringField('adresse_plz'),
+                    new StringField('adresse_ort'),
+                    new StringField('telephon_1'),
+                    new StringField('telephon_2'),
+                    new StringField('erfasst'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('autorisierung_verschickt_visa'),
+                    new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisiert_visa'),
+                    new DateField('autorisiert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('beruf_de'),
+                    new DateField('von', true),
+                    new DateField('bis'),
+                    new IntegerField('aktiv'),
+                    new IntegerField('published', true),
+                    new IntegerField('geburtstag_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_bis_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix'),
+                    new IntegerField('von_unix', true),
+                    new IntegerField('bis_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_person_log_ist_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -17654,6 +17834,7 @@
                     new StringField('facebook_name'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
+                    new IntegerField('ist_parlamentarier_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new DateTimeField('updated_by_import'),
@@ -17678,6 +17859,7 @@
             );
             $this->dataset->AddLookupField('beruf_interessengruppe_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('name', false, false, false, false, 'beruf_interessengruppe_id_name', 'beruf_interessengruppe_id_name_v_interessengruppe_simple'), 'beruf_interessengruppe_id_name_v_interessengruppe_simple');
             $this->dataset->AddLookupField('partei_id', 'v_partei', new IntegerField('id'), new StringField('abkuerzung_mixed', false, false, false, false, 'partei_id_abkuerzung_mixed', 'partei_id_abkuerzung_mixed_v_partei'), 'partei_id_abkuerzung_mixed_v_partei');
+            $this->dataset->AddLookupField('ist_parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'ist_parlamentarier_id_anzeige_name', 'ist_parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'ist_parlamentarier_id_anzeige_name_v_parlamentarier_simple');
         }
     
         protected function DoPrepare() {
@@ -17741,6 +17923,7 @@
                 new FilterColumn($this->dataset, 'telephon_2', 'telephon_2', 'Telephon 2'),
                 new FilterColumn($this->dataset, 'beschreibung_de', 'beschreibung_de', 'Beschreibung De'),
                 new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr'),
+                new FilterColumn($this->dataset, 'ist_parlamentarier_id', 'ist_parlamentarier_id_anzeige_name', 'Ist Parlamentarier'),
                 new FilterColumn($this->dataset, 'erfasst', 'erfasst', 'Erfasst'),
                 new FilterColumn($this->dataset, 'wikipedia', 'wikipedia', 'Wikipedia URL'),
                 new FilterColumn($this->dataset, 'wikidata_qid', 'wikidata_qid', 'Wikidata Qid'),
@@ -17792,6 +17975,7 @@
                 ->addColumn($columns['telephon_2'])
                 ->addColumn($columns['beschreibung_de'])
                 ->addColumn($columns['beschreibung_fr'])
+                ->addColumn($columns['ist_parlamentarier_id'])
                 ->addColumn($columns['wikidata_qid'])
                 ->addColumn($columns['notizen'])
                 ->addColumn($columns['created_visa'])
@@ -17815,6 +17999,7 @@
                 ->setOptionsFor('geschlecht')
                 ->setOptionsFor('arbeitssprache')
                 ->setOptionsFor('email')
+                ->setOptionsFor('ist_parlamentarier_id')
                 ->setOptionsFor('erfasst')
                 ->setOptionsFor('updated_by_import')
                 ->setOptionsFor('eingabe_abgeschlossen_visa')
@@ -18537,6 +18722,41 @@
                     FilterConditionOperator::ENDS_WITH => $main_editor,
                     FilterConditionOperator::IS_LIKE => $main_editor,
                     FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new DynamicCombobox('ist_parlamentarier_id_edit', $this->CreateLinkBuilder());
+            $main_editor->setAllowClear(true);
+            $main_editor->setMinimumInputLength(0);
+            $main_editor->SetAllowNullValue(false);
+            $main_editor->SetHandlerName('filter_builder_person_ist_parlamentarier_id_search');
+            
+            $multi_value_select_editor = new RemoteMultiValueSelect('ist_parlamentarier_id', $this->CreateLinkBuilder());
+            $multi_value_select_editor->SetHandlerName('filter_builder_person_ist_parlamentarier_id_search');
+            
+            $text_editor = new TextEdit('ist_parlamentarier_id');
+            
+            $filterBuilder->addColumn(
+                $columns['ist_parlamentarier_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $text_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $text_editor,
+                    FilterConditionOperator::BEGINS_WITH => $text_editor,
+                    FilterConditionOperator::ENDS_WITH => $text_editor,
+                    FilterConditionOperator::IS_LIKE => $text_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $text_editor,
+                    FilterConditionOperator::IN => $multi_value_select_editor,
+                    FilterConditionOperator::NOT_IN => $multi_value_select_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -19337,6 +19557,19 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('ist_parlamentarier_id', 'ist_parlamentarier_id_anzeige_name', 'Ist Parlamentarier', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%ist_parlamentarier_id%');
+            $column->setTarget('');
+            $column->SetMaxLength(75);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Verknüpfung zu Parlamentarier_in, falls diese Person einmal im Parlament war');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for erfasst field
             //
             $column = new TextViewColumn('erfasst', 'erfasst', 'Erfasst', $this->dataset);
@@ -19766,6 +19999,16 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('ist_parlamentarier_id', 'ist_parlamentarier_id_anzeige_name', 'Ist Parlamentarier', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%ist_parlamentarier_id%');
+            $column->setTarget('');
             $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -20332,6 +20575,124 @@
             //
             $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 4);
             $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for ist_parlamentarier_id field
+            //
+            $editor = new DynamicCombobox('ist_parlamentarier_id_edit', $this->CreateLinkBuilder());
+            $editor->setAllowClear(true);
+            $editor->setMinimumInputLength(0);
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_parlamentarier_simple`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('name'),
+                    new StringField('name_de'),
+                    new StringField('name_fr'),
+                    new IntegerField('id', true),
+                    new StringField('nachname', true),
+                    new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
+                    new StringField('zweiter_vorname'),
+                    new IntegerField('rat_id', true),
+                    new IntegerField('kanton_id', true),
+                    new StringField('kommissionen'),
+                    new IntegerField('partei_id'),
+                    new StringField('parteifunktion', true),
+                    new IntegerField('fraktion_id'),
+                    new StringField('fraktionsfunktion'),
+                    new DateField('im_rat_seit', true),
+                    new DateField('im_rat_bis'),
+                    new DateField('ratswechsel'),
+                    new DateField('ratsunterbruch_von'),
+                    new DateField('ratsunterbruch_bis'),
+                    new StringField('beruf'),
+                    new StringField('beruf_fr'),
+                    new IntegerField('beruf_interessengruppe_id'),
+                    new StringField('titel'),
+                    new StringField('aemter'),
+                    new StringField('weitere_aemter'),
+                    new StringField('zivilstand'),
+                    new IntegerField('anzahl_kinder'),
+                    new IntegerField('militaerischer_grad_id'),
+                    new StringField('geschlecht'),
+                    new DateField('geburtstag'),
+                    new StringField('photo'),
+                    new StringField('photo_dateiname'),
+                    new StringField('photo_dateierweiterung'),
+                    new StringField('photo_dateiname_voll'),
+                    new StringField('photo_mime_type'),
+                    new StringField('kleinbild'),
+                    new IntegerField('sitzplatz'),
+                    new StringField('email'),
+                    new StringField('homepage'),
+                    new StringField('homepage_2'),
+                    new IntegerField('parlament_biografie_id'),
+                    new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
+                    new StringField('parlament_interessenbindungen'),
+                    new StringField('parlament_interessenbindungen_json'),
+                    new DateTimeField('parlament_interessenbindungen_updated'),
+                    new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
+                    new StringField('linkedin_profil_url'),
+                    new StringField('xing_profil_name'),
+                    new StringField('facebook_name'),
+                    new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
+                    new StringField('sprache'),
+                    new StringField('arbeitssprache'),
+                    new StringField('adresse_firma'),
+                    new StringField('adresse_strasse'),
+                    new StringField('adresse_zusatz'),
+                    new StringField('adresse_plz'),
+                    new StringField('adresse_ort'),
+                    new StringField('telephon_1'),
+                    new StringField('telephon_2'),
+                    new StringField('erfasst'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('autorisierung_verschickt_visa'),
+                    new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisiert_visa'),
+                    new DateField('autorisiert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('beruf_de'),
+                    new DateField('von', true),
+                    new DateField('bis'),
+                    new IntegerField('aktiv'),
+                    new IntegerField('published', true),
+                    new IntegerField('geburtstag_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_bis_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix'),
+                    new IntegerField('von_unix', true),
+                    new IntegerField('bis_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
+            $editColumn = new DynamicLookupEditColumn('Ist Parlamentarier', 'ist_parlamentarier_id', 'ist_parlamentarier_id_anzeige_name', 'edit_person_ist_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -20954,6 +21315,124 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
+            // Edit column for ist_parlamentarier_id field
+            //
+            $editor = new DynamicCombobox('ist_parlamentarier_id_edit', $this->CreateLinkBuilder());
+            $editor->setAllowClear(true);
+            $editor->setMinimumInputLength(0);
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_parlamentarier_simple`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('name'),
+                    new StringField('name_de'),
+                    new StringField('name_fr'),
+                    new IntegerField('id', true),
+                    new StringField('nachname', true),
+                    new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
+                    new StringField('zweiter_vorname'),
+                    new IntegerField('rat_id', true),
+                    new IntegerField('kanton_id', true),
+                    new StringField('kommissionen'),
+                    new IntegerField('partei_id'),
+                    new StringField('parteifunktion', true),
+                    new IntegerField('fraktion_id'),
+                    new StringField('fraktionsfunktion'),
+                    new DateField('im_rat_seit', true),
+                    new DateField('im_rat_bis'),
+                    new DateField('ratswechsel'),
+                    new DateField('ratsunterbruch_von'),
+                    new DateField('ratsunterbruch_bis'),
+                    new StringField('beruf'),
+                    new StringField('beruf_fr'),
+                    new IntegerField('beruf_interessengruppe_id'),
+                    new StringField('titel'),
+                    new StringField('aemter'),
+                    new StringField('weitere_aemter'),
+                    new StringField('zivilstand'),
+                    new IntegerField('anzahl_kinder'),
+                    new IntegerField('militaerischer_grad_id'),
+                    new StringField('geschlecht'),
+                    new DateField('geburtstag'),
+                    new StringField('photo'),
+                    new StringField('photo_dateiname'),
+                    new StringField('photo_dateierweiterung'),
+                    new StringField('photo_dateiname_voll'),
+                    new StringField('photo_mime_type'),
+                    new StringField('kleinbild'),
+                    new IntegerField('sitzplatz'),
+                    new StringField('email'),
+                    new StringField('homepage'),
+                    new StringField('homepage_2'),
+                    new IntegerField('parlament_biografie_id'),
+                    new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
+                    new StringField('parlament_interessenbindungen'),
+                    new StringField('parlament_interessenbindungen_json'),
+                    new DateTimeField('parlament_interessenbindungen_updated'),
+                    new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
+                    new StringField('linkedin_profil_url'),
+                    new StringField('xing_profil_name'),
+                    new StringField('facebook_name'),
+                    new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
+                    new StringField('sprache'),
+                    new StringField('arbeitssprache'),
+                    new StringField('adresse_firma'),
+                    new StringField('adresse_strasse'),
+                    new StringField('adresse_zusatz'),
+                    new StringField('adresse_plz'),
+                    new StringField('adresse_ort'),
+                    new StringField('telephon_1'),
+                    new StringField('telephon_2'),
+                    new StringField('erfasst'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('autorisierung_verschickt_visa'),
+                    new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisiert_visa'),
+                    new DateField('autorisiert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('beruf_de'),
+                    new DateField('von', true),
+                    new DateField('bis'),
+                    new IntegerField('aktiv'),
+                    new IntegerField('published', true),
+                    new IntegerField('geburtstag_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_bis_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix'),
+                    new IntegerField('von_unix', true),
+                    new IntegerField('bis_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
+            $editColumn = new DynamicLookupEditColumn('Ist Parlamentarier', 'ist_parlamentarier_id', 'ist_parlamentarier_id_anzeige_name', 'multi_edit_person_ist_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
             // Edit column for erfasst field
             //
             $editor = new ComboBox('erfasst_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -21552,6 +22031,124 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for ist_parlamentarier_id field
+            //
+            $editor = new DynamicCombobox('ist_parlamentarier_id_edit', $this->CreateLinkBuilder());
+            $editor->setAllowClear(true);
+            $editor->setMinimumInputLength(0);
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_parlamentarier_simple`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('name'),
+                    new StringField('name_de'),
+                    new StringField('name_fr'),
+                    new IntegerField('id', true),
+                    new StringField('nachname', true),
+                    new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
+                    new StringField('zweiter_vorname'),
+                    new IntegerField('rat_id', true),
+                    new IntegerField('kanton_id', true),
+                    new StringField('kommissionen'),
+                    new IntegerField('partei_id'),
+                    new StringField('parteifunktion', true),
+                    new IntegerField('fraktion_id'),
+                    new StringField('fraktionsfunktion'),
+                    new DateField('im_rat_seit', true),
+                    new DateField('im_rat_bis'),
+                    new DateField('ratswechsel'),
+                    new DateField('ratsunterbruch_von'),
+                    new DateField('ratsunterbruch_bis'),
+                    new StringField('beruf'),
+                    new StringField('beruf_fr'),
+                    new IntegerField('beruf_interessengruppe_id'),
+                    new StringField('titel'),
+                    new StringField('aemter'),
+                    new StringField('weitere_aemter'),
+                    new StringField('zivilstand'),
+                    new IntegerField('anzahl_kinder'),
+                    new IntegerField('militaerischer_grad_id'),
+                    new StringField('geschlecht'),
+                    new DateField('geburtstag'),
+                    new StringField('photo'),
+                    new StringField('photo_dateiname'),
+                    new StringField('photo_dateierweiterung'),
+                    new StringField('photo_dateiname_voll'),
+                    new StringField('photo_mime_type'),
+                    new StringField('kleinbild'),
+                    new IntegerField('sitzplatz'),
+                    new StringField('email'),
+                    new StringField('homepage'),
+                    new StringField('homepage_2'),
+                    new IntegerField('parlament_biografie_id'),
+                    new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
+                    new StringField('parlament_interessenbindungen'),
+                    new StringField('parlament_interessenbindungen_json'),
+                    new DateTimeField('parlament_interessenbindungen_updated'),
+                    new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
+                    new StringField('linkedin_profil_url'),
+                    new StringField('xing_profil_name'),
+                    new StringField('facebook_name'),
+                    new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
+                    new StringField('sprache'),
+                    new StringField('arbeitssprache'),
+                    new StringField('adresse_firma'),
+                    new StringField('adresse_strasse'),
+                    new StringField('adresse_zusatz'),
+                    new StringField('adresse_plz'),
+                    new StringField('adresse_ort'),
+                    new StringField('telephon_1'),
+                    new StringField('telephon_2'),
+                    new StringField('erfasst'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('autorisierung_verschickt_visa'),
+                    new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisiert_visa'),
+                    new DateField('autorisiert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('beruf_de'),
+                    new DateField('von', true),
+                    new DateField('bis'),
+                    new IntegerField('aktiv'),
+                    new IntegerField('published', true),
+                    new IntegerField('geburtstag_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_bis_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix'),
+                    new IntegerField('von_unix', true),
+                    new IntegerField('bis_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
+            $editColumn = new DynamicLookupEditColumn('Ist Parlamentarier', 'ist_parlamentarier_id', 'ist_parlamentarier_id_anzeige_name', 'insert_person_ist_parlamentarier_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for erfasst field
             //
             $editor = new ComboBox('erfasst_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -21864,6 +22461,16 @@
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('ist_parlamentarier_id', 'ist_parlamentarier_id_anzeige_name', 'Ist Parlamentarier', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%ist_parlamentarier_id%');
+            $column->setTarget('');
             $column->SetMaxLength(75);
             $grid->AddPrintColumn($column);
             
@@ -22244,6 +22851,16 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('ist_parlamentarier_id', 'ist_parlamentarier_id_anzeige_name', 'Ist Parlamentarier', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%ist_parlamentarier_id%');
+            $column->setTarget('');
+            $column->SetMaxLength(75);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for erfasst field
             //
             $column = new TextViewColumn('erfasst', 'erfasst', 'Erfasst', $this->dataset);
@@ -22620,6 +23237,16 @@
             $grid->AddCompareColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('ist_parlamentarier_id', 'ist_parlamentarier_id_anzeige_name', 'Ist Parlamentarier', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%ist_parlamentarier_id%');
+            $column->setTarget('');
+            $column->SetMaxLength(75);
+            $grid->AddCompareColumn($column);
+            
+            //
             // View column for erfasst field
             //
             $column = new TextViewColumn('erfasst', 'erfasst', 'Erfasst', $this->dataset);
@@ -22942,6 +23569,116 @@
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
+                '`v_parlamentarier_simple`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('name'),
+                    new StringField('name_de'),
+                    new StringField('name_fr'),
+                    new IntegerField('id', true),
+                    new StringField('nachname', true),
+                    new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
+                    new StringField('zweiter_vorname'),
+                    new IntegerField('rat_id', true),
+                    new IntegerField('kanton_id', true),
+                    new StringField('kommissionen'),
+                    new IntegerField('partei_id'),
+                    new StringField('parteifunktion', true),
+                    new IntegerField('fraktion_id'),
+                    new StringField('fraktionsfunktion'),
+                    new DateField('im_rat_seit', true),
+                    new DateField('im_rat_bis'),
+                    new DateField('ratswechsel'),
+                    new DateField('ratsunterbruch_von'),
+                    new DateField('ratsunterbruch_bis'),
+                    new StringField('beruf'),
+                    new StringField('beruf_fr'),
+                    new IntegerField('beruf_interessengruppe_id'),
+                    new StringField('titel'),
+                    new StringField('aemter'),
+                    new StringField('weitere_aemter'),
+                    new StringField('zivilstand'),
+                    new IntegerField('anzahl_kinder'),
+                    new IntegerField('militaerischer_grad_id'),
+                    new StringField('geschlecht'),
+                    new DateField('geburtstag'),
+                    new StringField('photo'),
+                    new StringField('photo_dateiname'),
+                    new StringField('photo_dateierweiterung'),
+                    new StringField('photo_dateiname_voll'),
+                    new StringField('photo_mime_type'),
+                    new StringField('kleinbild'),
+                    new IntegerField('sitzplatz'),
+                    new StringField('email'),
+                    new StringField('homepage'),
+                    new StringField('homepage_2'),
+                    new IntegerField('parlament_biografie_id'),
+                    new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
+                    new StringField('parlament_interessenbindungen'),
+                    new StringField('parlament_interessenbindungen_json'),
+                    new DateTimeField('parlament_interessenbindungen_updated'),
+                    new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
+                    new StringField('linkedin_profil_url'),
+                    new StringField('xing_profil_name'),
+                    new StringField('facebook_name'),
+                    new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
+                    new StringField('sprache'),
+                    new StringField('arbeitssprache'),
+                    new StringField('adresse_firma'),
+                    new StringField('adresse_strasse'),
+                    new StringField('adresse_zusatz'),
+                    new StringField('adresse_plz'),
+                    new StringField('adresse_ort'),
+                    new StringField('telephon_1'),
+                    new StringField('telephon_2'),
+                    new StringField('erfasst'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('autorisierung_verschickt_visa'),
+                    new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisiert_visa'),
+                    new DateField('autorisiert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('beruf_de'),
+                    new DateField('von', true),
+                    new DateField('bis'),
+                    new IntegerField('aktiv'),
+                    new IntegerField('published', true),
+                    new IntegerField('geburtstag_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_bis_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix'),
+                    new IntegerField('von_unix', true),
+                    new IntegerField('bis_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_person_ist_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
                 '`v_interessengruppe_simple`');
             $lookupDataset->addFields(
                 array(
@@ -23046,6 +23783,336 @@
             );
             $lookupDataset->setOrderByField('abkuerzung_mixed', 'ASC');
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_partei_id_search', 'id', 'abkuerzung_mixed', null, 20);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_parlamentarier_simple`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('name'),
+                    new StringField('name_de'),
+                    new StringField('name_fr'),
+                    new IntegerField('id', true),
+                    new StringField('nachname', true),
+                    new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
+                    new StringField('zweiter_vorname'),
+                    new IntegerField('rat_id', true),
+                    new IntegerField('kanton_id', true),
+                    new StringField('kommissionen'),
+                    new IntegerField('partei_id'),
+                    new StringField('parteifunktion', true),
+                    new IntegerField('fraktion_id'),
+                    new StringField('fraktionsfunktion'),
+                    new DateField('im_rat_seit', true),
+                    new DateField('im_rat_bis'),
+                    new DateField('ratswechsel'),
+                    new DateField('ratsunterbruch_von'),
+                    new DateField('ratsunterbruch_bis'),
+                    new StringField('beruf'),
+                    new StringField('beruf_fr'),
+                    new IntegerField('beruf_interessengruppe_id'),
+                    new StringField('titel'),
+                    new StringField('aemter'),
+                    new StringField('weitere_aemter'),
+                    new StringField('zivilstand'),
+                    new IntegerField('anzahl_kinder'),
+                    new IntegerField('militaerischer_grad_id'),
+                    new StringField('geschlecht'),
+                    new DateField('geburtstag'),
+                    new StringField('photo'),
+                    new StringField('photo_dateiname'),
+                    new StringField('photo_dateierweiterung'),
+                    new StringField('photo_dateiname_voll'),
+                    new StringField('photo_mime_type'),
+                    new StringField('kleinbild'),
+                    new IntegerField('sitzplatz'),
+                    new StringField('email'),
+                    new StringField('homepage'),
+                    new StringField('homepage_2'),
+                    new IntegerField('parlament_biografie_id'),
+                    new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
+                    new StringField('parlament_interessenbindungen'),
+                    new StringField('parlament_interessenbindungen_json'),
+                    new DateTimeField('parlament_interessenbindungen_updated'),
+                    new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
+                    new StringField('linkedin_profil_url'),
+                    new StringField('xing_profil_name'),
+                    new StringField('facebook_name'),
+                    new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
+                    new StringField('sprache'),
+                    new StringField('arbeitssprache'),
+                    new StringField('adresse_firma'),
+                    new StringField('adresse_strasse'),
+                    new StringField('adresse_zusatz'),
+                    new StringField('adresse_plz'),
+                    new StringField('adresse_ort'),
+                    new StringField('telephon_1'),
+                    new StringField('telephon_2'),
+                    new StringField('erfasst'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('autorisierung_verschickt_visa'),
+                    new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisiert_visa'),
+                    new DateField('autorisiert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('beruf_de'),
+                    new DateField('von', true),
+                    new DateField('bis'),
+                    new IntegerField('aktiv'),
+                    new IntegerField('published', true),
+                    new IntegerField('geburtstag_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_bis_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix'),
+                    new IntegerField('von_unix', true),
+                    new IntegerField('bis_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_person_ist_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_parlamentarier_simple`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('name'),
+                    new StringField('name_de'),
+                    new StringField('name_fr'),
+                    new IntegerField('id', true),
+                    new StringField('nachname', true),
+                    new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
+                    new StringField('zweiter_vorname'),
+                    new IntegerField('rat_id', true),
+                    new IntegerField('kanton_id', true),
+                    new StringField('kommissionen'),
+                    new IntegerField('partei_id'),
+                    new StringField('parteifunktion', true),
+                    new IntegerField('fraktion_id'),
+                    new StringField('fraktionsfunktion'),
+                    new DateField('im_rat_seit', true),
+                    new DateField('im_rat_bis'),
+                    new DateField('ratswechsel'),
+                    new DateField('ratsunterbruch_von'),
+                    new DateField('ratsunterbruch_bis'),
+                    new StringField('beruf'),
+                    new StringField('beruf_fr'),
+                    new IntegerField('beruf_interessengruppe_id'),
+                    new StringField('titel'),
+                    new StringField('aemter'),
+                    new StringField('weitere_aemter'),
+                    new StringField('zivilstand'),
+                    new IntegerField('anzahl_kinder'),
+                    new IntegerField('militaerischer_grad_id'),
+                    new StringField('geschlecht'),
+                    new DateField('geburtstag'),
+                    new StringField('photo'),
+                    new StringField('photo_dateiname'),
+                    new StringField('photo_dateierweiterung'),
+                    new StringField('photo_dateiname_voll'),
+                    new StringField('photo_mime_type'),
+                    new StringField('kleinbild'),
+                    new IntegerField('sitzplatz'),
+                    new StringField('email'),
+                    new StringField('homepage'),
+                    new StringField('homepage_2'),
+                    new IntegerField('parlament_biografie_id'),
+                    new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
+                    new StringField('parlament_interessenbindungen'),
+                    new StringField('parlament_interessenbindungen_json'),
+                    new DateTimeField('parlament_interessenbindungen_updated'),
+                    new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
+                    new StringField('linkedin_profil_url'),
+                    new StringField('xing_profil_name'),
+                    new StringField('facebook_name'),
+                    new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
+                    new StringField('sprache'),
+                    new StringField('arbeitssprache'),
+                    new StringField('adresse_firma'),
+                    new StringField('adresse_strasse'),
+                    new StringField('adresse_zusatz'),
+                    new StringField('adresse_plz'),
+                    new StringField('adresse_ort'),
+                    new StringField('telephon_1'),
+                    new StringField('telephon_2'),
+                    new StringField('erfasst'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('autorisierung_verschickt_visa'),
+                    new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisiert_visa'),
+                    new DateField('autorisiert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('beruf_de'),
+                    new DateField('von', true),
+                    new DateField('bis'),
+                    new IntegerField('aktiv'),
+                    new IntegerField('published', true),
+                    new IntegerField('geburtstag_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_bis_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix'),
+                    new IntegerField('von_unix', true),
+                    new IntegerField('bis_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_person_ist_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_parlamentarier_simple`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('name'),
+                    new StringField('name_de'),
+                    new StringField('name_fr'),
+                    new IntegerField('id', true),
+                    new StringField('nachname', true),
+                    new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
+                    new StringField('zweiter_vorname'),
+                    new IntegerField('rat_id', true),
+                    new IntegerField('kanton_id', true),
+                    new StringField('kommissionen'),
+                    new IntegerField('partei_id'),
+                    new StringField('parteifunktion', true),
+                    new IntegerField('fraktion_id'),
+                    new StringField('fraktionsfunktion'),
+                    new DateField('im_rat_seit', true),
+                    new DateField('im_rat_bis'),
+                    new DateField('ratswechsel'),
+                    new DateField('ratsunterbruch_von'),
+                    new DateField('ratsunterbruch_bis'),
+                    new StringField('beruf'),
+                    new StringField('beruf_fr'),
+                    new IntegerField('beruf_interessengruppe_id'),
+                    new StringField('titel'),
+                    new StringField('aemter'),
+                    new StringField('weitere_aemter'),
+                    new StringField('zivilstand'),
+                    new IntegerField('anzahl_kinder'),
+                    new IntegerField('militaerischer_grad_id'),
+                    new StringField('geschlecht'),
+                    new DateField('geburtstag'),
+                    new StringField('photo'),
+                    new StringField('photo_dateiname'),
+                    new StringField('photo_dateierweiterung'),
+                    new StringField('photo_dateiname_voll'),
+                    new StringField('photo_mime_type'),
+                    new StringField('kleinbild'),
+                    new IntegerField('sitzplatz'),
+                    new StringField('email'),
+                    new StringField('homepage'),
+                    new StringField('homepage_2'),
+                    new IntegerField('parlament_biografie_id'),
+                    new IntegerField('parlament_number'),
+                    new StringField('parlament_beruf_json'),
+                    new StringField('parlament_interessenbindungen'),
+                    new StringField('parlament_interessenbindungen_json'),
+                    new DateTimeField('parlament_interessenbindungen_updated'),
+                    new StringField('twitter_name'),
+                    new StringField('instagram_profil'),
+                    new StringField('youtube_user'),
+                    new StringField('linkedin_profil_url'),
+                    new StringField('xing_profil_name'),
+                    new StringField('facebook_name'),
+                    new StringField('wikipedia'),
+                    new StringField('wikidata_qid'),
+                    new StringField('sprache'),
+                    new StringField('arbeitssprache'),
+                    new StringField('adresse_firma'),
+                    new StringField('adresse_strasse'),
+                    new StringField('adresse_zusatz'),
+                    new StringField('adresse_plz'),
+                    new StringField('adresse_ort'),
+                    new StringField('telephon_1'),
+                    new StringField('telephon_2'),
+                    new StringField('erfasst'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('autorisierung_verschickt_visa'),
+                    new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisiert_visa'),
+                    new DateField('autorisiert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('beruf_de'),
+                    new DateField('von', true),
+                    new DateField('bis'),
+                    new IntegerField('aktiv'),
+                    new IntegerField('published', true),
+                    new IntegerField('geburtstag_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_bis_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix'),
+                    new IntegerField('von_unix', true),
+                    new IntegerField('bis_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_person_ist_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
