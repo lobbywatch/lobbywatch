@@ -117,7 +117,9 @@ def read_groups(filename):
                 pass
             else:
                 # save previous page
-                if titles and presidents:
+                if titles:
+                    if not presidents:
+                        print("-- WARN: no presidents for group '{}'".format(titles[0]))
                     groups.append((titles, presidents, sekretariat, konstituierung, zweck, art_der_aktivitaeten, mitglieder))
                 reading_mode = ReadingMode.TITLE
                 titles = []
