@@ -87,12 +87,13 @@ function main() {
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
-  $options = getopt('hsv::n::',array('db:','help'));
+  $options = getopt('hsv::n::f',array('db:','help'));
 
   if (isset($options['h']) || isset($options['help'])) {
     print("ws.parlament.ch Fetcher for Lobbywatch.ch.
 Parameters:
 -s              Output SQL script
+-f              Fast update (only entries without wikidata are checked)
 -n number       Limit number of records
 -v[level]       Verbose, optional level, 1 = default
 --db=db_name    Name of DB to use
@@ -140,7 +141,9 @@ export SYNC_FILE=sql/ws_parlament_ch_sync_`date +\"%Y%m%d\"`.sql; php -f ws_parl
   $schema = $db_schema;
   print("-- Schema: $schema\n");
 
-  updateWikidata($schema, $records_limit);
+  $fast = isset($options['f']);
+
+  updateWikidata($schema, $fast, $records_limit);
   // setImportDate();
 
   if (count($errors) > 0) {
@@ -177,7 +180,7 @@ function setImportDate() {
   $script[] = "UPDATE settings SET value='$transaction_date' WHERE key_name='ws.parlament.ch_last_import_date';";
 }
 
-function updateWikidata(string $schema, $records_limit = false) {
+function updateWikidata(string $schema, bool $fast, $records_limit = false) {
   global $script;
   global $context;
   global $show_sql;
@@ -203,9 +206,11 @@ function updateWikidata(string $schema, $records_limit = false) {
   $wikidata_empty_count = 0;
   $wikidata_removed_count = 0;
 
+  $fast_condition = $fast ? 'AND wikidata_qid IS NULL' : '';
+
   $i = 0;
   foreach ($wikidata_tables as $wikidata_table) {
-    $sql = "SELECT id, wikipedia, wikidata_qid FROM $wikidata_table WHERE wikipedia IS NOT NULL ORDER BY id;";
+    $sql = "SELECT id, wikipedia, wikidata_qid FROM $wikidata_table WHERE wikipedia IS NOT NULL $fast_condition ORDER BY id;";
     foreach ($db->query($sql) as $row) {
       $i++;
       if ($records_limit && $i > $records_limit) {

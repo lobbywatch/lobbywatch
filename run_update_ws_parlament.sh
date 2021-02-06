@@ -51,6 +51,8 @@ noparlam=false
 nozb=false
 uid=false
 wikidata=false
+fast=false
+fast_param=''
 nopg=false
 zb_script_path=web_scrapers
 pg_script_path=web_scrapers
@@ -108,7 +110,8 @@ while test $# -gt 0; do
                         echo "-Z, --nozb                       Do not run zutrittsberechtigten script"
                         echo "-u, --uid                        Run update uid script"
                         echo "-U, --onlyuid                    Run ONLY update uid script"
-                        echo "-w, --wikidata               Run ONLY update wikidata script"
+                        echo "-F, --fast                       Fast mode (only empty wikidata)"
+                        echo "-w, --wikidata                   Run ONLY update wikidata script"
                         echo "-W, --onlywikidata               Run ONLY update wikidata script"
                         echo "-G, --nopg                       Do not run parlamentarische Gruppen script"
                         echo "-a, --automatic                  Automatic"
@@ -182,6 +185,11 @@ while test $# -gt 0; do
                         noparlam=true
                         nozb=true
                         nopg=true
+                        shift
+                        ;;
+                -F|--fast)
+                        fast=true
+                        fast_param='-f'
                         shift
                         ;;
                 -w|--wikidata)
@@ -522,7 +530,7 @@ if $wikidata; then
   fi
   mkdir -p sql
   echo "Limit: $limit_parameter"
-  export W_FILE=sql/ws_wikidata_sync_`date +"%Y%m%dT%H%M%S"`.sql; $LOCAL_PHP -f ws_wikidata_fetcher.php -- -s $limit_parameter --db=$db $verbose_mode | tee $W_FILE
+  export W_FILE=sql/ws_wikidata_sync_`date +"%Y%m%dT%H%M%S"`.sql; $LOCAL_PHP -f ws_wikidata_fetcher.php -- -s $limit_parameter --db=$db $verbose_mode $fast_param | tee $W_FILE
 
   if $verbose ; then
     echo "wikidata SQL: $W_FILE"
