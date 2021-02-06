@@ -1223,6 +1223,7 @@ function getParteiId($party) {
     case 'EDU': return 19;
     case 'Al': return 20;
     case 'EGsolS': return 21;
+    case 'Mitte': return 22;
     case '-': case '': case null: return null;
     default: $errors[] = "Wrong partei code '$partyCode'"; return "ERR $partyCode";
   }
