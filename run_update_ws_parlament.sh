@@ -86,6 +86,7 @@ FULL_DUMP_PARAMETER=''
 DUMP_TYPE_NAME='DATA dump'
 processRetired=''
 
+POSITIONAL=()
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 while test $# -gt 0; do
       case $1 in
@@ -273,10 +274,13 @@ while test $# -gt 0; do
                         shift
                         ;;
                 *)
-                        break
+                        POSITIONAL+=("$1") # save it in an array for later
+                        shift
                         ;;
         esac
 done
+
+set -- "${POSITIONAL[@]}" # restore positional parameters
 
 checkLocalMySQLRunning
 

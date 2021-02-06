@@ -18,9 +18,10 @@ progress=""
 backup_param='-b'
 onlyimport=false
 
+POSITIONAL=()
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
-for i in "$@" ; do
-      case $i in
+while test $# -gt 0; do
+      case $1 in
                 -h|--help)
                         echo "Import DB from production to local"
                         echo
@@ -54,7 +55,8 @@ for i in "$@" ; do
                         shift
                         ;;
                 *)
-                        break
+                        POSITIONAL+=("$1") # save it in an array for later
+                        shift
                         ;;
         esac
 done
