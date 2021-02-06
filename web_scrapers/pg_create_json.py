@@ -252,7 +252,7 @@ def scrape():
     args = parser.parse_args()
     local_pdf = args.local_pdf
 
-    url = "https://www.parlament.ch/centers/documents/de/parlamentarische-gruppen.pdf"
+    url = "https://www.parlament.ch/centers/documents/de/gruppen-der-bundesversammlung.pdf"
     filename = "parlamentarische-gruppen.json"
 
     script_path = os.path.dirname(os.path.realpath(__file__))
