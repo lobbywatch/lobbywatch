@@ -968,6 +968,7 @@ function search_name_and_set_uid($records_limit, $start_id, $ssl, $test_mode) {
     $rechtsform_hr = _lobbywatch_ws_get_legalform_hr($rechtsform);
     $name_ws = null;
     $plz_ws = null;
+    $ort_ws = null;
     $rechtsform_ws = null;
     $uid = $uid_db = $row['uid']; // always null
     $matches = [];
@@ -975,10 +976,19 @@ function search_name_and_set_uid($records_limit, $start_id, $ssl, $test_mode) {
     $retry_log = '';
     $data = initDataArray();
     $uid = $uid_ws = ws_get_uid_from_name_search($name, $plz, $ort, $rechtsform_hr, $client, $data, $verbose, 9, $retry_log);
+    if (!$records_limit || $records_limit > 5) sleep(3);
+    if (empty($uid_ws)) {
+      $data = initDataArray();
+      $uid = $uid_ws = ws_get_uid_from_name_search($name, null, null, null, $client, $data, $verbose, 9, $retry_log);
+      if (!$records_limit || $records_limit > 5) sleep(3);
+    }
     if ($verbose > 9 && !empty($retry_log)) $fields[] = $retry_log;
-    if (!$records_limit || $records_limit > 20) sleep(3);
     $uid_count = $data['total_count'] ?? 0;
     $uid_rating = $data['data']['uid_rating'] ?? 0;
+
+    $plz_ws = $data['data']['adresse_plz'] ?? null;
+    $ort_ws = $data['data']['ort'] ?? null;
+    $rechtsform_ws = $data['data']['rechtsform'] ?? null;
 
     if (in_array($uid_ws, $uids)) {
       $sign = '2';
@@ -990,9 +1000,6 @@ function search_name_and_set_uid($records_limit, $start_id, $ssl, $test_mode) {
       // $data = initDataArray();
       // ws_get_organization_from_uid_bfs($uid_ws, $client, $data, $verbose, 9, $retry_log);
       // if (!$records_limit || $records_limit > 20) sleep(3);
-      $plz_ws = $data['data']['adresse_plz'] ?? null;
-      $ort_ws = $data['data']['ort'] ?? null;
-      $rechtsform_ws = $data['data']['rechtsform'] ?? null;
       // TODO also remove ort from name in a 2nd step
       if ($data['success']
       && is_organisation_name_similar($name_ws = $data['data']['name_de'], $name)

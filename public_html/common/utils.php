@@ -2505,7 +2505,18 @@ function ws_get_uid_from_name_search($name, $plz, $ort, $rechtsform, $client, &$
     ws_search_uid_bfs_raw($name, $plz, $ort, $rechtsform, 30, $client, $data_raw, $verbose, $num_retries, $retry_log);
     $uid_list = $data_raw['data'];
     if ($data_raw['success'] && count($uid_list) > 0) {
-      $uid_item = $uid_list[0];
+      $uid_item = null;
+      foreach ($uid_list as $candiate) {
+        $candidate_data = initDataArray();
+        fillDataFromUidBfsResult50($candiate, $candidate_data);
+        if (is_organisation_name_similar($candidate_data['data']['name_de'], $name)) {
+          $uid_item = $candiate;
+          break;
+        }
+      }
+      if (empty($uid_item)) {
+        $uid_item = $uid_list[0];
+      }
       fillDataFromUidBfsResult50($uid_item, $data);
       $uid_rating = $uid_item->rating;
       $data['data']['uid_rating'] = $uid_rating;
