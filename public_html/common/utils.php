@@ -3167,6 +3167,13 @@ function getValueFromWSFieldNameEmptyAsNull($ws_field, $parlamentarier_ws, $parl
   return trim($parlamentarier_ws->$ws_field);
 }
 
+// id_function
+function getBooleanFromWSFieldNameEmptyAsNullOnlySetTrue($ws_field, $parlamentarier_ws, $parlamentarier_db_obj, $field, $fields): ?bool {
+  if (!isset($parlamentarier_ws->$ws_field)) return null;
+  return $parlamentarier_ws->$ws_field === false ? $parlamentarier_db_obj->$field : $parlamentarier_ws->$ws_field;
+}
+
+// id_function
 function getOrganisationNameFromWSFieldEmptyAsNull($ws_field, $parlamentarier_ws, $parlamentarier_db_obj, $field, $fields) {
   if (empty($parlamentarier_ws->$ws_field) || trim($parlamentarier_ws->$ws_field) === '') return null;
   return trim($parlamentarier_ws->$ws_field) . ($parlamentarier_ws->inaktiv ? ' [INAKTIV]' : '');

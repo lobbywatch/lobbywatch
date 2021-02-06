@@ -751,7 +751,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
           $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
           $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, '_lobbywatch_ws_get_rechtsform');
           $different_db_values |= checkField('in_handelsregister', 'in_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
-          $different_db_values |= checkField('inaktiv', 'inaktiv', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+          $different_db_values |= checkField('inaktiv', 'inaktiv', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getBooleanFromWSFieldNameEmptyAsNullOnlySetTrue');
           $in_hr |= $organisation_ws->in_handelsregister;
         } else if (empty((array) $organisation_ws)) {
           if ($verbose > 0) $fields[] = "uid@bfs empty";
@@ -791,7 +791,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
           $different_db_values |= checkField('adresse_zusatz', 'adresse_zusatz', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
           $different_db_values |= checkField('adresse_plz', 'adresse_plz', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
           $different_db_values |= checkField('in_handelsregister', 'in_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
-          $different_db_values |= checkField('inaktiv', 'inaktiv', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+          $different_db_values |= checkField('inaktiv', 'inaktiv', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getBooleanFromWSFieldNameEmptyAsNullOnlySetTrue');
 
           // --------------------------------------------
           // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT
