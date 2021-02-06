@@ -725,7 +725,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
 
 
   if (count($update) > 0) {
-    $script[] = $comment = "-- Update Parlamentarier $parlamentarier_ws->lastName, $parlamentarier_ws->firstName, id=$id, fields: " . implode(", ", $fields);
+    $script[] = $comment = "-- Update Parlamentarier $parlamentarier_ws->lastName, $parlamentarier_ws->firstName, id=$id, fields: " . strtr(implode(", ", $fields), ["\n" => '\n']);
     $script[] = $command = "UPDATE `parlamentarier` SET " . implode(", ", $update) . ", updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/$user: Update via ws.parlament.ch',`notizen`) WHERE id=$id;";
     if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
     if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
