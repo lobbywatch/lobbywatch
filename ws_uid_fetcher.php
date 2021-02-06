@@ -101,18 +101,18 @@ function main() {
   if (isset($options['h']) || isset($options['help'])) {
     print("ws uid Fetcher for Lobbywatch.ch.
 Parameters:
--uUID, --uidUID    Call UID (BFS and Zefix REST) WS, UID as 9-digit, CHE00000000, or CHE-000.000.000 string (default: $default_uid)
--bUID, --bfsUID    Call UID-BFS-Register-WS (SOAP), UID as 9-digit, CHE00000000, or CHE-000.000.000 string (default: $default_uid)
--ZUID, --zefix-soap Call UID Zefix SOAP WS, UID as 9-digit , CHE00000000, or CHE-000.000.000 string (default: $default_uid)
+-uUID, --uidUID      Call UID (BFS and Zefix REST) WS, UID as 9-digit, CHE00000000, or CHE-000.000.000 string (default: $default_uid)
+-bUID, --bfsUID      Call UID-BFS-Register-WS (SOAP), UID as 9-digit, CHE00000000, or CHE-000.000.000 string (default: $default_uid)
+-ZUID, --zefix-soap  Call UID Zefix SOAP WS, UID as 9-digit , CHE00000000, or CHE-000.000.000 string (default: $default_uid)
 -z , --zefix, --zefix-rest Call UID Zefix REST WS, UID as 9-digit , CHE00000000, or CHE-000.000.000 string (default: $default_uid)
--oHR-ID             Search old HR-ID
+-oHR-ID              Search old HR-ID
 -t                   Call test service (default: production)
 --ssl                Use SSL
 -m                   Migrate old hr-id to uid from handelsregister_url
--a[START_ID]        Actualise organisations with UID from webservices, optional starting from organisation START_ID
--S[START_ID]        Search UIDs from name via webservices, optional starting from organisation START_ID
--f[START_ID]        Search name and set UID, optional starting from organisation START_ID
--n[NUM]             Limit number of records
+-a[START_ID]         Actualise organisations with UID from webservices, optional starting from organisation START_ID
+-c[START_ID]         Search and print UID candiates from name via webservices, optional starting from organisation START_ID
+-f[START_ID]         Search name and set UID, optional starting from organisation START_ID
+-n[NUM]              Limit number of records
 -s                   Output SQL script
 -v[level]            Verbose, optional level, 1 = default
 --db=db_name         Name of DB to use
@@ -256,9 +256,9 @@ Parameters:
     actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, $test_mode);
   }
 
-  if (isset($options['S'])) {
-    $start_id = $options['S'];
-    search_uids_by_name($records_limit, $start_id, $ssl, $test_mode);
+  if (isset($options['c'])) {
+    $start_id = $options['c'];
+    search_uid_candiates_by_name($records_limit, $start_id, $ssl, $test_mode);
   }
 
   if (isset($options['f'])) {
@@ -526,7 +526,7 @@ function migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode) {
   print("\n\n*/\n");
 }
 
-function search_uids_by_name($records_limit, $start_id, $ssl, $test_mode) {
+function search_uid_candiates_by_name($records_limit, $start_id, $ssl, $test_mode) {
   global $script;
   global $context;
   global $show_sql;
@@ -540,7 +540,7 @@ function search_uids_by_name($records_limit, $start_id, $ssl, $test_mode) {
   $uidBFSenabled = true;
   $zefixRestEnabled = false;
 
-  $script[] = $comment = "\n-- Search UIDs from name via webservices $transaction_date";
+  $script[] = $comment = "\n-- Search UID candiates from name via webservices $transaction_date";
 
   $starting_id_sql = $start_id ? "AND id >= $start_id" : '';
   $sql = "SELECT id, name_de, handelsregister_url, uid, rechtsform, rechtsform_handelsregister, abkuerzung_de, name_fr, ort, adresse_strasse, adresse_zusatz, adresse_plz, inaktiv FROM organisation WHERE uid IS NULL AND (rechtsform IS NULL OR rechtsform NOT IN ('Parlamentarische Gruppe', 'Ausserparlamentarische Kommission')) AND (land_id IS NULL OR land_id = 191) $starting_id_sql ORDER BY id;";
