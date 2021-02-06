@@ -4108,3 +4108,32 @@ function get_DB_name(): string {
   global $db;
   return $db->query('select database()')->fetchColumn();
 }
+
+function is_organisation_name_similar(string $name1, string $name2): bool {
+  static $replace_pattern = [
+    '%ae%ui',
+    '%oe%ui',
+    '%ue%ui',
+    '%[âà]%ui',
+    '%[éèë]%ui',
+    '%ç%ui',
+    '%[&+]|\bund\b|\bet\b%ui',
+    '%Schweizerischer|Schweizerischen|Schweizerische|Schweizeriche|Schweizer|Schweiz\.%ui',
+    '%\b(der|die|L\'|La|Le|du|des|zu)\s+%ui',
+    '%(vereinigung|Förderverein|Verein|Associazione|Association|Assoc\.|Zunft|Förderstiftung|Stiftung|Società|Schweiz|Suisse|Svizzera|Swiss)\b%ui',
+    '%\(\w+\)%ui',
+    '%,\s*\w+$%ui',
+    '%\s+(AG\SA|GmbH)(\s+in Liquidation|\s+in liquidazione|\s+in Liq\.)?$%ui',
+    '%\s+[A-ZÄÖÜ]{2,4}(\s*-\s*[A-ZÄÖÜ]{3,4})?$%u',
+    '%^[A-ZÄÖÜ]{2,4}(-[A-ZÄÖÜ]{3,4})?\b%u',
+    '%[-–—;.,"/*_\'®:]%ui',
+    '%\s+%ui'];
+  static $replace_replacement = ['ä', 'ö', 'ü', 'a', 'e', 'c', '+', 'ch'];
+  return trim(mb_strtolower(preg_replace($replace_pattern, $replace_replacement, $name1))) === trim(mb_strtolower(preg_replace($replace_pattern, $replace_replacement, $name2)));
+}
+
+function is_ort_name_similar(string $name1, string $name2): bool {
+  static $ort_pattern = ['%Genf%u', '%Neuenburg%u', '%\s*\d+%u', '%\s+[A-Z]{2}$%u', '%[/]%u', '%\s+(bei|b\.)\s+.+$%u'];
+  static $ort_replacement = ['Genève', 'Neuchâtel'];
+  return trim(preg_replace($ort_pattern, $ort_replacement, $name1)) === trim(preg_replace($ort_pattern, $ort_replacement, $name2));
+}

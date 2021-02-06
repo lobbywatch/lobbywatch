@@ -994,14 +994,10 @@ function search_name_and_set_uid($records_limit, $start_id, $ssl, $test_mode) {
       $ort_ws = $data['data']['ort'] ?? null;
       $rechtsform_ws = $data['data']['rechtsform'] ?? null;
       // TODO also remove ort from name in a 2nd step
-      $replace_pattern = ['%ae%ui', '%oe%ui', '%ue%ui', '%[âà]%ui', '%[éèë]%ui', '%ç%ui', '%[&+]|\bund\b|\bet\b%ui', '%Schweizerischer|Schweizerischen|Schweizerische|Schweizeriche|Schweizer|Schweiz\.%ui','%\b(der|die|L\'|La|Le|du|des|zu)\s+%ui', '%(vereinigung|Förderverein|Verein|Associazione|Association|Assoc\.|Zunft|Förderstiftung|Stiftung|Società|Schweiz|Suisse|Svizzera|Swiss)\b%ui', '%\(\w+\)%ui', '%,\s*\w+$%ui', '%\s+(AG\SA|GmbH)(\s+in Liquidation|\s+in liquidazione|\s+in Liq\.)?$%ui', '%\s+[A-ZÄÖÜ]{2,4}(\s*-\s*[A-ZÄÖÜ]{3,4})?$%u', '%^[A-ZÄÖÜ]{2,4}(-[A-ZÄÖÜ]{3,4})?\b%u', '%[-–—;.,"/*_\'®:]%ui', '%\s+%ui'];
-      $replace_replacement = ['ä', 'ö', 'ü', 'a', 'e', 'c', '+', 'ch'];
-      $ort_pattern = ['%Genf%u', '%Neuenburg%u', '%\s*\d+%u', '%\s+[A-Z]{2}$%u', '%[/]%u', '%\s+(bei|b\.)\s+.+$%u'];
-      $ort_replacement = ['Genève', 'Neuchâtel'];
       if ($data['success']
-      && mb_strtolower(preg_replace($replace_pattern, $replace_replacement, $name_ws = $data['data']['name_de'])) === mb_strtolower(preg_replace($replace_pattern, $replace_replacement, $name))
+      && is_organisation_name_similar($name_ws = $data['data']['name_de'], $name)
       && (
-        (!empty($ort) && trim(preg_replace($ort_pattern, $ort_replacement, $ort)) === trim(preg_replace($ort_pattern, $ort_replacement, $ort_ws)))
+        (!empty($ort) && is_ort_name_similar($ort, $ort_ws))
         || (!empty($plz) && $plz == $plz_ws)
         || (empty($plz) && empty($ort))
         )
