@@ -38264,7 +38264,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlament_committee_number"/>
             <Column fieldName="parlament_subcommittee_number"/>
             <Column fieldName="parlament_type_code"/>
-            <Column fieldName="wikipedia" visible="false"/>
+            <Column fieldName="wikipedia"/>
             <Column fieldName="wikidata_qid" visible="false"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
