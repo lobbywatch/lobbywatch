@@ -792,7 +792,7 @@ CREATE TABLE `interessenbindung` (
   `funktion_im_gremium` enum('praesident','vizepraesident','mitglied') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwaltungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
   `deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Ist diese Interessenbindung deklarationspflichtig? Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `status` enum('deklariert','nicht-deklariert') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'deklariert' COMMENT 'Status der Interessenbindung',
-  `hauptberuflich` tinyint(1) DEFAULT '0' COMMENT 'Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)',
+  `hauptberuflich` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)',
   `behoerden_vertreter` enum('J','N') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Entstand diese Interessenbindung als Behördenvertreter von Amtes wegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von Amtes wegen Einsitz nimmt.',
   `beschreibung` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `beschreibung_fr` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Französische Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
@@ -1133,7 +1133,7 @@ CREATE TABLE `interessenbindung_log` (
   `funktion_im_gremium` enum('praesident','vizepraesident','mitglied') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwaltungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
   `deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Ist diese Interessenbindung deklarationspflichtig? Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `status` enum('deklariert','nicht-deklariert') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'deklariert' COMMENT 'Status der Interessenbindung',
-  `hauptberuflich` tinyint(1) DEFAULT '0' COMMENT 'Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)',
+  `hauptberuflich` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)',
   `behoerden_vertreter` enum('J','N') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Entstand diese Interessenbindung als Behördenvertreter von Amtes wegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von Amtes wegen Einsitz nimmt.',
   `beschreibung` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `beschreibung_fr` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Französische Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
@@ -2664,7 +2664,7 @@ CREATE TABLE `mv_interessenbindung` (
   `funktion_im_gremium` enum('praesident','vizepraesident','mitglied') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwaltungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
   `deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Ist diese Interessenbindung deklarationspflichtig? Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `status` enum('deklariert','nicht-deklariert') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'deklariert' COMMENT 'Status der Interessenbindung',
-  `hauptberuflich` tinyint(1) DEFAULT NULL COMMENT 'Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)',
+  `hauptberuflich` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)',
   `behoerden_vertreter` enum('J','N') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Entstand diese Interessenbindung als Behördenvertreter von Amtes wegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von Amtes wegen Einsitz nimmt.',
   `beschreibung` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `beschreibung_fr` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Französische Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
@@ -2791,7 +2791,7 @@ CREATE TABLE `mv_organisation` (
   `name_fr` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Französischer Name',
   `name_it` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Italienischer Name',
   `uid` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999',
-  `in_handelsregister` tinyint(1) DEFAULT NULL COMMENT 'Ist die Organisation im Handelsregister (Zefix) eingetragen?',
+  `in_handelsregister` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Ist die Organisation im Handelsregister (Zefix) eingetragen?',
   `inaktiv` tinyint(1) DEFAULT NULL COMMENT 'Gibt es die Organisation noch?',
   `ort` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Ort der Organisation',
   `abkuerzung_de` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)',
@@ -3359,7 +3359,7 @@ CREATE TABLE `organisation` (
   `name_fr` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Französischer Name',
   `name_it` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Italienischer Name',
   `uid` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999',
-  `in_handelsregister` tinyint(1) DEFAULT NULL COMMENT 'Ist die Organisation im Handelsregister (Zefix) eingetragen?',
+  `in_handelsregister` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Ist die Organisation im Handelsregister (Zefix) eingetragen?',
   `inaktiv` tinyint(1) DEFAULT '0' COMMENT 'Gibt es die Organisation noch?',
   `ort` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Ort der Organisation',
   `abkuerzung_de` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)',
@@ -4055,7 +4055,7 @@ CREATE TABLE `organisation_log` (
   `name_fr` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Französischer Name',
   `name_it` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Italienischer Name',
   `uid` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999',
-  `in_handelsregister` tinyint(1) DEFAULT NULL COMMENT 'Ist die Organisation im Handelsregister (Zefix) eingetragen?',
+  `in_handelsregister` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Ist die Organisation im Handelsregister (Zefix) eingetragen?',
   `inaktiv` tinyint(1) DEFAULT '0' COMMENT 'Gibt es die Organisation noch?',
   `ort` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Ort der Organisation',
   `abkuerzung_de` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)',
@@ -6010,7 +6010,7 @@ CREATE TABLE `translation_source_log` (
   PRIMARY KEY (`log_id`),
   KEY `fk_translation_source_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_translation_source_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2946 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Translations for lobbywatch DB';
+) ENGINE=InnoDB AUTO_INCREMENT=2958 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Translations for lobbywatch DB';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -15634,4 +15634,4 @@ SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS ;
 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION ;
 SET SQL_NOTES=@OLD_SQL_NOTES ;
 
--- Dump completed on 2021-02-07 21:09:01
+-- Dump completed on 2021-02-07 21:56:39

@@ -862,7 +862,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -1016,7 +1016,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -1623,7 +1623,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -1701,7 +1701,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -3475,7 +3475,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -4367,7 +4367,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -4595,7 +4595,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -10614,7 +10614,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -11118,7 +11118,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -11669,7 +11669,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -12658,7 +12658,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -19174,7 +19174,7 @@
                     new StringField('funktion_im_gremium', false, true),
                     new StringField('deklarationstyp', true, true),
                     new StringField('status', true, true),
-                    new IntegerField('hauptberuflich', false, true),
+                    new IntegerField('hauptberuflich', true, true),
                     new StringField('behoerden_vertreter', false, true),
                     new StringField('beschreibung', false, true),
                     new StringField('beschreibung_fr', false, true),
@@ -24358,7 +24358,7 @@
                     new StringField('funktion_im_gremium', false, true),
                     new StringField('deklarationstyp', true, true),
                     new StringField('status', true, true),
-                    new IntegerField('hauptberuflich', false, true),
+                    new IntegerField('hauptberuflich', true, true),
                     new StringField('behoerden_vertreter', false, true),
                     new StringField('beschreibung', false, true),
                     new StringField('beschreibung_fr', false, true),
@@ -30399,7 +30399,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -30760,7 +30760,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -31207,7 +31207,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -31942,7 +31942,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -32172,7 +32172,7 @@
                     new StringField('funktion_im_gremium'),
                     new StringField('deklarationstyp', true),
                     new StringField('status', true),
-                    new IntegerField('hauptberuflich'),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('behoerden_vertreter'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
@@ -33706,7 +33706,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -34173,7 +34173,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -34668,7 +34668,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -35890,7 +35890,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -37212,7 +37212,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -37501,7 +37501,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -37903,7 +37903,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -38837,7 +38837,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -39062,7 +39062,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -42006,7 +42006,8 @@
             $editor = new CheckBox('in_handelsregister_edit');
             $editColumn = new CustomEditColumn('In Handelsregister', 'in_handelsregister', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToNull(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -42886,7 +42887,8 @@
             $editor = new CheckBox('in_handelsregister_edit');
             $editColumn = new CustomEditColumn('In Handelsregister', 'in_handelsregister', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToNull(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
             
@@ -43789,7 +43791,8 @@
             $editor = new CheckBox('in_handelsregister_edit');
             $editColumn = new CustomEditColumn('In Handelsregister', 'in_handelsregister', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToNull(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             

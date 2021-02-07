@@ -1467,7 +1467,7 @@
                     new StringField('interessenbindung_funktion_im_gremium'),
                     new StringField('interessenbindung_deklarationstyp', true),
                     new StringField('interessenbindung_status', true),
-                    new IntegerField('interessenbindung_hauptberuflich'),
+                    new IntegerField('interessenbindung_hauptberuflich', true),
                     new StringField('interessenbindung_behoerden_vertreter'),
                     new StringField('interessenbindung_beschreibung'),
                     new StringField('interessenbindung_beschreibung_fr'),
@@ -2509,11 +2509,8 @@
             //
             // View column for id field
             //
-            $column = new NumberViewColumn('id', 'id', 'Id', $this->dataset);
+            $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Technischer Schlüssel Jahresvergütung von Intressenbindung');
             $column->SetFixedWidth(null);
@@ -2877,11 +2874,8 @@
             //
             // View column for id field
             //
-            $column = new NumberViewColumn('id', 'id', 'Id', $this->dataset);
+            $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3160,7 +3154,7 @@
                     new StringField('funktion_im_gremium'),
                     new StringField('deklarationstyp', true),
                     new StringField('status', true),
-                    new IntegerField('hauptberuflich'),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('behoerden_vertreter'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
@@ -3559,7 +3553,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -3779,7 +3773,7 @@
                     new StringField('funktion_im_gremium'),
                     new StringField('deklarationstyp', true),
                     new StringField('status', true),
-                    new IntegerField('hauptberuflich'),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('behoerden_vertreter'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
@@ -4046,7 +4040,7 @@
                     new StringField('funktion_im_gremium'),
                     new StringField('deklarationstyp', true),
                     new StringField('status', true),
-                    new IntegerField('hauptberuflich'),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('behoerden_vertreter'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
@@ -4175,11 +4169,8 @@
             //
             // View column for id field
             //
-            $column = new NumberViewColumn('id', 'id', 'Id', $this->dataset);
+            $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
             $grid->AddPrintColumn($column);
             
             //
@@ -4441,11 +4432,8 @@
             //
             // View column for id field
             //
-            $column = new NumberViewColumn('id', 'id', 'Id', $this->dataset);
+            $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
             $grid->AddExportColumn($column);
             
             //
@@ -5094,7 +5082,7 @@
                     new StringField('funktion_im_gremium'),
                     new StringField('deklarationstyp', true),
                     new StringField('status', true),
-                    new IntegerField('hauptberuflich'),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('behoerden_vertreter'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
@@ -5149,7 +5137,7 @@
                     new StringField('funktion_im_gremium'),
                     new StringField('deklarationstyp', true),
                     new StringField('status', true),
-                    new IntegerField('hauptberuflich'),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('behoerden_vertreter'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
@@ -5318,7 +5306,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -5392,7 +5380,7 @@
                     new StringField('funktion_im_gremium'),
                     new StringField('deklarationstyp', true),
                     new StringField('status', true),
-                    new IntegerField('hauptberuflich'),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('behoerden_vertreter'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
@@ -5561,7 +5549,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -5635,7 +5623,7 @@
                     new StringField('funktion_im_gremium'),
                     new StringField('deklarationstyp', true),
                     new StringField('status', true),
-                    new IntegerField('hauptberuflich'),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('behoerden_vertreter'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),

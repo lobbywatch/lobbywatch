@@ -3934,7 +3934,8 @@ function camelize($input, $separator = '_', $capitalizeFirstCharacter = true) {
 }
 
 function clean_str(?string $str): ?string {
-  if (empty($str)) return null;
+  // MUST NOT BE empty($str) due to usage in forms
+  if (!isset($str)) return null;
   $cleaned = Normalizer::normalize($str, Normalizer::FORM_C);
   // replace typographic chars
   // https://stackoverflow.com/questions/26458654/regular-expressions-for-a-range-of-unicode-points-php

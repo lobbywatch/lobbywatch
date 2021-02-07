@@ -1246,7 +1246,7 @@
                     new StringField('funktion_im_gremium'),
                     new StringField('deklarationstyp', true),
                     new StringField('status', true),
-                    new IntegerField('hauptberuflich'),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('behoerden_vertreter'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
@@ -2185,7 +2185,7 @@
                     new StringField('funktion_im_gremium'),
                     new StringField('deklarationstyp', true),
                     new StringField('status', true),
-                    new IntegerField('hauptberuflich'),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('behoerden_vertreter'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
@@ -2240,7 +2240,7 @@
                     new StringField('funktion_im_gremium'),
                     new StringField('deklarationstyp', true),
                     new StringField('status', true),
-                    new IntegerField('hauptberuflich'),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('behoerden_vertreter'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
@@ -2452,7 +2452,7 @@
                     new StringField('funktion_im_gremium'),
                     new StringField('deklarationstyp', true),
                     new StringField('status', true),
-                    new IntegerField('hauptberuflich'),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('behoerden_vertreter'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
@@ -5289,7 +5289,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -5628,7 +5628,7 @@
                     new StringField('funktion_im_gremium'),
                     new StringField('deklarationstyp', true),
                     new StringField('status', true),
-                    new IntegerField('hauptberuflich'),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('behoerden_vertreter'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
@@ -7463,7 +7463,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -7584,7 +7584,8 @@
             //
             $editor = new CheckBox('hauptberuflich_edit');
             $editColumn = new CustomEditColumn('Haupt&shy;beruflich', 'hauptberuflich', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -7961,7 +7962,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -8082,7 +8083,8 @@
             //
             $editor = new CheckBox('hauptberuflich_edit');
             $editColumn = new CustomEditColumn('Haupt&shy;beruflich', 'hauptberuflich', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
             
@@ -8468,7 +8470,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -8589,8 +8591,9 @@
             //
             $editor = new CheckBox('hauptberuflich_edit');
             $editColumn = new CustomEditColumn('Haupt&shy;beruflich', 'hauptberuflich', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
             $editColumn->SetInsertDefaultValue('0');
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -9841,7 +9844,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -10029,7 +10032,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -10217,7 +10220,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
@@ -10405,7 +10408,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister'),
+                    new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),

@@ -459,7 +459,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="150" placeholder="Inoffizielle Bezeichnungen durch ; getrennt"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="in_handelsregister" caption="In Handelsregister" headerHint="Ist die Organisation im Handelsregister (Zefix) eingetragen?" canSetNull="true" readOnly="true" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="in_handelsregister" caption="In Handelsregister" headerHint="Ist die Organisation im Handelsregister (Zefix) eingetragen?" readOnly="true" selectedFilterOperators="1573119">
             <ViewProperties type="checkBox" displayType="image"/>
             <EditProperties type="checkBox"/>
           </ColumnPresentation>
@@ -25097,7 +25097,7 @@ $edit_general_hint        </BeforeGridText>
               </Values>
             </EditProperties>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="hauptberuflich" caption="Haupt&amp;shy;beruflich" headerHint="Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)" canSetNull="true" defaultInsertValue="0" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="hauptberuflich" caption="Haupt&amp;shy;beruflich" headerHint="Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)" defaultInsertValue="0" selectedFilterOperators="1573119">
             <ViewProperties type="checkBox" displayType="image"/>
             <EditProperties type="checkBox"/>
           </ColumnPresentation>
@@ -26704,9 +26704,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
         <DetailedDescription/>
         <ColumnPresentations>
           <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel Jahresvergütung von Intressenbindung" showColumnFilter="false" selectedFilterOperators="1573119">
-            <ViewProperties type="text">
-              <Format type="number" thousandSeparator="'"/>
-            </ViewProperties>
+            <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="interessenbindung_id" caption="Interessenbindung" headerHint="Fremdschlüssel der Interessenbindung" selectedFilterOperators="1573119">

@@ -3831,19 +3831,19 @@ ALTER TABLE `person`
 ALTER TABLE `person_log`
   ADD `ist_parlamentarier_id` INT NULL DEFAULT NULL COMMENT 'Verknüpfung zu Parlamentarier_in, falls diese Person einmal im Parlament war' AFTER `telephon_2`;
 
--- 07.02.2021 organisation.in_handelsregister optional in DB in order to avoid "Cannot execute SQL statement: Column 'in_handelsregister' cannot be null"
+-- 07.02.2021 revert to organisation.in_handelsregister to NOT NULL
 
 ALTER TABLE `organisation`
-  CHANGE `in_handelsregister` `in_handelsregister` TINYINT(1) NULL DEFAULT NULL COMMENT 'Ist die Organisation im Handelsregister (Zefix) eingetragen?';
+  CHANGE `in_handelsregister` `in_handelsregister` TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'Ist die Organisation im Handelsregister (Zefix) eingetragen?';
 
 ALTER TABLE `organisation_log`
-  CHANGE `in_handelsregister` `in_handelsregister` TINYINT(1) NULL DEFAULT NULL COMMENT 'Ist die Organisation im Handelsregister (Zefix) eingetragen?';
+  CHANGE `in_handelsregister` `in_handelsregister` TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'Ist die Organisation im Handelsregister (Zefix) eingetragen?';
 
 
--- 07.02.2021 interessenbindung.hauptberuflich optional in DB in order to avoid "Cannot execute SQL statement: Column 'hauptberuflich' cannot be null"
+-- 07.02.2021 revert interessenbindung.hauptberuflich to NOT NULL
 
 ALTER TABLE `interessenbindung`
-  CHANGE `hauptberuflich` `hauptberuflich` TINYINT(1) NULL DEFAULT '0' COMMENT 'Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)';
+  CHANGE `hauptberuflich` `hauptberuflich` TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)';
 
 ALTER TABLE `interessenbindung_log`
-  CHANGE `hauptberuflich` `hauptberuflich` TINYINT(1) NULL DEFAULT '0' COMMENT 'Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)';
+  CHANGE `hauptberuflich` `hauptberuflich` TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)';
