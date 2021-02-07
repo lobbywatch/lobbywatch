@@ -2675,7 +2675,7 @@ function fillDataFromUidBfsResult50($object, &$data) {
         'land_id' => _lobbywatch_ws_get_land_id($address->countryIdISO2),
     //     'handelsregister_url' => ,
         'register_kanton' => null,
-        'kanton' => $address->cantonAbbreviation,
+        'kanton' => $address->cantonAbbreviation ?? null,
         'inaktiv' => (!empty($uid_status_code) ? in_array($uid_status_code, [5, 6, 7]) : null) || (!empty($hr_status_entry_code) ? $hr_status_entry_code == 2 : (!empty($ot->organisation->liquidation->uidregLiquidationDate) ? true : null)),
         'in_handelsregister' => $hr_status_code == 2,
         'gruendungsdatum' => $ot->organisation->foundationDate ?? null,
@@ -4138,18 +4138,18 @@ function get_DB_name(): string {
 
 function is_organisation_name_similar(string $name1, string $name2): bool {
   static $replace_pattern = [
-    '%ae%ui',
-    '%oe%ui',
-    '%ue%ui',
-    '%[âà]%ui',
-    '%[éèë]%ui',
-    '%ç%ui',
-    '%[&+]|\bund\b|\bet\b%ui',
-    '%Schweizerischer|Schweizerischen|Schweizerische|Schweizeriche|Schweizer|Schweiz\.%ui',
+    '%ae%ui', // replace ä
+    '%oe%ui', // replace ö
+    '%ue%ui', // replace ü
+    '%[âà]%ui', // replace a
+    '%[éèë]%ui', // replace e
+    '%ç%ui', // replace c
+    '%[&+]|\bund\b|\bet\b%ui', // replace +
+    '%Schweizerischer|Schweizerischen|Schweizerische|Schweizeriche|Schweizer|Schweiz\.%ui', // replace ch
     '%\b(der|die|L\'|La|Le|du|des|zu)\s+%ui',
     '%(vereinigung|Förderverein|Verein|Associazione|Association|Assoc\.|Zunft|Förderstiftung|Stiftung|Società|Schweiz|Suisse|Svizzera|Swiss)\b%ui',
     '%\(\w+\)%ui',
-    '%,\s*\w+$%ui',
+    // '%,\s*\w+$%ui',
     '%\s+(AG\SA|GmbH)(\s+in Liquidation|\s+in liquidazione|\s+in Liq\.)?$%ui',
     '%\s+[A-ZÄÖÜ]{2,4}(\s*-\s*[A-ZÄÖÜ]{3,4})?$%u',
     '%^[A-ZÄÖÜ]{2,4}(-[A-ZÄÖÜ]{3,4})?\b%u',
