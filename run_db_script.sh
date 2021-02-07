@@ -136,9 +136,10 @@ if [[ "$script" == "" ]]; then
 fi
 
 # docker check disabled due to problems with &, stopped process
-# docker exec -it $MYSQL_CONTAINER mysql --help >/dev/null 2>&1 && IS_DOCKER=true || IS_DOCKER=false
+# mysqldump of MySQL is necessary for generated cols
+docker exec -it $MYSQL_CONTAINER mysql --help >/dev/null 2>&1 && IS_DOCKER=true || IS_DOCKER=false
 # log files must be passed, disable for the moment
-IS_DOCKER=false
+# IS_DOCKER=true
 if $IS_DOCKER && [ "$PORT" == "3306" ]; then
   if  [[ "$mode" != "cron" ]] ; then
     echo "Docker mode"
