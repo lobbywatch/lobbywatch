@@ -746,7 +746,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
           // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT
           // --------------------------------------------
 
-          $different_db_values |= checkField('name_de', 'name_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull', null, null, 150);
+          // $different_db_values |= checkField('name_de', 'name_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull', null, null, 150); // do not update bfs names as the data quality is bad
           $different_db_values |= checkField('abkuerzung_de', 'abkuerzung_de', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, 'getValueFromWSFieldNameEmptyAsNull');
           $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
           $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getRechtsformFromWSFieldNameEmptyAsNull');
