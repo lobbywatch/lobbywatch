@@ -51,6 +51,7 @@ class Guest(Entity):
         name = self.fix_name_typos(name)
         self.names = split_names(name)
         self.function = self.clean_string(function)
+        self.gender = 'F' if "Frau" in name_raw or "Madame" in name_raw else "M"
 
     def fix_name_typos(self, name):
         return name.replace("Schürch Florence", "Schurch Florence")
@@ -168,7 +169,8 @@ def write_to_json(guests, archive_pdf_name, filename, url, creation_date, import
             "canton": member_of_parliament.canton,
             "guests": [{
                 "names": guest.names,
-                "function": guest.function
+                "function": guest.function,
+                "gender": guest.gender
                 } for guest in current_guests]
             } for member_of_parliament, current_guests in guests.items()]
 
