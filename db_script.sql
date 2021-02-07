@@ -1021,3 +1021,37 @@ SELECT `TABLE_SCHEMA`, `TABLE_NAME` FROM `COLUMNS` WHERE `COLUMN_NAME`='wikidata
 
 SELECT LENGTH(`twitter_name`), SUBSTRING(twitter_name, 1, 15) AS twitter_name_cut, `twitter_name`, `id` FROM organisation WHERE LENGTH(`twitter_name`) > 15;
 UPDATE `parlamentarier_log` SET twitter_name = SUBSTRING(twitter_name, 1, 15) WHERE LENGTH(twitter_name) > 15;
+
+-- 07.02.2021 check inaktive parlamentarische gruppen
+
+SELECT organisation.id, organisation.name_de, organisation.rechtsform, organisation.inaktiv, COUNT(interessenbindung.id) FROM `organisation` JOIN interessenbindung ON interessenbindung.organisation_id = organisation.id AND (interessenbindung.bis IS NULL) WHERE `inaktiv`=0 AND organisation.`rechtsform`='Parlamentarische Gruppe' GROUP BY organisation.id
+-- HAVING COUNT(interessenbindung.id) = 0
+
+SELECT organisation.id, organisation.name_de, organisation.rechtsform, organisation.inaktiv, interessenbindung.id, interessenbindung.bis, parlamentarier.id, parlamentarier.nachname, parlamentarier.vorname, parlamentarier.im_rat_bis FROM `organisation`
+JOIN interessenbindung ON interessenbindung.organisation_id = organisation.id AND (interessenbindung.bis IS NULL)
+JOIN parlamentarier ON parlamentarier.id = interessenbindung.parlamentarier_id
+WHERE `inaktiv`=0 AND organisation.`rechtsform`='Parlamentarische Gruppe' AND organisation.id = 5305
+
+SELECT organisation.id, organisation.name_de, organisation.rechtsform, organisation.inaktiv, interessenbindung.id, interessenbindung.bis, parlamentarier.id, parlamentarier.nachname, parlamentarier.vorname, parlamentarier.im_rat_bis
+FROM `organisation`
+JOIN interessenbindung ON interessenbindung.organisation_id = organisation.id AND interessenbindung.bis IS NULL
+JOIN parlamentarier ON parlamentarier.id = interessenbindung.parlamentarier_id AND parlamentarier.im_rat_bis IS NOT NULL
+WHERE `organisation`.`rechtsform`='Parlamentarische Gruppe'
+
+-- Update SQL beende Interessenbindung zu parlamentarischer Gruppe von zurückgetretenen Parlamentarieren
+SELECT organisation.id, organisation.name_de, organisation.rechtsform, organisation.inaktiv, interessenbindung.id, interessenbindung.bis, parlamentarier.id, parlamentarier.nachname, parlamentarier.vorname, parlamentarier.im_rat_bis, CONCAT('UPDATE interessenbindung SET bis=''', parlamentarier.im_rat_bis, ''', updated_visa=''roland'', notizen = CONCAT_WS(''\\n\\n'', ''07.02.2021/roland: beende Interessenbindung zu parlamentarischer Gruppe von zurückgetretenen Parlamentarieren'', notizen) WHERE id=', interessenbindung.id, ';') update_sql
+FROM `organisation`
+JOIN interessenbindung ON interessenbindung.organisation_id = organisation.id AND interessenbindung.bis IS NULL
+JOIN parlamentarier ON parlamentarier.id = interessenbindung.parlamentarier_id AND parlamentarier.im_rat_bis IS NOT NULL
+WHERE `organisation`.`rechtsform`='Parlamentarische Gruppe'
+
+-- Update SQL zum Inaktivsetzen von Parlamentarischen Gruppen ohne Mitglieder
+SELECT organisation.id, organisation.name_de, organisation.rechtsform, organisation.inaktiv, interessenbindung.id, interessenbindung.bis, parlamentarier.id, parlamentarier.nachname, parlamentarier.vorname, parlamentarier.im_rat_bis, COUNT(interessenbindung.id), CONCAT('UPDATE organisation SET inaktiv=1, updated_visa=''roland'', notizen = CONCAT_WS(''\\n\\n'', ''07.02.2021/roland: setze parlamentarische Gruppe ohne aktive Mitglieder auf inaktiv'', notizen) WHERE id=', organisation.id, ';') update_sql
+FROM `organisation`
+LEFT JOIN interessenbindung ON interessenbindung.organisation_id = organisation.id AND interessenbindung.bis IS NULL
+LEFT JOIN parlamentarier ON parlamentarier.id = interessenbindung.parlamentarier_id
+WHERE organisation.`rechtsform`='Parlamentarische Gruppe'
+AND `inaktiv`=0
+-- AND organisation.id = 5972
+GROUP BY organisation.id
+HAVING COUNT(interessenbindung.id) = 0
