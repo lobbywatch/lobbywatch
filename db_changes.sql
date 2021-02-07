@@ -3830,3 +3830,11 @@ ALTER TABLE `person`
 
 ALTER TABLE `person_log`
   ADD `ist_parlamentarier_id` INT NULL DEFAULT NULL COMMENT 'Verknüpfung zu Parlamentarier_in, falls diese Person einmal im Parlament war' AFTER `telephon_2`;
+
+-- 07.02.2021 organisation.in_handelsregister optional in DB in order to avoid "Cannot execute SQL statement: Column 'in_handelsregister' cannot be null"
+
+ALTER TABLE `organisation`
+  CHANGE `in_handelsregister` `in_handelsregister` TINYINT(1) NULL DEFAULT NULL COMMENT 'Ist die Organisation im Handelsregister (Zefix) eingetragen?';
+
+ALTER TABLE `organisation_log`
+  CHANGE `in_handelsregister` `in_handelsregister` TINYINT(1) NULL DEFAULT NULL COMMENT 'Ist die Organisation im Handelsregister (Zefix) eingetragen?';

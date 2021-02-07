@@ -2556,7 +2556,7 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
-                    new IntegerField('in_handelsregister', true),
+                    new IntegerField('in_handelsregister'),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
                     new StringField('abkuerzung_de'),
