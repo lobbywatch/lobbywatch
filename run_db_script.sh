@@ -135,6 +135,11 @@ if [[ "$script" == "" ]]; then
   abort "Parameter script is empty"
 fi
 
+MYSQLDUMP=mysqldump
+MYSQL=mysql
+MYSQL_LOCAL="mysql"
+#MYSQL_LOCAL="mysql -vvv"
+
 # docker check disabled due to problems with &, stopped process
 # mysqldump of MySQL is necessary for generated cols
 docker exec -it $MYSQL_CONTAINER mysql --help >/dev/null 2>&1 && IS_DOCKER=true || IS_DOCKER=false
