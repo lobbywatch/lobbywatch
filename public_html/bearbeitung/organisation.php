@@ -45864,6 +45864,9 @@
             '        editors[\'homepage\'].setReadonly(true);'. "\n" .
             '        editors[\'sekretariat\'].setReadonly(true);'. "\n" .
             '        editors[\'rechtsform\'].setReadonly(true);'. "\n" .
+            '        if (editors[\'inaktiv\'].getValue()) {'. "\n" .
+            '           editors[\'inaktiv\'].setReadonly(true);'. "\n" .
+            '        }'. "\n" .
             '    }'. "\n" .
             '    if (editors[\'uid\'].getValue()) {'. "\n" .
             '        editors[\'name_de\'].setReadonly(true);'. "\n" .
