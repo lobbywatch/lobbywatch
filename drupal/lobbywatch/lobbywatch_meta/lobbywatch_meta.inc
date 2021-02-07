@@ -115,6 +115,10 @@ function _lobbywatch_meta_get_node_data($values) {
     $data['field_author'] = $wrapper->author->name->value();
   }
 
+  if (empty($data['field_author_uid'])) {
+    $data['field_author_uid'] = $wrapper->author->uid->value();
+  }
+
   return $data;
 }
 
