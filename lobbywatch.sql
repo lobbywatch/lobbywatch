@@ -792,7 +792,7 @@ CREATE TABLE `interessenbindung` (
   `funktion_im_gremium` enum('praesident','vizepraesident','mitglied') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwaltungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
   `deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Ist diese Interessenbindung deklarationspflichtig? Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `status` enum('deklariert','nicht-deklariert') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'deklariert' COMMENT 'Status der Interessenbindung',
-  `hauptberuflich` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)',
+  `hauptberuflich` tinyint(1) DEFAULT '0' COMMENT 'Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)',
   `behoerden_vertreter` enum('J','N') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Entstand diese Interessenbindung als Behördenvertreter von Amtes wegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von Amtes wegen Einsitz nimmt.',
   `beschreibung` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `beschreibung_fr` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Französische Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
@@ -1133,7 +1133,7 @@ CREATE TABLE `interessenbindung_log` (
   `funktion_im_gremium` enum('praesident','vizepraesident','mitglied') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwaltungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
   `deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Ist diese Interessenbindung deklarationspflichtig? Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `status` enum('deklariert','nicht-deklariert') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'deklariert' COMMENT 'Status der Interessenbindung',
-  `hauptberuflich` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)',
+  `hauptberuflich` tinyint(1) DEFAULT '0' COMMENT 'Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)',
   `behoerden_vertreter` enum('J','N') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Entstand diese Interessenbindung als Behördenvertreter von Amtes wegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von Amtes wegen Einsitz nimmt.',
   `beschreibung` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `beschreibung_fr` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Französische Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
@@ -2664,7 +2664,7 @@ CREATE TABLE `mv_interessenbindung` (
   `funktion_im_gremium` enum('praesident','vizepraesident','mitglied') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwaltungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
   `deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Ist diese Interessenbindung deklarationspflichtig? Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `status` enum('deklariert','nicht-deklariert') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'deklariert' COMMENT 'Status der Interessenbindung',
-  `hauptberuflich` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)',
+  `hauptberuflich` tinyint(1) DEFAULT NULL COMMENT 'Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)',
   `behoerden_vertreter` enum('J','N') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Entstand diese Interessenbindung als Behördenvertreter von Amtes wegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von Amtes wegen Einsitz nimmt.',
   `beschreibung` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `beschreibung_fr` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Französische Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
@@ -15634,4 +15634,4 @@ SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS ;
 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION ;
 SET SQL_NOTES=@OLD_SQL_NOTES ;
 
--- Dump completed on 2021-02-07 19:38:14
+-- Dump completed on 2021-02-07 21:09:01

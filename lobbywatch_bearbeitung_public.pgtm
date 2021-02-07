@@ -25097,7 +25097,7 @@ $edit_general_hint        </BeforeGridText>
               </Values>
             </EditProperties>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="hauptberuflich" caption="Haupt&amp;shy;beruflich" headerHint="Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="hauptberuflich" caption="Haupt&amp;shy;beruflich" headerHint="Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)" canSetNull="true" defaultInsertValue="0" selectedFilterOperators="1573119">
             <ViewProperties type="checkBox" displayType="image"/>
             <EditProperties type="checkBox"/>
           </ColumnPresentation>

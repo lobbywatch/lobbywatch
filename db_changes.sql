@@ -3838,3 +3838,12 @@ ALTER TABLE `organisation`
 
 ALTER TABLE `organisation_log`
   CHANGE `in_handelsregister` `in_handelsregister` TINYINT(1) NULL DEFAULT NULL COMMENT 'Ist die Organisation im Handelsregister (Zefix) eingetragen?';
+
+
+-- 07.02.2021 interessenbindung.hauptberuflich optional in DB in order to avoid "Cannot execute SQL statement: Column 'hauptberuflich' cannot be null"
+
+ALTER TABLE `interessenbindung`
+  CHANGE `hauptberuflich` `hauptberuflich` TINYINT(1) NULL DEFAULT '0' COMMENT 'Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)';
+
+ALTER TABLE `interessenbindung_log`
+  CHANGE `hauptberuflich` `hauptberuflich` TINYINT(1) NULL DEFAULT '0' COMMENT 'Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)';
