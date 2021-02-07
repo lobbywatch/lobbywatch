@@ -448,7 +448,7 @@ if ! $nozb ; then
       less $ZB_DELTA_FILE
     fi
     echo -e "\nZutrittsberechtigten data ${greenBold}CHANGED${reset}"
-    if ! $automatic ; then
+    if ! $automatic && ! $nosql; then
       askContinueYn "Run zb SQL in LOCAL $db?"
     fi
     if ! $nosql ; then
@@ -485,7 +485,7 @@ if ! $nopg ; then
       less $PG_DELTA_FILE
     fi
     echo -e "\nParlamentarische Gruppen data ${greenBold}CHANGED${reset}"
-    if ! $automatic ; then
+    if ! $automatic && ! $nosql; then
       askContinueYn "Run pg SQL in local $db?"
     fi
     if ! $nosql ; then
