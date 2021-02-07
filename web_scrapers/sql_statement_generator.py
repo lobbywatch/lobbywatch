@@ -203,6 +203,18 @@ def update_beschreibung_organisation(organisation_id, beschreibung, batch_time, 
 
     return query
 
+def update_inaktiv_organisation(organisation_id, inaktiv, batch_time, pdf_date):
+    query = "UPDATE `organisation` SET `inaktiv` = {0}, `notizen` = CONCAT_WS('\\n\\n', '{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
+        1 if inaktiv else 0,
+        "{0}/import/{1}: Parlamentarische Gruppe {3} (PDF {2})".format(
+            _date_as_sql_string(batch_time), user, _datetime_as_sql_string(pdf_date), "inaktiv" if inaktiv else "aktiv"),
+        "import",
+        _datetime_as_sql_string(batch_time),
+        organisation_id
+    )
+
+    return query
+
 def update_beschreibung_interessenbindung(interessenbindung_id, funktion_im_gremium, beschreibung, beschreibung_fr, url, batch_time, pdf_date):
     query = "UPDATE `interessenbindung` SET `funktion_im_gremium`={7}, `beschreibung` = {0}, `beschreibung_fr` = {5},`quelle` = '{8}',  `quelle_url` = {6}, `notizen` = CONCAT_WS('\\n\\n', '{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
         _quote_str_or_NULL(_escape_string(beschreibung)),

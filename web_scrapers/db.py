@@ -185,7 +185,7 @@ def get_organisation_id(database, name_de, name_fr, name_it):
     with database.cursor() as cursor:
         organisation_id = None
         query = """
-SELECT id
+SELECT id, inaktiv
 FROM organisation
 WHERE (name_de LIKE '{0}%'
 OR name_de LIKE 'Parlamentarische Gruppe%{0}'
@@ -222,10 +222,10 @@ in the database for organisation '{}: {}'.  Aborting.\n{}".format(name_de, resul
 #             sys.exit(1)
 
         if result and len(result) == 1:
-            (organisation_id, ) = result[0]
-            return organisation_id
+            (organisation_id, inaktiv, ) = result[0]
+            return organisation_id, inaktiv
 
-    return None
+    return None, None
 
 
 def get_organisation_sekretariat(database, organisation_id):

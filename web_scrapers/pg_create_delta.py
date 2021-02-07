@@ -30,11 +30,16 @@ def print_summary(summary, batch_time):
     print("""/*\n\nactive Parlamentarische Gruppen on {}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}
     """.format(batch_time.day, batch_time.month, batch_time.year, batch_time.hour, batch_time.minute, batch_time.second))
 
-    summary.write_header()
-    for index, row in enumerate(summary.get_rows()):
-        print(row.write(index))
+    summary.print_parlamentarier()
+    print("\n\n")
+    summary.print_gruppen()
+    print("\n\n")
 
+    print("Total Gruppen: {}".format(summary.get_gruppen_total()))
+    print("Total aktive Interessenbindungen: {}".format(summary.aktive_mitglieder_total()))
+    print("Anzahl im Vorstand: {}".format(summary.im_vortand_total()))
     print("Hinzugefügte Organisationen: {}".format(summary.organisation_added_count()))
+    print("Gelöschte Gruppen: {}".format(summary.organisation_removed_count()))
     print("Parlamentarier mit unveränderten Interessenbindungen: {}".format(summary.equal_count()))
     print("Parlamentarier mit geänderten Interessenbindungen: {}".format(summary.changed_count()))
     print("Hinzugefügte Interessenbindungen: {}".format(summary.added_count()))
@@ -54,7 +59,7 @@ def print_summary(summary, batch_time):
 
     print("""*/""")
 
-    if any([row.has_changed() for row in summary.get_rows()]) or summary.organisation_data_changed():
+    if summary.any_parlamentarier_changed() or summary.organisation_data_changed():
         print("-- DATA CHANGED")
     else:
         print("-- DATA UNCHANGED")
@@ -70,6 +75,7 @@ def get_organisation(group, conn):
     name_fr = normalize_organisation(group["name_fr"])
     name_it = normalize_organisation(group["name_it"])
 
+    inaktiv = False
     # EXCEPTION: Migration code
     # Workaround for multiple results for 'Sport'
     if name_de == 'Sport':
@@ -78,9 +84,9 @@ def get_organisation(group, conn):
     elif name_de == 'lingua e cultura rumantscha':
         organisation_id = 5964
     else:
-        organisation_id = db.get_organisation_id(conn, name_de, name_fr, name_it)
+        organisation_id, inaktiv = db.get_organisation_id(conn, name_de, name_fr, name_it)
 
-    return organisation_id, name_de, name_fr, name_it
+    return organisation_id, inaktiv, name_de, name_fr, name_it
 
 def get_names(member):
     member_name_cleaned = re.sub(r'(NR|SR|CN|CE)', '', member).strip()
@@ -98,8 +104,7 @@ def sync_data(conn, filename, batch_time):
     summary = Summary()
 
     for parlamentarier_id, nachname, vorname in db.get_active_parlamentarier(conn):
-        summary_row = summary.get_row(parlamentarier_id)
-        summary_row.parlamentarier_name = nachname + ", " + vorname
+        summary.set_parlamentarier_name(parlamentarier_id, nachname + ", " + vorname)
 
     with open(filename) as data_file:
         content = json.load(data_file)
@@ -120,7 +125,7 @@ def sync_data(conn, filename, batch_time):
         for group in content["data"]:
             members = group["praesidium"] + group["mitglieder"]
 
-            organisation_id, name_de, name_fr, name_it = get_organisation(group, conn)
+            organisation_id, inaktiv, name_de, name_fr, name_it = get_organisation(group, conn)
 
             # Skip duplicate groups: Aktive Mobilität and Langsamverkehr are twice in 23.11.2020 PDF
             if organisation_id and organisation_id in handled_organisation_ids:
@@ -134,7 +139,7 @@ def sync_data(conn, filename, batch_time):
             else:
                 print('-- INFO: Organisation "{}" not found in DB'.format(name_de))
 
-            handle_organisation(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date)
+            handle_organisation(group, inaktiv, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date)
 
             processed_parlamentarier_ids = []
             for member, title in members:
@@ -166,15 +171,14 @@ def sync_data(conn, filename, batch_time):
                     interessenbindung_id, db_art, db_funktion_im_gremium, db_beschreibung, db_beschreibung_fr = db.get_interessenbindung_id(
                         conn, parlamentarier_id, organisation_id, stichdatum)
 
-                summary_row = summary.get_row(parlamentarier_id)
                 if not interessenbindung_id:
                     print(
                         "\n-- Neue Interessenbindung zwischen '{}' und '{}' als {}{}".format(name_de, member, art, '/' + funktion_im_gremium if funktion_im_gremium else ''))
                     if not organisation_id:
                         organisation_id = '@last_parlamentarische_gruppe'
-                        summary_row.neue_gruppe("neu", name_de, art)
+                        summary.neue_gruppe(parlamentarier_id, "neu", name_de, art)
                     else:
-                        summary_row.neue_gruppe(organisation_id, name_de, art)
+                        summary.neue_gruppe(parlamentarier_id, organisation_id, name_de, art)
 
                     print(sql_statement_generator.insert_interessenbindung_parlamentarische_gruppe(
                         parlamentarier_id, organisation_id, stichdatum, title != None, beschreibung, beschreibung_fr, funktion_im_gremium, url, batch_time, pdf_date))
@@ -184,15 +188,15 @@ def sync_data(conn, filename, batch_time):
                     print(sql_statement_generator.end_interessenbindung(interessenbindung_id, stichdatum, batch_time, pdf_date))
                     print(sql_statement_generator.insert_interessenbindung_parlamentarische_gruppe(
                         parlamentarier_id, organisation_id, stichdatum, title != None, beschreibung, beschreibung_fr, funktion_im_gremium, url, batch_time, pdf_date))
-                    summary_row.gruppe_veraendert(organisation_id, name_de, art)
+                    summary.gruppe_veraendert(parlamentarier_id, organisation_id, name_de, art)
                 elif funktion_im_gremium != db_funktion_im_gremium or beschreibung != db_beschreibung or beschreibung_fr != db_beschreibung_fr:
                     print(
                         "\n-- Interessenbindungsbeschreibung geändert '{}': '{}' → '{}' / '{}' → '{}' / '{}' → '{}'".format(name_de, db_funktion_im_gremium, funktion_im_gremium, db_beschreibung, beschreibung,db_beschreibung_fr, beschreibung_fr))
                     print(sql_statement_generator.update_beschreibung_interessenbindung(
                         interessenbindung_id, funktion_im_gremium, beschreibung, beschreibung_fr, url, batch_time, pdf_date))
-                    summary_row.gruppe_veraendert(organisation_id, name_de, art)
+                    summary.gruppe_veraendert(parlamentarier_id, organisation_id, name_de, art)
                 else:
-                    summary_row.gruppe_unveraendert(organisation_id, name_de, art)
+                    summary.gruppe_unveraendert(parlamentarier_id, organisation_id, name_de, art)
 
     return(summary)
 
@@ -203,20 +207,24 @@ def handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_da
         parlamentarier_id_cache = {}
         organisation_id_cache = {}
         lastprogress = -1
+        processed_org_name = {}
         for i, (ib_id, ib_art, ib_funktion_im_gremium, org_id, org_name, parl_vorname, parl_zweiter_vorname, parl_nachname, parl_id) in enumerate(ib_managed_by_import):
             progress = 100 * i // len(ib_managed_by_import)
             if progress % 25 == 0 and progress != lastprogress:
                 print('-- Progress {}%'.format(progress))
                 lastprogress = progress
             present = False
+            if org_name not in processed_org_name:
+                processed_org_name[org_name] = {'id': org_id, 'state': False}
             for group in content["data"]:
                 org_key = group["name_de"]
                 if org_key in organisation_id_cache:
-                    organisation_id, name_de, name_fr, name_it = organisation_id_cache[org_key]
+                    organisation_id, inaktiv, name_de, name_fr, name_it = organisation_id_cache[org_key]
                 else:
-                    organisation_id, name_de, name_fr, name_it = get_organisation(group, conn)
-                    organisation_id_cache[org_key] = (organisation_id, name_de, name_fr, name_it)
+                    organisation_id, inaktiv, name_de, name_fr, name_it = get_organisation(group, conn)
+                    organisation_id_cache[org_key] = (organisation_id, inaktiv, name_de, name_fr, name_it)
                 if org_id == organisation_id:
+                    processed_org_name[org_name]['state'] = True
                     members = group["praesidium"] + group["mitglieder"]
                     processed_parlamentarier_ids = []
                     for member, title in members:
@@ -254,8 +262,14 @@ def handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_da
                 print("\n-- Interessenbindung zwischen Parlamentarier '{}' und Gruppe '{}' als {}{} nicht mehr vorhanden".format(full_name, org_name,ib_art, '/' + ib_funktion_im_gremium if ib_funktion_im_gremium else ''))
                 print(sql_statement_generator.end_interessenbindung(ib_id, stichdatum, batch_time, pdf_date))
 
-                summary_row = summary.get_row(parl_id)
-                summary_row.gruppe_beendet(ib_id, org_name, ib_art)
+                summary.gruppe_beendet(parl_id, ib_id, org_name, ib_art)
+
+        for processed_org_name, processed_org_val in processed_org_name.items():
+            if not processed_org_val['state']:
+                inaktive_organisation_id = processed_org_val['id']
+                print("\n-- Setze Gruppe '{}' ({}) inaktiv".format(processed_org_name, inaktive_organisation_id))
+                print(sql_statement_generator.update_inaktiv_organisation(inaktive_organisation_id, True, batch_time, pdf_date))
+                summary.gruppe_geloescht(inaktive_organisation_id, processed_org_name)
 
     print('-- Progress {}%'.format(100))
 
@@ -266,30 +280,30 @@ def handle_names(group, name_de, name_fr, name_it, organisation_id, summary, con
     if db_name_de != name_de and name_de:
         if db_name_de:
             print("-- Geänderter deutscher Name für Organisation '{}'. Bisher: '{}' Neu: '{}'".format(name_de, db_name_de, name_de))
-            summary.name_changed()
+            summary.name_changed(name_de, organisation_id, 'de', db_name_de, name_de)
         print(sql_statement_generator.update_name_de_organisation(organisation_id, name_de, batch_time, pdf_date))
 
     if db_name_fr != name_fr and name_fr:
         if db_name_fr:
             print("-- Geänderter französischer Name für Organisation '{}'. Bisher: '{}' Neu: '{}'".format(name_de, db_name_fr, name_fr))
-            summary.name_changed()
+            summary.name_changed(name_de, organisation_id, 'fr', db_name_fr, name_fr)
         else:
             print("-- Neuer französischer Name für Organisation '{}': '{}'".format(name_de, name_fr))
-            summary.name_added()
+            summary.name_added(name_de, organisation_id, 'fr', name_fr)
         print(sql_statement_generator.update_name_fr_organisation(organisation_id, name_fr, batch_time, pdf_date))
 
     if db_name_it != name_it and name_it:
         if db_name_it:
-            summary.name_changed()
+            summary.name_changed(name_de, organisation_id, 'it', db_name_it, name_it)
             print("-- Geänderter italienischer Name für Organisation '{}'. Bisher: '{}' Neu: '{}'".format(name_de, db_name_it, name_it))
         else:
             print("-- Neuer italienischer Name für Organisation '{}': '{}'".format(name_de, name_it))
-            summary.name_added()
+            summary.name_added(name_de, organisation_id, 'it', name_it)
         print(sql_statement_generator.update_name_it_organisation(organisation_id, name_it, batch_time, pdf_date))
 
 
 
-def handle_organisation(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date):
+def handle_organisation(group, inaktiv, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date):
     sekretariat = "\n".join(group["sekretariat"])
     sekretariat_line = '; '.join(sekretariat.splitlines())
     sekretariat_list = "\n".join(group["sekretariat"]).replace('; ', '\n').replace(';', '\n').replace(', ', '\n').replace(',', '\n').splitlines()
@@ -370,6 +384,10 @@ def handle_organisation(group, name_de, name_fr, name_it, organisation_id, summa
         organisation_id = '@last_parlamentarische_gruppe'
 
     else:
+        if inaktiv:
+            print("\n-- Setze Gruppe '{}' ({}) aktiv".format(name_de, organisation_id))
+            print(sql_statement_generator.update_inaktiv_organisation(name_de, False, batch_time, pdf_date))
+
         db_sekretariat = db.get_organisation_sekretariat(conn, organisation_id)
 
         if db_sekretariat:
@@ -379,13 +397,13 @@ def handle_organisation(group, name_de, name_fr, name_it, organisation_id, summa
 
         if db_sekretariat_line != sekretariat_line:
             if db_sekretariat:
-                summary.sekretariat_changed()
+                summary.sekretariat_changed(name_de, organisation_id, db_sekretariat_line, sekretariat_line)
                 print("-- Sekretariat der Gruppe '{}' geändert".format(name_de))
                 print('-- Sekretariat alt: ' + db_sekretariat_line)
                 print('-- Sekretariat neu: ' + sekretariat_line)
             else:
                 # Same code as in new organisation
-                summary.sekretariat_added()
+                summary.sekretariat_added(name_de, organisation_id, sekretariat_line)
                 print("-- Sekretariat der Gruppe '{}' hinzugefügt".format(name_de))
             print(sql_statement_generator.update_sekretariat_organisation(
                     organisation_id, sekretariat, batch_time, pdf_date))
@@ -394,11 +412,11 @@ def handle_organisation(group, name_de, name_fr, name_it, organisation_id, summa
 
         if db_adresse != adresse:
             if db_adresse:
-                summary.adresse_changed()
+                summary.adresse_changed(name_de, organisation_id, db_adresse, adresse)
                 print("-- Adresse der Gruppe '{}' geändert von {} zu {}".format(name_de, db_adresse, adresse))
             else:
                 # Same code as in new organisation
-                summary.adresse_added()
+                summary.adresse_added(name_de, organisation_id, adresse)
                 print("-- Adresse der Gruppe {} hinzugefügt".format(name_de))
             print('-- Sekretariat: ' + sekretariat.replace('\n', '; '))
             print(sql_statement_generator.update_adresse_organisation(
@@ -409,11 +427,11 @@ def handle_organisation(group, name_de, name_fr, name_it, organisation_id, summa
         # if (db_homepage == None and homepage != None) or (db_homepage != None and homepage == None) or (db_homepage != None and homepage != None and db_homepage.lower() != homepage.lower()): # case insensitive comparision
         if db_homepage != homepage:
             if db_homepage:
-                summary.website_changed()
+                summary.website_changed(name_de, organisation_id, db_homepage, homepage)
                 print("-- Website der Gruppe '{}' geändert von '{}' zu '{}'".format(name_de, escape_newlines(db_homepage), escape_newlines(homepage)))
             else:
                 # Same code as in new organisation
-                summary.website_added()
+                summary.website_added(name_de, organisation_id, homepage)
                 print("-- Website der Gruppe '{}' hinzugefügt: '{}'"
                 .format(name_de, homepage))
             print(sql_statement_generator.update_homepage_organisation(
@@ -423,11 +441,11 @@ def handle_organisation(group, name_de, name_fr, name_it, organisation_id, summa
 
         if db_alias != alias:
             if db_alias:
-                summary.alias_changed()
+                summary.alias_changed(name_de, organisation_id, db_alias, alias)
                 print("-- Alias der Gruppe '{}' geändert von '{}' zu '{}'".format(name_de, escape_newlines(db_alias), escape_newlines(alias)))
             else:
                 # Same code as in new organisation
-                summary.alias_added()
+                summary.alias_added(name_de, organisation_id, alias)
                 print("-- Alias der Gruppe '{}' hinzugefügt: '{}'"
                 .format(name_de, alias))
             print(sql_statement_generator.update_alias_organisation(
@@ -437,13 +455,13 @@ def handle_organisation(group, name_de, name_fr, name_it, organisation_id, summa
 
         if db_beschreibung != beschreibung:
             if db_beschreibung:
-                summary.beschreibung_changed()
+                summary.beschreibung_changed(name_de, organisation_id, db_beschreibung, beschreibung)
                 print("-- Beschreibung der Gruppe '{}' geändert".format(name_de))
                 print('-- Beschreibung alt: ' + escape_newlines(db_beschreibung))
                 print('-- Beschreibung neu: ' + escape_newlines(beschreibung))
             else:
                 # Same code as in new organisation
-                summary.beschreibung_added()
+                summary.beschreibung_added(name_de, organisation_id, beschreibung)
                 print("-- Beschreibung der Gruppe '{}' hinzugefügt".format(name_de))
             print(sql_statement_generator.update_beschreibung_organisation(
                     organisation_id, beschreibung, batch_time, pdf_date))
