@@ -8653,7 +8653,6 @@ window.disable_organisation_imported_fields = function (editors) {
         }
     }
     if (editors['uid'].getValue()) {
-        editors['name_de'].setReadonly(true);
         // editors['abkuerzung_de'].setReadonly(true);
         // editors['name_fr'].setReadonly(true);
         // editors['name_it'].setReadonly(true);
@@ -8667,7 +8666,8 @@ window.disable_organisation_imported_fields = function (editors) {
         // editors['rechtsform'].setReadonly(true);
         editors['rechtsform_handelsregister'].setReadonly(true);
         if (editors['in_handelsregister'].getValue()) {
-          editors['inaktiv'].setReadonly(true);
+           editors['name_de'].setReadonly(true);
+           editors['inaktiv'].setReadonly(true);
         }
     }
 }          </OnBeforePageLoad>

@@ -45869,7 +45869,6 @@
             '        }'. "\n" .
             '    }'. "\n" .
             '    if (editors[\'uid\'].getValue()) {'. "\n" .
-            '        editors[\'name_de\'].setReadonly(true);'. "\n" .
             '        // editors[\'abkuerzung_de\'].setReadonly(true);'. "\n" .
             '        // editors[\'name_fr\'].setReadonly(true);'. "\n" .
             '        // editors[\'name_it\'].setReadonly(true);'. "\n" .
@@ -45883,7 +45882,8 @@
             '        // editors[\'rechtsform\'].setReadonly(true);'. "\n" .
             '        editors[\'rechtsform_handelsregister\'].setReadonly(true);'. "\n" .
             '        if (editors[\'in_handelsregister\'].getValue()) {'. "\n" .
-            '          editors[\'inaktiv\'].setReadonly(true);'. "\n" .
+            '           editors[\'name_de\'].setReadonly(true);'. "\n" .
+            '           editors[\'inaktiv\'].setReadonly(true);'. "\n" .
             '        }'. "\n" .
             '    }'. "\n" .
             '}';
