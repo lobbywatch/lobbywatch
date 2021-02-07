@@ -663,6 +663,9 @@ fi
 # update_prod=! $test && ! $nosql && ! $onlydownloadlastbak && ! $import
 
 if ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import && $remote_op; then
+  # OK
+  :
+else
   echo "Remote PROD will not be updated"
   $test && echo 'Parameter test is set'
   $nosql && echo 'Parameter nosql is set'
