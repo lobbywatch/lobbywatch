@@ -466,7 +466,7 @@ if ! $nopg ; then
   mkdir -p web_scrapers/backup web_scrapers/archive
   echo "Writing pg.json..."
   if $lastpdf ; then
-    last_pg_pdf=$(ls -t web_scrapers/backup/*gruppen.pdf | head -1)
+    last_pg_pdf=$(ls -t web_scrapers/backup/*gruppen*.pdf | head -1)
     echo "Last PDF $last_pg_pdf"
   else
     last_pg_pdf=''
