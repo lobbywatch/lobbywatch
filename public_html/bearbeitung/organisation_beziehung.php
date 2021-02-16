@@ -2783,7 +2783,7 @@
                 )
             );
             
-            $main_editor = new DateTimeEdit('von_edit', false, 'Y-m-d H:i:s');
+            $main_editor = new DateTimeEdit('von_edit', false, 'd.m.Y');
             
             $filterBuilder->addColumn(
                 $columns['von'],
@@ -3766,7 +3766,7 @@
             //
             // Edit column for von field
             //
-            $editor = new DateTimeEdit('von_edit', false, 'Y-m-d H:i:s');
+            $editor = new DateTimeEdit('von_edit', false, 'd.m.Y');
             $editColumn = new CustomEditColumn('Von', 'von', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4142,7 +4142,7 @@
             //
             // Edit column for von field
             //
-            $editor = new DateTimeEdit('von_edit', false, 'Y-m-d H:i:s');
+            $editor = new DateTimeEdit('von_edit', false, 'd.m.Y');
             $editColumn = new CustomEditColumn('Von', 'von', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4509,7 +4509,7 @@
             //
             // Edit column for von field
             //
-            $editor = new DateTimeEdit('von_edit', false, 'Y-m-d H:i:s');
+            $editor = new DateTimeEdit('von_edit', false, 'd.m.Y');
             $editColumn = new CustomEditColumn('Von', 'von', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);

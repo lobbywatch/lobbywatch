@@ -30939,7 +30939,7 @@ $edit_general_hint        </BeforeGridText>
           </ColumnPresentation>
           <ColumnPresentation fieldName="von" caption="Von" headerHint="Beginn der Organisationsbeziehung, leer (NULL) = unbekannt" canSetNull="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
-            <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="bis" caption="Bis" headerHint="Ende der Organisationsbeziehung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag" canSetNull="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
