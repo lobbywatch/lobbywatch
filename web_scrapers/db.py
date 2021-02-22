@@ -93,8 +93,9 @@ def get_parlamentarier_id(database, names, kanton_id, partei_id):
         WHERE kanton_id = {0}
         """.format(kanton_id)
 
-        if partei_id in (8, 22, 7):
-            query += " AND partei_id IN (8, 22, 7)" # handle transition of "Die Mitte" which is a fusion of CVP and BDP
+        prev_mitte_partei = (8, 22, 7, 11, 12, 18)
+        if partei_id in prev_mitte_partei:
+            query += " AND partei_id IN ({})".format(", ".join(str(i) for i in prev_mitte_partei)) # handle transition of "Die Mitte" which is a fusion of CVP and BDP
         elif partei_id:
             query += " AND partei_id = '{}'".format(partei_id)
         else:
