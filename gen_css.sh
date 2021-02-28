@@ -22,7 +22,7 @@ mv $main_css ${main_css}.bak || echo "'$main_css' did not exist"
 $WINE "$WINE_LESS" -r "$@" $assets_dir/less/main.less $main_css
 
 mv $bundle_hash_file_main $bundle_hash_file_main.bak
-echo -e "<?php\n\$hash_css_main = '`sha1sum $main_css | cut -c -7`';" > $bundle_hash_file_main
+echo -e "<?php\n// Generated file\n\$hash_css_main = '`sha1sum $main_css | cut -c -7`';" > $bundle_hash_file_main
 diff -u0 $bundle_hash_file_main.bak $bundle_hash_file_main | tail -2
 
 mv $bundle_hash_file_custom $bundle_hash_file_custom.bak

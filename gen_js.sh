@@ -13,7 +13,7 @@ r.js -o require-build-custom.js
 # baseUrl=$js_dir out=$js_dir/main-bundle-custom.js
 
 mv $bundle_hash_file $bundle_hash_file.bak
-echo -e "<?php\n\$hash_js_main_bundle = '`sha1sum $js_dir/$file | cut -c -7`';" > $bundle_hash_file
+echo -e "<?php\n// Generated file\n\$hash_js_main_bundle = '`sha1sum $js_dir/$file | cut -c -7`';" > $bundle_hash_file
 diff -u0 $bundle_hash_file.bak $bundle_hash_file | tail -2
 
 # Debug mode

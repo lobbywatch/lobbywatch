@@ -45,7 +45,7 @@ auswertung=$root_dir/auswertung
 NOW=$(date +"%d.%m.%Y %H:%M");
 NOW_SHORT=$(date +"%d.%m.%Y");
 
-echo -e "<?php\n\$build_date = '$NOW';\n\$build_date_short = '$NOW_SHORT';\n\$build_last_commit = '`git rev-parse HEAD`';" > $root_dir/custom/build.php;
+echo -e "<?php\n// Generated file\n\$build_date = '$NOW';\n\$build_date_short = '$NOW_SHORT';\n\$build_last_commit = '`git rev-parse HEAD`';" > $root_dir/custom/build.php;
 
 ./set_lobbywatch_version.sh $root_dir
 
