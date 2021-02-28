@@ -365,7 +365,7 @@ AddDefaultCharset utf-8
 
 </IfModule>
 
-AddHandler application/x-httpd-php74 .php
+AddHandler application/x-httpd-php80 .php
 <IfModule mod_suphp.c>
 	suPHP_ConfigPath "/home/lobbywat/etc/php_settings/php56"
 </IfModule>
