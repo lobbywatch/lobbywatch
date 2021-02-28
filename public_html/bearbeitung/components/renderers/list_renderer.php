@@ -147,8 +147,14 @@ class ViewAllRenderer extends Renderer
 
     private function getChartsParams(Page $page)
     {
-        if (GetOfflineMode())
-            return array();
+        if (GetOfflineMode()) {
+            return array(
+                'ChartsBeforeGrid' => null,
+                'ChartsBeforeGridClasses' => '',
+                'ChartsAfterGrid' => null,
+                'ChartsAfterGridClasses' => ''
+            );
+        }
 
         $renderedCharts = array(
             ChartPosition::BEFORE_GRID => array(),

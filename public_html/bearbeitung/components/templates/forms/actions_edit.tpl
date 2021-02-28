@@ -14,8 +14,12 @@
         </button>
         <ul class="dropdown-menu">
             <li><a href="#" class="js-save" data-action="open" data-url="{$Grid.CancelUrl}">{$Captions->GetMessageString('SaveAndBackToList')}</a></li>
-            <li><a href="#" class="js-save js-multiple-insert-hide" data-action="edit">{$Captions->GetMessageString('SaveAndEdit')}</a></li>
-            <li><a href="#" class="js-save js-save-insert" data-action="open" data-url="{$Grid.InsertUrl}">{$Captions->GetMessageString('SaveAndInsert')}</a></li>
+            {if $EditOperationIsEnabled}
+                <li><a href="#" class="js-save js-multiple-insert-hide" data-action="edit">{$Captions->GetMessageString('SaveAndEdit')}</a></li>
+            {/if}
+            {if $InsertOperationIsEnabled}
+                <li><a href="#" class="js-save js-save-insert" data-action="open" data-url="{$Grid.InsertUrl}">{$Captions->GetMessageString('SaveAndInsert')}</a></li>
+            {/if}
 
             {if $Grid.Details and count($Grid.Details) > 0}
                 <li class="divider js-multiple-insert-hide"></li>

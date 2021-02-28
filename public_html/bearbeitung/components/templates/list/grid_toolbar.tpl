@@ -25,11 +25,10 @@
 {/if}
 
 {* The string below is retained for compatibility *}
-{$GridBeforeFilterStatus}
+{if isset($GridBeforeFilterStatus)}{$GridBeforeFilterStatus}{/if}
 
 {include file='list/grid_filters_status.tpl'}
 
-{include file='common/messages.tpl' type='danger' dismissable=true messages=$DataGrid.ErrorMessages displayTime=$DataGrid.MessageDisplayTime}
-{include file='common/messages.tpl' type='success' dismissable=true messages=$DataGrid.Messages displayTime=$DataGrid.MessageDisplayTime}
+{include file='common/messages_block.tpl' GridMessages=$DataGrid}
 
 <div class="js-grid-message-container"></div>

@@ -14,6 +14,13 @@ define([
             var maxSelectionSize = $el.attr('data-max-selection-size');
             var self = this;
 
+            this.bind('submit.pgui.nested-insert', function ($insertButton, primaryKey, record) {
+                var currentValue = this.getValue();
+                var storedValue = record[$insertButton.data('stored-field-name')];
+                currentValue.push(storedValue.toString());
+                this.setValue(currentValue);
+            }.bind(this));
+
             $el.on("change", this.doChanged.bind(this));
 
             $el.select2({

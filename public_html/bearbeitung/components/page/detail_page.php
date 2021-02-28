@@ -201,7 +201,8 @@ abstract class DetailPage extends Page
         return ArrayWrapper::createGetWrapper()->getValue('inline', false);
     }
 
-    public function getNavigation(array $fieldValues = array())
+    /** @inheritdoc */
+    public function getNavigation($fieldValues = array())
     {
         if ($fieldValues) {
             $this->foreignKeyValues = $fieldValues;

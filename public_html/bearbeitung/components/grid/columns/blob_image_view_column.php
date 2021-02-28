@@ -9,7 +9,7 @@ class BlobImageViewColumn extends ImageViewColumn
 {
     private $handlerName;
 
-    public function __construct($fieldName, $datasetFieldName, $caption, $dataset, $enablePictureZoom = true, $handlerName = null)
+    public function __construct($fieldName, $datasetFieldName, $caption, $dataset, $handlerName)
     {
         parent::__construct($fieldName, $datasetFieldName, $caption, $dataset);
         $this->handlerName = $handlerName;

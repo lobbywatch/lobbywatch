@@ -156,7 +156,6 @@ abstract class Page extends CommonPage implements IVariableContainer
     private $showUserAuthBar = false;
     private $showTopPageNavigator = true;
     private $showBottomPageNavigator = false;
-    private $showPageList;
     private $showGrid = true;
     private $hidePageListByDefault;
     private $showNavigation;
@@ -200,7 +199,6 @@ abstract class Page extends CommonPage implements IVariableContainer
     public $BeforePageRender;
     public $OnAddEnvironmentVariables;
     public $OnPrepareChart;
-    public $OnGetCustomFormLayout;
     public $OnGetCustomColumnGroup;
     public $OnFileUpload;
     public $OnGetCustomRecordPermissions;
@@ -220,7 +218,6 @@ abstract class Page extends CommonPage implements IVariableContainer
         $this->BeforePageRender = new Event();
         $this->OnAddEnvironmentVariables = new Event();
         $this->OnPrepareChart = new Event();
-        $this->OnGetCustomFormLayout = new Event();
         $this->OnGetCustomColumnGroup = new Event();
         $this->OnGetCustomExportOptions = new Event();
         $this->OnFileUpload = new Event();
@@ -230,7 +227,7 @@ abstract class Page extends CommonPage implements IVariableContainer
 
         $this->securityInfo = $dataSourceSecurityInfo;
         $this->pageFileName = $pageFileName;
-        $this->showPageList = true;
+        $this->SetShowPageList(true);
         $this->showNavigation = true;
         $this->visualEffectsEnabled = true;
         $this->rssGenerator = null;
@@ -251,7 +248,6 @@ abstract class Page extends CommonPage implements IVariableContainer
 
         $this->CreateComponents();
         $this->setupCharts();
-        $this->setupGridLayouts();
         $this->setupGridColumnGroup($this->grid);
 
         $this->Prepare();
@@ -429,6 +425,7 @@ abstract class Page extends CommonPage implements IVariableContainer
             $grid->AfterDeleteRecord->AddListener('Grid_OnAfterDeleteRecordHandler', $this);
             $grid->OnCustomDefaultValues->AddListener('Grid_OnCustomDefaultValues', $this);
             $grid->OnGetSelectionFilters->AddListener('Grid_OnGetSelectionFilters', $this);
+            $grid->OnGetCustomFormLayout->AddListener('Grid_OnGetCustomFormLayoutHandler', $this);
         }
     }
 
@@ -438,7 +435,6 @@ abstract class Page extends CommonPage implements IVariableContainer
         $this->OnGetCustomExportOptions->AddListener('OnGetCustomExportOptionsHandler', $this);
         $this->OnFileUpload->AddListener('OnFileUploadHandler', $this);
         $this->OnPrepareChart->AddListener('OnPrepareChartHandler', $this);
-        $this->OnGetCustomFormLayout->AddListener('OnGetCustomFormLayoutHandler', $this);
         $this->OnGetCustomColumnGroup->AddListener('OnGetCustomColumnGroupHandler', $this);
         $this->OnPageLoaded->AddListener('OnPageLoadedHandler', $this);
         $this->getDataset()->OnCalculateFields->AddListener('OnCalculateFieldsHandler', $this);
@@ -504,6 +500,10 @@ abstract class Page extends CommonPage implements IVariableContainer
         $this->doGetSelectionFilters($columns, $result);
     }
 
+    public function Grid_OnGetCustomFormLayoutHandler($mode, FixedKeysArray $columns, FormLayout $layout) {
+        $this->doGetCustomFormLayout($mode, $columns, $layout);
+    }
+
     public function OnCustomHTMLHeaderHandler($page, &$customHtmlHeaderText) {
         $this->doCustomHTMLHeader($page, $customHtmlHeaderText);
     }
@@ -531,10 +531,6 @@ abstract class Page extends CommonPage implements IVariableContainer
 
     public function OnPrepareChartHandler(Chart $chart) {
         $this->doPrepareChart($chart);
-    }
-
-    public function OnGetCustomFormLayoutHandler($mode, FixedKeysArray $columns, FormLayout $layout) {
-        $this->doGetCustomFormLayout($mode, $columns, $layout);
     }
 
     public function OnGetCustomColumnGroupHandler(FixedKeysArray $columns, ViewColumnGroup $columnGroup) {
@@ -671,7 +667,7 @@ abstract class Page extends CommonPage implements IVariableContainer
         GetApplication()->RegisterHTTPHandler($handler);
 
         if ($this->GetEnableModalSingleRecordView()) {
-            $handler = new ModalGridViewHandler($this->GetModalGridViewHandler(), new RecordCardView($this->GetGrid()));
+            $handler = new RecordCardViewHandler($this->GetModalGridViewHandler(), new RecordCardView($this->GetGrid()));
             GetApplication()->RegisterHTTPHandler($handler);
         }
 
@@ -682,6 +678,11 @@ abstract class Page extends CommonPage implements IVariableContainer
 
         if ($this->GetEnableModalGridDelete()) {
             $handler = new ModalDeleteHandler($this->GetModalGridDeleteHandler(), $this->GetGrid());
+            GetApplication()->RegisterHTTPHandler($handler);
+        }
+
+        if ($this->GetEnableInlineSingleRecordView()) {
+            $handler = new RecordCardViewHandler($this->GetInlineGridViewHandler(), new RecordCardView($this->GetGrid()));
             GetApplication()->RegisterHTTPHandler($handler);
         }
 
@@ -734,6 +735,11 @@ abstract class Page extends CommonPage implements IVariableContainer
         return get_class($this) . '_select_records';
     }
 
+    public function GetInlineGridViewHandler()
+    {
+        return get_class($this) . '_inline_view';
+    }
+
     public function GetEnableModalSingleRecordView()
     {
         return false;
@@ -760,6 +766,11 @@ abstract class Page extends CommonPage implements IVariableContainer
     }
 
     protected function GetEnableModalGridDelete()
+    {
+        return false;
+    }
+
+    public function GetEnableInlineSingleRecordView()
     {
         return false;
     }
@@ -839,53 +850,6 @@ abstract class Page extends CommonPage implements IVariableContainer
     {
     }
 
-    private function setupGridLayouts()
-    {
-        $this->grid->SetViewFormLayout($this->callFormLayoutEvent(
-            'view',
-            $this->grid->GetSingleRecordViewColumns(),
-            new FormLayout()
-        ));
-
-        $this->grid->SetInsertFormLayout($this->callFormLayoutEvent(
-            'insert',
-            $this->grid->GetInsertColumns(),
-            new FormLayout()
-        ));
-
-        $this->grid->SetEditFormLayout($this->callFormLayoutEvent(
-            'edit',
-            $this->grid->GetEditColumns(),
-            new FormLayout()
-        ));
-
-        $this->grid->setMultiEditFormLayout($this->callFormLayoutEvent(
-            'multi_edit',
-            $this->grid->GetMultiEditColumns(),
-            new FormLayout()
-        ));
-
-        $this->grid->SetInlineInsertFormLayout($this->callFormLayoutEvent(
-            'inline_insert',
-            $this->grid->GetInsertColumns(),
-            new FormLayout(FormLayoutMode::VERTICAL)
-        ));
-
-        $this->grid->SetInlineEditFormLayout($this->callFormLayoutEvent(
-            'inline_edit',
-            $this->grid->GetEditColumns(),
-            new FormLayout(FormLayoutMode::VERTICAL)
-        ));
-
-        $this->grid->setMultiUploadFormLayout(new FormLayout());
-    }
-
-    private function callFormLayoutEvent($mode, $columns, FormLayout $layout)
-    {
-        $this->OnGetCustomFormLayout->Fire(array($mode, new FixedKeysArray(Grid::getNamedColumns($columns)),$layout));
-        return $layout;
-    }
-
     protected function setupGridColumnGroup(Grid $grid)
     {
         $columnGroup = new ViewColumnGroup(null, array());
@@ -900,6 +864,21 @@ abstract class Page extends CommonPage implements IVariableContainer
             'chart' => $chart,
             'cols' => $cols,
         );
+    }
+
+    /**
+     * @param string $chartId
+     */
+    public function removeChart($chartId) {
+        foreach ($this->getCharts() as $position => $chartsInfo) {
+            foreach ($chartsInfo as $chartIndex => $chartInfo) {
+                $chart = $chartInfo['chart'];
+                if ($chart->getId() == $chartId) {
+                    unset($this->charts[$position][$chartIndex]);
+                    return;
+                }
+            }
+        }
     }
 
     public function getCharts()
@@ -1187,12 +1166,8 @@ abstract class Page extends CommonPage implements IVariableContainer
     { return $this->showBottomPageNavigator; }
     function SetShowBottomPageNavigator($value)
     { $this->showBottomPageNavigator = $value; }
-    function GetShowPageList()
-    { return $this->showPageList; }
     function GetHidePageListByDefault()
     { return $this->hidePageListByDefault; }
-    function SetShowPageList($value)
-    { $this->showPageList = $value; }
     function SetHidePageListByDefault($value)
     { $this->hidePageListByDefault = $value; }
 
@@ -1837,9 +1812,10 @@ abstract class Page extends CommonPage implements IVariableContainer
     }
 
     /**
+     * @param array $fieldValues
      * @return Navigation
      */
-    public function getNavigation(array $fieldValues = array())
+    public function getNavigation($fieldValues = array())
     {
         $url = $this->CreateLinkBuilder()->getLink();
         $result = new Navigation($this);

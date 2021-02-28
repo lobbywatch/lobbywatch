@@ -15,7 +15,7 @@
         {if $Editor->GetMaxLength()}
             maxlength="{$Editor->GetMaxLength()}"
         {/if}
-        {if $AdditionalProperties}
+        {if isset($AdditionalProperties)}
             {$AdditionalProperties}
         {/if}
     >

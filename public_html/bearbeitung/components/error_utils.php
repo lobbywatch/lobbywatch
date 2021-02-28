@@ -2,6 +2,7 @@
 
 include_once dirname(__FILE__) . '/../libs/smartylibs/Smarty.class.php';
 include_once dirname(__FILE__) . '/renderers/list_renderer.php';
+include_once dirname(__FILE__) . '/renderers/template_renderer.php';
 include_once dirname(__FILE__) . '/page/common_page.php';
 include_once dirname(__FILE__) . '/captions.php';
 
@@ -41,8 +42,6 @@ function ShowSecurityErrorPage($parentPage, $message)
         $parentPage
     );
 
-    $errorPage->OnCustomHTMLHeader->AddListener('Global_CustomHTMLHeaderHandler');
-
     echo $renderer->Render($errorPage);
 }
 
@@ -55,29 +54,25 @@ function RaiseSecurityError($parentPage, $message = '')
 
 function ShowErrorPage(Exception $exception)
 {
-    $smarty = new Smarty();
-    $smarty->template_dir = '/components/templates';
-
     $captions = Captions::getInstance('UTF-8');
-    $smarty->assign('Captions', $captions);
-    $smarty->assign('Message', $exception->getMessage());
-
-    $displayDebugInfo = DebugUtils::GetDebugLevel();
-    $smarty->assign('DisplayDebugInfo', $displayDebugInfo);
-    if ($displayDebugInfo == 1) {
-        $smarty->assign('File', $exception->getFile());
-        $smarty->assign('Line', $exception->getLine());
-        $smarty->assign('Trace', $exception->getTraceAsString());
-    }
-
     $common = new CommonPageViewData();
     $common
         ->setTitle($captions->GetMessageString('Error'))
         ->setHeader(GetPagesHeader())
         ->setFooter(GetPagesFooter());
 
-    $smarty->assign('common', $common);
-    $smarty->display('error_page.tpl');
+    $params = array(
+        'Captions' => $captions,
+        'Message' => $exception->getMessage(),
+        'DisplayDebugInfo' => DebugUtils::GetDebugLevel(),
+        'File' => $exception->getFile(),
+        'Line' => $exception->getLine(),
+        'Trace' => $exception->getTraceAsString(),
+        'common' => $common
+    );
+
+    $templateRenderer = GetTemplateRenderer();
+    echo $templateRenderer->render('error_page.tpl', $params);
 }
 
 class CustomErrorPage extends CommonPage

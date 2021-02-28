@@ -2723,6 +2723,7 @@ input[type="search"] {
   margin-bottom: 15px;
 }
 .radio,
+.checkbox-group,
 .checkbox {
   position: relative;
   display: block;
@@ -2730,6 +2731,7 @@ input[type="search"] {
   margin-bottom: 10px;
 }
 .radio label,
+.checkbox-group label,
 .checkbox label {
   min-height: 21px;
   padding-left: 20px;
@@ -7270,6 +7272,7 @@ a.list-group-item-danger.active:focus {
   border: none;
   cursor: pointer;
   text-align: left;
+  white-space: nowrap;
   font-size: 15px;
   transition: all 150ms;
 }
@@ -9602,7 +9605,7 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1042;
+  z-index: 1062;
   overflow: hidden;
   position: fixed;
   background: #0b0b0b;
@@ -9614,7 +9617,7 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1043;
+  z-index: 1063;
   position: fixed;
   outline: none !important;
   -webkit-backface-visibility: hidden;
@@ -9646,7 +9649,7 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
   vertical-align: middle;
   margin: 0 auto;
   text-align: left;
-  z-index: 1045;
+  z-index: 1065;
 }
 .mfp-inline-holder .mfp-content,
 .mfp-ajax-holder .mfp-content {
@@ -9694,7 +9697,7 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
   margin-top: -0.8em;
   left: 8px;
   right: 8px;
-  z-index: 1044;
+  z-index: 1064;
 }
 .mfp-preloader a {
   color: #cccccc;
@@ -9718,7 +9721,7 @@ button.mfp-arrow {
   display: block;
   outline: none;
   padding: 0;
-  z-index: 1046;
+  z-index: 1066;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
@@ -11207,7 +11210,8 @@ table.pgui-cascading-editor tr td .select2-container {
   display: block;
   margin-right: 0;
 }
-.form-control-nested-form .select2-choice {
+.form-control-nested-form .select2-choice,
+.form-control-nested-form .select2-choices {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }

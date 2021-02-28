@@ -365,7 +365,7 @@ class MySqlIConnection extends EngConnection {
     public function DoExecSQL($sql) {
         $queryHandle = @mysqli_query($this->GetConnectionHandle(), $sql);
         $result = $queryHandle ? true : false;
-        if ($result)
+        if ($result && ($queryHandle instanceof mysqli_result))
             @mysqli_free_result($queryHandle);
         return $result;
     }
@@ -395,6 +395,10 @@ class MySqlIConnection extends EngConnection {
             return true;
         }
         return false;
+    }
+
+    public function nextResult() {
+        @mysqli_next_result($this->GetConnectionHandle());
     }
 
     public function IsDriverSupported() {

@@ -1,6 +1,6 @@
 {strip}
 <div
-    {n}{if $id}id="{$id}" {/if}
+    {n}{if isset($id)}id="{$id}"{/if}
     {n}data-editor="{$Editor->getEditorName()}"
     {n}data-editor-name="{$Editor->GetName()}"
     {n}data-field-name="{$Editor->GetFieldName()}"
@@ -50,7 +50,7 @@
         {/if}
     {/foreach}
 
-    {if $ColumnViewData.NestedInsertFormLink}
+    {if isset($ColumnViewData.NestedInsertFormLink) && isset($ColumnViewData.DisplayFieldName)}
         <a
             {n}href="#"
             {n}class="radio js-nested-insert"

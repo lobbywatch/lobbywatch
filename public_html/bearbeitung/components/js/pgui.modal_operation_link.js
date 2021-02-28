@@ -67,7 +67,7 @@ define(['pgui.shortcuts', 'pgui.utils'], function (shortcuts, utils) {
             $grid.container.find('.pgui-add:first').get(0).click();
         }
 
-        if (params.action === undefined && $grid.getReloadPageAfterAjaxOperation()) {
+        if (params.action === undefined && $grid && $grid.getReloadPageAfterAjaxOperation()) {
             location.reload();
         }
 
@@ -95,6 +95,7 @@ define(['pgui.shortcuts', 'pgui.utils'], function (shortcuts, utils) {
                     utils.replaceRow($link.closest('.pg-row'), $row);
                     if ($grid) {
                         $grid.integrateRows($row);
+                        $grid.updateEmptyGridMessage();
                     }
                 }
 

@@ -1,6 +1,6 @@
 {capture assign="ContentBlock"}
 
-    {$BeforePageList}
+    {if isset($BeforePageList)}{$BeforePageList}{/if}
 
     {assign var=ListObj value=$Page->getReadyPageList()}
     {assign var=List value=$ListObj->GetViewData()}
@@ -53,7 +53,7 @@
         {/if}
     {/foreach}
 
-    {$AfterPageList}
+    {if isset($AfterPageList)}{$AfterPageList}{/if}
 
 {/capture}
 

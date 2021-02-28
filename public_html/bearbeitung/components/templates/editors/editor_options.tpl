@@ -1,5 +1,5 @@
-{if $id}id="{$id}" {/if}
-name="{$Editor->GetName()}{if $Multiple}[]{/if}"
+{if isset($id)}id="{$id}"{/if}
+name="{$Editor->GetName()}{if isset($Multiple) && $Multiple}[]{/if}"
 data-editor="{$Editor->getEditorName()}"
 data-field-name="{$Editor->GetFieldName()}"
 {if not $Editor->getEnabled()}

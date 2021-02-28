@@ -21,6 +21,9 @@ class CommonPageViewData
     private $footer;
 
     /** @var string */
+    private $customHead = '';
+
+    /** @var string */
     private $entryPoint;
 
     /** @var string[] */

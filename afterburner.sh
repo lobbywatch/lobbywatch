@@ -152,16 +152,6 @@ do
   > "$file";
 done
 
-for file in $dir/components/dataset/view_based_dataset.php
-do
-  echo "Process $file";
-  mv "$file" "$file.bak";
-  # Read file, process regex and write file
-  cat "$file.bak" |
-   perl -p -e's%^(\s*)(return \$this->updateSql;)%$1$2\n    }\n\n    public function DoNotRewriteUnchangedValues() { // Processed by afterburner.sh\n      return empty(\$this->updateSql); // Processed by afterburner.sh%' \
-  > "$file";
-done
-
 for file in $dir/components/grid/grid.php
 do
   echo "Process $file";

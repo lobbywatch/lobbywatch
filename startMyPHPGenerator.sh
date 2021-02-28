@@ -1,4 +1,7 @@
 #!/bin/bash
 
+SCRIPT_DIR=`dirname "$0"`
+. $SCRIPT_DIR/phpgen_config.sh
+
 cd $HOME/dev/web/lobbywatch/lobbydev/
-wine "C:\Program Files (x86)\SQL Maestro Group\PHP Generator for MySQL Professional 20.5.0.3_20200925\MyPHPGeneratorPro.exe" "Z:\home\rkurmann\dev\web\lobbywatch\lobbydev\lobbywatch_bearbeitung.pgtm"
+wine "$PHPGEN_EXE" "Z:\home\rkurmann\dev\web\lobbywatch\lobbydev\lobbywatch_bearbeitung.pgtm"

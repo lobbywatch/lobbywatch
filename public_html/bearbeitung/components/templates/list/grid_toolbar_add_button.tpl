@@ -26,18 +26,16 @@
                             <a href="#"
                                data-modal-insert="true"
                                data-content-link="{$DataGrid.Links.ModalInsertDialog|escapeurl}&count={$choice}">
-                                {$Captions->GetMessageString('AddMultipleRecords')|@sprintf:$choice}
-                            </a>
                         {elseif $DataGrid.ActionsPanel.AddNewButton eq 'inline'}
                             <a href="#"
                                data-inline-insert="true"
                                data-content-link="{$DataGrid.Links.ModalInsertDialog|escapeurl}"
-                               data-count="{$choice}">{$choice}</a>
+                               data-count="{$choice}">
                         {else}
                             <a href="{$DataGrid.Links.SimpleAddNewRow|escapeurl}&count={$choice}">
+                        {/if}
                                 {$Captions->GetMessageString('AddMultipleRecords')|@sprintf:$choice}
                             </a>
-                        {/if}
                     </li>
                 {/foreach}
             </ul>

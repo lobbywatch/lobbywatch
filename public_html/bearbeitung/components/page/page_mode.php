@@ -13,6 +13,7 @@ class PageMode {
     const ModalInsert = 'modal-insert';
     const InlineEdit = 'inline-edit';
     const InlineInsert = 'inline-insert';
+    const InlineView = 'inline-view';
     const FormInsert = 'form-insert';
     const FormEdit = 'form-edit';
     const FormMultiEdit = 'form-multi-edit';

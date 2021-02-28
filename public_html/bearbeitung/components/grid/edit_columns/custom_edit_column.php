@@ -225,7 +225,7 @@ class CustomEditColumn implements ColumnInterface
 
     public function IsValueNull()
     {
-        if (GetOperation() == OPERATION_INSERT)
+        if ((GetOperation() == OPERATION_INSERT) || (GetOperation() == OPERATION_MULTI_EDIT))
             return false;
         else
         {

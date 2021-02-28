@@ -1,9 +1,9 @@
-{if $ColumnViewData.NestedInsertFormLink}
-<div class="input-group" style="width: 100%">
+{if isset($ColumnViewData.NestedInsertFormLink)}
+    <div class="input-group" style="width: 100%">
 {/if}
 
     <select
-        class="form-control {if $ColumnViewData.NestedInsertFormLink}form-control-nested-form{/if}"
+        class="form-control {if isset($ColumnViewData.NestedInsertFormLink)}form-control-nested-form{/if}"
         {include file="editors/editor_options.tpl" Editor=$Editor}>
 
         {if $Editor->hasEmptyChoice()}
@@ -23,8 +23,10 @@
             {/if}
         {/foreach}
     </select>
-    {include file='editors/nested_insert_button.tpl' NestedInsertFormLink=$ColumnViewData.NestedInsertFormLink LookupDisplayFieldName=$ColumnViewData.DisplayFieldName}
+    {if isset($ColumnViewData.NestedInsertFormLink) && isset($ColumnViewData.DisplayFieldName)}
+        {include file='editors/nested_insert_button.tpl' NestedInsertFormLink=$ColumnViewData.NestedInsertFormLink LookupDisplayFieldName=$ColumnViewData.DisplayFieldName}
+    {/if}
 
-{if $ColumnViewData.NestedInsertFormLink}
-</div>
+{if isset($ColumnViewData.NestedInsertFormLink)}
+    </div>
 {/if}

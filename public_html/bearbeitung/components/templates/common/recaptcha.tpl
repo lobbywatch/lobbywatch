@@ -1,4 +1,4 @@
-{if $ReCaptcha}
+{if isset($ReCaptcha)}
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     {if $ReCaptcha->isInvisibleCaptcha()}
         <script>

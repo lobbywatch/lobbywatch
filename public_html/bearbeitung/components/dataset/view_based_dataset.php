@@ -27,6 +27,10 @@ class ViewBasedDataset extends TableDataset {
         $this->deleteSql = $deleteSql;
     }
 
+    public function DoNotRewriteUnchangedValues() {
+        return empty($this->updateSql);
+    }
+
     /** @return string[] */
     public function getInsertSQL() {
         return $this->insertSql;
@@ -52,10 +56,6 @@ class ViewBasedDataset extends TableDataset {
     /** @return string[] */
     public function getUpdateSQL() {
         return $this->updateSql;
-    }
-
-    public function DoNotRewriteUnchangedValues() { // Processed by afterburner.sh
-      return empty($this->updateSql); // Processed by afterburner.sh
     }
 
     /** @var string[] $value */

@@ -70,7 +70,7 @@
         <tbody class="pg-row-list">
             {include file=$SingleRowTemplate Columns=$DataGrid.ColumnGroup->getLeafs()}
 
-            <tr class="empty-grid{if count($DataGrid.Rows) > 0} hidden{/if}">
+            <tr class="empty-grid" {if count($DataGrid.Rows) > 0}style="display: none"{/if}>
                 <td colspan="{$DataGrid.ColumnCount}">
                     <div class="alert alert-warning empty-grid">{$DataGrid.EmptyGridMessage}</div>
                 </td>

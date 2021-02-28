@@ -66,7 +66,7 @@
 {foreach from=$DataGrid.FilterBuilder->getColumns() item=column}
 {assign var=operators value=$DataGrid.FilterBuilder->getOperators($column)}
     {foreach from=$operators item=editor key=operator}
-        {if $editor}
+        {if isset($editor)}
             <script type="text/html" id="filter_builder_editor_{$operator}_{$column->getFieldName()|replace:' ':'_'}" data-editor="{$editor->getEditorName()}">
                 {include file='editors/'|cat:$editor->getEditorName()|cat:'.tpl' Editor=$editor ViewData=$editor->getViewData() FormId=$DataGrid.Id}
             </script>

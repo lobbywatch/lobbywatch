@@ -24,6 +24,7 @@ class Navigation implements IteratorAggregate, Countable
      * @param string     $title
      * @param string     $url
      * @param Navigation $siblings
+     * @return Navigation
      */
     public function append($title, $url = null, Navigation $siblings = null)
     {

@@ -3,8 +3,9 @@ define([
     'pgui.editors',
     'pgui.validation',
     'pgui.modal_operation_link',
+    'pgui.autohide-message',
     'jquery.form'
-], function (Class, editors, validation, modalLink) {
+], function (Class, editors, validation, modalLink, autoHideMessage) {
     var FormCollection = Class.extend({
 
         init: function ($formsContainer, $collectionContainer, newFormUrl, callbacks) {
@@ -135,6 +136,10 @@ define([
                 .on('click', '#clear-fields-to-be-updated', function (e) {
                     $('#fields-to-be-updated').select2('val', []).trigger('change');
                 });
+
+            $.each($form.find('.alert'), function (i, alert) {
+                autoHideMessage($(alert));
+            });
 
             return $form;
         },

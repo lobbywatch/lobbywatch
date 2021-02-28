@@ -8,6 +8,12 @@ class RemoteMultiValueSelect extends MultiValueSelect {
      */
     private $handlerName;
 
+    /** @var string */
+    private $nestedInsertFormLink;
+
+    /** @var string */
+    private $storedFieldName;
+
     /**
      * @param string $name
      * @param LinkBuilder $linkBuilder
@@ -59,6 +65,26 @@ class RemoteMultiValueSelect extends MultiValueSelect {
         } else {
             return '';
         }
+    }
+
+    /** @param string $nestedInsertFormLink */
+    public function setNestedInsertFormLink($nestedInsertFormLink) {
+        $this->nestedInsertFormLink = $nestedInsertFormLink;
+    }
+
+    /** @return string */
+    public function getNestedInsertFormLink() {
+        return $this->nestedInsertFormLink;
+    }
+
+    /** @param string $storedFieldName */
+    public function setStoredFieldName($storedFieldName) {
+        $this->storedFieldName = $storedFieldName;
+    }
+
+    /** @return string */
+    public function getStoredFieldName() {
+        return $this->storedFieldName;
     }
 
 }

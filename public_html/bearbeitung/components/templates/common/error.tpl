@@ -3,7 +3,7 @@
 <div class="alert alert-danger">
     <h3>{$ErrorTitle}</h3>
 
-    {$ErrorContent}
+    {if isset($ErrorContent)}{$ErrorContent}{/if}
 
     {if ($DisplayDebugInfo eq 1)}
         <hr>

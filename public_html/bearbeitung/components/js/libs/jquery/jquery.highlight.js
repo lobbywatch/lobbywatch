@@ -30,10 +30,10 @@ jQuery.fn.highlight = function(pat, opt, options)
         {
             var pos = -1;
             if (opt == 'END')
-                pos = node.data.toUpperCase().lastIndexOf(pat);
+                pos = node.data.toLowerCase().lastIndexOf(pat);
             else
-                pos = node.data.toUpperCase().indexOf(pat);
-            var dataLength = node.data.toUpperCase().length;
+                pos = node.data.toLowerCase().indexOf(pat);
+            var dataLength = node.data.toLowerCase().length;
             if (
                 ((pos >= 0) && (opt == 'ALL')) ||
                 ((pos == 0) && (opt == 'START')) ||
@@ -66,7 +66,7 @@ jQuery.fn.highlight = function(pat, opt, options)
         function()
         {
             if (pat != '')
-                innerHighlight(this, pat.toUpperCase(), opt, options);
+                innerHighlight(this, pat.toLowerCase(), opt, options);
         }
     );
 };

@@ -84,6 +84,9 @@ class EditRenderer extends Renderer
         $forms = array();
         $count = ArrayWrapper::createGetWrapper()->getValue('count', 1);
         for ($i = 0; $i < $count; $i++) {
+            if ($i > 0 && array_key_exists('FormId', $viewData)) {
+                $viewData['FormId'] = 'Form' . uniqid();
+            }
             $forms[] = $this->RenderForm($page, $viewData, $hiddenValues, $this->getOperationName(), true);
         }
 
@@ -91,7 +94,9 @@ class EditRenderer extends Renderer
             $template,
             array(
                 'Grid' => $viewData,
-                'isMultiEditOperation' => $this->getOperationName() === OPERATION_MULTI_EDIT
+                'isMultiEditOperation' => $this->getOperationName() === OPERATION_MULTI_EDIT,
+                'InsertOperationIsEnabled' => $grid->operationIsEnabled('insert'),
+                'EditOperationIsEnabled' => $grid->operationIsEnabled('edit')
             ),
             array_merge($customParams, array(
                 'Authentication' => $page->GetAuthenticationViewData(),

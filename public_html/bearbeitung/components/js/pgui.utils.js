@@ -36,24 +36,30 @@ define([
         updatePopupHints: function ($container) {
             $container.find('.js-more-hint').each(function () {
                 var $hintLink = $(this);
-                var $hintMessage = $hintLink.siblings('.js-more-box').html();
+                var $hintMessage = $hintLink.closest('td[data-column-name]').find('.js-more-box').html();
                 $hintLink
-                    .on('click', function() {
+                    .off('click').on('click', function() {
                         $(this).popover('hide');
                         _showBootBoxAlert($hintMessage);
                         return false;
-                    })
-                    .popover({
-                        title: '',
-                        placement: function () {
-                            return $hintLink.offset().top - $(window).scrollTop() < $(window).height() / 2
-                                ? 'bottom'
-                                : 'top';
-                        },
-                        html: true,
-                        trigger: 'hover',
-                        content: $hintMessage
                     });
+                var popover = $hintLink.data('bs.popover');
+                if (popover) {
+                    popover.options.content = $hintMessage;
+                } else{
+                    $hintLink
+                        .popover({
+                            title: '',
+                            placement: function () {
+                                return $hintLink.offset().top - $(window).scrollTop() < $(window).height() / 2
+                                    ? 'bottom'
+                                    : 'top';
+                            },
+                            html: true,
+                            trigger: 'hover',
+                            content: $hintMessage
+                        });
+                }
             });
         },
         buildDismissableMessage: function (className, message, messageDisplayTime) {

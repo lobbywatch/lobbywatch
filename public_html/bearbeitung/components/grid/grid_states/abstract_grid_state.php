@@ -165,14 +165,15 @@ abstract class GridState
      * @param IDataset|Dataset $dataset dataset where changes between old and new values must be written
      */
     protected function WriteChangesToDataset($oldValues, $newValues, Dataset $dataset) {
-        foreach ($newValues as $fieldName => $fieldValue)
+        $editFieldValues = $dataset->GetCurrentFieldValues();
+        foreach ($newValues as $fieldName => $fieldValue) {
             if ($dataset->DoNotRewriteUnchangedValues()) {
-                if (($oldValues[$fieldName] ?? null) != $fieldValue) // Processed by afterburner.sh
-                // if (!isset($oldValues[$fieldName]) || ($oldValues[$fieldName] != $fieldValue)) // Processed by afterburner.sh
+                if (!array_key_exists($fieldName, $oldValues) || array_key_exists($fieldName, $editFieldValues) || ($oldValues[$fieldName] != $fieldValue))
                     $dataset->SetFieldValueByName($fieldName, $fieldValue);
             } else {
                 $dataset->SetFieldValueByName($fieldName, $fieldValue);
             }
+        }
     }
 
     /**

@@ -108,7 +108,7 @@ class SMDateTime {
     }
 
     public function ToAnsiSQLString($withTime = true) {
-        return $this->ToString('Y-m-d' . ($withTime ? '  H:i:s' : ''));
+        return $this->ToString('Y-m-d' . ($withTime ? ' H:i:s' : ''));
     }
 
     public function __toString() {

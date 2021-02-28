@@ -7,8 +7,9 @@ define([
     'pgui.filter_builder',
     'pgui.column_filter',
     'pgui.charts',
+    'pgui.utils',
     'jquery.stickytableheaders'
-], function (_, pageSettings, shortcuts, Grid, Filter, FilterBuilder, ColumnFilter, charts) {
+], function (_, pageSettings, shortcuts, Grid, Filter, FilterBuilder, ColumnFilter, charts, utils) {
 
     function initGrids($grids) {
         $grids.each(function (i, el) {
@@ -51,6 +52,7 @@ define([
             var quickFilter = grid.getQuickFilter();
             quickFilter.setColumnNames(gridData.quickFilter.columns);
             quickFilter.highlight($grid);
+            utils.updatePopupHints($grid.find('.pg-row'));
         });
     }
 

@@ -30,4 +30,9 @@ class RecordCardView
     {
         $renderer->RenderRecordCardView($this);
     }
+
+    public function isInline() {
+        return (bool) ArrayWrapper::createGetWrapper()->getValue('is_inline', false);
+    }
+
 }

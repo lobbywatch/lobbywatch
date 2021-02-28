@@ -442,4 +442,5 @@ return array(
 'RecaptchaInvalidInputResponse' => 'reCAPTCHA: the response parameter is invalid or malformed',
 'RecaptchaBadRequest' => 'reCAPTCHA: the request is invalid or malformed',
 'RecaptchaTimeout' => 'reCAPTCHA: the response is no longer valid: either is too old or has been used previously',
+'InsertItem' => 'Insert item',
 );

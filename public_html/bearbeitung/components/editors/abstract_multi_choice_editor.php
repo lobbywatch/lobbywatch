@@ -46,15 +46,12 @@ abstract class AbstractMultiChoiceEditor extends AbstractChoicesEditor
      * @inheritdoc
      */
     public function extractValueFromArray(ArrayWrapper $arrayWrapper, &$valueChanged) {
-        $valueChanged = $arrayWrapper->isValueSet($this->GetName());
-        if ($valueChanged) {
+        $valueChanged = true;
+        $result = '';
+        if ($arrayWrapper->isValueSet($this->GetName())) {
             $valuesArray = $arrayWrapper->GetValue($this->GetName());
-            $result = '';
-            foreach ($valuesArray as $value)
-                StringUtils::AddStr($result, $value, ',');
-            return $result;
-        } else {
-            return '';
+            $result = implode(',', $valuesArray);
         }
+        return $result;
     }
 }

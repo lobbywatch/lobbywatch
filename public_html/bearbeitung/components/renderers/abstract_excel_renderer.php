@@ -124,7 +124,6 @@ abstract class AbstractExcelRenderer extends AbstractExportRenderer
 
     private function RenderPageTemplate(Page $page)
     {
-
         $customParams = array();
         $template = $page->GetCustomTemplate(
             PagePart::ExportLayout,
@@ -142,26 +141,33 @@ abstract class AbstractExcelRenderer extends AbstractExportRenderer
 
     private function RenderPagePhpExcel(Page $page)
     {
-        require_once dirname(__FILE__) . '/../../libs/phpoffice/PHPExcel.php';
+        if (version_compare(PHP_VERSION, '7.2', '<')) {
+            require_once dirname(__FILE__) . '/' . 'phpexcel_common.php';
+            $columnAIndex = 0;
+        } else {
+            require_once dirname(__FILE__) . '/' . 'phpspreadsheet_common.php';
+            $columnAIndex = 1;
+        }
 
-        $objPHPExcel = new PHPExcel();
-        $sheet = $objPHPExcel->setActiveSheetIndex(0);
+        $phpExcelObject = CreatePHPExcelObject();
+        $sheet = $phpExcelObject->setActiveSheetIndex(0);
 
         $grid = $page->getGrid();
         $grid->GetDataset()->Open();
 
         foreach($grid->GetExportColumns() as $i => $column) {
-            $sheet->setCellValueByColumnAndRow($i, 1, $this->PrepareForExcel(
+            $sheet->setCellValueByColumnAndRow($i + $columnAIndex, 1, $this->PrepareForExcel(
                 $column->GetCaption(),
                 $column->GetGrid()->GetPage()->GetContentEncoding()
             ));
+            $sheet->getColumnDimensionByColumn($i + $columnAIndex)->setAutoSize(true);
         }
 
         $currentRow = 2;
         while ($grid->GetDataset()->Next()) {
             $rowValues = $grid->GetDataset()->GetCurrentFieldValues();
             foreach($grid->GetExportColumns() as $i => $column) {
-                $sheet->setCellValueByColumnAndRow($i, $currentRow, $this->PrepareForExcel(
+                $sheet->setCellValueByColumnAndRow($i + $columnAIndex, $currentRow, $this->PrepareForExcel(
                     $this->RenderViewColumn($column, $rowValues),
                     $column->GetGrid()->GetPage()->GetContentEncoding()
                 ));
@@ -173,17 +179,15 @@ abstract class AbstractExcelRenderer extends AbstractExportRenderer
         $totals = $grid->getTotalsViewData($grid->GetExportColumns());
         if (!is_null($totals)) {
             foreach($totals as $i => $total) {
-                $sheet->setCellValueByColumnAndRow($i, $currentRow, $this->PrepareForExcel(
+                $sheet->setCellValueByColumnAndRow($i + $columnAIndex, $currentRow, $this->PrepareForExcel(
                     $total['Value'],
                     $page->GetContentEncoding()
                 ));
             }
         }
 
-        $objPHPExcel->setActiveSheetIndex(0);
-
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save('php://output');
+        $phpExcelIOWriter = CreatePHPExcelIOWriter($phpExcelObject);
+        $phpExcelIOWriter->save('php://output');
 
         exit;
     }

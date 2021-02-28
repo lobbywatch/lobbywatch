@@ -43,6 +43,7 @@ class AdminPage extends CommonPage
             ),
             'isAdminPanelVisible' => GetApplication()->HasAdminPanelForCurrentUser(),
             'canManageUsers' => GetApplication()->HasAdminGrantForCurrentUser(),
+            'CanChangeOwnPassword' => false,
             'EmailBasedFeaturesEnabled' => GetApplication()->GetUserAuthentication()->getSelfRegistrationEnabled() || GetApplication()->GetUserAuthentication()->getRecoveringPasswordEnabled(),
         );
     }

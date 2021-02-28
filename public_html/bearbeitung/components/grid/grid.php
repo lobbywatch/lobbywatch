@@ -289,6 +289,9 @@ class Grid {
     /** @var Event */
     public $OnGetSelectionFilters;
 
+    /** @var Event */
+    public $OnGetCustomFormLayout;
+
     /** @var DetailColumn[] */
     private $details;
 
@@ -309,6 +312,15 @@ class Grid {
 
     /** @var FormLayout */
     private $multiEditFormLayout;
+
+    /** @var FormLayout */
+    private $inlineInsertFormLayout;
+
+    /** @var FormLayout */
+    private $inlineEditFormLayout;
+
+    /** @var FormLayout */
+    private $inlineViewFormLayout;
 
     /** @var FormLayout */
     private $multiUploadFormLayout;
@@ -363,6 +375,7 @@ class Grid {
         $this->OnGetCustomTemplate = new Event();
         $this->OnCustomDefaultValues = new Event();
         $this->OnGetSelectionFilters = new Event();
+        $this->OnGetCustomFormLayout = new Event();
         //
         $this->SetState(OPERATION_VIEWALL);
         $this->highlightRowAtHover = false;
@@ -394,20 +407,6 @@ class Grid {
         $this->columnFilter = new ColumnFilter();
         $this->quickFilter = new QuickFilter();
         $this->selectionFilter = new SelectionFilter($this->page->GetLocalizerCaptions());
-    }
-
-    /**
-     * @param string $columnName
-     * @return \AbstractViewColumn|null
-     */
-    private function FindViewColumnByName($columnName) {
-        $columns = $this->GetViewColumns();
-        foreach ($columns as $column) {
-            if ($this->GetColumnName($column) == $columnName) {
-                return $column;
-            }
-        }
-        return null;
     }
 
     public function GetTemplate($mode, $defaultTemplate) {
@@ -1213,19 +1212,13 @@ class Grid {
         return $this->allowCompare;
     }
 
-    /**
-     * @param bool $allowAddMultipleRecords
-     */
-    public function setAllowAddMultipleRecords($allowAddMultipleRecords)
-    {
+    /** @param bool $allowAddMultipleRecords */
+    public function setAllowAddMultipleRecords($allowAddMultipleRecords) {
         $this->allowAddMultipleRecords = $allowAddMultipleRecords;
     }
 
-    /**
-     * @param bool $allowAddMultipleRecords
-     */
-    public function getAllowAddMultipleRecords()
-    {
+    /** @return bool */
+    public function getAllowAddMultipleRecords() {
         return $this->allowAddMultipleRecords;
     }
 
@@ -2093,6 +2086,18 @@ class Grid {
         );
     }
 
+    public function operationIsEnabled($operationName) {
+        foreach ($this->getActions()->getOperations() as $operation) {
+            if ($operationName == $operation->GetName()) {
+                return true;
+            }
+        }
+        if ($operationName == 'insert') {
+            return $this->GetShowAddButton();
+        }
+        return false;
+    }
+
     public function GetMultiUploadViewData() {
         return
             array(
@@ -2100,7 +2105,10 @@ class Grid {
                 'FormAction' => $this->GetMultiUploadPageAction(),
                 'FormLayout' => $this->getMultiUploadFormLayout(),
                 'Title' => $this->GetPage()->GetLocalizerCaptions()->GetMessageString('UploadFiles'),
-                'CancelUrl' => $this->GetReturnUrl()
+                'CancelUrl' => $this->GetReturnUrl(),
+                'Messages' => $this->getMessages(),
+                'ErrorMessages' => $this->getErrorMessages(),
+                'AllowAddMultipleRecords' => false
             );
     }
 
@@ -2219,7 +2227,7 @@ class Grid {
         }
     }
 
-    public function GetViewSingleRowViewData()
+    public function GetViewSingleRowViewData($isInline = false)
     {
         $detailViewData = array();
         $this->GetDataset()->Open();
@@ -2241,7 +2249,11 @@ class Grid {
                 );
             }
 
-            $layout = $this->getViewFormLayout();
+            if ($isInline) {
+                $layout = $this->getInlineViewFormLayout();
+            } else {
+                $layout = $this->getViewFormLayout();
+            }
             $cellEditUrls = array();
 
             if ($this->allowDisplayEditButtonOnViewForm()) {
@@ -2259,6 +2271,7 @@ class Grid {
             }
 
             return array(
+                'Id' => $this->GetId(),
                 'Details' => $detailViewData,
                 'HasEditGrant' => $this->allowDisplayEditButtonOnViewForm(),
                 'CancelUrl' => $this->GetReturnUrl(),
@@ -2691,179 +2704,14 @@ class Grid {
     }
 
     /**
-     * @param FormLayout $layout
-     */
-    public function setViewFormLayout(FormLayout $layout)
-    {
-        $this->viewFormLayout = $layout;
-    }
-
-    /**
-     * @return FormLayout
-     */
-    public function getViewFormLayout()
-    {
-        return $this->fillFormLayout($this->viewFormLayout, $this->GetSingleRecordViewColumns());
-    }
-
-    /**
-     * @param FormLayout $layout
-     */
-    public function setInsertFormLayout(FormLayout $layout)
-    {
-        $this->insertFormLayout = $layout;
-    }
-
-    /**
-     * @return FormLayout
-     */
-    public function getInsertFormLayout()
-    {
-        return $this->fillFormLayout($this->insertFormLayout, $this->GetInsertColumns());
-    }
-
-    /**
-     * @param FormLayout $layout
-     */
-    public function setMultiUploadFormLayout(FormLayout $layout)
-    {
-        $this->multiUploadFormLayout = $layout;
-    }
-
-    /**
-     * @return FormLayout
-     */
-    public function getMultiUploadFormLayout()
-    {
-        return $this->fillFormLayout($this->multiUploadFormLayout, $this->GetMultiUploadColumns());
-    }
-
-    /**
-     * @param FormLayout $layout
-     */
-    public function setEditFormLayout(FormLayout $layout)
-    {
-        $this->editFormLayout = $layout;
-    }
-
-    /**
-     * @return FormLayout
-     */
-    public function getEditFormLayout()
-    {
-        return $this->fillFormLayout($this->editFormLayout, $this->GetEditColumns());
-    }
-
-    /**
-     * @param FormLayout $layout
-     */
-    public function setMultiEditFormLayout(FormLayout $layout)
-    {
-        $this->multiEditFormLayout = $layout;
-    }
-
-    /**
-     * @return FormLayout
-     */
-    public function getMultiEditFormLayout()
-    {
-        return $this->fillFormLayout($this->multiEditFormLayout, $this->GetMultiEditColumns());
-    }
-
-    /**
-     * @param FormLayout $layout
-     */
-    public function setInlineInsertFormLayout(FormLayout $layout)
-    {
-        $this->inlineInsertFormLayout = $layout;
-    }
-
-    /**
-     * @param FormLayout $layout
-     */
-    public function setInlineEditFormLayout(FormLayout $layout)
-    {
-        $this->inlineEditFormLayout = $layout;
-    }
-
-    /**
-     * @return FormLayout
-     */
-    public function getInlineInsertFormLayout()
-    {
-        return $this->fillInlineFormLayout($this->inlineInsertFormLayout, $this->GetInsertColumns());
-    }
-
-    /**
-     * @return FormLayout
-     */
-    public function getInlineEditFormLayout()
-    {
-        return $this->fillInlineFormLayout($this->inlineEditFormLayout, $this->GetEditColumns());
-    }
-
-    /**
-     * @param FormLayout        $layout
      * @param ColumnInterface[] $columns
-     *
-     * @return FormLayout
-     */
-    private function fillFormLayout(FormLayout $layout, $columns)
-    {
-        $columnNames = $layout->getColumnNames();
-        if ($layout->tabsEnabled()) {
-            $tab = $layout->addTab('Default');
-            $group = $tab->addGroup();
-        } else {
-            $group = $layout->addGroup();
-        }
-
-        foreach ($columns as $column) {
-            if (!in_array($column->GetName(), $columnNames)) {
-                $group->addRow()->addCol($column);
-            }
-        }
-
-        return $layout;
-    }
-
-    private function fillInlineFormLayout(FormLayout $layout, $columns)
-    {
-        if ($this->GetViewMode() === ViewMode::CARD) {
-            return $this->fillFormLayout($layout, $columns);
-        }
-
-        $columnNames = $layout->getColumnNames();
-
-        if (count($columnNames) > 0) {
-            return $this->fillFormLayout($layout, $columns);
-        }
-
-        $groups = array(
-            $layout->addGroup(null, 6),
-            $layout->addGroup(null, 6)
-        );
-
-        foreach ($columns as $i => $column) {
-            $groups[$i%2]->addRow()->addCol($column);
-        }
-
-        return $layout;
-    }
-
-    /**
-     * @param ColumnInterface[] $columns
-     *
      * @return array
      */
-    static public function getNamedColumns($columns)
-    {
+    static public function getNamedColumns($columns) {
         $namedColumns = array();
-
         foreach ($columns as $column) {
             $namedColumns[$column->getName()] = $column;
         }
-
         return $namedColumns;
     }
 
@@ -2994,4 +2842,184 @@ class Grid {
             return '';
         }
     }
+
+    #region Form Layouts
+
+    /** @param FormLayout $layout */
+    public function setViewFormLayout($layout) {
+        $this->viewFormLayout = $layout;
+    }
+
+    /** @return FormLayout */
+    public function getViewFormLayout() {
+        if (!$this->viewFormLayout) {
+            $this->viewFormLayout = $this->getFormLayout('view', $this->GetSingleRecordViewColumns());
+        }
+        return $this->viewFormLayout;
+    }
+
+    /** @param FormLayout $layout */
+    public function setInsertFormLayout($layout) {
+        $this->insertFormLayout = $layout;
+    }
+
+    /** @return FormLayout */
+    public function getInsertFormLayout() {
+        if (!$this->insertFormLayout) {
+            $this->insertFormLayout = $this->getFormLayout('insert', $this->GetInsertColumns());
+        }
+        return $this->insertFormLayout;
+    }
+
+    /** @param FormLayout $layout */
+    public function setEditFormLayout($layout) {
+        $this->editFormLayout = $layout;
+    }
+
+    /** @return FormLayout */
+    public function getEditFormLayout() {
+        if (!$this->editFormLayout) {
+            $this->editFormLayout = $this->getFormLayout('edit', $this->GetEditColumns());
+        }
+        return $this->editFormLayout;
+    }
+
+    /** @param FormLayout $layout */
+    public function setMultiEditFormLayout($layout) {
+        $this->multiEditFormLayout = $layout;
+    }
+
+    /** @return FormLayout */
+    public function getMultiEditFormLayout() {
+        if (!$this->multiEditFormLayout) {
+            $this->multiEditFormLayout = $this->getFormLayout('multi_edit', $this->GetMultiEditColumns());
+        }
+        return $this->multiEditFormLayout;
+    }
+
+    /** @param FormLayout $layout */
+    public function setInlineInsertFormLayout($layout) {
+        $this->inlineInsertFormLayout = $layout;
+    }
+
+    /** @return FormLayout */
+    public function getInlineInsertFormLayout() {
+        if (!$this->inlineInsertFormLayout) {
+            $this->inlineInsertFormLayout = $this->getInlineFormLayout('inline_insert', $this->GetInsertColumns());
+        }
+        return $this->inlineInsertFormLayout;
+    }
+
+    /** @param FormLayout $layout */
+    public function setInlineEditFormLayout($layout) {
+        $this->inlineEditFormLayout = $layout;
+    }
+
+    /** @return FormLayout */
+    public function getInlineEditFormLayout() {
+        if (!$this->inlineEditFormLayout) {
+            $this->inlineEditFormLayout = $this->getInlineFormLayout('inline_edit', $this->GetEditColumns());
+        }
+        return $this->inlineEditFormLayout;
+    }
+
+    /** @param FormLayout $layout */
+    public function setInlineViewFormLayout($layout) {
+        $this->inlineViewFormLayout = $layout;
+    }
+
+    /** @return FormLayout */
+    public function getInlineViewFormLayout() {
+        if (!$this->inlineViewFormLayout) {
+            $this->inlineViewFormLayout = $this->getInlineFormLayout('inline_view', $this->GetSingleRecordViewColumns());
+        }
+        return $this->inlineViewFormLayout;
+    }
+
+    /** @param FormLayout $layout */
+    public function setMultiUploadFormLayout($layout) {
+        $this->multiUploadFormLayout = $layout;
+    }
+
+    /** @return FormLayout */
+    public function getMultiUploadFormLayout() {
+        if (!$this->multiUploadFormLayout) {
+            $this->multiUploadFormLayout = new FormLayout();
+            $this->tuneFormLayout($this->multiUploadFormLayout, $this->GetMultiUploadColumns());
+        }
+        return $this->multiUploadFormLayout;
+    }
+
+    /**
+     * @param string $mode
+     * @param ColumnInterface[] $columns
+     * @return FormLayout
+     */
+    private function getFormLayout($mode, $columns) {
+        $layout = new FormLayout();
+        $this->OnGetCustomFormLayout->Fire(array($mode, new FixedKeysArray(self::getNamedColumns($columns)), $layout));
+        $this->tuneFormLayout($layout, $columns);
+        return $layout;
+    }
+
+    /**
+     * @param string $mode
+     * @param ColumnInterface[] $columns
+     * @return FormLayout
+     */
+    private function getInlineFormLayout($mode, $columns) {
+        $layout = new FormLayout(FormLayoutMode::VERTICAL);
+        $this->OnGetCustomFormLayout->Fire(array($mode, new FixedKeysArray(self::getNamedColumns($columns)), $layout));
+        $this->tuneInlineFormLayout($layout, $columns);
+        return $layout;
+    }
+
+    /**
+     * @param FormLayout        $layout
+     * @param ColumnInterface[] $columns
+     */
+    private function tuneFormLayout($layout, $columns) {
+        $columnNames = $layout->getColumnNames();
+        if ($layout->tabsEnabled()) {
+            $tab = $layout->addTab('Default');
+            $group = $tab->addGroup();
+        } else {
+            $group = $layout->addGroup();
+        }
+
+        foreach ($columns as $column) {
+            if (!in_array($column->GetName(), $columnNames)) {
+                $group->addRow()->addCol($column);
+            }
+        }
+    }
+
+    /**
+     * @param FormLayout        $layout
+     * @param ColumnInterface[] $columns
+     */
+    private function tuneInlineFormLayout($layout, $columns) {
+        if ($this->GetViewMode() === ViewMode::CARD) {
+            $this->tuneFormLayout($layout, $columns);
+            return;
+        }
+
+        $columnNames = $layout->getColumnNames();
+
+        if (count($columnNames) > 0) {
+            $this->tuneFormLayout($layout, $columns);
+        } else {
+            $groups = array(
+                $layout->addGroup(null, 6),
+                $layout->addGroup(null, 6)
+            );
+
+            foreach ($columns as $i => $column) {
+                $groups[$i%2]->addRow()->addCol($column);
+            }
+        }
+    }
+
+    #endregion
+
 }

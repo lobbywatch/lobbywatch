@@ -1,7 +1,3 @@
-{php}
-    $this->assign("IconByOperationMap", array('view' => 'icon-view', 'edit' => 'icon-edit', 'delete' => 'icon-remove', 'copy' => 'icon-copy' ));
-{/php}
-
 {assign var="UseOperationContainer" value=$UseOperationContainer|default:true}
 
 {foreach item=Cell from=$Actions}
@@ -27,7 +23,7 @@
                 <a href="#" title="{$Cell.Data.dialogTitle}"{if $Cell.Data.useImage} class="link-icon"{/if} data-{$Cell.Data.type}-operation="{$Cell.Data.name}" data-content-link="{$Cell.Data.link}">
 
                     {if $Cell.Data.useImage}
-                        <i class="{$IconByOperationMap[$Cell.OperationName]}"></i>
+                        <i class="{$Cell.IconClass}"></i>
                     {else}
                         {$Cell.Data.caption}
                     {/if}

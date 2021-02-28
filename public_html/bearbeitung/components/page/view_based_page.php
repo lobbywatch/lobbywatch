@@ -21,7 +21,7 @@ abstract class ViewBasedPage extends Page
     }
 
     public function RegisterHandlers() {
-        $handler = new ModalGridViewHandler($this->GetModalGridViewHandler(), new RecordCardView($this->GetGrid()));
+        $handler = new RecordCardViewHandler($this->GetModalGridViewHandler(), new RecordCardView($this->GetGrid()));
         GetApplication()->RegisterHTTPHandler($handler);
 
         $this->doRegisterHandlers();

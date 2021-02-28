@@ -43,7 +43,9 @@ class SignatureEditColumn extends CustomEditColumn {
 
         if ($valueChanged && $value) {
             FileUtils::ForceDirectories($folderToSave);
-            $encodedImage = explode(",", $value)[1];
+            $valueParts = explode(",", $value);
+            $encodedImage = $valueParts[1];
+
             $imgData = base64_decode($encodedImage);
             $this->createSignatureFile($fileName, $imgData);
             $this->GetDataset()->SetFieldValueByName(

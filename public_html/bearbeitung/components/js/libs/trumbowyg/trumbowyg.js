@@ -1475,13 +1475,16 @@ Object.defineProperty(jQuery.trumbowyg, 'defaultOptions', {
             // Disable all btnPane btns
             t.$btnPane.addClass(prefix + 'disable');
 
+            var parentModal = $(t.doc).find('.modal:visible').last();
+            var parentElement = parentModal.length > 0 ? parentModal : $(t.doc.body);
+
             // Build out of ModalBox, it's the mask for animations
             var $modal = $('<div/>', {
                 class: prefix + 'modal ' + prefix + 'fixed-top'
             }).css({
                 top: t.$box.offset().top + t.$btnPane.height(),
                 zIndex: 99999
-            }).appendTo($(t.doc.body));
+            }).appendTo(parentElement);
 
             // Click on overlay close modal by cancelling them
             t.$overlay.one('click', function () {

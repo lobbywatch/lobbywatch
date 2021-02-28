@@ -749,7 +749,7 @@ abstract class Dataset implements IFilterable, IDataset {
         if (count($primaryKeyColumns) == 1) {
             if ($this->GetConnection()->SupportsLastInsertId()) {
                 $field = $this->GetFieldByName($primaryKeyColumns[0]);
-                if ($field != null && $field->SupportsLastInsertId() && $field->GetIsAutoincrement()) {
+                if ($field != null && $field->GetIsAutoincrement()) {
                     $lastInsertId = $this->GetConnection()->GetLastInsertId();
                     if ($lastInsertId != null)
                         $this->insertFieldValues[$primaryKeyColumns[0]] = $lastInsertId;
@@ -1150,7 +1150,7 @@ abstract class Dataset implements IFilterable, IDataset {
     }
 
     public function IsLookupFieldNameByDisplayFieldName($displayFieldName) {
-        return $this->lookupFields[$displayFieldName];
+        return array_key_exists($displayFieldName, $this->lookupFields);
     }
 
     /**

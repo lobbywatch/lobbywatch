@@ -17,7 +17,7 @@
 
     <link rel="stylesheet" type="text/css" href="{$StyleFile|default:'components/assets/css/main.css'}{if $StyleFile == ''}?h={$hash_css_main}{/if}" />
     <link rel="stylesheet" type="text/css" href="components/assets/css/custom/custom.css?h={$hash_css_custom}" />
-    {if !GetOfflineMode()}
+    {if !GetOfflineMode() && isset($ExternalServicesLoadingBlock)}
         {$ExternalServicesLoadingBlock}
     {/if}
 
@@ -43,29 +43,33 @@
     {/if}
 </head>
 
-{if $Page}
+{if isset($Page)}
     {assign var="PageListObj" value=$Page->GetReadyPageList()}
     {if $PageListObj and $Page->GetShowPageList()}
         {if $PageListObj->isTypeSidebar()}
             {capture assign="SideBar"}
-                {$Sidebar}
+                {if isset($Sidebar)}{$Sidebar}{/if}
                 {$PageList}
             {/capture}
         {/if}
 
         {if $PageListObj->isTypeMenu()}
             {capture assign="Menu"}
-                {$Menu}
+                {if isset($Menu)}{$Menu}{/if}
                 {$PageList}
             {/capture}
         {/if}
     {/if}
 {/if}
 
-<body{if $Page} id="pgpage-{$Page->GetPageId()}"{/if}{if $SideBar and not $HideSideBarByDefault} class="sidebar-desktop-active"{/if} data-page-entry="{$common->getEntryPoint()}" data-inactivity-timeout="{$common->getInactivityTimeout()}"{if $InactivityTimeoutExpired} data-inactivity-timeout-expired="true"{/if}>
+{if !isset($HideSideBarByDefault)}
+    {assign var="HideSideBarByDefault" value=false}
+{/if}
+
+<body{if isset($Page)} id="pgpage-{$Page->GetPageId()}"{/if}{if isset($SideBar) and not $HideSideBarByDefault} class="sidebar-desktop-active"{/if} data-page-entry="{$common->getEntryPoint()}" data-inactivity-timeout="{$common->getInactivityTimeout()}"{if isset($InactivityTimeoutExpired) && $InactivityTimeoutExpired} data-inactivity-timeout-expired="true"{/if}>
 <nav id="navbar" class="navbar navbar-default navbar-fixed-top">
 
-    {if $SideBar}
+    {if isset($SideBar)}
         <div class="toggle-sidebar pull-left" title="{$Captions->GetMessageString('SidebarToggle')}">
             <button class="icon-toggle-sidebar"></button>
         </div>
@@ -76,7 +80,7 @@
             {if $common}
                 {$common->getHeader()}
             {/if}
-            {if $Menu or $NavbarContent or $Authentication.Enabled}
+            {if isset($Menu) or isset($NavbarContent) or (isset($Authentication) && $Authentication.Enabled)}
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navnav" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
@@ -87,59 +91,24 @@
         </div>
 
         <div class="navbar-collapse collapse" id="navnav">
-            {if $NavbarContent}{$NavbarContent}{/if}
+            {if isset($NavbarContent)}{$NavbarContent}{/if}
 
-            {if $Authentication.Enabled}
-                <ul id="nav-menu" class="nav navbar-nav navbar-right">
-                    {if $Authentication.LoggedIn}
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <i class="icon-user"></i>
-                                {if $Authentication.CurrentUser.Name == 'guest'}
-                                    {$Captions->GetMessageString('Guest')}
-                                {else}
-                                    {$Authentication.CurrentUser.Name}
-                                {/if}
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                {if $Authentication.isAdminPanelVisible}
-                                    <li><a href="phpgen_admin.php" title="{$Captions->GetMessageString('AdminPage')}">{$Captions->GetMessageString('AdminPage')}</a></li>
-                                    <li role="separator" class="divider"></li>
-                                {/if}
-                                {if $Authentication.CanChangeOwnPassword}
-                                    <li><a id="self-change-password" href="#" title="{$Captions->GetMessageString('ChangePassword')}">
-                                            {$Captions->GetMessageString('ChangePassword')}
-                                        </a>
-                                    </li>
-                                {/if}
-                                <li><a href="login.php?operation=logout">{$Captions->GetMessageString('Logout')}</a></li>
-                            </ul>
-                        </li>
-                    {else}
-                        <li><a href="login.php{if $Page and $Page->getLink()}?redirect={$Page->getLink()|@urlencode}{/if}">{$Captions->GetMessageString('Login')}</a></li>
-                    {/if}
-                </ul>
+            {if isset($Authentication) && $Authentication.Enabled}
+                {include file='common/user_menu.tpl'}
             {/if}
 
-            {if $Menu}
+            {if isset($Menu)}
                 {$Menu}
             {/if}
         </div>
     </div>
 </nav>
 
-
-{if !isset($HideSideBarByDefault)}
-    {assign var="HideSideBarByDefault" value=false}
-{/if}
-
-
 <div class="container-fluid">
 
-    <div class="row{if $SideBar} sidebar-owner{/if}">
+    <div class="row{if isset($SideBar)} sidebar-owner{/if}">
 
-        {if $SideBar}
+        {if isset($SideBar)}
 
             <div class="sidebar">
                 <div class="content">
@@ -150,10 +119,10 @@
         {/if}
 
         <div class="{if isset($ContentBlockClass)}{$ContentBlockClass}{else}col-md-12{/if}">
-            {if $SideBar}<div class="sidebar-outer">{/if}
+            {if isset($SideBar)}<div class="sidebar-outer">{/if}
                 <div class="container-padding">
                     {$ContentBlock}
-                    {$Variables}
+		    {if isset($Variables)}{$Variables}{/if}
 
                     {if $common->getFooter()}
                         <hr>
@@ -172,7 +141,7 @@
 
                     {/php}
                 </div>
-            {if $SideBar}</div>{/if}
+            {if isset($SideBar)}</div>{/if}
         </div>
 
     </div>

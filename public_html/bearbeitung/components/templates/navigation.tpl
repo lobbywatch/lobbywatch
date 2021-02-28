@@ -1,7 +1,7 @@
-{if (HasHomePage() or count($navigation) > 1)}
+{if ($HomePageEnabled or count($navigation) > 1)}
     <ol class="breadcrumb pgui-breadcrumb">
-        {if HasHomePage()}
-            <li><a href="{php}echo GetHomeURL();{/php}"><i class="icon-home"></i></a></li>
+        {if $HomePageEnabled}
+            <li><a href="{$HomePageURL}"><i class="icon-home"></i></a></li>
         {/if}
 
         {foreach from=$navigation item=item name=navigation}

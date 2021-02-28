@@ -13,6 +13,8 @@
         {$Captions->GetMessageString('Cancel')}
     </button>
     
+
+    {if $EditOperationIsEnabled}
     <div class="btn-group">
         <button type="submit" class="btn btn-primary js-save js-primary-save">
             {$Captions->GetMessageString('Save')}
@@ -24,5 +26,9 @@
             <li><a href="#" class="js-save" data-action="edit">{$Captions->GetMessageString('SaveAndEdit')}</a></li>
         </ul>
     </div>
-
+    {else}
+        <button type="submit" class="btn btn-primary js-save js-primary-save">
+            {$Captions->GetMessageString('Save')}
+        </button>
+    {/if}
 </div>

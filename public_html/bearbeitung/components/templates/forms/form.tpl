@@ -8,8 +8,7 @@
     {/if}
     <div class="clearfix"></div>
 
-    {include file='common/messages.tpl' type='danger' dismissable=true messages=$Grid.ErrorMessages displayTime=$Grid.MessageDisplayTime}
-    {include file='common/messages.tpl' type='success' dismissable=true messages=$Grid.Messages displayTime=$Grid.MessageDisplayTime}
+    {include file='common/messages_block.tpl' GridMessages=$Grid}
 
     {if $ShowErrorsOnTop}
         <div class="row">
@@ -35,6 +34,8 @@
         </div>
     {/if}
 
-    {include file='forms/form_scripts.tpl'}
+    {if !$isMultiUploadOperation}
+        {include file='forms/form_scripts.tpl'}
+    {/if}
 
 </form>

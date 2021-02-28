@@ -15,19 +15,19 @@ define(['pgui.editors/plain', 'jquery.bind-first'], function (PlainEditor) {
             var $editor = this.rootElement;
 
             if (value) {
-                $editor.onFirst("click.SQLMaestro", function() {
+                $editor.onFirst("click.AUX", function() {
                     event.preventDefault();
                     event.stopImmediatePropagation();
                     return false;
                 });
-                $editor.onFirst("change.SQLMaestro", function(event) {
+                $editor.onFirst("change.AUX", function(event) {
                     event.preventDefault();
                     event.stopImmediatePropagation();
                     return false;
                 })
             } else {
-                $editor.off("click.SQLMaestro");
-                $editor.off("change.SQLMaestro");
+                $editor.off("click.AUX");
+                $editor.off("change.AUX");
             }
 
             return this;

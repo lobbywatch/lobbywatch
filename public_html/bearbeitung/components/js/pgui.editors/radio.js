@@ -94,9 +94,13 @@ define(['pgui.editors/custom', 'underscore'], function (CustomEditor, _) {
                 caption: caption
             };
 
-            $editor.find('.js-value').last().after($(
-                isInline ? inlineItemTemplate(data) : stackedItemTemplate(data)
-            ));
+            var $newItem = $(isInline ? inlineItemTemplate(data) : stackedItemTemplate(data));
+
+            if (this.getItemCount() > 0) {
+                $editor.find('.js-value').last().after($newItem);
+            } else {
+                $editor.prepend($newItem);
+            }
 
             return this;
         },

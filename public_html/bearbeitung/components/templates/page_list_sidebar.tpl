@@ -1,7 +1,7 @@
 <div class="sidebar-nav">
 
     <ul class="nav nav-pills nav-stacked">
-        {$BeforeSidebarList}
+        {if isset($BeforeSidebarList)}{$BeforeSidebarList}{/if}
         {foreach item=Group key=index from=$List.Groups}
             {assign var=GroupCaption value=$Group->getCaption()}
 
@@ -55,7 +55,7 @@
                 </li>
             {/if}
         {/foreach}
-        {$AfterSidebarList}
+        {if isset($AfterSidebarList)}{$AfterSidebarList}{/if}
     </ul>
 
 </div>

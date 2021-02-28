@@ -1,4 +1,4 @@
-{assign var="ErrorTitle" value=$Captions->getMessageString('Error')};
+{assign var="ErrorTitle" value=$Captions->getMessageString('Error')}
 
 {capture assign="ErrorContent"}
     <p>{$Captions->GetMessageString('CriticalErrorSuggestions')}</p>

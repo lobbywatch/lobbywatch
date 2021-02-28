@@ -168,7 +168,7 @@ define([
         },
 
         updateEmptyGridMessage: function() {
-            this.container.find('.pg-row-list:first .empty-grid').toggle(this.container.find('.pg-row') > 0);
+            this.container.find('.pg-row-list:first .empty-grid').toggle(this.container.find('.pg-row').length == 0);
         },
 
         insertRowAtBegin: function($row) {
@@ -178,8 +178,9 @@ define([
                 row = emptyGrid;
             }
             row.before($row);
-            emptyGrid.remove();
             this.integrateRows($row);
+
+            this.updateEmptyGridMessage();
 
             return $row;
         },
@@ -219,6 +220,9 @@ define([
                     var $row = $(response.row);
                     utils.replaceRow($el.closest('.pg-row'), $row);
                     self.integrateRows($row);
+                    if (self.getReloadPageAfterAjaxOperation()) {
+                        location.reload();
+                    }
                 });
             });
 
@@ -256,6 +260,13 @@ define([
                 var $item = $(item);
                 if (!$item.data('inline-copy')) {
                     $item.data('inline-copy', inlineLink.createInsertLink($item, self));
+                }
+            });
+
+            $rows.find('[data-inline-operation=view]').each(function (index, item) {
+                var $item = $(item);
+                if (!$item.data('inline-view')) {
+                    $item.data('inline-view', inlineLink.createViewLink($item, self));
                 }
             });
 

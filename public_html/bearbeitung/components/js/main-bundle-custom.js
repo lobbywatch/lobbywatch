@@ -8094,19 +8094,19 @@ define('pgui.editors/checkbox',['pgui.editors/plain', 'jquery.bind-first'], func
             var $editor = this.rootElement;
 
             if (value) {
-                $editor.onFirst("click.SQLMaestro", function() {
+                $editor.onFirst("click.AUX", function() {
                     event.preventDefault();
                     event.stopImmediatePropagation();
                     return false;
                 });
-                $editor.onFirst("change.SQLMaestro", function(event) {
+                $editor.onFirst("change.AUX", function(event) {
                     event.preventDefault();
                     event.stopImmediatePropagation();
                     return false;
                 })
             } else {
-                $editor.off("click.SQLMaestro");
-                $editor.off("change.SQLMaestro");
+                $editor.off("click.AUX");
+                $editor.off("change.AUX");
             }
 
             return this;
@@ -8127,11 +8127,11 @@ define('pgui.editors/checkboxgroup',[
         + '<%=caption%>';
 
     var stackedItemTemplate = _.template(
-        '<div class="checkbox"><label>' + inputTemplateString + '</label></div>'
+        '<div class="checkbox js-value"><label>' + inputTemplateString + '</label></div>'
     );
 
     var inlineItemTemplate = _.template(
-        '<label class="checkbox-inline">' + inputTemplateString + '</label>'
+        '<label class="checkbox-inline js-value">' + inputTemplateString + '</label>'
     );
 
     return PlainEditor.extend({
@@ -8141,6 +8141,14 @@ define('pgui.editors/checkboxgroup',[
             this.rootElement.find("input").change(_.bind(function() {
                 this.doChanged();
             }, this));
+
+            this.bind('submit.pgui.nested-insert', function ($insertButton, primaryKey, record) {
+                this.addItem(
+                    record[$insertButton.data('stored-field-name')],
+                    record[$insertButton.data('display-field-name')],
+                    true
+                );
+            }.bind(this));
         },
 
         getValue: function() {
@@ -8164,11 +8172,19 @@ define('pgui.editors/checkboxgroup',[
 
             var checkedValues = value.split(',');
             var index;
+
             this.rootElement.find("input").each(function(i, item) {
+                var isChecked = false;
                 for (index = 0; index < checkedValues.length; ++index) {
                     if ($(item).attr('value') == checkedValues[index]) {
-                        $(item).attr('checked', true);
+                        $(item).prop('checked', true);
+                        isChecked = true;
+                        break;
                     }
+                }
+
+                if (!isChecked) {
+                    $(item).prop('checked', false);
                 }
             });
         },
@@ -8196,10 +8212,10 @@ define('pgui.editors/checkboxgroup',[
         },
 
         clear: function() {
-            this.rootElement.find("label").remove();
+            this.rootElement.find(".checkbox, .checkbox-inline").remove();
         },
 
-        addItem: function(value, caption) {
+        addItem: function(value, caption, checked) {
             var $editor = this.rootElement;
             var isInline = $editor.data('inline');
             var data = {
@@ -8208,9 +8224,16 @@ define('pgui.editors/checkboxgroup',[
                 caption: caption
             };
 
-            $editor.append(
-                ($(isInline ? inlineItemTemplate(data) : stackedItemTemplate(data)))
-            );
+            var $newItem = $(isInline ? inlineItemTemplate(data) : stackedItemTemplate(data));
+            if (typeof(checked) === 'boolean' && checked) {
+                $newItem.find("input").prop('checked', true);
+            }
+
+            if (this.getItemCount() > 0) {
+                $editor.find('.js-value').last().after($newItem);
+            } else {
+                $editor.prepend($newItem);
+            }
 
             return this;
         },
@@ -13916,13 +13939,16 @@ Object.defineProperty(jQuery.trumbowyg, 'defaultOptions', {
             // Disable all btnPane btns
             t.$btnPane.addClass(prefix + 'disable');
 
+            var parentModal = $(t.doc).find('.modal:visible').last();
+            var parentElement = parentModal.length > 0 ? parentModal : $(t.doc.body);
+
             // Build out of ModalBox, it's the mask for animations
             var $modal = $('<div/>', {
                 class: prefix + 'modal ' + prefix + 'fixed-top'
             }).css({
                 top: t.$box.offset().top + t.$btnPane.height(),
                 zIndex: 99999
-            }).appendTo($(t.doc.body));
+            }).appendTo(parentElement);
 
             // Click on overlay close modal by cancelling them
             t.$overlay.one('click', function () {
@@ -14727,6 +14753,11 @@ define('pgui.editors/multivalue_select',[
     		return this.rootElement.find("option").length;
     	},
 
+        clear: function() {
+            this.rootElement.find("option").remove();
+            return this;
+        },
+
         isMultivalue: function () {
             return true;
         }
@@ -14748,6 +14779,13 @@ define('pgui.editors/remote_multivalue_select',[
             var $el = $(rootElement);
             var maxSelectionSize = $el.attr('data-max-selection-size');
             var self = this;
+
+            this.bind('submit.pgui.nested-insert', function ($insertButton, primaryKey, record) {
+                var currentValue = this.getValue();
+                var storedValue = record[$insertButton.data('stored-field-name')];
+                currentValue.push(storedValue.toString());
+                this.setValue(currentValue);
+            }.bind(this));
 
             $el.on("change", this.doChanged.bind(this));
 
@@ -14956,9 +14994,13 @@ define('pgui.editors/radio',['pgui.editors/custom', 'underscore'], function (Cus
                 caption: caption
             };
 
-            $editor.find('.js-value').last().after($(
-                isInline ? inlineItemTemplate(data) : stackedItemTemplate(data)
-            ));
+            var $newItem = $(isInline ? inlineItemTemplate(data) : stackedItemTemplate(data));
+
+            if (this.getItemCount() > 0) {
+                $editor.find('.js-value').last().after($newItem);
+            } else {
+                $editor.prepend($newItem);
+            }
 
             return this;
         },
@@ -22015,10 +22057,10 @@ jQuery.fn.highlight = function(pat, opt, options)
         {
             var pos = -1;
             if (opt == 'END')
-                pos = node.data.toUpperCase().lastIndexOf(pat);
+                pos = node.data.toLowerCase().lastIndexOf(pat);
             else
-                pos = node.data.toUpperCase().indexOf(pat);
-            var dataLength = node.data.toUpperCase().length;
+                pos = node.data.toLowerCase().indexOf(pat);
+            var dataLength = node.data.toLowerCase().length;
             if (
                 ((pos >= 0) && (opt == 'ALL')) ||
                 ((pos == 0) && (opt == 'START')) ||
@@ -22051,7 +22093,7 @@ jQuery.fn.highlight = function(pat, opt, options)
         function()
         {
             if (pat != '')
-                innerHighlight(this, pat.toUpperCase(), opt, options);
+                innerHighlight(this, pat.toLowerCase(), opt, options);
         }
     );
 };
@@ -24142,24 +24184,30 @@ define('pgui.utils',[
         updatePopupHints: function ($container) {
             $container.find('.js-more-hint').each(function () {
                 var $hintLink = $(this);
-                var $hintMessage = $hintLink.siblings('.js-more-box').html();
+                var $hintMessage = $hintLink.closest('td[data-column-name]').find('.js-more-box').html();
                 $hintLink
-                    .on('click', function() {
+                    .off('click').on('click', function() {
                         $(this).popover('hide');
                         _showBootBoxAlert($hintMessage);
                         return false;
-                    })
-                    .popover({
-                        title: '',
-                        placement: function () {
-                            return $hintLink.offset().top - $(window).scrollTop() < $(window).height() / 2
-                                ? 'bottom'
-                                : 'top';
-                        },
-                        html: true,
-                        trigger: 'hover',
-                        content: $hintMessage
                     });
+                var popover = $hintLink.data('bs.popover');
+                if (popover) {
+                    popover.options.content = $hintMessage;
+                } else{
+                    $hintLink
+                        .popover({
+                            title: '',
+                            placement: function () {
+                                return $hintLink.offset().top - $(window).scrollTop() < $(window).height() / 2
+                                    ? 'bottom'
+                                    : 'top';
+                            },
+                            html: true,
+                            trigger: 'hover',
+                            content: $hintMessage
+                        });
+                }
             });
         },
         buildDismissableMessage: function (className, message, messageDisplayTime) {
@@ -24269,15 +24317,20 @@ define('pgui.field-embedded-video',[
 
     function getApi($el, cb) {
         var url = $el.data('url');
-        $.getJSON('https://noembed.com/embed', {url: url}).success(function(response) {
-            $el.data('api', response);
-            if (response.type !== 'video') {
+        $.getJSON('https://www.youtube.com/oembed', {url: url})
+            .success(function(response) {
+                $el.data('api', response);
+                if (response.type !== 'video') {
+                    $el.html(url);
+                    $el.find('.pgui-field-embedded-video-preloader').remove();
+                    return;
+                }
+                cb(response);
+            })
+            .error(function() {
                 $el.html(url);
                 $el.find('.pgui-field-embedded-video-preloader').remove();
-                return;
-            }
-            cb(response);
-        });
+            });
     }
 
     return function (container, autoplay, allWithoutModal) {
@@ -26070,7 +26123,7 @@ define('pgui.modal_operation_link',['pgui.shortcuts', 'pgui.utils'], function (s
             $grid.container.find('.pgui-add:first').get(0).click();
         }
 
-        if (params.action === undefined && $grid.getReloadPageAfterAjaxOperation()) {
+        if (params.action === undefined && $grid && $grid.getReloadPageAfterAjaxOperation()) {
             location.reload();
         }
 
@@ -26098,6 +26151,7 @@ define('pgui.modal_operation_link',['pgui.shortcuts', 'pgui.utils'], function (s
                     utils.replaceRow($link.closest('.pg-row'), $row);
                     if ($grid) {
                         $grid.integrateRows($row);
+                        $grid.updateEmptyGridMessage();
                     }
                 }
 
@@ -27391,8 +27445,9 @@ define('pgui.form_collection',[
     'pgui.editors',
     'pgui.validation',
     'pgui.modal_operation_link',
+    'pgui.autohide-message',
     'jquery.form'
-], function (Class, editors, validation, modalLink) {
+], function (Class, editors, validation, modalLink, autoHideMessage) {
     var FormCollection = Class.extend({
 
         init: function ($formsContainer, $collectionContainer, newFormUrl, callbacks) {
@@ -27523,6 +27578,10 @@ define('pgui.form_collection',[
                 .on('click', '#clear-fields-to-be-updated', function (e) {
                     $('#fields-to-be-updated').select2('val', []).trigger('change');
                 });
+
+            $.each($form.find('.alert'), function (i, alert) {
+                autoHideMessage($(alert));
+            });
 
             return $form;
         },
@@ -30458,7 +30517,13 @@ define('pgui.modal_view',[
     }
 });
 
-define('pgui.inline-edit',['pgui.form_collection', 'pgui.utils', 'jquery.query'], function (FormCollection, utils) {
+define('pgui.inline-edit',[
+    'pgui.form_collection',
+    'pgui.utils',
+    'pgui.field-embedded-video',
+    'pgui.image_popup',
+    'jquery.query'
+], function (FormCollection, utils, showFieldEmbeddedVideo, initImagePopup) {
 
     function createContainer(grid, cancelCallback) {
         return grid.getRowTemplate().on('click', '.js-cancel', function (e) {
@@ -30503,6 +30568,7 @@ define('pgui.inline-edit',['pgui.form_collection', 'pgui.utils', 'jquery.query']
                         $container.after($newRow);
                         grid.integrateRows($newRow);
                         $container.remove();
+                        grid.updateEmptyGridMessage();
 
                         if (params && params.action == 'edit') {
                             $newRow.find('[data-inline-operation=edit]').first().click();
@@ -30562,6 +30628,12 @@ define('pgui.inline-edit',['pgui.form_collection', 'pgui.utils', 'jquery.query']
             $link.on('click', function (e) {
                 e.preventDefault();
 
+                var $viewInlineLink = $row.find('[data-inline-operation=view]');
+                if ($viewInlineLink.length && $viewInlineLink.data('form-container')) {
+                    $viewInlineLink.data('form-container').remove();
+                    $viewInlineLink.data('form-container', null);
+                }
+
                 if ($link.data('form-container')) {
                     $link.data('form-container').remove();
                     $link.data('form-container', null);
@@ -30596,6 +30668,8 @@ define('pgui.inline-edit',['pgui.form_collection', 'pgui.utils', 'jquery.query']
                                 $link.data('form-container', null);
                                 $container.remove();
 
+                                grid.updateEmptyGridMessage();
+
                                 if (params && params.action == 'edit') {
                                     $newRow.find('[data-column-name=edit] > a').first().click();
                                 }
@@ -30609,7 +30683,50 @@ define('pgui.inline-edit',['pgui.form_collection', 'pgui.utils', 'jquery.query']
                     });
                 });
             });
+        },
 
+        createViewLink: function ($link, grid) {
+            var url = getUrl($link);
+
+            var $row = $link.closest('.pg-row');
+            $link.data('form-container', null);
+
+            $link.on('click', function (e) {
+                e.preventDefault();
+
+                var $editInlineLink = $row.find('[data-inline-operation=edit]');
+                if ($editInlineLink.length && $editInlineLink.data('form-container')) {
+                    $editInlineLink.data('form-container').remove();
+                    $editInlineLink.data('form-container', null);
+                }
+
+                if ($link.data('form-container')) {
+                    $link.data('form-container').remove();
+                    $link.data('form-container', null);
+                    return;
+                }
+
+                var $container = createContainer(grid, function () {
+                    $link.data('form-container', null);
+                    $row.show();
+                });
+
+                $link.data('form-container', $container);
+
+                if (grid.isCard()) {
+                    $row.hide();
+                }
+
+                $row.after($container);
+
+                $.get(url, function (content) {
+                    putContent($container, content);
+
+                    showFieldEmbeddedVideo($container, false, false);
+                    initImagePopup($container);
+                });
+
+            });
         }
     };
 });
@@ -31220,7 +31337,7 @@ define('pgui.grid',[
         },
 
         updateEmptyGridMessage: function() {
-            this.container.find('.pg-row-list:first .empty-grid').toggle(this.container.find('.pg-row') > 0);
+            this.container.find('.pg-row-list:first .empty-grid').toggle(this.container.find('.pg-row').length == 0);
         },
 
         insertRowAtBegin: function($row) {
@@ -31230,8 +31347,9 @@ define('pgui.grid',[
                 row = emptyGrid;
             }
             row.before($row);
-            emptyGrid.remove();
             this.integrateRows($row);
+
+            this.updateEmptyGridMessage();
 
             return $row;
         },
@@ -31271,6 +31389,9 @@ define('pgui.grid',[
                     var $row = $(response.row);
                     utils.replaceRow($el.closest('.pg-row'), $row);
                     self.integrateRows($row);
+                    if (self.getReloadPageAfterAjaxOperation()) {
+                        location.reload();
+                    }
                 });
             });
 
@@ -31308,6 +31429,13 @@ define('pgui.grid',[
                 var $item = $(item);
                 if (!$item.data('inline-copy')) {
                     $item.data('inline-copy', inlineLink.createInsertLink($item, self));
+                }
+            });
+
+            $rows.find('[data-inline-operation=view]').each(function (index, item) {
+                var $item = $(item);
+                if (!$item.data('inline-view')) {
+                    $item.data('inline-view', inlineLink.createViewLink($item, self));
                 }
             });
 
@@ -31711,8 +31839,9 @@ define('pgui.list-page-main',[
     'pgui.filter_builder',
     'pgui.column_filter',
     'pgui.charts',
+    'pgui.utils',
     'jquery.stickytableheaders'
-], function (_, pageSettings, shortcuts, Grid, Filter, FilterBuilder, ColumnFilter, charts) {
+], function (_, pageSettings, shortcuts, Grid, Filter, FilterBuilder, ColumnFilter, charts, utils) {
 
     function initGrids($grids) {
         $grids.each(function (i, el) {
@@ -31755,6 +31884,7 @@ define('pgui.list-page-main',[
             var quickFilter = grid.getQuickFilter();
             quickFilter.setColumnNames(gridData.quickFilter.columns);
             quickFilter.highlight($grid);
+            utils.updatePopupHints($grid.find('.pg-row'));
         });
     }
 

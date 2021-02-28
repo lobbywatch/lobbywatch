@@ -63,7 +63,7 @@ class LookUpEditColumn extends CustomEditColumn
 
     public function IsValueNull()
     {
-        if (GetOperation() == OPERATION_INSERT)
+        if ((GetOperation() == OPERATION_INSERT) || (GetOperation() == OPERATION_MULTI_EDIT))
             return false;
         else
         {
@@ -107,6 +107,7 @@ class LookUpEditColumn extends CustomEditColumn
     {
         return array_merge(parent::getViewData(), array(
             'NestedInsertFormLink' => $this->insertFormLink,
+            'LinkFieldName' => $this->linkFieldName,
             'DisplayFieldName' => $this->displayFieldName,
         ));
     }

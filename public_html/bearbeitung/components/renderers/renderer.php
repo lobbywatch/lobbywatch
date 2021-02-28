@@ -1007,7 +1007,9 @@ abstract class Renderer
         $this->DisplayTemplate(
             $template,
             array('Grid' => $this->getGridFormViewData($grid, $verticalGrid->getOperation()),
-                'isMultiEditOperation' => $isMultiEditOperation
+                'isMultiEditOperation' => $isMultiEditOperation,
+                'InsertOperationIsEnabled' => $grid->operationIsEnabled('insert'),
+                'EditOperationIsEnabled' => $grid->operationIsEnabled('edit')
             ),
             array_merge($customParams, array(
                 'Forms' => $forms,
@@ -1091,12 +1093,16 @@ abstract class Renderer
         try {
             $grid = $recordCardView->GetGrid();
             $customParams = array();
-            $template = $grid->GetPage()->GetCustomTemplate(PagePart::VerticalGrid, PageMode::ModalView, 'view/record_card_view.tpl', $customParams);
+            if ($recordCardView->isInline()) {
+                $template = $grid->GetPage()->GetCustomTemplate(PagePart::VerticalGrid, PageMode::InlineView, 'view/record_card_inline_view.tpl', $customParams);
+            } else {
+                $template = $grid->GetPage()->GetCustomTemplate(PagePart::VerticalGrid, PageMode::ModalView, 'view/record_card_view.tpl', $customParams);
+            }
 
             $this->DisplayTemplate($template, array(), array_merge(
                 $customParams,
                 array(
-                    'Grid' => $grid->getViewSingleRowViewData(),
+                    'Grid' => $grid->getViewSingleRowViewData($recordCardView->isInline()),
                     'modalSizeClass' => $this->getModalSizeClass($grid->GetPage()->getModalViewSize()),
                 )
             ));
@@ -1160,7 +1166,11 @@ abstract class Renderer
 
         $this->DisplayTemplate(
             $template,
-            array('navigation' => $navigation),
+            array(
+                'navigation' => $navigation,
+                'HomePageEnabled' => HasHomePage(),
+                'HomePageURL' => GetHomeURL()
+            ),
             $customParams
         );
     }

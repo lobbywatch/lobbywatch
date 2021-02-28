@@ -11,7 +11,6 @@ include_once dirname(__FILE__) . '/http_handler/download_http_handler.php';
 include_once dirname(__FILE__) . '/http_handler/dynamic_search_http_handler.php';
 include_once dirname(__FILE__) . '/http_handler/image_http_handler.php';
 include_once dirname(__FILE__) . '/http_handler/grid_edit_http_handler.php';
-include_once dirname(__FILE__) . '/http_handler/modal_grid_view_http_handler.php';
 include_once dirname(__FILE__) . '/http_handler/modal_delete_http_handler.php';
 include_once dirname(__FILE__) . '/http_handler/multilevel_selection_http_handler.php';
 include_once dirname(__FILE__) . '/http_handler/page_http_handler.php';
@@ -19,6 +18,7 @@ include_once dirname(__FILE__) . '/http_handler/linked_images_http_handler.php';
 include_once dirname(__FILE__) . '/http_handler/autocomplete_dataset_based_http_handler.php';
 include_once dirname(__FILE__) . '/http_handler/autocomplete_function_based_http_handler.php';
 include_once dirname(__FILE__) . '/http_handler/selection_http_handler.php';
+include_once dirname(__FILE__) . '/http_handler/record_card_view_http_handler.php';
 
 $formatsMap = array(
 

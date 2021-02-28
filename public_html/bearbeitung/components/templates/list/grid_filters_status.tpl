@@ -1,6 +1,6 @@
-{if ($DataGrid.FilterBuilder->hasColumns() or $DataGrid.ColumnFilter->hasColumns() or $DataGrid.QuickFilter->hasColumns() or $FilterStatus)}
+{if ($DataGrid.FilterBuilder->hasColumns() or $DataGrid.ColumnFilter->hasColumns() or $DataGrid.QuickFilter->hasColumns() or isset($FilterStatus))}
     <div class="filter-status js-filter-status">
-        {$FilterStatus}
+        {if isset($FilterStatus)}{$FilterStatus}{/if}
 
         {include file='list/selection_filter_status.tpl'}
 

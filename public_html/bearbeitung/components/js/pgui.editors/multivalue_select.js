@@ -103,6 +103,11 @@ define([
     		return this.rootElement.find("option").length;
     	},
 
+        clear: function() {
+            this.rootElement.find("option").remove();
+            return this;
+        },
+
         isMultivalue: function () {
             return true;
         }
