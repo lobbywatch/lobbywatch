@@ -32,7 +32,7 @@ while test $# -gt 0; do
                         echo "Options:"
                         echo "-f, --full-dump           Import full DB dump which replaces the current DB"
                         echo "-P, --progress            Show download progress"
-                        echo "-B, --nobackup            Show download progress"
+                        echo "-B, --nobackup            Do not create remote backup, just download latest"
                         echo "-i, --onlyimport          Import last remote prod backup, no backup (implies -B, production update not possible)"
                         quit
                         ;;
