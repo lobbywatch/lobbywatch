@@ -385,9 +385,20 @@ function _lobbywatch_data_transformation($table, &$items) {
 
     foreach($items as $item_key => $fields) {
       foreach($fields as $key => $value) {
-        if ($fields['rechtsform'] === 'Parlamentarische Gruppe' && in_array($key, ['name', 'organisation_name'], true)) {
-          df('should replace');
+        if (in_array($key, ['name', 'organisation_name'], true) && $fields['rechtsform'] === 'Parlamentarische Gruppe') {
           $items[$item_key][$key] = $pg_prefix[$lang] . ($lang === 'de' ? $items[$item_key][$key] : lcfirst($items[$item_key][$key]));
+        }
+      }
+    }
+  } else if (in_array($table, ['parlamentarier'], true)) { // quick and dirty hack to replace M with Mitte
+    $lang = get_lang();
+
+    foreach($items as $item_key => $fields) {
+      foreach($fields as $key => $value) {
+        if (in_array($key, ['partei'], true) && $fields['partei'] === 'M') {
+          $items[$item_key][$key] = 'Mitte';
+        } else if (in_array($key, ['partei'], true) && $fields['partei'] === 'C') {
+          $items[$item_key][$key] = 'Centre';
         }
       }
     }
