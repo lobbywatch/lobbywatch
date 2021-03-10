@@ -43000,7 +43000,7 @@ $edit_general_hint        </BeforeGridText>
           </ColumnPresentation>
           <ColumnPresentation fieldName="bis" caption="Bis" headerHint="Ende der Fraktion, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag" canSetNull="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
-            <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="wikipedia" caption="Wikipedia URL" headerHint="Link zum Wikipedia-Eintrag" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>

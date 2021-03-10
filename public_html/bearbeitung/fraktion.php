@@ -13797,7 +13797,7 @@
                 )
             );
             
-            $main_editor = new DateTimeEdit('bis_edit', false, 'Y-m-d H:i:s');
+            $main_editor = new DateTimeEdit('bis_edit', false, 'd.m.Y');
             
             $filterBuilder->addColumn(
                 $columns['bis'],
@@ -14709,7 +14709,7 @@
             //
             // Edit column for bis field
             //
-            $editor = new DateTimeEdit('bis_edit', false, 'Y-m-d H:i:s');
+            $editor = new DateTimeEdit('bis_edit', false, 'd.m.Y');
             $editColumn = new CustomEditColumn('Bis', 'bis', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -14917,7 +14917,7 @@
             //
             // Edit column for bis field
             //
-            $editor = new DateTimeEdit('bis_edit', false, 'Y-m-d H:i:s');
+            $editor = new DateTimeEdit('bis_edit', false, 'd.m.Y');
             $editColumn = new CustomEditColumn('Bis', 'bis', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -15124,7 +15124,7 @@
             //
             // Edit column for bis field
             //
-            $editor = new DateTimeEdit('bis_edit', false, 'Y-m-d H:i:s');
+            $editor = new DateTimeEdit('bis_edit', false, 'd.m.Y');
             $editColumn = new CustomEditColumn('Bis', 'bis', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
