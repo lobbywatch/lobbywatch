@@ -397,7 +397,7 @@ function _lobbywatch_data_transformation($table, &$items) {
         }
       }
     }
-  } else if (in_array($table, ['parlamentarier'], true)) { // quick and dirty hack to replace M with Mitte
+  } else if (in_array($table, ['parlamentarier', 'organisation_parlamentarier'], true)) { // quick and dirty hack to replace M with Mitte
     $lang = get_lang();
 
     foreach($items as $item_key => $fields) {
