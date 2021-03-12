@@ -117,7 +117,11 @@ function _lobbywatch_data_not_allowd($type, $table, $json = true) {
   }
 }
 
-function lobbywatch_json_output($response = null) {
+function lobbywatch_json_output($response = null, $cors = true) {
+  global $no_cors; // Global scope is only within one request
+  if ($cors && empty($no_cors)) { // Should we disable cors?
+    drupal_add_http_header('Access-Control-Allow-Origin', '*');
+  }
   drupal_json_output($response);
 }
 
@@ -1599,6 +1603,7 @@ function _lobbywatch_data_json_403() {
 
 function _lobbywatch_data_ws_uid($table, $uid, $json = true) {
   global $show_sql;
+  global $no_cors;
   global $zefix_ws_login;
   global $allowed_uid_access_keys;
   $success = true;
@@ -1622,16 +1627,20 @@ function _lobbywatch_data_ws_uid($table, $uid, $json = true) {
   try {
     if ($table == 'uid-bfs') {
       $items = _lobbywatch_fetch_ws_uid_bfs_data($uid, 0, false, false);
+      $no_cors = true; // Disable CORS since it is a protected service
     } else if ($table == 'zefix-soap') {
       $items = _lobbywatch_fetch_ws_zefix_soap_data($uid, 0, false, false);
+      $no_cors = true; // Disable CORS since it is a protected service
     } else if ($table == 'zefix-rest') {
       $items = _lobbywatch_fetch_ws_zefix_rest_data($uid, 0, false);
+      $no_cors = true; // Disable CORS since it is a protected service
     } else if ($table == 'uid') {
       $items = _lobbywatch_fetch_ws_zefix_rest_data($uid, 0, false);
       if (!$items['success']) {
         $message .= "zefix-rest unsuccessful (${items['message']}), calling uid@bfs | ";
         $items = _lobbywatch_fetch_ws_uid_bfs_data($uid, 0, false, false, 0);
       }
+      $no_cors = true; // Disable CORS since it is a protected service
     } else {
       // Must not happen
       $items = null;
@@ -1661,7 +1670,7 @@ function _lobbywatch_data_ws_uid($table, $uid, $json = true) {
     );
 
     if ($json) {
-      lobbywatch_json_output($response);
+      lobbywatch_json_output($response, !$no_cors);
       drupal_exit();
     } else {
       return $response;

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>DataIF CORS Test</title>
+  </head>
+  <body>
+    <h1>DataIF CORS Test</h1>
+    <script>fetch('https://cms.lobbywatch.ch/de/data/interface/v1/json/table/parlamentarier/aggregated/id/333').then(response => response.json()).then(data => console.log('SUCCESS:', data)).catch(error => console.log('ERROR', error))</script>
+  </body>
+</html>
