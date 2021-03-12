@@ -122,6 +122,9 @@ function lobbywatch_json_output($response = null, $cors = true) {
   if ($cors && empty($no_cors)) { // Should we disable cors?
     drupal_add_http_header('Access-Control-Allow-Origin', '*');
   }
+  // if (!($response['success'] ?? false)) {
+  //   drupal_add_http_header('Status', '404 Not Found');
+  // }
   drupal_json_output($response);
 }
 
