@@ -54,7 +54,7 @@ class Guest(Entity):
         self.gender = 'F' if "Frau" in name_raw or "Madame" in name_raw else "M"
 
     def fix_name_typos(self, name):
-        return name.replace("Schürch Florence", "Schurch Florence")
+        return name.replace("Schürch Florence", "Schurch Florence").replace("Grunder Michael", "Grunder Michel")
 
     def remove_title(self, name):
         return re.sub(r'(Herr|Frau|Monsieur|Madame|Dr.|Signora?)\s+', ' ', name).strip()
