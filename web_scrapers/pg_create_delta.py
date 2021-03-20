@@ -115,6 +115,7 @@ def sync_data(conn, filename, batch_time):
         stichdatum = pdf_date
         print("-- PDF creation date: {}".format(pdf_date))
         print("-- PDF archive file: {}".format(archive_pdf_name))
+        print("-- URL: {}".format(content["metadata"]["url"]))
         print("-- ----------------------------- ")
 
         handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_date)

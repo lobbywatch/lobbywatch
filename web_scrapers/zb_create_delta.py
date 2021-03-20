@@ -96,6 +96,7 @@ def sync_data(conn, filename, council, batch_time):
         archive_pdf_name = content["metadata"]["archive_pdf_name"]
         print("-- PDF creation date: {}".format(pdf_date))
         print("-- PDF archive file: {}".format(archive_pdf_name))
+        print("-- URL: {}".format(content["metadata"]["url"]))
         print("-- ----------------------------- ")
 
         count = 1
