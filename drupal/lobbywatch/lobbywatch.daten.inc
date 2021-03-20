@@ -2280,7 +2280,7 @@ function _lobbywatch_get_workflow_state_SELECT_SQL($table, $only_if_admin = true
   return $sql;
 }
 
-function _lobbywatch_non_public_exports_page() {
+function _lobbywatch_non_public_historised_exports_page() {
   global $settings;
   global $base_url;
   // $base_path = variable_get('file_public_path', conf_path() . '/files');
@@ -2297,13 +2297,32 @@ function _lobbywatch_non_public_exports_page() {
   $header = file_get_contents("$secret_exports_path/HEADER.html");
   $export_info = file_get_contents("$secret_exports_path/db_export.txt");
 
-  $markup .= "<p>Link to non public <i>historised</i> exports.</p>";
-  $markup .= "<p>Für Studienprojekte</p>";
+  $markup .= "<h2>Für Auswertungen und Studienprojekte</h2>";
+  $markup .= "<p>Link to (non public) <i>historised</i> exports.</p>";
   $markup .= "<p><a href='$url_of_public$secret_exports_dir'>$url_of_public$secret_exports_dir</a></p>";
   $markup .= "$header";
   $markup .= "<pre>$export_info</pre>";
 
-  $markup .= "<hr>";
+  $build = [];
+  $build['lobbywatch_interessengruppe'] = array(
+    '#weight' => -5,
+    '#prefix' => '<div class="lobbywatch">',
+    '#markup' => $markup,
+    '#suffix' => '</div>',
+    );
+
+    return $build;
+}
+
+function _lobbywatch_non_public_unpublished_exports_page() {
+  global $settings;
+  global $base_url;
+  // $base_path = variable_get('file_public_path', conf_path() . '/files');
+  $wrapper = file_stream_wrapper_get_instance_by_uri('public://');
+  $path_of_public = $wrapper->realpath();
+  $url_of_public = $wrapper->getExternalUrl();
+
+  $markup = '';
 
   $secret_dir = trim(file_get_contents($settings['file_secret_dir_hist+unpubl']));
   $secret_exports_dir = "$secret_dir/non-public-hist-UNPUBLISHED-exports";
@@ -2312,9 +2331,11 @@ function _lobbywatch_non_public_exports_page() {
   $header = file_get_contents("$secret_exports_path/HEADER.html");
   $export_info = file_get_contents("$secret_exports_path/db_export.txt");
 
-  $markup .= "<p>Link to non public <i>historised and unpublished</i> exports.</p>";
-  $markup .= "<p>Für internen Gebrauch.</p>";
+  $markup .= "<h2>Für <i>internen</i> Gebrauch</h2>";
+  $markup .= "<p>Link to (non public) <i>historised and <strong>unpublished</strong></i> exports.</p>";
   $markup .= "<p><a href='$url_of_public$secret_exports_dir'>$url_of_public$secret_exports_dir</a></p>";
+  $markup .= "<p><strong>Nicht weitergeben!</strong></p>";
+  $markup .= "<p>Dieser Export enthält vertrauliche Daten wie Notizen, wer was wann bearbeitet hat, Telefonnummern, unpublizierte Daten, …</p>";
   $markup .= "$header";
   $markup .= "<pre>$export_info</pre>";
 
