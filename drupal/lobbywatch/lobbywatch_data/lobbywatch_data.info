@@ -9,4 +9,3 @@ dependencies[] = lobbywatch
 core = "7.x"
 
 ; Views handlers
-f
