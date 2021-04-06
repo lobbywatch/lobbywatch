@@ -3847,3 +3847,32 @@ ALTER TABLE `interessenbindung`
 
 ALTER TABLE `interessenbindung_log`
   CHANGE `hauptberuflich` `hauptberuflich` TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)';
+
+-- 05.04.2021 copy interessenbindung_jahr 2019 or 2020 to 2021
+
+INSERT INTO `interessenbindung_jahr` (`interessenbindung_id`, `verguetung`, `jahr`, `beschreibung`, `quelle_url`, `quelle`, `notizen`, `eingabe_abgeschlossen_datum`, `eingabe_abgeschlossen_visa`, `freigabe_visa`, `freigabe_datum`, `created_visa`, `created_date`, `updated_visa`)
+SELECT
+interessenbindung_jahr.interessenbindung_id
+, interessenbindung_jahr.verguetung
+, 2021 as jahr
+, interessenbindung_jahr.beschreibung
+, interessenbindung_jahr.quelle_url
+, interessenbindung_jahr.quelle
+, CONCAT_WS('\n\n', CONCAT('06.04.2021/Roland/SQL: Kopiert von Jahr ', interessenbindung_jahr.jahr, ', id=', interessenbindung.id), interessenbindung_jahr.notizen) as notizen
+, NOW() as eingabe_abgeschlossen_datum
+, 'roland' as eingabe_abgeschlossen_visa
+, interessenbindung_jahr.freigabe_visa
+, interessenbindung_jahr.freigabe_datum
+, CONCAT(interessenbindung_jahr.created_visa, '+') as created_visa
+, NOW() as created_date
+, 'roland' as updated_visa
+FROM interessenbindung_jahr
+JOIN interessenbindung ON interessenbindung.id = interessenbindung_jahr.interessenbindung_id AND (interessenbindung.bis IS NULL OR interessenbindung.bis >= NOW())
+JOIN parlamentarier ON parlamentarier.id = interessenbindung.parlamentarier_id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())
+WHERE interessenbindung_jahr.jahr = (SELECT max(ijn.jahr)
+    FROM interessenbindung_jahr ijn
+    WHERE ijn.interessenbindung_id = interessenbindung_jahr.interessenbindung_id
+    AND ijn.jahr >=2019
+    GROUP BY ijn.interessenbindung_id)
+AND interessenbindung_jahr.jahr < 2021
+ORDER BY `interessenbindung_jahr`.`jahr`  DESC, `interessenbindung_jahr`.`id` DESC;
