@@ -1177,6 +1177,7 @@ function getFraktionId($faction) {
   }
   switch($factionCode) {
     case 'M-CEB': return 8;
+    case 'M-E': return 8;
     case 'BD': return 7;
     case 'C': return 6;
     case 'CE': return 6;
@@ -1226,6 +1227,7 @@ function getParteiId($party) {
     case 'Mitte': return 22;
     case 'M-CEB': return 22;
     case 'M': return 22;
+    case 'M-E': return 22;
     case '-': case '': case null: return null;
     default: $errors[] = "Wrong partei code '$partyCode'"; return "ERR '$partyCode'";
   }
