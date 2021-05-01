@@ -810,6 +810,7 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED || $PG_CHANGED || $U_CHANGED || $W_CH
       subject="$subject Uid-Organisationen"
       echo -e "\n= UID-ORGANISATIONEN\n" >> $tmp_mail_body
       cat $U_FILE |
+      grep -v '| = |' |
       perl -p -e's%(/\*|\*/)%%' \
       >> $tmp_mail_body
     fi
@@ -818,6 +819,7 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED || $PG_CHANGED || $U_CHANGED || $W_CH
       subject="$subject wikidata changed"
       echo -e "\n= WIKIDATA\n" >> $tmp_mail_body
       cat $W_FILE |
+      grep -v '| = |' |
       perl -p -e's%(/\*|\*/)%%' \
       >> $tmp_mail_body
     fi
