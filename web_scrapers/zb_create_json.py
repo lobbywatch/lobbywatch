@@ -53,8 +53,15 @@ class Guest(Entity):
         self.function = self.clean_string(function)
         self.gender = 'F' if "Frau" in name_raw or "Madame" in name_raw else "M"
 
+    # namemapping fixes, a hack
     def fix_name_typos(self, name):
-        return name.replace("Schürch Florence", "Schurch Florence").replace("Grunder Michael", "Grunder Michel")
+        # () around calls for multi line writing, insteaf of "\" at EOL
+        # https://stackoverflow.com/questions/4768941/how-to-break-a-line-of-chained-methods-in-python
+        return (name
+        .replace("Schürch Florence", "Schurch Florence")
+        .replace("Grunder Michael", "Grunder Michel")
+        # .replace("Voegeli Tobias", "Vögeli Tobias")
+        )
 
     def remove_title(self, name):
         return re.sub(r'(Herr|Frau|Monsieur|Madame|Dr.|Signora?)\s+', ' ', name).strip()
