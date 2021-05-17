@@ -60,7 +60,7 @@ class Guest(Entity):
         return (name
         .replace("Schürch Florence", "Schurch Florence")
         .replace("Grunder Michael", "Grunder Michel")
-        # .replace("Voegeli Tobias", "Vögeli Tobias")
+        .replace("Voegeli Tobias", "Vögeli Tobias")
         )
 
     def remove_title(self, name):
