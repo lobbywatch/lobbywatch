@@ -3876,3 +3876,9 @@ WHERE interessenbindung_jahr.jahr = (SELECT max(ijn.jahr)
     GROUP BY ijn.interessenbindung_id)
 AND interessenbindung_jahr.jahr < 2021
 ORDER BY `interessenbindung_jahr`.`jahr`  DESC, `interessenbindung_jahr`.`id` DESC;
+
+-- 05.06.2021 remove interessenbindung/mandat art unique contraint
+
+ALTER TABLE interessenbindung DROP INDEX `interessenbindung_art_parlamentarier_organisation_unique`;
+
+ALTER TABLE mandat DROP INDEX `mandat_person_organisation_art_unique`;
