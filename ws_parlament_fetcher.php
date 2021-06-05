@@ -1212,6 +1212,7 @@ function getParteiId($party) {
     case 'FDP-Liberale': return 1;
     case 'glp': return 2;
     case 'GPS': return 4;
+    case 'GRÜNE': return 4;
     case 'Lega': return 10;
     case 'MCR': return 9;
     case 'MCG': return 9;
