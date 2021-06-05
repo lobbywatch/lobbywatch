@@ -692,55 +692,29 @@ function datei_anhang_insert($page, &$rowData, &$cancel, &$message, $tableName) 
   $rowData['encoding'] = $finfo_encoding->file($file);
 }
 
-function parlamentarier_check_imRatBis($page, &$rowData, &$cancel, &$message, $tableName)
-{
-//   df($rowData, 'parlamentarier_check_imRatBis $rowData');
-  if (isset($rowData['im_rat_seit']) && isset($rowData['im_rat_bis'])) {
-    $imRatSeit = $rowData['im_rat_seit'];
-    $imRatBis = $rowData['im_rat_bis'];
-  } else {
-    return;
+function parlamentarier_check_imRatBis($page, &$rowData, &$cancel, &$message, $tableName) {
+  if (!empty($rowData['im_rat_seit']) && !empty($rowData['im_rat_bis'])) {
+    check_von_bis_date($rowData['im_rat_seit'], $rowData['im_rat_bis'], $cancel, $message);
   }
-
-// df($imRatBis);
-// df($imRatBis === null);
-// df($imRatBis === '');
-// df($imRatBis->GetTimestamp());
-// df($imRatBis->GetDateTime());
-
-  // Roland, 20.04.2014: We support since v1.12 im_rat_bis in the future
-//   if ($imRatBis !== null && $imRatBis->GetTimestamp() > SMDateTime::Now()->GetTimestamp()) {
-//     $cancel = true;
-//     $message = '"Im Rat bis"-Datum darf nicht in der Zukunft liegen: ' . $imRatBis->ToString('d.m.Y');
-//   }
-
-  if ($imRatSeit !== null && $imRatBis !== null && $imRatSeit->GetTimestamp() >= $imRatBis->GetTimestamp()) {
-    $cancel = true;
-    $message = '"Im Rat bis"-Datum darf nicht kleiner als "Im Rat seit"-Datum sein: ' . $imRatBis->ToString('d.m.Y');
-  }
-
 }
 
-function check_bis_date($page, &$rowData, &$cancel, &$message, $tableName)
-{
-// df($rowData);
-  if (isset($rowData['von']) && isset($rowData['bis'])) {
-    $von = $rowData['von'];
-    $bis = $rowData['bis'];
-  } else {
-    return;
+function check_bis_date($page, &$rowData, &$cancel, &$message, $tableName) {
+  if (!empty($rowData['von']) && !empty($rowData['bis'])) {
+    check_von_bis_date($rowData['von'], $rowData['bis'], $cancel, $message);
   }
-// df($bis);
-// df($bis->GetTimestamp());
+}
 
-  // Roland, 20.04.2014: We support since v1.12 bis in the future
-//   if ($bis !== null && $bis->GetTimestamp() > SMDateTime::Now()->GetTimestamp()) {
-//     $cancel = true;
-//     $message = 'Bis-Datum darf nicht in der Zukunft liegen: ' . $bis->ToString('d.m.Y');
-//   }
-  if ($von !== null && $bis !== null && $von->GetTimestamp() >= $bis->GetTimestamp()) {
+function check_von_bis_date($von, $bis, &$cancel, &$message) {
+  if ($von != null && $bis != null && $von instanceof SMDateTime && $bis instanceof SMDateTime && $von->GetTimestamp() >= $bis->GetTimestamp()) {
     $cancel = true;
-    $message = 'Bis-Datum darf nicht kleiner als Von-Datum sein: ' . $bis->ToString('d.m.Y');
+    $message = 'Bis-Datum darf nicht kleiner als Von-Datum sein.<br>Von: ' . $von->ToString('d.m.Y') . ' > Bis: ' . $bis->ToString('d.m.Y');
+  } else if ($von != null && $bis != null) {
+    $vonUnix = strtotime($von);
+    $bisUnix = strtotime($bis);
+    if ($vonUnix >= $bisUnix) {
+      $cancel = true;
+      $message = "Operation abgebrochen.<br>Bis-Datum darf nicht kleiner als Von-Datum sein.<br>Von: $von > Bis: $bis";
+    }
   }
 }
 
