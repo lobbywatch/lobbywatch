@@ -1225,6 +1225,7 @@ function getParteiId($party) {
     case 'EDU': return 19;
     case 'Al': return 20;
     case 'EGsolS': return 21;
+    case 'EàG': return 21;
     case 'Mitte': return 22;
     case 'M-CEB': return 22;
     case 'M': return 22;

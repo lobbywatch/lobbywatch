@@ -66,6 +66,10 @@ def get_kanton_id(database, kanton_kuerzel):
 def get_partei_id(database, partei_kuerzel):
     if not partei_kuerzel:
         return None
+    # handle EàG transition from EGsolS
+    elif partei_kuerzel == "EGsolS":
+        return 21
+
     with database.cursor() as cursor:
         cursor.execute("""
         SELECT id
