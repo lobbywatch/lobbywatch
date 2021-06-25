@@ -691,4 +691,32 @@ class StringHelper
         self::buildCharacterSets();
 
         // If there is no escape character in the string there is nothing to do
-        if (strpos($pValue, '
+        if (strpos($pValue, '') === false) {
+            return $pValue;
+        }
+
+        foreach (self::$SYLKCharacters as $k => $v) {
+            $pValue = str_replace($k, $v, $pValue);
+        }
+
+        return $pValue;
+    }
+
+    /**
+     * Retrieve any leading numeric part of a string, or return the full string if no leading numeric
+     * (handles basic integer or float, but not exponent or non decimal).
+     *
+     * @param string $value
+     *
+     * @return mixed string or only the leading numeric part of the string
+     */
+    public static function testStringAsNumeric($value)
+    {
+        if (is_numeric($value)) {
+            return $value;
+        }
+        $v = (float) $value;
+
+        return (is_numeric(substr($value, 0, strlen($v)))) ? $v : $value;
+    }
+}

@@ -58,7 +58,7 @@ if $clean ; then
   echo $(echo "$files" | wc -l) files
   for file in $files
   do
-    if [[ "$file" == "public_html/bearbeitung/libs/phpoffice/PHPExcel/Shared/String.php" ]]; then
+    if [[ "$file" == "public_html/bearbeitung/libs/phpoffice/PHPExcel/Shared/String.php" ]] || [[ "$file" == "public_html/bearbeitung/libs/phpspreadsheet/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Shared/StringHelper.php" ]]; then
      echo "Skip $file"
      continue
     fi
