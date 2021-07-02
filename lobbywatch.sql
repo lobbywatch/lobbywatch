@@ -3405,9 +3405,10 @@ CREATE TABLE `organisation` (
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  `organisation_name_de_rechtsform_unique` varchar(195) COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`name_de`,`rechtsform`,ifnull(`inaktiv`,FALSE))) VIRTUAL NOT NULL COMMENT 'Kombination aus name_de, rechtsform und inaktiv muss eindeutig sein. (Fachlicher unique constraint)',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `organisation_name_de_rechtsform_unique` (`organisation_name_de_rechtsform_unique`),
   UNIQUE KEY `uid_unique` (`uid`) COMMENT 'Fachlicher unique constraint',
-  UNIQUE KEY `organisation_name_de_unique` (`name_de`,`rechtsform`) USING BTREE COMMENT 'Fachlicher unique constraint',
   UNIQUE KEY `organisation_name_fr_unique` (`name_fr`,`rechtsform`) USING BTREE COMMENT 'Fachlicher unique constraint',
   UNIQUE KEY `organisation_name_it_unique` (`name_it`,`rechtsform`) USING BTREE COMMENT 'Fachlicher unique constraint',
   KEY `idx_lobbygroup` (`interessengruppe_id`),
@@ -4101,6 +4102,7 @@ CREATE TABLE `organisation_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `organisation_name_de_rechtsform_unique` varchar(0) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint',
   `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Status der Aktion',
@@ -15632,4 +15634,4 @@ SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS ;
 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION ;
 SET SQL_NOTES=@OLD_SQL_NOTES ;
 
--- Dump completed on 2021-06-05  8:55:01
+-- Dump completed on 2021-07-02 10:01:13

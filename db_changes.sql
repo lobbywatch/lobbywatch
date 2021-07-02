@@ -3882,3 +3882,25 @@ ORDER BY `interessenbindung_jahr`.`jahr`  DESC, `interessenbindung_jahr`.`id` DE
 ALTER TABLE interessenbindung DROP INDEX `interessenbindung_art_parlamentarier_organisation_unique`;
 
 ALTER TABLE mandat DROP INDEX `mandat_person_organisation_art_unique`;
+
+-- 02.07.2021 add organisation.organisation_name_de_rechtsform_unique vitual col
+
+-- ALTER TABLE organisation
+--   ADD UNIQUE KEY `organisation_name_de_unique` (`name_de`,`rechtsform`) USING BTREE COMMENT 'Fachlicher unique constraint',
+--   DROP `organisation_name_de_rechtsform_unique`;
+
+-- ALTER TABLE organisation_log
+--   DROP `organisation_name_de_rechtsform_unique`;
+
+ALTER TABLE organisation
+  DROP INDEX `organisation_name_de_unique`,
+  ADD `organisation_name_de_rechtsform_unique` VARCHAR(195) GENERATED ALWAYS AS (CONCAT_WS('_', name_de, rechtsform, IFNULL(`inaktiv`, FALSE))) VIRTUAL NOT NULL COMMENT 'Kombination aus name_de, rechtsform und inaktiv muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE AFTER `updated_date`;
+  -- DROP INDEX `organisation_name_fr_unique`,
+  -- ADD `organisation_name_fr_rechtsform_unique` VARCHAR(195) GENERATED ALWAYS AS (CONCAT_WS('_', name_fr, rechtsform, IFNULL(`inaktiv`, FALSE))) VIRTUAL NOT NULL COMMENT 'Kombination aus name_fr, rechtsform und inaktiv muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE AFTER `organisation_name_de_rechtsform_unique`,
+  -- DROP INDEX `organisation_name_it_unique`,
+  -- ADD `organisation_name_it_rechtsform_unique` VARCHAR(195) GENERATED ALWAYS AS (CONCAT_WS('_', name_it, rechtsform, IFNULL(`inaktiv`, FALSE))) VIRTUAL NOT NULL COMMENT 'Kombination aus name_it, rechtsform und inaktiv muss eindeutig sein. (Fachlicher unique constraint)' UNIQUE AFTER `organisation_name_fr_rechtsform_unique`;
+
+ALTER TABLE organisation_log
+  ADD `organisation_name_de_rechtsform_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+  -- ADD `organisation_name_fr_rechtsform_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `organisation_name_de_rechtsform_unique`,
+  -- ADD `organisation_name_it_rechtsform_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `organisation_name_fr_rechtsform_unique`;

@@ -699,7 +699,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
     $different_db_values = false;
 
     // skip ids with known name clashes, exceptions
-    if (in_array($id, [42, 116, 1493, 2073, 2874, 8075])) {
+    if (in_array($id, [42, 116, 1493, 2073, 2874])) {
       continue;
     }
 
