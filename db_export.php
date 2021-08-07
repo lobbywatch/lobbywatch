@@ -2547,10 +2547,11 @@ function getRowsIterator(string $sql, array $ids_in_parent = null, int $parent_i
         $count = $db->query("SELECT FOUND_ROWS();")->fetchColumn();
         return $stmt_export;
       } catch (PDOException $e) {
-        if ($e->code === 1615 && $i < 1200) {
+        if ($e->GetCode() === 1615 && $i < 1200) {
           print(date("Y-m-d H:i:s") . " ($i) - SQLSTATE[HY000]: General error: 1615 Prepared statement needs to be re-prepared. Caused on direct DB query: $sql\n");
           sleep(3);
         } else {
+          print(date("Y-m-d H:i:s") . " Caused on direct DB query. SQL: $sql\n");
           throw $e;
         }
       }
