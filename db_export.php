@@ -298,6 +298,7 @@ $sql_tables = [
   'parlamentarier' => ['hist_field' => 'im_rat_bis', 'remove_cols' => []],
   'parlamentarier_transparenz' => ['hist_field' => null, 'remove_cols' => []],
   'person' => ['hist_field' => null, 'remove_cols' => []],
+  'country' => ['hist_field' => null, 'remove_cols' => []],
 
   'interessenbindung' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON interessenbindung.parlamentarier_id = p.id']],
   'interessenbindung_jahr' => ['hist_field' => ['i.bis', 'p.im_rat_bis'], 'remove_cols' => array_map(function($val) { return "i.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'join' => ['JOIN v_interessenbindung_simple i ON interessenbindung_jahr.interessenbindung_id = i.id', 'JOIN v_parlamentarier_simple p ON i.parlamentarier_id = p.id']],
