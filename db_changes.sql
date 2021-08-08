@@ -3904,3 +3904,17 @@ ALTER TABLE organisation_log
   ADD `organisation_name_de_rechtsform_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
   -- ADD `organisation_name_fr_rechtsform_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `organisation_name_de_rechtsform_unique`,
   -- ADD `organisation_name_it_rechtsform_unique` VARCHAR(0) COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `organisation_name_fr_rechtsform_unique`;
+
+-- 08.08.2021 country freigabe_datum
+
+ALTER TABLE country
+  ADD `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)' AFTER `notizen`,
+  ADD `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)' AFTER `freigabe_visa`;
+
+ALTER TABLE country_log
+  ADD `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)' AFTER `notizen`,
+  ADD `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)' AFTER `freigabe_visa`;
+
+SET @disable_table_logging = 1;
+UPDATE `country` SET `freigabe_visa` = 'roland', `freigabe_datum` = '2014-03-01 21:45:34', `updated_visa` = 'roland';
+SET @disable_table_logging = NULL;
