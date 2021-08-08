@@ -72,9 +72,10 @@ global $db_views_comments;
  *    Fields starting with "(" are treated as expressions, e.g. "(CONCAT(nachname, ', ', vorname)) name"
  * name (optional): string, name to use in additional column
  * start_id (optional): string, to build an directed edge, this is the field containing the starting id
- * end_id (optional): string, string, to build an directed edge, this is the field containing the destination id
+ * end_id (optional): string, to build an directed edge, this is the field containing the destination id
  * join (optional): string, tables to join, table/view alias is separted by a space, none of the fields are added automatially, use additional_join_cols
  * additional_join_cols (optional): array, fields of the joined table to export, field alias is separted by a space
+ * distinct (optional): boolean, add DISTINCT to SELECT records query
  * freigabe_datum (optional): string, field denoting published date, default freigabe_datum
  * id (optional): string, field denoting ID, default id
  * order_by (optional): string, order by field
@@ -303,9 +304,14 @@ $sql_tables = [
   'interessenbindung' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON interessenbindung.parlamentarier_id = p.id']],
   'interessenbindung_jahr' => ['hist_field' => ['i.bis', 'p.im_rat_bis'], 'remove_cols' => array_map(function($val) { return "i.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'join' => ['JOIN v_interessenbindung_simple i ON interessenbindung_jahr.interessenbindung_id = i.id', 'JOIN v_parlamentarier_simple p ON i.parlamentarier_id = p.id']],
   'in_kommission' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON in_kommission.parlamentarier_id = p.id']],
-  'mandat' => ['hist_field' => ['bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN person r ON mandat.person_id = r.id', 'JOIN zutrittsberechtigung z ON z.person_id = r.id', 'JOIN parlamentarier p ON z.parlamentarier_id = p.id']],
-  'mandat_jahr' => ['hist_field' => ['m.bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN v_mandat_simple m ON mandat_jahr.mandat_id = m.id', 'JOIN person r ON m.person_id = r.id', 'JOIN zutrittsberechtigung z ON z.person_id = r.id', 'JOIN parlamentarier p ON z.parlamentarier_id = p.id']],
-  'zutrittsberechtigung' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON zutrittsberechtigung.parlamentarier_id = p.id']],
+  'mandat' => ['hist_field' => ['bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN person r ON mandat.person_id = r.id', 'JOIN zutrittsberechtigung z ON z.person_id = r.id', 'JOIN parlamentarier p ON z.parlamentarier_id = p.id'],
+  'distinct' => true, // in non-historised export zutrittsberechtiung creates a cross product, to avoid this use distinct
+  ],
+  'mandat_jahr' => ['hist_field' => ['m.bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN v_mandat_simple m ON mandat_jahr.mandat_id = m.id', 'JOIN person r ON m.person_id = r.id', 'JOIN zutrittsberechtigung z ON z.person_id = r.id', 'JOIN parlamentarier p ON z.parlamentarier_id = p.id'],
+  'distinct' => true, // in non-historised export zutrittsberechtiung creates a cross product, to avoid this use distinct
+  ],
+  'zutrittsberechtigung' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON zutrittsberechtigung.parlamentarier_id = p.id'],
+],
 ];
 
 // TODO add zutrittsberechtigte
@@ -2582,13 +2588,14 @@ function buildRowsSelect(string $table, string $query_table_alias, string $query
   $parent_id_col = $table_meta['parent_id'] ?? null;
   $freigabe_datum = $table_meta['freigabe_datum'] ?? 'freigabe_datum';
   $joins = $table_meta['join'] ?? [];
+  $distinct = ($table_meta['distinct'] ?? false) ? ' DISTINCT' : '';
   list($table_alias_map, $alias_table_map) = getJoinTableMaps($joins);
 
   if ($parent_id_col) {
     $table_alias = hasJoin($table_meta) ? "$query_table_alias." : '';
     $select_fields[] = "$table_alias$parent_id_col _parent_id";
   }
-  $sql_select = "SELECT " . implode(', ', $select_fields);
+  $sql_select = "SELECT$distinct " . implode(', ', $select_fields);
 
   $sql_from = " FROM $query_table_with_alias";
   $sql_where = " WHERE 1 ";
