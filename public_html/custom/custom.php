@@ -907,6 +907,8 @@ function getFullUsername($user) {
       return 'Rebecca Wyss';
     case 'graf' :
   	  return 'Céline Graf';
+    case 'samuel' :
+  	  return 'Samuel Meier';
     default:
   	  return '';
   }
@@ -1663,8 +1665,9 @@ function isFullWorkflowUser() {
   // 6, // bane
   18, // philippe
   37, // Graf, Céline Graf
-  63, // Flavia, Von Gunten
-  67, // Alexandra Baertsch
+  // 63, // Flavia, Von Gunten
+  // 67, // Alexandra Baertsch
+  69, // Samuel Meier
   ), false);
 }
 
