@@ -1145,12 +1145,12 @@ class Grid {
 
     function GetAllowAuthorizationSentSelected() { // Afterburner
       $columns = $this->GetEditColumns(); // Afterburner
-      return $this->GetAllowDeleteSelected() && is_column_present($columns,'autorisierung_verschickt_datum') && is_column_present($columns,'autorisierung_verschickt_visa') && isFullWorkflowUser(); // Afterburner
+      return $this->getMultiEditAllowed() && is_column_present($columns,'autorisierung_verschickt_datum') && is_column_present($columns,'autorisierung_verschickt_visa') && isFullWorkflowUser(); // Afterburner
     }
 
     function GetAllowAuthorizeSelected() { // Afterburner
       $columns = $this->GetEditColumns(); // Afterburner
-      return $this->GetAllowDeleteSelected() && is_column_present($columns,'autorisiert_datum') && is_column_present($columns,'autorisiert_visa') /* && is_column_present($columns,'autorisierung_verschickt_datum') && isFullWorkflowUser() */; // Afterburner
+      return $this->getMultiEditAllowed() && is_column_present($columns,'autorisiert_datum') && is_column_present($columns,'autorisiert_visa') /* && is_column_present($columns,'autorisierung_verschickt_datum') && isFullWorkflowUser() */; // Afterburner
     }
 
     function GetAllowReleaseSelected() { // Afterburner
@@ -1161,31 +1161,31 @@ class Grid {
 
     function GetAllowImRatBisSelected() { // Afterburner
       $columns = $this->GetEditColumns();
-      return $this->GetAllowDeleteSelected() && is_column_present($columns,'im_rat_bis'); // Afterburner
+      return $this->getMultiEditAllowed() && is_column_present($columns,'im_rat_bis'); // Afterburner
     }
 
     function GetAllowEhrenamtlichSelected() { // Afterburner
       $columns = $this->GetEditColumns(); // Afterburner
       $datasetName = preg_replace('/[`]/i', '', $this->GetDataset()->GetName()); // Afterburner
-      return $this->GetAllowDeleteSelected() && (ends_with($datasetName, "interessenbindung") || ends_with($datasetName, "mandat")); // Afterburner
+      return $this->getMultiEditAllowed() && (ends_with($datasetName, "interessenbindung") || ends_with($datasetName, "mandat")); // Afterburner
     }
 
     function GetAllowBezahltSelected() { // Afterburner
       $columns = $this->GetEditColumns(); // Afterburner
       $datasetName = preg_replace('/[`]/i', '', $this->GetDataset()->GetName()); // Afterburner
-      return $this->GetAllowDeleteSelected() && (ends_with($datasetName, "interessenbindung") || ends_with($datasetName, "mandat")); // Afterburner
+      return $this->getMultiEditAllowed() && (ends_with($datasetName, "interessenbindung") || ends_with($datasetName, "mandat")); // Afterburner
     }
 
     function GetAllowZahlendSelected() { // Afterburner
       $columns = $this->GetEditColumns(); // Afterburner
       $datasetName = preg_replace('/[`]/i', '', $this->GetDataset()->GetName()); // Afterburner
-      return $this->GetAllowDeleteSelected() && (ends_with($datasetName, "interessenbindung") || ends_with($datasetName, "mandat")); // Afterburner
+      return $this->getMultiEditAllowed() && (ends_with($datasetName, "interessenbindung") || ends_with($datasetName, "mandat")); // Afterburner
     }
 
     function GetAllowCreateVerguetungstransparenzliste() { // Afterburner
       $columns = $this->GetEditColumns(); // Afterburner
       $datasetName = preg_replace('/[`]/i', '', $this->GetDataset()->GetName()); // Afterburner
-      return $this->GetAllowDeleteSelected() && ($datasetName == "parlamentarier"); // Afterburner
+      return $this->getMultiEditAllowed() && ($datasetName == "parlamentarier"); // Afterburner
     }
 
     function GetAllowDeleteSelected() {
