@@ -795,6 +795,10 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             </ViewProperties>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="organisation_name_de_rechtsform_unique" caption="Organisation Name De Rechtsform Unique" headerHint="Kombination aus name_de, rechtsform und inaktiv muss eindeutig sein. (Fachlicher unique constraint)" showColumnFilter="false" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -851,6 +855,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="ALT_branche_id" visible="false"/>
+            <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -906,6 +911,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="ALT_branche_id" visible="false"/>
+            <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
           </View>
           <Edit>
             <Column fieldName="id" visible="false"/>
@@ -961,6 +967,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="ALT_branche_id" visible="false"/>
+            <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
           </Edit>
           <Insert>
             <Column fieldName="id" visible="false"/>
@@ -1016,6 +1023,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="updated_visa" visible="false"/>
             <Column fieldName="updated_date" visible="false"/>
             <Column fieldName="ALT_branche_id" visible="false"/>
+            <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -1071,6 +1079,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
+            <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -1126,6 +1135,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="ALT_branche_id" visible="false"/>
+            <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -1181,6 +1191,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="ALT_branche_id" visible="false"/>
+            <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -1236,6 +1247,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="ALT_branche_id" visible="false"/>
+            <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -1291,6 +1303,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="ALT_branche_id" visible="false"/>
+            <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -1346,6 +1359,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="ALT_branche_id" visible="false"/>
+            <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
           </MultiEdit>
         </Columns>
         <Details>
@@ -2318,6 +2332,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="dynamicCombobox"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="organisation_name_de_rechtsform_unique" caption="Organisation Name De Rechtsform Unique" headerHint="Platzhalter für fachlichen unique constraint" showColumnFilter="false" canSetNull="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -2379,6 +2397,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -2439,6 +2458,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
                 </View>
                 <Edit>
                   <Column fieldName="id" visible="false"/>
@@ -2499,6 +2519,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="id" visible="false"/>
@@ -2559,6 +2580,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -2619,6 +2641,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -2679,6 +2702,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -2739,6 +2763,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -2799,6 +2824,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -2859,6 +2885,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -2919,6 +2946,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -33733,6 +33761,10 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="organisation_name_de_rechtsform_unique" caption="Organisation Name De Rechtsform Unique" headerHint="Kombination aus name_de, rechtsform und inaktiv muss eindeutig sein. (Fachlicher unique constraint)" showColumnFilter="false" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -33789,6 +33821,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -33844,6 +33877,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique"/>
                 </View>
                 <Edit>
                   <Column fieldName="name_de"/>
@@ -33899,6 +33933,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="name_de"/>
@@ -33954,6 +33989,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -34009,6 +34045,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -34064,6 +34101,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -34119,6 +34157,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -34174,6 +34213,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -34229,6 +34269,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -34284,6 +34325,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -35939,6 +35981,10 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="organisation_name_de_rechtsform_unique" caption="Organisation Name De Rechtsform Unique" headerHint="Kombination aus name_de, rechtsform und inaktiv muss eindeutig sein. (Fachlicher unique constraint)" showColumnFilter="false" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -35995,6 +36041,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -36050,6 +36097,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique"/>
                 </View>
                 <Edit>
                   <Column fieldName="name_de"/>
@@ -36105,6 +36153,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="name_de"/>
@@ -36160,6 +36209,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -36215,6 +36265,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -36270,6 +36321,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -36325,6 +36377,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -36380,6 +36433,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -36435,6 +36489,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -36490,6 +36545,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
+                  <Column fieldName="organisation_name_de_rechtsform_unique"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -53153,6 +53209,10 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="organisation_name_de_rechtsform_unique" caption="Organisation Name De Rechtsform Unique" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -53209,6 +53269,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
+            <Column fieldName="organisation_name_de_rechtsform_unique"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -53264,6 +53325,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
+            <Column fieldName="organisation_name_de_rechtsform_unique"/>
           </View>
           <Edit>
             <Column fieldName="id"/>
@@ -53319,6 +53381,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
+            <Column fieldName="organisation_name_de_rechtsform_unique"/>
           </Edit>
           <Insert>
             <Column fieldName="id"/>
@@ -53374,6 +53437,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
+            <Column fieldName="organisation_name_de_rechtsform_unique"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -53429,6 +53493,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
+            <Column fieldName="organisation_name_de_rechtsform_unique"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -53484,6 +53549,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
+            <Column fieldName="organisation_name_de_rechtsform_unique"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -53539,6 +53605,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
+            <Column fieldName="organisation_name_de_rechtsform_unique"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -53594,6 +53661,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
+            <Column fieldName="organisation_name_de_rechtsform_unique"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -53649,6 +53717,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
+            <Column fieldName="organisation_name_de_rechtsform_unique"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id"/>
@@ -53704,6 +53773,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
+            <Column fieldName="organisation_name_de_rechtsform_unique"/>
           </MultiEdit>
         </Columns>
         <Details/>
