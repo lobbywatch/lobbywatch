@@ -13,6 +13,8 @@ import literals
 import pdf_helpers
 from utils import clean_whitespace, clean_str, replace_bullets
 
+MEMBER_LINE_START = ('NR', 'SR', 'N ', 'S ')
+
 class ReadingMode(Enum):
     TITLE = auto()
     PRESIDENTS = auto()
@@ -51,7 +53,7 @@ def extract_presidents(line):
     for keyword in literals.president_mapping:
         line = line.replace(keyword, '')
     names = re.split(r',| e |;', line)
-    names = [re.sub(r'(Nationalratspräsidentin|Nationalratspräsident|Vizepräsident des Nationalrates|des Nationalrates|Vizepräsidentin des Nationalrates|Nationalrätin|Nationalrat|CN|Conseillère nationale|Conseiller national|Cusseglier naziunal)\s', 'NR ', re.sub(r'(Ständeratspräsidentin|Ständeratspräsident|Vizepräsident des Ständerates|Vizepräsidentin des Ständerates|des Ständerates|Ständerätin|Ständerat|CE|Conseillère aux Etats|Conseiller aux Etats)\s', 'SR ', re.sub(r'(Herr|Frau|Monsieur le|Madame la|Dr.|Co-)', '', name))).strip() for name in names if name.strip() not in ['', "vakant", "Vakant", "folgt", "Noch offen", "(wird angestrebt, 2. Person ist noch vakant)", "(wird angestrebt", "2. Person ist noch vakant)"]]
+    names = [re.sub(r'(Nationalratspräsidentin|Nationalratspräsident|Vizepräsident des Nationalrates|des Nationalrates|Vizepräsidentin des Nationalrates|Nationalrätin|Nationalrat|CN|Conseillère nationale|Conseiller national|Cusseglier naziunal|N)\s', 'NR ', re.sub(r'(Ständeratspräsidentin|Ständeratspräsident|Vizepräsident des Ständerates|Vizepräsidentin des Ständerates|des Ständerates|Ständerätin|Ständerat|CE|Conseillère aux Etats|Conseiller aux Etats|S)\s', 'SR ', re.sub(r'(Herr|Frau|Monsieur le|Madame la|Dr.|Co-)', '', name))).strip() for name in names if name.strip() not in ['', "vakant", "Vakant", "folgt", "Noch offen", "(wird angestrebt, 2. Person ist noch vakant)", "(wird angestrebt", "2. Person ist noch vakant)"]]
     return names
 
 
@@ -112,7 +114,7 @@ def read_groups(filename):
             if line.startswith('Mitgliederliste'):
                 # not a new group on the new page
                 continue
-            elif line.startswith(('NR', 'SR')) or next_line.startswith(('NR', 'SR')):
+            elif line.startswith(MEMBER_LINE_START) or next_line.startswith(MEMBER_LINE_START):
                 # continue normally as it is a group member
                 pass
             else:
@@ -173,8 +175,8 @@ def read_groups(filename):
             for president in extract_presidents(line):
                 presidents.append((fix_parlamentarian_name_typos(president), president_title))
 
-        elif reading_mode == ReadingMode.MITGLIEDERLISTE and (line.startswith('NR') or line.startswith('SR')):
-            mitglieder.append((fix_parlamentarian_name_typos(line), None))
+        elif reading_mode == ReadingMode.MITGLIEDERLISTE and line.startswith(MEMBER_LINE_START):
+            mitglieder.append((fix_parlamentarian_name_typos(line).replace('S ', 'SR ').replace('N ', 'NR '), None))
 
         elif reading_mode == ReadingMode.TITLE:
             titles.append(line)
