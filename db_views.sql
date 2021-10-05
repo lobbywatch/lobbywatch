@@ -3128,3 +3128,63 @@ SELECT 'fraktion' AS table_name, CONCAT('fraktion', '#', id) AS table_name_with_
 UNION ALL
 SELECT 'kommission' AS table_name, CONCAT('kommission', '#', id) AS table_name_with_id, id, anzeige_name, anzeige_name_de, anzeige_name_fr, anzeige_name as anzeige_name_mixed FROM v_kommission
 ;
+
+/*
+Adds a new database view `v_abgegrenzte_interessenbindung` which in contrast to the `interessebindung` table has the columns
+`von_effektiv` and `bis_effektiv` to represent the start and end date for the validity period (as opposed to `von` and `bis`).
+These dates are never `null` and when the end date is yet unknown (open-ended) the `bis_effektiv` will be represented by the date 9999-12-31.
+
+The value for `von_effektiv` will correspond to `von` when given and otherwise to `freigabe_datum` or `parlamentarier.im_rat_seit`,
+in case the `interessebindung` row was created as part of the initial research of the politician.
+
+Also note that in case a politician was elected for two non-consecutive periods of time (cf. `parlamentarier.ratsunterbruch_von` and
+`parlamentarier.ratsunterbruch_bis`), then the same `interessebindung` object may (depending on `von` and `bis`) end up being
+represented by multiple rows in this view (both with the same value for `interessebindung_id`).
+*/
+
+/*!80014
+create or replace view v_abgegrenzte_interessenbindung
+as
+with parlamentarier_amtszeit as (
+    select pa.*, im_rat_seit von_effektiv, coalesce(im_rat_bis, date '9999-12-31') bis_effektiv
+    from parlamentarier pa
+    where ratsunterbruch_von is null
+    union all
+    select *
+    from parlamentarier pa
+             cross join lateral ( select pa.im_rat_seit von_effektiv, pa.ratsunterbruch_von bis_effektiv
+                                  union all
+                                  select pa.ratsunterbruch_bis, coalesce(im_rat_bis, date '9999-12-31')) as t
+    where ratsunterbruch_von is not null
+      and ratsunterbruch_bis is not null
+),
+interessebindungen_mit_erstrecherche as (
+    select min(i.freigabe_datum) over (partition by parlamentarier_id) erstrecherche, i.*
+    from interessenbindung i
+    where i.freigabe_datum is not null
+)
+select i.parlamentarier_id,
+       pa.vorname,
+       pa.nachname,
+       i.erstrecherche,
+       i.id                                                                                                                                                      interessebindung_id,
+       cast(greatest(coalesce(i.von, date '0000-01-01'), pa.von_effektiv,
+                     IF(i.erstrecherche = i.freigabe_datum, pa.von_effektiv, coalesce(i.von,
+                                                                                      IF(i.bis < i.freigabe_datum, pa.im_rat_seit, i.freigabe_datum)))) as date) von_effektiv,
+       cast(least(coalesce(i.bis, date '9999-12-31'), pa.bis_effektiv) as date)                                                                                  bis_effektiv,
+       i.art,
+       i.funktion_im_gremium,
+       i.deklarationstyp,
+       i.status,
+       i.organisation_id,
+       o.name_de,
+       o.rechtsform,
+       o.vernehmlassung
+from interessebindungen_mit_erstrecherche i
+       join parlamentarier_amtszeit pa on pa.id = i.parlamentarier_id
+       join organisation o on i.organisation_id = o.id
+  and von_effektiv <= coalesce(bis, date '9999-12-31')
+  and coalesce(bis_effektiv, date '9999-12-31') > coalesce(von, i.freigabe_datum)
+where i.freigabe_datum is not null
+*/
+;
