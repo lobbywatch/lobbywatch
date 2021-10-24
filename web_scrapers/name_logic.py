@@ -68,15 +68,18 @@ def common_start(names):
 def parse_name_combination(names, pattern):
     vorname = ""
     zweiter_vorname = ""
+    vorname_kurz = ""
     nachname = ""
     for name, value in zip(names, pattern):
         if value == "V":
             vorname += " " + name
         elif value == "Z":
             zweiter_vorname += " " + name
+        elif value == "K":
+            vorname_kurz += " " + name
         elif value == "N":
             nachname += " " + name
         elif value == "S":
             vorname += " %" + name
 
-    return vorname.strip(), zweiter_vorname.strip(), nachname.strip()
+    return vorname.strip(), zweiter_vorname.strip(), vorname_kurz.strip(), nachname.strip()

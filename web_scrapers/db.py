@@ -169,7 +169,7 @@ def get_person_id(database, names):
         FROM person
         WHERE 1=1 """
 
-        for description in ["NV", "NZV", "NNV", "NVV", "NNNV", "NS"]:
+        for description in ["NV", "NK", "NZV", "NNV", "NVV", "NNNV", "NS"]:
             current_query = query + _generate_name_query(description, names, True)
             cursor.execute(current_query)
             result = cursor.fetchall()
@@ -393,7 +393,7 @@ def get_interessenbindung_id(database, parlamentarier_id, organisation_id, stich
 def get_person_names(database, person_id):
     with database.cursor() as cursor:
         person_query = """
-        SELECT nachname, vorname, zweiter_vorname
+        SELECT nachname, vorname, zweiter_vorname, vorname_kurz
         FROM person
         WHERE id = {0}
         """.format(person_id)
@@ -453,11 +453,12 @@ def get_guests(conn, parlamentarier_id):
 #          zweiter_vorname = "Alexander Michael"
 #          nachname = "von Meier"
 def _generate_name_query(pattern, names, exact):
-    vorname, zweiter_vorname, nachname = name_logic.parse_name_combination(
+    vorname, zweiter_vorname, vorname_kurz, nachname = name_logic.parse_name_combination(
         names, pattern)
 
     vorname = escape_SQL(vorname)
     nachname = escape_SQL(nachname)
+    vorname_kurz = escape_SQL(vorname_kurz)
     zweiter_vorname = escape_SQL(zweiter_vorname)
 
     # Problem Adèle Thorens-Goumaz vs Adèle Thorens Goumaz
@@ -465,13 +466,17 @@ def _generate_name_query(pattern, names, exact):
     # case Stefan vs Stefano Kunz (person_id 390 and 663)
     # case Streiff vs Streiff-Feller (parlamentarier_id 195)
     if exact:
-        query = " AND vorname = '{}' AND (nachname = '{}' OR nachname = '{}' OR nachname = '{}')".format(
+        query = " AND (nachname = '{}' OR nachname = '{}' OR nachname = '{}')".format(
             vorname, nachname, nachname.replace('-', ' '), re.sub(r'-.*', '', nachname))
+        if vorname:
+            query += " AND vorname = '{}'".format(vorname)
         if zweiter_vorname:
             query += " AND zweiter_vorname = '{}'".format(zweiter_vorname)
+        if vorname_kurz:
+            query += " AND vorname_kurz = '{}'".format(vorname_kurz)
     else:
-        query = " AND vorname LIKE '{}%' AND (nachname LIKE '{}%' OR nachname LIKE '{}%' OR nachname LIKE '{}%' OR nachname LIKE '%{}')".format(
-            vorname, nachname, nachname.replace('-', ' '), re.sub(r'-.*', '', nachname), nachname)
+        query = " AND (vorname LIKE '{}%' OR vorname_kurz LIKE '{}%') AND (nachname LIKE '{}%' OR nachname LIKE '{}%' OR nachname LIKE '{}%' OR nachname LIKE '%{}')".format(
+            vorname, vorname_kurz, nachname, nachname.replace('-', ' '), re.sub(r'-.*', '', nachname), nachname)
         if zweiter_vorname:
             query += " AND zweiter_vorname LIKE '{}%'".format(zweiter_vorname)
 
