@@ -1918,7 +1918,7 @@ CREATE TABLE `kommission` (
   `abkuerzung` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Kürzel der Kommission',
   `abkuerzung_fr` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Französisches Kürzel der Kommission',
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Ausgeschriebener Name der Kommission',
-  `name_fr` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Ausgeschriebener französischer Name der Kommission',
+  `name_fr` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Ausgeschriebener französischer Name der Kommission',
   `rat_id` int(11) DEFAULT NULL COMMENT 'Ratszugehörigkeit; Fremdschlüssel des Rates',
   `typ` enum('kommission','subkommission','spezialkommission') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'kommission' COMMENT 'Typ einer Kommission (Spezialkommission ist eine Delegation im weiteren Sinne).',
   `art` enum('legislativkommission','aufsichtskommission','parlam verwaltungskontrolle','weitere kommission','delegation im weiteren sinne') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Art der Kommission gemäss Einteilung auf Parlament.ch. Achtung für Delegationen im engeren Sinne (= Subkommissionen) sollte die Art der Mutterkommission gewählt werden, z.B. GPDel ist eine Subkommission der GPK und gehört somit zu den Aufsichtskommissionen.',
@@ -2077,7 +2077,7 @@ CREATE TABLE `kommission_log` (
   `abkuerzung` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Kürzel der Kommission',
   `abkuerzung_fr` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Französisches Kürzel der Kommission',
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Ausgeschriebener Name der Kommission',
-  `name_fr` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Ausgeschriebener französischer Name der Kommission',
+  `name_fr` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Ausgeschriebener französischer Name der Kommission',
   `rat_id` int(11) DEFAULT NULL COMMENT 'Ratszugehörigkeit; Fremdschlüssel des Rates',
   `typ` enum('kommission','subkommission','spezialkommission') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'kommission' COMMENT 'Typ einer Kommission (Spezialkommission ist eine Delegation im weiteren Sinne).',
   `art` enum('legislativkommission','aufsichtskommission','parlam verwaltungskontrolle','weitere kommission','delegation im weiteren sinne') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Art der Kommission gemäss Einteilung auf Parlament.ch. Achtung für Delegationen im engeren Sinne (= Subkommissionen) sollte die Art der Mutterkommission gewählt werden, z.B. GPDel ist eine Subkommission der GPK und gehört somit zu den Aufsichtskommissionen.',
@@ -15638,4 +15638,4 @@ SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS ;
 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION ;
 SET SQL_NOTES=@OLD_SQL_NOTES ;
 
--- Dump completed on 2021-08-08  7:13:32
+-- Dump completed on 2021-11-01 17:10:48

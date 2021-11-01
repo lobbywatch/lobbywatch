@@ -3918,3 +3918,9 @@ ALTER TABLE country_log
 SET @disable_table_logging = 1;
 UPDATE `country` SET `freigabe_visa` = 'roland', `freigabe_datum` = '2014-03-01 21:45:34', `updated_visa` = 'roland';
 SET @disable_table_logging = NULL;
+
+-- 01.11.2021 kommission.name_fr longer
+
+ALTER TABLE `kommission` CHANGE `name_fr` `name_fr` VARCHAR(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Ausgeschriebener französischer Name der Kommission';
+
+ALTER TABLE `kommission_log` CHANGE `name_fr` `name_fr` VARCHAR(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Ausgeschriebener französischer Name der Kommission';
