@@ -387,7 +387,7 @@ def handle_organisation(group, inaktiv, name_de, name_fr, name_it, organisation_
     else:
         if inaktiv:
             print("\n-- Setze Gruppe '{}' ({}) aktiv".format(name_de, organisation_id))
-            print(sql_statement_generator.update_inaktiv_organisation(name_de, False, batch_time, pdf_date))
+            print(sql_statement_generator.update_inaktiv_organisation(organisation_id, False, batch_time, pdf_date))
 
         db_sekretariat = db.get_organisation_sekretariat(conn, organisation_id)
 
