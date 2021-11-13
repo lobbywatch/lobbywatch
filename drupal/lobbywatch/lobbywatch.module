@@ -235,6 +235,16 @@ function lobbywatch_menu() {
       'file' => 'lobbywatch.daten.inc',
     );
 
+    $items['export/non-public-db-dump'] = array(
+      'title' => 'Non Public Exports',
+      'title callback' => 'lt',
+      'page callback' => '_lobbywatch_non_public_db_dump_page',
+      'page arguments' => array('0'),
+      'access arguments' => array('access lobbywatch unpublished content'),
+      'type' => MENU_CALLBACK,
+      'file' => 'lobbywatch.daten.inc',
+    );
+
   return $items;
 }
 
