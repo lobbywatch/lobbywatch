@@ -66,6 +66,7 @@ $db_connections = [
 $settings['public_exports_dir'] = getenv('LW_PUBLIC_EXPORTS_DIR');
 $settings['file_secret_dir_hist'] = '/home/lobbywatch/.exports_secret_dir_hist';
 $settings['file_secret_dir_hist+unpubl'] = '/home/lobbywatch/.exports_secret_dir_hist+unpubl';
+$settings['file_secret_dir_dump'] = '/home/lobbywatch/.exports_secret_dir_dump';
 
 if ($stage) {
   $env = "STAGE";

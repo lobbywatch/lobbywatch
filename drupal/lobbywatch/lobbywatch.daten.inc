@@ -2360,13 +2360,13 @@ function _lobbywatch_non_public_db_dump_page() {
 
   $markup = '';
 
-  $secret_dir = trim(file_get_contents($settings['file_secret_dir_hist+unpubl']));
+  $secret_dir = trim(file_get_contents($settings['file_secret_dir_dump']));
   $secret_exports_dir = "$secret_dir/non-public-DB-DUMP";
   $secret_exports_path = "$path_of_public/$secret_exports_dir";
 
   $header = file_get_contents("$secret_exports_path/HEADER.html");
 
-  $markup .= "<h2>Für <i>internen</i> Gebrauch</h2>";
+  $markup .= "<h2>Nur für <i>interne</i> Lobbywatch-Programmierer</h2>";
   $markup .= "<p>Link to (non public) <i>full DB dumps</strong></i>.</p>";
   $markup .= "<p><a href='$url_of_public$secret_exports_dir'>$url_of_public$secret_exports_dir</a></p>";
   $markup .= "<p><strong>Nicht weitergeben!</strong></p>";
