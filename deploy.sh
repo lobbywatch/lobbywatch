@@ -349,7 +349,7 @@ if $upload_drupal ; then
   fi
 
   echo "## Deploying Drupal modules via rsync"
-  cmd="rsync $verbose -avzce 'ssh -p $ssh_port $quiet' $exclude --backup --backup-dir=bak $dry_run $drupal_dir/lobbywatch $ssh_user:$remote_drupal_modules"
+  cmd="rsync $verbose -avzce 'ssh -p $ssh_port $quiet' $exclude --backup --backup-dir=../bak $dry_run $drupal_dir/lobbywatch $ssh_user:$remote_drupal_modules"
   if $verbose_mode ; then
     echo "$cmd"
   fi
