@@ -1073,11 +1073,6 @@ abstract class Page extends CommonPage implements IVariableContainer
         return $this->dataset->GetConnection();
     }
 
-    public function PrepareTextForSQL($text)
-    {
-        return ConvertTextToEncoding($text, GetAnsiEncoding(), $this->GetContentEncoding());
-    }
-
     public function SetErrorMessage($value)
     { $this->errorMessage = $value; }
     public function GetErrorMessage()

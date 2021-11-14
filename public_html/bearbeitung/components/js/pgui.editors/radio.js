@@ -81,7 +81,7 @@ define(['pgui.editors/custom', 'underscore'], function (CustomEditor, _) {
         },
 
         clear: function() {
-            this.rootElement.find("label").remove();
+            this.rootElement.find(".radio, .radio-inline").remove();
             return this;
         },
 

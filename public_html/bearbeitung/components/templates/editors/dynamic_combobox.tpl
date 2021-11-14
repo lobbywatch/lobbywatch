@@ -14,7 +14,7 @@
 		{/if}
 		{if $Editor->GetReadonly()}readonly="readonly"{/if}
 		{if $Editor->getAllowClear()}data-allowClear="true"{/if}
-		value="{$Editor->GetValue()}"
+		value="{$Editor->GetValue()|escape}"
 	/>
         {if isset($ColumnViewData.NestedInsertFormLink) && isset($ColumnViewData.DisplayFieldName)}
   	    {include file='editors/nested_insert_button.tpl' NestedInsertFormLink=$ColumnViewData.NestedInsertFormLink LookupDisplayFieldName=$ColumnViewData.DisplayFieldName}

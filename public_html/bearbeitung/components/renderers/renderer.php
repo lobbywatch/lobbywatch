@@ -1088,6 +1088,7 @@ abstract class Renderer
     }
 
     public function RenderRecordCardView(RecordCardView $recordCardView) {
+        $this->SetHTTPContentTypeByPage($recordCardView->GetGrid()->GetPage());
         $this->renderingRecordCardView = true;
 
         try {

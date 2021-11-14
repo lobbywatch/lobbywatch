@@ -7025,6 +7025,9 @@ input,
 textarea {
   color: #272b30;
 }
+input[type="file"] {
+  color: #c8c8c8;
+}
 .has-warning .help-block,
 .has-warning .control-label,
 .has-warning .radio,

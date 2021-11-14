@@ -12,14 +12,14 @@
 
         {if $Editor->HasMFUChoices()}
             {foreach key=value item=displayValue from=$Editor->getMFUChoices()}
-                <option value="{$value}">{$displayValue}</option>
+                <option value="{$value|escape}">{$displayValue}</option>
             {/foreach}
             <option value="----------" disabled="disabled">----------</option>
         {/if}
 
         {foreach key=value item=displayValue from=$Editor->getChoices()}
             {if $value !== ''}
-                <option value="{$value}"{if $Editor->getValue() == $value} selected{/if}>{$displayValue}</option>
+                <option value="{$value|escape}"{if $Editor->getValue() == $value} selected{/if}>{$displayValue}</option>
             {/if}
         {/foreach}
     </select>

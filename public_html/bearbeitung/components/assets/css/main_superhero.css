@@ -6918,6 +6918,9 @@ input,
 textarea {
   color: #2b3e50;
 }
+input[type="file"] {
+  color: #ebebeb;
+}
 label,
 .radio label,
 .checkbox label,

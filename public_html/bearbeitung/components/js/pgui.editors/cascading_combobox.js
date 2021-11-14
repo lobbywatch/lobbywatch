@@ -7,9 +7,10 @@ define([
     return CustomEditor.extend({
 
         init: function(rootElement, readyCallback) {
-            this._super(rootElement, readyCallback);
             this.levels = [];
             this._processElement(rootElement);
+            this._super(rootElement, readyCallback);
+            this.setReadonly(this.getReadonly());
             this.bind('submit.pgui.nested-insert', function ($insertButton, primaryKey, record) {
                 var $level = $insertButton.closest('.input-group').find('select');
                 for (var i = 0; i < this.levels.length; i++) {
@@ -102,6 +103,25 @@ define([
 
         getValue: function() {
             return this._getMainControl().val();
+        },
+
+        setReadonly: function(value) {
+            if (!value) {
+                this.rootElement.removeAttr('readonly');
+                this.rootElement.find('.js-nested-insert').removeAttr('disabled');
+            } else {
+                this.rootElement.attr('readonly', 'readonly');
+                this.rootElement.find('.js-nested-insert').attr('disabled', 'disabled');
+            }
+            for (var i = 0; i < this.levels.length; i++) {
+                var level = this.levels[i];
+                level.setReadonly(value);
+            }
+            return this;
+        },
+
+        getReadonly: function() {
+            return Boolean(this.rootElement.attr('readonly'));
         }
 
     });

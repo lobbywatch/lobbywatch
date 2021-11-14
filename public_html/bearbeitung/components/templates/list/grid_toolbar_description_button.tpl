@@ -1,9 +1,9 @@
 {if $Page->getDetailedDescription()}
     <div class="btn-group">
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#detailedDescriptionModal" title="{$Captions->GetMessageString('PageDescription')}"><i class="icon-question"></i></button>
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#detailedDescriptionModal-{$Page->GetPageId()}" title="{$Captions->GetMessageString('PageDescription')}"><i class="icon-question"></i></button>
     </div>
 
-    <div class="modal fade" id="detailedDescriptionModal" tabindex="-1" role="dialog">
+    <div class="modal fade" id="detailedDescriptionModal-{$Page->GetPageId()}" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">

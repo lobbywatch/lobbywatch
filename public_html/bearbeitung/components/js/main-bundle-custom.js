@@ -8314,8 +8314,19 @@ define('pgui.editors/combobox',[
             this.setReadonly(this.getReadonly());
         },
 
+        getReadonly: function() {
+            return Boolean(this.rootElement.attr('readonly')) || this.rootElement.prop('readonly');
+        },
+
         setReadonly: function(isReadonly) {
             this._super(isReadonly);
+            if (!isReadonly) {
+                this.rootElement.removeAttr('readonly');
+                this.rootElement.closest('.input-group').find('.js-nested-insert').first().removeAttr('disabled');
+            } else {
+                this.rootElement.attr('readonly', 'readonly');
+                this.rootElement.closest('.input-group').find('.js-nested-insert').first().attr('disabled', 'disabled');
+            }
             var value = this.getValue();
             this.rootElement.find("option").each(function(i, item) {
                 var $item = $(item);
@@ -14981,7 +14992,7 @@ define('pgui.editors/radio',['pgui.editors/custom', 'underscore'], function (Cus
         },
 
         clear: function() {
-            this.rootElement.find("label").remove();
+            this.rootElement.find(".radio, .radio-inline").remove();
             return this;
         },
 
@@ -15078,9 +15089,10 @@ define('pgui.editors/cascading_combobox',[
     return CustomEditor.extend({
 
         init: function(rootElement, readyCallback) {
-            this._super(rootElement, readyCallback);
             this.levels = [];
             this._processElement(rootElement);
+            this._super(rootElement, readyCallback);
+            this.setReadonly(this.getReadonly());
             this.bind('submit.pgui.nested-insert', function ($insertButton, primaryKey, record) {
                 var $level = $insertButton.closest('.input-group').find('select');
                 for (var i = 0; i < this.levels.length; i++) {
@@ -15173,6 +15185,25 @@ define('pgui.editors/cascading_combobox',[
 
         getValue: function() {
             return this._getMainControl().val();
+        },
+
+        setReadonly: function(value) {
+            if (!value) {
+                this.rootElement.removeAttr('readonly');
+                this.rootElement.find('.js-nested-insert').removeAttr('disabled');
+            } else {
+                this.rootElement.attr('readonly', 'readonly');
+                this.rootElement.find('.js-nested-insert').attr('disabled', 'disabled');
+            }
+            for (var i = 0; i < this.levels.length; i++) {
+                var level = this.levels[i];
+                level.setReadonly(value);
+            }
+            return this;
+        },
+
+        getReadonly: function() {
+            return Boolean(this.rootElement.attr('readonly'));
         }
 
     });
@@ -24317,7 +24348,7 @@ define('pgui.field-embedded-video',[
 
     function getApi($el, cb) {
         var url = $el.data('url');
-        $.getJSON('https://www.youtube.com/oembed', {url: url})
+        $.getJSON('https://noembed.com/embed', {url: url})
             .success(function(response) {
                 $el.data('api', response);
                 if (response.type !== 'video') {

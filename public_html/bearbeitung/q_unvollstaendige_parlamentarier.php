@@ -2718,6 +2718,8 @@
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
                     new StringField('created_visa', true),
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),

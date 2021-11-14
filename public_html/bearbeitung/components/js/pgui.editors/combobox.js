@@ -48,8 +48,19 @@ define([
             this.setReadonly(this.getReadonly());
         },
 
+        getReadonly: function() {
+            return Boolean(this.rootElement.attr('readonly')) || this.rootElement.prop('readonly');
+        },
+
         setReadonly: function(isReadonly) {
             this._super(isReadonly);
+            if (!isReadonly) {
+                this.rootElement.removeAttr('readonly');
+                this.rootElement.closest('.input-group').find('.js-nested-insert').first().removeAttr('disabled');
+            } else {
+                this.rootElement.attr('readonly', 'readonly');
+                this.rootElement.closest('.input-group').find('.js-nested-insert').first().attr('disabled', 'disabled');
+            }
             var value = this.getValue();
             this.rootElement.find("option").each(function(i, item) {
                 var $item = $(item);

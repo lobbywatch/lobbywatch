@@ -66,7 +66,7 @@ define([
 
     function getApi($el, cb) {
         var url = $el.data('url');
-        $.getJSON('https://www.youtube.com/oembed', {url: url})
+        $.getJSON('https://noembed.com/embed', {url: url})
             .success(function(response) {
                 $el.data('api', response);
                 if (response.type !== 'video') {
