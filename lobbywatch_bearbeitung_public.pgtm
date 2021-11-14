@@ -799,6 +799,16 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="ehra_id" caption="Ehra Id" headerHint="EHRA-ID des Handelsregisters" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+            <ViewProperties type="text">
+              <Format type="number" thousandSeparator="'"/>
+            </ViewProperties>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="ch_id" caption="Ch Id" headerHint="CH-ID des Handelsregisters (alte HR-ID)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="20"/>
+          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -856,6 +866,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="updated_date"/>
             <Column fieldName="ALT_branche_id" visible="false"/>
             <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
+            <Column fieldName="ehra_id" visible="false"/>
+            <Column fieldName="ch_id" visible="false"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -912,6 +924,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="updated_date"/>
             <Column fieldName="ALT_branche_id" visible="false"/>
             <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
+            <Column fieldName="ehra_id" visible="false"/>
+            <Column fieldName="ch_id" visible="false"/>
           </View>
           <Edit>
             <Column fieldName="id" visible="false"/>
@@ -968,6 +982,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="updated_date"/>
             <Column fieldName="ALT_branche_id" visible="false"/>
             <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
+            <Column fieldName="ehra_id" visible="false"/>
+            <Column fieldName="ch_id" visible="false"/>
           </Edit>
           <Insert>
             <Column fieldName="id" visible="false"/>
@@ -1024,6 +1040,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="updated_date" visible="false"/>
             <Column fieldName="ALT_branche_id" visible="false"/>
             <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
+            <Column fieldName="ehra_id" visible="false"/>
+            <Column fieldName="ch_id" visible="false"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -1080,6 +1098,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
             <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
+            <Column fieldName="ehra_id" visible="false"/>
+            <Column fieldName="ch_id" visible="false"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -1136,6 +1156,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="updated_date"/>
             <Column fieldName="ALT_branche_id" visible="false"/>
             <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
+            <Column fieldName="ehra_id" visible="false"/>
+            <Column fieldName="ch_id" visible="false"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -1192,6 +1214,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="updated_date"/>
             <Column fieldName="ALT_branche_id" visible="false"/>
             <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
+            <Column fieldName="ehra_id" visible="false"/>
+            <Column fieldName="ch_id" visible="false"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -1248,6 +1272,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="updated_date"/>
             <Column fieldName="ALT_branche_id" visible="false"/>
             <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
+            <Column fieldName="ehra_id" visible="false"/>
+            <Column fieldName="ch_id" visible="false"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -1304,6 +1330,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="updated_date"/>
             <Column fieldName="ALT_branche_id" visible="false"/>
             <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
+            <Column fieldName="ehra_id" visible="false"/>
+            <Column fieldName="ch_id" visible="false"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -1360,6 +1388,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="updated_date"/>
             <Column fieldName="ALT_branche_id" visible="false"/>
             <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
+            <Column fieldName="ehra_id" visible="false"/>
+            <Column fieldName="ch_id" visible="false"/>
           </MultiEdit>
         </Columns>
         <Details>
@@ -2336,6 +2366,16 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="ehra_id" caption="Ehra Id" headerHint="EHRA-ID des Handelsregisters" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="ch_id" caption="Ch Id" headerHint="CH-ID des Handelsregisters (alte HR-ID)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="20"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -2398,6 +2438,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
+                  <Column fieldName="ehra_id" visible="false"/>
+                  <Column fieldName="ch_id" visible="false"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -2459,6 +2501,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
+                  <Column fieldName="ehra_id" visible="false"/>
+                  <Column fieldName="ch_id" visible="false"/>
                 </View>
                 <Edit>
                   <Column fieldName="id" visible="false"/>
@@ -2520,6 +2564,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
+                  <Column fieldName="ehra_id" visible="false"/>
+                  <Column fieldName="ch_id" visible="false"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="id" visible="false"/>
@@ -2581,6 +2627,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
+                  <Column fieldName="ehra_id" visible="false"/>
+                  <Column fieldName="ch_id" visible="false"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -2642,6 +2690,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
+                  <Column fieldName="ehra_id" visible="false"/>
+                  <Column fieldName="ch_id" visible="false"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -2703,6 +2753,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
+                  <Column fieldName="ehra_id" visible="false"/>
+                  <Column fieldName="ch_id" visible="false"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -2764,6 +2816,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
+                  <Column fieldName="ehra_id" visible="false"/>
+                  <Column fieldName="ch_id" visible="false"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -2825,6 +2879,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
+                  <Column fieldName="ehra_id" visible="false"/>
+                  <Column fieldName="ch_id" visible="false"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -2886,6 +2942,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
+                  <Column fieldName="ehra_id" visible="false"/>
+                  <Column fieldName="ch_id" visible="false"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -2947,6 +3005,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
+                  <Column fieldName="ehra_id" visible="false"/>
+                  <Column fieldName="ch_id" visible="false"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -33765,6 +33825,16 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="ehra_id" caption="Ehra Id" headerHint="EHRA-ID des Handelsregisters" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="ch_id" caption="Ch Id" headerHint="CH-ID des Handelsregisters (alte HR-ID)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="20"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -33822,6 +33892,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
+                  <Column fieldName="ehra_id"/>
+                  <Column fieldName="ch_id"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -33878,6 +33950,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
+                  <Column fieldName="ehra_id"/>
+                  <Column fieldName="ch_id"/>
                 </View>
                 <Edit>
                   <Column fieldName="name_de"/>
@@ -33934,6 +34008,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
+                  <Column fieldName="ehra_id"/>
+                  <Column fieldName="ch_id"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="name_de"/>
@@ -33990,6 +34066,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
+                  <Column fieldName="ehra_id"/>
+                  <Column fieldName="ch_id"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -34046,6 +34124,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
+                  <Column fieldName="ehra_id"/>
+                  <Column fieldName="ch_id"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -34102,6 +34182,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
+                  <Column fieldName="ehra_id"/>
+                  <Column fieldName="ch_id"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -34158,6 +34240,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
+                  <Column fieldName="ehra_id"/>
+                  <Column fieldName="ch_id"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -34214,6 +34298,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
+                  <Column fieldName="ehra_id"/>
+                  <Column fieldName="ch_id"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -34270,6 +34356,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
+                  <Column fieldName="ehra_id"/>
+                  <Column fieldName="ch_id"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -34326,6 +34414,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
+                  <Column fieldName="ehra_id"/>
+                  <Column fieldName="ch_id"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -35985,6 +36075,16 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="ehra_id" caption="Ehra Id" headerHint="EHRA-ID des Handelsregisters" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="ch_id" caption="Ch Id" headerHint="CH-ID des Handelsregisters (alte HR-ID)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="20"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -36042,6 +36142,8 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
+                  <Column fieldName="ehra_id"/>
+                  <Column fieldName="ch_id"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -36098,6 +36200,8 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
+                  <Column fieldName="ehra_id"/>
+                  <Column fieldName="ch_id"/>
                 </View>
                 <Edit>
                   <Column fieldName="name_de"/>
@@ -36154,6 +36258,8 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
+                  <Column fieldName="ehra_id"/>
+                  <Column fieldName="ch_id"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="name_de"/>
@@ -36210,6 +36316,8 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
+                  <Column fieldName="ehra_id"/>
+                  <Column fieldName="ch_id"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -36266,6 +36374,8 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
+                  <Column fieldName="ehra_id"/>
+                  <Column fieldName="ch_id"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -36322,6 +36432,8 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
+                  <Column fieldName="ehra_id"/>
+                  <Column fieldName="ch_id"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -36378,6 +36490,8 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
+                  <Column fieldName="ehra_id"/>
+                  <Column fieldName="ch_id"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -36434,6 +36548,8 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
+                  <Column fieldName="ehra_id"/>
+                  <Column fieldName="ch_id"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -36490,6 +36606,8 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
+                  <Column fieldName="ehra_id"/>
+                  <Column fieldName="ch_id"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -36546,6 +36664,8 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="linkedin_profil_url"/>
                   <Column fieldName="xing_profil_name"/>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
+                  <Column fieldName="ehra_id"/>
+                  <Column fieldName="ch_id"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -53213,6 +53333,16 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="ehra_id" caption="Ehra Id" showColumnFilter="false" selectedFilterOperators="1573119">
+            <ViewProperties type="text">
+              <Format type="number" thousandSeparator="'"/>
+            </ViewProperties>
+            <EditProperties type="spinEdit" maxValue="100" minValue="0" useConstraints="false" step="1"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="ch_id" caption="Ch Id" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -53270,6 +53400,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
             <Column fieldName="organisation_name_de_rechtsform_unique"/>
+            <Column fieldName="ehra_id"/>
+            <Column fieldName="ch_id"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -53326,6 +53458,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
             <Column fieldName="organisation_name_de_rechtsform_unique"/>
+            <Column fieldName="ehra_id"/>
+            <Column fieldName="ch_id"/>
           </View>
           <Edit>
             <Column fieldName="id"/>
@@ -53382,6 +53516,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
             <Column fieldName="organisation_name_de_rechtsform_unique"/>
+            <Column fieldName="ehra_id"/>
+            <Column fieldName="ch_id"/>
           </Edit>
           <Insert>
             <Column fieldName="id"/>
@@ -53438,6 +53574,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
             <Column fieldName="organisation_name_de_rechtsform_unique"/>
+            <Column fieldName="ehra_id"/>
+            <Column fieldName="ch_id"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -53494,6 +53632,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
             <Column fieldName="organisation_name_de_rechtsform_unique"/>
+            <Column fieldName="ehra_id"/>
+            <Column fieldName="ch_id"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -53550,6 +53690,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
             <Column fieldName="organisation_name_de_rechtsform_unique"/>
+            <Column fieldName="ehra_id"/>
+            <Column fieldName="ch_id"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -53606,6 +53748,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
             <Column fieldName="organisation_name_de_rechtsform_unique"/>
+            <Column fieldName="ehra_id"/>
+            <Column fieldName="ch_id"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -53662,6 +53806,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
             <Column fieldName="organisation_name_de_rechtsform_unique"/>
+            <Column fieldName="ehra_id"/>
+            <Column fieldName="ch_id"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -53718,6 +53864,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
             <Column fieldName="organisation_name_de_rechtsform_unique"/>
+            <Column fieldName="ehra_id"/>
+            <Column fieldName="ch_id"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id"/>
@@ -53774,6 +53922,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="linkedin_profil_url"/>
             <Column fieldName="xing_profil_name"/>
             <Column fieldName="organisation_name_de_rechtsform_unique"/>
+            <Column fieldName="ehra_id"/>
+            <Column fieldName="ch_id"/>
           </MultiEdit>
         </Columns>
         <Details/>

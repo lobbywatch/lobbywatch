@@ -59,6 +59,8 @@
                     new StringField('name_fr'),
                     new StringField('name_it'),
                     new StringField('uid'),
+                    new IntegerField('ehra_id'),
+                    new StringField('ch_id'),
                     new IntegerField('in_handelsregister', true),
                     new IntegerField('inaktiv'),
                     new StringField('ort'),
@@ -197,7 +199,9 @@
                 new FilterColumn($this->dataset, 'wikidata_qid', 'wikidata_qid', 'Wikidata Qid'),
                 new FilterColumn($this->dataset, 'linkedin_profil_url', 'linkedin_profil_url', 'Linkedin Profil Url'),
                 new FilterColumn($this->dataset, 'xing_profil_name', 'xing_profil_name', 'Xing Profil Name'),
-                new FilterColumn($this->dataset, 'organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique')
+                new FilterColumn($this->dataset, 'organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique'),
+                new FilterColumn($this->dataset, 'ehra_id', 'ehra_id', 'Ehra Id'),
+                new FilterColumn($this->dataset, 'ch_id', 'ch_id', 'Ch Id')
             );
         }
     
@@ -257,7 +261,9 @@
                 ->addColumn($columns['wikidata_qid'])
                 ->addColumn($columns['linkedin_profil_url'])
                 ->addColumn($columns['xing_profil_name'])
-                ->addColumn($columns['organisation_name_de_rechtsform_unique']);
+                ->addColumn($columns['organisation_name_de_rechtsform_unique'])
+                ->addColumn($columns['ehra_id'])
+                ->addColumn($columns['ch_id']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -1623,6 +1629,48 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new SpinEdit('ehra_id_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['ehra_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('ch_id_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['ch_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -2195,6 +2243,29 @@
             $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for ehra_id field
+            //
+            $column = new NumberViewColumn('ehra_id', 'ehra_id', 'Ehra Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for ch_id field
+            //
+            $column = new TextViewColumn('ch_id', 'ch_id', 'Ch Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -2598,6 +2669,23 @@
             // View column for organisation_name_de_rechtsform_unique field
             //
             $column = new TextViewColumn('organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for ehra_id field
+            //
+            $column = new NumberViewColumn('ehra_id', 'ehra_id', 'Ehra Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for ch_id field
+            //
+            $column = new TextViewColumn('ch_id', 'ch_id', 'Ch Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
@@ -3336,6 +3424,26 @@
             //
             $editor = new TextEdit('organisation_name_de_rechtsform_unique_edit');
             $editColumn = new CustomEditColumn('Organisation Name De Rechtsform Unique', 'organisation_name_de_rechtsform_unique', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for ehra_id field
+            //
+            $editor = new SpinEdit('ehra_id_edit');
+            $editColumn = new CustomEditColumn('Ehra Id', 'ehra_id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for ch_id field
+            //
+            $editor = new TextEdit('ch_id_edit');
+            $editColumn = new CustomEditColumn('Ch Id', 'ch_id', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4080,6 +4188,26 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for ehra_id field
+            //
+            $editor = new SpinEdit('ehra_id_edit');
+            $editColumn = new CustomEditColumn('Ehra Id', 'ehra_id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for ch_id field
+            //
+            $editor = new TextEdit('ch_id_edit');
+            $editColumn = new CustomEditColumn('Ch Id', 'ch_id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -4820,6 +4948,26 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for ehra_id field
+            //
+            $editor = new SpinEdit('ehra_id_edit');
+            $editColumn = new CustomEditColumn('Ehra Id', 'ehra_id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for ch_id field
+            //
+            $editor = new TextEdit('ch_id_edit');
+            $editColumn = new CustomEditColumn('Ch Id', 'ch_id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -5231,6 +5379,23 @@
             $column = new TextViewColumn('organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for ehra_id field
+            //
+            $column = new NumberViewColumn('ehra_id', 'ehra_id', 'Ehra Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for ch_id field
+            //
+            $column = new TextViewColumn('ch_id', 'ch_id', 'Ch Id', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -5636,6 +5801,23 @@
             $column = new TextViewColumn('organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
+            
+            //
+            // View column for ehra_id field
+            //
+            $column = new NumberViewColumn('ehra_id', 'ehra_id', 'Ehra Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for ch_id field
+            //
+            $column = new TextViewColumn('ch_id', 'ch_id', 'Ch Id', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
         }
     
         private function AddCompareColumns(Grid $grid)
@@ -6039,6 +6221,23 @@
             // View column for organisation_name_de_rechtsform_unique field
             //
             $column = new TextViewColumn('organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for ehra_id field
+            //
+            $column = new NumberViewColumn('ehra_id', 'ehra_id', 'Ehra Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for ch_id field
+            //
+            $column = new TextViewColumn('ch_id', 'ch_id', 'Ch Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
         }

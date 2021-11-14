@@ -3938,3 +3938,13 @@ ALTER TABLE mil_grad_log
 SET @disable_table_logging = 1;
 UPDATE `mil_grad` SET `freigabe_visa` = 'roland', `freigabe_datum` = '2014-03-01 21:45:34', `updated_visa` = 'roland';
 SET @disable_table_logging = NULL;
+
+-- 14.11.2021 add organisation.ehra_id and ch_id
+
+ALTER TABLE `organisation`
+  ADD `ehra_id` INT NULL DEFAULT NULL COMMENT 'EHRA-ID des Handelsregisters' AFTER `uid`,
+  ADD `ch_id` VARCHAR( 20 ) NULL DEFAULT NULL COMMENT 'CH-ID des Handelsregisters' AFTER `ehra_id`;
+
+ALTER TABLE `organisation_log`
+  ADD `ehra_id` INT NULL DEFAULT NULL COMMENT 'EHRA-ID des Handelsregisters' AFTER `uid`,
+  ADD `ch_id` VARCHAR( 20 ) NULL DEFAULT NULL COMMENT 'CH-ID des Handelsregisters' AFTER `ehra_id`;

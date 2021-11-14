@@ -2303,6 +2303,7 @@ function ws_get_organization_from_zefix_rest($uid_raw, &$data, $verbose, $test_m
     // OpenAPI: https://www.zefix.admin.ch/ZefixPublicREST/
     $base_url = $test_mode ? 'https://www.zefixintg.admin.ch/ZefixPublicREST/api/v1/company/uid' : 'https://www.zefix.admin.ch/ZefixPublicREST/api/v1/company/uid';
     $url = "$base_url/CHE$uid";
+    if ($verbose > 8) print("URL: $url\n");
     $basicAuthUsernamePassword = "{$zefix_ws_login['username']}:${zefix_ws_login['password']}";
     $response_raw = callAPI('GET', $url, false, $basicAuthUsernamePassword);
     $response_json = decodeJson($response_raw);
@@ -2645,7 +2646,23 @@ function fillDataFromUidBfsResult50($object, &$data) {
       $base_address = $ot->organisation->address;
       $address = is_array($base_address) ? $base_address[0] : $base_address;
       $address2 = is_array($base_address) && isset($base_address[1]) ? $base_address[1] : null;
-      $old_hr_id = !empty($oid->OtherOrganisationId) ? (is_array($oid->OtherOrganisationId) ? $oid->OtherOrganisationId[0] : $oid->OtherOrganisationId) : null;
+      $alte_hr_id = null;
+      $ehra_id = null;
+      if (!empty($oid->OtherOrganisationId) && is_array($oid->OtherOrganisationId)) {
+        foreach ($oid->OtherOrganisationId as $otherOrg) {
+          if ($otherOrg->organisationIdCategory === 'CH.HR') {
+            $alte_hr_id = $otherOrg->organisationId;
+          } elseif ($otherOrg->organisationIdCategory === 'CH.EHRAID') {
+            $ehra_id = $otherOrg->organisationId;
+          }
+        }
+      } else {
+        if ($otherOrg->organisationIdCategory === 'CH.HR') {
+          $alte_hr_id = $otherOrg->organisationId;
+        } elseif ($otherOrg->organisationIdCategory === 'CH.EHRAID') {
+          $ehra_id = $otherOrg->organisationId;
+        }
+      }
       $legel_form = !empty($oid->legalForm) ? $oid->legalForm : null;
       if (!empty($address->street)) {
         $adresse_strasse = trim($address->street) . (!empty($address->houseNumber) ? ' ' . trim($address->houseNumber) : '');
@@ -2657,7 +2674,9 @@ function fillDataFromUidBfsResult50($object, &$data) {
       $data['data'] = array(
         'uid' => formatUID($uid_ws),
         'uid_raw' => $uid_ws,
-        'alte_hr_id' => !empty($old_hr_id->organisationId) && substr($old_hr_id->organisationId, 0, 2) == 'CH' ? $old_hr_id->organisationId : null,
+        'alte_hr_id' => $alte_hr_id,
+        'ch_id' => $alte_hr_id,
+        'ehra_id' => $ehra_id,
         'name' => clean_str($oid->organisationName),
         'name_de' => clean_str($oid->organisationName),
         'alias_name' => clean_str($oid->organisationAdditionalName ?? null),
@@ -2850,17 +2869,19 @@ function fillDataFromZefixRestResult($json, &$data) {
         $base_address = $address = $address2 = null;
       }
       $old_hr_id = !empty($oid->chid) ? $oid->chid : null;
-      $legel_form_handelsregister_uid = $oid->legalForm->uid ?? null;
+      $legal_form_handelsregister_uid = $oid->legalForm->uid ?? null;
       $data['data'] = array(
         'uid' => formatUID($uid_ws),
         'uid_raw' => $uid_ws,
         'alte_hr_id' => $old_hr_id ?? null,
+        'ch_id' => $old_hr_id ?? null,
+        'ehra_id' => $oid->ehraid ?? null,
         'name' => clean_str($oid->name),
         'name_de' => clean_str($oid->name),
         'abkuerzung_de' => extractAbkuerzung($oid->name),
     // TODO 'name_fr' => $ot->organisation->organisationIdentification->organisationName, TODO
-        'rechtsform_handelsregister' => $legel_form_handelsregister_uid,
-        'rechtsform' => _lobbywatch_ws_get_rechtsform($legel_form_handelsregister_uid),
+        'rechtsform_handelsregister' => $legal_form_handelsregister_uid,
+        'rechtsform' => _lobbywatch_ws_get_rechtsform($legal_form_handelsregister_uid),
         'rechtsform_zefix' => $oid->legalForm->id ?? null,
         'adresse_strasse' => !empty($address->street) ? (clean_str($address->street) . (!empty($address->houseNumber) ? ' ' . clean_str($address->houseNumber) : '')) : null,
         // 'adresse_zusatz' => (!empty($address->addon) ? $address->addon : null) ?? ('Postfach ' . $address->poBox) ?? ('Postfach ' . $address2->poBox) ?? null,
@@ -2990,6 +3011,7 @@ function formatUIDnumber($uid_number) {
   return 'CHE-' . substr($uid_number, 0, 3) . '.' . substr($uid_number, 3, 3) . '.' . substr($uid_number, 6, 3);
 }
 
+// CH-ID
 function formatOldHandelsregisterID($old_hr_id_raw) {
   $matches = [];
   // TODO check
