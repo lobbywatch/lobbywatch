@@ -312,7 +312,9 @@ $sql_tables = [
   'distinct' => true, // in non-historised export zutrittsberechtiung creates a cross product, to avoid this use distinct
   ],
   'zutrittsberechtigung' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON zutrittsberechtigung.parlamentarier_id = p.id'],
-],
+  ],
+  'organisation_beziehung' => ['hist_field' => ['bis'], 'remove_cols' => [], 'join' => [],
+  ],
 ];
 
 // TODO add zutrittsberechtigte
