@@ -3924,3 +3924,17 @@ SET @disable_table_logging = NULL;
 ALTER TABLE `kommission` CHANGE `name_fr` `name_fr` VARCHAR(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Ausgeschriebener französischer Name der Kommission';
 
 ALTER TABLE `kommission_log` CHANGE `name_fr` `name_fr` VARCHAR(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Ausgeschriebener französischer Name der Kommission';
+
+-- 14.11.2021 mil_grad freigabe_datum
+
+ALTER TABLE mil_grad
+  ADD `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)' AFTER `notizen`,
+  ADD `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)' AFTER `freigabe_visa`;
+
+ALTER TABLE mil_grad_log
+  ADD `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)' AFTER `notizen`,
+  ADD `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)' AFTER `freigabe_visa`;
+
+SET @disable_table_logging = 1;
+UPDATE `mil_grad` SET `freigabe_visa` = 'roland', `freigabe_datum` = '2014-03-01 21:45:34', `updated_visa` = 'roland';
+SET @disable_table_logging = NULL;
