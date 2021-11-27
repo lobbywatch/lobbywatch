@@ -18,8 +18,20 @@ class Summary:
         self.names_added = 0
         self.names_changed = 0
 
-    def organisation_added(self):
+    def organisation_added(self, name_de, name_fr, name_it, beschreibung, sekretariat, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, homepage, alias):
         self.organisationen_added += 1
+        gruppe = self.get_gruppe(name_de, 'neu')
+        gruppe.add_change('name_de', None, name_de)
+        gruppe.add_change('name_fr', None, name_fr)
+        gruppe.add_change('name_it', None, name_it)
+        gruppe.add_change('beschreibung', None, beschreibung)
+        gruppe.add_change('sekretariat', None, sekretariat)
+        gruppe.add_change('adresse_str', None, adresse_str)
+        gruppe.add_change('adresse_zusatz', None, adresse_zusatz)
+        gruppe.add_change('adresse_plz', None, adresse_plz)
+        gruppe.add_change('adresse_ort', None, adresse_ort)
+        gruppe.add_change('homepage', None, homepage)
+        gruppe.add_change('alias', None, alias)
 
     def organisation_removed(self):
         self.organisationen_removed += 1
@@ -439,13 +451,13 @@ class GruppeSummary:
                     "alt " + feld.ljust(13),
                     ("; ".join(x for x in alt if x != None) if type(alt) is tuple else alt.replace('\n', '; '))
                     ))
-            lines.append("{:3}   {}   {}   {} ‖ {}: '{}'".format(
+            lines.append("{:3}   {}   {}   {} ‖ {}: {}".format(
                 "",
                 " ",
                 "".ljust(7),
                 "".rjust(5),
                 "neu " + feld.ljust(13),
-                ("; ".join(x for x in neu if x != None) if type(neu) is tuple else neu.replace('\n', '; ')) if neu else 'None'
+                ("'" + ("; ".join(x for x in neu if x != None) if type(neu) is tuple else neu.replace('\n', '; ')) + "'") if neu else '-'
                 ))
         for i, (symbol, ib_art, parlamentarier_name, parlamentarier_id) in enumerate(parlamentarier_sorted):
             lines.append("{:3}   {}   {}   {} ‖ {:2} {}".format(

@@ -390,7 +390,7 @@ def handle_organisation(group_type, rechtsform, group, inaktiv, name_de, name_fr
         print("\n-- Neue parlamentarische Gruppe: '{}'".format(name_de))
         print(sql_statement_generator.insert_parlamentarische_gruppe(
             group_type, name_de, name_fr, name_it, beschreibung, sekretariat, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, homepage, alias, batch_time, pdf_date))
-        summary.organisation_added()
+        summary.organisation_added(name_de, name_fr, name_it, beschreibung, sekretariat, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, homepage, alias)
 
         organisation_id = '@last_parlamentarische_gruppe'
 
