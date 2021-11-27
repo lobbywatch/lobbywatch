@@ -15,12 +15,16 @@ HOST_REGEX = r'(?i)(?:https?://)?((?:[-\w.]+)(?:[-\w.]+\.(?:ch|net|li|org|com|sw
 def run():
     parser = ArgumentParser(description='Create SQL files for data differences')
     parser.add_argument("--db", dest="db_name", help="name of DB to use", metavar="DB", default=None)
+    parser.add_argument("--group_type", metavar="TYPE", help="normal or friendship groups (TYPE=[normal,friendship])")
     args = parser.parse_args()
 
     batch_time = datetime.now().replace(microsecond=0)
     conn = db.connect(args.db_name)
     print(sql_statement_generator.start_transaction())
-    summary = sync_data(conn, "parlamentarische-gruppen.json", batch_time)
+    if args.group_type == "friendship":
+        summary = sync_data("friendship_group", conn, "parlamentarische-freundschaftsgruppen.json", batch_time)
+    else:
+        summary = sync_data("normal_group", conn, "parlamentarische-gruppen.json", batch_time)
     print(sql_statement_generator.commit_transaction())
     conn.close()
     print_summary(summary, batch_time)
@@ -76,6 +80,7 @@ def get_organisation(group, conn):
     name_it = normalize_organisation(group["name_it"])
 
     inaktiv = False
+    rechtsform = "Parlamentarische Gruppe"
     # EXCEPTION: Migration code
     # Workaround for multiple results for 'Sport'
     if name_de == 'Sport':
@@ -84,9 +89,9 @@ def get_organisation(group, conn):
     elif name_de == 'lingua e cultura rumantscha':
         organisation_id = 5964
     else:
-        organisation_id, inaktiv = db.get_organisation_id(conn, name_de, name_fr, name_it)
+        organisation_id, inaktiv, rechtsform = db.get_organisation_id(conn, name_de, name_fr, name_it)
 
-    return organisation_id, inaktiv, name_de, name_fr, name_it
+    return organisation_id, inaktiv, name_de, name_fr, name_it, rechtsform
 
 def get_names(member):
     member_name_cleaned = re.sub(r'(NR|SR|CN|CE)', '', member).strip()
@@ -95,7 +100,7 @@ def get_names(member):
     names = [re.sub(r'\([^)]*\)', '', name).strip() for name in names]
     return names
 
-def sync_data(conn, filename, batch_time):
+def sync_data(group_type, conn, filename, batch_time):
     backup_filename = "{}-{:02d}-{:02d}-{}".format(
         batch_time.year, batch_time.month, batch_time.day, filename)
     print("\n\n-- ----------------------------- ")
@@ -118,7 +123,7 @@ def sync_data(conn, filename, batch_time):
         print("-- URL: {}".format(content["metadata"]["url"]))
         print("-- ----------------------------- ")
 
-        handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_date)
+        handle_removed_groups(group_type, content, conn, summary, stichdatum, batch_time, pdf_date)
 
         print('\n-- Sync pgs...')
 
@@ -126,7 +131,7 @@ def sync_data(conn, filename, batch_time):
         for group in content["data"]:
             members = group["praesidium"] + group["mitglieder"]
 
-            organisation_id, inaktiv, name_de, name_fr, name_it = get_organisation(group, conn)
+            organisation_id, inaktiv, name_de, name_fr, name_it, rechtsform = get_organisation(group, conn)
 
             # Skip duplicate groups: Aktive Mobilität and Langsamverkehr are twice in 23.11.2020 PDF
             if organisation_id and organisation_id in handled_organisation_ids:
@@ -140,7 +145,7 @@ def sync_data(conn, filename, batch_time):
             else:
                 print('-- INFO: Organisation "{}" not found in DB'.format(name_de))
 
-            handle_organisation(group, inaktiv, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date)
+            handle_organisation(group_type, rechtsform, group, inaktiv, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date)
 
             processed_parlamentarier_ids = []
             for member, title in members:
@@ -201,9 +206,9 @@ def sync_data(conn, filename, batch_time):
 
     return(summary)
 
-def handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_date):
+def handle_removed_groups(group_type, content, conn, summary, stichdatum, batch_time, pdf_date):
     print('-- Check removed groups...')
-    ib_managed_by_import = db.get_pg_interessenbindungen_managed_by_import(conn)
+    ib_managed_by_import = db.get_pg_interessenbindungen_managed_by_import(group_type, conn)
     if ib_managed_by_import:
         parlamentarier_id_cache = {}
         organisation_id_cache = {}
@@ -220,10 +225,10 @@ def handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_da
             for group in content["data"]:
                 org_key = group["name_de"]
                 if org_key in organisation_id_cache:
-                    organisation_id, inaktiv, name_de, name_fr, name_it = organisation_id_cache[org_key]
+                    organisation_id, inaktiv, name_de, name_fr, name_it, rechtsform = organisation_id_cache[org_key]
                 else:
-                    organisation_id, inaktiv, name_de, name_fr, name_it = get_organisation(group, conn)
-                    organisation_id_cache[org_key] = (organisation_id, inaktiv, name_de, name_fr, name_it)
+                    organisation_id, inaktiv, name_de, name_fr, name_it, rechtsform = get_organisation(group, conn)
+                    organisation_id_cache[org_key] = (organisation_id, inaktiv, name_de, name_fr, name_it, rechtsform)
                 if org_id == organisation_id:
                     processed_org_name[org_name]['state'] = True
                     members = group["praesidium"] + group["mitglieder"]
@@ -260,7 +265,7 @@ def handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_da
                 if parl_zweiter_vorname:
                     full_name += " " + parl_zweiter_vorname
                 full_name += " " + parl_nachname
-                print("\n-- Interessenbindung zwischen Parlamentarier '{}' und Gruppe '{}' als {}{} nicht mehr vorhanden".format(full_name, org_name,ib_art, '/' + ib_funktion_im_gremium if ib_funktion_im_gremium else ''))
+                print("\n-- Interessenbindung zwischen Parlamentarier '{}' und Gruppe '{}' als {}{} nicht mehr vorhanden".format(full_name, org_name, ib_art, '/' + ib_funktion_im_gremium if ib_funktion_im_gremium else ''))
                 print(sql_statement_generator.end_interessenbindung(ib_id, stichdatum, batch_time, pdf_date))
 
                 summary.gruppe_beendet(parl_id, ib_id, org_name, ib_art)
@@ -269,7 +274,7 @@ def handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_da
             if not processed_org_val['state']:
                 inaktive_organisation_id = processed_org_val['id']
                 print("\n-- Setze Gruppe '{}' ({}) inaktiv".format(processed_org_name, inaktive_organisation_id))
-                print(sql_statement_generator.update_inaktiv_organisation(inaktive_organisation_id, True, batch_time, pdf_date))
+                print(sql_statement_generator.update_inaktiv_organisation(group_type, inaktive_organisation_id, True, batch_time, pdf_date))
                 summary.gruppe_geloescht(inaktive_organisation_id, processed_org_name)
 
     print('-- Progress {}%'.format(100))
@@ -304,7 +309,7 @@ def handle_names(group, name_de, name_fr, name_it, organisation_id, summary, con
 
 
 
-def handle_organisation(group, inaktiv, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date):
+def handle_organisation(group_type, rechtsform, group, inaktiv, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date):
     sekretariat = "\n".join(group["sekretariat"])
     sekretariat_line = '; '.join(sekretariat.splitlines())
     sekretariat_list = "\n".join(group["sekretariat"]).replace('; ', '\n').replace(';', '\n').replace(', ', '\n').replace(',', '\n').splitlines()
@@ -379,15 +384,16 @@ def handle_organisation(group, inaktiv, name_de, name_fr, name_it, organisation_
     if not organisation_id:
         print("\n-- Neue parlamentarische Gruppe: '{}'".format(name_de))
         print(sql_statement_generator.insert_parlamentarische_gruppe(
-            name_de, name_fr, name_it, beschreibung, sekretariat, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, homepage, alias, batch_time, pdf_date))
+            group_type, name_de, name_fr, name_it, beschreibung, sekretariat, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, homepage, alias, batch_time, pdf_date))
         summary.organisation_added()
 
         organisation_id = '@last_parlamentarische_gruppe'
 
     else:
-        if inaktiv:
-            print("\n-- Setze Gruppe '{}' ({}) aktiv".format(name_de, organisation_id))
-            print(sql_statement_generator.update_inaktiv_organisation(organisation_id, False, batch_time, pdf_date))
+        new_rechtsform = "Parlamentarische Freundschaftsgruppe" if group_type == 'friendship_group' else "Parlamentarische Gruppe"
+        if inaktiv or rechtsform != new_rechtsform:
+            print("\n-- Setze Gruppe '{}' ({}) aktiv mit type '{}'".format(name_de, organisation_id, new_rechtsform))
+            print(sql_statement_generator.update_inaktiv_organisation(group_type, organisation_id, False, batch_time, pdf_date))
 
         db_sekretariat = db.get_organisation_sekretariat(conn, organisation_id)
 

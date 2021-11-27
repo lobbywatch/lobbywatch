@@ -463,6 +463,7 @@ if ! $nopg ; then
   if ! $automatic ; then
     askContinueYn "Run parlamentarische Gruppen (pg) python '$db' on '$HOSTNAME'?"
   fi
+  export PG_DELTA_FILE=sql/pg_delta_`date +"%Y%m%dT%H%M%S"`.sql
   mkdir -p web_scrapers/backup web_scrapers/archive
   echo "Writing pg.json..."
   if $lastpdf ; then
@@ -473,7 +474,21 @@ if ! $nopg ; then
   fi
   python3 $pg_script_path/pg_create_json.py $last_pg_pdf
   echo "Writing pg_delta.sql..."
-  export PG_DELTA_FILE=sql/pg_delta_`date +"%Y%m%dT%H%M%S"`.sql; python3 $pg_script_path/pg_create_delta.py --db=$db | tee $PG_DELTA_FILE
+  python3 $pg_script_path/pg_create_delta.py --db=$db | tee $PG_DELTA_FILE
+
+  if ! $automatic ; then
+    askContinueYn "Run parlamentarische Freundschaftsgruppen (fpg) python '$db' on '$HOSTNAME'?"
+  fi
+  echo "Writing pg.json..."
+  if $lastpdf ; then
+    last_pg_pdf=$(ls -t web_scrapers/backup/*freundschaftsgruppe*.pdf | head -1)
+    echo "Last PDF $last_pg_pdf"
+  else
+    last_pg_pdf=''
+  fi
+  python3 $pg_script_path/pg_create_json.py --group_type friendship $last_pg_pdf
+  echo "Writing pg_delta.sql..."
+  python3 $pg_script_path/pg_create_delta.py --group_type friendship --db=$db | tee --append $PG_DELTA_FILE
 
   if $verbose ; then
     echo "Parlamentarische Gruppen SQL: $PG_DELTA_FILE"

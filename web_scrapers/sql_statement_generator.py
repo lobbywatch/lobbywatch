@@ -69,7 +69,7 @@ def insert_person(guest, date, pdf_date):
 
 
 # insert a new organisation with the characteristics of a parlamentarische gruppe
-def insert_parlamentarische_gruppe(name_de, name_fr, name_it, beschreibung, sekretariat, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, homepage, alias, date, pdf_date):
+def insert_parlamentarische_gruppe(group_type, name_de, name_fr, name_it, beschreibung, sekretariat, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, homepage, alias, date, pdf_date):
     query = """INSERT INTO `organisation` (`name_de`, `name_fr`, `name_it`, `beschreibung`, `sekretariat`, `adresse_strasse`, `adresse_zusatz`, `adresse_plz`, `ort`, `homepage`, `alias_namen_de`, `land_id`, `rechtsform`, `typ`, `vernehmlassung`, `created_visa`, `created_date`, `updated_visa`, `updated_by_import`, `notizen`, `eingabe_abgeschlossen_visa`, `eingabe_abgeschlossen_datum`) VALUES ('{}', {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, '{}', '{}', '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'));
 SET @last_parlamentarische_gruppe = LAST_INSERT_ID();
 """.format(
@@ -85,7 +85,7 @@ SET @last_parlamentarische_gruppe = LAST_INSERT_ID();
             _quote_str_or_NULL(_escape_string(homepage)),
             _quote_str_or_NULL(_escape_string(alias)),
             191,  # Schweiz
-            "Parlamentarische Gruppe",
+            "Parlamentarische Freundschaftsgruppe" if group_type == 'friendship_group' else "Parlamentarische Gruppe",
             "EinzelOrganisation,dezidierteLobby",
             "nie",
             "import",
@@ -204,14 +204,15 @@ def update_beschreibung_organisation(organisation_id, beschreibung, batch_time, 
 
     return query
 
-def update_inaktiv_organisation(organisation_id, inaktiv, batch_time, pdf_date):
-    query = "UPDATE `organisation` SET `inaktiv` = {0}, `notizen` = CONCAT_WS('\\n\\n', '{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
+def update_inaktiv_organisation(group_type, organisation_id, inaktiv, batch_time, pdf_date):
+    query = "UPDATE `organisation` SET `inaktiv` = {0}, rechtsform='{5}', `notizen` = CONCAT_WS('\\n\\n', '{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
         1 if inaktiv else 0,
         "{0}/import/{1}: Parlamentarische Gruppe {3} (PDF {2})".format(
             _date_as_sql_string(batch_time), user, _datetime_as_sql_string(pdf_date), "inaktiv" if inaktiv else "aktiv"),
         "import",
         _datetime_as_sql_string(batch_time),
-        organisation_id
+        organisation_id,
+        "Parlamentarische Freundschaftsgruppe" if group_type == 'friendship_group' else "Parlamentarische Gruppe"
     )
 
     return query

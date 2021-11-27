@@ -190,7 +190,7 @@ def get_organisation_id(database, name_de, name_fr, name_it):
     with database.cursor() as cursor:
         organisation_id = None
         query = """
-SELECT id, inaktiv
+SELECT id, inaktiv, rechtsform
 FROM organisation
 WHERE (name_de LIKE '{0}%'
 OR name_de LIKE 'Parlamentarische Gruppe%{0}'
@@ -198,7 +198,7 @@ OR CONCAT_WS(' ', name_de, abkuerzung_de) LIKE 'Parlamentarische Gruppe%{0}'
 OR name_de LIKE 'Parlamentarische%{0}'
 OR (CHAR_LENGTH(name_de) > 8 AND LOWER(name_de) = LOWER(SUBSTR('{0}', 1, CHAR_LENGTH(name_de))))
 OR (CHAR_LENGTH('{0}') > 8 AND LOWER('{0}') = LOWER(SUBSTR(name_de, 1, CHAR_LENGTH('{0}')))))
-AND rechtsform='Parlamentarische Gruppe'
+AND rechtsform IN ('Parlamentarische Gruppe', 'Parlamentarische Freundschaftsgruppe')
         """.format(escape_SQL(name_de))
 
         if name_fr:
@@ -227,10 +227,10 @@ in the database for organisation '{}: {}'.  Aborting.\n{}".format(name_de, resul
 #             sys.exit(1)
 
         if result and len(result) == 1:
-            (organisation_id, inaktiv, ) = result[0]
-            return organisation_id, inaktiv
+            (organisation_id, inaktiv, rechtsform, ) = result[0]
+            return organisation_id, inaktiv, rechtsform
 
-    return None, None
+    return None, None, None
 
 
 def get_organisation_sekretariat(database, organisation_id):
@@ -340,17 +340,17 @@ def get_organisation_alias(database, organisation_id):
 
     return None
 
-def get_pg_interessenbindungen_managed_by_import(database):
+def get_pg_interessenbindungen_managed_by_import(group_type, database):
     with database.cursor() as cursor:
         query = """
         SELECT ib.id, art, funktion_im_gremium, org.id, org.name_de, parl.vorname, parl.zweiter_vorname, parl.nachname, parl.id
         FROM interessenbindung ib
         INNER JOIN organisation org ON ib.organisation_id = org.id
         INNER JOIN parlamentarier parl ON ib.parlamentarier_id = parl.id
-        WHERE org.rechtsform = 'Parlamentarische Gruppe'
+        WHERE org.rechtsform = '{}'
         AND ib.updated_by_import IS NOT NULL
         AND (ib.bis IS NULL OR ib.bis > NOW());
-        """
+        """.format("Parlamentarische Freundschaftsgruppe" if group_type == 'friendship_group' else "Parlamentarische Gruppe")
 
         cursor.execute(query)
         results = cursor.fetchall()

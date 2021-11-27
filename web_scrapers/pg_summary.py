@@ -318,7 +318,7 @@ class ParlamentarierSummary:
         return len([x for x in self.gruppen_neu if x[2][0].upper() == "V"]) + len([x for x in self.gruppen_veraendert if x[2][0].upper() == "V"]) + len([x for x in self.gruppen_unveraendert if x[2][0].upper() == "V"])
 
     def has_changed(self):
-        return len(self.gruppen_neu) > 0 or len(self.gruppen_beendet) > 0
+        return len(self.gruppen_neu) > 0 or len(self.gruppen_beendet) > 0 or len(self.gruppen_veraendert) > 0
 
     def write(self, index):
         changed_symbol = "≠" if self.has_changed() else "="

@@ -251,12 +251,26 @@ def write_to_json(groups, archive_pdf_name, filename, url, creation_date, import
 def scrape():
     parser = ArgumentParser(description='Scarpe Parlamentarische Gruppen PDF')
     parser.add_argument("local_pdf", metavar="file", nargs='?', help="local PDF file to use", default=None)
+    parser.add_argument("--group_type", metavar="TYPE", help="normal or friendship groups (TYPE=[normal,friendship])")
     args = parser.parse_args()
-    local_pdf = args.local_pdf
 
+    if args.group_type == "friendship":
+        scarpe_friendship_groups(args.local_pdf)
+    else:
+        scarpe_normal_groups(args.local_pdf)
+
+def scarpe_normal_groups(local_pdf):
     url = "https://www.parlament.ch/centers/documents/de/gruppen-der-bundesversammlung.pdf"
     filename = "parlamentarische-gruppen.json"
+    scarpe_parl_pdf("normal_group", url, filename, local_pdf)
 
+def scarpe_friendship_groups(local_pdf):
+    url = "https://www.parlament.ch/centers/documents/de/freundschaftsgruppe-bundesversammlung.pdf"
+    filename = "parlamentarische-freundschaftsgruppen.json"
+    scarpe_parl_pdf("friendship_group", url, filename, local_pdf)
+
+def scarpe_parl_pdf(group_type, url, filename, local_pdf):
+    print("\ntype: {}".format(group_type))
     script_path = os.path.dirname(os.path.realpath(__file__))
     stripped_file_name = None
     try:
