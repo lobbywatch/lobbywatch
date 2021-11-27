@@ -10,7 +10,7 @@ from pg_summary import Summary
 from utils import clean_whitespace, escape_newlines
 import literals
 
-HOST_REGEX = r'(?i)(?:https?://)?((?:[-\w.]+)(?:[-\w.]+\.(?:ch|net|li|org|com|swiss|at|de|edu|info|io|name|pro)))\b'
+HOST_REGEX = r'(?i)\b(?:https?://)?((?:[-\w.]+)(?:[-\w.]+\.(?:ch|net|li|org|com|swiss|at|de|edu|info|io|name|pro)))\b'
 
 def run():
     parser = ArgumentParser(description='Create SQL files for data differences')
@@ -362,6 +362,8 @@ def handle_organisation(group_type, rechtsform, group, inaktiv, name_de, name_fr
 
     adresse = (adresse_str, adresse_zusatz, adresse_plz, adresse_ort)
 
+    email_hosts = ('parl.ch', 'bluewin.ch', 'gmail.com', 'yahoo.com', 'yahoo.de', 'yahoo.fr', 'gmx.ch', 'gmx.net', 'gmx.de', 'swissonline.ch', 'hotmail.com', 'bluemail.ch', 'outlook.com')
+
     homepage = re.findall(HOST_REGEX, sekretariat)
     email_host = re.findall(r"(?i)@([-\w.]+)", sekretariat)
 
@@ -372,11 +374,14 @@ def handle_organisation(group_type, rechtsform, group, inaktiv, name_de, name_fr
     elif email_host:
         homepage = None
         for host in email_host:
-            if host not in ('parl.ch', 'bluewin.ch', 'gmail.com', 'yahoo.com', 'yahoo.de', 'yahoo.fr', 'gmx.ch', 'gmx.net', 'gmx.de', 'swissonline.ch', 'hotmail.com', 'bluemail.ch', 'outlook.com'):
+            if host not in email_hosts:
                 homepage = ("http://" + host).upper()
                 # print("-- Benutze Domain von E-Mail-Adresse: " + homepage)
                 break
     else:
+        homepage = None
+
+    if homepage is not None and homepage.replace('http://', ''). replace('https://', '') in email_hosts:
         homepage = None
 
     beschreibung = get_pg_beschreibung(name_de, group, organisation_id, summary, conn, batch_time, pdf_date)
