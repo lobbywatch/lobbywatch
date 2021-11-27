@@ -1654,6 +1654,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -1764,6 +1765,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -1874,6 +1876,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -2891,6 +2894,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -3532,6 +3536,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -3621,6 +3626,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -5303,6 +5309,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -5749,6 +5756,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -6195,6 +6203,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -7365,6 +7374,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -7532,6 +7542,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -7699,6 +7710,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -7866,6 +7878,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -8184,6 +8197,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -8304,6 +8318,7 @@
                 new FilterColumn($this->dataset, 'kleinbild', 'kleinbild', 'Kleinbild'),
                 new FilterColumn($this->dataset, 'sitzplatz', 'sitzplatz', 'Sitzplatz'),
                 new FilterColumn($this->dataset, 'email', 'email', 'Email'),
+                new FilterColumn($this->dataset, 'email_2', 'email_2', 'Email 2'),
                 new FilterColumn($this->dataset, 'homepage', 'homepage', 'Homepage'),
                 new FilterColumn($this->dataset, 'homepage_2', 'homepage_2', 'Homepage 2'),
                 new FilterColumn($this->dataset, 'parlament_biografie_id', 'parlament_biografie_id', 'Parlament Biografie Id'),
@@ -8392,6 +8407,7 @@
                 ->addColumn($columns['kleinbild'])
                 ->addColumn($columns['sitzplatz'])
                 ->addColumn($columns['email'])
+                ->addColumn($columns['email_2'])
                 ->addColumn($columns['homepage'])
                 ->addColumn($columns['homepage_2'])
                 ->addColumn($columns['parlament_biografie_id'])
@@ -9366,6 +9382,31 @@
             
             $filterBuilder->addColumn(
                 $columns['email'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('email_2_edit');
+            $main_editor->SetMaxLength(100);
+            
+            $filterBuilder->addColumn(
+                $columns['email_2'],
                 array(
                     FilterConditionOperator::EQUALS => $main_editor,
                     FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
@@ -10925,6 +10966,17 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for email_2 field
+            //
+            $column = new TextViewColumn('email_2', 'email_2', 'Email 2', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('2. (private) E-Mail-Adresse des Parlamentariers');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
@@ -11690,6 +11742,14 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for email_2 field
+            //
+            $column = new TextViewColumn('email_2', 'email_2', 'Email 2', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
@@ -12338,6 +12398,14 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for email_2 field
+            //
+            $column = new TextViewColumn('email_2', 'email_2', 'Email 2', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
@@ -12965,6 +13033,14 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for email_2 field
+            //
+            $column = new TextViewColumn('email_2', 'email_2', 'Email 2', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
@@ -13587,6 +13663,14 @@
             // View column for email field
             //
             $column = new TextViewColumn('email', 'email', 'Email', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for email_2 field
+            //
+            $column = new TextViewColumn('email_2', 'email_2', 'Email 2', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddCompareColumn($column);
@@ -19356,6 +19440,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -19753,6 +19838,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -20236,6 +20322,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -21098,6 +21185,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -21351,6 +21439,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -21604,6 +21693,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -21857,6 +21947,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -50241,6 +50332,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -50358,6 +50450,7 @@
                 new FilterColumn($this->dataset, 'kleinbild', 'kleinbild', 'Kleinbild'),
                 new FilterColumn($this->dataset, 'sitzplatz', 'sitzplatz', 'Sitzplatz'),
                 new FilterColumn($this->dataset, 'email', 'email', 'Email'),
+                new FilterColumn($this->dataset, 'email_2', 'email_2', 'Email 2'),
                 new FilterColumn($this->dataset, 'homepage', 'homepage', 'Homepage'),
                 new FilterColumn($this->dataset, 'homepage_2', 'homepage_2', '2. Homepage'),
                 new FilterColumn($this->dataset, 'parlament_biografie_id', 'parlament_biografie_id', 'Parlament.ch Biografie ID'),
@@ -50425,6 +50518,7 @@
                 ->addColumn($columns['weitere_aemter'])
                 ->addColumn($columns['sitzplatz'])
                 ->addColumn($columns['email'])
+                ->addColumn($columns['email_2'])
                 ->addColumn($columns['homepage'])
                 ->addColumn($columns['homepage_2'])
                 ->addColumn($columns['parlament_biografie_id'])
@@ -51283,6 +51377,31 @@
             
             $filterBuilder->addColumn(
                 $columns['email'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('email_2_edit');
+            $main_editor->SetMaxLength(100);
+            
+            $filterBuilder->addColumn(
+                $columns['email_2'],
                 array(
                     FilterConditionOperator::EQUALS => $main_editor,
                     FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
@@ -52740,6 +52859,19 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for email_2 field
+            //
+            $column = new TextViewColumn('email_2', 'email_2', 'Email 2', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('mailto:%email_2%');
+            $column->setTarget('');
+            $column->SetMaxLength(75);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('2. (private) E-Mail-Adresse des Parlamentariers');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
@@ -53386,6 +53518,16 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
+            $column->SetMaxLength(75);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for email_2 field
+            //
+            $column = new TextViewColumn('email_2', 'email_2', 'Email 2', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('mailto:%email_2%');
+            $column->setTarget('');
             $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -54334,6 +54476,18 @@
             $editor = new TextEdit('email_edit');
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Email', 'email', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for email_2 field
+            //
+            $editor = new TextEdit('email_2_edit');
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Email 2', 'email_2', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -55407,6 +55561,18 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
+            // Edit column for email_2 field
+            //
+            $editor = new TextEdit('email_2_edit');
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Email 2', 'email_2', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
             // Edit column for homepage field
             //
             $editor = new TextEdit('homepage_edit');
@@ -56451,6 +56617,18 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for email_2 field
+            //
+            $editor = new TextEdit('email_2_edit');
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Email 2', 'email_2', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for homepage field
             //
             $editor = new TextEdit('homepage_edit');
@@ -57004,6 +57182,16 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
+            $column->SetMaxLength(75);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for email_2 field
+            //
+            $column = new TextViewColumn('email_2', 'email_2', 'Email 2', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('mailto:%email_2%');
+            $column->setTarget('');
             $column->SetMaxLength(75);
             $grid->AddPrintColumn($column);
             
@@ -57574,6 +57762,16 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for email_2 field
+            //
+            $column = new TextViewColumn('email_2', 'email_2', 'Email 2', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('mailto:%email_2%');
+            $column->setTarget('');
+            $column->SetMaxLength(75);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
@@ -58136,6 +58334,16 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
+            $column->SetMaxLength(75);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for email_2 field
+            //
+            $column = new TextViewColumn('email_2', 'email_2', 'Email 2', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('mailto:%email_2%');
+            $column->setTarget('');
             $column->SetMaxLength(75);
             $grid->AddCompareColumn($column);
             

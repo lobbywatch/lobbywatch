@@ -5908,6 +5908,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -6062,7 +6063,8 @@
                 new FilterColumn($this->dataset, 'parlament_beruf_json', 'parlament_beruf_json', 'Parlament Beruf Json'),
                 new FilterColumn($this->dataset, 'instagram_profil', 'instagram_profil', 'Instagram Profil'),
                 new FilterColumn($this->dataset, 'youtube_user', 'youtube_user', 'Youtube User'),
-                new FilterColumn($this->dataset, 'wikidata_qid', 'wikidata_qid', 'Wikidata Qid')
+                new FilterColumn($this->dataset, 'wikidata_qid', 'wikidata_qid', 'Wikidata Qid'),
+                new FilterColumn($this->dataset, 'email_2', 'email_2', 'Email 2')
             );
         }
     
@@ -6129,7 +6131,8 @@
                 ->addColumn($columns['parlament_beruf_json'])
                 ->addColumn($columns['instagram_profil'])
                 ->addColumn($columns['youtube_user'])
-                ->addColumn($columns['wikidata_qid']);
+                ->addColumn($columns['wikidata_qid'])
+                ->addColumn($columns['email_2']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -7712,6 +7715,31 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('email_2_edit');
+            $main_editor->SetMaxLength(100);
+            
+            $filterBuilder->addColumn(
+                $columns['email_2'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -8358,6 +8386,17 @@
             $column->SetDescription('Wikidata Item Q-ID. Wikidata enthält sprachunabhängige Wikipediadaten und stellt eine global gültige ID dar (semantic Web). Die Q-ID wird aufgrund des Wikipedia-Links automatisch gesetzt.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for email_2 field
+            //
+            $column = new TextViewColumn('email_2', 'email_2', 'Email 2', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('2. (private) E-Mail-Adresse des Parlamentariers');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -8816,6 +8855,14 @@
             //
             $column = new TextViewColumn('wikidata_qid', 'wikidata_qid', 'Wikidata Qid', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for email_2 field
+            //
+            $column = new TextViewColumn('email_2', 'email_2', 'Email 2', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -9650,6 +9697,16 @@
             $editor = new TextEdit('wikidata_qid_edit');
             $editor->SetMaxLength(12);
             $editColumn = new CustomEditColumn('Wikidata Qid', 'wikidata_qid', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for email_2 field
+            //
+            $editor = new TextEdit('email_2_edit');
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Email 2', 'email_2', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -10635,6 +10692,16 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for email_2 field
+            //
+            $editor = new TextEdit('email_2_edit');
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Email 2', 'email_2', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -11471,6 +11538,16 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for email_2 field
+            //
+            $editor = new TextEdit('email_2_edit');
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Email 2', 'email_2', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -11936,6 +12013,14 @@
             $column = new TextViewColumn('wikidata_qid', 'wikidata_qid', 'Wikidata Qid', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for email_2 field
+            //
+            $column = new TextViewColumn('email_2', 'email_2', 'Email 2', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -12394,6 +12479,14 @@
             //
             $column = new TextViewColumn('wikidata_qid', 'wikidata_qid', 'Wikidata Qid', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for email_2 field
+            //
+            $column = new TextViewColumn('email_2', 'email_2', 'Email 2', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
             $grid->AddExportColumn($column);
         }
     
@@ -12977,6 +13070,14 @@
             //
             $column = new TextViewColumn('wikidata_qid', 'wikidata_qid', 'Wikidata Qid', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for email_2 field
+            //
+            $column = new TextViewColumn('email_2', 'email_2', 'Email 2', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
             $grid->AddCompareColumn($column);
         }
     

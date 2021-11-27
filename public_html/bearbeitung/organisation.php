@@ -5245,19 +5245,20 @@
             );
             
             $main_editor = new ComboBox('rechtsform_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $main_editor->addChoice('AG', 'AG');
-            $main_editor->addChoice('GmbH', 'GmbH');
-            $main_editor->addChoice('Stiftung', 'Stiftung');
-            $main_editor->addChoice('Verein', 'Verein');
-            $main_editor->addChoice('Informelle Gruppe', 'Informelle Gruppe');
-            $main_editor->addChoice('Parlamentarische Gruppe', 'Parlamentarische Gruppe');
-            $main_editor->addChoice('Oeffentlich-rechtlich', 'Oeffentlich-rechtlich');
-            $main_editor->addChoice('Einzelunternehmen', 'Einzelunternehmen');
-            $main_editor->addChoice('KG', 'KG');
-            $main_editor->addChoice('Genossenschaft', 'Genossenschaft');
-            $main_editor->addChoice('Staatlich', 'Staatlich');
-            $main_editor->addChoice('Ausserparlamentarische Kommission', 'Ausserparlamentarische Kommission');
-            $main_editor->addChoice('Einfache Gesellschaft', 'Einfache Gesellschaft');
+            $main_editor->addChoice('AG', 'AG / SA');
+            $main_editor->addChoice('GmbH', 'GmbH / SARL');
+            $main_editor->addChoice('Stiftung', 'Stiftung / Fondation');
+            $main_editor->addChoice('Verein', 'Verein / Association');
+            $main_editor->addChoice('Informelle Gruppe', 'Informelle Gruppe / Groupe informel');
+            $main_editor->addChoice('Parlamentarische Gruppe', 'Parlamentarische Gruppe / Groupe parlementaire');
+            $main_editor->addChoice('Oeffentlich-rechtlich', 'Öffentlich-rechtlich / de droit public');
+            $main_editor->addChoice('Einzelunternehmen', 'Einzelunternehmen / Entreprise individuelle');
+            $main_editor->addChoice('KG', 'KG / SC');
+            $main_editor->addChoice('Genossenschaft', 'Genossenschaft / Société coopérative');
+            $main_editor->addChoice('Staatlich', 'Staatlich / Public/publique');
+            $main_editor->addChoice('Ausserparlamentarische Kommission', 'Ausserparlamentarische Kommission / Commission extraparlementaire');
+            $main_editor->addChoice('Einfache Gesellschaft', 'Einfache Gesellschaft / Société simple');
+            $main_editor->addChoice('Parlamentarische Freundschaftsgruppe', 'Parlamentarische Freundschaftsgruppe');
             $main_editor->SetAllowNullValue(false);
             
             $multi_value_select_editor = new MultiValueSelect('rechtsform');
@@ -10345,6 +10346,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -10852,6 +10854,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -11406,6 +11409,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -12489,6 +12493,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -21010,6 +21015,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -21441,6 +21447,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -22508,6 +22515,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -24109,6 +24117,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -26212,6 +26221,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -26651,6 +26661,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -27691,6 +27702,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -29340,6 +29352,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -30246,6 +30259,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -30610,6 +30624,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -31060,6 +31075,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -31847,6 +31863,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -33665,6 +33682,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -34135,6 +34153,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -34633,6 +34652,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -35869,6 +35889,7 @@
                     new StringField('kleinbild'),
                     new IntegerField('sitzplatz'),
                     new StringField('email'),
+                    new StringField('email_2'),
                     new StringField('homepage'),
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
@@ -39858,6 +39879,7 @@
             $main_editor->addChoice('Staatlich', 'Staatlich / Public/publique');
             $main_editor->addChoice('Ausserparlamentarische Kommission', 'Ausserparlamentarische Kommission / Commission extraparlementaire');
             $main_editor->addChoice('Einfache Gesellschaft', 'Einfache Gesellschaft / Société simple');
+            $main_editor->addChoice('Parlamentarische Freundschaftsgruppe', 'Parlamentarische Freundschaftsgruppe');
             $main_editor->SetAllowNullValue(false);
             
             $multi_value_select_editor = new MultiValueSelect('rechtsform');
@@ -42278,6 +42300,7 @@
             $editor->addChoice('Staatlich', 'Staatlich / Public/publique');
             $editor->addChoice('Ausserparlamentarische Kommission', 'Ausserparlamentarische Kommission / Commission extraparlementaire');
             $editor->addChoice('Einfache Gesellschaft', 'Einfache Gesellschaft / Société simple');
+            $editor->addChoice('Parlamentarische Freundschaftsgruppe', 'Parlamentarische Freundschaftsgruppe');
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -43161,6 +43184,7 @@
             $editor->addChoice('Staatlich', 'Staatlich / Public/publique');
             $editor->addChoice('Ausserparlamentarische Kommission', 'Ausserparlamentarische Kommission / Commission extraparlementaire');
             $editor->addChoice('Einfache Gesellschaft', 'Einfache Gesellschaft / Société simple');
+            $editor->addChoice('Parlamentarische Freundschaftsgruppe', 'Parlamentarische Freundschaftsgruppe');
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -44069,6 +44093,7 @@
             $editor->addChoice('Staatlich', 'Staatlich / Public/publique');
             $editor->addChoice('Ausserparlamentarische Kommission', 'Ausserparlamentarische Kommission / Commission extraparlementaire');
             $editor->addChoice('Einfache Gesellschaft', 'Einfache Gesellschaft / Société simple');
+            $editor->addChoice('Parlamentarische Freundschaftsgruppe', 'Parlamentarische Freundschaftsgruppe');
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);

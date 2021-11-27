@@ -524,6 +524,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
                 <Value name="Staatlich" caption="Staatlich / Public/publique"/>
                 <Value name="Ausserparlamentarische Kommission" caption="Ausserparlamentarische Kommission / Commission extraparlementaire"/>
                 <Value name="Einfache Gesellschaft" caption="Einfache Gesellschaft / Société simple"/>
+                <Value name="Parlamentarische Freundschaftsgruppe" caption="Parlamentarische Freundschaftsgruppe"/>
               </Values>
             </EditProperties>
           </ColumnPresentation>
@@ -2149,19 +2150,20 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox">
                     <Values>
-                      <Value name="AG" caption="AG"/>
-                      <Value name="GmbH" caption="GmbH"/>
-                      <Value name="Stiftung" caption="Stiftung"/>
-                      <Value name="Verein" caption="Verein"/>
-                      <Value name="Informelle Gruppe" caption="Informelle Gruppe"/>
-                      <Value name="Parlamentarische Gruppe" caption="Parlamentarische Gruppe"/>
-                      <Value name="Oeffentlich-rechtlich" caption="Oeffentlich-rechtlich"/>
-                      <Value name="Einzelunternehmen" caption="Einzelunternehmen"/>
-                      <Value name="KG" caption="KG"/>
-                      <Value name="Genossenschaft" caption="Genossenschaft"/>
-                      <Value name="Staatlich" caption="Staatlich"/>
-                      <Value name="Ausserparlamentarische Kommission" caption="Ausserparlamentarische Kommission"/>
-                      <Value name="Einfache Gesellschaft" caption="Einfache Gesellschaft"/>
+                      <Value name="AG" caption="AG / SA"/>
+                      <Value name="GmbH" caption="GmbH / SARL"/>
+                      <Value name="Stiftung" caption="Stiftung / Fondation"/>
+                      <Value name="Verein" caption="Verein / Association"/>
+                      <Value name="Informelle Gruppe" caption="Informelle Gruppe / Groupe informel"/>
+                      <Value name="Parlamentarische Gruppe" caption="Parlamentarische Gruppe / Groupe parlementaire"/>
+                      <Value name="Oeffentlich-rechtlich" caption="Öffentlich-rechtlich / de droit public"/>
+                      <Value name="Einzelunternehmen" caption="Einzelunternehmen / Entreprise individuelle"/>
+                      <Value name="KG" caption="KG / SC"/>
+                      <Value name="Genossenschaft" caption="Genossenschaft / Société coopérative"/>
+                      <Value name="Staatlich" caption="Staatlich / Public/publique"/>
+                      <Value name="Ausserparlamentarische Kommission" caption="Ausserparlamentarische Kommission / Commission extraparlementaire"/>
+                      <Value name="Einfache Gesellschaft" caption="Einfache Gesellschaft / Société simple"/>
+                      <Value name="Parlamentarische Freundschaftsgruppe" caption="Parlamentarische Freundschaftsgruppe"/>
                     </Values>
                   </EditProperties>
                 </ColumnPresentation>
@@ -9001,6 +9003,14 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
               <EmailClientValidatorInfo enabled="true"/>
             </Validators>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="email_2" caption="Email 2" headerHint="2. (private) E-Mail-Adresse des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <Hyperlink template="mailto:%email_2%" target=""/>
+            <EditProperties type="textBox" maxLength="100"/>
+            <Validators>
+              <EmailClientValidatorInfo enabled="true"/>
+            </Validators>
+          </ColumnPresentation>
           <ColumnPresentation fieldName="homepage" caption="Homepage" headerHint="Homepage des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <Hyperlink template="%homepage%"/>
@@ -9281,6 +9291,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="kleinbild"/>
             <Column fieldName="sitzplatz"/>
             <Column fieldName="email"/>
+            <Column fieldName="email_2"/>
             <Column fieldName="homepage"/>
             <Column fieldName="homepage_2"/>
             <Column fieldName="parlament_biografie_id"/>
@@ -9360,6 +9371,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="kleinbild"/>
             <Column fieldName="sitzplatz"/>
             <Column fieldName="email"/>
+            <Column fieldName="email_2"/>
             <Column fieldName="homepage"/>
             <Column fieldName="homepage_2"/>
             <Column fieldName="parlament_biografie_id"/>
@@ -9439,6 +9451,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="kleinbild" visible="false"/>
             <Column fieldName="sitzplatz"/>
             <Column fieldName="email"/>
+            <Column fieldName="email_2"/>
             <Column fieldName="homepage"/>
             <Column fieldName="homepage_2"/>
             <Column fieldName="parlament_biografie_id"/>
@@ -9518,6 +9531,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="kleinbild" visible="false"/>
             <Column fieldName="sitzplatz"/>
             <Column fieldName="email"/>
+            <Column fieldName="email_2"/>
             <Column fieldName="homepage"/>
             <Column fieldName="homepage_2"/>
             <Column fieldName="parlament_biografie_id"/>
@@ -9642,6 +9656,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="instagram_profil"/>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="email_2"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -9676,6 +9691,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="kleinbild" visible="false"/>
             <Column fieldName="sitzplatz"/>
             <Column fieldName="email"/>
+            <Column fieldName="email_2"/>
             <Column fieldName="homepage"/>
             <Column fieldName="homepage_2"/>
             <Column fieldName="parlament_biografie_id"/>
@@ -9755,6 +9771,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="kleinbild"/>
             <Column fieldName="sitzplatz"/>
             <Column fieldName="email"/>
+            <Column fieldName="email_2"/>
             <Column fieldName="homepage"/>
             <Column fieldName="homepage_2" caption="Homepage 2"/>
             <Column fieldName="parlament_biografie_id"/>
@@ -9834,6 +9851,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="kleinbild"/>
             <Column fieldName="sitzplatz"/>
             <Column fieldName="email"/>
+            <Column fieldName="email_2"/>
             <Column fieldName="homepage"/>
             <Column fieldName="homepage_2" caption="Homepage 2"/>
             <Column fieldName="parlament_biografie_id"/>
@@ -9913,6 +9931,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="kleinbild"/>
             <Column fieldName="sitzplatz"/>
             <Column fieldName="email"/>
+            <Column fieldName="email_2"/>
             <Column fieldName="homepage"/>
             <Column fieldName="homepage_2"/>
             <Column fieldName="parlament_biografie_id"/>
@@ -9992,6 +10011,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="kleinbild" visible="false"/>
             <Column fieldName="sitzplatz"/>
             <Column fieldName="email"/>
+            <Column fieldName="email_2"/>
             <Column fieldName="homepage"/>
             <Column fieldName="homepage_2"/>
             <Column fieldName="parlament_biografie_id"/>
@@ -11301,6 +11321,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="100"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="email_2" caption="Email 2" headerHint="2. (private) E-Mail-Adresse des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="100"/>
+                </ColumnPresentation>
                 <ColumnPresentation fieldName="homepage" caption="Homepage" headerHint="Homepage des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
@@ -11554,6 +11578,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kleinbild"/>
                   <Column fieldName="sitzplatz"/>
                   <Column fieldName="email"/>
+                  <Column fieldName="email_2"/>
                   <Column fieldName="homepage"/>
                   <Column fieldName="homepage_2"/>
                   <Column fieldName="parlament_biografie_id"/>
@@ -11638,6 +11663,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kleinbild"/>
                   <Column fieldName="sitzplatz"/>
                   <Column fieldName="email"/>
+                  <Column fieldName="email_2"/>
                   <Column fieldName="homepage"/>
                   <Column fieldName="homepage_2"/>
                   <Column fieldName="parlament_biografie_id"/>
@@ -11722,6 +11748,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kleinbild" visible="false"/>
                   <Column fieldName="sitzplatz" visible="false"/>
                   <Column fieldName="email" visible="false"/>
+                  <Column fieldName="email_2" visible="false"/>
                   <Column fieldName="homepage" visible="false"/>
                   <Column fieldName="homepage_2" visible="false"/>
                   <Column fieldName="parlament_biografie_id" visible="false"/>
@@ -11806,6 +11833,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kleinbild" visible="false"/>
                   <Column fieldName="sitzplatz" visible="false"/>
                   <Column fieldName="email" visible="false"/>
+                  <Column fieldName="email_2" visible="false"/>
                   <Column fieldName="homepage" visible="false"/>
                   <Column fieldName="homepage_2" visible="false"/>
                   <Column fieldName="parlament_biografie_id" visible="false"/>
@@ -11936,6 +11964,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -11974,6 +12003,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kleinbild"/>
                   <Column fieldName="sitzplatz"/>
                   <Column fieldName="email"/>
+                  <Column fieldName="email_2"/>
                   <Column fieldName="homepage"/>
                   <Column fieldName="homepage_2"/>
                   <Column fieldName="parlament_biografie_id"/>
@@ -12058,6 +12088,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kleinbild"/>
                   <Column fieldName="sitzplatz"/>
                   <Column fieldName="email"/>
+                  <Column fieldName="email_2"/>
                   <Column fieldName="homepage"/>
                   <Column fieldName="homepage_2"/>
                   <Column fieldName="parlament_biografie_id"/>
@@ -12142,6 +12173,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kleinbild"/>
                   <Column fieldName="sitzplatz"/>
                   <Column fieldName="email"/>
+                  <Column fieldName="email_2"/>
                   <Column fieldName="homepage"/>
                   <Column fieldName="homepage_2"/>
                   <Column fieldName="parlament_biografie_id"/>
@@ -12226,6 +12258,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kleinbild"/>
                   <Column fieldName="sitzplatz"/>
                   <Column fieldName="email"/>
+                  <Column fieldName="email_2"/>
                   <Column fieldName="homepage"/>
                   <Column fieldName="homepage_2"/>
                   <Column fieldName="parlament_biografie_id"/>
@@ -12310,6 +12343,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kleinbild" visible="false"/>
                   <Column fieldName="sitzplatz" visible="false"/>
                   <Column fieldName="email" visible="false"/>
+                  <Column fieldName="email_2" visible="false"/>
                   <Column fieldName="homepage" visible="false"/>
                   <Column fieldName="homepage_2" visible="false"/>
                   <Column fieldName="parlament_biografie_id" visible="false"/>
@@ -37046,6 +37080,10 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="12"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="email_2" caption="Email 2" headerHint="2. (private) E-Mail-Adresse des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="100"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -37126,6 +37164,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -37205,6 +37244,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </View>
                 <Edit>
                   <Column fieldName="nachname"/>
@@ -37284,6 +37324,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="nachname"/>
@@ -37363,6 +37404,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -37442,6 +37484,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -37521,6 +37564,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -37600,6 +37644,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -37679,6 +37724,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -37758,6 +37804,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -37837,6 +37884,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -41912,6 +41960,10 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="12"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="email_2" caption="Email 2" headerHint="2. (private) E-Mail-Adresse des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="100"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -41992,6 +42044,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -42071,6 +42124,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </View>
                 <Edit>
                   <Column fieldName="nachname"/>
@@ -42150,6 +42204,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="nachname"/>
@@ -42229,6 +42284,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -42308,6 +42364,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -42387,6 +42444,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -42466,6 +42524,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -42545,6 +42604,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -42624,6 +42684,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -42703,6 +42764,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -44830,6 +44892,10 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="12"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="email_2" caption="Email 2" headerHint="2. (private) E-Mail-Adresse des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="100"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -44910,6 +44976,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -44989,6 +45056,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </View>
                 <Edit>
                   <Column fieldName="nachname"/>
@@ -45068,6 +45136,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="nachname"/>
@@ -45147,6 +45216,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -45226,6 +45296,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -45305,6 +45376,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -45384,6 +45456,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -45463,6 +45536,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -45542,6 +45616,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -45621,6 +45696,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -46983,6 +47059,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="12"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="email_2" caption="Email 2" headerHint="2. (private) E-Mail-Adresse des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="100"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -47063,6 +47143,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -47142,6 +47223,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </View>
                 <Edit>
                   <Column fieldName="nachname"/>
@@ -47221,6 +47303,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="nachname"/>
@@ -47300,6 +47383,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -47379,6 +47463,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -47458,6 +47543,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -47537,6 +47623,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -47616,6 +47703,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -47695,6 +47783,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -47774,6 +47863,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="instagram_profil"/>
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
+                  <Column fieldName="email_2"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -51114,6 +51204,10 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="email_2" caption="Email 2" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -51194,6 +51288,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="instagram_profil"/>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="email_2"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -51273,6 +51368,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="instagram_profil"/>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="email_2"/>
           </View>
           <Edit>
             <Column fieldName="id"/>
@@ -51352,6 +51448,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="instagram_profil"/>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="email_2"/>
           </Edit>
           <Insert>
             <Column fieldName="id"/>
@@ -51431,6 +51528,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="instagram_profil"/>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="email_2"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -51510,6 +51608,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="instagram_profil"/>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="email_2"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -51589,6 +51688,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="instagram_profil"/>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="email_2"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -51668,6 +51768,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="instagram_profil"/>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="email_2"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -51747,6 +51848,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="instagram_profil"/>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="email_2"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -51826,6 +51928,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="instagram_profil"/>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="email_2"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -51905,6 +52008,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="instagram_profil"/>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
+            <Column fieldName="email_2"/>
           </MultiEdit>
         </Columns>
         <Details/>
