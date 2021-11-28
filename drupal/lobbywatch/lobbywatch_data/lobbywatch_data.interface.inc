@@ -271,10 +271,12 @@ function _lobbywatch_data_clean_records($result) {
 
   // TODO test exclusion of historised records
   while($record = $result->fetchAssoc()) {
-    if (
+    if ((
       (!array_key_exists('bis_unix', $record) || (is_null($record['bis_unix']) || $record['bis_unix'] > time()))
       && (!array_key_exists('im_rat_bis_unix', $record) || (is_null($record['im_rat_bis_unix']) || $record['im_rat_bis_unix'] > time()))
       && (!array_key_exists('zutrittsberechtigung_bis_unix', $record) || (is_null($record['zutrittsberechtigung_bis_unix']) || $record['zutrittsberechtigung_bis_unix'] > time()))
+      && empty($record['inaktiv'])
+      )
       || $includeHistorised
     ) {
       $fields = _lobbywatch_data_clean_fields($record);
