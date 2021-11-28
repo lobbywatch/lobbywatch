@@ -387,6 +387,11 @@ function _lobbywatch_data_transformation($table, &$items) {
       'fr' => 'Intergroupe parlementaire ',
       'it' => 'Intergruppo parlamentare ',
     ];
+    $fpg_prefix = [
+      'de' => 'Parlamentarische Freundschaftsgruppe ',
+      'fr' => 'Intergroupe parlementaire ',
+      'it' => 'Intergruppo parlamentare ',
+    ];
 
     // df($lang, '$lang');
     // df($pg_prefix[$lang], 'prefix');
@@ -396,6 +401,8 @@ function _lobbywatch_data_transformation($table, &$items) {
       foreach($fields as $key => $value) {
         if (in_array($key, ['name', 'organisation_name'], true) && $fields['rechtsform'] === 'Parlamentarische Gruppe') {
           $items[$item_key][$key] = $pg_prefix[$lang] . ($lang === 'de' ? $items[$item_key][$key] : lcfirst($items[$item_key][$key]));
+        } else if (in_array($key, ['name', 'organisation_name'], true) && $fields['rechtsform'] === 'Parlamentarische Freundschaftsgruppe') {
+          $items[$item_key][$key] = $fpg_prefix[$lang] . ($lang === 'de' ? $items[$item_key][$key] : lcfirst($items[$item_key][$key]));
         }
       }
     }
