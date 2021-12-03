@@ -40,6 +40,9 @@ class MemberOfParliament(Entity):
             self.party = party
         else:
             self.party = party_split[0]
+        # Partei mapping al -> ALG (hack)
+        if self.party == 'Al':
+            self.party = 'ALG'
         self.canton = party_and_canton[1]
 
 
