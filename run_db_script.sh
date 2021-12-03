@@ -232,7 +232,7 @@ if [[ "$script" == "dbdump" ]] ; then
    sed -e "\$a$END_SETTINGS" |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
    perl -p -e's/DEFINER=`.*?`@`[a-zA-Z0-9_.-]+` //ig' |
-   perl -0 -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|sg' |
+   perl -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|sg' |
    perl -p -e"s/\`$db\`\.//ig" |
    perl -p -e's/\r//ig' |
    grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
@@ -247,7 +247,7 @@ elif [[ "$script" == "dbdump_data" ]] ; then
    sed -r "s/$PATTERN_USE/$CREATED-- \0 -- ibex Disable setting of original DB$BEGIN_SETTINGS$START_TRANSACTION/i" |
    sed -r 's/^\s*LOCK TABLES (`[^`]+`) WRITE;/\0\nTRUNCATE \1; -- ibex added/ig' |
    sed -e "\$a$END_SETTINGS$END_TRANSACTION" |
-   perl -0 -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|sg' |
+   perl -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|sg' |
    perl -p -e's/\r//ig' |
    perl -p -e"s/\`$db\`\.//ig" |
    grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
