@@ -139,6 +139,21 @@ BEGIN
    INSERT INTO `translation_target_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `translation_target`;
 
+   INSERT INTO `interessenraum_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `interessenraum`;
+
+   INSERT INTO `country_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `country`;
+
+   INSERT INTO `in_rat_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `in_rat`;
+
+   INSERT INTO `in_partei_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `in_partei`;
+
+   INSERT INTO `in_fraktion_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `in_fraktion`;
+
 END
 //
 delimiter ;
@@ -2742,6 +2757,165 @@ FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   UPDATE `country_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+END
+//
+delimiter ;
+
+-- in_rat triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_in_rat_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_in_rat_log_ins` AFTER INSERT ON `in_rat`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `in_rat_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `in_rat` WHERE id = NEW.id ;
+END
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_in_rat_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_in_rat_log_upd` AFTER UPDATE ON `in_rat`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `in_rat_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `in_rat` WHERE id = NEW.id ;
+END
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_in_rat_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_in_rat_log_del_before` BEFORE DELETE ON `in_rat`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `in_rat_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `in_rat` WHERE id = OLD.id ;
+END
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_in_rat_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_in_rat_log_del_after` AFTER DELETE ON `in_rat`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `in_rat_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+END
+//
+delimiter ;
+
+-- in_partei triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_in_partei_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_in_partei_log_ins` AFTER INSERT ON `in_partei`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `in_partei_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `in_partei` WHERE id = NEW.id ;
+END
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_in_partei_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_in_partei_log_upd` AFTER UPDATE ON `in_partei`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `in_partei_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `in_partei` WHERE id = NEW.id ;
+END
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_in_partei_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_in_partei_log_del_before` BEFORE DELETE ON `in_partei`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `in_partei_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `in_partei` WHERE id = OLD.id ;
+END
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_in_partei_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_in_partei_log_del_after` AFTER DELETE ON `in_partei`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `in_partei_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+END
+//
+delimiter ;
+
+-- in_fraktion triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_in_fraktion_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_in_fraktion_log_ins` AFTER INSERT ON `in_fraktion`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `in_fraktion_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `in_fraktion` WHERE id = NEW.id ;
+END
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_in_fraktion_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_in_fraktion_log_upd` AFTER UPDATE ON `in_fraktion`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `in_fraktion_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `in_fraktion` WHERE id = NEW.id ;
+END
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_in_fraktion_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_in_fraktion_log_del_before` BEFORE DELETE ON `in_fraktion`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `in_fraktion_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `in_fraktion` WHERE id = OLD.id ;
+END
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_in_fraktion_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_in_fraktion_log_del_after` AFTER DELETE ON `in_fraktion`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `in_fraktion_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
 END

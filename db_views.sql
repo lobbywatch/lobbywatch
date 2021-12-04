@@ -441,6 +441,24 @@ country.*,
 UNIX_TIMESTAMP(created_date) as created_date_unix, UNIX_TIMESTAMP(updated_date) as updated_date_unix
 FROM `country`;
 
+CREATE OR REPLACE VIEW `v_in_rat` AS
+SELECT
+in_rat.*,
+UNIX_TIMESTAMP(created_date) as created_date_unix, UNIX_TIMESTAMP(updated_date) as updated_date_unix
+FROM `in_rat`;
+
+CREATE OR REPLACE VIEW `v_in_partei` AS
+SELECT
+in_partei.*,
+UNIX_TIMESTAMP(created_date) as created_date_unix, UNIX_TIMESTAMP(updated_date) as updated_date_unix
+FROM `in_partei`;
+
+CREATE OR REPLACE VIEW `v_in_fraktion` AS
+SELECT
+in_fraktion.*,
+UNIX_TIMESTAMP(created_date) as created_date_unix, UNIX_TIMESTAMP(updated_date) as updated_date_unix
+FROM `in_fraktion`;
+
 CREATE OR REPLACE VIEW `v_rat` AS
 SELECT rat.name_de as anzeige_name, rat.name_de as anzeige_name_de, rat.name_de as anzeige_name_fr,
 CONCAT_WS(' / ', rat.name_de, rat.name_de) as anzeige_name_mixed,

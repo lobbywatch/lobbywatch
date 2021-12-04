@@ -1186,3 +1186,53 @@ ALTER TABLE `country_log`
   ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   ADD CONSTRAINT `fk_country_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- 04.12.2021 add in_rat, in_fraktion, in_partei
+
+-- Table in_rat_log
+DROP TABLE IF EXISTS `in_rat_log`;
+CREATE TABLE IF NOT EXISTS `in_rat_log` LIKE `in_rat`;
+ALTER TABLE `in_rat_log`
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_in_rat_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- Table in_fraktion_log
+DROP TABLE IF EXISTS `in_fraktion_log`;
+CREATE TABLE IF NOT EXISTS `in_fraktion_log` LIKE `in_fraktion`;
+ALTER TABLE `in_fraktion_log`
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_in_fraktion_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- Table in_partei_log
+DROP TABLE IF EXISTS `in_partei_log`;
+CREATE TABLE IF NOT EXISTS `in_partei_log` LIKE `in_partei`;
+ALTER TABLE `in_partei_log`
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_in_partei_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
