@@ -3967,11 +3967,13 @@ UPDATE parlamentarier SET email_2 = email, notizen = CONCAT_WS('\n\n', '27.11.20
 
 -- 04.12.2021 add in_rat, in_fraktion, in_partei
 
+DROP TABLE IF EXISTS `in_rat`;
 CREATE TABLE `in_rat` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des Parlamentariers',
   `rat_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des Rates',
-  `funktion` enum('praesident','vizepraesident','mitglied') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers im Rat',
+  `vorgaenger_parlamentarier_id` int(11) NULL COMMENT 'Vorgänger des Parlamentariers bei Nachgerutschten (Fremdschlüssel)',
+  `funktion` enum('praesident','vizepraesident','mitglied') COLLATE utf8mb4_unicode_ci NULL COMMENT 'Funktion des Parlamentariers im Rat',
   `von` date DEFAULT NULL COMMENT 'Beginn der Ratszugehörigkeit, leer (NULL) = unbekannt',
   `bis` date DEFAULT NULL COMMENT 'Ende der Ratszugehörigkeit, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
   `parlament_uuid` varchar(36) DEFAULT NULL COMMENT 'UUID dieser Relation bei den Parlamentsdiensten',
@@ -3998,6 +4000,7 @@ CREATE TABLE `in_rat` (
   CONSTRAINT `fk_in_rat_parlamentarier_id` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Ratszugehörigkeit von Parlamentariern';
 
+DROP TABLE IF EXISTS `in_partei`;
 CREATE TABLE `in_partei` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des Parlamentariers',
@@ -4029,6 +4032,7 @@ CREATE TABLE `in_partei` (
   CONSTRAINT `fk_in_partei_parlamentarier_id` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Parteizugehörigkeit von Parlamentariern';
 
+DROP TABLE IF EXISTS `in_fraktion`;
 CREATE TABLE `in_fraktion` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des Parlamentariers',

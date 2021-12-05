@@ -414,8 +414,6 @@ function syncParlamentarier(string $img_path, bool $processRetired = true) {
       $parlamentarier_db = search_objects($parlamentarier_list_db, 'parlament_biografie_id', $biografie_id);
 
       $sign = '!';
-      $update = [];
-      $update_optional = [];
       $fields = [];
       if ($ok = ($n = count($parlamentarier_db)) == 0) {
 
@@ -448,7 +446,7 @@ function syncParlamentarier(string $img_path, bool $processRetired = true) {
           $id = NEW_ID;
         }
 
-        updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, $update, $update_optional, $fields, $sign, $img_path, $delta);
+        updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, $fields, $sign, $img_path, $delta);
       }
 
       if ($n > 1) {
@@ -489,11 +487,9 @@ function syncParlamentarier(string $img_path, bool $processRetired = true) {
       $id = $parlamentarier_inactive->id;
       $sign = '!';
 
-      $update = [];
-      $update_optional = [];
       $fields = [];
       if ($biografie_id = $parlamentarier_inactive->parlament_biografie_id) {
-        updateParlamentarierFields($id, $biografie_id, $parlamentarier_inactive, $update, $update_optional, $fields, $sign, $img_path, $delta);
+        updateParlamentarierFields($id, $biografie_id, $parlamentarier_inactive, $fields, $sign, $img_path, $delta);
       } else {
         $biografie_id = 'null';
       }
@@ -521,13 +517,15 @@ function syncParlamentarier(string $img_path, bool $processRetired = true) {
   print("\n\n-- RETIRED " . ($new_parlamentarier_count + $updated_parlamentarier_count + $deleted_parlamentarier_count + $modified_parlamentarier_count > 0 ? 'DATA CHANGED' : 'DATA UNCHANGED') . "\n\n");
 }
 
-function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, &$update, &$update_optional, &$fields, &$sign, $img_path, &$delta) {
+function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, &$fields, &$sign, $img_path, &$delta) {
   global $script;
   global $context;
   global $show_sql;
   global $db;
   global $today;
   global $sql_today;
+  global $yesterday;
+  global $sql_yesterday;
   global $transaction_date;
   global $sql_transaction_date;
   global $download_images;
@@ -547,6 +545,8 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
     $max_output_length = 10;
   }
 
+  $update = [];
+  $update_optional = [];
   $fields_ignored = [];
 
   // TODO repeal and replace ws-old.parlament.ch, see https://www.parlament.ch/de/services/open-data-webservices
@@ -629,6 +629,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT IN syncParlamentarier()
   // ----------------------------------------------------------
 
+  // Rat: old handling in parlamentarier.rat_id
   // TODO Use max ID in membership
   $terminated = false;
   if (!$parlamentarier_ws->active && strtotime($parlamentarier_ws->councilMemberships[count($parlamentarier_ws->councilMemberships) - 1]->entryDate) < time()) {
@@ -640,6 +641,121 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
 //     $different_db_values |= checkField('im_rat_bis', $parlamentarier_ws->active ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE /*FIELD_MODE_ONLY_NEW*/, 'getImRatBis');
     add_field_to_update($parlamentarier_db_obj, 'im_rat_bis', null, $update, null /*'updated_date'*/);
   }
+
+  // only existing members since a parlamentarier.id is required
+  if (is_numeric($id)) {
+    // Rat: new handling in in_rat table
+    static $stmtInRat;
+    if (!isset($stmtInRat)) {
+      $sql = "SELECT id, rat_id, von, bis FROM in_rat WHERE parlamentarier_id = :parlamentarier_id ORDER BY von asc;";
+      $stmtInRat = $db->prepare($sql);
+    }
+
+    $stmtInRat->execute([':parlamentarier_id' => $id]);
+    $parlamentarier_in_rat_db_obj = $stmtInRat->fetchAll(PDO::FETCH_CLASS);
+
+    // Assume ordered
+    $i = 0;
+    foreach($parlamentarier_ws->councilMemberships as $councilMembership) {
+      if(empty($parlamentarier_in_rat_db_obj[$i])) {
+        $insertInRat = [];
+        $fields[] = "in_rat+";
+        $insertInRat['parlamentarier_id'] = $id;
+        if (!empty($councilMembership->council->type)) $insertInRat['rat_id'] = getRatId($councilMembership->council);
+        if (!empty($councilMembership->entryDate)) $insertInRat['von'] = getCouncilEntryDate($councilMembership) ?? 'NULL';
+        if (!empty($councilMembership->leavingDate)) $insertInRat['bis'] = getCouncilLeavingDate($councilMembership) ?? 'NULL';
+
+        $script[] = $comment = "-- Insert neue Ratsmitgliedschaft in_rat $parlamentarier_ws->lastName, $parlamentarier_ws->firstName, " . ($councilMembership->entryDate ?? '') . " - " . ($councilMembership->leavingDate ?? '') . ", id=$id";
+        $script[] = $command = "INSERT INTO `in_rat` (" . implode(", ", array_keys($insertInRat)) . ", updated_visa, updated_date, created_visa, created_date, notizen) VALUES (" .  implode(", ", array_values($insertInRat)) . ", 'import', $sql_transaction_date, 'import', $sql_transaction_date, '$today/$user: Import via ws.parlament.ch');";
+        if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+        if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+      } else {
+        $updateInRat = [];
+        $db_in_rat_id = $parlamentarier_in_rat_db_obj[$i]->id;
+        $different_db_values |= checkField('rat_id', $councilMembership->council ?? null, $parlamentarier_in_rat_db_obj[$i], $councilMembership, $updateInRat, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK, 'getRatId');
+        $different_db_values |= checkField('von', $councilMembership, $parlamentarier_in_rat_db_obj[$i], $councilMembership, $updateInRat, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK, 'getCouncilEntryDate');
+        $different_db_values |= checkField('bis', $councilMembership, $parlamentarier_in_rat_db_obj[$i], $councilMembership, $updateInRat, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK, 'getCouncilLeavingDate');
+
+        if (count($updateInRat) > 0) {
+          $script[] = $comment = "-- Update in_rat $parlamentarier_ws->lastName, $parlamentarier_ws->firstName, id=$id, fields: " . strtr(implode(", ", $fields), ["\n" => '\n']);
+          $script[] = $command = "UPDATE `in_rat` SET " . implode(", ", $updateInRat) . ", updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/$user: Update via ws.parlament.ch',`notizen`) WHERE id=$db_in_rat_id;";
+          if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+          if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+        }
+
+      }
+      $i++;
+    }
+
+    // Partei: new handling in in_partei table
+    static $stmtInPartei;
+    if (!isset($stmtInPartei)) {
+      $sql = "SELECT id, partei_id, von, bis FROM in_partei WHERE parlamentarier_id = :parlamentarier_id ORDER BY von asc;";
+      $stmtInPartei = $db->prepare($sql);
+    }
+
+    $stmtInPartei->execute([':parlamentarier_id' => $id]);
+    $parlamentarier_in_partei_db_obj = $stmtInPartei->fetchAll(PDO::FETCH_CLASS);
+
+    $i = count($parlamentarier_in_partei_db_obj) - 1;
+    $db_in_partei_found = !empty($parlamentarier_in_partei_db_obj[$i]);
+    $ws_has_party = !empty($parlamentarier_ws->party);
+    if (!$db_in_partei_found && $ws_has_party && getParteiId($parlamentarier_ws->party)) {
+      // New party
+      insert_in_partei($fields, $id, $parlamentarier_ws, null);
+    } else if ($db_in_partei_found && $ws_has_party && $parlamentarier_in_partei_db_obj[$i]->partei_id != getParteiId($parlamentarier_ws->party)) {
+      // partei changed
+      $db_in_partei_id = $parlamentarier_in_partei_db_obj[$i]->id;
+      // terminate existing party
+      $updateInPartei = [];
+      $different_db_values |= checkField('bis', $sql_yesterday, $parlamentarier_in_partei_db_obj[$i], $parlamentarier_ws, $updateInPartei, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK);
+
+      if (count($updateInPartei) > 0) {
+        $script[] = $comment = "-- Update in_partei $parlamentarier_ws->lastName, $parlamentarier_ws->firstName, id=$id, fields: " . strtr(implode(", ", $fields), ["\n" => '\n']);
+        $script[] = $command = "UPDATE `in_partei` SET " . implode(", ", $updateInPartei) . ", updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/$user: Update via ws.parlament.ch',`notizen`) WHERE id=$db_in_partei_id;";
+        if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+        if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+      }
+
+      // insert new party
+      $different_db_values |= insert_in_partei($fields, $id, $parlamentarier_ws, $sql_today);
+    } // else is equal
+
+    // Fraktion: new handling in in_fraktion table
+    static $stmtInFraktion;
+    if (!isset($stmtInFraktion)) {
+      $sql = "SELECT id, fraktion_id, von, bis FROM in_fraktion WHERE parlamentarier_id = :parlamentarier_id ORDER BY von asc;";
+      $stmtInFraktion = $db->prepare($sql);
+    }
+
+    $stmtInFraktion->execute([':parlamentarier_id' => $id]);
+    $parlamentarier_in_fraktion_db_obj = $stmtInFraktion->fetchAll(PDO::FETCH_CLASS);
+
+    $i = count($parlamentarier_in_fraktion_db_obj) - 1;
+    $db_in_fraktion_found = !empty($parlamentarier_in_fraktion_db_obj[$i]);
+    $ws_has_faction = !empty($parlamentarier_ws->faction);
+    if(!$db_in_fraktion_found && $ws_has_faction && getFraktionId($parlamentarier_ws->faction)) {
+      // New fraction
+      insert_in_fraktion($fields, $id, $parlamentarier_ws, null);
+    } else if ($db_in_fraktion_found && $ws_has_faction && $parlamentarier_in_fraktion_db_obj[$i]->fraktion_id != getFraktionId($parlamentarier_ws->faction)) {
+      // fraktion changed
+      $db_in_fraktion_id = $parlamentarier_in_fraktion_db_obj[$i]->id;
+      // terminate existing fraktion
+      $updateInFraktion = [];
+      $different_db_values |= checkField('bis', $sql_yesterday, $parlamentarier_in_fraktion_db_obj[$i], $parlamentarier_ws, $updateInFraktion, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK);
+
+      if (count($updateInFraktion) > 0) {
+        $script[] = $comment = "-- Update in_fraktion $parlamentarier_ws->lastName, $parlamentarier_ws->firstName, id=$id, fields: " . strtr(implode(", ", $fields), ["\n" => '\n']);
+        $script[] = $command = "UPDATE `in_fraktion` SET " . implode(", ", $updateInFraktion) . ", updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/$user: Update via ws.parlament.ch',`notizen`) WHERE id=$db_in_fraktion_id;";
+        if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+        if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+      }
+
+      // insert new fraktion
+      $different_db_values |= insert_in_fraktion($fields, $id, $parlamentarier_ws, $sql_today);
+    } // else is equal
+  }
+
   $different_db_values |= checkField('im_rat_seit', $parlamentarier_ws->councilMemberships ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getImRatSeit');
   $different_db_values |= checkField('ratsunterbruch_von', $parlamentarier_ws->councilMemberships ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getRatsunterbruchVon');
   $different_db_values |= checkField('ratsunterbruch_bis', $parlamentarier_ws->councilMemberships ?? null, $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getRatsunterbruchBis');
@@ -754,6 +870,50 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   }
 
   return $sign;
+}
+
+function insert_in_partei(&$fields, $id, $parlamentarier_ws, $vonDate) {
+  global $script;
+  global $show_sql;
+  global $sql_transaction_date;
+  global $today;
+  global $sql_today;
+  global $user;
+
+  $insertInPartei = [];
+  $fields[] = "in_partei+";
+  $insertInPartei['parlamentarier_id'] = $id;
+  if (!empty($parlamentarier_ws->party)) $insertInPartei['partei_id'] = getParteiId($parlamentarier_ws->party);
+  $insertInPartei['von'] = $vonDate ?? 'NULL';
+  $insertInPartei['bis'] = 'NULL';
+
+  $script[] = $comment = "-- Insert neue Parteimitgliedschaft in_partei $parlamentarier_ws->lastName, $parlamentarier_ws->firstName, " . ($parlamentarier_ws->party ?? '') . ", id=$id";
+  $script[] = $command = "INSERT INTO `in_partei` (" . implode(", ", array_keys($insertInPartei)) . ", updated_visa, updated_date, created_visa, created_date, notizen) VALUES (" .  implode(", ", array_values($insertInPartei)) . ", 'import', $sql_transaction_date, 'import', $sql_transaction_date, '$today/$user: Import via ws.parlament.ch');";
+  if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+  if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+  return true;
+}
+
+function insert_in_fraktion(&$fields, $id, $parlamentarier_ws, $vonDate) {
+  global $script;
+  global $show_sql;
+  global $sql_transaction_date;
+  global $today;
+  global $sql_today;
+  global $user;
+
+  $insertInFraktion = [];
+  $fields[] = "in_fraktion+";
+  $insertInFraktion['parlamentarier_id'] = $id;
+  if (!empty($parlamentarier_ws->faction)) $insertInFraktion['fraktion_id'] = getFraktionId($parlamentarier_ws->faction);
+  $insertInFraktion['von'] = $vonDate ?? 'NULL';
+  $insertInFraktion['bis'] = 'NULL';
+
+  $script[] = $comment = "-- Insert neue Fraktionsmitgliedschaft in_fraktion $parlamentarier_ws->lastName, $parlamentarier_ws->firstName, " . ($parlamentarier_ws->faction ?? '') . ", id=$id";
+  $script[] = $command = "INSERT INTO `in_fraktion` (" . implode(", ", array_keys($insertInFraktion)) . ", updated_visa, updated_date, created_visa, created_date, notizen) VALUES (" .  implode(", ", array_values($insertInFraktion)) . ", 'import', $sql_transaction_date, 'import', $sql_transaction_date, '$today/$user: Import via ws.parlament.ch');";
+  if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+  if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+  return true;
 }
 
 function show_members(array $ids, $level = 1) {
@@ -1304,6 +1464,32 @@ function getImRatSeit($councilMemberships, $parlamentarier_ws, $parlamentarier_d
     }
 
   return null;
+}
+
+function getCouncilEntryDate($membership) {
+  $is_date = isset($membership->entryDate) && !is_array($membership->entryDate) && preg_match('/^\d{4}-\d{2}-\d{2}/', $membership->entryDate);
+  if (empty($membership->entryDate)) {
+    return null;
+  } else if ($is_date) {
+    $entry_date = substr($membership->entryDate, 0, 10);
+    return "STR_TO_DATE('$entry_date','%Y-%m-%d')";
+  } else {
+    $errors[] = "councilMemberships->entryDate is not a date!";
+    return null;
+  }
+}
+
+function getCouncilLeavingDate($membership) {
+  $is_date = isset($membership->leavingDate) && !is_array($membership->leavingDate) && preg_match('/^\d{4}-\d{2}-\d{2}/', $membership->leavingDate);
+  if (empty($membership->leavingDate)) {
+    return null;
+  } else if ($is_date) {
+    $leaving_date = substr($membership->leavingDate, 0, 10);
+    return "STR_TO_DATE('$leaving_date','%Y-%m-%d')";
+  } else {
+    $errors[] = "councilMemberships->leavingDate is not a date!";
+    return null;
+  }
 }
 
 /**

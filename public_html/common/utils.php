@@ -30,6 +30,10 @@ const FIELD_MODE_ONLY_NEW = 3;
 
 global $today;
 global $sql_today;
+global $yesterday;
+global $sql_yesterday;
+global $tomorrow;
+global $sql_tomorrow;
 global $transaction_date;
 global $sql_transaction_date;
 global $mysql_client_version;
@@ -37,6 +41,10 @@ global $mysql_server_version;
 
 $today = date('d.m.Y');
 $sql_today = "STR_TO_DATE('$today','%d.%m.%Y')";
+$yesterday = date('d.m.Y',strtotime("-1 days"));
+$sql_yesterday = "STR_TO_DATE('$yesterday','%d.%m.%Y')";
+$tomorrow = date('d.m.Y',strtotime("+1 days"));
+$sql_tomorrow = "STR_TO_DATE('$tomorrow','%d.%m.%Y')";
 $transaction_date = date('d.m.Y H:i:s');
 $sql_transaction_date = "STR_TO_DATE('$transaction_date','%d.%m.%Y %T')";
 
@@ -3095,7 +3103,7 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
   }
 
   $val_raw = $field_ws ?? null;
-  $is_date = !is_array($val_raw) && /*isset($parlamentarier_db_obj->field) && is_string($db_val) &&*/ preg_match('/^\d{4}-\d{2}-\d{2}/', $val_raw);
+  $is_date = !is_array($val_raw) && !is_object($val_raw) && /*isset($parlamentarier_db_obj->field) && is_string($db_val) &&*/ preg_match('/^\d{4}-\d{2}-\d{2}/', $val_raw);
   if ($is_date) {
     $val = substr($val_raw, 0, 10);
   } elseif ($id_function != null) {
