@@ -574,6 +574,85 @@ CREATE TABLE `fraktion_log` (
 SET character_set_client = @saved_cs_client ;
 
 --
+-- Table structure for table `in_fraktion`
+--
+
+DROP TABLE IF EXISTS `in_fraktion`;
+SET @saved_cs_client     = @@character_set_client ;
+SET character_set_client = utf8 ;
+CREATE TABLE `in_fraktion` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
+  `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des Parlamentariers',
+  `fraktion_id` int(11) NOT NULL COMMENT 'Fremdschlüssel der Fraktion',
+  `funktion` enum('praesident','vizepraesident','mitglied') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Fraktion',
+  `von` date DEFAULT NULL COMMENT 'Beginn der Fraktionszugehörigkeit, leer (NULL) = unbekannt',
+  `bis` date DEFAULT NULL COMMENT 'Ende der Fraktionszugehörigkeit, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
+  `notizen` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `eingabe_abgeschlossen_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `kontrolliert_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `freigabe_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  `in_fraktion_parlamentarier_fraktion_unique` varchar(45) COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`parlamentarier_id`,`fraktion_id`,ifnull(`bis`,'9999-12-31'))) VIRTUAL NOT NULL COMMENT 'Kombination aus parlamentarier_id, fraktion_id und bis muss eindeutig sein. (Fachlicher unique constraint)',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `in_fraktion_parlamentarier_fraktion_unique` (`in_fraktion_parlamentarier_fraktion_unique`),
+  KEY `idx_parlam_freigabe` (`parlamentarier_id`,`freigabe_datum`,`bis`,`fraktion_id`),
+  KEY `idx_parlam` (`parlamentarier_id`,`bis`,`fraktion_id`),
+  KEY `idx_fraktion_freigabe` (`fraktion_id`,`freigabe_datum`,`bis`,`parlamentarier_id`),
+  KEY `idx_fraktion` (`fraktion_id`,`bis`,`parlamentarier_id`),
+  CONSTRAINT `fk_in_fraktion_fraktion_id` FOREIGN KEY (`fraktion_id`) REFERENCES `fraktion` (`id`),
+  CONSTRAINT `fk_in_fraktion_parlamentarier_id` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Fraktionszugehörigkeit von Parlamentariern';
+SET character_set_client = @saved_cs_client ;
+
+--
+-- Table structure for table `in_fraktion_log`
+--
+
+DROP TABLE IF EXISTS `in_fraktion_log`;
+SET @saved_cs_client     = @@character_set_client ;
+SET character_set_client = utf8 ;
+CREATE TABLE `in_fraktion_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des Parlamentariers',
+  `fraktion_id` int(11) NOT NULL COMMENT 'Fremdschlüssel der Fraktion',
+  `funktion` enum('praesident','vizepraesident','mitglied') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Fraktion',
+  `von` date DEFAULT NULL COMMENT 'Beginn der Fraktionszugehörigkeit, leer (NULL) = unbekannt',
+  `bis` date DEFAULT NULL COMMENT 'Ende der Fraktionszugehörigkeit, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
+  `notizen` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `eingabe_abgeschlossen_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `kontrolliert_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `freigabe_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `in_fraktion_parlamentarier_fraktion_unique` varchar(45) COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`parlamentarier_id`,`fraktion_id`,ifnull(`bis`,'9999-12-31'))) VIRTUAL NOT NULL COMMENT 'Kombination aus parlamentarier_id, fraktion_id und bis muss eindeutig sein. (Fachlicher unique constraint)',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  UNIQUE KEY `in_fraktion_parlamentarier_fraktion_unique` (`in_fraktion_parlamentarier_fraktion_unique`),
+  KEY `idx_parlam_freigabe` (`parlamentarier_id`,`freigabe_datum`,`bis`,`fraktion_id`),
+  KEY `idx_parlam` (`parlamentarier_id`,`bis`,`fraktion_id`),
+  KEY `idx_fraktion_freigabe` (`fraktion_id`,`freigabe_datum`,`bis`,`parlamentarier_id`),
+  KEY `idx_fraktion` (`fraktion_id`,`bis`,`parlamentarier_id`),
+  KEY `fk_in_fraktion_log_snapshot_id` (`snapshot_id`),
+  CONSTRAINT `fk_in_fraktion_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Fraktionszugehörigkeit von Parlamentariern';
+SET character_set_client = @saved_cs_client ;
+
+--
 -- Table structure for table `in_kommission`
 --
 
@@ -779,6 +858,166 @@ CREATE TABLE `in_kommission_log` (
   KEY `fk_in_kommission_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_in_kommission_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11394 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Kommissionszugehörigkeit von Parlamentariern';
+SET character_set_client = @saved_cs_client ;
+
+--
+-- Table structure for table `in_partei`
+--
+
+DROP TABLE IF EXISTS `in_partei`;
+SET @saved_cs_client     = @@character_set_client ;
+SET character_set_client = utf8 ;
+CREATE TABLE `in_partei` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
+  `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des Parlamentariers',
+  `partei_id` int(11) NOT NULL COMMENT 'Fremdschlüssel der Partei',
+  `funktion` enum('praesident','vizepraesident','mitglied','copraesident') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Partei',
+  `von` date DEFAULT NULL COMMENT 'Beginn der Parteizugehörigkeit, leer (NULL) = unbekannt',
+  `bis` date DEFAULT NULL COMMENT 'Ende der Parteizugehörigkeit, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
+  `notizen` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `eingabe_abgeschlossen_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `kontrolliert_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `freigabe_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  `in_partei_parlamentarier_partei_unique` varchar(45) COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`parlamentarier_id`,`partei_id`,ifnull(`bis`,'9999-12-31'))) VIRTUAL NOT NULL COMMENT 'Kombination aus parlamentarier_id, partei_id und bis muss eindeutig sein. (Fachlicher unique constraint)',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `in_partei_parlamentarier_partei_unique` (`in_partei_parlamentarier_partei_unique`),
+  KEY `idx_parlam_freigabe` (`parlamentarier_id`,`freigabe_datum`,`bis`,`partei_id`),
+  KEY `idx_parlam` (`parlamentarier_id`,`bis`,`partei_id`),
+  KEY `idx_partei_freigabe` (`partei_id`,`freigabe_datum`,`bis`,`parlamentarier_id`),
+  KEY `idx_partei` (`partei_id`,`bis`,`parlamentarier_id`),
+  CONSTRAINT `fk_in_partei_parlamentarier_id` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`),
+  CONSTRAINT `fk_in_partei_partei_id` FOREIGN KEY (`partei_id`) REFERENCES `partei` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Parteizugehörigkeit von Parlamentariern';
+SET character_set_client = @saved_cs_client ;
+
+--
+-- Table structure for table `in_partei_log`
+--
+
+DROP TABLE IF EXISTS `in_partei_log`;
+SET @saved_cs_client     = @@character_set_client ;
+SET character_set_client = utf8 ;
+CREATE TABLE `in_partei_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des Parlamentariers',
+  `partei_id` int(11) NOT NULL COMMENT 'Fremdschlüssel der Partei',
+  `funktion` enum('praesident','vizepraesident','mitglied','copraesident') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Partei',
+  `von` date DEFAULT NULL COMMENT 'Beginn der Parteizugehörigkeit, leer (NULL) = unbekannt',
+  `bis` date DEFAULT NULL COMMENT 'Ende der Parteizugehörigkeit, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
+  `notizen` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `eingabe_abgeschlossen_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `kontrolliert_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `freigabe_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `in_partei_parlamentarier_partei_unique` varchar(45) COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`parlamentarier_id`,`partei_id`,ifnull(`bis`,'9999-12-31'))) VIRTUAL NOT NULL COMMENT 'Kombination aus parlamentarier_id, partei_id und bis muss eindeutig sein. (Fachlicher unique constraint)',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  UNIQUE KEY `in_partei_parlamentarier_partei_unique` (`in_partei_parlamentarier_partei_unique`),
+  KEY `idx_parlam_freigabe` (`parlamentarier_id`,`freigabe_datum`,`bis`,`partei_id`),
+  KEY `idx_parlam` (`parlamentarier_id`,`bis`,`partei_id`),
+  KEY `idx_partei_freigabe` (`partei_id`,`freigabe_datum`,`bis`,`parlamentarier_id`),
+  KEY `idx_partei` (`partei_id`,`bis`,`parlamentarier_id`),
+  KEY `fk_in_partei_log_snapshot_id` (`snapshot_id`),
+  CONSTRAINT `fk_in_partei_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Parteizugehörigkeit von Parlamentariern';
+SET character_set_client = @saved_cs_client ;
+
+--
+-- Table structure for table `in_rat`
+--
+
+DROP TABLE IF EXISTS `in_rat`;
+SET @saved_cs_client     = @@character_set_client ;
+SET character_set_client = utf8 ;
+CREATE TABLE `in_rat` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
+  `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des Parlamentariers',
+  `rat_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des Rates',
+  `vorgaenger_parlamentarier_id` int(11) DEFAULT NULL COMMENT 'Vorgänger des Parlamentariers bei Nachgerutschten (Fremdschlüssel)',
+  `funktion` enum('praesident','vizepraesident','mitglied') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Funktion des Parlamentariers im Rat',
+  `von` date DEFAULT NULL COMMENT 'Beginn der Ratszugehörigkeit, leer (NULL) = unbekannt',
+  `bis` date DEFAULT NULL COMMENT 'Ende der Ratszugehörigkeit, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
+  `notizen` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `eingabe_abgeschlossen_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `kontrolliert_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `freigabe_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  `in_rat_parlamentarier_rat_unique` varchar(45) COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`parlamentarier_id`,`rat_id`,ifnull(`bis`,'9999-12-31'))) VIRTUAL NOT NULL COMMENT 'Kombination aus parlamentarier_id, rat_id und bis muss eindeutig sein. (Fachlicher unique constraint)',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `in_rat_parlamentarier_rat_unique` (`in_rat_parlamentarier_rat_unique`),
+  KEY `idx_parlam_freigabe` (`parlamentarier_id`,`freigabe_datum`,`bis`,`rat_id`),
+  KEY `idx_parlam` (`parlamentarier_id`,`bis`,`rat_id`),
+  KEY `idx_rat_freigabe` (`rat_id`,`freigabe_datum`,`bis`,`parlamentarier_id`),
+  KEY `idx_rat` (`rat_id`,`bis`,`parlamentarier_id`),
+  CONSTRAINT `fk_in_rat_parlamentarier_id` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`),
+  CONSTRAINT `fk_in_rat_rat_id` FOREIGN KEY (`rat_id`) REFERENCES `rat` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Ratszugehörigkeit von Parlamentariern';
+SET character_set_client = @saved_cs_client ;
+
+--
+-- Table structure for table `in_rat_log`
+--
+
+DROP TABLE IF EXISTS `in_rat_log`;
+SET @saved_cs_client     = @@character_set_client ;
+SET character_set_client = utf8 ;
+CREATE TABLE `in_rat_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des Parlamentariers',
+  `rat_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des Rates',
+  `vorgaenger_parlamentarier_id` int(11) DEFAULT NULL COMMENT 'Vorgänger des Parlamentariers bei Nachgerutschten (Fremdschlüssel)',
+  `funktion` enum('praesident','vizepraesident','mitglied') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Funktion des Parlamentariers im Rat',
+  `von` date DEFAULT NULL COMMENT 'Beginn der Ratszugehörigkeit, leer (NULL) = unbekannt',
+  `bis` date DEFAULT NULL COMMENT 'Ende der Ratszugehörigkeit, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
+  `notizen` mediumtext COLLATE utf8mb4_unicode_ci COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `eingabe_abgeschlossen_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `kontrolliert_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `freigabe_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `in_rat_parlamentarier_rat_unique` varchar(45) COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`parlamentarier_id`,`rat_id`,ifnull(`bis`,'9999-12-31'))) VIRTUAL NOT NULL COMMENT 'Kombination aus parlamentarier_id, rat_id und bis muss eindeutig sein. (Fachlicher unique constraint)',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  UNIQUE KEY `in_rat_parlamentarier_rat_unique` (`in_rat_parlamentarier_rat_unique`),
+  KEY `idx_parlam_freigabe` (`parlamentarier_id`,`freigabe_datum`,`bis`,`rat_id`),
+  KEY `idx_parlam` (`parlamentarier_id`,`bis`,`rat_id`),
+  KEY `idx_rat_freigabe` (`rat_id`,`freigabe_datum`,`bis`,`parlamentarier_id`),
+  KEY `idx_rat` (`rat_id`,`bis`,`parlamentarier_id`),
+  KEY `fk_in_rat_log_snapshot_id` (`snapshot_id`),
+  CONSTRAINT `fk_in_rat_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Ratszugehörigkeit von Parlamentariern';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -6664,6 +6903,37 @@ CREATE VIEW `v_fraktion` AS SELECT
 SET character_set_client = @saved_cs_client;
 
 --
+-- Temporary table structure for view `v_in_fraktion`
+--
+
+DROP TABLE IF EXISTS `v_in_fraktion`;
+DROP VIEW IF EXISTS `v_in_fraktion`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE VIEW `v_in_fraktion` AS SELECT 
+ 1 AS `id`,
+ 1 AS `parlamentarier_id`,
+ 1 AS `fraktion_id`,
+ 1 AS `funktion`,
+ 1 AS `von`,
+ 1 AS `bis`,
+ 1 AS `notizen`,
+ 1 AS `eingabe_abgeschlossen_visa`,
+ 1 AS `eingabe_abgeschlossen_datum`,
+ 1 AS `kontrolliert_visa`,
+ 1 AS `kontrolliert_datum`,
+ 1 AS `freigabe_visa`,
+ 1 AS `freigabe_datum`,
+ 1 AS `created_visa`,
+ 1 AS `created_date`,
+ 1 AS `updated_visa`,
+ 1 AS `updated_date`,
+ 1 AS `in_fraktion_parlamentarier_fraktion_unique`,
+ 1 AS `created_date_unix`,
+ 1 AS `updated_date_unix`;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Temporary table structure for view `v_in_kommission`
 --
 
@@ -6910,6 +7180,69 @@ CREATE VIEW `v_in_kommission_simple` AS SELECT
  1 AS `eingabe_abgeschlossen_datum_unix`,
  1 AS `kontrolliert_datum_unix`,
  1 AS `freigabe_datum_unix`;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_in_partei`
+--
+
+DROP TABLE IF EXISTS `v_in_partei`;
+DROP VIEW IF EXISTS `v_in_partei`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE VIEW `v_in_partei` AS SELECT 
+ 1 AS `id`,
+ 1 AS `parlamentarier_id`,
+ 1 AS `partei_id`,
+ 1 AS `funktion`,
+ 1 AS `von`,
+ 1 AS `bis`,
+ 1 AS `notizen`,
+ 1 AS `eingabe_abgeschlossen_visa`,
+ 1 AS `eingabe_abgeschlossen_datum`,
+ 1 AS `kontrolliert_visa`,
+ 1 AS `kontrolliert_datum`,
+ 1 AS `freigabe_visa`,
+ 1 AS `freigabe_datum`,
+ 1 AS `created_visa`,
+ 1 AS `created_date`,
+ 1 AS `updated_visa`,
+ 1 AS `updated_date`,
+ 1 AS `in_partei_parlamentarier_partei_unique`,
+ 1 AS `created_date_unix`,
+ 1 AS `updated_date_unix`;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_in_rat`
+--
+
+DROP TABLE IF EXISTS `v_in_rat`;
+DROP VIEW IF EXISTS `v_in_rat`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE VIEW `v_in_rat` AS SELECT 
+ 1 AS `id`,
+ 1 AS `parlamentarier_id`,
+ 1 AS `rat_id`,
+ 1 AS `vorgaenger_parlamentarier_id`,
+ 1 AS `funktion`,
+ 1 AS `von`,
+ 1 AS `bis`,
+ 1 AS `notizen`,
+ 1 AS `eingabe_abgeschlossen_visa`,
+ 1 AS `eingabe_abgeschlossen_datum`,
+ 1 AS `kontrolliert_visa`,
+ 1 AS `kontrolliert_datum`,
+ 1 AS `freigabe_visa`,
+ 1 AS `freigabe_datum`,
+ 1 AS `created_visa`,
+ 1 AS `created_date`,
+ 1 AS `updated_visa`,
+ 1 AS `updated_date`,
+ 1 AS `in_rat_parlamentarier_rat_unique`,
+ 1 AS `created_date_unix`,
+ 1 AS `updated_date_unix`;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -13310,6 +13643,21 @@ BEGIN
    INSERT INTO `translation_target_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `translation_target`;
 
+   INSERT INTO `interessenraum_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `interessenraum`;
+
+   INSERT INTO `country_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `country`;
+
+   INSERT INTO `in_rat_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `in_rat`;
+
+   INSERT INTO `in_partei_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `in_partei`;
+
+   INSERT INTO `in_fraktion_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `in_fraktion`;
+
 END ;;
 DELIMITER ;
 SET sql_mode              = @saved_sql_mode  ;
@@ -13522,6 +13870,24 @@ SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
 
 --
+-- Final view structure for view `v_in_fraktion`
+--
+
+DROP VIEW IF EXISTS `v_in_fraktion`;
+SET @saved_cs_client          = @@character_set_client ;
+SET @saved_cs_results         = @@character_set_results ;
+SET @saved_col_connection     = @@collation_connection ;
+SET character_set_client      = utf8mb4 ;
+SET character_set_results     = utf8mb4 ;
+SET collation_connection      = utf8mb4_unicode_ci ;
+CREATE  
+ 
+VIEW `v_in_fraktion` AS select `in_fraktion`.`id` AS `id`,`in_fraktion`.`parlamentarier_id` AS `parlamentarier_id`,`in_fraktion`.`fraktion_id` AS `fraktion_id`,`in_fraktion`.`funktion` AS `funktion`,`in_fraktion`.`von` AS `von`,`in_fraktion`.`bis` AS `bis`,`in_fraktion`.`notizen` AS `notizen`,`in_fraktion`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`in_fraktion`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`in_fraktion`.`kontrolliert_visa` AS `kontrolliert_visa`,`in_fraktion`.`kontrolliert_datum` AS `kontrolliert_datum`,`in_fraktion`.`freigabe_visa` AS `freigabe_visa`,`in_fraktion`.`freigabe_datum` AS `freigabe_datum`,`in_fraktion`.`created_visa` AS `created_visa`,`in_fraktion`.`created_date` AS `created_date`,`in_fraktion`.`updated_visa` AS `updated_visa`,`in_fraktion`.`updated_date` AS `updated_date`,`in_fraktion`.`in_fraktion_parlamentarier_fraktion_unique` AS `in_fraktion_parlamentarier_fraktion_unique`,unix_timestamp(`in_fraktion`.`created_date`) AS `created_date_unix`,unix_timestamp(`in_fraktion`.`updated_date`) AS `updated_date_unix` from `in_fraktion` ;
+SET character_set_client      = @saved_cs_client ;
+SET character_set_results     = @saved_cs_results ;
+SET collation_connection      = @saved_col_connection ;
+
+--
 -- Final view structure for view `v_in_kommission`
 --
 
@@ -13589,6 +13955,42 @@ SET collation_connection      = utf8mb4_unicode_ci ;
 CREATE  
  
 VIEW `v_in_kommission_simple` AS select `in_kommission`.`id` AS `id`,`in_kommission`.`parlamentarier_id` AS `parlamentarier_id`,`in_kommission`.`kommission_id` AS `kommission_id`,`in_kommission`.`funktion` AS `funktion`,`in_kommission`.`parlament_committee_function` AS `parlament_committee_function`,`in_kommission`.`parlament_committee_function_name` AS `parlament_committee_function_name`,`in_kommission`.`von` AS `von`,`in_kommission`.`bis` AS `bis`,`in_kommission`.`notizen` AS `notizen`,`in_kommission`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`in_kommission`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`in_kommission`.`kontrolliert_visa` AS `kontrolliert_visa`,`in_kommission`.`kontrolliert_datum` AS `kontrolliert_datum`,`in_kommission`.`freigabe_visa` AS `freigabe_visa`,`in_kommission`.`freigabe_datum` AS `freigabe_datum`,`in_kommission`.`created_visa` AS `created_visa`,`in_kommission`.`created_date` AS `created_date`,`in_kommission`.`updated_visa` AS `updated_visa`,`in_kommission`.`updated_date` AS `updated_date`,`in_kommission`.`in_kommission_parlamentarier_kommission_funktion_unique` AS `in_kommission_parlamentarier_kommission_funktion_unique`,((isnull(`in_kommission`.`von`) or (`in_kommission`.`von` <= now())) and (isnull(`in_kommission`.`bis`) or (`in_kommission`.`bis` > now()))) AS `aktiv`,ifnull((`in_kommission`.`freigabe_datum` <= now()),FALSE) AS `published`,unix_timestamp(`in_kommission`.`bis`) AS `bis_unix`,unix_timestamp(`in_kommission`.`von`) AS `von_unix`,unix_timestamp(`in_kommission`.`created_date`) AS `created_date_unix`,unix_timestamp(`in_kommission`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`in_kommission`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`in_kommission`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`in_kommission`.`freigabe_datum`) AS `freigabe_datum_unix` from `in_kommission` ;
+SET character_set_client      = @saved_cs_client ;
+SET character_set_results     = @saved_cs_results ;
+SET collation_connection      = @saved_col_connection ;
+
+--
+-- Final view structure for view `v_in_partei`
+--
+
+DROP VIEW IF EXISTS `v_in_partei`;
+SET @saved_cs_client          = @@character_set_client ;
+SET @saved_cs_results         = @@character_set_results ;
+SET @saved_col_connection     = @@collation_connection ;
+SET character_set_client      = utf8mb4 ;
+SET character_set_results     = utf8mb4 ;
+SET collation_connection      = utf8mb4_unicode_ci ;
+CREATE  
+ 
+VIEW `v_in_partei` AS select `in_partei`.`id` AS `id`,`in_partei`.`parlamentarier_id` AS `parlamentarier_id`,`in_partei`.`partei_id` AS `partei_id`,`in_partei`.`funktion` AS `funktion`,`in_partei`.`von` AS `von`,`in_partei`.`bis` AS `bis`,`in_partei`.`notizen` AS `notizen`,`in_partei`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`in_partei`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`in_partei`.`kontrolliert_visa` AS `kontrolliert_visa`,`in_partei`.`kontrolliert_datum` AS `kontrolliert_datum`,`in_partei`.`freigabe_visa` AS `freigabe_visa`,`in_partei`.`freigabe_datum` AS `freigabe_datum`,`in_partei`.`created_visa` AS `created_visa`,`in_partei`.`created_date` AS `created_date`,`in_partei`.`updated_visa` AS `updated_visa`,`in_partei`.`updated_date` AS `updated_date`,`in_partei`.`in_partei_parlamentarier_partei_unique` AS `in_partei_parlamentarier_partei_unique`,unix_timestamp(`in_partei`.`created_date`) AS `created_date_unix`,unix_timestamp(`in_partei`.`updated_date`) AS `updated_date_unix` from `in_partei` ;
+SET character_set_client      = @saved_cs_client ;
+SET character_set_results     = @saved_cs_results ;
+SET collation_connection      = @saved_col_connection ;
+
+--
+-- Final view structure for view `v_in_rat`
+--
+
+DROP VIEW IF EXISTS `v_in_rat`;
+SET @saved_cs_client          = @@character_set_client ;
+SET @saved_cs_results         = @@character_set_results ;
+SET @saved_col_connection     = @@collation_connection ;
+SET character_set_client      = utf8mb4 ;
+SET character_set_results     = utf8mb4 ;
+SET collation_connection      = utf8mb4_unicode_ci ;
+CREATE  
+ 
+VIEW `v_in_rat` AS select `in_rat`.`id` AS `id`,`in_rat`.`parlamentarier_id` AS `parlamentarier_id`,`in_rat`.`rat_id` AS `rat_id`,`in_rat`.`vorgaenger_parlamentarier_id` AS `vorgaenger_parlamentarier_id`,`in_rat`.`funktion` AS `funktion`,`in_rat`.`von` AS `von`,`in_rat`.`bis` AS `bis`,`in_rat`.`notizen` AS `notizen`,`in_rat`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`in_rat`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`in_rat`.`kontrolliert_visa` AS `kontrolliert_visa`,`in_rat`.`kontrolliert_datum` AS `kontrolliert_datum`,`in_rat`.`freigabe_visa` AS `freigabe_visa`,`in_rat`.`freigabe_datum` AS `freigabe_datum`,`in_rat`.`created_visa` AS `created_visa`,`in_rat`.`created_date` AS `created_date`,`in_rat`.`updated_visa` AS `updated_visa`,`in_rat`.`updated_date` AS `updated_date`,`in_rat`.`in_rat_parlamentarier_rat_unique` AS `in_rat_parlamentarier_rat_unique`,unix_timestamp(`in_rat`.`created_date`) AS `created_date_unix`,unix_timestamp(`in_rat`.`updated_date`) AS `updated_date_unix` from `in_rat` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -15672,4 +16074,4 @@ SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS ;
 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION ;
 SET SQL_NOTES=@OLD_SQL_NOTES ;
 
--- Dump completed on 2021-11-27 12:32:09
+-- Dump completed on 2021-12-11 11:00:12
