@@ -111,7 +111,7 @@ def read_groups(filename):
 
         if is_new_page:
             is_new_page = False
-            if line.startswith('Mitgliederliste'):
+            if line.startswith('Mitgliederliste') or line.startswith('Konstituierung') or line.startswith('Art der ') or line.startswith('Zweck:'):
                 # not a new group on the new page
                 continue
             elif line.startswith(MEMBER_LINE_START) or next_line.startswith(MEMBER_LINE_START):
