@@ -666,7 +666,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
         if (!empty($councilMembership->leavingDate)) $insertInRat['bis'] = getCouncilLeavingDate($councilMembership) ?? 'NULL';
 
         $script[] = $comment = "-- Insert neue Ratsmitgliedschaft in_rat $parlamentarier_ws->lastName, $parlamentarier_ws->firstName, " . ($councilMembership->entryDate ?? '') . " - " . ($councilMembership->leavingDate ?? '') . ", id=$id";
-        $script[] = $command = "INSERT INTO `in_rat` (" . implode(", ", array_keys($insertInRat)) . ", updated_visa, updated_date, created_visa, created_date, notizen) VALUES (" .  implode(", ", array_values($insertInRat)) . ", 'import', $sql_transaction_date, 'import', $sql_transaction_date, '$today/$user: Import via ws.parlament.ch');";
+        $script[] = $command = "INSERT INTO `in_rat` (" . implode(", ", array_keys($insertInRat)) . ", updated_visa, updated_date, created_visa, created_date, notizen, freigabe_datum, freigabe_visa) VALUES (" .  implode(", ", array_values($insertInRat)) . ", 'import', $sql_transaction_date, 'import', $sql_transaction_date, '$today/$user: Import via ws.parlament.ch', $sql_transaction_date, 'import');";
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
       } else {
@@ -888,7 +888,7 @@ function insert_in_partei(&$fields, $id, $parlamentarier_ws, $vonDate) {
   $insertInPartei['bis'] = 'NULL';
 
   $script[] = $comment = "-- Insert neue Parteimitgliedschaft in_partei $parlamentarier_ws->lastName, $parlamentarier_ws->firstName, " . ($parlamentarier_ws->party ?? '') . ", id=$id";
-  $script[] = $command = "INSERT INTO `in_partei` (" . implode(", ", array_keys($insertInPartei)) . ", updated_visa, updated_date, created_visa, created_date, notizen) VALUES (" .  implode(", ", array_values($insertInPartei)) . ", 'import', $sql_transaction_date, 'import', $sql_transaction_date, '$today/$user: Import via ws.parlament.ch');";
+  $script[] = $command = "INSERT INTO `in_partei` (" . implode(", ", array_keys($insertInPartei)) . ", updated_visa, updated_date, created_visa, created_date, notizen, freigabe_datum, freigabe_visa) VALUES (" .  implode(", ", array_values($insertInPartei)) . ", 'import', $sql_transaction_date, 'import', $sql_transaction_date, '$today/$user: Import via ws.parlament.ch', $sql_transaction_date, 'import');";
   if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
   if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
   return true;
@@ -910,7 +910,7 @@ function insert_in_fraktion(&$fields, $id, $parlamentarier_ws, $vonDate) {
   $insertInFraktion['bis'] = 'NULL';
 
   $script[] = $comment = "-- Insert neue Fraktionsmitgliedschaft in_fraktion $parlamentarier_ws->lastName, $parlamentarier_ws->firstName, " . ($parlamentarier_ws->faction ?? '') . ", id=$id";
-  $script[] = $command = "INSERT INTO `in_fraktion` (" . implode(", ", array_keys($insertInFraktion)) . ", updated_visa, updated_date, created_visa, created_date, notizen) VALUES (" .  implode(", ", array_values($insertInFraktion)) . ", 'import', $sql_transaction_date, 'import', $sql_transaction_date, '$today/$user: Import via ws.parlament.ch');";
+  $script[] = $command = "INSERT INTO `in_fraktion` (" . implode(", ", array_keys($insertInFraktion)) . ", updated_visa, updated_date, created_visa, created_date, notizen, freigabe_datum, freigabe_visa) VALUES (" .  implode(", ", array_values($insertInFraktion)) . ", 'import', $sql_transaction_date, 'import', $sql_transaction_date, '$today/$user: Import via ws.parlament.ch', $sql_transaction_date, 'import');";
   if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
   if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
   return true;
