@@ -31030,47 +31030,47 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat." showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)" canSetNull="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="kontrolliert_visa" caption="Kontrolliert Visa" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="kontrolliert_visa" caption="Kontrolliert Visa" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat." showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="kontrolliert_datum" caption="Kontrolliert Datum" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)" canSetNull="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="kontrolliert_datum" caption="Kontrolliert Datum" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="freigabe_visa" caption="Freigabe Visa" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="freigabe_visa" caption="Freigabe Visa" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="freigabe_datum" caption="Freigabe Datum" headerHint="Freigabedatum (Freigabe = Daten sind fertig)" canSetNull="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="freigabe_datum" caption="Freigabe Datum" headerHint="Freigabedatum (Freigabe = Daten sind fertig)" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgäendert von" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgäendert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="in_rat_parlamentarier_rat_unique" caption="In Rat Parlamentarier Rat Unique" headerHint="Kombination aus parlamentarier_id, rat_id und bis muss eindeutig sein. (Fachlicher unique constraint)" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="in_rat_parlamentarier_rat_unique" caption="In Rat Parlamentarier Rat Unique" headerHint="Kombination aus parlamentarier_id, rat_id und bis muss eindeutig sein. (Fachlicher unique constraint)" showColumnFilter="false" canSetNull="true" readOnly="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="45"/>
           </ColumnPresentation>
@@ -31740,47 +31740,47 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat." showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)" canSetNull="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="kontrolliert_visa" caption="Kontrolliert Visa" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="kontrolliert_visa" caption="Kontrolliert Visa" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat." showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="kontrolliert_datum" caption="Kontrolliert Datum" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)" canSetNull="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="kontrolliert_datum" caption="Kontrolliert Datum" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="freigabe_visa" caption="Freigabe Visa" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="freigabe_visa" caption="Freigabe Visa" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="freigabe_datum" caption="Freigabe Datum" headerHint="Freigabedatum (Freigabe = Daten sind fertig)" canSetNull="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="freigabe_datum" caption="Freigabe Datum" headerHint="Freigabedatum (Freigabe = Daten sind fertig)" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgäendert von" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgäendert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="in_fraktion_parlamentarier_fraktion_unique" caption="In Fraktion Parlamentarier Fraktion Unique" headerHint="Kombination aus parlamentarier_id, fraktion_id und bis muss eindeutig sein. (Fachlicher unique constraint)" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="in_fraktion_parlamentarier_fraktion_unique" caption="In Fraktion Parlamentarier Fraktion Unique" headerHint="Kombination aus parlamentarier_id, fraktion_id und bis muss eindeutig sein. (Fachlicher unique constraint)" showColumnFilter="false" canSetNull="true" readOnly="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="45"/>
           </ColumnPresentation>
@@ -32428,47 +32428,47 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat." showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)" canSetNull="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="kontrolliert_visa" caption="Kontrolliert Visa" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="kontrolliert_visa" caption="Kontrolliert Visa" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat." showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="kontrolliert_datum" caption="Kontrolliert Datum" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)" canSetNull="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="kontrolliert_datum" caption="Kontrolliert Datum" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="freigabe_visa" caption="Freigabe Visa" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="freigabe_visa" caption="Freigabe Visa" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="freigabe_datum" caption="Freigabe Datum" headerHint="Freigabedatum (Freigabe = Daten sind fertig)" canSetNull="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="freigabe_datum" caption="Freigabe Datum" headerHint="Freigabedatum (Freigabe = Daten sind fertig)" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgäendert von" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgäendert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="in_partei_parlamentarier_partei_unique" caption="In Partei Parlamentarier Partei Unique" headerHint="Kombination aus parlamentarier_id, partei_id und bis muss eindeutig sein. (Fachlicher unique constraint)" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="in_partei_parlamentarier_partei_unique" caption="In Partei Parlamentarier Partei Unique" headerHint="Kombination aus parlamentarier_id, partei_id und bis muss eindeutig sein. (Fachlicher unique constraint)" showColumnFilter="false" canSetNull="true" readOnly="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="45"/>
           </ColumnPresentation>
