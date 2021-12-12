@@ -18,7 +18,10 @@ def are_guests_equal(guest1, guest2):
 
 
 # do we assume these two lists of names denote the same person?
-def are_names_equal(names1, names2):
+def are_names_equal(orig_names1, orig_names2):
+    names1 = split_names(orig_names1)
+    names2 = split_names(orig_names2)
+
     # number of names that are in both name lists
     common_names = set(names1).intersection(set(names2))
 
@@ -57,6 +60,13 @@ def are_names_equal(names1, names2):
     # default is not equal
     return False
 
+def split_names(orig_names):
+    names = [];
+    for name in orig_names:
+        split_names = name.split("-")
+        for split_name in split_names:
+            names.append(split_name)
+    return names
 
 # does either name start with the other?
 def common_start(names):
