@@ -195,6 +195,7 @@ def guest_added(conn, member_of_parliament, guest_to_add, date, pdf_date):
             name_logic.fullname(guest_to_add),
             guest_to_add["function"]))
 
+        guest_to_add["names"] = name_logic.fixNobleNames(guest_to_add["names"])
         # check if the new guest is already a person in the database, if not create them
         person_id = db.get_person_id(conn, guest_to_add["names"])
         if not person_id:

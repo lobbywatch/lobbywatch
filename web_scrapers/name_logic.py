@@ -93,3 +93,9 @@ def parse_name_combination(names, pattern):
             vorname += " %" + name
 
     return vorname.strip(), zweiter_vorname.strip(), vorname_kurz.strip(), nachname.strip()
+
+def fixNobleNames(names):
+    if names[0] in ('de', 'De', 'von', 'Von') and len(names) > 1:
+        names[0] += ' ' + names[1]
+        names.pop(1)
+    return names
