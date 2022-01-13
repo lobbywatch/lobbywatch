@@ -4057,3 +4057,17 @@ CREATE TABLE `in_fraktion` (
   CONSTRAINT `fk_in_fraktion_fraktion_id` FOREIGN KEY (`fraktion_id`) REFERENCES `fraktion` (`id`),
   CONSTRAINT `fk_in_fraktion_parlamentarier_id` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Fraktionszugehörigkeit von Parlamentariern';
+
+-- 10.01.2022 buergerorte
+
+ALTER TABLE `parlamentarier`
+ADD `buergerorte` VARCHAR(170) NULL COMMENT 'Strichpunkt getrennte Liste der Bürgerorte' AFTER `zweiter_vorname`;
+
+ALTER TABLE `parlamentarier_log`
+ADD `buergerorte` VARCHAR(170) NULL COMMENT 'Strichpunkt getrennte Liste der Bürgerorte' AFTER `zweiter_vorname`;
+
+ALTER TABLE `person`
+ADD `buergerorte` VARCHAR(170) NULL COMMENT 'Strichpunkt getrennte Liste der Bürgerorte' AFTER `zweiter_vorname`;
+
+ALTER TABLE `person_log`
+ADD `buergerorte` VARCHAR(170) NULL COMMENT 'Strichpunkt getrennte Liste der Bürgerorte' AFTER `zweiter_vorname`;
