@@ -1,0 +1,139 @@
+-- Public Views for usage with Lobbywatch data exports
+
+CREATE OR REPLACE VIEW `pv_organisation_extended` AS
+SELECT
+organisation.*,
+interessengruppe1.anzeige_name as interessengruppe,
+interessengruppe1.anzeige_name_de as interessengruppe_de,
+interessengruppe1.anzeige_name_fr as interessengruppe_fr,
+interessengruppe1.branche as interessengruppe_branche,
+interessengruppe1.branche_de as interessengruppe_branche_de,
+interessengruppe1.branche_fr as interessengruppe_branche_fr,
+interessengruppe1.branche_id as interessengruppe_branche_id,
+interessengruppe1.kommission1_id as interessengruppe_branche_kommission1_id,
+interessengruppe1.kommission1_abkuerzung as interessengruppe_branche_kommission1_abkuerzung,
+interessengruppe1.kommission1_abkuerzung_de as interessengruppe_branche_kommission1_abkuerzung_de,
+interessengruppe1.kommission1_abkuerzung_fr as interessengruppe_branche_kommission1_abkuerzung_fr,
+interessengruppe1.kommission1_name as interessengruppe_branche_kommission1_name,
+interessengruppe1.kommission1_name_de as interessengruppe_branche_kommission1_name_de,
+interessengruppe1.kommission1_name_fr as interessengruppe_branche_kommission1_name_fr,
+interessengruppe1.kommission2_id as interessengruppe_branche_kommission2_id,
+interessengruppe1.kommission2_abkuerzung as interessengruppe_branche_kommission2_abkuerzung,
+interessengruppe1.kommission2_abkuerzung_de as interessengruppe_branche_kommission2_abkuerzung_de,
+interessengruppe1.kommission2_abkuerzung_fr as interessengruppe_branche_kommission2_abkuerzung_fr,
+interessengruppe1.kommission2_name as interessengruppe_branche_kommission2_name,
+interessengruppe1.kommission2_name_de as interessengruppe_branche_kommission2_name_de,
+interessengruppe1.kommission2_name_fr as interessengruppe_branche_kommission2_name_fr,
+interessengruppe1.anzeige_name as interessengruppe1,
+interessengruppe1.id as interessengruppe1_id,
+interessengruppe1.anzeige_name_de as interessengruppe1_de,
+interessengruppe1.anzeige_name_fr as interessengruppe1_fr,
+interessengruppe1.branche as interessengruppe1_branche,
+interessengruppe1.branche_de as interessengruppe1_branche_de,
+interessengruppe1.branche_fr as interessengruppe1_branche_fr,
+interessengruppe1.branche_id as interessengruppe1_branche_id,
+REPLACE(REPLACE(IFNULL(interessengruppe1.kommission1_abkuerzung, interessengruppe1.kommission2_abkuerzung), '-NR', ''), '-SR', '') as interessengruppe1_branche_kommission_abkuerzung,
+REPLACE(REPLACE(IFNULL(interessengruppe1.kommission1_abkuerzung_de, interessengruppe1.kommission2_abkuerzung_de), '-NR', ''), '-SR', '') as interessengruppe1_branche_kommission_abkuerzung_de,
+REPLACE(REPLACE(IFNULL(interessengruppe1.kommission1_abkuerzung_fr, interessengruppe1.kommission2_abkuerzung_fr), '-CN', ''), '-CE', '') as interessengruppe1_branche_kommission_abkuerzung_fr,
+CONCAT_WS(' / ', interessengruppe1.kommission1_abkuerzung, interessengruppe1.kommission2_abkuerzung) as interessengruppe1_branche_kommissionen_abkuerzung,
+CONCAT_WS(' / ', interessengruppe1.kommission1_abkuerzung_de, interessengruppe1.kommission2_abkuerzung_de) as interessengruppe1_branche_kommissionen_abkuerzung_de,
+CONCAT_WS(' / ', interessengruppe1.kommission1_abkuerzung_fr, interessengruppe1.kommission2_abkuerzung_fr) as interessengruppe1_branche_kommissionen_abkuerzung_fr,
+interessengruppe1.kommission1_id as interessengruppe1_branche_kommission1_id,
+interessengruppe1.kommission1_abkuerzung as interessengruppe1_branche_kommission1_abkuerzung,
+interessengruppe1.kommission1_abkuerzung_de as interessengruppe1_branche_kommission1_abkuerzung_de,
+interessengruppe1.kommission1_abkuerzung_fr as interessengruppe1_branche_kommission1_abkuerzung_fr,
+interessengruppe1.kommission1_name as interessengruppe1_branche_kommission1_name,
+interessengruppe1.kommission1_name_de as interessengruppe1_branche_kommission1_name_de,
+interessengruppe1.kommission1_name_fr as interessengruppe1_branche_kommission1_name_fr,
+interessengruppe1.kommission2_id as interessengruppe1_branche_kommission2_id,
+interessengruppe1.kommission2_abkuerzung as interessengruppe1_branche_kommission2_abkuerzung,
+interessengruppe1.kommission2_abkuerzung_de as interessengruppe1_branche_kommission2_abkuerzung_de,
+interessengruppe1.kommission2_abkuerzung_fr as interessengruppe1_branche_kommission2_abkuerzung_fr,
+interessengruppe1.kommission2_name as interessengruppe1_branche_kommission2_name,
+interessengruppe1.kommission2_name_de as interessengruppe1_branche_kommission2_name_de,
+interessengruppe1.kommission2_name_fr as interessengruppe1_branche_kommission2_name_fr,
+interessengruppe2.anzeige_name as interessengruppe2,
+interessengruppe2.anzeige_name_de as interessengruppe2_de,
+interessengruppe2.anzeige_name_fr as interessengruppe2_fr,
+interessengruppe2.branche as interessengruppe2_branche,
+interessengruppe2.branche_de as interessengruppe2_branche_de,
+interessengruppe2.branche_fr as interessengruppe2_branche_fr,
+interessengruppe2.branche_id as interessengruppe2_branche_id,
+REPLACE(REPLACE(IFNULL(interessengruppe2.kommission1_abkuerzung, interessengruppe2.kommission2_abkuerzung), '-NR', ''), '-SR', '') as interessengruppe2_branche_kommission_abkuerzung,
+REPLACE(REPLACE(IFNULL(interessengruppe2.kommission1_abkuerzung_de, interessengruppe2.kommission2_abkuerzung_de), '-NR', ''), '-SR', '') as interessengruppe2_branche_kommission_abkuerzung_de,
+REPLACE(REPLACE(IFNULL(interessengruppe2.kommission1_abkuerzung_fr, interessengruppe2.kommission2_abkuerzung_fr), '-CN', ''), '-CE', '') as interessengruppe2_branche_kommission_abkuerzung_fr,
+CONCAT_WS(' / ', interessengruppe2.kommission1_abkuerzung, interessengruppe2.kommission2_abkuerzung) as interessengruppe2_branche_kommissionen_abkuerzung,
+CONCAT_WS(' / ', interessengruppe2.kommission1_abkuerzung_de, interessengruppe2.kommission2_abkuerzung_de) as interessengruppe2_branche_kommissionen_abkuerzung_de,
+CONCAT_WS(' / ', interessengruppe2.kommission1_abkuerzung_fr, interessengruppe2.kommission2_abkuerzung_fr) as interessengruppe2_branche_kommissionen_abkuerzung_fr,
+interessengruppe2.kommission1_id as interessengruppe2_branche_kommission1_id,
+interessengruppe2.kommission1_abkuerzung as interessengruppe2_branche_kommission1_abkuerzung,
+interessengruppe2.kommission1_abkuerzung_de as interessengruppe2_branche_kommission1_abkuerzung_de,
+interessengruppe2.kommission1_abkuerzung_fr as interessengruppe2_branche_kommission1_abkuerzung_fr,
+interessengruppe2.kommission1_name as interessengruppe2_branche_kommission1_name,
+interessengruppe2.kommission1_name_de as interessengruppe2_branche_kommission1_name_de,
+interessengruppe2.kommission1_name_fr as interessengruppe2_branche_kommission1_name_fr,
+interessengruppe2.kommission2_id as interessengruppe2_branche_kommission2_id,
+interessengruppe2.kommission2_abkuerzung as interessengruppe2_branche_kommission2_abkuerzung,
+interessengruppe2.kommission2_abkuerzung_de as interessengruppe2_branche_kommission2_abkuerzung_de,
+interessengruppe2.kommission2_abkuerzung_fr as interessengruppe2_branche_kommission2_abkuerzung_fr,
+interessengruppe2.kommission2_name as interessengruppe2_branche_kommission2_name,
+interessengruppe2.kommission2_name_de as interessengruppe2_branche_kommission2_name_de,
+interessengruppe2.kommission2_name_fr as interessengruppe2_branche_kommission2_name_fr,
+interessengruppe3.anzeige_name as interessengruppe3,
+interessengruppe3.anzeige_name_de as interessengruppe3_de,
+interessengruppe3.anzeige_name_fr as interessengruppe3_fr,
+interessengruppe3.branche as interessengruppe3_branche,
+interessengruppe3.branche_de as interessengruppe3_branche_de,
+interessengruppe3.branche_fr as interessengruppe3_branche_fr,
+interessengruppe3.branche_id as interessengruppe3_branche_id,
+REPLACE(REPLACE(IFNULL(interessengruppe3.kommission1_abkuerzung, interessengruppe3.kommission2_abkuerzung), '-NR', ''), '-SR', '') as interessengruppe3_branche_kommission_abkuerzung,
+REPLACE(REPLACE(IFNULL(interessengruppe3.kommission1_abkuerzung_de, interessengruppe3.kommission2_abkuerzung_de), '-NR', ''), '-SR', '') as interessengruppe3_branche_kommission_abkuerzung_de,
+REPLACE(REPLACE(IFNULL(interessengruppe3.kommission1_abkuerzung_fr, interessengruppe3.kommission2_abkuerzung_fr), '-CN', ''), '-CE', '') as interessengruppe3_branche_kommission_abkuerzung_fr,
+CONCAT_WS(' / ', interessengruppe3.kommission1_abkuerzung, interessengruppe3.kommission2_abkuerzung) as interessengruppe3_branche_kommissionen_abkuerzung,
+CONCAT_WS(' / ', interessengruppe3.kommission1_abkuerzung_de, interessengruppe3.kommission2_abkuerzung_de) as interessengruppe3_branche_kommissionen_abkuerzung_de,
+CONCAT_WS(' / ', interessengruppe3.kommission1_abkuerzung_fr, interessengruppe3.kommission2_abkuerzung_fr) as interessengruppe3_branche_kommissionen_abkuerzung_fr,
+interessengruppe3.kommission1_id as interessengruppe3_branche_kommission1_id,
+interessengruppe3.kommission1_abkuerzung as interessengruppe3_branche_kommission1_abkuerzung,
+interessengruppe3.kommission1_abkuerzung_de as interessengruppe3_branche_kommission1_abkuerzung_de,
+interessengruppe3.kommission1_abkuerzung_fr as interessengruppe3_branche_kommission1_abkuerzung_fr,
+interessengruppe3.kommission1_name as interessengruppe3_branche_kommission1_name,
+interessengruppe3.kommission1_name_de as interessengruppe3_branche_kommission1_name_de,
+interessengruppe3.kommission1_name_fr as interessengruppe3_branche_kommission1_name_fr,
+interessengruppe3.kommission2_id as interessengruppe3_branche_kommission2_id,
+interessengruppe3.kommission2_abkuerzung as interessengruppe3_branche_kommission2_abkuerzung,
+interessengruppe3.kommission2_abkuerzung_de as interessengruppe3_branche_kommission2_abkuerzung_de,
+interessengruppe3.kommission2_abkuerzung_fr as interessengruppe3_branche_kommission2_abkuerzung_fr,
+interessengruppe3.kommission2_name as interessengruppe3_branche_kommission2_name,
+interessengruppe3.kommission2_name_de as interessengruppe3_branche_kommission2_name_de,
+interessengruppe3.kommission2_name_fr as interessengruppe3_branche_kommission2_name_fr,
+NOW() as refreshed_date
+FROM organisation
+LEFT JOIN v_interessengruppe interessengruppe1
+ON interessengruppe1.id = organisation.interessengruppe_id
+LEFT JOIN v_interessengruppe interessengruppe2
+ON interessengruppe2.id = organisation.interessengruppe2_id
+LEFT JOIN v_interessengruppe interessengruppe3
+ON interessengruppe3.id = organisation.interessengruppe3_id;
+
+CREATE OR REPLACE VIEW pv_interessenbindung_wirksamkeit AS
+SELECT
+interessenbindung.*,
+IF(organisation.vernehmlassung IN ('immer', 'punktuell')
+  AND interessenbindung.art IN ('geschaeftsfuehrend','vorstand')
+  AND EXISTS (
+    SELECT in_kommission.kommission_id
+    FROM in_kommission in_kommission
+    LEFT JOIN branche branche
+    ON (in_kommission.kommission_id = branche.kommission_id OR in_kommission.kommission_id = branche.kommission2_id)
+    WHERE (in_kommission.bis >= NOW() OR in_kommission.bis IS NULL)
+    AND in_kommission.parlamentarier_id = parlamentarier.id
+    AND branche.id IN (organisation.interessengruppe_branche_id, organisation.interessengruppe2_branche_id, organisation.interessengruppe3_branche_id)), 'hoch',
+  IF(organisation.vernehmlassung IN ('immer', 'punktuell')
+    AND interessenbindung.art IN ('geschaeftsfuehrend','vorstand','taetig','beirat','finanziell'), 'mittel', 'tief')
+) wirksamkeit,
+parlamentarier.im_rat_seit as parlamentarier_im_rat_seit
+FROM interessenbindung
+INNER JOIN pv_organisation_extended organisation
+ON interessenbindung.organisation_id = organisation.id
+INNER JOIN parlamentarier
+ON interessenbindung.parlamentarier_id = parlamentarier.id;
