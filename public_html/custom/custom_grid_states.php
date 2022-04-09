@@ -12,6 +12,7 @@ define('OPERATION_DE_CONTROLLED_SELECTED', 'deconsel');
 define('OPERATION_AUTHORIZATION_SENT_SELECTED', 'sndsel');
 define('OPERATION_DE_AUTHORIZATION_SENT_SELECTED', 'desndsel');
 define('OPERATION_CREATE_VERGUETUNGSTRANSPARENZLISTE', 'create-verguetungstransparenzliste');
+define('OPERATION_COPY_INTERESSENBINDUNGSVERGUETUNGEN', 'copy-interessenbindungsverguetungen');
 define('OPERATION_AUTHORIZE_SELECTED', 'autsel');
 define('OPERATION_DE_AUTHORIZE_SELECTED', 'deautsel');
 define('OPERATION_RELEASE_SELECTED', 'relsel');
@@ -309,6 +310,57 @@ SELECT id, $stichdatum, '$this->userName', '$this->userName', $sql_date, $sql_da
 FROM parlamentarier
 WHERE (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())
 ORDER BY nachname, vorname, id;";
+//     df($sql, "SQL");
+
+    $eng_con = getDBConnection();
+    $eng_con->ExecSQL($sql);
+  }
+}
+
+// A hack: Disable functionaly of parent class. Being a subclass is wrong, but the easiest way
+class CopyInteressenbindungsverguetungen extends AbstractCommitEditSelectedOperationValuesGridState {
+
+    // A hack: Disable functionaly of parent class. Being a subclass is wrong, but the easiest way
+    // See AbstractCommitEditSelectedOperationValuesGridState.ProcessMessages()
+    public function ProcessMessages() {
+        $this->getSelectionOperationMetadata();
+        $this->getSelectionOperationParametersFromPost();
+
+        $this->DoOperation(null);
+        $this->ApplyState(OPERATION_VIEWALL);
+    }
+
+  protected function DoOperation($rowValues) {
+    $sql_date = "STR_TO_DATE('$this->transactionDateTime','%d-%m-%Y %T')";
+    $date = date('d-m-Y', strtotime($this->date));
+
+    // Quick and dirty solution to fill another table
+    $sql = "INSERT INTO `interessenbindung_jahr` (`interessenbindung_id`, `verguetung`, `jahr`, `beschreibung`, `quelle_url`, `quelle`, `notizen`, `eingabe_abgeschlossen_datum`, `eingabe_abgeschlossen_visa`, `freigabe_visa`, `freigabe_datum`, `created_visa`, `created_date`, `updated_visa`)
+    SELECT
+    interessenbindung_jahr.interessenbindung_id
+    , interessenbindung_jahr.verguetung
+    , YEAR( $sql_date ) as jahr
+    , interessenbindung_jahr.beschreibung
+    , interessenbindung_jahr.quelle_url
+    , interessenbindung_jahr.quelle
+    , CONCAT_WS('\n\n', CONCAT(DATE_FORMAT($sql_date,'%d.%m.%Y'), '/script: Kopiert von Jahr ', interessenbindung_jahr.jahr, ', id=', interessenbindung_jahr.id), interessenbindung_jahr.notizen) as notizen
+    , $sql_date as eingabe_abgeschlossen_datum
+    , '$this->userName' as eingabe_abgeschlossen_visa
+    , interessenbindung_jahr.freigabe_visa
+    , interessenbindung_jahr.freigabe_datum
+    , CONCAT(SUBSTRING(interessenbindung_jahr.created_visa, 1, 9), '+') as created_visa
+    , $sql_date as created_date
+    , '$this->userName' as updated_visa
+    FROM interessenbindung_jahr
+    JOIN interessenbindung ON interessenbindung.id = interessenbindung_jahr.interessenbindung_id AND (interessenbindung.bis IS NULL OR interessenbindung.bis >= $sql_date)
+    JOIN parlamentarier ON parlamentarier.id = interessenbindung.parlamentarier_id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > $sql_date)
+    WHERE interessenbindung_jahr.jahr = (SELECT MAX(ijn.jahr)
+        FROM interessenbindung_jahr ijn
+        WHERE ijn.interessenbindung_id = interessenbindung_jahr.interessenbindung_id
+        AND ijn.jahr >=YEAR($sql_date) - 1
+        GROUP BY ijn.interessenbindung_id)
+    AND interessenbindung_jahr.jahr < YEAR($sql_date)
+    ORDER BY `interessenbindung_jahr`.`jahr`  DESC, `interessenbindung_jahr`.`id` DESC;";
 //     df($sql, "SQL");
 
     $eng_con = getDBConnection();

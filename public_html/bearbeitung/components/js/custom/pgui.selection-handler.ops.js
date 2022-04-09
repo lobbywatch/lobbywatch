@@ -67,6 +67,8 @@ define([
                 return this._op_confirm('desndsel', '"Autorisierungsanfrage verschickt" bei ' + nRows + ' Einträgen entfernen?', url);
               case 'create-verguetungstransparenzliste':
                 return this._op_date('create-verguetungstransparenzliste', 'Vergütungstransparenzliste erstellen?<small><br><br>Bitte Stichdatum (TT.MM.JJJJ) eingeben (leer = heute):</small>', url);
+              case 'copy-interessenbindungsverguetungen':
+                return this._op_confirm('copy-interessenbindungsverguetungen', 'Kopiere die Interessenbindungsvergütungen des letzten Jahres aufs aktuelle Jahr?<br>Falls fürs aktuelle Jahr bereits Interessenbindungsvergütungen erfasst wurden, werden diese Einträge beim Kopieren ignoriert. Falls fürs letzte Jahr Einträge nacherfasst wurden, kann das Kopieren nochmals ausgeführt werden und diese Einträge werden für aktuelle Jahr übernommen.', url);
               case 'authorize-selected':
                 return this._op_date('autsel', nRows + ' markierte Einträge autorisieren?<small><br><br>Bitte Autorisierungsdatum (TT.MM.JJJJ) eingeben (leer = heute):</small>', url);
               case 'de-authorize-selected':

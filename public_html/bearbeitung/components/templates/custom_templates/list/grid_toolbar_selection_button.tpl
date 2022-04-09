@@ -8,6 +8,16 @@
     </div>
 {/if}
 
+{if $DataGrid.ActionsPanel.CopyInteressenbindungsverguetungenButton}
+    <div class="btn-group js-selection-actions-container js-actions-container-always-visible">
+        <a href="#" class="btn btn-default js-action" data-type="copy-interessenbindungsverguetungen" data-url="{$Page->getLink()}"
+            title="Kopiere die Interessenbindungsvergütungen des letzten Jahres aufs aktuelle Jahr">
+            <i class="icon-plus"></i>
+            <span class="visible-lg-inline">Kopiere letztjährige Interessenbindungsvergütungen</span>
+        </a>
+    </div>
+{/if}
+
 {if $DataGrid.AllowSelect}
     <div class="btn-group js-selection-actions-container fade" style="display: none">
         <div class="btn-group">

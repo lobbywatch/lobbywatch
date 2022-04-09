@@ -4071,3 +4071,32 @@ ADD `buergerorte` VARCHAR(170) NULL COMMENT 'Strichpunkt getrennte Liste der Bü
 
 ALTER TABLE `person_log`
 ADD `buergerorte` VARCHAR(170) NULL COMMENT 'Strichpunkt getrennte Liste der Bürgerorte' AFTER `zweiter_vorname`;
+
+-- 09.02.2022 copy interessenbindung_jahr last year to current year
+
+INSERT INTO `interessenbindung_jahr` (`interessenbindung_id`, `verguetung`, `jahr`, `beschreibung`, `quelle_url`, `quelle`, `notizen`, `eingabe_abgeschlossen_datum`, `eingabe_abgeschlossen_visa`, `freigabe_visa`, `freigabe_datum`, `created_visa`, `created_date`, `updated_visa`)
+SELECT
+interessenbindung_jahr.interessenbindung_id
+, interessenbindung_jahr.verguetung
+, YEAR(NOW()) as jahr
+, interessenbindung_jahr.beschreibung
+, interessenbindung_jahr.quelle_url
+, interessenbindung_jahr.quelle
+, CONCAT_WS('\n\n', CONCAT(DATE_FORMAT(NOW(),'%d.%m.%Y'), '/script: Kopiert von Jahr ', interessenbindung_jahr.jahr, ', id=', interessenbindung_jahr.id), interessenbindung_jahr.notizen) as notizen
+, NOW() as eingabe_abgeschlossen_datum
+, 'script' as eingabe_abgeschlossen_visa
+, interessenbindung_jahr.freigabe_visa
+, interessenbindung_jahr.freigabe_datum
+, CONCAT(SUBSTRING(interessenbindung_jahr.created_visa, 1, 9), '+') as created_visa
+, NOW() as created_date
+, 'script' as updated_visa
+FROM interessenbindung_jahr
+JOIN interessenbindung ON interessenbindung.id = interessenbindung_jahr.interessenbindung_id AND (interessenbindung.bis IS NULL OR interessenbindung.bis >= NOW())
+JOIN parlamentarier ON parlamentarier.id = interessenbindung.parlamentarier_id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())
+WHERE interessenbindung_jahr.jahr = (SELECT MAX(ijn.jahr)
+    FROM interessenbindung_jahr ijn
+    WHERE ijn.interessenbindung_id = interessenbindung_jahr.interessenbindung_id
+    AND ijn.jahr >=YEAR(NOW()) - 1
+    GROUP BY ijn.interessenbindung_id)
+AND interessenbindung_jahr.jahr < YEAR(NOW())
+ORDER BY `interessenbindung_jahr`.`jahr`  DESC, `interessenbindung_jahr`.`id` DESC;

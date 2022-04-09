@@ -915,6 +915,7 @@ class Grid {
             OPERATION_SET_ZAHLEND_SELECTED => 'SetZahlendSelectedGridState', // Afterburner
             OPERATION_SET_BEZAHLT_SELECTED => 'SetBezahltSelectedGridState', // Afterburner
             OPERATION_CREATE_VERGUETUNGSTRANSPARENZLISTE => 'CreateVerguetungstransparenzliste', // Afterburner
+            OPERATION_COPY_INTERESSENBINDUNGSVERGUETUNGEN => 'CopyInteressenbindungsverguetungen', // Afterburner
         );
 
         if (isset($map[$name])) {
@@ -1186,6 +1187,12 @@ class Grid {
       $columns = $this->GetEditColumns(); // Afterburner
       $datasetName = preg_replace('/[`]/i', '', $this->GetDataset()->GetName()); // Afterburner
       return $this->getMultiEditAllowed() && ($datasetName == "parlamentarier"); // Afterburner
+    }
+
+    function GetAllowCopyInteressenbindungsverguetungen() { // Afterburner
+      $columns = $this->GetEditColumns(); // Afterburner
+      $datasetName = preg_replace('/[`]/i', '', $this->GetDataset()->GetName()); // Afterburner
+      return $this->getMultiEditAllowed() && (ends_with($datasetName, "interessenbindung_jahr")); // Afterburner
     }
 
     function GetAllowDeleteSelected() {
@@ -1997,6 +2004,7 @@ class Grid {
                 'BezahltSelectedButton' => $this->GetAllowBezahltSelected(), // Afterburner
                 'ZahlendSelectedButton' => $this->GetAllowZahlendSelected(), // Afterburner
                 'CreateVerguetungstransparenzListButton' => $this->GetAllowCreateVerguetungstransparenzliste(), // Afterburner
+                'CopyInteressenbindungsverguetungenButton' => $this->GetAllowCopyInteressenbindungsverguetungen(), // Afterburner
 
             ),
 
