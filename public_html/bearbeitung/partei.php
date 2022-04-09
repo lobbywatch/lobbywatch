@@ -3073,6 +3073,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -3260,7 +3261,8 @@
                 new FilterColumn($this->dataset, 'instagram_profil', 'instagram_profil', 'Instagram Profil'),
                 new FilterColumn($this->dataset, 'youtube_user', 'youtube_user', 'Youtube User'),
                 new FilterColumn($this->dataset, 'wikidata_qid', 'wikidata_qid', 'Wikidata Qid'),
-                new FilterColumn($this->dataset, 'email_2', 'email_2', 'Email 2')
+                new FilterColumn($this->dataset, 'email_2', 'email_2', 'Email 2'),
+                new FilterColumn($this->dataset, 'buergerorte', 'buergerorte', 'Buergerorte')
             );
         }
     
@@ -3327,7 +3329,8 @@
                 ->addColumn($columns['instagram_profil'])
                 ->addColumn($columns['youtube_user'])
                 ->addColumn($columns['wikidata_qid'])
-                ->addColumn($columns['email_2']);
+                ->addColumn($columns['email_2'])
+                ->addColumn($columns['buergerorte']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -4907,6 +4910,30 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('buergerorte');
+            
+            $filterBuilder->addColumn(
+                $columns['buergerorte'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -5566,6 +5593,17 @@
             $column->SetDescription('2. (private) E-Mail-Adresse des Parlamentariers');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for buergerorte field
+            //
+            $column = new TextViewColumn('buergerorte', 'buergerorte', 'Buergerorte', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Strichpunkt getrennte Liste der Bürgerorte');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -6034,6 +6072,14 @@
             // View column for email_2 field
             //
             $column = new TextViewColumn('email_2', 'email_2', 'Email 2', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for buergerorte field
+            //
+            $column = new TextViewColumn('buergerorte', 'buergerorte', 'Buergerorte', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
@@ -6921,6 +6967,15 @@
             $editor = new TextEdit('email_2_edit');
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Email 2', 'email_2', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for buergerorte field
+            //
+            $editor = new TextAreaEdit('buergerorte_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Buergerorte', 'buergerorte', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -7948,6 +8003,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for buergerorte field
+            //
+            $editor = new TextAreaEdit('buergerorte_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Buergerorte', 'buergerorte', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -8835,6 +8899,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for buergerorte field
+            //
+            $editor = new TextAreaEdit('buergerorte_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Buergerorte', 'buergerorte', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -9312,6 +9385,14 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for buergerorte field
+            //
+            $column = new TextViewColumn('buergerorte', 'buergerorte', 'Buergerorte', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -9780,6 +9861,14 @@
             // View column for email_2 field
             //
             $column = new TextViewColumn('email_2', 'email_2', 'Email 2', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for buergerorte field
+            //
+            $column = new TextViewColumn('buergerorte', 'buergerorte', 'Buergerorte', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddExportColumn($column);
@@ -10367,6 +10456,14 @@
             // View column for email_2 field
             //
             $column = new TextViewColumn('email_2', 'email_2', 'Email 2', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for buergerorte field
+            //
+            $column = new TextViewColumn('buergerorte', 'buergerorte', 'Buergerorte', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddCompareColumn($column);

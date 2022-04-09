@@ -1623,6 +1623,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -1734,6 +1735,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -1845,6 +1847,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -2863,6 +2866,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -3505,6 +3509,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -3595,6 +3600,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -5278,6 +5284,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -5725,6 +5732,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -6172,6 +6180,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -7343,6 +7352,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -7511,6 +7521,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -7679,6 +7690,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -7847,6 +7859,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -8166,6 +8179,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -8364,7 +8378,8 @@
                 new FilterColumn($this->dataset, 'action', 'action', 'Action'),
                 new FilterColumn($this->dataset, 'state', 'state', 'State'),
                 new FilterColumn($this->dataset, 'action_date', 'action_date', 'Action Date'),
-                new FilterColumn($this->dataset, 'snapshot_id', 'snapshot_id_beschreibung', 'Snapshot Id')
+                new FilterColumn($this->dataset, 'snapshot_id', 'snapshot_id_beschreibung', 'Snapshot Id'),
+                new FilterColumn($this->dataset, 'buergerorte', 'buergerorte', 'Buergerorte')
             );
         }
     
@@ -8453,7 +8468,8 @@
                 ->addColumn($columns['action'])
                 ->addColumn($columns['state'])
                 ->addColumn($columns['action_date'])
-                ->addColumn($columns['snapshot_id']);
+                ->addColumn($columns['snapshot_id'])
+                ->addColumn($columns['buergerorte']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -10562,6 +10578,30 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('buergerorte');
+            
+            $filterBuilder->addColumn(
+                $columns['buergerorte'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -11460,6 +11500,17 @@
             $column->SetDescription('Fremdschlüssel zu einem Snapshot');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for buergerorte field
+            //
+            $column = new TextViewColumn('buergerorte', 'buergerorte', 'Buergerorte', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Strichpunkt getrennte Liste der Bürgerorte');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -12095,21 +12146,50 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for buergerorte field
+            //
+            $column = new TextViewColumn('buergerorte', 'buergerorte', 'Buergerorte', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddSingleRecordViewColumn($column);
         }
     
         protected function AddEditColumns(Grid $grid)
         {
-    
+            //
+            // Edit column for buergerorte field
+            //
+            $editor = new TextAreaEdit('buergerorte_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Buergerorte', 'buergerorte', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
         }
     
         protected function AddMultiEditColumns(Grid $grid)
         {
-    
+            //
+            // Edit column for buergerorte field
+            //
+            $editor = new TextAreaEdit('buergerorte_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Buergerorte', 'buergerorte', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
         {
-    
+            //
+            // Edit column for buergerorte field
+            //
+            $editor = new TextAreaEdit('buergerorte_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Buergerorte', 'buergerorte', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -12751,6 +12831,14 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for buergerorte field
+            //
+            $column = new TextViewColumn('buergerorte', 'buergerorte', 'Buergerorte', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -13386,6 +13474,14 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddExportColumn($column);
+            
+            //
+            // View column for buergerorte field
+            //
+            $column = new TextViewColumn('buergerorte', 'buergerorte', 'Buergerorte', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddExportColumn($column);
         }
     
         private function AddCompareColumns(Grid $grid)
@@ -14014,6 +14110,14 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddCompareColumn($column);
+            
+            //
+            // View column for buergerorte field
+            //
+            $column = new TextViewColumn('buergerorte', 'buergerorte', 'Buergerorte', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddCompareColumn($column);
         }
     
         private function AddCompareHeaderColumns(Grid $grid)
@@ -14407,6 +14511,25 @@
             );
             $lookupDataset->setOrderByField('name', 'ASC');
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_parlamentarier_log_militaerischer_grad_id_search', 'id', 'name', null, 20);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`snapshot`');
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('beschreibung', true),
+                    new StringField('notizen'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa', true),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('beschreibung', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_parlamentarier_log_snapshot_id_search', 'id', 'beschreibung', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -19309,6 +19432,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
@@ -19409,6 +19533,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -19707,6 +19832,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
@@ -19807,6 +19933,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -20191,6 +20318,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
@@ -20291,6 +20419,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -21090,6 +21219,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
@@ -21154,6 +21284,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -21344,6 +21475,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
@@ -21408,6 +21540,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -21598,6 +21731,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
@@ -21662,6 +21796,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -21852,6 +21987,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
@@ -21916,6 +22052,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -34492,6 +34629,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
@@ -34986,6 +35124,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
@@ -35954,6 +36093,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
@@ -37829,6 +37969,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
@@ -46839,6 +46980,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
@@ -47246,6 +47388,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
@@ -48151,6 +48294,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
@@ -49903,6 +50047,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
@@ -49965,6 +50110,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
@@ -50027,6 +50173,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
@@ -50089,6 +50236,7 @@
                     new IntegerField('id', true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
+                    new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
@@ -50301,6 +50449,7 @@
                     new StringField('vorname', true),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
+                    new StringField('buergerorte'),
                     new IntegerField('rat_id', true),
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
@@ -50495,7 +50644,8 @@
                 new FilterColumn($this->dataset, 'photo_dateiname', 'photo_dateiname', 'Photo Dateiname'),
                 new FilterColumn($this->dataset, 'photo_dateierweiterung', 'photo_dateierweiterung', 'Photo Dateierweiterung'),
                 new FilterColumn($this->dataset, 'photo_dateiname_voll', 'photo_dateiname_voll', 'Photo Dateiname'),
-                new FilterColumn($this->dataset, 'photo_mime_type', 'photo_mime_type', 'Photo Mime Type')
+                new FilterColumn($this->dataset, 'photo_mime_type', 'photo_mime_type', 'Photo Mime Type'),
+                new FilterColumn($this->dataset, 'buergerorte', 'buergerorte', 'Buergerorte')
             );
         }
     
@@ -50537,7 +50687,8 @@
                 ->addColumn($columns['telephon_1'])
                 ->addColumn($columns['telephon_2'])
                 ->addColumn($columns['wikidata_qid'])
-                ->addColumn($columns['notizen']);
+                ->addColumn($columns['notizen'])
+                ->addColumn($columns['buergerorte']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -52405,6 +52556,30 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('buergerorte');
+            
+            $filterBuilder->addColumn(
+                $columns['buergerorte'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -53268,6 +53443,17 @@
             $column->SetDescription('Abgeändert am');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for buergerorte field
+            //
+            $column = new TextViewColumn('buergerorte', 'buergerorte', 'Buergerorte', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Strichpunkt getrennte Liste der Bürgerorte');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -53850,6 +54036,14 @@
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for buergerorte field
+            //
+            $column = new TextViewColumn('buergerorte', 'buergerorte', 'Buergerorte', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -54929,6 +55123,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for buergerorte field
+            //
+            $editor = new TextAreaEdit('buergerorte_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Buergerorte', 'buergerorte', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
         }
     
         protected function AddMultiEditColumns(Grid $grid)
@@ -55984,6 +56187,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for buergerorte field
+            //
+            $editor = new TextAreaEdit('buergerorte_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Buergerorte', 'buergerorte', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -56926,6 +57138,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for buergerorte field
+            //
+            $editor = new TextAreaEdit('buergerorte_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Buergerorte', 'buergerorte', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(true && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -57508,6 +57729,14 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for buergerorte field
+            //
+            $column = new TextViewColumn('buergerorte', 'buergerorte', 'Buergerorte', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -58084,6 +58313,14 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
+            
+            //
+            // View column for buergerorte field
+            //
+            $column = new TextViewColumn('buergerorte', 'buergerorte', 'Buergerorte', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddExportColumn($column);
         }
     
         private function AddCompareColumns(Grid $grid)
@@ -58659,6 +58896,14 @@
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for buergerorte field
+            //
+            $column = new TextViewColumn('buergerorte', 'buergerorte', 'Buergerorte', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
             $grid->AddCompareColumn($column);
         }
     
