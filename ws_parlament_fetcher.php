@@ -1363,7 +1363,7 @@ function getFraktionId($faction) {
     case 'RL': return 1;
     case 'S': return 3;
     case 'V': return 5;
-    case '-': case '': case null: return null;
+    case '-': case '': case null: return null; // 9 fraktionslos
     default: $errors[] = "Wrong fraktion code '$factionCode'"; return "ERR $factionCode";
   }
 }
@@ -1407,7 +1407,7 @@ function getParteiId($party) {
     case 'M-CEB': return 22;
     case 'M': return 22;
     case 'M-E': return 22;
-    case '-': case '': case null: return null;
+    case '-': case '': case null: return null; // 23 parteilos
     default: $errors[] = "Wrong partei code '$partyCode'"; return "ERR '$partyCode'";
   }
 }
