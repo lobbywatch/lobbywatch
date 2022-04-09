@@ -1778,6 +1778,7 @@ FROM `zutrittsberechtigung`;
 -- Compatibility view simulating the previous v_zutrittsberechtigung_simple
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_simple_compat` AS
 SELECT
+zutrittsberechtigung.id,
 person.anzeige_name,
 person.anzeige_name_de,
 person.anzeige_name_fr,
@@ -1785,7 +1786,6 @@ person.name,
 person.name_de,
 person.name_fr,
 -- person.*,
-person.id,
 -- person.`parlamentarier_id` ,
 person.`nachname` ,
 person.`vorname` ,

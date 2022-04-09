@@ -23,7 +23,7 @@
     <div class="row-fluid" {*class="span8"*}>
 
         <div class="preview">
-            <h3>{$Parlamentarier.Title}</h3>
+            <h3>{$Parlamentarier.Title} <span>({$Parlamentarier.Id})</span></h3>
 
                         <div class="container-fluid">
 
