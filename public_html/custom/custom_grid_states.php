@@ -334,6 +334,8 @@ class CopyInteressenbindungsverguetungen extends AbstractCommitEditSelectedOpera
     $sql_date = "STR_TO_DATE('$this->transactionDateTime','%d-%m-%Y %T')";
     $date = date('d-m-Y', strtotime($this->date));
 
+    // This SQL statement can copy from several older years, currently it only copies from the last year
+
     // Quick and dirty solution to fill another table
     $sql = "INSERT INTO `interessenbindung_jahr` (`interessenbindung_id`, `verguetung`, `jahr`, `beschreibung`, `quelle_url`, `quelle`, `notizen`, `eingabe_abgeschlossen_datum`, `eingabe_abgeschlossen_visa`, `freigabe_visa`, `freigabe_datum`, `created_visa`, `created_date`, `updated_visa`)
     SELECT
@@ -343,12 +345,12 @@ class CopyInteressenbindungsverguetungen extends AbstractCommitEditSelectedOpera
     , interessenbindung_jahr.beschreibung
     , interessenbindung_jahr.quelle_url
     , interessenbindung_jahr.quelle
-    , CONCAT_WS('\n\n', CONCAT(DATE_FORMAT($sql_date,'%d.%m.%Y'), '/script: Kopiert von Jahr ', interessenbindung_jahr.jahr, ', id=', interessenbindung_jahr.id), interessenbindung_jahr.notizen) as notizen
+    , CONCAT_WS('\n\n', CONCAT(DATE_FORMAT($sql_date,'%d.%m.%Y'), '/script/$this->userName: Kopiert von Jahr ', interessenbindung_jahr.jahr, ', id=', interessenbindung_jahr.id), interessenbindung_jahr.notizen) as notizen
     , $sql_date as eingabe_abgeschlossen_datum
     , '$this->userName' as eingabe_abgeschlossen_visa
-    , interessenbindung_jahr.freigabe_visa
+    ,  CONCAT(SUBSTRING(REPLACE(REPLACE(interessenbindung_jahr.freigabe_visa, '*', ''), '+', ''), 1, 9), '+') as freigabe_visa
     , interessenbindung_jahr.freigabe_datum
-    , CONCAT(SUBSTRING(interessenbindung_jahr.created_visa, 1, 9), '+') as created_visa
+    , CONCAT(SUBSTRING(REPLACE(REPLACE(interessenbindung_jahr.created_visa, '*', ''), '+', ''), 1, 9), '+') as created_visa
     , $sql_date as created_date
     , '$this->userName' as updated_visa
     FROM interessenbindung_jahr
@@ -357,7 +359,7 @@ class CopyInteressenbindungsverguetungen extends AbstractCommitEditSelectedOpera
     WHERE interessenbindung_jahr.jahr = (SELECT MAX(ijn.jahr)
         FROM interessenbindung_jahr ijn
         WHERE ijn.interessenbindung_id = interessenbindung_jahr.interessenbindung_id
-        AND ijn.jahr >=YEAR($sql_date) - 1
+        AND ijn.jahr >= YEAR($sql_date) - 1
         GROUP BY ijn.interessenbindung_id)
     AND interessenbindung_jahr.jahr < YEAR($sql_date)
     ORDER BY `interessenbindung_jahr`.`jahr`  DESC, `interessenbindung_jahr`.`id` DESC;";
