@@ -3505,7 +3505,7 @@ GROUP BY zutrittsberechtigung.id;";
   END anrede
   FROM v_zutrittsberechtigung_simple_compat zutrittsberechtigung
   LEFT JOIN v_mandat_simple mandat
-    ON mandat.person_id = zutrittsberechtigung.id " . ($for_email ? 'AND mandat.bis IS NULL' : '') . "
+    ON mandat.person_id = zutrittsberechtigung.person_id " . ($for_email ? 'AND mandat.bis IS NULL' : '') . "
   LEFT JOIN (
       SELECT mandat_jahr.mandat_id, GROUP_CONCAT(DISTINCT CONCAT('<li>', mandat_jahr.jahr, ': ', mandat_jahr.verguetung, ' CHF ', IF(mandat_jahr.beschreibung IS NULL OR TRIM(mandat_jahr.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', mandat_jahr.beschreibung, '&quot;</small>'))) ORDER BY mandat_jahr.jahr SEPARATOR ' ') jahr_grouped
       FROM `v_mandat_jahr` mandat_jahr
