@@ -700,7 +700,8 @@ function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = t
     $last_modified_date_unix = $aggregated['updated_date_unix'];
 
     if ($success) {
-      $mandate = _lobbywatch_data_table_flat_list('person_mandate', "person_mandate.person_id = $id", false);
+      $person_id = $zutrittsberechtigung['data']['person_id'];
+      $mandate = _lobbywatch_data_table_flat_list('person_mandate', "person_mandate.person_id = $person_id", false);
       $aggregated['mandate'] = $mandate['data'];
       $message .= ' | ' . $mandate['message'] . '';
       $sql .= ' | ' . $mandate['sql'] . '';
