@@ -8859,6 +8859,8 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('autorisierung_verschickt_visa'),
                     new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisierung_reminder_verschickt_visa'),
+                    new DateTimeField('autorisierung_reminder_verschickt_datum'),
                     new StringField('autorisiert_visa'),
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),
@@ -8982,7 +8984,9 @@
                 new FilterColumn($this->dataset, 'youtube_user', 'youtube_user', 'Youtube User'),
                 new FilterColumn($this->dataset, 'wikidata_qid', 'wikidata_qid', 'Wikidata Qid'),
                 new FilterColumn($this->dataset, 'email_2', 'email_2', 'Email 2'),
-                new FilterColumn($this->dataset, 'buergerorte', 'buergerorte', 'Buergerorte')
+                new FilterColumn($this->dataset, 'buergerorte', 'buergerorte', 'Buergerorte'),
+                new FilterColumn($this->dataset, 'autorisierung_reminder_verschickt_visa', 'autorisierung_reminder_verschickt_visa', 'Autorisierung Reminder Verschickt Visa'),
+                new FilterColumn($this->dataset, 'autorisierung_reminder_verschickt_datum', 'autorisierung_reminder_verschickt_datum', 'Autorisierung Reminder Verschickt Datum')
             );
         }
     
@@ -9053,7 +9057,9 @@
                 ->addColumn($columns['youtube_user'])
                 ->addColumn($columns['wikidata_qid'])
                 ->addColumn($columns['email_2'])
-                ->addColumn($columns['buergerorte']);
+                ->addColumn($columns['buergerorte'])
+                ->addColumn($columns['autorisierung_reminder_verschickt_visa'])
+                ->addColumn($columns['autorisierung_reminder_verschickt_datum']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -9083,7 +9089,8 @@
                 ->setOptionsFor('updated_date')
                 ->setOptionsFor('parlament_interessenbindungen_updated')
                 ->setOptionsFor('sprache')
-                ->setOptionsFor('erfasst');
+                ->setOptionsFor('erfasst')
+                ->setOptionsFor('autorisierung_reminder_verschickt_datum');
         }
     
         protected function setupFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
@@ -10729,6 +10736,52 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('autorisierung_reminder_verschickt_visa_edit');
+            $main_editor->SetMaxLength(10);
+            
+            $filterBuilder->addColumn(
+                $columns['autorisierung_reminder_verschickt_visa'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new DateTimeEdit('autorisierung_reminder_verschickt_datum_edit', false, 'd.m.Y H:i:s');
+            
+            $filterBuilder->addColumn(
+                $columns['autorisierung_reminder_verschickt_datum'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::DATE_EQUALS => $main_editor,
+                    FilterConditionOperator::DATE_DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::TODAY => null,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -11429,6 +11482,27 @@
             $column->SetDescription('Strichpunkt getrennte Liste der Bürgerorte');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_reminder_verschickt_visa', 'autorisierung_reminder_verschickt_visa', 'Autorisierung Reminder Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Autorisierungerinnerung verschickt durch');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_reminder_verschickt_datum', 'autorisierung_reminder_verschickt_datum', 'Autorisierung Reminder Verschickt Datum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Autorisierungerinnerung verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -11928,6 +12002,21 @@
             $column = new TextViewColumn('buergerorte', 'buergerorte', 'Buergerorte', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_reminder_verschickt_visa', 'autorisierung_reminder_verschickt_visa', 'Autorisierung Reminder Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_reminder_verschickt_datum', 'autorisierung_reminder_verschickt_datum', 'Autorisierung Reminder Verschickt Datum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -12846,6 +12935,25 @@
             //
             $editor = new TextAreaEdit('buergerorte_edit', 50, 8);
             $editColumn = new CustomEditColumn('Buergerorte', 'buergerorte', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for autorisierung_reminder_verschickt_visa field
+            //
+            $editor = new TextEdit('autorisierung_reminder_verschickt_visa_edit');
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Autorisierung Reminder Verschickt Visa', 'autorisierung_reminder_verschickt_visa', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for autorisierung_reminder_verschickt_datum field
+            //
+            $editor = new DateTimeEdit('autorisierung_reminder_verschickt_datum_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Autorisierung Reminder Verschickt Datum', 'autorisierung_reminder_verschickt_datum', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -13897,6 +14005,25 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for autorisierung_reminder_verschickt_visa field
+            //
+            $editor = new TextEdit('autorisierung_reminder_verschickt_visa_edit');
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Autorisierung Reminder Verschickt Visa', 'autorisierung_reminder_verschickt_visa', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for autorisierung_reminder_verschickt_datum field
+            //
+            $editor = new DateTimeEdit('autorisierung_reminder_verschickt_datum_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Autorisierung Reminder Verschickt Datum', 'autorisierung_reminder_verschickt_datum', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -14817,6 +14944,25 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for autorisierung_reminder_verschickt_visa field
+            //
+            $editor = new TextEdit('autorisierung_reminder_verschickt_visa_edit');
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Autorisierung Reminder Verschickt Visa', 'autorisierung_reminder_verschickt_visa', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for autorisierung_reminder_verschickt_datum field
+            //
+            $editor = new DateTimeEdit('autorisierung_reminder_verschickt_datum_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Autorisierung Reminder Verschickt Datum', 'autorisierung_reminder_verschickt_datum', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -15323,6 +15469,21 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_reminder_verschickt_visa', 'autorisierung_reminder_verschickt_visa', 'Autorisierung Reminder Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_reminder_verschickt_datum', 'autorisierung_reminder_verschickt_datum', 'Autorisierung Reminder Verschickt Datum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -15822,6 +15983,21 @@
             $column = new TextViewColumn('buergerorte', 'buergerorte', 'Buergerorte', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_reminder_verschickt_visa', 'autorisierung_reminder_verschickt_visa', 'Autorisierung Reminder Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_reminder_verschickt_datum', 'autorisierung_reminder_verschickt_datum', 'Autorisierung Reminder Verschickt Datum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
         }
     
@@ -16430,6 +16606,21 @@
             $column = new TextViewColumn('buergerorte', 'buergerorte', 'Buergerorte', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_reminder_verschickt_visa', 'autorisierung_reminder_verschickt_visa', 'Autorisierung Reminder Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_reminder_verschickt_datum', 'autorisierung_reminder_verschickt_datum', 'Autorisierung Reminder Verschickt Datum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
         }
     

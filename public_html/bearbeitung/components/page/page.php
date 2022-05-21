@@ -1329,6 +1329,8 @@ abstract class Page extends CommonPage implements IVariableContainer
             case OPERATION_DE_CONTROLLED_SELECTED: // Afterburner
             case OPERATION_AUTHORIZATION_SENT_SELECTED: // Afterburner
             case OPERATION_DE_AUTHORIZATION_SENT_SELECTED: // Afterburner
+            case OPERATION_AUTHORIZATION_REMINDER_SENT_SELECTED: // Afterburner
+            case OPERATION_DE_AUTHORIZATION_REMINDER_SENT_SELECTED: // Afterburner
             case OPERATION_AUTHORIZE_SELECTED: // Afterburner
             case OPERATION_DE_AUTHORIZE_SELECTED: // Afterburner
             case OPERATION_RELEASE_SELECTED: // Afterburner
@@ -1424,6 +1426,8 @@ abstract class Page extends CommonPage implements IVariableContainer
             case OPERATION_DE_CONTROLLED_SELECTED: // Afterburner
             case OPERATION_AUTHORIZATION_SENT_SELECTED: // Afterburner
             case OPERATION_DE_AUTHORIZATION_SENT_SELECTED: // Afterburner
+            case OPERATION_AUTHORIZATION_REMINDER_SENT_SELECTED: // Afterburner
+            case OPERATION_DE_AUTHORIZATION_REMINDER_SENT_SELECTED: // Afterburner
             case OPERATION_AUTHORIZE_SELECTED: // Afterburner
             case OPERATION_DE_AUTHORIZE_SELECTED: // Afterburner
             case OPERATION_RELEASE_SELECTED: // Afterburner

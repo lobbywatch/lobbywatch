@@ -60,13 +60,13 @@
               $selectQuery, $insertQuery, $updateQuery, $deleteQuery, 'q_unvollstaendige_zutrittsberechtigte');
             $this->dataset->addFields(
                 array(
+                    new IntegerField('id', true, true),
                     new StringField('anzeige_name'),
                     new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('name'),
                     new StringField('name_de'),
                     new StringField('name_fr'),
-                    new IntegerField('id', true, true),
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
@@ -3842,6 +3842,8 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('autorisierung_verschickt_visa'),
                     new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisierung_reminder_verschickt_visa'),
+                    new DateTimeField('autorisierung_reminder_verschickt_datum'),
                     new StringField('autorisiert_visa'),
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),
@@ -7171,6 +7173,8 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('autorisierung_verschickt_visa'),
                     new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisierung_reminder_verschickt_visa'),
+                    new DateTimeField('autorisierung_reminder_verschickt_datum'),
                     new StringField('autorisiert_visa'),
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),

@@ -3313,19 +3313,13 @@ function _lobbywatch_anzeige_name_for_url($table, $id, $lang = null) {
   return _lobbywatch_clean_for_url(_lobbywatch_fetch_anzeige_name($table, $id, $lang));
 }
 
-function fillZutrittsberechtigterEmail($i) {
-  global $zbList;
-  global $emailEndZb;
-  global $mailtoZb;
-  global $emailIntroZb;
-  global $rowCellStylesZb;
-  global $rowData;
+function fillZutrittsberechtigterEmail($i, $rowData, $zbList, $emailEndZb, $mailtoZb, $emailIntroZb, $isZbAuthorizationReminder, $rowCellStylesZb) {
 
   if (isset($zbList[$i])) {
     $lang = $zbList[$i]['arbeitssprache'];
     $oldlang = lobbywatch_set_language($lang);
     $lang_suffix = get_lang_suffix($lang);
-    $isReAuthorization = isset($zbList[$i]['autorisiert_datum']);
+    $isReAuthorization = !$isZbAuthorizationReminder[$i] && isset($zbList[$i]['autorisiert_datum']);
 
     $state = '<table style="margin-top: 1em; margin-bottom: 1em;">
                     <tr><td style="padding: 16px; '. $rowCellStylesZb[$i]['id'] . '" title="Status des Arbeitsablaufes dieses Zutrittsberechtigten">Arbeitsablauf</td><td style="padding: 16px; ' . (!empty($rowCellStylesZb[$i]['nachname']) ? $rowCellStylesZb[$i]['nachname'] : '') . '" title="Status der Vollständigkeit der Felder dieses Zutrittsberechtigten">Vollständigkeit</td></tr></table>';
@@ -3335,12 +3329,14 @@ function fillZutrittsberechtigterEmail($i) {
         'Title' => 'Vorschau: ' . $zbList[$i]["zutrittsberechtigung_name"],
         'State' =>  $state,
         'Preview' =>  '<p>Zutrittsberechtigung von '. $rowData["parlamentarier_name2"] . '<br><b>Funktion</b>: ' . $zbList[$i]['funktion'] . '<br><b>Beruf</b>: ' . $zbList[$i]['beruf'] . '</p>' . '<h4>Mandate</h4><ul>' . $zbList[$i]['mandate'] . '</ul>',
-        'EmailTitle' => ($isReAuthorization ? 'Re-' : '') . 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoZb[$i]. '" target="_blank">' . $zbList[$i]["zutrittsberechtigung_name"] . '</a>',
+        'EmailTitle' => ($isZbAuthorizationReminder[$i] ? 'Reminder-' : '') . ($isReAuthorization ? 'Re-' : '') . 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoZb[$i]. '" target="_blank">' . $zbList[$i]["zutrittsberechtigung_name"] . '</a>',
         'EmailText' => '<div>' . $zbList[$i]['anrede'] .  $emailIntroZb[$i] . (isset($zbList[$i]['funktion']) ? '<br><b>' . lt('Deklarierte Funktion:') . '</b> ' . $zbList[$i]['funktion'] : '') . '<br><b>' . lt('Beruf:') . '</b> ' . (isset($zbList[$i]['beruf']) ? translate_record_field($zbList[$i], 'beruf', false, true) : '___________'). '<br><br><b>' . lt('Ihre Tätigkeiten:') . '</b><br>' . ($zbList[$i]['mandate'] ? '<ul>' . $zbList[$i]['mandate'] . '</ul>' : lt('keine') . '<br>') . /*$zbList[$i]['organisationsbeziehungen'] .*/
         '' . $emailEndZb[$i] . '</div>',
         // '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true)
         'MailTo' => $mailtoZb[$i],
-        'ParlamentarierName' => $rowData["parlamentarier_name"]
+        'ParlamentarierName' => $rowData["parlamentarier_name"],
+        'isReminder' => $isZbAuthorizationReminder[$i],
+
     );
 
     // Reset language

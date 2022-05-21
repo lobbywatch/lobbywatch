@@ -28111,6 +28111,10 @@ define('custom/pgui.selection-handler.ops',[
                 return this._op_date('sndsel', 'Bei ' + nRows + ' markierten Einträgen eine Autorisierungsanfrage verschickt?<small><br><br>Bitte Sendedatum (TT.MM.JJJJ) eingeben (leer = heute):</small>', url);
               case 'de-authorization-sent-selected':
                 return this._op_confirm('desndsel', '"Autorisierungsanfrage verschickt" bei ' + nRows + ' Einträgen entfernen?', url);
+              case 'authorization-reminder-sent-selected':
+                return this._op_date('sndremindersel', 'Bei ' + nRows + ' markierten Einträgen eine Autorisierungsreminder verschickt?<small><br><br>Bitte Sendedatum (TT.MM.JJJJ) eingeben (leer = heute):</small>', url);
+              case 'de-authorization-reminder-sent-selected':
+                return this._op_confirm('desndremindersel', '"Autorisierungsreminder verschickt" bei ' + nRows + ' Einträgen entfernen?', url);
               case 'create-verguetungstransparenzliste':
                 return this._op_date('create-verguetungstransparenzliste', 'Vergütungstransparenzliste erstellen?<small><br><br>Bitte Stichdatum (TT.MM.JJJJ) eingeben (leer = heute):</small>', url);
               case 'copy-interessenbindungsverguetungen':

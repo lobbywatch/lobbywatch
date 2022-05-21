@@ -11,6 +11,8 @@ define('OPERATION_CONTROLLED_SELECTED', 'consel');
 define('OPERATION_DE_CONTROLLED_SELECTED', 'deconsel');
 define('OPERATION_AUTHORIZATION_SENT_SELECTED', 'sndsel');
 define('OPERATION_DE_AUTHORIZATION_SENT_SELECTED', 'desndsel');
+define('OPERATION_AUTHORIZATION_REMINDER_SENT_SELECTED', 'sndremindersel');
+define('OPERATION_DE_AUTHORIZATION_REMINDER_SENT_SELECTED', 'desndremindersel');
 define('OPERATION_CREATE_VERGUETUNGSTRANSPARENZLISTE', 'create-verguetungstransparenzliste');
 define('OPERATION_COPY_INTERESSENBINDUNGSVERGUETUNGEN', 'copy-interessenbindungsverguetungen');
 define('OPERATION_AUTHORIZE_SELECTED', 'autsel');
@@ -175,6 +177,22 @@ class DeAuthorizationSentSelectedGridState extends AbstractCommitEditSelectedOpe
     // df($this->grid->GetDataset()->GetFieldValueByName('id'));
     $this->grid->GetDataset()->SetFieldValueByName('autorisierung_verschickt_visa', null);
     $this->grid->GetDataset()->SetFieldValueByName('autorisierung_verschickt_datum', null);
+  }
+}
+
+class AuthorizationReminderSentSelectedGridState extends AbstractCommitEditSelectedOperationValuesGridState {
+  protected function DoOperation($rowValues) {
+    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
+    $this->grid->GetDataset()->SetFieldValueByName('autorisierung_reminder_verschickt_visa', $this->userName);
+    $this->grid->GetDataset()->SetFieldValueByName('autorisierung_reminder_verschickt_datum', $this->date);
+  }
+}
+
+class DeAuthorizationReminderSentSelectedGridState extends AbstractCommitEditSelectedOperationValuesGridState {
+  protected function DoOperation($rowValues) {
+    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
+    $this->grid->GetDataset()->SetFieldValueByName('autorisierung_reminder_verschickt_visa', null);
+    $this->grid->GetDataset()->SetFieldValueByName('autorisierung_reminder_verschickt_datum', null);
   }
 }
 

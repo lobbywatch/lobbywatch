@@ -9211,6 +9211,14 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="autorisierung_reminder_verschickt_visa" caption="Autorisierung Reminder Verschickt Visa" headerHint="Autorisierungerinnerung verschickt durch" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="10"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="autorisierung_reminder_verschickt_datum" caption="Autorisierung Reminder Verschickt Datum" headerHint="Autorisierungerinnerung verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
           <ColumnPresentation fieldName="autorisiert_visa" caption="Autorisiert Visa" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen." canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
@@ -9258,6 +9266,10 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
           <ColumnPresentation fieldName="photo_mime_type" caption="Photo Mime Type" headerHint="MIME Type des Photos" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="100"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="buergerorte" caption="Buergerorte" headerHint="Strichpunkt getrennte Liste der Bürgerorte" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
@@ -9328,6 +9340,8 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="kontrolliert_datum"/>
             <Column fieldName="autorisierung_verschickt_visa"/>
             <Column fieldName="autorisierung_verschickt_datum"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
             <Column fieldName="autorisiert_visa"/>
             <Column fieldName="autorisiert_datum"/>
             <Column fieldName="freigabe_visa"/>
@@ -9340,6 +9354,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
+            <Column fieldName="buergerorte"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -9408,6 +9423,8 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="kontrolliert_datum"/>
             <Column fieldName="autorisierung_verschickt_visa"/>
             <Column fieldName="autorisierung_verschickt_datum"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
             <Column fieldName="autorisiert_visa"/>
             <Column fieldName="autorisiert_datum"/>
             <Column fieldName="freigabe_visa"/>
@@ -9420,6 +9437,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" caption="Photo Dateiname" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
+            <Column fieldName="buergerorte"/>
           </View>
           <Edit>
             <Column fieldName="id" visible="false"/>
@@ -9488,6 +9506,8 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="kontrolliert_datum"/>
             <Column fieldName="autorisierung_verschickt_visa"/>
             <Column fieldName="autorisierung_verschickt_datum"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
             <Column fieldName="autorisiert_visa"/>
             <Column fieldName="autorisiert_datum"/>
             <Column fieldName="freigabe_visa"/>
@@ -9500,6 +9520,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" caption="Photodateiname" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
+            <Column fieldName="buergerorte"/>
           </Edit>
           <Insert>
             <Column fieldName="id" visible="false"/>
@@ -9568,6 +9589,8 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="kontrolliert_datum" visible="false"/>
             <Column fieldName="autorisierung_verschickt_visa" visible="false"/>
             <Column fieldName="autorisierung_verschickt_datum" visible="false"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa" visible="false"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum" visible="false"/>
             <Column fieldName="autorisiert_visa" visible="false"/>
             <Column fieldName="autorisiert_datum" visible="false"/>
             <Column fieldName="freigabe_visa" visible="false"/>
@@ -9580,6 +9603,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
+            <Column fieldName="buergerorte"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -9660,6 +9684,9 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="email_2"/>
+            <Column fieldName="buergerorte"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa" visible="false"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum" visible="false"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -9728,6 +9755,8 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="kontrolliert_datum"/>
             <Column fieldName="autorisierung_verschickt_visa"/>
             <Column fieldName="autorisierung_verschickt_datum"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
             <Column fieldName="autorisiert_visa"/>
             <Column fieldName="autorisiert_datum"/>
             <Column fieldName="freigabe_visa"/>
@@ -9740,6 +9769,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" caption="Photo Dateiname" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
+            <Column fieldName="buergerorte"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -9808,6 +9838,8 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="kontrolliert_datum"/>
             <Column fieldName="autorisierung_verschickt_visa"/>
             <Column fieldName="autorisierung_verschickt_datum"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
             <Column fieldName="autorisiert_visa"/>
             <Column fieldName="autorisiert_datum"/>
             <Column fieldName="freigabe_visa"/>
@@ -9820,6 +9852,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
+            <Column fieldName="buergerorte"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -9888,6 +9921,8 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="kontrolliert_datum"/>
             <Column fieldName="autorisierung_verschickt_visa"/>
             <Column fieldName="autorisierung_verschickt_datum"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
             <Column fieldName="autorisiert_visa"/>
             <Column fieldName="autorisiert_datum"/>
             <Column fieldName="freigabe_visa"/>
@@ -9900,6 +9935,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
+            <Column fieldName="buergerorte"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -9968,6 +10004,8 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="kontrolliert_datum"/>
             <Column fieldName="autorisierung_verschickt_visa"/>
             <Column fieldName="autorisierung_verschickt_datum"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
             <Column fieldName="autorisiert_visa"/>
             <Column fieldName="autorisiert_datum"/>
             <Column fieldName="freigabe_visa"/>
@@ -9980,6 +10018,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
+            <Column fieldName="buergerorte"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -10048,6 +10087,8 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="kontrolliert_datum"/>
             <Column fieldName="autorisierung_verschickt_visa"/>
             <Column fieldName="autorisierung_verschickt_datum"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
             <Column fieldName="autorisiert_visa"/>
             <Column fieldName="autorisiert_datum"/>
             <Column fieldName="freigabe_visa"/>
@@ -10060,6 +10101,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
+            <Column fieldName="buergerorte"/>
           </MultiEdit>
         </Columns>
         <Details>
@@ -11482,6 +11524,14 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="autorisierung_reminder_verschickt_visa" caption="Autorisierung Reminder Verschickt Visa" headerHint="Autorisierungerinnerung verschickt durch" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="autorisierung_reminder_verschickt_datum" caption="Autorisierung Reminder Verschickt Datum" headerHint="Autorisierungerinnerung verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
                 <ColumnPresentation fieldName="autorisiert_visa" caption="Autorisiert Visa" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen." canSetNull="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
@@ -11541,6 +11591,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Lookup tableName="snapshot" linkFieldName="id" displayFieldName="beschreibung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="dynamicCombobox"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="buergerorte" caption="Buergerorte" headerHint="Strichpunkt getrennte Liste der Bürgerorte" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
                 </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
@@ -11615,6 +11669,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kontrolliert_datum"/>
                   <Column fieldName="autorisierung_verschickt_visa"/>
                   <Column fieldName="autorisierung_verschickt_datum"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                   <Column fieldName="autorisiert_visa"/>
                   <Column fieldName="autorisiert_datum"/>
                   <Column fieldName="freigabe_visa"/>
@@ -11628,6 +11684,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
+                  <Column fieldName="buergerorte"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -11700,6 +11757,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kontrolliert_datum"/>
                   <Column fieldName="autorisierung_verschickt_visa"/>
                   <Column fieldName="autorisierung_verschickt_datum"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                   <Column fieldName="autorisiert_visa"/>
                   <Column fieldName="autorisiert_datum"/>
                   <Column fieldName="freigabe_visa"/>
@@ -11713,6 +11772,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
+                  <Column fieldName="buergerorte"/>
                 </View>
                 <Edit>
                   <Column fieldName="id" visible="false"/>
@@ -11785,6 +11845,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kontrolliert_datum" visible="false"/>
                   <Column fieldName="autorisierung_verschickt_visa" visible="false"/>
                   <Column fieldName="autorisierung_verschickt_datum" visible="false"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa" visible="false"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum" visible="false"/>
                   <Column fieldName="autorisiert_visa" visible="false"/>
                   <Column fieldName="autorisiert_datum" visible="false"/>
                   <Column fieldName="freigabe_visa" visible="false"/>
@@ -11798,6 +11860,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
+                  <Column fieldName="buergerorte"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="id" visible="false"/>
@@ -11870,6 +11933,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kontrolliert_datum" visible="false"/>
                   <Column fieldName="autorisierung_verschickt_visa" visible="false"/>
                   <Column fieldName="autorisierung_verschickt_datum" visible="false"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa" visible="false"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum" visible="false"/>
                   <Column fieldName="autorisiert_visa" visible="false"/>
                   <Column fieldName="autorisiert_datum" visible="false"/>
                   <Column fieldName="freigabe_visa" visible="false"/>
@@ -11883,6 +11948,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
+                  <Column fieldName="buergerorte"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -11968,6 +12034,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -12040,6 +12109,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kontrolliert_datum"/>
                   <Column fieldName="autorisierung_verschickt_visa"/>
                   <Column fieldName="autorisierung_verschickt_datum"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                   <Column fieldName="autorisiert_visa"/>
                   <Column fieldName="autorisiert_datum"/>
                   <Column fieldName="freigabe_visa"/>
@@ -12053,6 +12124,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
+                  <Column fieldName="buergerorte"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -12125,6 +12197,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kontrolliert_datum"/>
                   <Column fieldName="autorisierung_verschickt_visa"/>
                   <Column fieldName="autorisierung_verschickt_datum"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                   <Column fieldName="autorisiert_visa"/>
                   <Column fieldName="autorisiert_datum"/>
                   <Column fieldName="freigabe_visa"/>
@@ -12138,6 +12212,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
+                  <Column fieldName="buergerorte"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -12210,6 +12285,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kontrolliert_datum"/>
                   <Column fieldName="autorisierung_verschickt_visa"/>
                   <Column fieldName="autorisierung_verschickt_datum"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                   <Column fieldName="autorisiert_visa"/>
                   <Column fieldName="autorisiert_datum"/>
                   <Column fieldName="freigabe_visa"/>
@@ -12223,6 +12300,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
+                  <Column fieldName="buergerorte"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -12295,6 +12373,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kontrolliert_datum"/>
                   <Column fieldName="autorisierung_verschickt_visa"/>
                   <Column fieldName="autorisierung_verschickt_datum"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                   <Column fieldName="autorisiert_visa"/>
                   <Column fieldName="autorisiert_datum"/>
                   <Column fieldName="freigabe_visa"/>
@@ -12308,6 +12388,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
+                  <Column fieldName="buergerorte"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -12380,6 +12461,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kontrolliert_datum" visible="false"/>
                   <Column fieldName="autorisierung_verschickt_visa" visible="false"/>
                   <Column fieldName="autorisierung_verschickt_datum" visible="false"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa" visible="false"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum" visible="false"/>
                   <Column fieldName="autorisiert_visa" visible="false"/>
                   <Column fieldName="autorisiert_datum" visible="false"/>
                   <Column fieldName="freigabe_visa" visible="false"/>
@@ -12393,6 +12476,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
+                  <Column fieldName="buergerorte"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -21291,6 +21375,14 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="autorisierung_reminder_verschickt_visa" caption="Autorisierung Reminder Verschickt Visa" headerHint="Autorisierungerinnerung verschickt durch" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="10"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="autorisierung_reminder_verschickt_datum" caption="Autorisierung Reminder Verschickt Datum" headerHint="Autorisierungerinnerung verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
           <ColumnPresentation fieldName="autorisiert_visa" caption="Autorisiert Visa" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen." canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
@@ -21324,6 +21416,10 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="person_nachname_zweiter_name_vorname_unique" caption="Person Nachname Zweiter Name Vorname Unique" headerHint="Kombination aus nachname, vorname, zweiter_vorname und namensunterscheidung muss eindeutig sein. (Fachlicher unique constraint)" showColumnFilter="false" canSetNull="true" readOnly="true" controlVisible="false" enabled="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="buergerorte" caption="Buergerorte" headerHint="Strichpunkt getrennte Liste der Bürgerorte" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
@@ -21369,6 +21465,8 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="kontrolliert_datum"/>
             <Column fieldName="autorisierung_verschickt_visa"/>
             <Column fieldName="autorisierung_verschickt_datum"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
             <Column fieldName="autorisiert_visa"/>
             <Column fieldName="autorisiert_datum"/>
             <Column fieldName="freigabe_visa"/>
@@ -21378,6 +21476,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
+            <Column fieldName="buergerorte"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -21419,6 +21518,8 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="kontrolliert_datum"/>
             <Column fieldName="autorisierung_verschickt_visa"/>
             <Column fieldName="autorisierung_verschickt_datum"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
             <Column fieldName="autorisiert_visa"/>
             <Column fieldName="autorisiert_datum"/>
             <Column fieldName="freigabe_visa"/>
@@ -21428,6 +21529,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
+            <Column fieldName="buergerorte"/>
           </View>
           <Edit>
             <Column fieldName="id" visible="false"/>
@@ -21469,6 +21571,8 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="kontrolliert_datum"/>
             <Column fieldName="autorisierung_verschickt_visa"/>
             <Column fieldName="autorisierung_verschickt_datum"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
             <Column fieldName="autorisiert_visa"/>
             <Column fieldName="autorisiert_datum"/>
             <Column fieldName="freigabe_visa"/>
@@ -21478,6 +21582,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
+            <Column fieldName="buergerorte"/>
           </Edit>
           <Insert>
             <Column fieldName="id" visible="false"/>
@@ -21519,6 +21624,8 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="kontrolliert_datum" visible="false"/>
             <Column fieldName="autorisierung_verschickt_visa" visible="false"/>
             <Column fieldName="autorisierung_verschickt_datum" visible="false"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa" visible="false"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum" visible="false"/>
             <Column fieldName="autorisiert_visa" visible="false"/>
             <Column fieldName="autorisiert_datum" visible="false"/>
             <Column fieldName="freigabe_visa" visible="false"/>
@@ -21528,6 +21635,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
+            <Column fieldName="buergerorte"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -21578,6 +21686,9 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="wikipedia" visible="false"/>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="ist_parlamentarier_id"/>
+            <Column fieldName="buergerorte"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa" visible="false"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum" visible="false"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -21619,6 +21730,8 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="kontrolliert_datum"/>
             <Column fieldName="autorisierung_verschickt_visa"/>
             <Column fieldName="autorisierung_verschickt_datum"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
             <Column fieldName="autorisiert_visa"/>
             <Column fieldName="autorisiert_datum"/>
             <Column fieldName="freigabe_visa"/>
@@ -21628,6 +21741,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
+            <Column fieldName="buergerorte"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -21669,6 +21783,8 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="kontrolliert_datum"/>
             <Column fieldName="autorisierung_verschickt_visa"/>
             <Column fieldName="autorisierung_verschickt_datum"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
             <Column fieldName="autorisiert_visa"/>
             <Column fieldName="autorisiert_datum"/>
             <Column fieldName="freigabe_visa"/>
@@ -21678,6 +21794,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
+            <Column fieldName="buergerorte"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -21719,6 +21836,8 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="kontrolliert_datum"/>
             <Column fieldName="autorisierung_verschickt_visa"/>
             <Column fieldName="autorisierung_verschickt_datum"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
             <Column fieldName="autorisiert_visa"/>
             <Column fieldName="autorisiert_datum"/>
             <Column fieldName="freigabe_visa"/>
@@ -21728,6 +21847,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
+            <Column fieldName="buergerorte"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -21769,6 +21889,8 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="kontrolliert_datum"/>
             <Column fieldName="autorisierung_verschickt_visa"/>
             <Column fieldName="autorisierung_verschickt_datum"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
             <Column fieldName="autorisiert_visa"/>
             <Column fieldName="autorisiert_datum"/>
             <Column fieldName="freigabe_visa"/>
@@ -21778,6 +21900,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
+            <Column fieldName="buergerorte"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -21819,6 +21942,8 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="kontrolliert_datum"/>
             <Column fieldName="autorisierung_verschickt_visa"/>
             <Column fieldName="autorisierung_verschickt_datum"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
             <Column fieldName="autorisiert_visa"/>
             <Column fieldName="autorisiert_datum"/>
             <Column fieldName="freigabe_visa"/>
@@ -21828,6 +21953,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
+            <Column fieldName="buergerorte"/>
           </MultiEdit>
         </Columns>
         <Details>
@@ -22610,6 +22736,14 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="autorisierung_reminder_verschickt_visa" caption="Autorisierung Reminder Verschickt Visa" headerHint="Autorisierungerinnerung verschickt durch" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="autorisierung_reminder_verschickt_datum" caption="Autorisierung Reminder Verschickt Datum" headerHint="Autorisierungerinnerung verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
                 <ColumnPresentation fieldName="autorisiert_visa" caption="Autorisiert Visa" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen." canSetNull="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
@@ -22676,6 +22810,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="buergerorte" caption="Buergerorte" headerHint="Strichpunkt getrennte Liste der Bürgerorte" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -22718,6 +22856,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kontrolliert_datum"/>
                   <Column fieldName="autorisierung_verschickt_visa"/>
                   <Column fieldName="autorisierung_verschickt_datum"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                   <Column fieldName="autorisiert_visa"/>
                   <Column fieldName="autorisiert_datum"/>
                   <Column fieldName="freigabe_visa"/>
@@ -22732,6 +22872,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
                   <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
+                  <Column fieldName="buergerorte"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -22773,6 +22914,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kontrolliert_datum"/>
                   <Column fieldName="autorisierung_verschickt_visa"/>
                   <Column fieldName="autorisierung_verschickt_datum"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                   <Column fieldName="autorisiert_visa"/>
                   <Column fieldName="autorisiert_datum"/>
                   <Column fieldName="freigabe_visa"/>
@@ -22787,6 +22930,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
                   <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
+                  <Column fieldName="buergerorte"/>
                 </View>
                 <Edit>
                   <Column fieldName="id" visible="false"/>
@@ -22828,6 +22972,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kontrolliert_datum" visible="false"/>
                   <Column fieldName="autorisierung_verschickt_visa" visible="false"/>
                   <Column fieldName="autorisierung_verschickt_datum" visible="false"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa" visible="false"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum" visible="false"/>
                   <Column fieldName="autorisiert_visa" visible="false"/>
                   <Column fieldName="autorisiert_datum" visible="false"/>
                   <Column fieldName="freigabe_visa" visible="false"/>
@@ -22842,6 +22988,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
                   <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
+                  <Column fieldName="buergerorte"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="id" visible="false"/>
@@ -22883,6 +23030,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kontrolliert_datum" visible="false"/>
                   <Column fieldName="autorisierung_verschickt_visa" visible="false"/>
                   <Column fieldName="autorisierung_verschickt_datum" visible="false"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa" visible="false"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum" visible="false"/>
                   <Column fieldName="autorisiert_visa" visible="false"/>
                   <Column fieldName="autorisiert_datum" visible="false"/>
                   <Column fieldName="freigabe_visa" visible="false"/>
@@ -22897,6 +23046,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
                   <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
+                  <Column fieldName="buergerorte"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -22952,6 +23102,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="ist_parlamentarier_id"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -22993,6 +23146,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kontrolliert_datum"/>
                   <Column fieldName="autorisierung_verschickt_visa"/>
                   <Column fieldName="autorisierung_verschickt_datum"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                   <Column fieldName="autorisiert_visa"/>
                   <Column fieldName="autorisiert_datum"/>
                   <Column fieldName="freigabe_visa"/>
@@ -23007,6 +23162,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
                   <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
+                  <Column fieldName="buergerorte"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -23048,6 +23204,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kontrolliert_datum"/>
                   <Column fieldName="autorisierung_verschickt_visa"/>
                   <Column fieldName="autorisierung_verschickt_datum"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                   <Column fieldName="autorisiert_visa"/>
                   <Column fieldName="autorisiert_datum"/>
                   <Column fieldName="freigabe_visa"/>
@@ -23062,6 +23220,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
                   <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
+                  <Column fieldName="buergerorte"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -23103,6 +23262,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kontrolliert_datum"/>
                   <Column fieldName="autorisierung_verschickt_visa"/>
                   <Column fieldName="autorisierung_verschickt_datum"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                   <Column fieldName="autorisiert_visa"/>
                   <Column fieldName="autorisiert_datum"/>
                   <Column fieldName="freigabe_visa"/>
@@ -23117,6 +23278,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
                   <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
+                  <Column fieldName="buergerorte"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -23158,6 +23320,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kontrolliert_datum"/>
                   <Column fieldName="autorisierung_verschickt_visa"/>
                   <Column fieldName="autorisierung_verschickt_datum"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                   <Column fieldName="autorisiert_visa"/>
                   <Column fieldName="autorisiert_datum"/>
                   <Column fieldName="freigabe_visa"/>
@@ -23172,6 +23336,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
                   <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
+                  <Column fieldName="buergerorte"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -23213,6 +23378,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kontrolliert_datum" visible="false"/>
                   <Column fieldName="autorisierung_verschickt_visa" visible="false"/>
                   <Column fieldName="autorisierung_verschickt_datum" visible="false"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa" visible="false"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum" visible="false"/>
                   <Column fieldName="autorisiert_visa" visible="false"/>
                   <Column fieldName="autorisiert_datum" visible="false"/>
                   <Column fieldName="freigabe_visa" visible="false"/>
@@ -23227,6 +23394,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
                   <Column fieldName="person_nachname_zweiter_name_vorname_unique" visible="false"/>
+                  <Column fieldName="buergerorte"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -39179,6 +39347,18 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="100"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="buergerorte" caption="Buergerorte" headerHint="Strichpunkt getrennte Liste der Bürgerorte" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="autorisierung_reminder_verschickt_visa" caption="Autorisierung Reminder Verschickt Visa" headerHint="Autorisierungerinnerung verschickt durch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="autorisierung_reminder_verschickt_datum" caption="Autorisierung Reminder Verschickt Datum" headerHint="Autorisierungerinnerung verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -39260,6 +39440,9 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -39340,6 +39523,9 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </View>
                 <Edit>
                   <Column fieldName="nachname"/>
@@ -39420,6 +39606,9 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="nachname"/>
@@ -39500,6 +39689,9 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -39580,6 +39772,9 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -39660,6 +39855,9 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -39740,6 +39938,9 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -39820,6 +40021,9 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -39900,6 +40104,9 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -39980,6 +40187,9 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -44059,6 +44269,18 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="100"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="buergerorte" caption="Buergerorte" headerHint="Strichpunkt getrennte Liste der Bürgerorte" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="autorisierung_reminder_verschickt_visa" caption="Autorisierung Reminder Verschickt Visa" headerHint="Autorisierungerinnerung verschickt durch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="autorisierung_reminder_verschickt_datum" caption="Autorisierung Reminder Verschickt Datum" headerHint="Autorisierungerinnerung verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -44140,6 +44362,9 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -44220,6 +44445,9 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </View>
                 <Edit>
                   <Column fieldName="nachname"/>
@@ -44300,6 +44528,9 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="nachname"/>
@@ -44380,6 +44611,9 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -44460,6 +44694,9 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -44540,6 +44777,9 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -44620,6 +44860,9 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -44700,6 +44943,9 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -44780,6 +45026,9 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -44860,6 +45109,9 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -46991,6 +47243,18 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="100"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="buergerorte" caption="Buergerorte" headerHint="Strichpunkt getrennte Liste der Bürgerorte" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="autorisierung_reminder_verschickt_visa" caption="Autorisierung Reminder Verschickt Visa" headerHint="Autorisierungerinnerung verschickt durch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="autorisierung_reminder_verschickt_datum" caption="Autorisierung Reminder Verschickt Datum" headerHint="Autorisierungerinnerung verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -47072,6 +47336,9 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -47152,6 +47419,9 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </View>
                 <Edit>
                   <Column fieldName="nachname"/>
@@ -47232,6 +47502,9 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="nachname"/>
@@ -47312,6 +47585,9 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -47392,6 +47668,9 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -47472,6 +47751,9 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -47552,6 +47834,9 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -47632,6 +47917,9 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -47712,6 +48000,9 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -47792,6 +48083,9 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -49158,6 +49452,18 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="100"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="buergerorte" caption="Buergerorte" headerHint="Strichpunkt getrennte Liste der Bürgerorte" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="autorisierung_reminder_verschickt_visa" caption="Autorisierung Reminder Verschickt Visa" headerHint="Autorisierungerinnerung verschickt durch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="autorisierung_reminder_verschickt_datum" caption="Autorisierung Reminder Verschickt Datum" headerHint="Autorisierungerinnerung verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)" canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -49239,6 +49545,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -49319,6 +49628,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </View>
                 <Edit>
                   <Column fieldName="nachname"/>
@@ -49399,6 +49711,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="nachname"/>
@@ -49479,6 +49794,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -49559,6 +49877,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -49639,6 +49960,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -49719,6 +50043,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -49799,6 +50126,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -49879,6 +50209,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -49959,6 +50292,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="youtube_user"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="email_2"/>
+                  <Column fieldName="buergerorte"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+                  <Column fieldName="autorisierung_reminder_verschickt_datum"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -53303,6 +53639,18 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="buergerorte" caption="Buergerorte" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="autorisierung_reminder_verschickt_visa" caption="Autorisierung Reminder Verschickt Visa" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="autorisierung_reminder_verschickt_datum" caption="Autorisierung Reminder Verschickt Datum" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -53384,6 +53732,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="email_2"/>
+            <Column fieldName="buergerorte"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -53464,6 +53815,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="email_2"/>
+            <Column fieldName="buergerorte"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
           </View>
           <Edit>
             <Column fieldName="id"/>
@@ -53544,6 +53898,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="email_2"/>
+            <Column fieldName="buergerorte"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
           </Edit>
           <Insert>
             <Column fieldName="id"/>
@@ -53624,6 +53981,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="email_2"/>
+            <Column fieldName="buergerorte"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -53704,6 +54064,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="email_2"/>
+            <Column fieldName="buergerorte"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -53784,6 +54147,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="email_2"/>
+            <Column fieldName="buergerorte"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -53864,6 +54230,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="email_2"/>
+            <Column fieldName="buergerorte"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -53944,6 +54313,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="email_2"/>
+            <Column fieldName="buergerorte"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -54024,6 +54396,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="email_2"/>
+            <Column fieldName="buergerorte"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -54104,6 +54479,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="youtube_user"/>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="email_2"/>
+            <Column fieldName="buergerorte"/>
+            <Column fieldName="autorisierung_reminder_verschickt_visa"/>
+            <Column fieldName="autorisierung_reminder_verschickt_datum"/>
           </MultiEdit>
         </Columns>
         <Details/>

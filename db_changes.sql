@@ -4100,3 +4100,21 @@ WHERE interessenbindung_jahr.jahr = (SELECT MAX(ijn.jahr)
     GROUP BY ijn.interessenbindung_id)
 AND interessenbindung_jahr.jahr < YEAR(NOW())
 ORDER BY `interessenbindung_jahr`.`jahr`  DESC, `interessenbindung_jahr`.`id` DESC;
+
+-- 20.05.2022 parlamentarier.autorisierung_reminder
+
+ALTER TABLE `parlamentarier`
+  ADD `autorisierung_reminder_verschickt_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Autorisierungerinnerung verschickt durch' AFTER autorisierung_verschickt_datum,
+  ADD`autorisierung_reminder_verschickt_datum` timestamp NULL DEFAULT NULL COMMENT 'Autorisierungerinnerung verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)' AFTER autorisierung_reminder_verschickt_visa;
+
+ALTER TABLE `parlamentarier_log`
+  ADD `autorisierung_reminder_verschickt_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Autorisierungerinnerung verschickt durch' AFTER autorisierung_verschickt_datum,
+  ADD`autorisierung_reminder_verschickt_datum` timestamp NULL DEFAULT NULL COMMENT 'Autorisierungerinnerung verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)' AFTER autorisierung_reminder_verschickt_visa;
+
+ALTER TABLE `person`
+  ADD `autorisierung_reminder_verschickt_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Autorisierungerinnerung verschickt durch' AFTER autorisierung_verschickt_datum,
+  ADD`autorisierung_reminder_verschickt_datum` timestamp NULL DEFAULT NULL COMMENT 'Autorisierungerinnerung verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)' AFTER autorisierung_reminder_verschickt_visa;
+
+ALTER TABLE `person_log`
+  ADD `autorisierung_reminder_verschickt_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Autorisierungerinnerung verschickt durch' AFTER autorisierung_verschickt_datum,
+  ADD`autorisierung_reminder_verschickt_datum` timestamp NULL DEFAULT NULL COMMENT 'Autorisierungerinnerung verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)' AFTER autorisierung_reminder_verschickt_visa;

@@ -3649,6 +3649,8 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('autorisierung_verschickt_visa'),
                     new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisierung_reminder_verschickt_visa'),
+                    new DateTimeField('autorisierung_reminder_verschickt_datum'),
                     new StringField('autorisiert_visa'),
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),
@@ -3737,6 +3739,8 @@
                 new FilterColumn($this->dataset, 'kontrolliert_datum', 'kontrolliert_datum', 'Kontrolliert Datum'),
                 new FilterColumn($this->dataset, 'autorisierung_verschickt_visa', 'autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa'),
                 new FilterColumn($this->dataset, 'autorisierung_verschickt_datum', 'autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum'),
+                new FilterColumn($this->dataset, 'autorisierung_reminder_verschickt_visa', 'autorisierung_reminder_verschickt_visa', 'Autorisierung Reminder Verschickt Visa'),
+                new FilterColumn($this->dataset, 'autorisierung_reminder_verschickt_datum', 'autorisierung_reminder_verschickt_datum', 'Autorisierung Reminder Verschickt Datum'),
                 new FilterColumn($this->dataset, 'autorisiert_visa', 'autorisiert_visa', 'Autorisiert Visa'),
                 new FilterColumn($this->dataset, 'autorisiert_datum', 'autorisiert_datum', 'Autorisiert Datum'),
                 new FilterColumn($this->dataset, 'freigabe_visa', 'freigabe_visa', 'Freigabe Visa'),
@@ -3797,6 +3801,8 @@
                 ->addColumn($columns['kontrolliert_datum'])
                 ->addColumn($columns['autorisierung_verschickt_visa'])
                 ->addColumn($columns['autorisierung_verschickt_datum'])
+                ->addColumn($columns['autorisierung_reminder_verschickt_visa'])
+                ->addColumn($columns['autorisierung_reminder_verschickt_datum'])
                 ->addColumn($columns['autorisiert_visa'])
                 ->addColumn($columns['autorisiert_datum'])
                 ->addColumn($columns['freigabe_visa'])
@@ -3827,6 +3833,8 @@
                 ->setOptionsFor('kontrolliert_datum')
                 ->setOptionsFor('autorisierung_verschickt_visa')
                 ->setOptionsFor('autorisierung_verschickt_datum')
+                ->setOptionsFor('autorisierung_reminder_verschickt_visa')
+                ->setOptionsFor('autorisierung_reminder_verschickt_datum')
                 ->setOptionsFor('autorisiert_visa')
                 ->setOptionsFor('autorisiert_datum')
                 ->setOptionsFor('freigabe_visa')
@@ -4818,6 +4826,52 @@
                 )
             );
             
+            $main_editor = new TextEdit('autorisierung_reminder_verschickt_visa_edit');
+            $main_editor->SetMaxLength(10);
+            
+            $filterBuilder->addColumn(
+                $columns['autorisierung_reminder_verschickt_visa'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new DateTimeEdit('autorisierung_reminder_verschickt_datum_edit', false, 'd.m.Y H:i:s');
+            
+            $filterBuilder->addColumn(
+                $columns['autorisierung_reminder_verschickt_datum'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::DATE_EQUALS => $main_editor,
+                    FilterConditionOperator::DATE_DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::TODAY => null,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
             $main_editor = new TextEdit('autorisiert_visa_edit');
             $main_editor->SetMaxLength(10);
             
@@ -5587,6 +5641,27 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for autorisierung_reminder_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_reminder_verschickt_visa', 'autorisierung_reminder_verschickt_visa', 'Autorisierung Reminder Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Autorisierungerinnerung verschickt durch');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_reminder_verschickt_datum', 'autorisierung_reminder_verschickt_datum', 'Autorisierung Reminder Verschickt Datum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Autorisierungerinnerung verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'autorisiert_visa', 'Autorisiert Visa', $this->dataset);
@@ -6026,6 +6101,21 @@
             // View column for autorisierung_verschickt_datum field
             //
             $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_reminder_verschickt_visa', 'autorisierung_reminder_verschickt_visa', 'Autorisierung Reminder Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_reminder_verschickt_datum', 'autorisierung_reminder_verschickt_datum', 'Autorisierung Reminder Verschickt Datum', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
@@ -6475,6 +6565,21 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for autorisierung_reminder_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_reminder_verschickt_visa', 'autorisierung_reminder_verschickt_visa', 'Autorisierung Reminder Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_reminder_verschickt_datum', 'autorisierung_reminder_verschickt_datum', 'Autorisierung Reminder Verschickt Datum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'autorisiert_visa', 'Autorisiert Visa', $this->dataset);
@@ -6872,6 +6977,21 @@
             // View column for autorisierung_verschickt_datum field
             //
             $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_reminder_verschickt_visa', 'autorisierung_reminder_verschickt_visa', 'Autorisierung Reminder Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_reminder_verschickt_datum', 'autorisierung_reminder_verschickt_datum', 'Autorisierung Reminder Verschickt Datum', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
@@ -7279,6 +7399,21 @@
             $grid->AddCompareColumn($column);
             
             //
+            // View column for autorisierung_reminder_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_reminder_verschickt_visa', 'autorisierung_reminder_verschickt_visa', 'Autorisierung Reminder Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_reminder_verschickt_datum', 'autorisierung_reminder_verschickt_datum', 'Autorisierung Reminder Verschickt Datum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddCompareColumn($column);
+            
+            //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'autorisiert_visa', 'Autorisiert Visa', $this->dataset);
@@ -7664,6 +7799,8 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('autorisierung_verschickt_visa'),
                     new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisierung_reminder_verschickt_visa'),
+                    new DateTimeField('autorisierung_reminder_verschickt_datum'),
                     new StringField('autorisiert_visa'),
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),
@@ -10259,6 +10396,8 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('autorisierung_verschickt_visa'),
                     new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisierung_reminder_verschickt_visa'),
+                    new DateTimeField('autorisierung_reminder_verschickt_datum'),
                     new StringField('autorisiert_visa'),
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),
@@ -10831,6 +10970,8 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('autorisierung_verschickt_visa'),
                     new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisierung_reminder_verschickt_visa'),
+                    new DateTimeField('autorisierung_reminder_verschickt_datum'),
                     new StringField('autorisiert_visa'),
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),
@@ -11868,6 +12009,8 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('autorisierung_verschickt_visa'),
                     new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisierung_reminder_verschickt_visa'),
+                    new DateTimeField('autorisierung_reminder_verschickt_datum'),
                     new StringField('autorisiert_visa'),
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),
@@ -14063,6 +14206,8 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('autorisierung_verschickt_visa'),
                     new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisierung_reminder_verschickt_visa'),
+                    new DateTimeField('autorisierung_reminder_verschickt_datum'),
                     new StringField('autorisiert_visa'),
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),
@@ -14175,6 +14320,8 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('autorisierung_verschickt_visa'),
                     new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisierung_reminder_verschickt_visa'),
+                    new DateTimeField('autorisierung_reminder_verschickt_datum'),
                     new StringField('autorisiert_visa'),
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),
@@ -14287,6 +14434,8 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('autorisierung_verschickt_visa'),
                     new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisierung_reminder_verschickt_visa'),
+                    new DateTimeField('autorisierung_reminder_verschickt_datum'),
                     new StringField('autorisiert_visa'),
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),
@@ -14399,6 +14548,8 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('autorisierung_verschickt_visa'),
                     new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisierung_reminder_verschickt_visa'),
+                    new DateTimeField('autorisierung_reminder_verschickt_datum'),
                     new StringField('autorisiert_visa'),
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),
@@ -17995,6 +18146,8 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('autorisierung_verschickt_visa'),
                     new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisierung_reminder_verschickt_visa'),
+                    new DateTimeField('autorisierung_reminder_verschickt_datum'),
                     new StringField('autorisiert_visa'),
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),
@@ -18084,6 +18237,8 @@
                 new FilterColumn($this->dataset, 'kontrolliert_datum', 'kontrolliert_datum', 'Kontrolliert Datum'),
                 new FilterColumn($this->dataset, 'autorisierung_verschickt_visa', 'autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa'),
                 new FilterColumn($this->dataset, 'autorisierung_verschickt_datum', 'autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum'),
+                new FilterColumn($this->dataset, 'autorisierung_reminder_verschickt_visa', 'autorisierung_reminder_verschickt_visa', 'Autorisierung Reminder Verschickt Visa'),
+                new FilterColumn($this->dataset, 'autorisierung_reminder_verschickt_datum', 'autorisierung_reminder_verschickt_datum', 'Autorisierung Reminder Verschickt Datum'),
                 new FilterColumn($this->dataset, 'autorisiert_visa', 'autorisiert_visa', 'Autorisiert Visa'),
                 new FilterColumn($this->dataset, 'autorisiert_datum', 'autorisiert_datum', 'Autorisiert Datum'),
                 new FilterColumn($this->dataset, 'freigabe_visa', 'freigabe_visa', 'Freigabe Visa'),
@@ -18159,6 +18314,8 @@
                 ->setOptionsFor('kontrolliert_datum')
                 ->setOptionsFor('autorisierung_verschickt_visa')
                 ->setOptionsFor('autorisierung_verschickt_datum')
+                ->setOptionsFor('autorisierung_reminder_verschickt_visa')
+                ->setOptionsFor('autorisierung_reminder_verschickt_datum')
                 ->setOptionsFor('autorisiert_visa')
                 ->setOptionsFor('autorisiert_datum')
                 ->setOptionsFor('freigabe_visa')
@@ -19145,6 +19302,52 @@
                 )
             );
             
+            $main_editor = new TextEdit('autorisierung_reminder_verschickt_visa_edit');
+            $main_editor->SetMaxLength(10);
+            
+            $filterBuilder->addColumn(
+                $columns['autorisierung_reminder_verschickt_visa'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new DateTimeEdit('autorisierung_reminder_verschickt_datum_edit', false, 'd.m.Y H:i:s');
+            
+            $filterBuilder->addColumn(
+                $columns['autorisierung_reminder_verschickt_datum'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::DATE_EQUALS => $main_editor,
+                    FilterConditionOperator::DATE_DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::TODAY => null,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
             $main_editor = new TextEdit('autorisiert_visa_edit');
             $main_editor->SetMaxLength(10);
             
@@ -19866,6 +20069,27 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for autorisierung_reminder_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_reminder_verschickt_visa', 'autorisierung_reminder_verschickt_visa', 'Autorisierung Reminder Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Autorisierungerinnerung verschickt durch');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_reminder_verschickt_datum', 'autorisierung_reminder_verschickt_datum', 'Autorisierung Reminder Verschickt Datum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Autorisierungerinnerung verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'autorisiert_visa', 'Autorisiert Visa', $this->dataset);
@@ -20282,6 +20506,21 @@
             // View column for autorisierung_verschickt_datum field
             //
             $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_reminder_verschickt_visa', 'autorisierung_reminder_verschickt_visa', 'Autorisierung Reminder Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_reminder_verschickt_datum', 'autorisierung_reminder_verschickt_datum', 'Autorisierung Reminder Verschickt Datum', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
@@ -20862,6 +21101,8 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('autorisierung_verschickt_visa'),
                     new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisierung_reminder_verschickt_visa'),
+                    new DateTimeField('autorisierung_reminder_verschickt_datum'),
                     new StringField('autorisiert_visa'),
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),
@@ -21002,6 +21243,27 @@
             //
             $editor = new DateTimeEdit('autorisierung_verschickt_datum_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Autorisierung Verschickt Datum', 'autorisierung_verschickt_datum', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for autorisierung_reminder_verschickt_visa field
+            //
+            $editor = new TextEdit('autorisierung_reminder_verschickt_visa_edit');
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Autorisierung Reminder Verschickt Visa', 'autorisierung_reminder_verschickt_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for autorisierung_reminder_verschickt_datum field
+            //
+            $editor = new DateTimeEdit('autorisierung_reminder_verschickt_datum_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Autorisierung Reminder Verschickt Datum', 'autorisierung_reminder_verschickt_datum', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -21608,6 +21870,8 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('autorisierung_verschickt_visa'),
                     new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisierung_reminder_verschickt_visa'),
+                    new DateTimeField('autorisierung_reminder_verschickt_datum'),
                     new StringField('autorisiert_visa'),
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),
@@ -21728,6 +21992,27 @@
             //
             $editor = new DateTimeEdit('autorisierung_verschickt_datum_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Autorisierung Verschickt Datum', 'autorisierung_verschickt_datum', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for autorisierung_reminder_verschickt_visa field
+            //
+            $editor = new TextEdit('autorisierung_reminder_verschickt_visa_edit');
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Autorisierung Reminder Verschickt Visa', 'autorisierung_reminder_verschickt_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for autorisierung_reminder_verschickt_datum field
+            //
+            $editor = new DateTimeEdit('autorisierung_reminder_verschickt_datum_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Autorisierung Reminder Verschickt Datum', 'autorisierung_reminder_verschickt_datum', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -22335,6 +22620,8 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('autorisierung_verschickt_visa'),
                     new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisierung_reminder_verschickt_visa'),
+                    new DateTimeField('autorisierung_reminder_verschickt_datum'),
                     new StringField('autorisiert_visa'),
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),
@@ -22790,6 +23077,21 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for autorisierung_reminder_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_reminder_verschickt_visa', 'autorisierung_reminder_verschickt_visa', 'Autorisierung Reminder Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_reminder_verschickt_datum', 'autorisierung_reminder_verschickt_datum', 'Autorisierung Reminder Verschickt Datum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'autorisiert_visa', 'Autorisiert Visa', $this->dataset);
@@ -23179,6 +23481,21 @@
             // View column for autorisierung_verschickt_datum field
             //
             $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_reminder_verschickt_visa', 'autorisierung_reminder_verschickt_visa', 'Autorisierung Reminder Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_reminder_verschickt_datum', 'autorisierung_reminder_verschickt_datum', 'Autorisierung Reminder Verschickt Datum', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
@@ -23578,6 +23895,21 @@
             $grid->AddCompareColumn($column);
             
             //
+            // View column for autorisierung_reminder_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_reminder_verschickt_visa', 'autorisierung_reminder_verschickt_visa', 'Autorisierung Reminder Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for autorisierung_reminder_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_reminder_verschickt_datum', 'autorisierung_reminder_verschickt_datum', 'Autorisierung Reminder Verschickt Datum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddCompareColumn($column);
+            
+            //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'autorisiert_visa', 'Autorisiert Visa', $this->dataset);
@@ -23900,6 +24232,8 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('autorisierung_verschickt_visa'),
                     new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisierung_reminder_verschickt_visa'),
+                    new DateTimeField('autorisierung_reminder_verschickt_datum'),
                     new StringField('autorisiert_visa'),
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),
@@ -24121,6 +24455,8 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('autorisierung_verschickt_visa'),
                     new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisierung_reminder_verschickt_visa'),
+                    new DateTimeField('autorisierung_reminder_verschickt_datum'),
                     new StringField('autorisiert_visa'),
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),
@@ -24233,6 +24569,8 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('autorisierung_verschickt_visa'),
                     new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisierung_reminder_verschickt_visa'),
+                    new DateTimeField('autorisierung_reminder_verschickt_datum'),
                     new StringField('autorisiert_visa'),
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),
@@ -24345,6 +24683,8 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('autorisierung_verschickt_visa'),
                     new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisierung_reminder_verschickt_visa'),
+                    new DateTimeField('autorisierung_reminder_verschickt_datum'),
                     new StringField('autorisiert_visa'),
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),

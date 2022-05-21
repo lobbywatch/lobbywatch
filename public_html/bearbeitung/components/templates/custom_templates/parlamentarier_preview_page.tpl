@@ -120,12 +120,21 @@
                           </a>
                       </div>
 
+                      {if $Parlamentarier.isReminder}
+                      <div class="btn-group">
+                          <a id="email-reminder-sent-parlam" class="btn btn-default" href="#">
+                              <i class="pg-icon-authorization-sent-selected"></i>
+                              Autorisierungsreminder verschickt
+                          </a>
+                      </div>
+                      {else}
                       <div class="btn-group">
                           <a id="email-sent-parlam" class="btn btn-default" href="#">
                               <i class="pg-icon-authorization-sent-selected"></i>
                               Autorisierungsanfrage verschickt
                           </a>
                       </div>
+                      {/if}
 
           {*        </div>
              </div>
@@ -202,12 +211,21 @@
                           </a>
                       </div>
 
+                      {if $Zutrittsberechtigter0.isReminder}
+                      <div class="btn-group">
+                          <a id="email-reminder-sent-zb0" class="btn btn-default" href="#">
+                              <i class="pg-icon-authorization-sent-selected"></i>
+                              Autorisierungsreminder verschickt
+                          </a>
+                      </div>
+                      {else}
                       <div class="btn-group">
                           <a id="email-sent-zb0" class="btn btn-default" href="#">
                               <i class="pg-icon-authorization-sent-selected"></i>
                               Autorisierungsanfrage verschickt
                           </a>
                       </div>
+                      {/if}
 
           {*        </div>
              </div>
@@ -285,12 +303,21 @@
                           </a>
                       </div>
 
+                      {if $Zutrittsberechtigter1.isReminder}
+                      <div class="btn-group">
+                          <a id="email-reminder-sent-zb1" class="btn btn-default" href="#">
+                              <i class="pg-icon-authorization-sent-selected"></i>
+                              Autorisierungsreminder verschickt
+                          </a>
+                      </div>
+                      {else}
                       <div class="btn-group">
                           <a id="email-sent-zb1" class="btn btn-default" href="#">
                               <i class="pg-icon-authorization-sent-selected"></i>
                               Autorisierungsanfrage verschickt
                           </a>
                       </div>
+                      {/if}
 
           {*        </div>
              </div>
@@ -473,6 +500,22 @@
         return false;
       });
 
+      $("#email-reminder-sent-parlam").click(function() {
+        require(['bootbox'], function() {
+
+          var ids = '#opsParlam';
+          var nRows = countSelectedRows(ids);
+          // bootbox.animate(false);
+          bootbox.confirm( 'Parlamentarier-Autorisierungsminder verschickt? (n=' + nRows + ')' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+              if (confirmed) {
+                //self.operateSelectRows('sndsel');
+                operateRowAsSelected('parlamentarier.php', 'sndremindersel', '', ids);
+              }
+          });
+        });
+        return false;
+      });
+
       $("#email-sent-zb0").click(function() {
         require(['bootbox'], function() {
 
@@ -499,6 +542,38 @@
               if (confirmed) {
                 //self.operateSelectRows('sndsel');
                 operateRowAsSelected('person.php', 'sndsel', '', ids);
+              }
+          });
+        });
+        return false;
+      });
+
+      $("#email-reminder-sent-zb0").click(function() {
+        require(['bootbox'], function() {
+
+          var ids = '#opsZb0';
+          var nRows = countSelectedRows(ids);
+          // bootbox.animate(false);
+          bootbox.confirm( 'Zutrittsberechtiger-Autorisierungsreminder verschickt? (n=' + nRows + ')' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+              if (confirmed) {
+                //self.operateSelectRows('sndsel');
+                operateRowAsSelected('person.php', 'sndremindersel', '', ids);
+              }
+          });
+        });
+        return false;
+      });
+
+      $("#email-reminder-sent-zb1").click(function() {
+        require(['bootbox'], function() {
+
+          var ids = '#opsZb1';
+          var nRows = countSelectedRows(ids);
+          // bootbox.animate(false);
+          bootbox.confirm( 'Zutrittsberechtiger-Autorisierungsreminder verschickt? (n=' + nRows + ')' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+              if (confirmed) {
+                //self.operateSelectRows('sndsel');
+                operateRowAsSelected('person.php', 'sndremindersel', '', ids);
               }
           });
         });

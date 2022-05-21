@@ -905,6 +905,8 @@ class Grid {
             OPERATION_DE_CONTROLLED_SELECTED => 'DeControlledSelectedGridState', // Afterburner
             OPERATION_AUTHORIZATION_SENT_SELECTED => 'AuthorizationSentSelectedGridState', // Afterburner
             OPERATION_DE_AUTHORIZATION_SENT_SELECTED => 'DeAuthorizationSentSelectedGridState', // Afterburner
+            OPERATION_AUTHORIZATION_REMINDER_SENT_SELECTED => 'AuthorizationReminderSentSelectedGridState', // Afterburner
+            OPERATION_DE_AUTHORIZATION_REMINDER_SENT_SELECTED => 'DeAuthorizationReminderSentSelectedGridState', // Afterburner
             OPERATION_AUTHORIZE_SELECTED => 'AuthorizeSelectedGridState', // Afterburner
             OPERATION_DE_AUTHORIZE_SELECTED => 'DeAuthorizeSelectedGridState', // Afterburner
             OPERATION_RELEASE_SELECTED => 'ReleaseSelectedGridState', // Afterburner

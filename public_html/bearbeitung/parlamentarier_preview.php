@@ -66,11 +66,26 @@ try {
     $lastLogRowParlamentInteressenbindungen = get_parlamentarier_log_last_changed_parlament_interessenbindungen($con, $id);
     $lastLogRowParlamentBeruf = get_parlamentarier_log_last_changed_parlament_beruf_json($con, $id);
 
-    $isParlReAuthorization = isset($rowData['autorisiert_datum']);
+    $isParlReAuthorization = false;
+    $isParlAuthorizationReminder = false;
+
+    $aut_sent = isset($rowData['autorisierung_verschickt_datum']);
+    if ($aut_sent) {
+      $aut_sent_time = strtotime($rowData['autorisierung_verschickt_datum']);
+      $now_time = (new DateTime())->getTimestamp();
+      $isParlAuthorizationReminder = $aut_sent_time > $now_time - 8 * 7 * 24 * 60 * 60;
+      $reminder = $isParlAuthorizationReminder ? 'Reminder' : '';
+    }
+
+    if ($isParlAuthorizationReminder) {
+      $isParlReAuthorization = false;
+    } else {
+      $isParlReAuthorization = isset($rowData['autorisiert_datum']);
+    }
     $re = $isParlReAuthorization ? 'Re' : '';
 
     $emailSubjectParlam = getSettingValue("parlamentarierAutorisierungEmailSubject$lang_suffix", false, 'Interessenbindungen');
-    $emailIntroParlam = getSettingValue("parlamentarier${re}AutorisierungEmailEinleitung$lang_suffix", false, '[Einleitung]<br><br>');
+    $emailIntroParlam = getSettingValue("parlamentarier${re}Autorisierung${reminder}EmailEinleitung$lang_suffix", false, '[Einleitung]<br><br>');
     $emailEndParlam = getSettingValue("parlamentarier${re}AutorisierungEmailSchluss$lang_suffix", false, '<br><br>Freundliche Grüsse<br>%name%');
     $emailEndParlam = StringUtils::ReplaceVariableInTemplate($emailEndParlam, 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
 
@@ -96,6 +111,8 @@ try {
 
     $mailtoParlam = 'mailto:' . rawurlencode($rowData["email"]) . '?subject=' . rawurlencode($emailSubjectParlam) . '&body=' . rawurlencode('[Kopiere von Vorlage]') . '&bcc=redaktion@lobbywatch.ch';
 
+    $isZbAuthorizationReminder = [];
+
     $i = 0;
     foreach ($zbList as $zb) {
 
@@ -103,12 +120,26 @@ try {
       lobbywatch_set_language($lang);
       $lang_suffix = get_lang_suffix($lang);
 
-      $isZbReAuthorization = isset($zb['autorisiert_datum']);
+      $aut_sent = isset($zb['autorisierung_verschickt_datum']);
+      if ($aut_sent) {
+        $aut_sent_time = strtotime($zb['autorisierung_verschickt_datum']);
+        $now_time = (new DateTime())->getTimestamp();
+        $isZbAuthorizationReminder[$i] = $aut_sent_time > $now_time - 8 * 7 * 24 * 60 * 60;
+        $reminder = $isParlAuthorizationReminder ? 'Reminder' : '';
+      } else {
+        $isZbAuthorizationReminder[$i] = false;
+      }
+
+      if ($isZbAuthorizationReminder[$i]) {
+        $isZbReAuthorization = false;
+      } else {
+        $isZbReAuthorization = isset($zb['autorisiert_datum']);
+      }
       $re = $isZbReAuthorization ? 'Re' : '';
 
       $emailSubjectZb[$i] = getSettingValue("zutrittsberechtigterAutorisierungEmailSubject$lang_suffix", false, 'Zugangsberechtigung ins Parlament');
 
-      $emailIntroZb[$i] = StringUtils::ReplaceVariableInTemplate(getSettingValue("zutrittsberechtigter${re}AutorisierungEmailEinleitung$lang_suffix", false, '[Einleitung]<br><br>Zutrittsberechtigung erhalten von %parlamentarierName%.'), 'parlamentarierName', $rowData["parlamentarier_name2"]);
+      $emailIntroZb[$i] = StringUtils::ReplaceVariableInTemplate(getSettingValue("zutrittsberechtigter${re}Autorisierung${reminder}EmailEinleitung$lang_suffix", false, '[Einleitung]<br><br>Zutrittsberechtigung erhalten von %parlamentarierName%.'), 'parlamentarierName', $rowData["parlamentarier_name2"]);
       $emailEndZb[$i] = StringUtils::ReplaceVariableInTemplate(getSettingValue("zutrittsberechtigter${re}AutorisierungEmailSchluss$lang_suffix", false, '<br><br>Freundliche Grüsse<br>%name%'), 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
 
       $rowCellStylesZb[$i] = [];
@@ -161,7 +192,7 @@ try {
             '<h4>Interessenbindungen</h4><ul>' . $rowData['interessenbindungen'] . '</ul>' .
             '<h4>Gäste' . (substr_count($rowData['zutrittsberechtigungen'], '[VALID_Zutrittsberechtigung]') > 2 ? ' <img src="img/icons/warning.gif" alt="Warnung">': '') . '</h4>' . ($rowData['zutrittsberechtigungen'] ? '<ul>' . $rowData['zutrittsberechtigungen'] . '</ul>': '<p>keine</p>') .
             '<h4>Mandate der Gäste</h4>' . $zbRetDetail['gaesteMitMandaten'],
-          'EmailTitle' => ($isParlReAuthorization ? 'Re-' : '') . 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoParlam. '" target="_blank">' . $rowData["parlamentarier_name"] . '</a>',
+          'EmailTitle' => ($isParlAuthorizationReminder ? 'Reminder-' : '') . ($isParlReAuthorization ? 'Re-' : '') . 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoParlam. '" target="_blank">' . $rowData["parlamentarier_name"] . '</a>',
           'EmailText' => '<div>' . $rowData['anrede'] . '' . $emailIntroParlam . (isset($rowData['beruf']) ? '<b>' . lt('Beruf:') . '</b> ' . translate_record_field($rowData, 'beruf', false, true) . '' : '') . '<br><br><b>' . lt('Ihre Interessenbindungen:') .'</b><ul>' . $rowData_no_pg_members['interessenbindungen_for_email'] . '</ul>' .
             // $organisationsbeziehungen .  RK Do not show Organisationsbeziehungen in Autorisierungs E-Mail, request Otto
             '<b>' . lt('Ihre Gäste:') . '</b></p>' . ($rowData['zutrittsberechtigungen_for_email'] ? '<ul>' . $rowData['zutrittsberechtigungen_for_email'] . '</ul>': '<br>' . lt('keine') . '<br>') .
@@ -175,9 +206,10 @@ try {
           'parlament_interessenbindungen_updated' => $rowData['parlament_interessenbindungen_updated_formatted'],
           'parlament_biografie_id' => $rowData['parlament_biografie_id'],
           'import_date_wsparlamentch' => $import_date_wsparlamentch,
+          'isReminder' => $isParlAuthorizationReminder,
         ),
-        'Zutrittsberechtigter0' => fillZutrittsberechtigterEmail(0),
-        'Zutrittsberechtigter1' => fillZutrittsberechtigterEmail(1),
+        'Zutrittsberechtigter0' => fillZutrittsberechtigterEmail(0, $rowData, $zbList, $emailEndZb, $mailtoZb, $emailIntroZb, $isZbAuthorizationReminder, $rowCellStylesZb),
+        'Zutrittsberechtigter1' => fillZutrittsberechtigterEmail(1, $rowData, $zbList, $emailEndZb, $mailtoZb, $emailIntroZb, $isZbAuthorizationReminder, $rowCellStylesZb),
         'Authentication' => array(
             'Enabled' => true,
             'LoggedIn' => GetApplication()->IsCurrentUserLoggedIn(),

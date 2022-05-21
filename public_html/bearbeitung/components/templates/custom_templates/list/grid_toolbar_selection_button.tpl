@@ -182,6 +182,18 @@
                             &quot;Autorisierung verschickt&quot; entfernen{*$Captions->GetMessageString('DeleteSelected')*}
                         </a>
                     </li>
+                    <li>
+                        <a href="#" class="js-action" data-type="authorization-reminder-sent-selected" data-url="{$Page->getLink()}">
+                            <i class="pg-icon-authorization-reminder-sent-selected"></i>
+                            &quot;Autorisierungsreminder verschickt&quot; setzen{*$Captions->GetMessageString('DeleteSelected')*}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="js-action" data-type="de-authorization-reminder-sent-selected" data-url="{$Page->getLink()}">
+                            <i class="pg-icon-de-authorization-reminder-sent-selected"></i>
+                            &quot;Autorisierungreminder verschickt&quot; entfernen{*$Captions->GetMessageString('DeleteSelected')*}
+                        </a>
+                    </li>
                 {/if}
 
                 {if $DataGrid.ActionsPanel.AuthorizeSelectedButton}
