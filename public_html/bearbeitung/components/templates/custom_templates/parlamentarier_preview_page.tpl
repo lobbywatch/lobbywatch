@@ -11,8 +11,8 @@
   <ul {*class="css-tabs"*}>
     <li><a href="#preview">Vorschau</a></li>
     <li><a href="#email-parlam">Autorisierungs-E-Mail Parlamentarier</a></li>
-    {if isset($Zutrittsberechtigter0.Id)}<li><a href="#email-zb0">Autorisierungs-E-Mail Zutrittsberechtiger 1</a></li>{/if}
-    {if isset($Zutrittsberechtigter1.Id)}<li><a href="#email-zb1">Autorisierungs-E-Mail Zutrittsberechtiger 2</a></li>{/if}
+    {if isset($Zutrittsberechtigter0.PersonId)}<li><a href="#email-zb0">Autorisierungs-E-Mail Zutrittsberechtiger 1</a></li>{/if}
+    {if isset($Zutrittsberechtigter1.PersonId)}<li><a href="#email-zb1">Autorisierungs-E-Mail Zutrittsberechtiger 2</a></li>{/if}
   </ul>
 
   <!-- First tab content.-->
@@ -166,13 +166,13 @@
   </div>  <!-- end second tab content.-->
 
   <!-- Third tab content.-->
-  {if isset($Zutrittsberechtigter0.Id)}
+  {if isset($Zutrittsberechtigter0.PersonId)}
   <div id="email-zb0" {*class="row-fluid"*}>
 
     <div id="opsZb0" class="hide">
       <div class="pg-row-selected-sim">
         <input name="rec0" type="checkbox" checked>
-        <input name="rec0_pk0" value="{$Zutrittsberechtigter0.Id}" type="hidden">
+        <input name="rec0_pk0" value="{$Zutrittsberechtigter0.PersonId}" type="hidden">
       </div>
     </div>
 
@@ -217,11 +217,11 @@
           *}
 
                       <div class="btn-group">
-                          <a class="btn btn-default" href="person.php?operation=edit&pk0={$Zutrittsberechtigter0.Id}">Bearbeiten</a>
+                          <a class="btn btn-default" href="person.php?operation=edit&pk0={$Zutrittsberechtigter0.PersonId}">Bearbeiten</a>
                       </div>
 
                       <div class="btn-group">
-                          <a class="btn btn-default" href="person.php?operation=view&pk0={$Zutrittsberechtigter0.Id}">Ansehen</a>
+                          <a class="btn btn-default" href="person.php?operation=view&pk0={$Zutrittsberechtigter0.PersonId}">Ansehen</a>
                       </div>
 
                       <div class="btn-group">
@@ -249,13 +249,13 @@
   {/if}
 
   <!-- Fourth tab content.-->
-  {if isset($Zutrittsberechtigter1.Id)}
+  {if isset($Zutrittsberechtigter1.PersonId)}
   <div id="email-zb1" {*class="row-fluid"*}>
 
     <div id="opsZb1" class="hide">
       <div class="pg-row-selected-sim">
         <input name="rec0" type="checkbox" checked>
-        <input name="rec0_pk0" value="{$Zutrittsberechtigter1.Id}" type="hidden">
+        <input name="rec0_pk0" value="{$Zutrittsberechtigter1.PersonId}" type="hidden">
       </div>
     </div>
 
@@ -300,11 +300,11 @@
           *}
 
                       <div class="btn-group">
-                          <a class="btn btn-default" href="person.php?operation=edit&pk0={$Zutrittsberechtigter1.Id}">Bearbeiten</a>
+                          <a class="btn btn-default" href="person.php?operation=edit&pk0={$Zutrittsberechtigter1.PersonId}">Bearbeiten</a>
                       </div>
 
                       <div class="btn-group">
-                          <a class="btn btn-default" href="person.php?operation=view&pk0={$Zutrittsberechtigter1.Id}">Ansehen</a>
+                          <a class="btn btn-default" href="person.php?operation=view&pk0={$Zutrittsberechtigter1.PersonId}">Ansehen</a>
                       </div>
 
                       <div class="btn-group">
