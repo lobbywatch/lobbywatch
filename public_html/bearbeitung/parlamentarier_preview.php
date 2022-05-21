@@ -125,7 +125,7 @@ try {
         $aut_sent_time = strtotime($zb['autorisierung_verschickt_datum']);
         $now_time = (new DateTime())->getTimestamp();
         $isZbAuthorizationReminder[$i] = $aut_sent_time > $now_time - 8 * 7 * 24 * 60 * 60;
-        $reminder = $isParlAuthorizationReminder ? 'Reminder' : '';
+        $reminder = $isZbAuthorizationReminder[$i] ? 'Reminder' : '';
       } else {
         $isZbAuthorizationReminder[$i] = false;
       }
