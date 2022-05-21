@@ -169,20 +169,29 @@ try {
 //     df($trans);
 
     $viewData = new CommonPageViewData();
-    $viewData->setTitle($rowData["parlamentarier_name"] . ' - Vorschau');
+    $viewData
+    ->setTitle($rowData["parlamentarier_name"] . ' - Vorschau')
+    ->setHeader(GetPagesHeader())
+    ->setFooter(GetPagesFooter())
+    ;
     DisplayTemplateSimple('custom_templates/parlamentarier_preview_page.tpl',
-      array(
-      ),
-      array(
+      [],
+      [
         'common' => $viewData,
-        'App' => array(
+        'App' => [
           'ContentEncoding' => 'UTF-8',
           'PageCaption' => 'Vorschau: ' . $rowData["parlamentarier_name"],
-          'Header' => GetPagesHeader(),
           'Direction' => 'ltr',
-      ),
-        'Footer' => GetPagesFooter(),
-        'Parlamentarier' => array(
+        ],
+        'Authentication' => [
+          'Enabled' => true,
+          'LoggedIn' => GetApplication()->IsCurrentUserLoggedIn(),
+          'CurrentUser' => [
+              'Name' => GetApplication()->GetCurrentUser(),
+              'Id' => GetApplication()->GetCurrentUserId(),
+          ],
+        ],
+        'Parlamentarier' => [
           'Id'  => $id,
           'Title' => 'Vorschau: ' . $rowData["parlamentarier_name"],
           'parlamentarier_name' => $rowData["parlamentarier_name"],
@@ -207,20 +216,10 @@ try {
           'parlament_biografie_id' => $rowData['parlament_biografie_id'],
           'import_date_wsparlamentch' => $import_date_wsparlamentch,
           'isReminder' => $isParlAuthorizationReminder,
-        ),
+        ],
         'Zutrittsberechtigter0' => fillZutrittsberechtigterEmail(0, $rowData, $zbList, $emailEndZb, $mailtoZb, $emailIntroZb, $isZbAuthorizationReminder, $rowCellStylesZb),
         'Zutrittsberechtigter1' => fillZutrittsberechtigterEmail(1, $rowData, $zbList, $emailEndZb, $mailtoZb, $emailIntroZb, $isZbAuthorizationReminder, $rowCellStylesZb),
-        'Authentication' => array(
-            'Enabled' => true,
-            'LoggedIn' => GetApplication()->IsCurrentUserLoggedIn(),
-            'CurrentUser' => array(
-                'Name' => GetApplication()->GetCurrentUser(),
-                'Id' => GetApplication()->GetCurrentUserId(),
-            ),
-        ),
-        'HideSideBarByDefault' => true,
-        'Variables' => '',
-      )
+      ]
     );
 } catch(Exception $e) {
     ShowErrorPage($e);
