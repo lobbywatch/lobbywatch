@@ -4118,3 +4118,17 @@ ALTER TABLE `person`
 ALTER TABLE `person_log`
   ADD `autorisierung_reminder_verschickt_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Autorisierungerinnerung verschickt durch' AFTER autorisierung_verschickt_datum,
   ADD`autorisierung_reminder_verschickt_datum` timestamp NULL DEFAULT NULL COMMENT 'Autorisierungerinnerung verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)' AFTER autorisierung_reminder_verschickt_visa;
+
+-- 24.05.2022 freigabe_queue
+
+DROP TABLE IF EXISTS `freigabe_queue`;
+CREATE TABLE IF NOT EXISTS `freigabe_queue` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Queue-Eintrags',
+  `status` ENUM('neu', 'erledigt') NOT NULL DEFAULT 'neu' COMMENT 'Status des Queue-Eintrags',
+  `objekt_typ` ENUM('interessenbindung') NOT NULL COMMENT 'Typ des freigegebenen Objekts',
+  `objekt_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des freigegebenen Objekts',
+  `objekt_freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum des freigegebenen Objekts',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  PRIMARY KEY (`id`),
+  INDEX `status_typ_datum_key` (`status`, `objekt_typ`, `objekt_freigabe_datum`) COMMENT 'Index for key'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Queue für freigegebene Objekte';

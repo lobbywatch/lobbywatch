@@ -759,6 +759,9 @@ thisTrigger: BEGIN
         updated_visa = CONCAT(NEW.updated_visa, '*')
         WHERE
         interessenbindung_id = NEW.id;
+      -- freigabe_queue
+      INSERT INTO `freigabe_queue`(`objekt_typ`, `objekt_id`, `objekt_freigabe_datum`)
+        VALUES ('interessenbindung', NEW.id, NEW.freigabe_datum);
   END IF;
 
   -- Propagate freigabe from interessenbindung to ...
