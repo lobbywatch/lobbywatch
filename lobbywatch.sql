@@ -574,6 +574,25 @@ CREATE TABLE `fraktion_log` (
 SET character_set_client = @saved_cs_client ;
 
 --
+-- Table structure for table `freigabe_queue`
+--
+
+DROP TABLE IF EXISTS `freigabe_queue`;
+SET @saved_cs_client     = @@character_set_client ;
+SET character_set_client = utf8 ;
+CREATE TABLE `freigabe_queue` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Queue-Eintrags',
+  `status` enum('neu','erledigt') NOT NULL DEFAULT 'neu' COMMENT 'Status des Queue-Eintrags',
+  `objekt_typ` enum('interessenbindung') NOT NULL COMMENT 'Typ des freigegebenen Objekts',
+  `objekt_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des freigegebenen Objekts',
+  `objekt_freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum des freigegebenen Objekts',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  PRIMARY KEY (`id`),
+  KEY `status_typ_datum_key` (`status`,`objekt_typ`,`objekt_freigabe_datum`) COMMENT 'Index for key'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Queue für freigegebene Objekte';
+SET character_set_client = @saved_cs_client ;
+
+--
 -- Table structure for table `in_fraktion`
 --
 
@@ -1384,6 +1403,9 @@ thisTrigger: BEGIN
         updated_visa = CONCAT(NEW.updated_visa, '*')
         WHERE
         interessenbindung_id = NEW.id;
+      
+      INSERT INTO `freigabe_queue`(`objekt_typ`, `objekt_id`, `objekt_freigabe_datum`)
+        VALUES ('interessenbindung', NEW.id, NEW.freigabe_datum);
   END IF;
 
   
@@ -16358,4 +16380,4 @@ SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS ;
 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION ;
 SET SQL_NOTES=@OLD_SQL_NOTES ;
 
--- Dump completed on 2022-05-21  6:15:20
+-- Dump completed on 2022-05-26  6:55:56
