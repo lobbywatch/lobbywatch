@@ -145,11 +145,14 @@ def read_guests(filename):
 def is_header(row):
     if len(row) < 2:
         return True
-    header_words = ["Partito", "Consigliere", "Fonction",
-                    "Conseiller", "Funzionenktion", "Funktion",
-                    "Funzione", "Name", "Partei / Kanton", "Funzionenktion,",
-                    "Conseiller/,", "Parti / Canton", "Partito / Cantone",
-                    "Ratsmitglied"]
+    header_words = [
+        "Ratsmitglied,",
+        "Partei / Kanton",
+        "Membre du Conseil,",
+        "Parti / Canton",
+        "Membro del Consiglio,",
+        "Partito / Cantone"
+    ]
 
     return any(header_word in row_entry
                for header_word in header_words
