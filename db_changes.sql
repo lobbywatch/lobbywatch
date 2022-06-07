@@ -4132,3 +4132,9 @@ CREATE TABLE IF NOT EXISTS `freigabe_queue` (
   PRIMARY KEY (`id`),
   INDEX `status_typ_datum_key` (`status`, `objekt_typ`, `objekt_freigabe_datum`) COMMENT 'Index for key'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Queue für freigegebene Objekte';
+
+-- 07.06.2022 freigabe_queue.tweet_de_id
+
+alter table `freigabe_queue` modify column `status` ENUM('neu', 'in_triage', 'verarbeitet', 'ignoriert', 'fehler') NOT NULL DEFAULT 'neu' COMMENT 'Status des Queue-Eintrags';
+alter table `freigabe_queue` add column `tweet_de_id` bigint unsigned NULL COMMENT 'ID des deutschen Tweets' AFTER `updated_date`;
+alter table `freigabe_queue` add column `tweet_fr_id` bigint unsigned NULL COMMENT 'ID des französischen Tweets' AFTER `tweet_de_id`;
