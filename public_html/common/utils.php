@@ -3690,7 +3690,7 @@ LEFT JOIN interessenbindung_jahr interessenbindung_jahr_current
   ON interessenbindung_jahr_current.interessenbindung_id = interessenbindung.id AND interessenbindung_jahr_current.jahr = $jahr
 WHERE
   parlamentarier.id=:id" .
-  ($include_parlamentarische_gruppen_members ? "" : " AND NOT (interessenbindung.art = 'mitglied' AND organisation.rechtsform = 'Parlamentarische Gruppe')") .
+  ($include_parlamentarische_gruppen_members ? "" : " AND NOT (interessenbindung.art = 'mitglied' AND organisation.rechtsform IN ('Parlamentarische Gruppe', 'Parlamentarische Freundschaftsgruppe'))") .
 " GROUP BY parlamentarier.id;";
 
         // df($sql);
