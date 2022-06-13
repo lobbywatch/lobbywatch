@@ -1668,6 +1668,7 @@ function isFullWorkflowUser() {
   // 63, // Flavia, Von Gunten
   // 67, // Alexandra Baertsch
   69, // Samuel Meier
+  71, // Strässle Fabian
   ), false);
 }
 
