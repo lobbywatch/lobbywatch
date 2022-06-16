@@ -111,7 +111,6 @@ try {
 
     $mailtoParlam = 'mailto:' . rawurlencode($rowData["email"]) . '?subject=' . rawurlencode($emailSubjectParlam) . '&body=' . rawurlencode('[Kopiere von Vorlage]') . '&bcc=redaktion@lobbywatch.ch';
 
-    $zbList = [];
     $emailEndZb = [];
     $mailtoZb = [];
     $emailIntroZb = [];
