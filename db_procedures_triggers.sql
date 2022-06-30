@@ -745,12 +745,11 @@ thisTrigger: BEGIN
         interessenbindung_id = NEW.id;
   END IF;
 
-  -- Propagate freigabe from interessenbindung to ...
+  -- Propagate freigabe from interessenbindung to interessenbindung_jahr
   IF OLD.freigabe_datum <> NEW.freigabe_datum
     OR (OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL)
     OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL)
   THEN
-      -- interessenbindung_jahr
       UPDATE `interessenbindung_jahr`
         SET
         freigabe_datum = NEW.freigabe_datum,
@@ -759,6 +758,11 @@ thisTrigger: BEGIN
         updated_visa = CONCAT(NEW.updated_visa, '*')
         WHERE
         interessenbindung_id = NEW.id;
+  END IF;
+
+  -- Propagate first freigabe to freigabe_queue
+  IF OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL
+  THEN
       -- freigabe_queue
       INSERT INTO `freigabe_queue`(`objekt_typ`, `objekt_id`, `objekt_freigabe_datum`)
         VALUES ('interessenbindung', NEW.id, NEW.freigabe_datum);
