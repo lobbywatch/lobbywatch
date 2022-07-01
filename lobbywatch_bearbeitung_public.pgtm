@@ -9169,6 +9169,10 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="25"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="buergerorte" caption="Bürgerorte" headerHint="Strichpunkt getrennte Liste der Bürgerorte" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
           <ColumnPresentation fieldName="erfasst" caption="Erfasst" headerHint="Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden. NULL bedeutet Status unklar." canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
@@ -9267,10 +9271,6 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="buergerorte" caption="Buergerorte" headerHint="Strichpunkt getrennte Liste der Bürgerorte" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-            <ViewProperties type="text" maxLength="75"/>
-            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -9331,6 +9331,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_ort"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
+            <Column fieldName="buergerorte"/>
             <Column fieldName="erfasst" visible="false"/>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="notizen"/>
@@ -9354,7 +9355,6 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
-            <Column fieldName="buergerorte"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -9414,6 +9414,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_ort"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
+            <Column fieldName="buergerorte"/>
             <Column fieldName="erfasst"/>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="notizen"/>
@@ -9437,7 +9438,6 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" caption="Photo Dateiname" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
-            <Column fieldName="buergerorte"/>
           </View>
           <Edit>
             <Column fieldName="id" visible="false"/>
@@ -9497,6 +9497,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_ort"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
+            <Column fieldName="buergerorte"/>
             <Column fieldName="erfasst" visible="false"/>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="notizen"/>
@@ -9520,7 +9521,6 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" caption="Photodateiname" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
-            <Column fieldName="buergerorte"/>
           </Edit>
           <Insert>
             <Column fieldName="id" visible="false"/>
@@ -9580,6 +9580,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_ort"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
+            <Column fieldName="buergerorte"/>
             <Column fieldName="erfasst" visible="false"/>
             <Column fieldName="wikidata_qid" visible="false"/>
             <Column fieldName="notizen"/>
@@ -9603,7 +9604,6 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
-            <Column fieldName="buergerorte"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -9746,6 +9746,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_ort"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
+            <Column fieldName="buergerorte"/>
             <Column fieldName="erfasst"/>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="notizen"/>
@@ -9769,7 +9770,6 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" caption="Photo Dateiname" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
-            <Column fieldName="buergerorte"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -9829,6 +9829,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_ort"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
+            <Column fieldName="buergerorte"/>
             <Column fieldName="erfasst" visible="false"/>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="notizen"/>
@@ -9852,7 +9853,6 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
-            <Column fieldName="buergerorte"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -9912,6 +9912,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_ort"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
+            <Column fieldName="buergerorte"/>
             <Column fieldName="erfasst" visible="false"/>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="notizen"/>
@@ -9935,7 +9936,6 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
-            <Column fieldName="buergerorte"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -9995,6 +9995,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_ort"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
+            <Column fieldName="buergerorte"/>
             <Column fieldName="erfasst" visible="false"/>
             <Column fieldName="wikidata_qid"/>
             <Column fieldName="notizen"/>
@@ -10018,7 +10019,6 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
-            <Column fieldName="buergerorte"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -10078,6 +10078,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_ort"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
+            <Column fieldName="buergerorte"/>
             <Column fieldName="erfasst" visible="false"/>
             <Column fieldName="wikidata_qid" visible="false"/>
             <Column fieldName="notizen"/>
@@ -10101,7 +10102,6 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
-            <Column fieldName="buergerorte"/>
           </MultiEdit>
         </Columns>
         <Details>
@@ -11483,6 +11483,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="25"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="buergerorte" caption="Bürgerorte" headerHint="Strichpunkt getrennte Liste der Bürgerorte" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
                 <ColumnPresentation fieldName="erfasst" caption="Erfasst" headerHint="Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden. NULL bedeutet Status unklar." canSetNull="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox">
@@ -11592,10 +11596,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="dynamicCombobox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="buergerorte" caption="Buergerorte" headerHint="Strichpunkt getrennte Liste der Bürgerorte" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                  <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -11660,6 +11660,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_ort"/>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
+                  <Column fieldName="buergerorte"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="notizen"/>
@@ -11684,7 +11685,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="buergerorte"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -11748,6 +11748,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_ort"/>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
+                  <Column fieldName="buergerorte"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="notizen"/>
@@ -11772,7 +11773,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="buergerorte"/>
                 </View>
                 <Edit>
                   <Column fieldName="id" visible="false"/>
@@ -11836,6 +11836,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_ort" visible="false"/>
                   <Column fieldName="telephon_1" visible="false"/>
                   <Column fieldName="telephon_2" visible="false"/>
+                  <Column fieldName="buergerorte" visible="false"/>
                   <Column fieldName="erfasst" visible="false"/>
                   <Column fieldName="wikidata_qid" visible="false"/>
                   <Column fieldName="notizen" visible="false"/>
@@ -11860,7 +11861,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
-                  <Column fieldName="buergerorte"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="id" visible="false"/>
@@ -11924,6 +11924,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_ort" visible="false"/>
                   <Column fieldName="telephon_1" visible="false"/>
                   <Column fieldName="telephon_2" visible="false"/>
+                  <Column fieldName="buergerorte" visible="false"/>
                   <Column fieldName="erfasst" visible="false"/>
                   <Column fieldName="wikidata_qid" visible="false"/>
                   <Column fieldName="notizen" visible="false"/>
@@ -11948,7 +11949,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
-                  <Column fieldName="buergerorte"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -12100,6 +12100,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_ort"/>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
+                  <Column fieldName="buergerorte"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="notizen"/>
@@ -12124,7 +12125,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="buergerorte"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -12188,6 +12188,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_ort"/>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
+                  <Column fieldName="buergerorte"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="notizen"/>
@@ -12212,7 +12213,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="buergerorte"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -12276,6 +12276,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_ort"/>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
+                  <Column fieldName="buergerorte"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="notizen"/>
@@ -12300,7 +12301,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="buergerorte"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -12364,6 +12364,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_ort"/>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
+                  <Column fieldName="buergerorte"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="notizen"/>
@@ -12388,7 +12389,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state"/>
                   <Column fieldName="action_date"/>
                   <Column fieldName="snapshot_id"/>
-                  <Column fieldName="buergerorte"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -12452,6 +12452,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_ort" visible="false"/>
                   <Column fieldName="telephon_1" visible="false"/>
                   <Column fieldName="telephon_2" visible="false"/>
+                  <Column fieldName="buergerorte" visible="false"/>
                   <Column fieldName="erfasst" visible="false"/>
                   <Column fieldName="wikidata_qid" visible="false"/>
                   <Column fieldName="notizen" visible="false"/>
@@ -12476,7 +12477,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="state" visible="false"/>
                   <Column fieldName="action_date" visible="false"/>
                   <Column fieldName="snapshot_id" visible="false"/>
-                  <Column fieldName="buergerorte"/>
                 </MultiEdit>
               </Columns>
               <Details/>

@@ -67,7 +67,7 @@
                     new DateTimeField('created_date'),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date'),
-                    new StringField('in_rat_parlamentarier_rat_unique', true),
+                    new StringField('in_rat_parlamentarier_rat_unique'),
                     new IntegerField('log_id', true, true, true),
                     new StringField('action', true),
                     new StringField('state'),
