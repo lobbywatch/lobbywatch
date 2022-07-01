@@ -4058,6 +4058,79 @@ CREATE TABLE `in_fraktion` (
   CONSTRAINT `fk_in_fraktion_parlamentarier_id` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Fraktionszugehörigkeit von Parlamentariern';
 
+-- -----
+-- Log
+-- -----
+
+-- Table in_rat_log
+DROP TABLE IF EXISTS `in_rat_log`;
+CREATE TABLE IF NOT EXISTS `in_rat_log` LIKE `in_rat`;
+ALTER TABLE `in_rat_log`
+  DROP INDEX `in_rat_parlamentarier_rat_unique` ,
+  DROP INDEX `idx_parlam_freigabe`,
+  DROP INDEX `idx_parlam` ,
+  DROP INDEX `idx_rat_freigabe`,
+  DROP INDEX `idx_rat`,
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP `in_rat_parlamentarier_rat_unique`,
+  ADD `in_rat_parlamentarier_rat_unique` VARCHAR(0) NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`,
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_in_rat_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- Table in_partei_log
+DROP TABLE IF EXISTS `in_partei_log`;
+CREATE TABLE IF NOT EXISTS `in_partei_log` LIKE `in_partei`;
+ALTER TABLE `in_partei_log`
+  DROP INDEX `in_partei_parlamentarier_partei_unique` ,
+  DROP INDEX `idx_parlam_freigabe`,
+  DROP INDEX `idx_parlam`,
+  DROP INDEX `idx_partei_freigabe` ,
+  DROP INDEX `idx_partei`,
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP `in_partei_parlamentarier_partei_unique`,
+  ADD `in_partei_parlamentarier_partei_unique` VARCHAR(0) NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`,
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_in_partei_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- Table in_fraktion_log
+DROP TABLE IF EXISTS `in_fraktion_log`;
+CREATE TABLE IF NOT EXISTS `in_fraktion_log` LIKE `in_fraktion`;
+ALTER TABLE `in_fraktion_log`
+  DROP INDEX `in_fraktion_parlamentarier_fraktion_unique`,
+  DROP INDEX `idx_parlam_freigabe`,
+  DROP INDEX `idx_parlam`,
+  DROP INDEX `idx_fraktion_freigabe`,
+  DROP INDEX `idx_fraktion`,
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP `in_fraktion_parlamentarier_fraktion_unique`,
+  ADD `in_fraktion_parlamentarier_fraktion_unique` VARCHAR(0) NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`,
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_in_fraktion_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
 -- 10.01.2022 buergerorte
 
 ALTER TABLE `parlamentarier`
