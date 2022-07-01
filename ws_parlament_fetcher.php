@@ -549,6 +549,12 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   $update_optional = [];
   $fields_ignored = [];
 
+  // skip biografie_id=4304 due to server error 500 on ws-old.parlament.ch
+  if (in_array($biografie_id, [4304], true)) {
+    $fields[] = "SKIPPED";
+    return;
+  }
+
   // TODO repeal and replace ws-old.parlament.ch, see https://www.parlament.ch/de/services/open-data-webservices
   // The new services should be available end of 2018
   $ws_parlament_url = "http://ws-old.parlament.ch/councillors/$biografie_id?format=json&lang=de";
