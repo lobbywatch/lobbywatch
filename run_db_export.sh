@@ -36,7 +36,7 @@ echo -e "====================" >>$EXPORT_LOG
 echo >>$EXPORT_LOG
 
 test_parameter=''
-isExport=false
+isExport=true
 isBackupCopy=false
 export_options=''
 publish=false
@@ -122,6 +122,7 @@ while test $# -gt 0; do
     ;;
   -c)
     isBackupCopy=true
+    isExport=false
     shift
     ;;
   -n | --limit)
@@ -131,6 +132,7 @@ while test $# -gt 0; do
     ;;
   -e)
     isExport=true
+    isBackupCopy=false
     export_options=$2
     shift
     shift
