@@ -295,7 +295,7 @@ def scarpe_parl_pdf(group_type, url, filename, local_pdf):
         call(["qpdf", "--pages", pdf_name, "2-z", "--", pdf_name, stripped_file_name])
 
         print("parsing PDF...")
-        tabula_path = script_path + "/tabula-1.0.4-jar-with-dependencies.jar"
+        tabula_path = script_path + "/tabula-1.0.5-jar-with-dependencies.jar"
         cmd = ["java", "-Djava.util.logging.config.file=web_scrapers/logging.properties", "-jar", tabula_path, stripped_file_name, "-o", "pg_data.csv", "--pages", "all", "-t", "-i"]
         print(" ".join(cmd))
         call(cmd, stderr=None)
