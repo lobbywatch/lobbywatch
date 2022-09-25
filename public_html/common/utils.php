@@ -2664,12 +2664,6 @@ function fillDataFromUidBfsResult50($object, &$data) {
             $ehra_id = $otherOrg->organisationId;
           }
         }
-      } else {
-        if ($otherOrg->organisationIdCategory === 'CH.HR') {
-          $alte_hr_id = $otherOrg->organisationId;
-        } elseif ($otherOrg->organisationIdCategory === 'CH.EHRAID') {
-          $ehra_id = $otherOrg->organisationId;
-        }
       }
       $legel_form = !empty($oid->legalForm) ? $oid->legalForm : null;
       if (!empty($address->street)) {
