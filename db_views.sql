@@ -441,6 +441,12 @@ country.*,
 UNIX_TIMESTAMP(created_date) as created_date_unix, UNIX_TIMESTAMP(updated_date) as updated_date_unix
 FROM `country`;
 
+CREATE OR REPLACE VIEW `v_bfs_gemeinde` AS
+SELECT
+bfs_gemeinde.*,
+UNIX_TIMESTAMP(created_date) as created_date_unix, UNIX_TIMESTAMP(updated_date) as updated_date_unix
+FROM `bfs_gemeinde`;
+
 CREATE OR REPLACE VIEW `v_in_rat` AS
 SELECT
 in_rat.*,

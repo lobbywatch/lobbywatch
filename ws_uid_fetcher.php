@@ -104,7 +104,7 @@ Parameters:
 -uUID, --uidUID      Call UID (BFS and Zefix REST) WS, UID as 9-digit, CHE00000000, or CHE-000.000.000 string (default: $default_uid)
 -bUID, --bfsUID      Call UID-BFS-Register-WS (SOAP), UID as 9-digit, CHE00000000, or CHE-000.000.000 string (default: $default_uid)
 -ZUID, --zefix-soap  Call UID Zefix SOAP WS, UID as 9-digit , CHE00000000, or CHE-000.000.000 string (default: $default_uid)
--z , --zefix, --zefix-rest Call UID Zefix REST WS, UID as 9-digit , CHE00000000, or CHE-000.000.000 string (default: $default_uid)
+-zUID , --zefixUID, --zefix-restUID Call UID Zefix REST WS, UID as 9-digit , CHE00000000, or CHE-000.000.000 string (default: $default_uid)
 -oHR-ID              Search old HR-ID
 -t                   Call test service (default: production)
 --ssl                Use SSL
@@ -653,7 +653,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
   $script[] = $comment = "\n-- Actualise organisations having an UID from webservices $transaction_date";
 
   $starting_id_sql = $start_id ? "AND id >= $start_id" : '';
-  $sql = "SELECT id, name_de, handelsregister_url, uid, ch_id, ehra_id, rechtsform, rechtsform_handelsregister, rechtsform_zefix, beschreibung, abkuerzung_de, name_fr, ort, adresse_strasse, adresse_zusatz, adresse_plz, in_handelsregister, inaktiv FROM organisation WHERE uid IS NOT NULL $starting_id_sql ORDER BY id;";
+  $sql = "SELECT id, name_de, handelsregister_url, uid, ch_id, ehra_id, rechtsform, rechtsform_handelsregister, rechtsform_zefix, beschreibung, abkuerzung_de, name_fr, ort, adresse_strasse, adresse_zusatz, adresse_plz, in_handelsregister, inaktiv, bfs_gemeinde_id FROM organisation WHERE uid IS NOT NULL $starting_id_sql ORDER BY id;";
   $stmt = $db->prepare($sql);
 
   $stmt->execute([]);
@@ -753,6 +753,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
           $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
           $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getRechtsformFromWSFieldNameEmptyAsNull');
           $different_db_values |= checkField('in_handelsregister', 'in_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+          $different_db_values |= checkField('bfs_gemeinde_id', 'bfs_gemeinde_id', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
           $different_db_values |= checkField('inaktiv', 'inaktiv', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getBooleanFromWSFieldNameEmptyAsNullOnlySetTrue');
           $in_hr |= $organisation_ws->in_handelsregister;
         } else if (empty((array) $organisation_ws)) {
@@ -792,6 +793,7 @@ function actualise_organisations_having_an_UID($records_limit, $start_id, $ssl, 
           $different_db_values |= checkField('adresse_strasse', 'adresse_strasse', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
           $different_db_values |= checkField('adresse_zusatz', 'adresse_zusatz', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
           $different_db_values |= checkField('adresse_plz', 'adresse_plz', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
+          $different_db_values |= checkField('bfs_gemeinde_id', 'bfs_gemeinde_id', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
           $different_db_values |= checkField('in_handelsregister', 'in_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');
           $different_db_values |= checkField('inaktiv', 'inaktiv', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getBooleanFromWSFieldNameEmptyAsNullOnlySetTrue');
           $different_db_values |= checkField('ehra_id', 'ehra_id', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getValueFromWSFieldNameEmptyAsNull');

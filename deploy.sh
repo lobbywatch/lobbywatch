@@ -142,6 +142,7 @@ while test $# -gt 0; do
                         echo
                         echo -e "Example with real last value: ./deploy.sh -r -s prod_bak/`cat prod_bak/last_dbdump_data.txt`"
                         echo -e 'Example                     : ./deploy.sh -r -s prod_bak/`cat prod_bak/last_dbdump_data.txt`'
+                        echo -e 'Example                     : ./deploy.sh -r -l -q && ./deploy.sh -r -L -q && ./deploy.sh -S -L -q'
                         quit
                         ;;
                 -u|--upload)

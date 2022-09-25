@@ -95,6 +95,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -201,7 +202,8 @@
                 new FilterColumn($this->dataset, 'xing_profil_name', 'xing_profil_name', 'Xing Profil Name'),
                 new FilterColumn($this->dataset, 'organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique'),
                 new FilterColumn($this->dataset, 'ehra_id', 'ehra_id', 'Ehra Id'),
-                new FilterColumn($this->dataset, 'ch_id', 'ch_id', 'Ch Id')
+                new FilterColumn($this->dataset, 'ch_id', 'ch_id', 'Ch Id'),
+                new FilterColumn($this->dataset, 'bfs_gemeinde_id', 'bfs_gemeinde_id', 'Bfs Gemeindenummer')
             );
         }
     
@@ -263,7 +265,8 @@
                 ->addColumn($columns['xing_profil_name'])
                 ->addColumn($columns['organisation_name_de_rechtsform_unique'])
                 ->addColumn($columns['ehra_id'])
-                ->addColumn($columns['ch_id']);
+                ->addColumn($columns['ch_id'])
+                ->addColumn($columns['bfs_gemeinde_id']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -1671,6 +1674,24 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new SpinEdit('bfs_gemeinde_id_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['bfs_gemeinde_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -2266,6 +2287,19 @@
             $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for bfs_gemeinde_id field
+            //
+            $column = new NumberViewColumn('bfs_gemeinde_id', 'bfs_gemeinde_id', 'Bfs Gemeindenummer', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -2687,6 +2721,16 @@
             //
             $column = new TextViewColumn('ch_id', 'ch_id', 'Ch Id', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for bfs_gemeinde_id field
+            //
+            $column = new NumberViewColumn('bfs_gemeinde_id', 'bfs_gemeinde_id', 'Bfs Gemeindenummer', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -3444,6 +3488,16 @@
             //
             $editor = new TextEdit('ch_id_edit');
             $editColumn = new CustomEditColumn('Ch Id', 'ch_id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for bfs_gemeinde_id field
+            //
+            $editor = new SpinEdit('bfs_gemeinde_id_edit');
+            $editColumn = new CustomEditColumn('Bfs Gemeindenummer', 'bfs_gemeinde_id', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4208,6 +4262,16 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for bfs_gemeinde_id field
+            //
+            $editor = new SpinEdit('bfs_gemeinde_id_edit');
+            $editColumn = new CustomEditColumn('Bfs Gemeindenummer', 'bfs_gemeinde_id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -4968,6 +5032,16 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for bfs_gemeinde_id field
+            //
+            $editor = new SpinEdit('bfs_gemeinde_id_edit');
+            $editColumn = new CustomEditColumn('Bfs Gemeindenummer', 'bfs_gemeinde_id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -5396,6 +5470,16 @@
             $column = new TextViewColumn('ch_id', 'ch_id', 'Ch Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for bfs_gemeinde_id field
+            //
+            $column = new NumberViewColumn('bfs_gemeinde_id', 'bfs_gemeinde_id', 'Bfs Gemeindenummer', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -5818,6 +5902,16 @@
             $column = new TextViewColumn('ch_id', 'ch_id', 'Ch Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
+            
+            //
+            // View column for bfs_gemeinde_id field
+            //
+            $column = new NumberViewColumn('bfs_gemeinde_id', 'bfs_gemeinde_id', 'Bfs Gemeindenummer', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
         }
     
         private function AddCompareColumns(Grid $grid)
@@ -6239,6 +6333,16 @@
             //
             $column = new TextViewColumn('ch_id', 'ch_id', 'Ch Id', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for bfs_gemeinde_id field
+            //
+            $column = new NumberViewColumn('bfs_gemeinde_id', 'bfs_gemeinde_id', 'Bfs Gemeindenummer', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddCompareColumn($column);
         }
     

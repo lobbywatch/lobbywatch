@@ -4211,3 +4211,54 @@ CREATE TABLE IF NOT EXISTS `freigabe_queue` (
 alter table `freigabe_queue` modify column `status` ENUM('neu', 'in_triage', 'verarbeitet', 'ignoriert', 'fehler') NOT NULL DEFAULT 'neu' COMMENT 'Status des Queue-Eintrags';
 alter table `freigabe_queue` add column `tweet_de_id` bigint unsigned NULL COMMENT 'ID des deutschen Tweets' AFTER `updated_date`;
 alter table `freigabe_queue` add column `tweet_fr_id` bigint unsigned NULL COMMENT 'ID des französischen Tweets' AFTER `tweet_de_id`;
+
+-- 25.09.2022 bfs_gemeinde_id
+
+DROP TABLE IF EXISTS `bfs_gemeinde`;
+CREATE TABLE IF NOT EXISTS `bfs_gemeinde` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
+  gdekt enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Kantonskürzel',
+  gdebznr SMALLINT UNSIGNED NOT NULL COMMENT 'BFS Bezirknummer',
+  gdenr SMALLINT UNSIGNED NOT NULL COMMENT 'BFS Gemeindenummer',
+  gdename VARCHAR(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Name',
+  gdenamk VARCHAR(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Name kurz',
+  gdebzna VARCHAR(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Bezirk',
+  gdektna VARCHAR(25) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Kanton',
+  gdemutdat DATE NOT NULL  COMMENT 'Mutationsdatum',
+  `created_visa` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `gdenr` (`gdenr`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='BFS Gemeinden';
+
+ALTER TABLE `organisation`
+  ADD `bfs_gemeinde_id` SMALLINT UNSIGNED NULL COMMENT 'BFS Gemeindenummer (BFS GDENR)' AFTER `adresse_plz`,
+  ADD KEY `idx_bfs_gemeinde_id` (`bfs_gemeinde_id`),
+  ADD CONSTRAINT `fk_organisation_bfs_gemeinde_id` FOREIGN KEY (`bfs_gemeinde_id`) REFERENCES `bfs_gemeinde` (`gdenr`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `organisation_log`
+  ADD `bfs_gemeinde_id` SMALLINT UNSIGNED NULL COMMENT 'BFS Gemeindenummer (BFS GDENR)' AFTER `adresse_plz`;
+
+ALTER TABLE `parlamentarier`
+  ADD `bfs_gemeinde_id` SMALLINT UNSIGNED NULL COMMENT 'BFS Gemeindenummer (BFS GDENR)' AFTER `adresse_ort`,
+  ADD KEY `idx_bfs_gemeinde_id` (`bfs_gemeinde_id`),
+  ADD CONSTRAINT `fk_parlamentarier_bfs_gemeinde_id` FOREIGN KEY (`bfs_gemeinde_id`) REFERENCES `bfs_gemeinde` (`gdenr`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `parlamentarier_log`
+  ADD `bfs_gemeinde_id` SMALLINT UNSIGNED NULL COMMENT 'BFS Gemeindenummer (BFS GDENR)' AFTER `adresse_ort`;
+
+-- fix
+
+ALTER TABLE `parlamentarier` CHANGE `bfs_gemeindenummer` `bfs_gemeinde_id` SMALLINT(5) UNSIGNED NULL DEFAULT NULL COMMENT 'BFS Gemeindenummer (BFS GDENR)';
+ALTER TABLE `parlamentarier_log` CHANGE `bfs_gemeindenummer` `bfs_gemeinde_id` SMALLINT(5) UNSIGNED NULL DEFAULT NULL COMMENT 'BFS Gemeindenummer (BFS GDENR)';
+ALTER TABLE `organisation` CHANGE `bfs_gemeindenummer` `bfs_gemeinde_id` SMALLINT(5) UNSIGNED NULL DEFAULT NULL COMMENT 'BFS Gemeindenummer (BFS GDENR)';
+ALTER TABLE `organisation_log` CHANGE `bfs_gemeindenummer` `bfs_gemeinde_id` SMALLINT(5) UNSIGNED NULL DEFAULT NULL COMMENT 'BFS Gemeindenummer (BFS GDENR)';
+
+--
+
+ALTER TABLE organisation DROP FOREIGN KEY fk_organisation_bfs_gemeinde_id;
+ALTER TABLE parlamentarier DROP FOREIGN KEY fk_parlamentarier_bfs_gemeinde_id;
+ALTER TABLE `organisation` DROP `bfs_gemeinde_id`;
+ALTER TABLE `organisation_log` DROP `bfs_gemeinde_id`;
+ALTER TABLE `parlamentarier` DROP `bfs_gemeinde_id`;
+ALTER TABLE `parlamentarier_log` DROP `bfs_gemeinde_id`;

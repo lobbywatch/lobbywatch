@@ -109,6 +109,7 @@ $(function() {
             setWSFieldValue(formId, 'adresse_zusatz', data.data.adresse_zusatz);
             setWSFieldValue(formId, 'adresse_plz', data.data.adresse_plz);
             setWSFieldValue(formId, 'ort', data.data.ort);
+            setWSFieldValue(formId, 'bfs_gemeinde_id', data.data.bfs_gemeinde_id);
             setWSFieldValue(formId, 'rechtsform', data.data.rechtsform);
             setWSFieldValue(formId, 'rechtsform_zefix', data.data.rechtsform_zefix);
             setWSFieldValue(formId, 'rechtsform_handelsregister', data.data.rechtsform_handelsregister);

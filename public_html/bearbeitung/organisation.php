@@ -898,6 +898,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -1055,6 +1056,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -1665,6 +1667,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -1746,6 +1749,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -3523,6 +3527,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -4418,6 +4423,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -4649,6 +4655,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -4711,7 +4718,6 @@
                 new FilterColumn($this->dataset, 'name_fr', 'name_fr', 'Name Fr'),
                 new FilterColumn($this->dataset, 'name_it', 'name_it', 'Name It'),
                 new FilterColumn($this->dataset, 'uid', 'uid', 'Uid'),
-                new FilterColumn($this->dataset, 'ort', 'ort', 'Ort'),
                 new FilterColumn($this->dataset, 'abkuerzung_de', 'abkuerzung_de', 'Abkuerzung De'),
                 new FilterColumn($this->dataset, 'alias_namen_de', 'alias_namen_de', 'Alias Namen De'),
                 new FilterColumn($this->dataset, 'abkuerzung_fr', 'abkuerzung_fr', 'Abkuerzung Fr'),
@@ -4745,6 +4751,8 @@
                 new FilterColumn($this->dataset, 'adresse_strasse', 'adresse_strasse', 'Adresse Strasse'),
                 new FilterColumn($this->dataset, 'adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz'),
                 new FilterColumn($this->dataset, 'adresse_plz', 'adresse_plz', 'Adresse Plz'),
+                new FilterColumn($this->dataset, 'ort', 'ort', 'Ort'),
+                new FilterColumn($this->dataset, 'bfs_gemeinde_id', 'bfs_gemeinde_id', 'Bfs Gemeindenr'),
                 new FilterColumn($this->dataset, 'wikipedia', 'wikipedia', 'Wikipedia'),
                 new FilterColumn($this->dataset, 'wikidata_qid', 'wikidata_qid', 'Wikidata Qid'),
                 new FilterColumn($this->dataset, 'notizen', 'notizen', 'Notizen'),
@@ -4778,7 +4786,6 @@
                 ->addColumn($columns['name_fr'])
                 ->addColumn($columns['name_it'])
                 ->addColumn($columns['uid'])
-                ->addColumn($columns['ort'])
                 ->addColumn($columns['abkuerzung_de'])
                 ->addColumn($columns['alias_namen_de'])
                 ->addColumn($columns['abkuerzung_fr'])
@@ -4811,6 +4818,8 @@
                 ->addColumn($columns['adresse_strasse'])
                 ->addColumn($columns['adresse_zusatz'])
                 ->addColumn($columns['adresse_plz'])
+                ->addColumn($columns['ort'])
+                ->addColumn($columns['bfs_gemeinde_id'])
                 ->addColumn($columns['wikipedia'])
                 ->addColumn($columns['wikidata_qid'])
                 ->addColumn($columns['notizen'])
@@ -4968,31 +4977,6 @@
             
             $filterBuilder->addColumn(
                 $columns['uid'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
-                    FilterConditionOperator::BEGINS_WITH => $main_editor,
-                    FilterConditionOperator::ENDS_WITH => $main_editor,
-                    FilterConditionOperator::IS_LIKE => $main_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
-            
-            $main_editor = new TextEdit('ort_edit');
-            $main_editor->SetMaxLength(100);
-            
-            $filterBuilder->addColumn(
-                $columns['ort'],
                 array(
                     FilterConditionOperator::EQUALS => $main_editor,
                     FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
@@ -5821,6 +5805,49 @@
                 )
             );
             
+            $main_editor = new TextEdit('ort_edit');
+            $main_editor->SetMaxLength(100);
+            
+            $filterBuilder->addColumn(
+                $columns['ort'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('bfs_gemeinde_id_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['bfs_gemeinde_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
             $main_editor = new TextEdit('wikipedia');
             
             $filterBuilder->addColumn(
@@ -6351,17 +6378,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for ort field
-            //
-            $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Ort der Organisation');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for abkuerzung_de field
             //
             $column = new TextViewColumn('abkuerzung_de', 'abkuerzung_de', 'Abkuerzung De', $this->dataset);
@@ -6704,6 +6720,30 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for ort field
+            //
+            $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Ort der Organisation');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for bfs_gemeinde_id field
+            //
+            $column = new NumberViewColumn('bfs_gemeinde_id', 'bfs_gemeinde_id', 'Bfs Gemeindenr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('BFS Gemeindenummer (BFS GDENR)');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for wikipedia field
             //
             $column = new TextViewColumn('wikipedia', 'wikipedia', 'Wikipedia', $this->dataset);
@@ -6948,14 +6988,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for ort field
-            //
-            $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for abkuerzung_de field
             //
             $column = new TextViewColumn('abkuerzung_de', 'abkuerzung_de', 'Abkuerzung De', $this->dataset);
@@ -7199,6 +7231,24 @@
             //
             $column = new TextViewColumn('adresse_plz', 'adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for ort field
+            //
+            $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for bfs_gemeinde_id field
+            //
+            $column = new NumberViewColumn('bfs_gemeinde_id', 'bfs_gemeinde_id', 'Bfs Gemeindenr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -7410,14 +7460,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for ort field
-            //
-            $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for abkuerzung_de field
             //
             $column = new TextViewColumn('abkuerzung_de', 'abkuerzung_de', 'Abkuerzung De', $this->dataset);
@@ -7661,6 +7703,24 @@
             //
             $column = new TextViewColumn('adresse_plz', 'adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for ort field
+            //
+            $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for bfs_gemeinde_id field
+            //
+            $column = new NumberViewColumn('bfs_gemeinde_id', 'bfs_gemeinde_id', 'Bfs Gemeindenr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddPrintColumn($column);
             
             //
@@ -7851,14 +7911,6 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for ort field
-            //
-            $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $grid->AddExportColumn($column);
-            
-            //
             // View column for abkuerzung_de field
             //
             $column = new TextViewColumn('abkuerzung_de', 'abkuerzung_de', 'Abkuerzung De', $this->dataset);
@@ -8102,6 +8154,24 @@
             //
             $column = new TextViewColumn('adresse_plz', 'adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for ort field
+            //
+            $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for bfs_gemeinde_id field
+            //
+            $column = new NumberViewColumn('bfs_gemeinde_id', 'bfs_gemeinde_id', 'Bfs Gemeindenr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddExportColumn($column);
             
             //
@@ -8292,14 +8362,6 @@
             $grid->AddCompareColumn($column);
             
             //
-            // View column for ort field
-            //
-            $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $grid->AddCompareColumn($column);
-            
-            //
             // View column for abkuerzung_de field
             //
             $column = new TextViewColumn('abkuerzung_de', 'abkuerzung_de', 'Abkuerzung De', $this->dataset);
@@ -8543,6 +8605,24 @@
             //
             $column = new TextViewColumn('adresse_plz', 'adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for ort field
+            //
+            $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for bfs_gemeinde_id field
+            //
+            $column = new NumberViewColumn('bfs_gemeinde_id', 'bfs_gemeinde_id', 'Bfs Gemeindenr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddCompareColumn($column);
             
             //
@@ -10371,6 +10451,7 @@
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('adresse_ort'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
                     new StringField('erfasst'),
@@ -10682,6 +10763,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -10883,6 +10965,7 @@
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('adresse_ort'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
                     new StringField('erfasst'),
@@ -11194,6 +11277,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -11442,6 +11526,7 @@
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('adresse_ort'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
                     new StringField('erfasst'),
@@ -11753,6 +11838,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -12530,6 +12616,7 @@
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('adresse_ort'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
                     new StringField('erfasst'),
@@ -12750,6 +12837,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -21056,6 +21144,7 @@
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('adresse_ort'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
                     new StringField('erfasst'),
@@ -21491,6 +21580,7 @@
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('adresse_ort'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
                     new StringField('erfasst'),
@@ -22562,6 +22652,7 @@
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('adresse_ort'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
                     new StringField('erfasst'),
@@ -24167,6 +24258,7 @@
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('adresse_ort'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
                     new StringField('erfasst'),
@@ -26274,6 +26366,7 @@
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('adresse_ort'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
                     new StringField('erfasst'),
@@ -26717,6 +26810,7 @@
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('adresse_ort'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
                     new StringField('erfasst'),
@@ -27761,6 +27855,7 @@
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('adresse_ort'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
                     new StringField('erfasst'),
@@ -29414,6 +29509,7 @@
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('adresse_ort'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
                     new StringField('erfasst'),
@@ -30324,6 +30420,7 @@
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('adresse_ort'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
                     new StringField('erfasst'),
@@ -30531,6 +30628,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -30693,6 +30791,7 @@
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('adresse_ort'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
                     new StringField('erfasst'),
@@ -30900,6 +30999,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -31148,6 +31248,7 @@
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('adresse_ort'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
                     new StringField('erfasst'),
@@ -31355,6 +31456,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -31940,6 +32042,7 @@
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('adresse_ort'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
                     new StringField('erfasst'),
@@ -32098,6 +32201,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -33763,6 +33867,7 @@
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('adresse_ort'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
                     new StringField('erfasst'),
@@ -33869,6 +33974,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -34237,6 +34343,7 @@
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('adresse_ort'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
                     new StringField('erfasst'),
@@ -34343,6 +34450,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -34739,6 +34847,7 @@
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('adresse_ort'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
                     new StringField('erfasst'),
@@ -34845,6 +34954,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -35979,6 +36089,7 @@
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('adresse_ort'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('telephon_1'),
                     new StringField('telephon_2'),
                     new StringField('erfasst'),
@@ -36074,6 +36185,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -37399,6 +37511,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -37691,6 +37804,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -38097,6 +38211,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -39034,6 +39149,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -39204,6 +39320,218 @@
     
     }
     
+    class organisation_bfs_gemeinde_idModalViewPage extends ViewBasedPage
+    {
+        protected function DoBeforeCreate()
+        {
+            $this->dataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_bfs_gemeinde`');
+            $this->dataset->addFields(
+                array(
+                    new IntegerField('id', true, true),
+                    new StringField('gdekt', true, true),
+                    new IntegerField('gdebznr', true, true),
+                    new IntegerField('gdenr', true, true),
+                    new StringField('gdename', true, true),
+                    new StringField('gdenamk', true, true),
+                    new StringField('gdebzna', true, true),
+                    new StringField('gdektna', true, true),
+                    new DateField('gdemutdat', true, true),
+                    new StringField('created_visa', true, true),
+                    new DateTimeField('created_date', true, true),
+                    new StringField('updated_visa', false, true),
+                    new DateTimeField('updated_date', true, true),
+                    new IntegerField('created_date_unix', true, true),
+                    new IntegerField('updated_date_unix', true, true)
+                )
+            );
+        }
+    
+        protected function DoPrepare() {
+    
+        }
+    
+        protected function AddSingleRecordViewColumns(Grid $grid)
+        {
+            //
+            // View column for id field
+            //
+            $column = new NumberViewColumn('id', 'id', 'Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for gdekt field
+            //
+            $column = new TextViewColumn('gdekt', 'gdekt', 'Gdekt', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for gdebznr field
+            //
+            $column = new NumberViewColumn('gdebznr', 'gdebznr', 'Gdebznr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for gdenr field
+            //
+            $column = new NumberViewColumn('gdenr', 'gdenr', 'Gdenr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for gdename field
+            //
+            $column = new TextViewColumn('gdename', 'gdename', 'Gdename', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for gdenamk field
+            //
+            $column = new TextViewColumn('gdenamk', 'gdenamk', 'Gdenamk', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for gdebzna field
+            //
+            $column = new TextViewColumn('gdebzna', 'gdebzna', 'Gdebzna', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for gdektna field
+            //
+            $column = new TextViewColumn('gdektna', 'gdektna', 'Gdektna', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for gdemutdat field
+            //
+            $column = new DateTimeViewColumn('gdemutdat', 'gdemutdat', 'Gdemutdat', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for created_visa field
+            //
+            $column = new TextViewColumn('created_visa', 'created_visa', 'Created Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for created_date field
+            //
+            $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for updated_visa field
+            //
+            $column = new TextViewColumn('updated_visa', 'updated_visa', 'Updated Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for updated_date field
+            //
+            $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for created_date_unix field
+            //
+            $column = new NumberViewColumn('created_date_unix', 'created_date_unix', 'Created Date Unix', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for updated_date_unix field
+            //
+            $column = new NumberViewColumn('updated_date_unix', 'updated_date_unix', 'Updated Date Unix', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+        }
+    
+        function GetCustomClientScript()
+        {
+            return ;
+        }
+        
+        function GetOnPageLoadedClientScript()
+        {
+            return ;
+        }
+    
+        protected function setClientSideEvents(Grid $grid) {
+    
+        }
+    
+        protected function doRegisterHandlers() {
+            
+            
+        }
+    
+        static public function getHandlerName() {
+            return get_class() . '_modal_view';
+        }
+    
+        public function GetModalGridViewHandler() {
+            return self::getHandlerName();
+        }
+    
+        protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
+        {
+            $column->SetVariableContainer($this->GetColumnVariableContainer());
+        }
+    
+        protected function doGetCustomFormLayout($mode, FixedKeysArray $columns, FormLayout $layout)
+        {
+    
+        }
+    
+        protected function doGetCustomTemplate($type, $part, $mode, &$result, &$params)
+        {
+    
+        }
+    
+        protected function doCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        { 
+    
+        }
+    
+        protected function doCalculateFields($rowData, $fieldName, &$value)
+        {
+    
+        }
+    }
+    
     // OnBeforePageExecute event handler
     
     
@@ -39262,6 +39590,7 @@
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
+                    new IntegerField('bfs_gemeinde_id'),
                     new StringField('wikipedia'),
                     new StringField('wikidata_qid'),
                     new StringField('notizen'),
@@ -39279,6 +39608,7 @@
                     new StringField('organisation_name_de_rechtsform_unique', true)
                 )
             );
+            $this->dataset->AddLookupField('bfs_gemeinde_id', 'v_bfs_gemeinde', new IntegerField('gdenr'), new StringField('gdename', false, false, false, false, 'bfs_gemeinde_id_gdename', 'bfs_gemeinde_id_gdename_v_bfs_gemeinde'), 'bfs_gemeinde_id_gdename_v_bfs_gemeinde');
             $this->dataset->AddLookupField('land_id', 'v_country', new IntegerField('id'), new StringField('anzeige_name_mixed', false, false, false, false, 'land_id_anzeige_name_mixed', 'land_id_anzeige_name_mixed_v_country'), 'land_id_anzeige_name_mixed_v_country');
             $this->dataset->AddLookupField('interessenraum_id', 'v_interessenraum', new IntegerField('id'), new StringField('anzeige_name_mixed', false, false, false, false, 'interessenraum_id_anzeige_name_mixed', 'interessenraum_id_anzeige_name_mixed_v_interessenraum'), 'interessenraum_id_anzeige_name_mixed_v_interessenraum');
             $this->dataset->AddLookupField('interessengruppe_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name_mixed', false, false, false, false, 'interessengruppe_id_anzeige_name_mixed', 'interessengruppe_id_anzeige_name_mixed_v_interessengruppe_simple'), 'interessengruppe_id_anzeige_name_mixed_v_interessengruppe_simple');
@@ -39337,6 +39667,7 @@
                 new FilterColumn($this->dataset, 'adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz'),
                 new FilterColumn($this->dataset, 'adresse_plz', 'adresse_plz', 'Adresse PLZ'),
                 new FilterColumn($this->dataset, 'ort', 'ort', 'Ort'),
+                new FilterColumn($this->dataset, 'bfs_gemeinde_id', 'bfs_gemeinde_id_gdename', 'Bfs Gemeindenr'),
                 new FilterColumn($this->dataset, 'land_id', 'land_id_anzeige_name_mixed', 'Land'),
                 new FilterColumn($this->dataset, 'interessenraum_id', 'interessenraum_id_anzeige_name_mixed', 'Interessenraum'),
                 new FilterColumn($this->dataset, 'rechtsform', 'rechtsform', 'Rechtsform'),
@@ -39397,6 +39728,7 @@
                 ->addColumn($columns['adresse_zusatz'])
                 ->addColumn($columns['adresse_plz'])
                 ->addColumn($columns['ort'])
+                ->addColumn($columns['bfs_gemeinde_id'])
                 ->addColumn($columns['homepage'])
                 ->addColumn($columns['handelsregister_url'])
                 ->addColumn($columns['twitter_name'])
@@ -39433,6 +39765,7 @@
                 ->setOptionsFor('adresse_zusatz')
                 ->setOptionsFor('adresse_plz')
                 ->setOptionsFor('ort')
+                ->setOptionsFor('bfs_gemeinde_id')
                 ->setOptionsFor('land_id')
                 ->setOptionsFor('interessenraum_id')
                 ->setOptionsFor('rechtsform')
@@ -39857,6 +40190,33 @@
                     FilterConditionOperator::ENDS_WITH => $main_editor,
                     FilterConditionOperator::IS_LIKE => $main_editor,
                     FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new DynamicCombobox('bfs_gemeinde_id_edit', $this->CreateLinkBuilder());
+            $main_editor->setAllowClear(true);
+            $main_editor->setMinimumInputLength(0);
+            $main_editor->SetAllowNullValue(false);
+            $main_editor->SetHandlerName('filter_builder_organisation_bfs_gemeinde_id_search');
+            
+            $multi_value_select_editor = new RemoteMultiValueSelect('bfs_gemeinde_id', $this->CreateLinkBuilder());
+            $multi_value_select_editor->SetHandlerName('filter_builder_organisation_bfs_gemeinde_id_search');
+            
+            $filterBuilder->addColumn(
+                $columns['bfs_gemeinde_id'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IN => $multi_value_select_editor,
+                    FilterConditionOperator::NOT_IN => $multi_value_select_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -41229,6 +41589,17 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for gdename field
+            //
+            $column = new TextViewColumn('bfs_gemeinde_id', 'bfs_gemeinde_id_gdename', 'Bfs Gemeindenr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setLookupRecordModalViewHandlerName(organisation_bfs_gemeinde_idModalViewPage::getHandlerName());
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('BFS Gemeindenummer (BFS GDENR)');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('land_id', 'land_id_anzeige_name_mixed', 'Land', $this->dataset);
@@ -41771,6 +42142,14 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for gdename field
+            //
+            $column = new TextViewColumn('bfs_gemeinde_id', 'bfs_gemeinde_id_gdename', 'Bfs Gemeindenr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setLookupRecordModalViewHandlerName(organisation_bfs_gemeinde_idModalViewPage::getHandlerName());
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('land_id', 'land_id_anzeige_name_mixed', 'Land', $this->dataset);
@@ -42230,6 +42609,43 @@
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Ort', 'ort', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for bfs_gemeinde_id field
+            //
+            $editor = new DynamicCombobox('bfs_gemeinde_id_edit', $this->CreateLinkBuilder());
+            $editor->setAllowClear(true);
+            $editor->setMinimumInputLength(0);
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_bfs_gemeinde`');
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true),
+                    new StringField('gdekt', true),
+                    new IntegerField('gdebznr', true),
+                    new IntegerField('gdenr', true),
+                    new StringField('gdename', true),
+                    new StringField('gdenamk', true),
+                    new StringField('gdebzna', true),
+                    new StringField('gdektna', true),
+                    new DateField('gdemutdat', true),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true)
+                )
+            );
+            $lookupDataset->setOrderByField('gdename', 'ASC');
+            $editColumn = new DynamicLookupEditColumn('Bfs Gemeindenr', 'bfs_gemeinde_id', 'bfs_gemeinde_id_gdename', 'edit_organisation_bfs_gemeinde_id_search', $editor, $this->dataset, $lookupDataset, 'gdenr', 'gdename', '');
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -43114,6 +43530,43 @@
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Ort', 'ort', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for bfs_gemeinde_id field
+            //
+            $editor = new DynamicCombobox('bfs_gemeinde_id_edit', $this->CreateLinkBuilder());
+            $editor->setAllowClear(true);
+            $editor->setMinimumInputLength(0);
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_bfs_gemeinde`');
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true),
+                    new StringField('gdekt', true),
+                    new IntegerField('gdebznr', true),
+                    new IntegerField('gdenr', true),
+                    new StringField('gdename', true),
+                    new StringField('gdenamk', true),
+                    new StringField('gdebzna', true),
+                    new StringField('gdektna', true),
+                    new DateField('gdemutdat', true),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true)
+                )
+            );
+            $lookupDataset->setOrderByField('gdename', 'ASC');
+            $editColumn = new DynamicLookupEditColumn('Bfs Gemeindenr', 'bfs_gemeinde_id', 'bfs_gemeinde_id_gdename', 'multi_edit_organisation_bfs_gemeinde_id_search', $editor, $this->dataset, $lookupDataset, 'gdenr', 'gdename', '');
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
             
@@ -44025,6 +44478,43 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for bfs_gemeinde_id field
+            //
+            $editor = new DynamicCombobox('bfs_gemeinde_id_edit', $this->CreateLinkBuilder());
+            $editor->setAllowClear(true);
+            $editor->setMinimumInputLength(0);
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_bfs_gemeinde`');
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true),
+                    new StringField('gdekt', true),
+                    new IntegerField('gdebznr', true),
+                    new IntegerField('gdenr', true),
+                    new StringField('gdename', true),
+                    new StringField('gdenamk', true),
+                    new StringField('gdebzna', true),
+                    new StringField('gdektna', true),
+                    new DateField('gdemutdat', true),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true)
+                )
+            );
+            $lookupDataset->setOrderByField('gdename', 'ASC');
+            $editColumn = new DynamicLookupEditColumn('Bfs Gemeindenr', 'bfs_gemeinde_id', 'bfs_gemeinde_id_gdename', 'insert_organisation_bfs_gemeinde_id_search', $editor, $this->dataset, $lookupDataset, 'gdenr', 'gdename', '');
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for land_id field
             //
             $editor = new ComboBox('land_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -44810,6 +45300,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for gdename field
+            //
+            $column = new TextViewColumn('bfs_gemeinde_id', 'bfs_gemeinde_id_gdename', 'Bfs Gemeindenr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('land_id', 'land_id_anzeige_name_mixed', 'Land', $this->dataset);
@@ -45244,6 +45741,13 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for gdename field
+            //
+            $column = new TextViewColumn('bfs_gemeinde_id', 'bfs_gemeinde_id_gdename', 'Bfs Gemeindenr', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
@@ -45684,6 +46188,13 @@
             $grid->AddCompareColumn($column);
             
             //
+            // View column for gdename field
+            //
+            $column = new TextViewColumn('bfs_gemeinde_id', 'bfs_gemeinde_id_gdename', 'Bfs Gemeindenr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('land_id', 'land_id_anzeige_name_mixed', 'Land', $this->dataset);
@@ -46057,6 +46568,7 @@
             '        editors[\'adresse_zusatz\'].setReadonly(true);'. "\n" .
             '        editors[\'adresse_plz\'].setReadonly(true);'. "\n" .
             '        editors[\'ort\'].setReadonly(true);'. "\n" .
+            '        editors[\'bfs_gemeinde_id\'].setReadonly(true);'. "\n" .
             '        editors[\'land_id\'].setReadonly(true);'. "\n" .
             '        // TODO "Rechtsform is required." despite being filled by ws.uid'. "\n" .
             '        // editors[\'rechtsform\'].setReadonly(true);'. "\n" .
@@ -46268,6 +46780,60 @@
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('organisation.mandat'));
             $detailPage->SetHttpHandlerName('organisation_mandat_handler');
             $handler = new PageHTTPHandler('organisation_mandat_handler', $detailPage);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_bfs_gemeinde`');
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true),
+                    new StringField('gdekt', true),
+                    new IntegerField('gdebznr', true),
+                    new IntegerField('gdenr', true),
+                    new StringField('gdename', true),
+                    new StringField('gdenamk', true),
+                    new StringField('gdebzna', true),
+                    new StringField('gdektna', true),
+                    new DateField('gdemutdat', true),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true)
+                )
+            );
+            $lookupDataset->setOrderByField('gdename', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_organisation_bfs_gemeinde_id_search', 'gdenr', 'gdename', null, 20);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_bfs_gemeinde`');
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true),
+                    new StringField('gdekt', true),
+                    new IntegerField('gdebznr', true),
+                    new IntegerField('gdenr', true),
+                    new StringField('gdename', true),
+                    new StringField('gdenamk', true),
+                    new StringField('gdebzna', true),
+                    new StringField('gdektna', true),
+                    new DateField('gdemutdat', true),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true)
+                )
+            );
+            $lookupDataset->setOrderByField('gdename', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_organisation_bfs_gemeinde_id_search', 'gdenr', 'gdename', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -46504,6 +47070,61 @@
             $lookupDataset->setOrderByField('anzeige_name_mixed', 'ASC');
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_organisation_interessengruppe3_id_search', 'id', 'anzeige_name_mixed', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
+            
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_bfs_gemeinde`');
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true),
+                    new StringField('gdekt', true),
+                    new IntegerField('gdebznr', true),
+                    new IntegerField('gdenr', true),
+                    new StringField('gdename', true),
+                    new StringField('gdenamk', true),
+                    new StringField('gdebzna', true),
+                    new StringField('gdektna', true),
+                    new DateField('gdemutdat', true),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true)
+                )
+            );
+            $lookupDataset->setOrderByField('gdename', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_organisation_bfs_gemeinde_id_search', 'gdenr', 'gdename', null, 20);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_bfs_gemeinde`');
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true),
+                    new StringField('gdekt', true),
+                    new IntegerField('gdebznr', true),
+                    new IntegerField('gdenr', true),
+                    new StringField('gdename', true),
+                    new StringField('gdenamk', true),
+                    new StringField('gdebzna', true),
+                    new StringField('gdektna', true),
+                    new DateField('gdemutdat', true),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true)
+                )
+            );
+            $lookupDataset->setOrderByField('gdename', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_organisation_bfs_gemeinde_id_search', 'gdenr', 'gdename', null, 20);
+            GetApplication()->RegisterHTTPHandler($handler);
+            new organisation_bfs_gemeinde_idModalViewPage($this, GetCurrentUserPermissionsForPage('organisation.bfs_gemeinde_id'));
         }
        
         protected function doCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
