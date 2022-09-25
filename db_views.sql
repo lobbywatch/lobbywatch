@@ -443,6 +443,7 @@ FROM `country`;
 
 CREATE OR REPLACE VIEW `v_bfs_gemeinde` AS
 SELECT
+CONCAT(gdenr, ' - ', gdenamk) as anzeige_name,
 bfs_gemeinde.*,
 UNIX_TIMESTAMP(created_date) as created_date_unix, UNIX_TIMESTAMP(updated_date) as updated_date_unix
 FROM `bfs_gemeinde`;

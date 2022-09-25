@@ -489,289 +489,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <ViewProperties type="text" maxLength="75" escapeHTMLChars="true"/>
             <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="bfs_gemeinde_id" caption="Bfs Gemeindenr" headerHint="BFS Gemeindenummer (BFS GDENR)" canSetNull="true" selectedFilterOperators="1573119">
-            <Lookup tableName="v_bfs_gemeinde" linkFieldName="gdenr" displayFieldName="gdename" lookupFilter="" useLookupOrdering="true" lookupOrdering="0" displayLookupRecord="true">
-              <LookupRecordViewForm numberByDataSource="0" fileName="v_bfs_gemeinde" caption="V Bfs Gemeinde" shortCaption="V Bfs Gemeinde" addSeparator="false" horizontalFilterCondition="" isLookupRecordViewForm="true" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" multiEditAbility="0" includeAllFieldsForMultiEditByDefault="false" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
-                <BeforeGridText/>
-                <DetailedDescription/>
-                <ColumnPresentations>
-                  <ColumnPresentation fieldName="id" caption="Id" showColumnFilter="false" selectedFilterOperators="1573119">
-                    <ViewProperties type="text">
-                      <Format type="number" thousandSeparator="'"/>
-                    </ViewProperties>
-                    <EditProperties type="textBox" maxLength="0"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="gdekt" caption="Gdekt" selectedFilterOperators="1589247">
-                    <ViewProperties type="text"/>
-                    <EditProperties type="comboBox">
-                      <Values>
-                        <Value name="AG" caption="AG"/>
-                        <Value name="AR" caption="AR"/>
-                        <Value name="AI" caption="AI"/>
-                        <Value name="BL" caption="BL"/>
-                        <Value name="BS" caption="BS"/>
-                        <Value name="BE" caption="BE"/>
-                        <Value name="FR" caption="FR"/>
-                        <Value name="GE" caption="GE"/>
-                        <Value name="GL" caption="GL"/>
-                        <Value name="GR" caption="GR"/>
-                        <Value name="JU" caption="JU"/>
-                        <Value name="LU" caption="LU"/>
-                        <Value name="NE" caption="NE"/>
-                        <Value name="NW" caption="NW"/>
-                        <Value name="OW" caption="OW"/>
-                        <Value name="SH" caption="SH"/>
-                        <Value name="SZ" caption="SZ"/>
-                        <Value name="SO" caption="SO"/>
-                        <Value name="SG" caption="SG"/>
-                        <Value name="TI" caption="TI"/>
-                        <Value name="TG" caption="TG"/>
-                        <Value name="UR" caption="UR"/>
-                        <Value name="VD" caption="VD"/>
-                        <Value name="VS" caption="VS"/>
-                        <Value name="ZG" caption="ZG"/>
-                        <Value name="ZH" caption="ZH"/>
-                      </Values>
-                    </EditProperties>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="gdebznr" caption="Gdebznr" showColumnFilter="false" selectedFilterOperators="1573119">
-                    <ViewProperties type="text">
-                      <Format type="number" thousandSeparator="'"/>
-                    </ViewProperties>
-                    <EditProperties type="textBox" maxLength="0"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="gdenr" caption="Gdenr" showColumnFilter="false" selectedFilterOperators="1573119">
-                    <ViewProperties type="text">
-                      <Format type="number" thousandSeparator="'"/>
-                    </ViewProperties>
-                    <EditProperties type="textBox" maxLength="0"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="gdename" caption="Gdename" showColumnFilter="false" selectedFilterOperators="1589247">
-                    <ViewProperties type="text"/>
-                    <EditProperties type="textBox" maxLength="30"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="gdenamk" caption="Gdenamk" showColumnFilter="false" selectedFilterOperators="1589247">
-                    <ViewProperties type="text"/>
-                    <EditProperties type="textBox" maxLength="30"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="gdebzna" caption="Gdebzna" showColumnFilter="false" selectedFilterOperators="1589247">
-                    <ViewProperties type="text"/>
-                    <EditProperties type="textBox" maxLength="50"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="gdektna" caption="Gdektna" showColumnFilter="false" selectedFilterOperators="1589247">
-                    <ViewProperties type="text"/>
-                    <EditProperties type="textBox" maxLength="25"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="gdemutdat" caption="Gdemutdat" selectedFilterOperators="2031871">
-                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
-                    <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="created_visa" caption="Created Visa" showColumnFilter="false" selectedFilterOperators="1589247">
-                    <ViewProperties type="text"/>
-                    <EditProperties type="textBox" maxLength="10"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="created_date" caption="Created Date" selectedFilterOperators="2031871">
-                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-                    <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                    <ViewProperties type="text"/>
-                    <EditProperties type="textBox" maxLength="10"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="updated_date" caption="Updated Date" selectedFilterOperators="2031871">
-                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-                    <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="created_date_unix" caption="Created Date Unix" showColumnFilter="false" selectedFilterOperators="1573119">
-                    <ViewProperties type="text">
-                      <Format type="number" thousandSeparator="'"/>
-                    </ViewProperties>
-                    <EditProperties type="textBox" maxLength="0"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="updated_date_unix" caption="Updated Date Unix" showColumnFilter="false" selectedFilterOperators="1573119">
-                    <ViewProperties type="text">
-                      <Format type="number" thousandSeparator="'"/>
-                    </ViewProperties>
-                    <EditProperties type="textBox" maxLength="0"/>
-                  </ColumnPresentation>
-                </ColumnPresentations>
-                <Columns>
-                  <List>
-                    <Column fieldName="id"/>
-                    <Column fieldName="gdekt"/>
-                    <Column fieldName="gdebznr"/>
-                    <Column fieldName="gdenr"/>
-                    <Column fieldName="gdename"/>
-                    <Column fieldName="gdenamk"/>
-                    <Column fieldName="gdebzna"/>
-                    <Column fieldName="gdektna"/>
-                    <Column fieldName="gdemutdat"/>
-                    <Column fieldName="created_visa"/>
-                    <Column fieldName="created_date"/>
-                    <Column fieldName="updated_visa"/>
-                    <Column fieldName="updated_date"/>
-                    <Column fieldName="created_date_unix"/>
-                    <Column fieldName="updated_date_unix"/>
-                  </List>
-                  <View>
-                    <Column fieldName="id"/>
-                    <Column fieldName="gdekt"/>
-                    <Column fieldName="gdebznr"/>
-                    <Column fieldName="gdenr"/>
-                    <Column fieldName="gdename"/>
-                    <Column fieldName="gdenamk"/>
-                    <Column fieldName="gdebzna"/>
-                    <Column fieldName="gdektna"/>
-                    <Column fieldName="gdemutdat"/>
-                    <Column fieldName="created_visa"/>
-                    <Column fieldName="created_date"/>
-                    <Column fieldName="updated_visa"/>
-                    <Column fieldName="updated_date"/>
-                    <Column fieldName="created_date_unix"/>
-                    <Column fieldName="updated_date_unix"/>
-                  </View>
-                  <Edit>
-                    <Column fieldName="id"/>
-                    <Column fieldName="gdekt"/>
-                    <Column fieldName="gdebznr"/>
-                    <Column fieldName="gdenr"/>
-                    <Column fieldName="gdename"/>
-                    <Column fieldName="gdenamk"/>
-                    <Column fieldName="gdebzna"/>
-                    <Column fieldName="gdektna"/>
-                    <Column fieldName="gdemutdat"/>
-                    <Column fieldName="created_visa"/>
-                    <Column fieldName="created_date"/>
-                    <Column fieldName="updated_visa"/>
-                    <Column fieldName="updated_date"/>
-                    <Column fieldName="created_date_unix"/>
-                    <Column fieldName="updated_date_unix"/>
-                  </Edit>
-                  <Insert>
-                    <Column fieldName="id"/>
-                    <Column fieldName="gdekt"/>
-                    <Column fieldName="gdebznr"/>
-                    <Column fieldName="gdenr"/>
-                    <Column fieldName="gdename"/>
-                    <Column fieldName="gdenamk"/>
-                    <Column fieldName="gdebzna"/>
-                    <Column fieldName="gdektna"/>
-                    <Column fieldName="gdemutdat"/>
-                    <Column fieldName="created_visa"/>
-                    <Column fieldName="created_date"/>
-                    <Column fieldName="updated_visa"/>
-                    <Column fieldName="updated_date"/>
-                    <Column fieldName="created_date_unix"/>
-                    <Column fieldName="updated_date_unix"/>
-                  </Insert>
-                  <QuickFilter>
-                    <Column fieldName="id"/>
-                    <Column fieldName="gdekt"/>
-                    <Column fieldName="gdebznr"/>
-                    <Column fieldName="gdenr"/>
-                    <Column fieldName="gdename"/>
-                    <Column fieldName="gdenamk"/>
-                    <Column fieldName="gdebzna"/>
-                    <Column fieldName="gdektna"/>
-                    <Column fieldName="gdemutdat"/>
-                    <Column fieldName="created_visa"/>
-                    <Column fieldName="created_date"/>
-                    <Column fieldName="updated_visa"/>
-                    <Column fieldName="updated_date"/>
-                    <Column fieldName="created_date_unix"/>
-                    <Column fieldName="updated_date_unix"/>
-                  </QuickFilter>
-                  <FilterBuilder>
-                    <Column fieldName="id"/>
-                    <Column fieldName="gdekt"/>
-                    <Column fieldName="gdebznr"/>
-                    <Column fieldName="gdenr"/>
-                    <Column fieldName="gdename"/>
-                    <Column fieldName="gdenamk"/>
-                    <Column fieldName="gdebzna"/>
-                    <Column fieldName="gdektna"/>
-                    <Column fieldName="gdemutdat"/>
-                    <Column fieldName="created_visa"/>
-                    <Column fieldName="created_date"/>
-                    <Column fieldName="updated_visa"/>
-                    <Column fieldName="updated_date"/>
-                    <Column fieldName="created_date_unix"/>
-                    <Column fieldName="updated_date_unix"/>
-                  </FilterBuilder>
-                  <Print>
-                    <Column fieldName="id"/>
-                    <Column fieldName="gdekt"/>
-                    <Column fieldName="gdebznr"/>
-                    <Column fieldName="gdenr"/>
-                    <Column fieldName="gdename"/>
-                    <Column fieldName="gdenamk"/>
-                    <Column fieldName="gdebzna"/>
-                    <Column fieldName="gdektna"/>
-                    <Column fieldName="gdemutdat"/>
-                    <Column fieldName="created_visa"/>
-                    <Column fieldName="created_date"/>
-                    <Column fieldName="updated_visa"/>
-                    <Column fieldName="updated_date"/>
-                    <Column fieldName="created_date_unix"/>
-                    <Column fieldName="updated_date_unix"/>
-                  </Print>
-                  <Export>
-                    <Column fieldName="id"/>
-                    <Column fieldName="gdekt"/>
-                    <Column fieldName="gdebznr"/>
-                    <Column fieldName="gdenr"/>
-                    <Column fieldName="gdename"/>
-                    <Column fieldName="gdenamk"/>
-                    <Column fieldName="gdebzna"/>
-                    <Column fieldName="gdektna"/>
-                    <Column fieldName="gdemutdat"/>
-                    <Column fieldName="created_visa"/>
-                    <Column fieldName="created_date"/>
-                    <Column fieldName="updated_visa"/>
-                    <Column fieldName="updated_date"/>
-                    <Column fieldName="created_date_unix"/>
-                    <Column fieldName="updated_date_unix"/>
-                  </Export>
-                  <Compare>
-                    <Column fieldName="id"/>
-                    <Column fieldName="gdekt"/>
-                    <Column fieldName="gdebznr"/>
-                    <Column fieldName="gdenr"/>
-                    <Column fieldName="gdename"/>
-                    <Column fieldName="gdenamk"/>
-                    <Column fieldName="gdebzna"/>
-                    <Column fieldName="gdektna"/>
-                    <Column fieldName="gdemutdat"/>
-                    <Column fieldName="created_visa"/>
-                    <Column fieldName="created_date"/>
-                    <Column fieldName="updated_visa"/>
-                    <Column fieldName="updated_date"/>
-                    <Column fieldName="created_date_unix"/>
-                    <Column fieldName="updated_date_unix"/>
-                  </Compare>
-                  <MultiEdit>
-                    <Column fieldName="id"/>
-                    <Column fieldName="gdekt"/>
-                    <Column fieldName="gdebznr"/>
-                    <Column fieldName="gdenr"/>
-                    <Column fieldName="gdename"/>
-                    <Column fieldName="gdenamk"/>
-                    <Column fieldName="gdebzna"/>
-                    <Column fieldName="gdektna"/>
-                    <Column fieldName="gdemutdat"/>
-                    <Column fieldName="created_visa"/>
-                    <Column fieldName="created_date"/>
-                    <Column fieldName="updated_visa"/>
-                    <Column fieldName="updated_date"/>
-                    <Column fieldName="created_date_unix"/>
-                    <Column fieldName="updated_date_unix"/>
-                  </MultiEdit>
-                </Columns>
-                <Details/>
-                <RecordPermissions useRecordPermissions="false"/>
-                <PartitionNavigators/>
-              </LookupRecordViewForm>
-            </Lookup>
+          <ColumnPresentation fieldName="bfs_gemeinde_nr" caption="Bfs Gemeinde" headerHint="BFS Gemeindenummer (BFS GDENR)" canSetNull="true" selectedFilterOperators="1573119">
+            <Lookup tableName="v_bfs_gemeinde" linkFieldName="gdenr" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             <ViewProperties type="text"/>
             <EditProperties type="dynamicCombobox"/>
             <Validators>
@@ -1122,7 +841,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="adresse_zusatz"/>
             <Column fieldName="adresse_plz"/>
             <Column fieldName="ort"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
             <Column fieldName="land_id"/>
             <Column fieldName="interessenraum_id"/>
             <Column fieldName="rechtsform"/>
@@ -1181,7 +900,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="adresse_zusatz"/>
             <Column fieldName="adresse_plz"/>
             <Column fieldName="ort"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
             <Column fieldName="land_id"/>
             <Column fieldName="interessenraum_id"/>
             <Column fieldName="rechtsform"/>
@@ -1240,7 +959,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="adresse_zusatz"/>
             <Column fieldName="adresse_plz"/>
             <Column fieldName="ort"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
             <Column fieldName="land_id"/>
             <Column fieldName="interessenraum_id"/>
             <Column fieldName="rechtsform"/>
@@ -1299,7 +1018,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="adresse_zusatz"/>
             <Column fieldName="adresse_plz"/>
             <Column fieldName="ort"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
             <Column fieldName="land_id"/>
             <Column fieldName="interessenraum_id"/>
             <Column fieldName="rechtsform"/>
@@ -1397,7 +1116,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
             <Column fieldName="ehra_id" visible="false"/>
             <Column fieldName="ch_id" visible="false"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -1417,7 +1136,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="adresse_zusatz"/>
             <Column fieldName="adresse_plz"/>
             <Column fieldName="ort"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
             <Column fieldName="land_id"/>
             <Column fieldName="interessenraum_id"/>
             <Column fieldName="rechtsform"/>
@@ -1476,7 +1195,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="adresse_zusatz"/>
             <Column fieldName="adresse_plz"/>
             <Column fieldName="ort"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
             <Column fieldName="land_id"/>
             <Column fieldName="interessenraum_id"/>
             <Column fieldName="rechtsform"/>
@@ -1535,7 +1254,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="adresse_zusatz"/>
             <Column fieldName="adresse_plz"/>
             <Column fieldName="ort"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
             <Column fieldName="land_id"/>
             <Column fieldName="interessenraum_id"/>
             <Column fieldName="rechtsform"/>
@@ -1594,7 +1313,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="adresse_zusatz"/>
             <Column fieldName="adresse_plz"/>
             <Column fieldName="ort"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
             <Column fieldName="land_id"/>
             <Column fieldName="interessenraum_id"/>
             <Column fieldName="rechtsform"/>
@@ -1653,7 +1372,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="adresse_zusatz"/>
             <Column fieldName="adresse_plz"/>
             <Column fieldName="ort"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
             <Column fieldName="land_id"/>
             <Column fieldName="interessenraum_id"/>
             <Column fieldName="rechtsform"/>
@@ -2580,7 +2299,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="100"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="bfs_gemeinde_id" caption="Bfs Gemeindenr" headerHint="BFS Gemeindenummer (BFS GDENR)" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1573119">
+                <ColumnPresentation fieldName="bfs_gemeinde_nr" caption="Bfs Gemeindenr" headerHint="BFS Gemeindenummer (BFS GDENR)" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1573119">
                   <ViewProperties type="text">
                     <Format type="number" thousandSeparator="'"/>
                   </ViewProperties>
@@ -2728,7 +2447,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_zusatz"/>
                   <Column fieldName="adresse_plz"/>
                   <Column fieldName="ort"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="notizen"/>
@@ -2792,7 +2511,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_zusatz"/>
                   <Column fieldName="adresse_plz"/>
                   <Column fieldName="ort"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="notizen"/>
@@ -2856,7 +2575,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_zusatz" visible="false"/>
                   <Column fieldName="adresse_plz" visible="false"/>
                   <Column fieldName="ort" visible="false"/>
-                  <Column fieldName="bfs_gemeinde_id" visible="false"/>
+                  <Column fieldName="bfs_gemeinde_nr" visible="false"/>
                   <Column fieldName="wikipedia" visible="false"/>
                   <Column fieldName="wikidata_qid" visible="false"/>
                   <Column fieldName="notizen" visible="false"/>
@@ -2920,7 +2639,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_zusatz" visible="false"/>
                   <Column fieldName="adresse_plz" visible="false"/>
                   <Column fieldName="ort" visible="false"/>
-                  <Column fieldName="bfs_gemeinde_id" visible="false"/>
+                  <Column fieldName="bfs_gemeinde_nr" visible="false"/>
                   <Column fieldName="wikipedia" visible="false"/>
                   <Column fieldName="wikidata_qid" visible="false"/>
                   <Column fieldName="notizen" visible="false"/>
@@ -3006,7 +2725,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="organisation_name_de_rechtsform_unique" visible="false"/>
                   <Column fieldName="ehra_id" visible="false"/>
                   <Column fieldName="ch_id" visible="false"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -3048,7 +2767,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_zusatz"/>
                   <Column fieldName="adresse_plz"/>
                   <Column fieldName="ort"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="notizen"/>
@@ -3112,7 +2831,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_zusatz"/>
                   <Column fieldName="adresse_plz"/>
                   <Column fieldName="ort"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="notizen"/>
@@ -3176,7 +2895,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_zusatz"/>
                   <Column fieldName="adresse_plz"/>
                   <Column fieldName="ort"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="notizen"/>
@@ -3240,7 +2959,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_zusatz"/>
                   <Column fieldName="adresse_plz"/>
                   <Column fieldName="ort"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                   <Column fieldName="wikipedia"/>
                   <Column fieldName="wikidata_qid"/>
                   <Column fieldName="notizen"/>
@@ -3304,7 +3023,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_zusatz" visible="false"/>
                   <Column fieldName="adresse_plz" visible="false"/>
                   <Column fieldName="ort" visible="false"/>
-                  <Column fieldName="bfs_gemeinde_id" visible="false"/>
+                  <Column fieldName="bfs_gemeinde_nr" visible="false"/>
                   <Column fieldName="wikipedia" visible="false"/>
                   <Column fieldName="wikidata_qid" visible="false"/>
                   <Column fieldName="notizen" visible="false"/>
@@ -9069,7 +8788,7 @@ window.disable_organisation_imported_fields = function (editors) {
         editors['adresse_zusatz'].setReadonly(true);
         editors['adresse_plz'].setReadonly(true);
         editors['ort'].setReadonly(true);
-        editors['bfs_gemeinde_id'].setReadonly(true);
+        editors['bfs_gemeinde_nr'].setReadonly(true);
         editors['land_id'].setReadonly(true);
         // TODO &quot;Rechtsform is required.&quot; despite being filled by ws.uid
         // editors['rechtsform'].setReadonly(true);
@@ -9477,289 +9196,8 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="bfs_gemeinde_id" caption="Bfs Gemeindenr" headerHint="BFS Gemeindenummer (BFS GDENR)" canSetNull="true" selectedFilterOperators="1573119">
-            <Lookup tableName="v_bfs_gemeinde" linkFieldName="gdenr" displayFieldName="gdename" lookupFilter="" useLookupOrdering="true" lookupOrdering="0" displayLookupRecord="true">
-              <LookupRecordViewForm numberByDataSource="0" fileName="v_bfs_gemeinde" caption="V Bfs Gemeinde" shortCaption="V Bfs Gemeinde" addSeparator="false" horizontalFilterCondition="" isLookupRecordViewForm="true" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" multiEditAbility="0" includeAllFieldsForMultiEditByDefault="false" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
-                <BeforeGridText/>
-                <DetailedDescription/>
-                <ColumnPresentations>
-                  <ColumnPresentation fieldName="id" caption="Id" showColumnFilter="false" selectedFilterOperators="1573119">
-                    <ViewProperties type="text">
-                      <Format type="number" thousandSeparator="'"/>
-                    </ViewProperties>
-                    <EditProperties type="textBox" maxLength="0"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="gdekt" caption="Gdekt" selectedFilterOperators="1589247">
-                    <ViewProperties type="text"/>
-                    <EditProperties type="comboBox">
-                      <Values>
-                        <Value name="AG" caption="AG"/>
-                        <Value name="AR" caption="AR"/>
-                        <Value name="AI" caption="AI"/>
-                        <Value name="BL" caption="BL"/>
-                        <Value name="BS" caption="BS"/>
-                        <Value name="BE" caption="BE"/>
-                        <Value name="FR" caption="FR"/>
-                        <Value name="GE" caption="GE"/>
-                        <Value name="GL" caption="GL"/>
-                        <Value name="GR" caption="GR"/>
-                        <Value name="JU" caption="JU"/>
-                        <Value name="LU" caption="LU"/>
-                        <Value name="NE" caption="NE"/>
-                        <Value name="NW" caption="NW"/>
-                        <Value name="OW" caption="OW"/>
-                        <Value name="SH" caption="SH"/>
-                        <Value name="SZ" caption="SZ"/>
-                        <Value name="SO" caption="SO"/>
-                        <Value name="SG" caption="SG"/>
-                        <Value name="TI" caption="TI"/>
-                        <Value name="TG" caption="TG"/>
-                        <Value name="UR" caption="UR"/>
-                        <Value name="VD" caption="VD"/>
-                        <Value name="VS" caption="VS"/>
-                        <Value name="ZG" caption="ZG"/>
-                        <Value name="ZH" caption="ZH"/>
-                      </Values>
-                    </EditProperties>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="gdebznr" caption="Gdebznr" showColumnFilter="false" selectedFilterOperators="1573119">
-                    <ViewProperties type="text">
-                      <Format type="number" thousandSeparator="'"/>
-                    </ViewProperties>
-                    <EditProperties type="textBox" maxLength="0"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="gdenr" caption="Gdenr" showColumnFilter="false" selectedFilterOperators="1573119">
-                    <ViewProperties type="text">
-                      <Format type="number" thousandSeparator="'"/>
-                    </ViewProperties>
-                    <EditProperties type="textBox" maxLength="0"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="gdename" caption="Gdename" showColumnFilter="false" selectedFilterOperators="1589247">
-                    <ViewProperties type="text"/>
-                    <EditProperties type="textBox" maxLength="30"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="gdenamk" caption="Gdenamk" showColumnFilter="false" selectedFilterOperators="1589247">
-                    <ViewProperties type="text"/>
-                    <EditProperties type="textBox" maxLength="30"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="gdebzna" caption="Gdebzna" showColumnFilter="false" selectedFilterOperators="1589247">
-                    <ViewProperties type="text"/>
-                    <EditProperties type="textBox" maxLength="50"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="gdektna" caption="Gdektna" showColumnFilter="false" selectedFilterOperators="1589247">
-                    <ViewProperties type="text"/>
-                    <EditProperties type="textBox" maxLength="25"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="gdemutdat" caption="Gdemutdat" selectedFilterOperators="2031871">
-                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
-                    <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="created_visa" caption="Created Visa" showColumnFilter="false" selectedFilterOperators="1589247">
-                    <ViewProperties type="text"/>
-                    <EditProperties type="textBox" maxLength="10"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="created_date" caption="Created Date" selectedFilterOperators="2031871">
-                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-                    <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-                    <ViewProperties type="text"/>
-                    <EditProperties type="textBox" maxLength="10"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="updated_date" caption="Updated Date" selectedFilterOperators="2031871">
-                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-                    <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="created_date_unix" caption="Created Date Unix" showColumnFilter="false" selectedFilterOperators="1573119">
-                    <ViewProperties type="text">
-                      <Format type="number" thousandSeparator="'"/>
-                    </ViewProperties>
-                    <EditProperties type="textBox" maxLength="0"/>
-                  </ColumnPresentation>
-                  <ColumnPresentation fieldName="updated_date_unix" caption="Updated Date Unix" showColumnFilter="false" selectedFilterOperators="1573119">
-                    <ViewProperties type="text">
-                      <Format type="number" thousandSeparator="'"/>
-                    </ViewProperties>
-                    <EditProperties type="textBox" maxLength="0"/>
-                  </ColumnPresentation>
-                </ColumnPresentations>
-                <Columns>
-                  <List>
-                    <Column fieldName="id"/>
-                    <Column fieldName="gdekt"/>
-                    <Column fieldName="gdebznr"/>
-                    <Column fieldName="gdenr"/>
-                    <Column fieldName="gdename"/>
-                    <Column fieldName="gdenamk"/>
-                    <Column fieldName="gdebzna"/>
-                    <Column fieldName="gdektna"/>
-                    <Column fieldName="gdemutdat"/>
-                    <Column fieldName="created_visa"/>
-                    <Column fieldName="created_date"/>
-                    <Column fieldName="updated_visa"/>
-                    <Column fieldName="updated_date"/>
-                    <Column fieldName="created_date_unix"/>
-                    <Column fieldName="updated_date_unix"/>
-                  </List>
-                  <View>
-                    <Column fieldName="id"/>
-                    <Column fieldName="gdekt"/>
-                    <Column fieldName="gdebznr"/>
-                    <Column fieldName="gdenr"/>
-                    <Column fieldName="gdename"/>
-                    <Column fieldName="gdenamk"/>
-                    <Column fieldName="gdebzna"/>
-                    <Column fieldName="gdektna"/>
-                    <Column fieldName="gdemutdat"/>
-                    <Column fieldName="created_visa"/>
-                    <Column fieldName="created_date"/>
-                    <Column fieldName="updated_visa"/>
-                    <Column fieldName="updated_date"/>
-                    <Column fieldName="created_date_unix"/>
-                    <Column fieldName="updated_date_unix"/>
-                  </View>
-                  <Edit>
-                    <Column fieldName="id"/>
-                    <Column fieldName="gdekt"/>
-                    <Column fieldName="gdebznr"/>
-                    <Column fieldName="gdenr"/>
-                    <Column fieldName="gdename"/>
-                    <Column fieldName="gdenamk"/>
-                    <Column fieldName="gdebzna"/>
-                    <Column fieldName="gdektna"/>
-                    <Column fieldName="gdemutdat"/>
-                    <Column fieldName="created_visa"/>
-                    <Column fieldName="created_date"/>
-                    <Column fieldName="updated_visa"/>
-                    <Column fieldName="updated_date"/>
-                    <Column fieldName="created_date_unix"/>
-                    <Column fieldName="updated_date_unix"/>
-                  </Edit>
-                  <Insert>
-                    <Column fieldName="id"/>
-                    <Column fieldName="gdekt"/>
-                    <Column fieldName="gdebznr"/>
-                    <Column fieldName="gdenr"/>
-                    <Column fieldName="gdename"/>
-                    <Column fieldName="gdenamk"/>
-                    <Column fieldName="gdebzna"/>
-                    <Column fieldName="gdektna"/>
-                    <Column fieldName="gdemutdat"/>
-                    <Column fieldName="created_visa"/>
-                    <Column fieldName="created_date"/>
-                    <Column fieldName="updated_visa"/>
-                    <Column fieldName="updated_date"/>
-                    <Column fieldName="created_date_unix"/>
-                    <Column fieldName="updated_date_unix"/>
-                  </Insert>
-                  <QuickFilter>
-                    <Column fieldName="id"/>
-                    <Column fieldName="gdekt"/>
-                    <Column fieldName="gdebznr"/>
-                    <Column fieldName="gdenr"/>
-                    <Column fieldName="gdename"/>
-                    <Column fieldName="gdenamk"/>
-                    <Column fieldName="gdebzna"/>
-                    <Column fieldName="gdektna"/>
-                    <Column fieldName="gdemutdat"/>
-                    <Column fieldName="created_visa"/>
-                    <Column fieldName="created_date"/>
-                    <Column fieldName="updated_visa"/>
-                    <Column fieldName="updated_date"/>
-                    <Column fieldName="created_date_unix"/>
-                    <Column fieldName="updated_date_unix"/>
-                  </QuickFilter>
-                  <FilterBuilder>
-                    <Column fieldName="id"/>
-                    <Column fieldName="gdekt"/>
-                    <Column fieldName="gdebznr"/>
-                    <Column fieldName="gdenr"/>
-                    <Column fieldName="gdename"/>
-                    <Column fieldName="gdenamk"/>
-                    <Column fieldName="gdebzna"/>
-                    <Column fieldName="gdektna"/>
-                    <Column fieldName="gdemutdat"/>
-                    <Column fieldName="created_visa"/>
-                    <Column fieldName="created_date"/>
-                    <Column fieldName="updated_visa"/>
-                    <Column fieldName="updated_date"/>
-                    <Column fieldName="created_date_unix"/>
-                    <Column fieldName="updated_date_unix"/>
-                  </FilterBuilder>
-                  <Print>
-                    <Column fieldName="id"/>
-                    <Column fieldName="gdekt"/>
-                    <Column fieldName="gdebznr"/>
-                    <Column fieldName="gdenr"/>
-                    <Column fieldName="gdename"/>
-                    <Column fieldName="gdenamk"/>
-                    <Column fieldName="gdebzna"/>
-                    <Column fieldName="gdektna"/>
-                    <Column fieldName="gdemutdat"/>
-                    <Column fieldName="created_visa"/>
-                    <Column fieldName="created_date"/>
-                    <Column fieldName="updated_visa"/>
-                    <Column fieldName="updated_date"/>
-                    <Column fieldName="created_date_unix"/>
-                    <Column fieldName="updated_date_unix"/>
-                  </Print>
-                  <Export>
-                    <Column fieldName="id"/>
-                    <Column fieldName="gdekt"/>
-                    <Column fieldName="gdebznr"/>
-                    <Column fieldName="gdenr"/>
-                    <Column fieldName="gdename"/>
-                    <Column fieldName="gdenamk"/>
-                    <Column fieldName="gdebzna"/>
-                    <Column fieldName="gdektna"/>
-                    <Column fieldName="gdemutdat"/>
-                    <Column fieldName="created_visa"/>
-                    <Column fieldName="created_date"/>
-                    <Column fieldName="updated_visa"/>
-                    <Column fieldName="updated_date"/>
-                    <Column fieldName="created_date_unix"/>
-                    <Column fieldName="updated_date_unix"/>
-                  </Export>
-                  <Compare>
-                    <Column fieldName="id"/>
-                    <Column fieldName="gdekt"/>
-                    <Column fieldName="gdebznr"/>
-                    <Column fieldName="gdenr"/>
-                    <Column fieldName="gdename"/>
-                    <Column fieldName="gdenamk"/>
-                    <Column fieldName="gdebzna"/>
-                    <Column fieldName="gdektna"/>
-                    <Column fieldName="gdemutdat"/>
-                    <Column fieldName="created_visa"/>
-                    <Column fieldName="created_date"/>
-                    <Column fieldName="updated_visa"/>
-                    <Column fieldName="updated_date"/>
-                    <Column fieldName="created_date_unix"/>
-                    <Column fieldName="updated_date_unix"/>
-                  </Compare>
-                  <MultiEdit>
-                    <Column fieldName="id"/>
-                    <Column fieldName="gdekt"/>
-                    <Column fieldName="gdebznr"/>
-                    <Column fieldName="gdenr"/>
-                    <Column fieldName="gdename"/>
-                    <Column fieldName="gdenamk"/>
-                    <Column fieldName="gdebzna"/>
-                    <Column fieldName="gdektna"/>
-                    <Column fieldName="gdemutdat"/>
-                    <Column fieldName="created_visa"/>
-                    <Column fieldName="created_date"/>
-                    <Column fieldName="updated_visa"/>
-                    <Column fieldName="updated_date"/>
-                    <Column fieldName="created_date_unix"/>
-                    <Column fieldName="updated_date_unix"/>
-                  </MultiEdit>
-                </Columns>
-                <Details/>
-                <RecordPermissions useRecordPermissions="false"/>
-                <PartitionNavigators/>
-              </LookupRecordViewForm>
-            </Lookup>
+          <ColumnPresentation fieldName="bfs_gemeinde_nr" caption="Bfs Gemeinde" headerHint="BFS Gemeindenummer (BFS GDENR)" canSetNull="true" selectedFilterOperators="1573119">
+            <Lookup tableName="v_bfs_gemeinde" linkFieldName="gdenr" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             <ViewProperties type="text"/>
             <EditProperties type="dynamicCombobox"/>
             <Validators>
@@ -9934,7 +9372,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_zusatz" visible="false"/>
             <Column fieldName="adresse_plz"/>
             <Column fieldName="adresse_ort"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
             <Column fieldName="buergerorte"/>
@@ -10018,7 +9456,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_zusatz"/>
             <Column fieldName="adresse_plz"/>
             <Column fieldName="adresse_ort"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
             <Column fieldName="buergerorte"/>
@@ -10102,7 +9540,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_zusatz"/>
             <Column fieldName="adresse_plz"/>
             <Column fieldName="adresse_ort"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
             <Column fieldName="buergerorte"/>
@@ -10186,7 +9624,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_zusatz"/>
             <Column fieldName="adresse_plz"/>
             <Column fieldName="adresse_ort"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
             <Column fieldName="buergerorte"/>
@@ -10296,7 +9734,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="buergerorte"/>
             <Column fieldName="autorisierung_reminder_verschickt_visa" visible="false"/>
             <Column fieldName="autorisierung_reminder_verschickt_datum" visible="false"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -10354,7 +9792,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_zusatz"/>
             <Column fieldName="adresse_plz"/>
             <Column fieldName="adresse_ort"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
             <Column fieldName="buergerorte"/>
@@ -10438,7 +9876,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_zusatz"/>
             <Column fieldName="adresse_plz"/>
             <Column fieldName="adresse_ort"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
             <Column fieldName="buergerorte"/>
@@ -10522,7 +9960,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_zusatz"/>
             <Column fieldName="adresse_plz"/>
             <Column fieldName="adresse_ort"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
             <Column fieldName="buergerorte"/>
@@ -10606,7 +10044,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_zusatz"/>
             <Column fieldName="adresse_plz"/>
             <Column fieldName="adresse_ort"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
             <Column fieldName="buergerorte"/>
@@ -10690,7 +10128,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="adresse_zusatz"/>
             <Column fieldName="adresse_plz"/>
             <Column fieldName="adresse_ort"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
             <Column fieldName="buergerorte"/>
@@ -12090,7 +11528,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="100"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="bfs_gemeinde_id" caption="Bfs Gemeindenr" headerHint="BFS Gemeindenummer (BFS GDENR)" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1573119">
+                <ColumnPresentation fieldName="bfs_gemeinde_nr" caption="Bfs Gemeindenr" headerHint="BFS Gemeindenummer (BFS GDENR)" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1573119">
                   <ViewProperties type="text">
                     <Format type="number" thousandSeparator="'"/>
                   </ViewProperties>
@@ -12279,7 +11717,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_zusatz"/>
                   <Column fieldName="adresse_plz"/>
                   <Column fieldName="adresse_ort"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="buergerorte"/>
@@ -12368,7 +11806,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_zusatz"/>
                   <Column fieldName="adresse_plz"/>
                   <Column fieldName="adresse_ort"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="buergerorte"/>
@@ -12457,7 +11895,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_zusatz" visible="false"/>
                   <Column fieldName="adresse_plz" visible="false"/>
                   <Column fieldName="adresse_ort" visible="false"/>
-                  <Column fieldName="bfs_gemeinde_id" visible="false"/>
+                  <Column fieldName="bfs_gemeinde_nr" visible="false"/>
                   <Column fieldName="telephon_1" visible="false"/>
                   <Column fieldName="telephon_2" visible="false"/>
                   <Column fieldName="buergerorte" visible="false"/>
@@ -12546,7 +11984,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_zusatz" visible="false"/>
                   <Column fieldName="adresse_plz" visible="false"/>
                   <Column fieldName="adresse_ort" visible="false"/>
-                  <Column fieldName="bfs_gemeinde_id" visible="false"/>
+                  <Column fieldName="bfs_gemeinde_nr" visible="false"/>
                   <Column fieldName="telephon_1" visible="false"/>
                   <Column fieldName="telephon_2" visible="false"/>
                   <Column fieldName="buergerorte" visible="false"/>
@@ -12662,7 +12100,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -12724,7 +12162,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_zusatz"/>
                   <Column fieldName="adresse_plz"/>
                   <Column fieldName="adresse_ort"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="buergerorte"/>
@@ -12813,7 +12251,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_zusatz"/>
                   <Column fieldName="adresse_plz"/>
                   <Column fieldName="adresse_ort"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="buergerorte"/>
@@ -12902,7 +12340,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_zusatz"/>
                   <Column fieldName="adresse_plz"/>
                   <Column fieldName="adresse_ort"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="buergerorte"/>
@@ -12991,7 +12429,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_zusatz"/>
                   <Column fieldName="adresse_plz"/>
                   <Column fieldName="adresse_ort"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="buergerorte"/>
@@ -13080,7 +12518,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="adresse_zusatz" visible="false"/>
                   <Column fieldName="adresse_plz" visible="false"/>
                   <Column fieldName="adresse_ort" visible="false"/>
-                  <Column fieldName="bfs_gemeinde_id" visible="false"/>
+                  <Column fieldName="bfs_gemeinde_nr" visible="false"/>
                   <Column fieldName="telephon_1" visible="false"/>
                   <Column fieldName="telephon_2" visible="false"/>
                   <Column fieldName="buergerorte" visible="false"/>
@@ -36763,7 +36201,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="20"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="bfs_gemeinde_id" caption="Bfs Gemeindenummer" headerHint="BFS Gemeindenummer (BFS GDENR)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                <ColumnPresentation fieldName="bfs_gemeinde_nr" caption="Bfs Gemeindenummer" headerHint="BFS Gemeindenummer (BFS GDENR)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
                   <ViewProperties type="text">
                     <Format type="number" thousandSeparator="'"/>
                   </ViewProperties>
@@ -36828,7 +36266,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
                   <Column fieldName="ehra_id"/>
                   <Column fieldName="ch_id"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -36887,7 +36325,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
                   <Column fieldName="ehra_id"/>
                   <Column fieldName="ch_id"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </View>
                 <Edit>
                   <Column fieldName="name_de"/>
@@ -36946,7 +36384,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
                   <Column fieldName="ehra_id"/>
                   <Column fieldName="ch_id"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="name_de"/>
@@ -37005,7 +36443,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
                   <Column fieldName="ehra_id"/>
                   <Column fieldName="ch_id"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -37064,7 +36502,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
                   <Column fieldName="ehra_id"/>
                   <Column fieldName="ch_id"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -37123,7 +36561,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
                   <Column fieldName="ehra_id"/>
                   <Column fieldName="ch_id"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -37182,7 +36620,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
                   <Column fieldName="ehra_id"/>
                   <Column fieldName="ch_id"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -37241,7 +36679,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
                   <Column fieldName="ehra_id"/>
                   <Column fieldName="ch_id"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -37300,7 +36738,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
                   <Column fieldName="ehra_id"/>
                   <Column fieldName="ch_id"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -37359,7 +36797,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
                   <Column fieldName="ehra_id"/>
                   <Column fieldName="ch_id"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -39029,7 +38467,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="20"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="bfs_gemeinde_id" caption="Bfs Gemeindenummer" headerHint="BFS Gemeindenummer (BFS GDENR)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                <ColumnPresentation fieldName="bfs_gemeinde_nr" caption="Bfs Gemeindenummer" headerHint="BFS Gemeindenummer (BFS GDENR)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
                   <ViewProperties type="text">
                     <Format type="number" thousandSeparator="'"/>
                   </ViewProperties>
@@ -39094,7 +38532,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
                   <Column fieldName="ehra_id"/>
                   <Column fieldName="ch_id"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -39153,7 +38591,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
                   <Column fieldName="ehra_id"/>
                   <Column fieldName="ch_id"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </View>
                 <Edit>
                   <Column fieldName="name_de"/>
@@ -39212,7 +38650,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
                   <Column fieldName="ehra_id"/>
                   <Column fieldName="ch_id"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="name_de"/>
@@ -39271,7 +38709,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
                   <Column fieldName="ehra_id"/>
                   <Column fieldName="ch_id"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -39330,7 +38768,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
                   <Column fieldName="ehra_id"/>
                   <Column fieldName="ch_id"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -39389,7 +38827,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
                   <Column fieldName="ehra_id"/>
                   <Column fieldName="ch_id"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -39448,7 +38886,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
                   <Column fieldName="ehra_id"/>
                   <Column fieldName="ch_id"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -39507,7 +38945,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
                   <Column fieldName="ehra_id"/>
                   <Column fieldName="ch_id"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -39566,7 +39004,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
                   <Column fieldName="ehra_id"/>
                   <Column fieldName="ch_id"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -39625,7 +39063,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="organisation_name_de_rechtsform_unique"/>
                   <Column fieldName="ehra_id"/>
                   <Column fieldName="ch_id"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -40022,7 +39460,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="bfs_gemeinde_id" caption="Bfs Gemeindenummer" headerHint="BFS Gemeindenummer (BFS GDENR)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                <ColumnPresentation fieldName="bfs_gemeinde_nr" caption="Bfs Gemeindenummer" headerHint="BFS Gemeindenummer (BFS GDENR)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
                   <ViewProperties type="text">
                     <Format type="number" thousandSeparator="'"/>
                   </ViewProperties>
@@ -40112,7 +39550,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -40196,7 +39634,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </View>
                 <Edit>
                   <Column fieldName="nachname"/>
@@ -40280,7 +39718,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="nachname"/>
@@ -40364,7 +39802,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -40448,7 +39886,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -40532,7 +39970,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -40616,7 +40054,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -40700,7 +40138,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -40784,7 +40222,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -40868,7 +40306,7 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -44960,7 +44398,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="bfs_gemeinde_id" caption="Bfs Gemeindenummer" headerHint="BFS Gemeindenummer (BFS GDENR)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                <ColumnPresentation fieldName="bfs_gemeinde_nr" caption="Bfs Gemeindenummer" headerHint="BFS Gemeindenummer (BFS GDENR)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
                   <ViewProperties type="text">
                     <Format type="number" thousandSeparator="'"/>
                   </ViewProperties>
@@ -45050,7 +44488,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -45134,7 +44572,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </View>
                 <Edit>
                   <Column fieldName="nachname"/>
@@ -45218,7 +44656,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="nachname"/>
@@ -45302,7 +44740,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -45386,7 +44824,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -45470,7 +44908,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -45554,7 +44992,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -45638,7 +45076,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -45722,7 +45160,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -45806,7 +45244,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -47950,7 +47388,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="bfs_gemeinde_id" caption="Bfs Gemeindenummer" headerHint="BFS Gemeindenummer (BFS GDENR)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                <ColumnPresentation fieldName="bfs_gemeinde_nr" caption="Bfs Gemeindenummer" headerHint="BFS Gemeindenummer (BFS GDENR)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
                   <ViewProperties type="text">
                     <Format type="number" thousandSeparator="'"/>
                   </ViewProperties>
@@ -48040,7 +47478,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -48124,7 +47562,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </View>
                 <Edit>
                   <Column fieldName="nachname"/>
@@ -48208,7 +47646,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="nachname"/>
@@ -48292,7 +47730,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -48376,7 +47814,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -48460,7 +47898,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -48544,7 +47982,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -48628,7 +48066,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -48712,7 +48150,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -48796,7 +48234,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -50175,7 +49613,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="bfs_gemeinde_id" caption="Bfs Gemeindenummer" headerHint="BFS Gemeindenummer (BFS GDENR)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                <ColumnPresentation fieldName="bfs_gemeinde_nr" caption="Bfs Gemeindenummer" headerHint="BFS Gemeindenummer (BFS GDENR)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
                   <ViewProperties type="text">
                     <Format type="number" thousandSeparator="'"/>
                   </ViewProperties>
@@ -50265,7 +49703,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -50349,7 +49787,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </View>
                 <Edit>
                   <Column fieldName="nachname"/>
@@ -50433,7 +49871,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="nachname"/>
@@ -50517,7 +49955,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -50601,7 +50039,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -50685,7 +50123,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -50769,7 +50207,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -50853,7 +50291,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -50937,7 +50375,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -51021,7 +50459,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="buergerorte"/>
                   <Column fieldName="autorisierung_reminder_verschickt_visa"/>
                   <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-                  <Column fieldName="bfs_gemeinde_id"/>
+                  <Column fieldName="bfs_gemeinde_nr"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -54378,7 +53816,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="bfs_gemeinde_id" caption="Bfs Gemeindenummer" showColumnFilter="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="bfs_gemeinde_nr" caption="Bfs Gemeindenummer" showColumnFilter="false" selectedFilterOperators="1573119">
             <ViewProperties type="text">
               <Format type="number" thousandSeparator="'"/>
             </ViewProperties>
@@ -54468,7 +53906,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="buergerorte"/>
             <Column fieldName="autorisierung_reminder_verschickt_visa"/>
             <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -54552,7 +53990,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="buergerorte"/>
             <Column fieldName="autorisierung_reminder_verschickt_visa"/>
             <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </View>
           <Edit>
             <Column fieldName="id"/>
@@ -54636,7 +54074,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="buergerorte"/>
             <Column fieldName="autorisierung_reminder_verschickt_visa"/>
             <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </Edit>
           <Insert>
             <Column fieldName="id"/>
@@ -54720,7 +54158,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="buergerorte"/>
             <Column fieldName="autorisierung_reminder_verschickt_visa"/>
             <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -54804,7 +54242,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="buergerorte"/>
             <Column fieldName="autorisierung_reminder_verschickt_visa"/>
             <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -54888,7 +54326,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="buergerorte"/>
             <Column fieldName="autorisierung_reminder_verschickt_visa"/>
             <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -54972,7 +54410,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="buergerorte"/>
             <Column fieldName="autorisierung_reminder_verschickt_visa"/>
             <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -55056,7 +54494,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="buergerorte"/>
             <Column fieldName="autorisierung_reminder_verschickt_visa"/>
             <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -55140,7 +54578,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="buergerorte"/>
             <Column fieldName="autorisierung_reminder_verschickt_visa"/>
             <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -55224,7 +54662,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="buergerorte"/>
             <Column fieldName="autorisierung_reminder_verschickt_visa"/>
             <Column fieldName="autorisierung_reminder_verschickt_datum"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </MultiEdit>
         </Columns>
         <Details/>
@@ -56663,7 +56101,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="bfs_gemeinde_id" caption="Bfs Gemeindenummer" showColumnFilter="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="bfs_gemeinde_nr" caption="Bfs Gemeindenummer" showColumnFilter="false" selectedFilterOperators="1573119">
             <ViewProperties type="text">
               <Format type="number" thousandSeparator="'"/>
             </ViewProperties>
@@ -56728,7 +56166,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="organisation_name_de_rechtsform_unique"/>
             <Column fieldName="ehra_id"/>
             <Column fieldName="ch_id"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -56787,7 +56225,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="organisation_name_de_rechtsform_unique"/>
             <Column fieldName="ehra_id"/>
             <Column fieldName="ch_id"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </View>
           <Edit>
             <Column fieldName="id"/>
@@ -56846,7 +56284,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="organisation_name_de_rechtsform_unique"/>
             <Column fieldName="ehra_id"/>
             <Column fieldName="ch_id"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </Edit>
           <Insert>
             <Column fieldName="id"/>
@@ -56905,7 +56343,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="organisation_name_de_rechtsform_unique"/>
             <Column fieldName="ehra_id"/>
             <Column fieldName="ch_id"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -56964,7 +56402,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="organisation_name_de_rechtsform_unique"/>
             <Column fieldName="ehra_id"/>
             <Column fieldName="ch_id"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -57023,7 +56461,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="organisation_name_de_rechtsform_unique"/>
             <Column fieldName="ehra_id"/>
             <Column fieldName="ch_id"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -57082,7 +56520,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="organisation_name_de_rechtsform_unique"/>
             <Column fieldName="ehra_id"/>
             <Column fieldName="ch_id"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -57141,7 +56579,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="organisation_name_de_rechtsform_unique"/>
             <Column fieldName="ehra_id"/>
             <Column fieldName="ch_id"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -57200,7 +56638,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="organisation_name_de_rechtsform_unique"/>
             <Column fieldName="ehra_id"/>
             <Column fieldName="ch_id"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id"/>
@@ -57259,7 +56697,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="organisation_name_de_rechtsform_unique"/>
             <Column fieldName="ehra_id"/>
             <Column fieldName="ch_id"/>
-            <Column fieldName="bfs_gemeinde_id"/>
+            <Column fieldName="bfs_gemeinde_nr"/>
           </MultiEdit>
         </Columns>
         <Details/>

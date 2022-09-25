@@ -4262,3 +4262,18 @@ ALTER TABLE `organisation` DROP `bfs_gemeinde_id`;
 ALTER TABLE `organisation_log` DROP `bfs_gemeinde_id`;
 ALTER TABLE `parlamentarier` DROP `bfs_gemeinde_id`;
 ALTER TABLE `parlamentarier_log` DROP `bfs_gemeinde_id`;
+
+-- 25.09.2022 rename bfs_gemeinde_id to bfs_gemeinde_nr
+
+ALTER TABLE `organisation`
+  DROP FOREIGN KEY `fk_organisation_bfs_gemeinde_id`,
+  CHANGE `bfs_gemeinde_id` `bfs_gemeinde_nr` SMALLINT(5) UNSIGNED NULL DEFAULT NULL COMMENT 'BFS Gemeindenummer (BFS GDENR)',
+  RENAME INDEX `idx_bfs_gemeinde_id` TO `idx_bfs_gemeinde_nr`,
+  ADD CONSTRAINT `fk_organisation_bfs_gemeinde_nr` FOREIGN KEY (`bfs_gemeinde_nr`) REFERENCES `bfs_gemeinde`(`gdenr`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `organisation_log` CHANGE `bfs_gemeinde_id` `bfs_gemeinde_nr` SMALLINT(5) UNSIGNED NULL DEFAULT NULL COMMENT 'BFS Gemeindenummer (BFS GDENR)';
+ALTER TABLE `parlamentarier`
+  DROP FOREIGN KEY `fk_parlamentarier_bfs_gemeinde_id`,
+  CHANGE `bfs_gemeinde_id` `bfs_gemeinde_nr` SMALLINT(5) UNSIGNED NULL DEFAULT NULL COMMENT 'BFS Gemeindenummer (BFS GDENR)',
+  RENAME INDEX `idx_bfs_gemeinde_id` TO `idx_bfs_gemeinde_nr`,
+  ADD CONSTRAINT `fk_parlamentarier_bfs_gemeinde_nr` FOREIGN KEY (`bfs_gemeinde_nr`) REFERENCES `bfs_gemeinde`(`gdenr`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `parlamentarier_log` CHANGE `bfs_gemeinde_id` `bfs_gemeinde_nr` SMALLINT(5) UNSIGNED NULL DEFAULT NULL COMMENT 'BFS Gemeindenummer (BFS GDENR)';
