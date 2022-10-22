@@ -22,7 +22,7 @@ export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlam
 
 // DONE clean inputs, use custom.php function
 
-// TODO Change to new ws, currently using http://ws-old.parlament.ch/
+// TODO Change to new ws, currently using https://ws-old.parlament.ch/
 // TODO multipage handling
 // TODO Datenquelle angeben
 // TODO historized handlen
@@ -262,7 +262,7 @@ function syncKommissionen() {
 //   $error_inkommission_count = 0;     // 'P'
 
   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
-    $ws_parlament_url = "http://ws-old.parlament.ch/committees?currentOnly=true&mainOnly=true&permanentOnly=true&format=json&lang=de&pageNumber=$page";
+    $ws_parlament_url = "https://ws-old.parlament.ch/committees?currentOnly=true&mainOnly=true&permanentOnly=true&format=json&lang=de&pageNumber=$page";
     $obj = get_object_from_json_url($ws_parlament_url);
 
   $hasMorePages = false;
@@ -275,7 +275,7 @@ function syncKommissionen() {
 
       $kommission_db = search_objects($kommissionen_db, 'parlament_id', $kommission_ws->id);
 
-      $ws_parlament_url = "http://ws-old.parlament.ch/committees?ids=$kommission_ws->id&format=json&lang=fr&subcom=true&pageNumber=1";
+      $ws_parlament_url = "https://ws-old.parlament.ch/committees?ids=$kommission_ws->id&format=json&lang=fr&subcom=true&pageNumber=1";
       $obj_fr = get_object_from_json_url($ws_parlament_url);
       $kommission_fr = $obj_fr[0];
 
@@ -399,7 +399,7 @@ function syncParlamentarier(string $img_path, bool $processRetired = true) {
 
   echo "\n/*\nActive Parlamentarier on ws.parlament.ch $transaction_date\n";
   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
-    $ws_parlament_url = "http://ws-old.parlament.ch/councillors/basicdetails?format=json&lang=de&pageNumber=$page";
+    $ws_parlament_url = "https://ws-old.parlament.ch/councillors/basicdetails?format=json&lang=de&pageNumber=$page";
     $obj = get_object_from_json_url($ws_parlament_url);
 
     $hasMorePages = false;
@@ -557,7 +557,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
 
   // TODO repeal and replace ws-old.parlament.ch, see https://www.parlament.ch/de/services/open-data-webservices
   // The new services should be available end of 2018
-  $ws_parlament_url = "http://ws-old.parlament.ch/councillors/$biografie_id?format=json&lang=de";
+  $ws_parlament_url = "https://ws-old.parlament.ch/councillors/$biografie_id?format=json&lang=de";
   $parlamentarier_ws = get_object_from_json_url($ws_parlament_url);
 
   // https://ws.parlament.ch/odata.svc/Person?$filter=(PersonNumber+eq+1139)+and+(Language eq 'DE')
@@ -956,7 +956,7 @@ function show_members(array $ids, $level = 1) {
   // for checking duplicate members
   $ws_kommission_members = [];
   for($page = 1, $hasMorePages = true, $i = 0, $j = 0; $hasMorePages; $page++) {
-    $ws_parlament_url = "http://ws-old.parlament.ch/committees?ids=$ids_str&format=json&lang=de&subcom=true&pageNumber=$page";
+    $ws_parlament_url = "https://ws-old.parlament.ch/committees?ids=$ids_str&format=json&lang=de&subcom=true&pageNumber=$page";
     $obj = get_object_from_json_url($ws_parlament_url);
 
 
