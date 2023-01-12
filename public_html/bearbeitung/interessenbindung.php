@@ -5722,9 +5722,9 @@
                 new FilterColumn($this->dataset, 'status', 'status', 'Status'),
                 new FilterColumn($this->dataset, 'hauptberuflich', 'hauptberuflich', 'Haupt&shy;beruflich'),
                 new FilterColumn($this->dataset, 'behoerden_vertreter', 'behoerden_vertreter', 'Behörden&shy;vertreter'),
-                new FilterColumn($this->dataset, 'jahr_minus_2_verguetung', 'jahr_minus_2_verguetung', 'Vergütung 2020 CHF/J'),
-                new FilterColumn($this->dataset, 'jahr_minus_1_verguetung', 'jahr_minus_1_verguetung', 'Vergütung 2021 CHF/J'),
-                new FilterColumn($this->dataset, 'verguetung', 'verguetung', 'Vergütung 2022 CHF/J'),
+                new FilterColumn($this->dataset, 'jahr_minus_2_verguetung', 'jahr_minus_2_verguetung', 'Vergütung ' . (date('Y') - 2) . ' CHF/J'),
+                new FilterColumn($this->dataset, 'jahr_minus_1_verguetung', 'jahr_minus_1_verguetung', 'Vergütung ' . (date('Y') - 1) . ' CHF/J'),
+                new FilterColumn($this->dataset, 'verguetung', 'verguetung', 'Vergütung ' . date('Y') . ' CHF/J'),
                 new FilterColumn($this->dataset, 'von', 'von', 'Von'),
                 new FilterColumn($this->dataset, 'bis', 'bis', 'Bis'),
                 new FilterColumn($this->dataset, 'beschreibung', 'beschreibung', 'Beschreibung'),
@@ -6795,7 +6795,7 @@
             //
             // View column for jahr_minus_2_verguetung field
             //
-            $column = new NumberViewColumn('jahr_minus_2_verguetung', 'jahr_minus_2_verguetung', 'Vergütung 2020 CHF/J', $this->dataset);
+            $column = new NumberViewColumn('jahr_minus_2_verguetung', 'jahr_minus_2_verguetung', 'Vergütung ' . (date('Y') - 2) . ' CHF/J', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -6808,7 +6808,7 @@
             //
             // View column for jahr_minus_1_verguetung field
             //
-            $column = new NumberViewColumn('jahr_minus_1_verguetung', 'jahr_minus_1_verguetung', 'Vergütung 2021 CHF/J', $this->dataset);
+            $column = new NumberViewColumn('jahr_minus_1_verguetung', 'jahr_minus_1_verguetung', 'Vergütung ' . (date('Y') - 1) . ' CHF/J', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -6821,7 +6821,7 @@
             //
             // View column for verguetung field
             //
-            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung 2022 CHF/J', $this->dataset);
+            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung ' . date('Y') . ' CHF/J', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -7134,7 +7134,7 @@
             //
             // View column for jahr_minus_2_verguetung field
             //
-            $column = new NumberViewColumn('jahr_minus_2_verguetung', 'jahr_minus_2_verguetung', 'Vergütung 2020 CHF/J', $this->dataset);
+            $column = new NumberViewColumn('jahr_minus_2_verguetung', 'jahr_minus_2_verguetung', 'Vergütung ' . (date('Y') - 2) . ' CHF/J', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -7144,7 +7144,7 @@
             //
             // View column for jahr_minus_1_verguetung field
             //
-            $column = new NumberViewColumn('jahr_minus_1_verguetung', 'jahr_minus_1_verguetung', 'Vergütung 2021 CHF/J', $this->dataset);
+            $column = new NumberViewColumn('jahr_minus_1_verguetung', 'jahr_minus_1_verguetung', 'Vergütung ' . (date('Y') - 1) . ' CHF/J', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -7154,7 +7154,7 @@
             //
             // View column for verguetung field
             //
-            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung 2022 CHF/J', $this->dataset);
+            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung ' . date('Y') . ' CHF/J', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -8857,7 +8857,7 @@
             //
             // View column for jahr_minus_2_verguetung field
             //
-            $column = new NumberViewColumn('jahr_minus_2_verguetung', 'jahr_minus_2_verguetung', 'Vergütung 2020 CHF/J', $this->dataset);
+            $column = new NumberViewColumn('jahr_minus_2_verguetung', 'jahr_minus_2_verguetung', 'Vergütung ' . (date('Y') - 2) . ' CHF/J', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -8867,7 +8867,7 @@
             //
             // View column for jahr_minus_1_verguetung field
             //
-            $column = new NumberViewColumn('jahr_minus_1_verguetung', 'jahr_minus_1_verguetung', 'Vergütung 2021 CHF/J', $this->dataset);
+            $column = new NumberViewColumn('jahr_minus_1_verguetung', 'jahr_minus_1_verguetung', 'Vergütung ' . (date('Y') - 1) . ' CHF/J', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -8877,7 +8877,7 @@
             //
             // View column for verguetung field
             //
-            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung 2022 CHF/J', $this->dataset);
+            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung ' . date('Y') . ' CHF/J', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -9124,7 +9124,7 @@
             //
             // View column for jahr_minus_2_verguetung field
             //
-            $column = new NumberViewColumn('jahr_minus_2_verguetung', 'jahr_minus_2_verguetung', 'Vergütung 2020 CHF/J', $this->dataset);
+            $column = new NumberViewColumn('jahr_minus_2_verguetung', 'jahr_minus_2_verguetung', 'Vergütung ' . (date('Y') - 2) . ' CHF/J', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -9134,7 +9134,7 @@
             //
             // View column for jahr_minus_1_verguetung field
             //
-            $column = new NumberViewColumn('jahr_minus_1_verguetung', 'jahr_minus_1_verguetung', 'Vergütung 2021 CHF/J', $this->dataset);
+            $column = new NumberViewColumn('jahr_minus_1_verguetung', 'jahr_minus_1_verguetung', 'Vergütung ' . (date('Y') - 1) . ' CHF/J', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -9144,7 +9144,7 @@
             //
             // View column for verguetung field
             //
-            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung 2022 CHF/J', $this->dataset);
+            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung ' . date('Y') . ' CHF/J', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -9391,7 +9391,7 @@
             //
             // View column for jahr_minus_2_verguetung field
             //
-            $column = new NumberViewColumn('jahr_minus_2_verguetung', 'jahr_minus_2_verguetung', 'Vergütung 2020 CHF/J', $this->dataset);
+            $column = new NumberViewColumn('jahr_minus_2_verguetung', 'jahr_minus_2_verguetung', 'Vergütung ' . (date('Y') - 2) . ' CHF/J', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -9401,7 +9401,7 @@
             //
             // View column for jahr_minus_1_verguetung field
             //
-            $column = new NumberViewColumn('jahr_minus_1_verguetung', 'jahr_minus_1_verguetung', 'Vergütung 2021 CHF/J', $this->dataset);
+            $column = new NumberViewColumn('jahr_minus_1_verguetung', 'jahr_minus_1_verguetung', 'Vergütung ' . (date('Y') - 1) . ' CHF/J', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
@@ -9411,7 +9411,7 @@
             //
             // View column for verguetung field
             //
-            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung 2022 CHF/J', $this->dataset);
+            $column = new NumberViewColumn('verguetung', 'verguetung', 'Vergütung ' . date('Y') . ' CHF/J', $this->dataset);
             $column->SetOrderable(true);
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
