@@ -1290,6 +1290,7 @@ function getMilGradId($militaryGrade) {
     case 'Leutnant': return 15;
     case 'Oberleutnant': return 16;
     case 'Hauptmann': return 17;
+    case 'Fachoffizier (Hptm)': return 17;
     case 'Major a D': return 18; // Added
     case 'Major': return 18;
     case 'Fachoffizier (Maj)': return 18; // Added
