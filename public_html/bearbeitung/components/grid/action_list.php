@@ -18,7 +18,7 @@ class ActionList {
     /**
      * @var BaseRowOperation[]
      */
-    private $operations;
+    private $operations = array();
 
     /**
      * Actions constructor.
@@ -27,7 +27,6 @@ class ActionList {
     {
         $this->setPosition(ActionList::POSITION_LEFT);
         $this->setCaption('Actions');
-        $this->operations = array();
     }
 
     /**

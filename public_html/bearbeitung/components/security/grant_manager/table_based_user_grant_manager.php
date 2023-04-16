@@ -31,6 +31,8 @@ class TableBasedUserGrantManager extends UserGrantManager
     private $userPerms_PageName;
     private $userPerms_Grant;
 
+    private $tableCaptions = array();
+    private $adminGrantCache = array();
     private $securityCache = array();
     private $allowGuest = array();
 

@@ -117,7 +117,6 @@ class LoginControl {
     private function DoOnAfterLogin($userName, &$canLogin, &$errorMessage) {
         $connection = $this->getAuxiliaryConnection();
         $this->page->OnAfterLogin->Fire(array($userName, $connection, &$canLogin, &$errorMessage));
-        $connection->Disconnect();
     }
 
     private function DoOnAfterFailedLoginAttempt($userName) {
@@ -127,13 +126,11 @@ class LoginControl {
         if (!empty($errorMessage)) {
             $this->errorMessage = $errorMessage;
         }
-        $connection->Disconnect();
     }
 
     private function DoBeforeLogout($userName) {
         $connection = $this->getAuxiliaryConnection();
         $this->page->OnBeforeLogout->Fire(array($userName, $connection));
-        $connection->Disconnect();
     }
 
     private function GetUrlToRedirectAfterLogin() {

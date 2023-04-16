@@ -9,6 +9,16 @@ function CreatePHPExcelObject() {
     return new Spreadsheet();
 }
 
-function CreatePHPExcelIOWriter($phpExcelObject) {
-    return IOFactory::createWriter($phpExcelObject, 'Xls');
+function CreatePHPExcelObjectBasedOnHTML($htmlContent) {
+    $reader = IOFactory::createReader('Html');
+    $spreadsheet = $reader->loadFromString($htmlContent);
+    return $spreadsheet;
+}
+
+function CreatePHPExcelIOWriter($phpExcelObject, $fileFormat) {
+    if ($fileFormat == 'xlsx') {
+        return IOFactory::createWriter($phpExcelObject, 'Xlsx');
+    } else {
+        return IOFactory::createWriter($phpExcelObject, 'Xls');
+    }
 }

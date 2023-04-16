@@ -42,6 +42,7 @@ class Smarty_Compiler extends Smarty {
     var $_current_file          =   null;       // the current template being compiled
     var $_current_line_no       =   1;          // line number for error messages
     var $_capture_stack         =   array();    // keeps track of nested capture buffers
+    var $_plugins_code          =   null;
     var $_plugin_info           =   array();    // keeps track of plugins to load
     var $_init_smarty_vars      =   false;
     var $_permitted_tokens      =   array('true','false','yes','no','on','off','null');
@@ -50,8 +51,11 @@ class Smarty_Compiler extends Smarty {
     var $_qstr_regexp           =   null;
     var $_func_regexp           =   null;
     var $_reg_obj_regexp        =   null;
+    var $_param_regexp          =   null;
     var $_var_bracket_regexp    =   null;
     var $_num_const_regexp      =   null;
+    var $_dvar_math_regexp      =   null;
+    var $_dvar_math_var_regexp  =   null;
     var $_dvar_guts_regexp      =   null;
     var $_dvar_regexp           =   null;
     var $_cvar_regexp           =   null;
@@ -62,6 +66,8 @@ class Smarty_Compiler extends Smarty {
     var $_parenth_param_regexp  =   null;
     var $_func_call_regexp      =   null;
     var $_obj_ext_regexp        =   null;
+    var $_obj_restricted_param_regexp =   null;
+    var $_obj_single_param_regexp = null;
     var $_obj_start_regexp      =   null;
     var $_obj_params_regexp     =   null;
     var $_obj_call_regexp       =   null;
@@ -392,7 +398,7 @@ class Smarty_Compiler extends Smarty {
         }
 
         // put header at the top of the compiled template
-        $template_header = "<?php /* Smarty version ".$this->_version.", created on ".strftime("%Y-%m-%d %H:%M:%S")."\n";
+        $template_header = "<?php /* Smarty version ".$this->_version.", created on ".date("Y-m-d H:i:s")."\n";
         $template_header .= "         compiled from ".strtr(urlencode($resource_name), array('%2F'=>'/', '%3A'=>':'))." */ ?>\n";
         $template_header = "";
 
@@ -1525,7 +1531,9 @@ class Smarty_Compiler extends Smarty {
      */
     function _parse_attrs($tag_args)
     {
-
+        if (is_null($tag_args)) {
+          return array();
+        }
         /* Tokenize tag attributes. */
         preg_match_all('~(?:' . $this->_obj_call_regexp . '|' . $this->_qstr_regexp . ' | (?>[^"\'=\s]+)
                          )+ |

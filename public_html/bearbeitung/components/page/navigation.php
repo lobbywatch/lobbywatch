@@ -67,6 +67,7 @@ class Navigation implements IteratorAggregate, Countable
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator($this->navigation);
@@ -75,6 +76,7 @@ class Navigation implements IteratorAggregate, Countable
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return count($this->navigation);

@@ -141,6 +141,16 @@ define([
                 autoHideMessage($(alert));
             });
 
+            $form.find('.js-hint').each(function () {
+                $(this).popover({
+                    placement: 'top',
+                    trigger: 'hover',
+                    container: 'body',
+                    html: true,
+                    content: $(this).attr('data-hint')
+                });
+            });
+
             return $form;
         },
 

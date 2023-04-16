@@ -2,7 +2,17 @@
 
     {assign var='ColumnViewData' value=$Column->getViewData()}
     <div class="col-input">
+        <label class="control-label" data-column="{$ColumnViewData.FieldName}">
+            {if $ColumnViewData.EditorHint}
+                <span class="commented js-hint" data-hint="{$ColumnViewData.EditorHint}">{$ColumnViewData.Caption}</span>
+            {else}
+                {$ColumnViewData.Caption}
+            {/if}
+        </label>
+    </div>
+    <div class="col-input">
         <div class="form-group">
+
             {include file='editors/'|cat:$ColumnViewData.EditorViewData.Editor->getEditorName()|cat:'.tpl' Editor=$ColumnViewData.EditorViewData.Editor ViewData=$ColumnViewData.EditorViewData FormId=$Grid.FormId isSingleFieldForm=true}
 
         </div>

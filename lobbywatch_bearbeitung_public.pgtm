@@ -1,4 +1,4 @@
-<Project version="20.5.0.7" edition="pro" localizationFileName="public_html\bearbeitung\components\lang.en.lobbywatch.php" phpDriver="2" outputPath="public_html\bearbeitung" copySystemFiles="true" generateModifiedDataOnly="true" outputFilesExtension="php" colorSchemeName="default-compact">
+<Project version="22.8.0.5" edition="pro" localizationFileName="public_html\bearbeitung\components\lang.en.lobbywatch.php" phpDriver="2" outputPath="public_html\bearbeitung" copySystemFiles="true" generateModifiedDataOnly="true" outputFilesExtension="php" colorSchemeName="default-compact">
   <ConnectionOptions host="localhost" port="3306" login="" password="hidden" database="" client_encoding="utf8" allow_old_password="false">
     <ssh_secure secure="false" port="22" authentication_mode="0"/>
     <http_tunnel tunneling="false" url="">
@@ -514,7 +514,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             </EditProperties>
           </ColumnPresentation>
           <ColumnPresentation fieldName="interessenraum_id" caption="Interessenraum" headerHint="Aktionsgebiet der Organisation" canSetNull="true" defaultInsertValue="1" selectedFilterOperators="1589247">
-            <Lookup tableName="v_interessenraum" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="false" lookupOrdering="0"/>
+            <Lookup tableName="v_interessenraum" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter=""/>
             <ViewProperties type="text"/>
             <EditProperties type="comboBox"/>
           </ColumnPresentation>
@@ -1676,8 +1676,6 @@ datei_anhang_delete($page, $rowData, $cancel, $message, $tableName);            
                 <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);                </OnGetCustomTemplate>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="organisation_id"/>
@@ -2082,8 +2080,6 @@ customDrawRow('organisation_jahr', $rowData, $rowCellStyles, $rowStyles);       
                 <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);                </OnGetCustomTemplate>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="organisation_id"/>
@@ -3053,8 +3049,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('organisation_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -3439,8 +3433,6 @@ logTableExtendedDrawRow('organisation_log', $rowData, $rowCellStyles, $rowStyles
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="connector_organisation_id"/>
@@ -3735,8 +3727,6 @@ logTableExtendedDrawRow('organisation_log', $rowData, $rowCellStyles, $rowStyles
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="ziel_organisation_id"/>
@@ -4031,8 +4021,6 @@ logTableExtendedDrawRow('organisation_log', $rowData, $rowCellStyles, $rowStyles
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="organisation_id"/>
@@ -4327,8 +4315,6 @@ logTableExtendedDrawRow('organisation_log', $rowData, $rowCellStyles, $rowStyles
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="organisation_id"/>
@@ -4623,8 +4609,6 @@ logTableExtendedDrawRow('organisation_log', $rowData, $rowCellStyles, $rowStyles
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="ziel_organisation_id"/>
@@ -6080,8 +6064,6 @@ logTableExtendedDrawRow('organisation_log', $rowData, $rowCellStyles, $rowStyles
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="organisation_id"/>
@@ -7469,8 +7451,6 @@ logTableExtendedDrawRow('organisation_log', $rowData, $rowCellStyles, $rowStyles
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="connector_organisation_id"/>
@@ -7793,8 +7773,6 @@ logTableExtendedDrawRow('organisation_log', $rowData, $rowCellStyles, $rowStyles
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="organisation_id"/>
@@ -8298,8 +8276,6 @@ logTableExtendedDrawRow('organisation_log', $rowData, $rowCellStyles, $rowStyles
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="organisation_id"/>
@@ -8731,8 +8707,6 @@ logTableExtendedDrawRow('organisation_log', $rowData, $rowCellStyles, $rowStyles
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="organisation_id"/>
@@ -8814,7 +8788,6 @@ window.disable_organisation_imported_fields(editors);          </OnInsertFormLoa
           <OnEditFormLoaded enabled="true">
 window.disable_organisation_imported_fields(editors);          </OnEditFormLoaded>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators>
           <PartitionNavigator type="userDefined" name="partition" caption="De Name beginnt mit" allowViewAllRecords="true">
             <OnGetPartitions>
@@ -8890,7 +8863,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <EditProperties type="textBox" maxLength="50"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="rat_id" caption="Rat" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates" selectedFilterOperators="1589247">
-            <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="anzeigestufe &gt; 0" useLookupOrdering="false" lookupOrdering="0"/>
+            <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="anzeigestufe &gt; 0"/>
             <ViewProperties type="text"/>
             <EditProperties type="comboBox"/>
           </ColumnPresentation>
@@ -9017,7 +8990,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="militaerischer_grad_id" caption="Militärischer Grad" headerHint="Militärischer Grad, leer (NULL) = kein Militärdienst" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-            <Lookup tableName="v_mil_grad" linkFieldName="id" displayFieldName="name" lookupFilter="anzeigestufe &gt; 0" useLookupOrdering="false" lookupOrdering="0"/>
+            <Lookup tableName="v_mil_grad" linkFieldName="id" displayFieldName="name" lookupFilter="anzeigestufe &gt; 0"/>
             <ViewProperties type="text"/>
             <EditProperties type="comboBox"/>
           </ColumnPresentation>
@@ -10731,8 +10704,6 @@ $edit_general_hint              </BeforeGridText>
                       <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('parlamentarier_anhang_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                      </CustomDrawRow>
                     </EventHandlers>
-                    <RecordPermissions useRecordPermissions="false"/>
-                    <PartitionNavigators/>
                   </Page>
                   <MasterForeignKeyColumnMap>
                     <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -10747,8 +10718,6 @@ datei_anhang_delete($page, $rowData, $cancel, $message, $tableName);            
                 <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);                </OnGetCustomTemplate>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="parlamentarier_id"/>
@@ -11224,8 +11193,6 @@ customOnCustomRenderColumn('parlamentarier_transparenz', $fieldName, $fieldData,
                 <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);                </OnGetCustomTemplate>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="parlamentarier_id"/>
@@ -12553,8 +12520,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('parlamentarier_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -13711,8 +13676,6 @@ customOnCustomRenderColumn('v_zutrittsberechtigung_simple_compat', $fieldName, $
                 <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);                </OnGetCustomTemplate>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="parlamentarier_id"/>
@@ -14095,8 +14058,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="parlamentarier_id"/>
@@ -14708,8 +14669,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="parlamentarier_id"/>
@@ -16169,8 +16128,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="parlamentarier_id"/>
@@ -17431,8 +17388,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="parlamentarier_id"/>
@@ -18939,8 +18894,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="parlamentarier_id"/>
@@ -20237,8 +20190,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="parlamentarier_id"/>
@@ -20314,7 +20265,6 @@ window.disable_parlamentarier_imported_fields = function (editors) {
           <OnEditFormLoaded enabled="true">
 window.disable_parlamentarier_imported_fields(editors);          </OnEditFormLoaded>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators>
           <PartitionNavigator type="userDefined" name="partition" caption="Name beginnt mit" allowViewAllRecords="true">
             <OnGetPartitions>
@@ -21153,8 +21103,6 @@ See &lt;a href=&quot;https://cms.lobbywatch.ch/sites/lobbywatch.ch/wiki/Transpar
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('parlamentarier_transparenz_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -21177,8 +21125,6 @@ customOnCustomRenderColumn('parlamentarier_transparenz', $fieldName, $fieldData,
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
         <Charts>
           <Chart name="chart-parlamentarier-transparenz" title="Parlamentariertransparenz der angezeigten Einträge" type="2" domainColumnName="name" domainColumnLabel="Fraktion" domainColumnType="string" annotationColumnName="abkuerzung" annotationTextColumnName="name">
             <DataColumns>
@@ -22599,8 +22545,6 @@ $edit_general_hint              </BeforeGridText>
                       <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('person_anhang_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                      </CustomDrawRow>
                     </EventHandlers>
-                    <RecordPermissions useRecordPermissions="false"/>
-                    <PartitionNavigators/>
                   </Page>
                   <MasterForeignKeyColumnMap>
                     <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -22615,8 +22559,6 @@ datei_anhang_delete($page, $rowData, $cancel, $message, $tableName);            
                 <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);                </OnGetCustomTemplate>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="person_id"/>
@@ -23471,8 +23413,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('person_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -24904,8 +24844,6 @@ logTableExtendedDrawRow('person_log', $rowData, $rowCellStyles, $rowStyles, $row
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="person_id"/>
@@ -25346,8 +25284,6 @@ logTableExtendedDrawRow('person_log', $rowData, $rowCellStyles, $rowStyles, $row
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="person_id"/>
@@ -25362,7 +25298,6 @@ customOnCustomRenderColumn('person', $fieldName, $fieldData, $rowData, $customTe
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators>
           <PartitionNavigator type="userDefined" name="partition" caption="Nachname beginnt mit" allowViewAllRecords="true">
             <OnGetPartitions>
@@ -26424,8 +26359,6 @@ $handled = true;                </OnCustomDefaultValues>
                 <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);                </OnGetCustomTemplate>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="interessenbindung_id"/>
@@ -27018,8 +26951,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('interessenbindung_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -27038,7 +26969,6 @@ customOnCustomRenderColumn('interessenbindung', $fieldName, $fieldData, $rowData
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators>
           <PartitionNavigator type="userDefined" name="partition" caption="Parlamentariername beginnt mit" allowViewAllRecords="true">
             <OnGetPartitions>
@@ -28242,8 +28172,6 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('interessenbindung_jahr_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -28258,8 +28186,6 @@ customOnCustomRenderColumn('interessenbindung_jahr', $fieldName, $fieldData, $ro
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="zutrittsberechtigung" numberByDataSource="0" fileName="zutrittsberechtigung" caption="Zutrittsberechtigung" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Zutrittsberechtigungen für Gäse ins Bundeshaus&quot;&gt;Zutrittsberechtigung&lt;/span&gt;" viewFormCaptionTemplate="Zutrittsberechtigung &quot;%parlamentarier_id%&quot; - &quot;%person_id%&quot;" editFormCaptionTemplate="Edit Zutrittsberechtigung &quot;%parlamentarier_id%&quot; - &quot;%person_id%&quot;" insertFormCaption="Add new Zutrittsberechtigung" addSeveralRecordsAtATimeValues="2" groupName="&lt;span class=&quot;releation-menu important-relation-menu&quot;&gt;Verbindungen&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
         <DefaultSortedColumns>
@@ -29065,8 +28991,6 @@ $edit_general_hint        </BeforeGridText>
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('zutrittsberechtigung_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -29085,7 +29009,6 @@ customOnCustomRenderColumn('zutrittsberechtigung', $fieldName, $fieldData, $rowD
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators>
           <PartitionNavigator type="userDefined" name="partition" caption="Parlamentariernachname beginnt mit" allowViewAllRecords="true">
             <OnGetPartitions>
@@ -29899,8 +29822,6 @@ $handled = true;                </OnCustomDefaultValues>
                 <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);                </OnGetCustomTemplate>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="mandat_id"/>
@@ -30420,8 +30341,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('mandat_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -30440,7 +30359,6 @@ customOnCustomRenderColumn('mandat', $fieldName, $fieldData, $rowData, $customTe
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators>
           <PartitionNavigator type="userDefined" name="partition" caption="Nachname der zutrittsberechtigten Person beginn mit" allowViewAllRecords="true">
             <OnGetPartitions>
@@ -31196,8 +31114,6 @@ $edit_general_hint        </BeforeGridText>
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('in_kommission_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -31216,8 +31132,6 @@ customOnCustomRenderColumn('in_kommission', $fieldName, $fieldData, $rowData, $c
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="in_rat" numberByDataSource="0" fileName="in_rat" caption="In Rat" shortCaption="&lt;span class=&quot;relation&quot;&gt;In Rat&lt;/span&gt;" groupName="&lt;span class=&quot;releation-menu important-relation-menu&quot;&gt;Verbindungen&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
         <BeforeGridText/>
@@ -31914,8 +31828,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('in_rat_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -31934,8 +31846,6 @@ customOnCustomRenderColumn('in_rat', $fieldName, $fieldData, $rowData, $customTe
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="in_fraktion" numberByDataSource="0" fileName="in_fraktion" caption="In Fraktion" shortCaption="&lt;span class=&quot;relation&quot;&gt;In Fraktion&lt;/span&gt;" groupName="&lt;span class=&quot;releation-menu important-relation-menu&quot;&gt;Verbindungen&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
         <BeforeGridText/>
@@ -32599,8 +32509,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('in_fraktion_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -32619,8 +32527,6 @@ customOnCustomRenderColumn('in_fraktion', $fieldName, $fieldData, $rowData, $cus
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="in_partei" numberByDataSource="0" fileName="in_partei" caption="In Partei" shortCaption="&lt;span class=&quot;relation&quot;&gt;In Partei&lt;/span&gt;" groupName="&lt;span class=&quot;releation-menu important-relation-menu&quot;&gt;Verbindungen&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
         <BeforeGridText/>
@@ -33288,8 +33194,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('in_partei_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -33308,8 +33212,6 @@ customOnCustomRenderColumn('in_partei', $fieldName, $fieldData, $rowData, $custo
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="organisation_beziehung" numberByDataSource="0" fileName="organisation_beziehung" caption="Organisation Beziehung" shortCaption="&lt;span class=&quot;relation&quot;&gt;Organisation Beziehung&lt;/span&gt;" viewFormCaptionTemplate="Organisation Beziehung &quot;%organisation_id%&quot; - &quot;%ziel_organisation_id%&quot;" editFormCaptionTemplate="Edit Organisation Beziehung &quot;%organisation_id%&quot; - &quot;%ziel_organisation_id%&quot;" insertFormCaption="Add new Organisation Beziehung" groupName="&lt;span class=&quot;releation-menu important-relation-menu&quot;&gt;Verbindungen&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
         <DefaultSortedColumns>
@@ -34149,8 +34051,6 @@ $edit_general_hint        </BeforeGridText>
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('organisation_beziehung_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -34169,8 +34069,6 @@ customOnCustomRenderColumn('organisation_beziehung', $fieldName, $fieldData, $ro
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="uv_wissensartikel_link" numberByDataSource="0" fileName="wissensartikel_link" caption="Lobbypediaverknüpfung" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Verknüpfung von Lobbypedia-Artikel mit einem Datensatz&quot;&gt;Lobbypediaverknüpfung&lt;/span&gt;" addSeveralRecordsAtATimeValues="2,3,4" groupName="&lt;span class=&quot;releation-menu important-relation-menu&quot;&gt;Verbindungen&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
         <DefaultSortedColumns>
@@ -34993,8 +34891,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('wissensartikel_link_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -35071,8 +34967,6 @@ if (editors.target_table_name.getValue()) {
 
 editors.target_table_name_with_id.setEnabled(editors.target_table_name_with_id.getValue());          </OnEditFormLoaded>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="branche" numberByDataSource="0" fileName="branche" caption="Branche" shortCaption="&lt;span class=&quot;entity&quot;&gt;Branche&lt;/span&gt;" viewFormCaptionTemplate="Branche &quot;%name%&quot;" editFormCaptionTemplate="Edit Branche &quot;%name%&quot;" insertFormCaption="Add new Branche" groupName="Stammdaten" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
         <DefaultSortedColumns>
@@ -35921,8 +35815,6 @@ $edit_general_hint        </BeforeGridText>
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="branche_id"/>
@@ -36801,8 +36693,6 @@ $edit_general_hint        </BeforeGridText>
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="branche_id"/>
@@ -37372,8 +37262,6 @@ $edit_general_hint        </BeforeGridText>
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('branche_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -37395,8 +37283,6 @@ customOnCustomRenderColumn('branche', $fieldName, $fieldData, $rowData, $customT
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="interessengruppe" numberByDataSource="0" fileName="interessengruppe" caption="Lobbygruppe" shortCaption="&lt;span class=&quot;entity&quot;&gt;Lobbygruppe&lt;/span&gt;" viewFormCaptionTemplate="Lobbygruppe &quot;%name%&quot;" editFormCaptionTemplate="Edit Lobbygruppe &quot;%name%&quot;" insertFormCaption="Add new Lobbygruppe" groupName="Stammdaten" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
         <DefaultSortedColumns>
@@ -38187,8 +38073,6 @@ $edit_general_hint        </BeforeGridText>
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -39067,8 +38951,6 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="interessengruppe_id"/>
@@ -40310,8 +40192,6 @@ logTableExtendedDrawRow('interessengruppe_log', $rowData, $rowCellStyles, $rowSt
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="beruf_interessengruppe_id"/>
@@ -40326,7 +40206,6 @@ customOnCustomRenderColumn('interessengruppe', $fieldName, $fieldData, $rowData,
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators>
           <PartitionNavigator type="userDefined" name="partition" caption="Name beginnt mit" allowViewAllRecords="true">
             <OnGetPartitions>
@@ -41699,8 +41578,6 @@ $edit_general_hint        </BeforeGridText>
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="kommission_id"/>
@@ -42186,8 +42063,6 @@ $edit_general_hint        </BeforeGridText>
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="kommission_id"/>
@@ -42850,8 +42725,6 @@ $edit_general_hint        </BeforeGridText>
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('kommission_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -42866,8 +42739,6 @@ customOnCustomRenderColumn('kommission', $fieldName, $fieldData, $rowData, $cust
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="partei" numberByDataSource="0" fileName="partei" caption="Partei" shortCaption="&lt;span class=&quot;entity&quot;&gt;Partei&lt;/span&gt;" viewFormCaptionTemplate="Partei &quot;%abkuerzung%&quot;" editFormCaptionTemplate="Edit Partei &quot;%abkuerzung%&quot;" insertFormCaption="Add new Partei" groupName="Stammdaten" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
         <DefaultSortedColumns>
@@ -44004,8 +43875,6 @@ Tabelle der Parteien        </homePageDescription>
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -44155,7 +44024,7 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="militaerischer_grad_id" caption="Militärischer Grad" headerHint="Militärischer Grad, leer (NULL) = kein Militärdienst" canSetNull="true" selectedFilterOperators="1589247">
-                  <Lookup tableName="v_mil_grad" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="false" lookupOrdering="0"/>
+                  <Lookup tableName="v_mil_grad" linkFieldName="id" displayFieldName="name" lookupFilter=""/>
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox"/>
                 </ColumnPresentation>
@@ -45248,8 +45117,6 @@ logTableExtendedDrawRow('partei_log', $rowData, $rowCellStyles, $rowStyles, $row
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="partei_id"/>
@@ -45630,8 +45497,6 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
   $result = 'page_list.tpl';
 }                </OnGetCustomTemplate>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="fraktion_id" foreginColumnName="id"/>
@@ -45656,8 +45521,6 @@ customOnBeforePageLoad();          </OnBeforePageLoad>
           <OnPageLoaded enabled="true">
 customOnAfterPageLoad();          </OnPageLoaded>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="fraktion" numberByDataSource="0" fileName="fraktion" caption="Fraktion" shortCaption="&lt;span class=&quot;entity&quot;&gt;Fraktion&lt;/span&gt;" viewFormCaptionTemplate="Fraktion &quot;%name%&quot;" editFormCaptionTemplate="Edit Fraktion &quot;%name%&quot;" insertFormCaption="Add new Fraktion" groupName="Stammdaten" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
         <DefaultSortedColumns>
@@ -46473,8 +46336,6 @@ $edit_general_hint        </BeforeGridText>
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('fraktion_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -47000,8 +46861,6 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
   $result = 'page_list.tpl';
 }                </OnGetCustomTemplate>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="fraktion_id"/>
@@ -48238,8 +48097,6 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="fraktion_id"/>
@@ -48254,8 +48111,6 @@ customOnCustomRenderColumn('fraktion', $fieldName, $fieldData, $rowData, $custom
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="kanton" numberByDataSource="0" fileName="kanton" caption="Kanton" shortCaption="&lt;span class=&quot;entity&quot;&gt;Kanton&lt;/span&gt;" viewFormCaptionTemplate="Kanton &quot;%abkuerzung%&quot;" editFormCaptionTemplate="Edit Kanton &quot;%abkuerzung%&quot;" insertFormCaption="Add new Kanton" groupName="Stammdaten" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
         <DefaultSortedColumns>
@@ -49225,8 +49080,6 @@ customDrawRow('kanton_jahr', $rowData, $rowCellStyles, $rowStyles);             
                 <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);                </OnGetCustomTemplate>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="kanton_id"/>
@@ -50463,8 +50316,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="kanton_id"/>
@@ -51106,8 +50957,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('kanton_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -51122,8 +50971,6 @@ customOnCustomRenderColumn('kanton', $fieldName, $fieldData, $rowData, $customTe
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="v_last_updated_tables" includedIntoPageList="false" numberByDataSource="0" fileName="last_updated_tables" caption="Tabellenstand" shortCaption="&lt;span class=&quot;view&quot;&gt;Tabellenstand&lt;/span&gt;" groupName="Meta" addSeparator="false" horizontalFilterCondition="" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" multiEditAbility="0" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="30" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="30" printAvailable="13" highlightRowOnMouseHover="true" useActionImages="true" showSetNullCheckBox="true">
         <BeforeGridText/>
@@ -51242,8 +51089,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="query" queryName="q_last_updated_tables" numberByDataSource="0" fileName="tabellenstand" caption="Tabellenstand" shortCaption="&lt;span class=&quot;view&quot;&gt;Tabellenstand&lt;/span&gt;" groupName="Meta" addSeparator="false" horizontalFilterCondition="" NavigatorPosition="0" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" multiEditAbility="0" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="30" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="30" printAvailable="13" highlightRowOnMouseHover="true" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <DefaultSortedColumns>
@@ -51375,8 +51220,6 @@ $edit_general_hint        </BeforeGridText>
           <OnGetCustomTemplate enabled="false">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="settings" numberByDataSource="0" fileName="settings" caption="Settings" shortCaption="&lt;span class=&quot;settings&quot;&gt;Settings&lt;/span&gt;" viewFormCaptionTemplate="Setting &quot;%key_name%&quot;" editFormCaptionTemplate="Edit Setting &quot;%key_name%&quot;" insertFormCaption="Add new Setting" groupName="Meta" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
         <DefaultSortedColumns>
@@ -51818,8 +51661,6 @@ $edit_general_hint        </BeforeGridText>
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('settings_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -51830,8 +51671,6 @@ logTableExtendedDrawRow('settings_log', $rowData, $rowCellStyles, $rowStyles, $r
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="settings_category" numberByDataSource="0" fileName="settings_category" caption="Settings Category" shortCaption="&lt;span class=&quot;settings&quot;&gt;Settings Category&lt;/span&gt;" viewFormCaptionTemplate="Setting Category &quot;%name%&quot;" editFormCaptionTemplate="Edit Setting Category &quot;%name%&quot;" insertFormCaption="Add new Setting Category" groupName="Meta" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
         <DefaultSortedColumns>
@@ -52154,8 +51993,6 @@ $edit_general_hint        </BeforeGridText>
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="category_id"/>
@@ -52387,8 +52224,6 @@ $edit_general_hint        </BeforeGridText>
                 <CustomDrawRow enabled="true">
 logTableExtendedDrawRow('settings_category_log', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
               </EventHandlers>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="id"/>
@@ -52399,8 +52234,6 @@ logTableExtendedDrawRow('settings_category_log', $rowData, $rowCellStyles, $rowS
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="translation_source" numberByDataSource="0" fileName="translation_source" caption="Translation Source" shortCaption="&lt;span class=&quot;settings&quot;&gt;Translation Source&lt;/span&gt;" groupName="Meta" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
         <BeforeGridText>
@@ -52761,8 +52594,6 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. 
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="plural_translation_source_id"/>
@@ -52944,8 +52775,6 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. 
                 </MultiEdit>
               </Columns>
               <Details/>
-              <RecordPermissions useRecordPermissions="false"/>
-              <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
               <FieldMap masterColumnName="id" foreginColumnName="translation_source_id"/>
@@ -52958,8 +52787,6 @@ customDrawRow('translation_source', $rowData, $rowCellStyles, $rowStyles, $rowCl
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="translation_target" numberByDataSource="0" fileName="translation_target" caption="Translation Target" shortCaption="&lt;span class=&quot;settings&quot;&gt;Translation Target&lt;/span&gt;" groupName="Meta" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
         <BeforeGridText>
@@ -53143,8 +52970,6 @@ customDrawRow('translation_target', $rowData, $rowCellStyles, $rowStyles, $rowCl
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="user" numberByDataSource="0" fileName="user" caption="User" shortCaption="&lt;span class=&quot;settings&quot;&gt;User&lt;/span&gt;" viewFormCaptionTemplate="User &quot;%name%&quot;" editFormCaptionTemplate="Edit User &quot;%name%&quot;" insertFormCaption="Add new User" groupName="Meta" addSeparator="false" horizontalFilterCondition="" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="0" multiEditAbility="0" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="30" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="30" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText/>
@@ -53424,8 +53249,6 @@ customDrawRowFarbcode('user', $rowData, $rowCellStyles, $rowStyles, $rowClasses,
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="query" queryName="q_unvollstaendige_parlamentarier" numberByDataSource="0" fileName="q_unvollstaendige_parlamentarier" caption="Unvollständige Parlamentarier" shortCaption="&lt;span class=&quot;view&quot;&gt;Unvollständige Parlamentarier&lt;/span&gt;" groupName="Auswertungen" addSeparator="true" horizontalFilterCondition="" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" multiEditAbility="0" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="30" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="30" printAvailable="13" useActionImages="true" showSetNullCheckBox="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
@@ -54672,8 +54495,6 @@ customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles);          
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="query" queryName="q_unvollstaendige_zutrittsberechtigte" numberByDataSource="0" fileName="q_unvollstaendige_zutrittsberechtigte" caption="Unvollständige Zutrittsberechtigte" shortCaption="&lt;span class=&quot;view&quot;&gt;Unvollständige Zutrittsberechtigte&lt;/span&gt;" groupName="Auswertungen" addSeparator="false" horizontalFilterCondition="" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" multiEditAbility="0" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="30" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="30" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
@@ -55807,8 +55628,6 @@ customDrawRow('person', $rowData, $rowCellStyles, $rowStyles);          </Custom
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="query" queryName="q_unvollstaendige_organisationen" numberByDataSource="0" fileName="q_unvollstaendige_organisationen" caption="Unvollständige Organisationen" shortCaption="&lt;span class=&quot;view&quot;&gt;Unvollständige Organisationen&lt;/span&gt;" groupName="Auswertungen" addSeparator="false" horizontalFilterCondition="" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" multiEditAbility="0" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="30" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="30" printAvailable="13" useActionImages="true" showSetNullCheckBox="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
@@ -56707,8 +56526,6 @@ customDrawRow('organisation', $rowData, $rowCellStyles, $rowStyles);          </
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="parlamentarier_anhang" includedIntoPageList="false" numberByDataSource="0" fileName="parlamentarier_anhang" caption="Parlamentarier Anhang" shortCaption="Parlamentarier Anhang" groupName="Misc" addSeparator="false" horizontalFilterCondition="" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" editAbilityMode="0" multiEditAbility="0" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="30" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="30" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText/>
@@ -56958,8 +56775,6 @@ datei_anhang_delete($page, $rowData, $cancel, $message, $tableName);          </
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="person_anhang" includedIntoPageList="false" numberByDataSource="0" fileName="person_anhang" caption="Person Anhang" shortCaption="Person Anhang" groupName="Misc" addSeparator="false" horizontalFilterCondition="" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" editAbilityMode="0" multiEditAbility="0" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="30" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="30" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText/>
@@ -57208,8 +57023,6 @@ datei_anhang_delete($page, $rowData, $cancel, $message, $tableName);          </
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
       </Page>
     </Pages>
     <UserAuthorization type="tableBased" tableName="user" userIdField="id" userNameField="name" passwordField="password" passwordEncryption="Custom" allowUserToChangePassword="true">

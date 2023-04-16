@@ -21,7 +21,7 @@ class PdfListRenderer extends AbstractPdfRenderer
                 $cell['Align'] = $column->GetAlign();
 
                 $cellStyle = new StyleBuilder();
-                $cellStyle->Add('width', $column->GetFixedWidth());
+                $cellStyle->Add('width', $column->getFixedWidth());
                 if (!$column->GetWordWrap())
                     $cellStyle->Add('white-space', 'nowrap');
                 $cellStyle->AddStyleString(ArrayUtils::GetArrayValueDef($cellStyles, $columnName));
@@ -58,8 +58,8 @@ class PdfListRenderer extends AbstractPdfRenderer
         {
             $headColumnsStyleBuilder = new StyleBuilder();
 
-            if ($Column->GetFixedWidth() != null)
-                $headColumnsStyleBuilder->Add('width', $Column->GetFixedWidth());
+            if ($Column->getFixedWidth() != null)
+                $headColumnsStyleBuilder->Add('width', $Column->getFixedWidth());
 
             array_push(
                 $headCellsData,

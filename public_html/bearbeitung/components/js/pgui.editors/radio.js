@@ -38,8 +38,8 @@ define(['pgui.editors/custom', 'underscore'], function (CustomEditor, _) {
         setValue: function(value) {
             this.rootElement.find("input").each(function(i, item) {
                 if ($(item).attr('value') == value) {
-                    $(item).attr('checked', true);
-                }
+                    $(item).prop('checked', true);
+                }  
             });
 
             return this;

@@ -24,4 +24,7 @@ include(dirname(__FILE__) . '/columns/external_video_view_column.php');
 include(dirname(__FILE__) . '/columns/external_image_view_column.php');
 include(dirname(__FILE__) . '/columns/blob_image_view_column.php');
 include(dirname(__FILE__) . '/columns/embedded_video_view_column.php');
+include(dirname(__FILE__) . '/columns/barcode_view_column.php');
+include(dirname(__FILE__) . '/columns/qrcode_view_column.php');
+include(dirname(__FILE__) . '/columns/toggle_view_column.php');
 include(dirname(__FILE__) . '/columns/detail_column.php');

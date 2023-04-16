@@ -290,20 +290,16 @@
             $column->setHrefTemplate('%table_name%.php?order=dupdated_date');
             $column->setTarget('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Name der Tabelle');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Name der Tabelle');
             $grid->AddViewColumn($column);
-            
             //
             // View column for table_name field
             //
             $column = new TextViewColumn('table_name', 'table_name', 'Table Name', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Technischer Tabellenname in der Datenbank');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Technischer Tabellenname in der Datenbank');
             $grid->AddViewColumn($column);
-            
             //
             // View column for anzahl_eintraege field
             //
@@ -313,10 +309,8 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('.');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Anzahl Einträge in der Tabelle');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Anzahl Einträge in der Tabelle');
             $grid->AddViewColumn($column);
-            
             //
             // View column for last_updated field
             //
@@ -324,28 +318,23 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Zuletzt abgeändert am');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Zuletzt abgeändert am');
             $grid->AddViewColumn($column);
-            
             //
             // View column for last_visa field
             //
             $column = new TextViewColumn('last_visa', 'last_visa', 'Last Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Zuletzt abgeändert von');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Zuletzt abgeändert von');
             $grid->AddViewColumn($column);
-            
             //
             // View column for last_updated_id field
             //
             $column = new TextViewColumn('last_updated_id', 'last_updated_id', 'Last Updated Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('ID des zuletzt abgeänderten Eintrages');
-            $column->SetFixedWidth(null);
+            $column->setDescription('ID des zuletzt abgeänderten Eintrages');
             $grid->AddViewColumn($column);
         }
     
@@ -514,6 +503,11 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+        }
+    
+        protected function AddToggleEditColumns(Grid $grid)
+        {
+    
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -803,6 +797,7 @@
             $this->AddSingleRecordViewColumns($result);
             $this->AddEditColumns($result);
             $this->AddMultiEditColumns($result);
+            $this->AddToggleEditColumns($result);
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
@@ -812,6 +807,7 @@
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(false);
             $this->SetShowBottomPageNavigator(false);
+            $this->setAllowedActions(array());
             $this->setPrintListAvailable(true);
             $this->setPrintListRecordAvailable(false);
             $this->setPrintOneRecordAvailable(true);

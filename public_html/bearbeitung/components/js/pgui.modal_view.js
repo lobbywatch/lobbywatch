@@ -2,8 +2,9 @@ define([
     'pgui.field-embedded-video',
     'pgui.cell-edit',
     'pgui.utils',
-    'pgui.image_popup'
-], function(showFieldEmbeddedVideo, initCellEdit, utils, initImagePopup) {
+    'pgui.image_popup',
+    'pgui.toggle'
+], function(showFieldEmbeddedVideo, initCellEdit, utils, initImagePopup, initToggle) {
     var $body = $('body');
 
     return function init(item) {
@@ -25,6 +26,7 @@ define([
 
                 showFieldEmbeddedVideo($modalContainer, false, false);
                 initImagePopup($modalContainer);
+                initToggle($modalContainer);
 
                 $modalContainer.find('[data-edit-url]').each(function (i, el) {
                     var $el = $(el);

@@ -107,8 +107,8 @@ class ImageFilter
         $imageHeight = $imageSize[1];
 
         $newImageSize = $this->GetTransformedSize($imageSize);
-        $newImageWidth = $newImageSize[0];
-        $newImageHeight = $newImageSize[1];
+        $newImageWidth = (int) $newImageSize[0];
+        $newImageHeight = (int) $newImageSize[1];
 
         $result = imagecreatetruecolor($newImageWidth, $newImageHeight);
 

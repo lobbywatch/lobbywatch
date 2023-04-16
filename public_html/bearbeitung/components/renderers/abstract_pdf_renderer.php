@@ -46,7 +46,9 @@ abstract class AbstractPdfRenderer extends AbstractExportRenderer
             'margin-top' => 10,
             'margin-bottom' => 10,
             'margin-header' => 5,
-            'margin-footer' => 5
+            'margin-footer' => 5,
+	    'autoScriptToLang' => false,
+            'autoLangToFont' => false
         );
         $Page->GetCustomExportOptions(
             'pdf',
@@ -66,7 +68,9 @@ abstract class AbstractPdfRenderer extends AbstractExportRenderer
             'margin_top' => $options['margin-top'],
             'margin_bottom' => $options['margin-bottom'],
             'margin_header' => $options['margin-header'],
-            'margin_footer' => $options['margin-footer']
+            'margin_footer' => $options['margin-footer'],
+	    'autoScriptToLang' => $options['autoScriptToLang'],
+            'autoLangToFont' => $options['autoLangToFont']
         );
 
         $mpdf = createMPDF($configParams);

@@ -867,30 +867,24 @@
             $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Technischer Schlüssel der Live-Daten');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Technischer Schlüssel der Live-Daten');
             $grid->AddViewColumn($column);
-            
             //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('parlamentarier_id', 'parlamentarier_id_anzeige_name', 'Parlamentarier Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Fremdschlüssel Parlamentarier');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Fremdschlüssel Parlamentarier');
             $grid->AddViewColumn($column);
-            
             //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('person_id', 'person_id_anzeige_name', 'Person Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Fremdschlüssel zur zutrittsberechtigten Person');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Fremdschlüssel zur zutrittsberechtigten Person');
             $grid->AddViewColumn($column);
-            
             //
             // View column for parlamentarier_kommissionen field
             //
@@ -898,10 +892,8 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/zutrittsberechtigung Trigger])');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/zutrittsberechtigung Trigger])');
             $grid->AddViewColumn($column);
-            
             //
             // View column for funktion field
             //
@@ -909,10 +901,8 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Funktion der zutrittsberechtigen Person.');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Funktion der zutrittsberechtigen Person.');
             $grid->AddViewColumn($column);
-            
             //
             // View column for funktion_fr field
             //
@@ -920,10 +910,8 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Funktion der zutrittsberechtigen Person auf französisch.');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Funktion der zutrittsberechtigen Person auf französisch.');
             $grid->AddViewColumn($column);
-            
             //
             // View column for von field
             //
@@ -931,10 +919,8 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Beginn der Zutrittsberechtigung, leer (NULL) = unbekannt');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Beginn der Zutrittsberechtigung, leer (NULL) = unbekannt');
             $grid->AddViewColumn($column);
-            
             //
             // View column for bis field
             //
@@ -942,10 +928,8 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Ende der Zutrittsberechtigung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Ende der Zutrittsberechtigung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag');
             $grid->AddViewColumn($column);
-            
             //
             // View column for updated_by_import field
             //
@@ -953,10 +937,8 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Datum, wann die Zutrittsberechtigung durch einen Import zu letzt aktualisiert wurde.');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Datum, wann die Zutrittsberechtigung durch einen Import zu letzt aktualisiert wurde.');
             $grid->AddViewColumn($column);
-            
             //
             // View column for notizen field
             //
@@ -964,20 +946,16 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
             $grid->AddViewColumn($column);
-            
             //
             // View column for eingabe_abgeschlossen_visa field
             //
             $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Kürzel der Person, welche die Eingabe abgeschlossen hat.');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Kürzel der Person, welche die Eingabe abgeschlossen hat.');
             $grid->AddViewColumn($column);
-            
             //
             // View column for eingabe_abgeschlossen_datum field
             //
@@ -985,20 +963,16 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)');
             $grid->AddViewColumn($column);
-            
             //
             // View column for kontrolliert_visa field
             //
             $column = new TextViewColumn('kontrolliert_visa', 'kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Kürzel der Person, welche die Eingabe kontrolliert hat.');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Kürzel der Person, welche die Eingabe kontrolliert hat.');
             $grid->AddViewColumn($column);
-            
             //
             // View column for kontrolliert_datum field
             //
@@ -1006,20 +980,16 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)');
             $grid->AddViewColumn($column);
-            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Autorisiert durch. Sonstige Angaben als Notiz erfassen.');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Autorisiert durch. Sonstige Angaben als Notiz erfassen.');
             $grid->AddViewColumn($column);
-            
             //
             // View column for autorisiert_datum field
             //
@@ -1027,20 +997,16 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass der Eintrag vom Parlamentarier autorisiert wurde.');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass der Eintrag vom Parlamentarier autorisiert wurde.');
             $grid->AddViewColumn($column);
-            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Freigabe von wem? (Freigabe = Daten sind fertig)');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Freigabe von wem? (Freigabe = Daten sind fertig)');
             $grid->AddViewColumn($column);
-            
             //
             // View column for freigabe_datum field
             //
@@ -1048,20 +1014,16 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Freigabedatum (Freigabe = Daten sind fertig)');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Freigabedatum (Freigabe = Daten sind fertig)');
             $grid->AddViewColumn($column);
-            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Datensatz erstellt von');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Datensatz erstellt von');
             $grid->AddViewColumn($column);
-            
             //
             // View column for created_date field
             //
@@ -1069,20 +1031,16 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Erstellt am');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Erstellt am');
             $grid->AddViewColumn($column);
-            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Abgeändert von');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Abgeändert von');
             $grid->AddViewColumn($column);
-            
             //
             // View column for updated_date field
             //
@@ -1090,40 +1048,32 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Abgeändert am');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Abgeändert am');
             $grid->AddViewColumn($column);
-            
             //
             // View column for log_id field
             //
             $column = new TextViewColumn('log_id', 'log_id', 'Log Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Technischer Log-Schlüssel');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Technischer Log-Schlüssel');
             $grid->AddViewColumn($column);
-            
             //
             // View column for action field
             //
             $column = new TextViewColumn('action', 'action', 'Action', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Aktionstyp');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Aktionstyp');
             $grid->AddViewColumn($column);
-            
             //
             // View column for state field
             //
             $column = new TextViewColumn('state', 'state', 'State', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Status der Aktion');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Status der Aktion');
             $grid->AddViewColumn($column);
-            
             //
             // View column for action_date field
             //
@@ -1131,10 +1081,8 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Datum der Aktion');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Datum der Aktion');
             $grid->AddViewColumn($column);
-            
             //
             // View column for beschreibung field
             //
@@ -1142,8 +1090,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Fremdschlüssel zu einem Snapshot');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Fremdschlüssel zu einem Snapshot');
             $grid->AddViewColumn($column);
         }
     
@@ -1360,6 +1307,11 @@
         }
     
         protected function AddMultiEditColumns(Grid $grid)
+        {
+    
+        }
+    
+        protected function AddToggleEditColumns(Grid $grid)
         {
     
         }
@@ -2055,6 +2007,7 @@
             $this->AddSingleRecordViewColumns($result);
             $this->AddEditColumns($result);
             $this->AddMultiEditColumns($result);
+            $this->AddToggleEditColumns($result);
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
@@ -2064,6 +2017,7 @@
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(false);
             $this->SetShowBottomPageNavigator(true);
+            $this->setAllowedActions(array('view'));
             $this->setPrintListAvailable(true);
             $this->setPrintListRecordAvailable(false);
             $this->setPrintOneRecordAvailable(true);
@@ -2196,7 +2150,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_zutrittsberechtigung_zutrittsberechtigung_log_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'filter_builder_zutrittsberechtigung_zutrittsberechtigung_log_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -2259,7 +2213,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_zutrittsberechtigung_zutrittsberechtigung_log_person_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'filter_builder_zutrittsberechtigung_zutrittsberechtigung_log_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -2278,7 +2232,7 @@
                 )
             );
             $lookupDataset->setOrderByField('beschreibung', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_zutrittsberechtigung_zutrittsberechtigung_log_snapshot_id_search', 'id', 'beschreibung', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'filter_builder_zutrittsberechtigung_zutrittsberechtigung_log_snapshot_id_search', 'id', 'beschreibung', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -3119,15 +3073,17 @@
                 $operation->OnShow->AddListener('ShowEditButtonHandler', $this);
             }
             
-            if ($this->GetSecurityInfo()->HasDeleteGrant())
-            {
-                $operation = new LinkOperation($this->GetLocalizerCaptions()->GetMessageString('Delete'), OPERATION_DELETE, $this->dataset, $grid);
+            if ($this->deleteOperationIsAllowed()) {
+                $operation = new AjaxOperation(OPERATION_DELETE,
+                    $this->GetLocalizerCaptions()->GetMessageString('Delete'),
+                    $this->GetLocalizerCaptions()->GetMessageString('Delete'), $this->dataset,
+                    $this->GetModalGridDeleteHandler(), $grid
+                );
                 $operation->setUseImage(true);
                 $actions->addOperation($operation);
                 $operation->OnShow->AddListener('ShowDeleteButtonHandler', $this);
-                $operation->SetAdditionalAttribute('data-modal-operation', 'delete');
-                $operation->SetAdditionalAttribute('data-delete-handler-name', $this->GetModalGridDeleteHandler());
             }
+            
             
             if ($this->GetSecurityInfo()->HasAddGrant())
             {
@@ -3155,10 +3111,8 @@
             $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Technischer Schlüssel der Zutrittsberechtigung');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Technischer Schlüssel der Zutrittsberechtigung');
             $grid->AddViewColumn($column);
-            
             //
             // View column for anzeige_name field
             //
@@ -3167,10 +3121,8 @@
             $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
             $column->setTarget('_self');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Fremdschlüssel Parlamentarier');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Fremdschlüssel Parlamentarier');
             $grid->AddViewColumn($column);
-            
             //
             // View column for anzeige_name field
             //
@@ -3179,20 +3131,16 @@
             $column->setHrefTemplate('person.php?operation=view&pk0=%person_id%');
             $column->setTarget('_self');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Fremdschlüssel zur zutrittsberechtigten Person');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Fremdschlüssel zur zutrittsberechtigten Person');
             $grid->AddViewColumn($column);
-            
             //
             // View column for parlamentarier_kommissionen field
             //
             $column = new TextViewColumn('parlamentarier_kommissionen', 'parlamentarier_kommissionen', 'Parlamentarier Kommissionen', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/zutrittsberechtigung Trigger])');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/zutrittsberechtigung Trigger])');
             $grid->AddViewColumn($column);
-            
             //
             // View column for funktion field
             //
@@ -3200,10 +3148,8 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Deklarierte Funktion der zutrittsberechtigen Person bei den Parlamentsdiensten.');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Deklarierte Funktion der zutrittsberechtigen Person bei den Parlamentsdiensten.');
             $grid->AddViewColumn($column);
-            
             //
             // View column for funktion_fr field
             //
@@ -3211,10 +3157,8 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Deklarierte Funktion der zutrittsberechtigen Person auf französisch.');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Deklarierte Funktion der zutrittsberechtigen Person auf französisch.');
             $grid->AddViewColumn($column);
-            
             //
             // View column for von field
             //
@@ -3222,10 +3166,8 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Beginn der Zutrittsberechtigung, leer (NULL) = unbekannt');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Beginn der Zutrittsberechtigung, leer (NULL) = unbekannt');
             $grid->AddViewColumn($column);
-            
             //
             // View column for bis field
             //
@@ -3233,10 +3175,8 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Ende der Zutrittsberechtigung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Ende der Zutrittsberechtigung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag');
             $grid->AddViewColumn($column);
-            
             //
             // View column for notizen field
             //
@@ -3245,10 +3185,8 @@
             $column->SetMaxLength(75);
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
             $grid->AddViewColumn($column);
-            
             //
             // View column for updated_by_import field
             //
@@ -3256,20 +3194,16 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Datum, wann die Zutrittsberechtigung durch einen Import zu letzt aktualisiert wurde.');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Datum, wann die Zutrittsberechtigung durch einen Import zu letzt aktualisiert wurde.');
             $grid->AddViewColumn($column);
-            
             //
             // View column for eingabe_abgeschlossen_visa field
             //
             $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Kürzel der Person, welche die Eingabe abgeschlossen hat.');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Kürzel der Person, welche die Eingabe abgeschlossen hat.');
             $grid->AddViewColumn($column);
-            
             //
             // View column for eingabe_abgeschlossen_datum field
             //
@@ -3277,20 +3211,16 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)');
             $grid->AddViewColumn($column);
-            
             //
             // View column for kontrolliert_visa field
             //
             $column = new TextViewColumn('kontrolliert_visa', 'kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Kürzel der Person, welche die Eingabe kontrolliert hat.');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Kürzel der Person, welche die Eingabe kontrolliert hat.');
             $grid->AddViewColumn($column);
-            
             //
             // View column for kontrolliert_datum field
             //
@@ -3298,20 +3228,16 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)');
             $grid->AddViewColumn($column);
-            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Autorisiert durch. Sonstige Angaben als Notiz erfassen.');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Autorisiert durch. Sonstige Angaben als Notiz erfassen.');
             $grid->AddViewColumn($column);
-            
             //
             // View column for autorisiert_datum field
             //
@@ -3319,20 +3245,16 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass der Eintrag vom Parlamentarier autorisiert wurde.');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass der Eintrag vom Parlamentarier autorisiert wurde.');
             $grid->AddViewColumn($column);
-            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Freigabe von wem? (Freigabe = Daten sind fertig)');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Freigabe von wem? (Freigabe = Daten sind fertig)');
             $grid->AddViewColumn($column);
-            
             //
             // View column for freigabe_datum field
             //
@@ -3340,20 +3262,16 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Freigabedatum (Freigabe = Daten sind fertig)');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Freigabedatum (Freigabe = Daten sind fertig)');
             $grid->AddViewColumn($column);
-            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Datensatz erstellt von');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Datensatz erstellt von');
             $grid->AddViewColumn($column);
-            
             //
             // View column for created_date field
             //
@@ -3361,20 +3279,16 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Erstellt am');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Erstellt am');
             $grid->AddViewColumn($column);
-            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Abgeändert von');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Abgeändert von');
             $grid->AddViewColumn($column);
-            
             //
             // View column for updated_date field
             //
@@ -3382,8 +3296,7 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Abgeändert am');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Abgeändert am');
             $grid->AddViewColumn($column);
         }
     
@@ -4349,6 +4262,11 @@
             $grid->AddMultiEditColumn($editColumn);
         }
     
+        protected function AddToggleEditColumns(Grid $grid)
+        {
+    
+        }
+    
         protected function AddInsertColumns(Grid $grid)
         {
             //
@@ -5240,8 +5158,6 @@
         {
             return ;
         }
-        protected function GetEnableModalGridDelete() { return true; }
-        
         function partition_OnGetPartitions(&$partitions)
         {
             $tmp = array();
@@ -5295,6 +5211,7 @@
             $this->AddSingleRecordViewColumns($result);
             $this->AddEditColumns($result);
             $this->AddMultiEditColumns($result);
+            $this->AddToggleEditColumns($result);
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
@@ -5308,6 +5225,7 @@
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(false);
             $this->SetShowBottomPageNavigator(true);
+            $this->setAllowedActions(array('view', 'insert', 'copy', 'edit', 'multi-edit', 'delete', 'multi-delete'));
             $this->setPrintListAvailable(true);
             $this->setPrintListRecordAvailable(false);
             $this->setPrintOneRecordAvailable(true);
@@ -5453,7 +5371,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_zutrittsberechtigung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'insert_zutrittsberechtigung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5516,7 +5434,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_zutrittsberechtigung_person_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'insert_zutrittsberechtigung_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5631,7 +5549,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_zutrittsberechtigung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'filter_builder_zutrittsberechtigung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5694,7 +5612,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_zutrittsberechtigung_person_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'filter_builder_zutrittsberechtigung_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5809,7 +5727,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_zutrittsberechtigung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'edit_zutrittsberechtigung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5872,7 +5790,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_zutrittsberechtigung_person_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'edit_zutrittsberechtigung_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -5987,7 +5905,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_zutrittsberechtigung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'multi_edit_zutrittsberechtigung_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6050,7 +5968,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_zutrittsberechtigung_person_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'multi_edit_zutrittsberechtigung_person_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        

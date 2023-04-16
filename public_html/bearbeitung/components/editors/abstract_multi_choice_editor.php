@@ -39,7 +39,7 @@ abstract class AbstractMultiChoiceEditor extends AbstractChoicesEditor
      * @inheritdoc
      */
     public function setValue($valuesAsString) {
-        $this->values = explode(',', $valuesAsString);
+        $this->values = is_null($valuesAsString) ? array() : explode(',', $valuesAsString);
     }
 
     /**

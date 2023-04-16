@@ -3,8 +3,9 @@ define([
     'pgui.utils',
     'pgui.field-embedded-video',
     'pgui.image_popup',
+    'pgui.toggle',
     'jquery.query'
-], function (FormCollection, utils, showFieldEmbeddedVideo, initImagePopup) {
+], function (FormCollection, utils, showFieldEmbeddedVideo, initImagePopup, initToggle) {
 
     function createContainer(grid, cancelCallback) {
         return grid.getRowTemplate().on('click', '.js-cancel', function (e) {
@@ -205,6 +206,7 @@ define([
 
                     showFieldEmbeddedVideo($container, false, false);
                     initImagePopup($container);
+                    initToggle($container);
                 });
 
             });

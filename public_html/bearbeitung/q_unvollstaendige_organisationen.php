@@ -1710,160 +1710,112 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for name_de field
             //
             $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for name_fr field
             //
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for name_it field
             //
             $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'uid', 'Uid', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for abkuerzung_de field
             //
             $column = new TextViewColumn('abkuerzung_de', 'abkuerzung_de', 'Abkuerzung De', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for alias_namen_de field
             //
             $column = new TextViewColumn('alias_namen_de', 'alias_namen_de', 'Alias Namen De', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for abkuerzung_fr field
             //
             $column = new TextViewColumn('abkuerzung_fr', 'abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for alias_namen_fr field
             //
             $column = new TextViewColumn('alias_namen_fr', 'alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for abkuerzung_it field
             //
             $column = new TextViewColumn('abkuerzung_it', 'abkuerzung_it', 'Abkuerzung It', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for alias_namen_it field
             //
             $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for continent field
             //
             $column = new TextViewColumn('land_id', 'land_id_continent', 'Land Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for name field
             //
             $column = new TextViewColumn('interessenraum_id', 'interessenraum_id_name', 'Interessenraum Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'rechtsform', 'Rechtsform', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for rechtsform_handelsregister field
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for rechtsform_zefix field
             //
@@ -1873,30 +1825,21 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for typ field
             //
             $column = new TextViewColumn('typ', 'typ', 'Typ', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for vernehmlassung field
             //
             $column = new TextViewColumn('vernehmlassung', 'vernehmlassung', 'Vernehmlassung', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for name field
             //
@@ -1904,10 +1847,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for name field
             //
@@ -1915,10 +1855,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for name field
             //
@@ -1926,10 +1863,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for ALT_branche_id field
             //
@@ -1939,110 +1873,77 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for handelsregister_url field
             //
             $column = new TextViewColumn('handelsregister_url', 'handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'twitter_name', 'Twitter Name', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for sekretariat field
             //
             $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for adresse_strasse field
             //
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for adresse_zusatz field
             //
             $column = new TextViewColumn('adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for adresse_plz field
             //
             $column = new TextViewColumn('adresse_plz', 'adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for updated_by_import field
             //
@@ -2050,20 +1951,14 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for eingabe_abgeschlossen_visa field
             //
             $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for eingabe_abgeschlossen_datum field
             //
@@ -2071,20 +1966,14 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for kontrolliert_visa field
             //
             $column = new TextViewColumn('kontrolliert_visa', 'kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for kontrolliert_datum field
             //
@@ -2092,20 +1981,14 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for freigabe_datum field
             //
@@ -2113,20 +1996,14 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for created_date field
             //
@@ -2134,20 +2011,14 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for updated_date field
             //
@@ -2155,10 +2026,7 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for in_handelsregister field
             //
@@ -2168,10 +2036,7 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for inaktiv field
             //
@@ -2181,90 +2046,63 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for instagram_profil field
             //
             $column = new TextViewColumn('instagram_profil', 'instagram_profil', 'Instagram Profil', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for youtube_user field
             //
             $column = new TextViewColumn('youtube_user', 'youtube_user', 'Youtube User', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for facebook_name field
             //
             $column = new TextViewColumn('facebook_name', 'facebook_name', 'Facebook Name', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for wikipedia field
             //
             $column = new TextViewColumn('wikipedia', 'wikipedia', 'Wikipedia', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for wikidata_qid field
             //
             $column = new TextViewColumn('wikidata_qid', 'wikidata_qid', 'Wikidata Qid', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for linkedin_profil_url field
             //
             $column = new TextViewColumn('linkedin_profil_url', 'linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for xing_profil_name field
             //
             $column = new TextViewColumn('xing_profil_name', 'xing_profil_name', 'Xing Profil Name', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for organisation_name_de_rechtsform_unique field
             //
             $column = new TextViewColumn('organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for ehra_id field
             //
@@ -2274,20 +2112,14 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for ch_id field
             //
             $column = new TextViewColumn('ch_id', 'ch_id', 'Ch Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for bfs_gemeinde_nr field
             //
@@ -2297,8 +2129,6 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
     
@@ -4272,6 +4102,11 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+        }
+    
+        protected function AddToggleEditColumns(Grid $grid)
+        {
+    
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -6407,6 +6242,7 @@
             $this->AddSingleRecordViewColumns($result);
             $this->AddEditColumns($result);
             $this->AddMultiEditColumns($result);
+            $this->AddToggleEditColumns($result);
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
@@ -6416,6 +6252,7 @@
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);
+            $this->setAllowedActions(array());
             $this->setPrintListAvailable(true);
             $this->setPrintListRecordAvailable(false);
             $this->setPrintOneRecordAvailable(true);
@@ -6489,7 +6326,7 @@
                 )
             );
             $lookupDataset->setOrderByField('continent', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_q_unvollstaendige_organisationen_land_id_search', 'id', 'continent', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'insert_q_unvollstaendige_organisationen_land_id_search', 'id', 'continent', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6520,7 +6357,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_q_unvollstaendige_organisationen_interessenraum_id_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'insert_q_unvollstaendige_organisationen_interessenraum_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6554,7 +6391,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_q_unvollstaendige_organisationen_interessengruppe_id_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'insert_q_unvollstaendige_organisationen_interessengruppe_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6588,7 +6425,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_q_unvollstaendige_organisationen_interessengruppe2_id_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'insert_q_unvollstaendige_organisationen_interessengruppe2_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6622,7 +6459,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_q_unvollstaendige_organisationen_interessengruppe3_id_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'insert_q_unvollstaendige_organisationen_interessengruppe3_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6667,7 +6504,7 @@
                 )
             );
             $lookupDataset->setOrderByField('continent', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_q_unvollstaendige_organisationen_land_id_search', 'id', 'continent', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'filter_builder_q_unvollstaendige_organisationen_land_id_search', 'id', 'continent', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6698,7 +6535,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_q_unvollstaendige_organisationen_interessenraum_id_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'filter_builder_q_unvollstaendige_organisationen_interessenraum_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6732,7 +6569,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_q_unvollstaendige_organisationen_interessengruppe_id_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'filter_builder_q_unvollstaendige_organisationen_interessengruppe_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6766,7 +6603,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_q_unvollstaendige_organisationen_interessengruppe2_id_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'filter_builder_q_unvollstaendige_organisationen_interessengruppe2_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6800,7 +6637,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_q_unvollstaendige_organisationen_interessengruppe3_id_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'filter_builder_q_unvollstaendige_organisationen_interessengruppe3_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6845,7 +6682,7 @@
                 )
             );
             $lookupDataset->setOrderByField('continent', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_q_unvollstaendige_organisationen_land_id_search', 'id', 'continent', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'edit_q_unvollstaendige_organisationen_land_id_search', 'id', 'continent', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6876,7 +6713,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_q_unvollstaendige_organisationen_interessenraum_id_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'edit_q_unvollstaendige_organisationen_interessenraum_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6910,7 +6747,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_q_unvollstaendige_organisationen_interessengruppe_id_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'edit_q_unvollstaendige_organisationen_interessengruppe_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6944,7 +6781,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_q_unvollstaendige_organisationen_interessengruppe2_id_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'edit_q_unvollstaendige_organisationen_interessengruppe2_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -6978,7 +6815,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_q_unvollstaendige_organisationen_interessengruppe3_id_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'edit_q_unvollstaendige_organisationen_interessengruppe3_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7023,7 +6860,7 @@
                 )
             );
             $lookupDataset->setOrderByField('continent', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_q_unvollstaendige_organisationen_land_id_search', 'id', 'continent', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'multi_edit_q_unvollstaendige_organisationen_land_id_search', 'id', 'continent', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7054,7 +6891,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_q_unvollstaendige_organisationen_interessenraum_id_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'multi_edit_q_unvollstaendige_organisationen_interessenraum_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7088,7 +6925,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_q_unvollstaendige_organisationen_interessengruppe_id_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'multi_edit_q_unvollstaendige_organisationen_interessengruppe_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7122,7 +6959,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_q_unvollstaendige_organisationen_interessengruppe2_id_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'multi_edit_q_unvollstaendige_organisationen_interessengruppe2_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -7156,7 +6993,7 @@
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'multi_edit_q_unvollstaendige_organisationen_interessengruppe3_id_search', 'id', 'name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'multi_edit_q_unvollstaendige_organisationen_interessengruppe3_id_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        

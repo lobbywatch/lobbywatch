@@ -13,6 +13,9 @@ function createMPDF($configParams) {
         $configParams['margin_top'],
         $configParams['margin_bottom'],
         $configParams['margin_header'],
-        $configParams['margin_footer']
+        $configParams['margin_footer'],
+        'P',
+	$configParams['autoScriptToLang'],
+	$configParams['autoLangToFont']
     );
 }

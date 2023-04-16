@@ -79,7 +79,7 @@ class StringUtils
 
     public static function ReplaceVariableInTemplate($template, $varName, $varValue)
     {
-        if (is_array($varValue))
+        if (is_array($varValue) || is_null($varValue) || is_null($template))
             return $template;
         else
             return str_ireplace('%' . $varName . '%', $varValue, $template);

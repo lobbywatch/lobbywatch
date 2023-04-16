@@ -5,9 +5,6 @@ class FormLayoutSheet
     /** @var string */
     private $mode;
 
-    /** @var FormLayout */
-    private $layout;
-
     /** $var string */
     private $name;
 

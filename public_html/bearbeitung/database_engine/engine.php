@@ -253,9 +253,10 @@ abstract class EngConnection implements IEngConnection {
     /** @var string */
     private $clientEncoding;
 
-    /**
-     * @var string[]
-     */
+    /** @var SMVersion */
+    private $serverVersion;
+
+    /** @var string[] */
     private $queryLog = array();
 
     /** @var \Event */

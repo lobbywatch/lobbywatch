@@ -2,10 +2,12 @@
 
 include_once dirname(__FILE__) . '/' . 'multivalue_select.php';
 
-class RemoteMultiValueSelect extends MultiValueSelect {
-    /**
-     * @var string
-     */
+class RemoteMultiValueSelect extends MultiValueSelect
+{
+    /**@var LinkBuilder */
+    private $linkBuilder;
+
+    /**@var string */
     private $handlerName;
 
     /** @var string */

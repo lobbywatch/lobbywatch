@@ -50,7 +50,7 @@ class TextEdit extends CustomEditor {
     }
 
     public function GetHTMLValue() {
-        return str_replace('"', '&quot;', $this->value);
+        return is_null($this->value) ? '' : str_replace('"', '&quot;', $this->value);
     }
 
     public function GetAllowHtmlCharacters() {

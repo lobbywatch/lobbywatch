@@ -71,7 +71,8 @@ define([
         static_editor: StaticEditor,
         multiuploader: MultiUploader,
         autocomplete: Autocomplete,
-        signature: Signature
+        signature: Signature,
+        toggle: Checkbox
     };
 
     var EditorsController = events.mixin(Class.extend({

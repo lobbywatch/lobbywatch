@@ -50,7 +50,8 @@ class LinkBuilder {
             if (is_array($value)) {
                 StringUtils::AddStr($parameterList, http_build_query(array($name => $value)), '&');
             } else {
-                StringUtils::AddStr($parameterList, urlencode($name) . '=' . urlencode($value), '&');
+                $parameterEncodedValue = is_null($value) ? '' : urlencode($value);
+                StringUtils::AddStr($parameterList, urlencode($name) . '=' . $parameterEncodedValue, '&');
             }
         }
         return $this->targetPage . ($parameterList != '' ? '?' : '') . $parameterList;

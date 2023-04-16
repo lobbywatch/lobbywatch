@@ -4,23 +4,40 @@ include_once dirname(__FILE__) . '/navigation.php';
 
 abstract class DetailPage extends Page
 {
-    private $foreignKeyValues = array();
-    private $foreignKeyFields = array();
-    private $masterKeyFields = array();
-
-    /** @var Dataset */
-    private $masterDataset;
-    /** @var Grid */
-    private $masterGrid;
-    /** @var array */
-    private $masterRecordFields = array();
     /** @var Page */
     private $parentPage;
+    /** @var Grid */
+    private $masterGrid;
+    /** @var Dataset */
+    private $masterDataset;
+    /** @var array */
+    private $foreignKeyFields = array();
+    /** @var array */
+    private $foreignKeyValues = array();
+    /** @var array */
+    private $masterKeyFields = array();
+    /** @var array */
+    private $masterRecordValues = array();
+    /** @var array */
     private $parentMasterKeyFields = array();
+    /** @var array */
     private $parentMasterKeyValues = array();
+    /** @var integer */
     private $totalRowCount = 0;
+    /** @var boolean */
     private $showInlineCharts = true;
 
+    /**
+     * @param string $id
+     * @param Page $parentPage
+     * @param array $foreignKeyFields
+     * @param array $masterKeyFields
+     * @param array $parentMasterKeyFields
+     * @param Grid $masterGrid
+     * @param Dataset $masterDataset
+     * @param IPermissionSet $dataSourceSecurityInfo
+     * @param string $contentEncoding
+     */
     public function __construct($id, $parentPage, $foreignKeyFields, $masterKeyFields, $parentMasterKeyFields, $masterGrid, $masterDataset, $dataSourceSecurityInfo, $contentEncoding = null)
     {
         $this->foreignKeyFields = $foreignKeyFields;
@@ -38,18 +55,18 @@ abstract class DetailPage extends Page
         $this->masterDataset = $masterDataset;
         $this->foreignKeyValues = array();
         $this->parentMasterKeyFields = $parentMasterKeyFields;
-
     }
 
-    public function getTitle()
-    {
-        if (!empty($this->masterRecordFields)) {
-            return StringUtils::ReplaceVariables(parent::getTitle(), $this->masterRecordFields);
+    /** @inheritdoc */
+    public function getTitle() {
+        if (!empty($this->masterRecordValues)) {
+            return StringUtils::ReplaceVariables(parent::getTitle(), $this->masterRecordValues);
         }
 
         return parent::getTitle();
     }
 
+    /** @inheritdoc */
     public function GetReadyPageList() {
         return $this->parentPage->GetReadyPageList();
     }
@@ -58,14 +75,15 @@ abstract class DetailPage extends Page
         return $this->parentPage;
     }
 
-    public function GetForeignKeyFields()
-    { return $this->foreignKeyFields; }
+    public function GetForeignKeyFields() {
+        return $this->foreignKeyFields;
+    }
 
-    public function GetMasterGrid()
-    { return $this->masterGrid; }
+    public function GetMasterGrid() {
+        return $this->masterGrid;
+    }
 
-    public function ProcessMessages()
-    {
+    public function ProcessMessages() {
         $this->UpdateValuesFromUrl();
 
         if ($this->isInline()) {
@@ -82,8 +100,7 @@ abstract class DetailPage extends Page
         }
     }
 
-    public function UpdateValuesFromUrl()
-    {
+    public function UpdateValuesFromUrl() {
         for($i = 0; $i < count($this->foreignKeyFields); $i++) {
             if (GetApplication()->GetSuperGlobals()->IsGetValueSet('fk' . $i)) {
                 $this->foreignKeyValues[] = $_GET['fk' . $i];
@@ -99,8 +116,7 @@ abstract class DetailPage extends Page
         $this->RetrieveMasterDatasetValues();
     }
 
-    private function applyDatasetFilters()
-    {
+    private function applyDatasetFilters() {
         foreach ($this->foreignKeyFields as $i => $field) {
             $this->dataset->AddFieldFilter($field, new FieldFilter($this->foreignKeyValues[$i], '='));
             $this->dataset->SetMasterFieldValue($field, $this->foreignKeyValues[$i]);
@@ -113,12 +129,11 @@ abstract class DetailPage extends Page
         }
     }
 
-    private function RetrieveMasterDatasetValues()
-    {
+    private function RetrieveMasterDatasetValues() {
         $this->masterDataset->Open();
 
         if ($this->masterDataset->Next()) {
-            $this->masterRecordFields = $this->masterDataset->getCurrentFieldValues();
+            $this->masterRecordValues = $this->masterDataset->getCurrentFieldValues();
             for($i = 0; $i < count($this->parentMasterKeyFields); $i++) {
                 $this->parentMasterKeyValues[] = $this->masterDataset->GetFieldValueByName($this->parentMasterKeyFields[$i]);
             }
@@ -128,13 +143,11 @@ abstract class DetailPage extends Page
     }
 
     /** @inheritdoc */
-    function Accept($visitor)
-    {
+    function Accept($visitor) {
         $visitor->RenderDetailPage($this);
     }
 
-    public function GetHiddenGetParameters()
-    {
+    public function GetHiddenGetParameters() {
         $result = parent::GetHiddenGetParameters();
         for($i = 0; $i < count($this->foreignKeyValues); $i++) {
             $result['fk' . $i] = $this->foreignKeyValues[$i];
@@ -143,8 +156,7 @@ abstract class DetailPage extends Page
         return $result;
     }
 
-    public function GetParentPageLink()
-    {
+    public function GetParentPageLink() {
         $result = $this->parentPage->CreateLinkBuilder();
 
         for($i = 0; $i < count($this->parentMasterKeyFields); $i++)
@@ -153,8 +165,7 @@ abstract class DetailPage extends Page
         return $result->GetLink();
     }
 
-    public function CreateLinkBuilder($withViewMode = true)
-    {
+    public function CreateLinkBuilder($withViewMode = true) {
         $result = $this->parentPage->CreateLinkBuilder();
         $result->addParameter('hname', $this->GetHttpHandlerName());
 
@@ -170,13 +181,11 @@ abstract class DetailPage extends Page
         return $result;
     }
 
-    public function getLink($withViewMode = true)
-    {
+    public function getLink($withViewMode = true) {
         return $this->CreateLinkBuilder($withViewMode)->getLink();
     }
 
-    public function getFirstPageRecordCount()
-    {
+    public function getFirstPageRecordCount() {
         $rowsPerPage = 20;
         $navigator = $this->getPageNavigator();
         if ($navigator instanceof CompositePageNavigator) {
@@ -191,19 +200,18 @@ abstract class DetailPage extends Page
         return min($this->totalRowCount, $rowsPerPage);
     }
 
-    public function getTotalRowCount()
-    {
+    /** @return integer */
+    public function getTotalRowCount() {
         return $this->totalRowCount;
     }
 
-    public function isInline()
-    {
+    /** @return boolean */
+    public function isInline() {
         return ArrayWrapper::createGetWrapper()->getValue('inline', false);
     }
 
     /** @inheritdoc */
-    public function getNavigation($fieldValues = array())
-    {
+    public function getNavigation($fieldValues = array()) {
         if ($fieldValues) {
             $this->foreignKeyValues = $fieldValues;
             $this->applyDatasetFilters();
@@ -219,8 +227,7 @@ abstract class DetailPage extends Page
         );
     }
 
-    private function getSiblingsNavigation()
-    {
+    private function getSiblingsNavigation() {
         $details = $this->parentPage->getGrid()->getDetails();
 
         if (count($details) <= 1) {
@@ -242,33 +249,31 @@ abstract class DetailPage extends Page
         return $result;
     }
 
-    public function getViewId()
-    {
+    public function getViewId() {
         return implode('_', $this->foreignKeyValues);
     }
 
     /**
      * @param bool $showInlineCharts
-     *
      * @return $this
      */
-    public function setShowInlineCharts($showInlineCharts)
-    {
+    public function setShowInlineCharts($showInlineCharts) {
         $this->showInlineCharts = $showInlineCharts;
-
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getShowInlineCharts()
-    {
+    /** @return bool */
+    public function getShowInlineCharts() {
         return $this->showInlineCharts;
     }
 
-    public function getType()
-    {
+    public function getType() {
         return PageType::Data;
     }
+
+    /** @return  array */
+    public function getMasterRecordValues() {
+        return $this->masterRecordValues;
+    }
+
 }

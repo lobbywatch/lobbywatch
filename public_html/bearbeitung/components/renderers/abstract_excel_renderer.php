@@ -1,6 +1,13 @@
 <?php
 
 include_once dirname(__FILE__) . '/' . 'abstract_export_renderer.php';
+include_once dirname(__FILE__) . '/' . '../utils/string_utils.php';
+
+if (version_compare(PHP_VERSION, '7.2', '<')) {
+    include_once dirname(__FILE__) . '/' . 'phpexcel_common.php';
+} else {
+    include_once dirname(__FILE__) . '/' . 'phpspreadsheet_common.php';
+}
 
 abstract class AbstractExcelRenderer extends AbstractExportRenderer
 {
@@ -29,8 +36,9 @@ abstract class AbstractExcelRenderer extends AbstractExportRenderer
     public function RenderPage(Page $page)
     {
         $options = array(
-            'engine' => 'template',
-            'filename' => Path::ReplaceFileNameIllegalCharacters($page->GetTitle() . '.xls'),
+            'engine' => 'phpexcel',
+            'file-format' => 'xlsx',
+            'filename' => Path::ReplaceFileNameIllegalCharacters($page->GetTitle() . '.xlsx')
         );
 
         $page->GetCustomExportOptions(
@@ -39,14 +47,26 @@ abstract class AbstractExcelRenderer extends AbstractExportRenderer
             $options
         );
 
+        if ($options['file-format'] == 'xls') {
+            if (StringUtils::EndsBy($options['filename'], '.xlsx')) {
+                $options['filename'] = rtrim($options['filename'], 'x');
+            }
+        }
+
+        if ($options['file-format'] == 'xlsx') {
+            if (StringUtils::EndsBy($options['filename'], '.xls')) {
+                $options['filename'] = $options['filename'] . 'x';
+            }
+        }
+
         ob_end_clean();
         set_time_limit(0);
 
+        $contentType = $options['file-format'] == 'xlsx' ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' : 'application/vnd.ms-excel';
         if (!is_null($page->GetContentEncoding())) {
-            header('Content-type: application/vnd.ms-excel; charset=' . $page->GetContentEncoding());
-        } else {
-            header('Content-type: application/vnd.ms-excel;');
+            $contentType .= '; charset=' . $page->GetContentEncoding();
         }
+        header('Content-type: ' . $contentType);
 
         header('Content-Disposition: attachment;filename="' . $options['filename'] . '"');
         header('Cache-Control: max-age=0');
@@ -57,9 +77,9 @@ abstract class AbstractExcelRenderer extends AbstractExportRenderer
         header ('Pragma: public');
 
         if ($options['engine'] === 'phpexcel') {
-            $this->RenderPagePhpExcel($page);
+            $this->RenderPagePhpExcel($page, $options['file-format']);
         } else {
-            $this->RenderPageTemplate($page);
+            $this->RenderPageTemplate($page, $options['file-format']);
         }
     }
 
@@ -122,7 +142,7 @@ abstract class AbstractExcelRenderer extends AbstractExportRenderer
     {
     }
 
-    private function RenderPageTemplate(Page $page)
+    private function RenderPageTemplate(Page $page, $fileFormat)
     {
         $customParams = array();
         $template = $page->GetCustomTemplate(
@@ -137,18 +157,25 @@ abstract class AbstractExcelRenderer extends AbstractExportRenderer
             array('Page' => $page),
             array_merge($customParams, array('Grid' => $grid))
         );
+
+        $phpExcelObject = CreatePHPExcelObjectBasedOnHTML($this->result);
+        $phpExcelIOWriter = CreatePHPExcelIOWriter($phpExcelObject, $fileFormat);
+        $phpExcelIOWriter->save('php://output');
+
+        exit;
     }
 
-    private function RenderPagePhpExcel(Page $page)
+    /**
+     * @param Page $page
+     * @param string $fileFormat
+     */
+    private function RenderPagePhpExcel($page, $fileFormat)
     {
         if (version_compare(PHP_VERSION, '7.2', '<')) {
-            require_once dirname(__FILE__) . '/' . 'phpexcel_common.php';
             $columnAIndex = 0;
         } else {
-            require_once dirname(__FILE__) . '/' . 'phpspreadsheet_common.php';
             $columnAIndex = 1;
         }
-
         $phpExcelObject = CreatePHPExcelObject();
         $sheet = $phpExcelObject->setActiveSheetIndex(0);
 
@@ -156,10 +183,7 @@ abstract class AbstractExcelRenderer extends AbstractExportRenderer
         $grid->GetDataset()->Open();
 
         foreach($grid->GetExportColumns() as $i => $column) {
-            $sheet->setCellValueByColumnAndRow($i + $columnAIndex, 1, $this->PrepareForExcel(
-                $column->GetCaption(),
-                $column->GetGrid()->GetPage()->GetContentEncoding()
-            ));
+            $sheet->setCellValueByColumnAndRow($i + $columnAIndex, 1, $column->GetCaption());
             $sheet->getColumnDimensionByColumn($i + $columnAIndex)->setAutoSize(true);
         }
 
@@ -167,10 +191,7 @@ abstract class AbstractExcelRenderer extends AbstractExportRenderer
         while ($grid->GetDataset()->Next()) {
             $rowValues = $grid->GetDataset()->GetCurrentFieldValues();
             foreach($grid->GetExportColumns() as $i => $column) {
-                $sheet->setCellValueByColumnAndRow($i + $columnAIndex, $currentRow, $this->PrepareForExcel(
-                    $this->RenderViewColumn($column, $rowValues),
-                    $column->GetGrid()->GetPage()->GetContentEncoding()
-                ));
+                $sheet->setCellValueByColumnAndRow($i + $columnAIndex, $currentRow, $this->RenderViewColumn($column, $rowValues));
             }
 
             $currentRow++;
@@ -179,14 +200,11 @@ abstract class AbstractExcelRenderer extends AbstractExportRenderer
         $totals = $grid->getTotalsViewData($grid->GetExportColumns());
         if (!is_null($totals)) {
             foreach($totals as $i => $total) {
-                $sheet->setCellValueByColumnAndRow($i + $columnAIndex, $currentRow, $this->PrepareForExcel(
-                    $total['Value'],
-                    $page->GetContentEncoding()
-                ));
+                $sheet->setCellValueByColumnAndRow($i + $columnAIndex, $currentRow, $total['Value']);
             }
         }
 
-        $phpExcelIOWriter = CreatePHPExcelIOWriter($phpExcelObject);
+        $phpExcelIOWriter = CreatePHPExcelIOWriter($phpExcelObject, $fileFormat);
         $phpExcelIOWriter->save('php://output');
 
         exit;

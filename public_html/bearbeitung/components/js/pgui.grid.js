@@ -24,7 +24,8 @@ define([
     'pgui.column_group',
     'pgui.grid-details',
     'pgui.form_collection',
-    'pgui.image_popup'
+    'pgui.image_popup',
+    'pgui.toggle'
 ], function(
     Class,
     FilterBuilder,
@@ -50,7 +51,8 @@ define([
     initColumnGroup,
     initDetails,
     FormCollection,
-    initImagePopup
+    initImagePopup,
+    initToggle
 ) {
 
     function padNumber(number, length) {
@@ -212,6 +214,7 @@ define([
 
             showFieldEmbeddedVideo($rows);
             initImagePopup($rows);
+            initToggle($rows, self);
 
             $rows.find('[data-edit-url]').each(function (i, el) {
                 var $el = $(el);
@@ -373,6 +376,7 @@ define([
                     placement: 'top',
                     container: 'body',
                     trigger: 'hover',
+                    html: true,
                     title: $(this).attr('data-field-caption'),
                     content: $(this).attr('data-comment')
                 });

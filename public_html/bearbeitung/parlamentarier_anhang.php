@@ -456,10 +456,8 @@
             $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Technischer Schlüssel des Parlamentarieranhangs');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Technischer Schlüssel des Parlamentarieranhangs');
             $grid->AddViewColumn($column);
-            
             //
             // View column for anzeige_name field
             //
@@ -468,30 +466,24 @@
             $column->setHrefTemplate('parlamentarier.php?operation=view&pk0=%parlamentarier_id%');
             $column->setTarget('_self');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Fremdschlüssel eines Parlamentariers');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Fremdschlüssel eines Parlamentariers');
             $grid->AddViewColumn($column);
-            
             //
             // View column for datei field
             //
             $column = new DownloadDataColumn('datei', 'datei', 'Datei', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Datei');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Datei');
             $grid->AddViewColumn($column);
-            
             //
             // View column for dateierweiterung field
             //
             $column = new TextViewColumn('dateierweiterung', 'dateierweiterung', 'Dateierweiterung', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Erweiterung der Datei');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Erweiterung der Datei');
             $grid->AddViewColumn($column);
-            
             //
             // View column for dateiname_voll field
             //
@@ -499,10 +491,8 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Dateiname inkl. Erweiterung');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Dateiname inkl. Erweiterung');
             $grid->AddViewColumn($column);
-            
             //
             // View column for mime_type field
             //
@@ -510,20 +500,16 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('MIME Type der Datei');
-            $column->SetFixedWidth(null);
+            $column->setDescription('MIME Type der Datei');
             $grid->AddViewColumn($column);
-            
             //
             // View column for encoding field
             //
             $column = new TextViewColumn('encoding', 'encoding', 'Encoding', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Encoding der Datei');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Encoding der Datei');
             $grid->AddViewColumn($column);
-            
             //
             // View column for beschreibung field
             //
@@ -531,20 +517,16 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Beschreibung des Anhangs');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Beschreibung des Anhangs');
             $grid->AddViewColumn($column);
-            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Datensatz erstellt von');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Datensatz erstellt von');
             $grid->AddViewColumn($column);
-            
             //
             // View column for created_date field
             //
@@ -552,20 +534,16 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Erstellt am');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Erstellt am');
             $grid->AddViewColumn($column);
-            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Abgäendert von');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Abgäendert von');
             $grid->AddViewColumn($column);
-            
             //
             // View column for updated_date field
             //
@@ -573,8 +551,7 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Abgäendert am');
-            $column->SetFixedWidth(null);
+            $column->setDescription('Abgäendert am');
             $grid->AddViewColumn($column);
         }
     
@@ -1031,6 +1008,11 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+        }
+    
+        protected function AddToggleEditColumns(Grid $grid)
+        {
+    
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -1598,6 +1580,7 @@
             $this->AddSingleRecordViewColumns($result);
             $this->AddEditColumns($result);
             $this->AddMultiEditColumns($result);
+            $this->AddToggleEditColumns($result);
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
@@ -1607,6 +1590,7 @@
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);
+            $this->setAllowedActions(array('view'));
             $this->setPrintListAvailable(true);
             $this->setPrintListRecordAvailable(false);
             $this->setPrintOneRecordAvailable(true);
@@ -1745,7 +1729,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_anhang_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'filter_builder_parlamentarier_anhang_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -1860,7 +1844,7 @@
                 )
             );
             $lookupDataset->setOrderByField('anzeige_name', 'ASC');
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_anhang_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
+            $handler = new DynamicSearchHandler($lookupDataset, 'filter_builder_parlamentarier_anhang_parlamentarier_id_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $handler = new PrivateFileDownloadHTTPHandler($this->dataset, 'datei', 'datei_handler', '%mime_type%', '%datei%', true);

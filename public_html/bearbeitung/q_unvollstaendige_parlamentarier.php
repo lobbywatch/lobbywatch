@@ -1282,10 +1282,7 @@
             $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for nachname field
             //
@@ -1294,10 +1291,7 @@
             $column->setHrefTemplate('parlamentarier.php?operation=edit&amp;pk0=%id%&amp;t=0');
             $column->setTarget('_self');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for vorname field
             //
@@ -1306,10 +1300,7 @@
             $column->setHrefTemplate('parlamentarier_preview.php?pk0=%id%');
             $column->setTarget('_self');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for parlament_biografie_id field
             //
@@ -1318,10 +1309,7 @@
             $column->setHrefTemplate('http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%');
             $column->setTarget('_blank');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for email field
             //
@@ -1330,20 +1318,14 @@
             $column->setHrefTemplate('%email%');
             $column->setTarget('_blank');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for im_rat_seit field
             //
@@ -1351,20 +1333,14 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('Y');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for kommissionen field
             //
             $column = new TextViewColumn('kommissionen', 'kommissionen', 'Kommissionen', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for geburtstag field
             //
@@ -1372,10 +1348,7 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for kleinbild field
             //
@@ -1384,20 +1357,14 @@
             $column->setSourcePrefixTemplate('../files/parlamentarier_photos/klein/');
             $column->setImageHintTemplate('%kleinbild%');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for sitzplatz field
             //
             $column = new TextViewColumn('sitzplatz', 'sitzplatz', 'Sitzplatz', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for homepage field
             //
@@ -1406,30 +1373,21 @@
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('_blank');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'geschlecht', 'Geschlecht', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for created_date field
             //
@@ -1437,20 +1395,14 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for updated_date field
             //
@@ -1458,60 +1410,42 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for beruf_fr field
             //
             $column = new TextViewColumn('beruf_fr', 'beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for titel field
             //
             $column = new TextViewColumn('titel', 'titel', 'Titel', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for aemter field
             //
             $column = new TextViewColumn('aemter', 'aemter', 'Aemter', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for weitere_aemter field
             //
             $column = new TextViewColumn('weitere_aemter', 'weitere_aemter', 'Weitere Aemter', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for homepage_2 field
             //
             $column = new TextViewColumn('homepage_2', 'homepage_2', 'Homepage 2', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for parlament_number field
             //
@@ -1521,20 +1455,14 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for parlament_interessenbindungen field
             //
             $column = new TextViewColumn('parlament_interessenbindungen', 'parlament_interessenbindungen', 'Parlament Interessenbindungen', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for parlament_interessenbindungen_updated field
             //
@@ -1542,150 +1470,105 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for wikipedia field
             //
             $column = new TextViewColumn('wikipedia', 'wikipedia', 'Wikipedia', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for sprache field
             //
             $column = new TextViewColumn('sprache', 'sprache', 'Sprache', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for telephon_1 field
             //
             $column = new TextViewColumn('telephon_1', 'telephon_1', 'Telephon 1', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for telephon_2 field
             //
             $column = new TextViewColumn('telephon_2', 'telephon_2', 'Telephon 2', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for erfasst field
             //
             $column = new TextViewColumn('erfasst', 'erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for parlament_interessenbindungen_json field
             //
             $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for vorname_kurz field
             //
             $column = new TextViewColumn('vorname_kurz', 'vorname_kurz', 'Vorname Kurz', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for parlament_beruf_json field
             //
             $column = new TextViewColumn('parlament_beruf_json', 'parlament_beruf_json', 'Parlament Beruf Json', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for instagram_profil field
             //
             $column = new TextViewColumn('instagram_profil', 'instagram_profil', 'Instagram Profil', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for youtube_user field
             //
             $column = new TextViewColumn('youtube_user', 'youtube_user', 'Youtube User', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for wikidata_qid field
             //
             $column = new TextViewColumn('wikidata_qid', 'wikidata_qid', 'Wikidata Qid', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for email_2 field
             //
             $column = new TextViewColumn('email_2', 'email_2', 'Email 2', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for buergerorte field
             //
             $column = new TextViewColumn('buergerorte', 'buergerorte', 'Buergerorte', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for autorisierung_reminder_verschickt_visa field
             //
             $column = new TextViewColumn('autorisierung_reminder_verschickt_visa', 'autorisierung_reminder_verschickt_visa', 'Autorisierung Reminder Verschickt Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for autorisierung_reminder_verschickt_datum field
             //
@@ -1693,10 +1576,7 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
             //
             // View column for bfs_gemeinde_nr field
             //
@@ -1706,8 +1586,6 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('');
-            $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
     
@@ -3511,6 +3389,11 @@
             $grid->AddMultiEditColumn($editColumn);
         }
     
+        protected function AddToggleEditColumns(Grid $grid)
+        {
+    
+        }
+    
         protected function AddInsertColumns(Grid $grid)
         {
             //
@@ -5231,6 +5114,7 @@
             $this->AddSingleRecordViewColumns($result);
             $this->AddEditColumns($result);
             $this->AddMultiEditColumns($result);
+            $this->AddToggleEditColumns($result);
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
@@ -5240,6 +5124,7 @@
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);
+            $this->setAllowedActions(array());
             $this->setPrintListAvailable(true);
             $this->setPrintListRecordAvailable(false);
             $this->setPrintOneRecordAvailable(true);

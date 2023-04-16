@@ -7,7 +7,7 @@ include_once dirname(__FILE__) . '/' . '../../utils/hash_utils.php';
 
 class UserIdentitySessionStorage implements UserIdentityStorage
 {
-    const KEY_SESSION_IDENTITY = 'current_user';
+    const KEY_SESSION_IDENTITY = 'current_user_identity';
     const KEY_REMEMBER_ME = 'remember_me';
     const REMEMBER_ME_LIFETIME = 15552000; //3600 * 24 * 180 = 6 months
 
@@ -49,7 +49,7 @@ class UserIdentitySessionStorage implements UserIdentityStorage
 
     public function SaveUserIdentity(UserIdentity $identity)
     {
-        $this->sessionWrapper->setValue(self::KEY_SESSION_IDENTITY, $identity);
+        $this->sessionWrapper->setValue(self::KEY_SESSION_IDENTITY, serialize($identity));
 
         if ($identity->persistent) {
             setcookie(
@@ -75,7 +75,7 @@ class UserIdentitySessionStorage implements UserIdentityStorage
             return $this->restoreFromRememberMeCookie();
         }
 
-        return $this->sessionWrapper->getValue(self::KEY_SESSION_IDENTITY);
+        return unserialize($this->sessionWrapper->getValue(self::KEY_SESSION_IDENTITY));
     }
 
     /**

@@ -4,12 +4,29 @@ include_once dirname(__FILE__) . '/abstract_http_handler.php';
 
 class DownloadHTTPHandler extends AbstractHTTPHandler
 {
-    /** @var IDataset */
+    /** @var Dataset */
     private $dataset;
+
+    /** @var string */
     private $fieldName;
+
+    /** @var string */
     private $contentType;
+
+    /** @var string */
     private $downloadFileName;
 
+    /** @var boolean */
+    private $forceDownload = true;
+
+    /**
+     * @param Dataset $dataset
+     * @param string $fieldName
+     * @param string $name
+     * @param string $contentType
+     * @param string $downloadFileName
+     * @param boolean $forceDownload
+     */
     public function __construct($dataset, $fieldName, $name, $contentType, $downloadFileName, $forceDownload = true)
     {
         parent::__construct($name);

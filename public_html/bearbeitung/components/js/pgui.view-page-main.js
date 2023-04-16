@@ -5,8 +5,9 @@ define([
     'pgui.selection',
     'pgui.selection-handler',
     'pgui.image_popup',
-    'pgui.modal_view'
-], function(utils, showFieldEmbeddedVideo, initCellEdit, Selection, SelectionHandler, initImagePopup, initModalView) {
+    'pgui.modal_view',
+    'pgui.toggle'
+], function(utils, showFieldEmbeddedVideo, initCellEdit, Selection, SelectionHandler, initImagePopup, initModalView, initToggle) {
 
     return function () {
         var $body = $('body');
@@ -14,6 +15,7 @@ define([
         utils.updatePopupHints($body);
         showFieldEmbeddedVideo($body);
         initImagePopup($body);
+        initToggle($body);
 
 
         $body.find('[data-edit-url]').each(function (i, el) {

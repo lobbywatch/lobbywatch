@@ -169,6 +169,7 @@ abstract class Page extends CommonPage implements IVariableContainer
     private $exportListRecordAvailable = array();
     private $exportOneRecordAvailable = array('pdf', 'excel', 'word', 'xml', 'csv');
     private $exportSelectedRecordsAvailable = array('pdf', 'excel', 'word', 'xml', 'csv');
+    private $allowedActions = array('view', 'insert', 'copy', 'edit', 'multi-edit', 'multi-upload', 'delete', 'multi-delete');
 
     /** @var bool */
     private $openPrintFormInNewTab = true;
@@ -200,6 +201,7 @@ abstract class Page extends CommonPage implements IVariableContainer
     public $OnAddEnvironmentVariables;
     public $OnPrepareChart;
     public $OnGetCustomColumnGroup;
+    public $OnGetCustomExportOptions;
     public $OnFileUpload;
     public $OnGetCustomRecordPermissions;
     public $OnPageLoaded;
@@ -654,36 +656,46 @@ abstract class Page extends CommonPage implements IVariableContainer
 
     public function RegisterHandlers()
     {
-        $handler = new GridEditHandler($this->GetGridEditHandler(), new VerticalGrid($this->GetGrid(), OPERATION_EDIT));
-        GetApplication()->RegisterHTTPHandler($handler);
-
-        $handler = new GridEditHandler($this->GetGridMultiEditHandler(), new VerticalGrid($this->GetGrid(), OPERATION_MULTI_EDIT));
-        GetApplication()->RegisterHTTPHandler($handler);
-
-        $handler = new GridEditHandler($this->GetGridInsertHandler(), new VerticalGrid($this->GetGrid(), OPERATION_INSERT));
-        GetApplication()->RegisterHTTPHandler($handler);
-
-        $handler = new GridEditHandler($this->GetGridMultiUploadHandler(), new VerticalGrid($this->GetGrid(), OPERATION_MULTI_UPLOAD));
-        GetApplication()->RegisterHTTPHandler($handler);
-
-        if ($this->GetEnableModalSingleRecordView()) {
-            $handler = new RecordCardViewHandler($this->GetModalGridViewHandler(), new RecordCardView($this->GetGrid()));
+        if ($this->insertOperationIsAllowed() || $this->copyOperationIsAllowed()) {
+            $handler = new GridEditHandler($this->GetGridInsertHandler(), new VerticalGrid($this->GetGrid(), OPERATION_INSERT));
             GetApplication()->RegisterHTTPHandler($handler);
         }
 
-        if ($this->GetEnableModalGridCopy()) {
+        if ($this->GetEnableModalGridCopy() && $this->copyOperationIsAllowed()) {
             $handler = new GridEditHandler($this->GetModalGridCopyHandler(), new VerticalGrid($this->GetGrid(), OPERATION_COPY));
             GetApplication()->RegisterHTTPHandler($handler);
         }
 
-        if ($this->GetEnableModalGridDelete()) {
+        if ($this->editOperationIsAllowed()) {
+            $handler = new GridEditHandler($this->GetGridEditHandler(), new VerticalGrid($this->GetGrid(), OPERATION_EDIT));
+            GetApplication()->RegisterHTTPHandler($handler);
+        }
+
+        if ($this->multiEditOperationIsAllowed()) {
+            $handler = new GridEditHandler($this->GetGridMultiEditHandler(), new VerticalGrid($this->GetGrid(), OPERATION_MULTI_EDIT));
+            GetApplication()->RegisterHTTPHandler($handler);
+        }
+
+        if ($this->multiUploadOperationIsAllowed()) {
+            $handler = new GridEditHandler($this->GetGridMultiUploadHandler(), new VerticalGrid($this->GetGrid(), OPERATION_MULTI_UPLOAD));
+            GetApplication()->RegisterHTTPHandler($handler);
+        }
+
+        if ($this->deleteOperationIsAllowed()) {
             $handler = new ModalDeleteHandler($this->GetModalGridDeleteHandler(), $this->GetGrid());
             GetApplication()->RegisterHTTPHandler($handler);
         }
 
-        if ($this->GetEnableInlineSingleRecordView()) {
-            $handler = new RecordCardViewHandler($this->GetInlineGridViewHandler(), new RecordCardView($this->GetGrid()));
-            GetApplication()->RegisterHTTPHandler($handler);
+        if ($this->viewOperationIsAllowed()) {
+            if ($this->GetEnableModalSingleRecordView()) {
+                $handler = new RecordCardViewHandler($this->GetModalGridViewHandler(), new RecordCardView($this->GetGrid()));
+                GetApplication()->RegisterHTTPHandler($handler);
+            }
+
+            if ($this->GetEnableInlineSingleRecordView()) {
+                $handler = new RecordCardViewHandler($this->GetInlineGridViewHandler(), new RecordCardView($this->GetGrid()));
+                GetApplication()->RegisterHTTPHandler($handler);
+            }
         }
 
         $handler = new SelectionHandler($this->GetRecordsSelectionHandler(), $this->GetGrid());
@@ -761,11 +773,6 @@ abstract class Page extends CommonPage implements IVariableContainer
     }
 
     public function GetEnableModalGridCopy()
-    {
-        return false;
-    }
-
-    protected function GetEnableModalGridDelete()
     {
         return false;
     }
@@ -1025,12 +1032,16 @@ abstract class Page extends CommonPage implements IVariableContainer
 
     public function Prepare()
     {
+        $this->DoPrepare();
+        $this->setupExportAndPrintOperations();
+    }
+
+    private function setupExportAndPrintOperations()
+    {
         if ($this->GetSecurityInfo()->HasViewGrant()) {
             $this->addExportOperationsColumns();
             $this->addPrintOperationsColumns();
         }
-
-        $this->DoPrepare();
     }
 
     private function addExportOperationsColumns()
@@ -1307,10 +1318,14 @@ abstract class Page extends CommonPage implements IVariableContainer
         switch ($operation)
         {
             case OPERATION_EDIT:
+                $this->RaiseSecurityError(!$this->editOperationIsAllowed(), OPERATION_EDIT);
+                break;
             case OPERATION_MULTI_EDIT:
-                $this->RaiseSecurityError(!$this->GetSecurityInfo()->HasEditGrant(), OPERATION_EDIT);
+                $this->RaiseSecurityError(!$this->multiEditOperationIsAllowed(), OPERATION_EDIT);
                 break;
             case OPERATION_VIEW:
+                $this->RaiseSecurityError(!$this->viewOperationIsAllowed(), OPERATION_VIEW);
+                break;
             case OPERATION_PRINT_ONE:
             case OPERATION_PRINT_ALL:
             case OPERATION_PRINT_PAGE:
@@ -1322,6 +1337,8 @@ abstract class Page extends CommonPage implements IVariableContainer
                 $this->RaiseSecurityError(!$this->GetSecurityInfo()->HasViewGrant(), OPERATION_VIEW);
                 break;
             case OPERATION_DELETE:
+                $this->RaiseSecurityError(!$this->deleteOperationIsAllowed(), OPERATION_DELETE);
+                break;
             case OPERATION_DELETE_SELECTED:
             case OPERATION_INPUT_FINISHED_SELECTED: // Afterburner
             case OPERATION_DE_INPUT_FINISHED_SELECTED: // Afterburner
@@ -1335,12 +1352,16 @@ abstract class Page extends CommonPage implements IVariableContainer
             case OPERATION_DE_AUTHORIZE_SELECTED: // Afterburner
             case OPERATION_RELEASE_SELECTED: // Afterburner
             case OPERATION_DE_RELEASE_SELECTED: // Afterburner
-                $this->RaiseSecurityError(!$this->GetSecurityInfo()->HasDeleteGrant(), OPERATION_DELETE);
+                $this->RaiseSecurityError(!$this->multiDeleteOperationIsAllowed(), OPERATION_DELETE);
                 break;
             case OPERATION_INSERT:
+                $this->RaiseSecurityError(!$this->insertOperationIsAllowed(), OPERATION_INSERT);
+                break;
             case OPERATION_COPY:
+                $this->RaiseSecurityError(!$this->copyOperationIsAllowed(), OPERATION_INSERT);
+                break;
             case OPERATION_MULTI_UPLOAD:
-                $this->RaiseSecurityError(!$this->GetSecurityInfo()->HasAddGrant(), OPERATION_INSERT);
+                $this->RaiseSecurityError(!$this->multiUploadOperationIsAllowed(), OPERATION_INSERT);
                 break;
             default:
                 $this->RaiseSecurityError(!$this->GetSecurityInfo()->HasViewGrant(), OPERATION_VIEW);
@@ -1477,10 +1498,25 @@ abstract class Page extends CommonPage implements IVariableContainer
 
     function BeginRender()
     {
+        $this->CheckOperationPermitted();
         $this->applyRLSUsingCondition();
         $this->ProcessMessages();
 
         $this->OnPageLoaded->Fire(array());
+    }
+
+    function EndRender()
+    {
+        try
+        {
+            $this->SelectRenderer();
+            echo $this->renderer->Render($this);
+        }
+        catch(Exception $e)
+        {
+            $this->DisplayErrorPage($e);
+            die();
+        }
     }
 
     private function applyRLSUsingCondition()
@@ -1520,25 +1556,6 @@ abstract class Page extends CommonPage implements IVariableContainer
             }
         }
     }
-
-    function EndRender()
-    {
-        try
-        {
-            $this->CheckOperationPermitted();
-            $this->SelectRenderer();
-            $this->BeforeRenderPageRender();
-            echo $this->renderer->Render($this);
-        }
-        catch(Exception $e)
-        {
-            $this->DisplayErrorPage($e);
-            die();
-        }
-    }
-
-    function BeforeRenderPageRender()
-    { }
 
     function DisplayErrorPage($exception)
     {
@@ -1963,6 +1980,56 @@ abstract class Page extends CommonPage implements IVariableContainer
     /** @param bool $value */
     public function setDisplayChartsOnPrintForm($value) {
         $this->displayChartsOnPrintForm = $value;
+    }
+
+    /** @param array $allowedActions */
+    public function setAllowedActions($allowedActions) {
+        $this->allowedActions = $allowedActions;
+    }
+
+    /** @return array */
+    public function getAllowedActions() {
+        return $this->allowedActions;
+    }
+
+    /** @return boolean */
+    protected function viewOperationIsAllowed() {
+        return in_array('view', $this->allowedActions) && $this->GetSecurityInfo()->HasViewGrant();
+    }
+
+    /** @return boolean */
+    protected function editOperationIsAllowed() {
+        return in_array('edit', $this->allowedActions) && $this->GetSecurityInfo()->HasEditGrant();
+    }
+
+    /** @return boolean */
+    protected function multiEditOperationIsAllowed() {
+        return in_array('multi-edit', $this->allowedActions) && $this->GetSecurityInfo()->HasEditGrant();
+    }
+
+    /** @return boolean */
+    protected function insertOperationIsAllowed() {
+        return in_array('insert', $this->allowedActions) && $this->GetSecurityInfo()->HasAddGrant();
+    }
+
+    /** @return boolean */
+    protected function copyOperationIsAllowed() {
+        return in_array('copy', $this->allowedActions) && $this->GetSecurityInfo()->HasAddGrant();
+    }
+
+    /** @return boolean */
+    protected function multiUploadOperationIsAllowed() {
+        return in_array('multi-upload', $this->allowedActions) && $this->GetSecurityInfo()->HasAddGrant();
+    }
+
+    /** @return boolean */
+    protected function deleteOperationIsAllowed() {
+        return in_array('delete', $this->allowedActions) && $this->GetSecurityInfo()->HasDeleteGrant();
+    }
+
+    /** @return boolean */
+    protected function multiDeleteOperationIsAllowed() {
+        return in_array('multi-delete', $this->allowedActions) && $this->GetSecurityInfo()->HasDeleteGrant();
     }
 
 }

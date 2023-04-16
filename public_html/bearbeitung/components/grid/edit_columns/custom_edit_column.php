@@ -29,8 +29,10 @@ class CustomEditColumn implements ColumnInterface
 
     private $allowListCellEdit = true;
     private $allowSingleViewCellEdit = true;
+    /** @var string */
+    private $hint = '';
 
-    /**
+        /**
      * @param string $caption
      * @param string $fieldName
      * @param CustomEditor $editControl
@@ -377,6 +379,7 @@ class CustomEditColumn implements ColumnInterface
             'EditorViewData' => $this->getEditControl()->getViewData(),
             'Caption' => $this->GetCaption(),
             'Required' => $this->DisplayAsRequired(),
+            'EditorHint' => $this->getHint(),
             'DisplaySetToNullCheckBox' => $this->GetDisplaySetToNullCheckBox(),
             'DisplaySetToDefaultCheckBox' => $this->GetDisplaySetToDefaultCheckBox(),
             'IsValueNull' => $this->IsValueNull(),
@@ -410,4 +413,15 @@ class CustomEditColumn implements ColumnInterface
     public function getValidators() {
         return $this->GetEditControl()->GetValidatorCollection()->getItems();
     }
+
+    /** @return string */
+    public function getHint() {
+        return $this->hint;
+    }
+
+    /** @param string $value */
+    public function setHint($value) {
+        $this->hint = $value;
+    }
+
 }

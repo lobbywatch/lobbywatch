@@ -91,6 +91,9 @@ class Grid {
     /** @var CustomEditColumn[] */
     private $multiEditColumns = array();
 
+    /** @var CustomEditColumn[] */
+    private $toggleEditColumns = array();
+
     /** @var AbstractViewColumn[] */
     private $viewColumns = array();
 
@@ -344,6 +347,7 @@ class Grid {
         //
         $this->editColumns = array();
         $this->multiEditColumns = array();
+        $this->toggleEditColumns = array();
         $this->viewColumns = array();
         $this->printColumns = array();
         $this->insertColumns = array();
@@ -614,6 +618,12 @@ class Grid {
         return $column;
     }
 
+    public function AddToggleEditColumn($column) {
+        $this->toggleEditColumns[] = $column;
+        $this->DoAddColumn($column);
+        return $column;
+    }
+
     public function AddPrintColumn($column) {
         $this->printColumns[] = $column;
         $this->DoAddColumn($column);
@@ -650,6 +660,13 @@ class Grid {
      */
     public function GetMultiEditColumns() {
         return $this->multiEditColumns;
+    }
+
+    /**
+     * @return CustomEditColumn[]
+     */
+    public function GetToggleEditColumns() {
+        return $this->toggleEditColumns;
     }
 
     /**
@@ -776,6 +793,14 @@ class Grid {
      */
     public function getMultiEditColumn($columnName) {
         return $this->getEditBasedColumn($this->GetMultiEditColumns(), $columnName);
+    }
+
+    /**
+     * @param string $columnName
+     * @return CustomEditColumn|null
+     */
+    public function getToggleEditColumn($columnName) {
+        return $this->getEditBasedColumn($this->GetToggleEditColumns(), $columnName);
     }
 
     /**
@@ -1781,7 +1806,7 @@ class Grid {
                     'Classes' => $column->GetGridColumnClass(),
                     'CellClasses' => $this->getEffectiveCellClasses($column->GetGridColumnClass(), $cellClasses[$columnName]),
                     'Style' => $rowStyleByColumns[$columnName],
-                    'EditUrl' => $hasEditGrant && in_array($columnName, $editColumnNames)
+                    'EditUrl' => $hasEditGrant && in_array($columnName, $editColumnNames) && !($column  instanceof ToggleViewColumn)
                         ? $this->getColumnEditUrl($primaryKeys, $column)
                         : null,
                 );
@@ -2276,6 +2301,10 @@ class Grid {
 
                 $viewColumns = $layout->getColumns();
                 foreach (array_intersect(array_keys($viewColumns), $editColumnNames) as $name) {
+                    $viewColumn = $this->GetSingleRecordViewColumn($name);
+                    if ($viewColumn && ($viewColumn instanceof ToggleViewColumn)) {
+                        continue;
+                    }
                     $cellEditUrls[$name] = $this->getColumnEditUrl($primaryKeys, $viewColumns[$name]);
                 }
             }
@@ -2442,7 +2471,7 @@ class Grid {
     /**
      * @return boolean
      */
-    private function allowDisplayEditButtonOnViewForm() {
+    public function allowDisplayEditButtonOnViewForm() {
         return
             $this->actions->hasEditOperation() &&
             $this->hasEditColumns() &&
@@ -2709,8 +2738,16 @@ class Grid {
             $linkBuilder->AddParameter("pk$key", $value);
         }
 
-
         return $linkBuilder->GetLink();
+    }
+
+    public function columnEditingInListIsAllowed(AbstractViewColumn $column) {
+        $editColumn = $this->GetEditColumn($column->GetName());
+        if ($editColumn) {
+            return $this->allowDisplayEditButtonOnViewForm() && $editColumn->getAllowListCellEdit();
+        } else {
+            return false;
+        }
     }
 
     /**

@@ -226,6 +226,15 @@ abstract class Renderer
         return $value;
     }
 
+    private function getStylesAndAttributes(AbstractDatasetFieldViewColumn $column) {
+        if ($this->HtmlMarkupAvailable()) {
+            $stylesAndAttributesString = implode(' ', array($this->getColumnStyle($column), $column->getCustomAttributes()));
+            return empty($stylesAndAttributesString) ? '' :  ' '. $stylesAndAttributesString;
+        } else {
+            return '';
+        }
+    }
+
     private function viewColumnRenderStyleProperties(AbstractDatasetFieldViewColumn $column, $value)
     {
         if (is_null($column->getValue())) {
@@ -391,6 +400,79 @@ abstract class Renderer
         }
 
         $this->result = $value;
+    }
+
+    /** @param BarcodeViewColumn $column */
+    public function RenderBarcodeViewColumn($column) {
+        $value = $column->GetValue();
+        if (is_null($value)) {
+            $this->result = $this->GetNullValuePresentation($column);
+            return;
+        }
+
+        if (version_compare(PHP_VERSION, '7.0', '<')) {
+            $this->result = 'Barcode generation is supported since PHP 7.0';
+        } else {
+            include_once dirname(__FILE__) . '/' . 'barcode_generation.php';
+
+            try {
+                $barcode = generateBarcode($value, $column->getBarcodeType(), $column->getSingleBarWidth(),$column->getBarHeight(), $column->getBarColor());
+                $renderedValue = sprintf('<img src="data:image/png;base64,%s"%s>', base64_encode($barcode), $this->getStylesAndAttributes($column));
+                $this->result = $this->viewColumnRenderHyperlinkProperties($column, $renderedValue);
+            } catch (Exception $e) {
+                $this->result = $e->getMessage();
+            }
+        }
+    }
+
+    /** @param QRCodeViewColumn $column */
+    public function RenderQRCodeViewColumn($column){
+        $value = $column->GetValue();
+        if ($value == null) {
+            $this->result = $this->GetNullValuePresentation($column);
+            return;
+        }
+
+        include_once dirname(__FILE__) . '/../../libs/php_qrcode_generator/phpqrcode.php';
+
+        try {
+            ob_start();
+            QRCode::png($value, null, QR_ECLEVEL_L, $column->getSizeFactor(), $column->getFrameWidth());
+            $qrCode = ob_get_contents();
+            $renderedValue = sprintf('<img src="data:image/png;base64,%s"%s>', base64_encode($qrCode), $this->getStylesAndAttributes($column));
+            $this->result = $this->viewColumnRenderHyperlinkProperties($column, $renderedValue);
+            ob_end_clean();
+        } catch (Exception $e) {
+            ob_end_clean();
+            $this->result = $e->getMessage();
+        }
+    }
+
+    /** @param ToggleViewColumn $column */
+    public function RenderToggleViewColumn($column) {
+        $value = $column->GetValue();
+        if (!$this->InteractionAvailable()) {
+            $this->result = empty($value) ? $column->getOffToggleCaption() : $column->getOnToggleCaption() ;
+            return;
+        }
+        $pkValues = array();
+        AddPrimaryKeyParametersToArray($pkValues, $column->GetDataset()->GetPrimaryKeyValues());
+        $editingIsAllowed = $column->GetGrid()->allowDisplayEditButtonOnViewForm() && $column->getAllowEditing() && !empty($pkValues);
+        if (!$editingIsAllowed) {
+            $this->result = empty($value) ? $column->getOffToggleCaption() : $column->getOnToggleCaption() ;
+            return;
+        } else {
+            $isChecked = !empty($value) ? ' checked="checked"' : '';
+            $customAttributes = '';
+            if (!is_null($column->getCustomAttributes())) {
+                $customAttributes = ' ' . trim($column->getCustomAttributes());
+            }
+            $editingAttributes = sprintf('data-editing-link="%s" data-editor-name="%s" data-pk-values="%s"', $column->getEditingLink(), $column->getEditorName(), htmlspecialchars(json_encode($pkValues), ENT_QUOTES));
+            $this->result =
+                sprintf('<input type="checkbox" class="pgui-toggle-checkbox"%s data-toggle-on-caption="%s" data-toggle-off-caption="%s" data-toggle-size="%s" data-toggle-on-style="%s" data-toggle-off-style="%s" %s%s>',
+                    $isChecked, $column->getOnToggleCaption(), $column->getOffToggleCaption(), $column->getToggleSize(), $column->getOnToggleStyle(), $column->getOffToggleStyle(), $editingAttributes, $customAttributes
+                );
+        }
     }
 
     /**

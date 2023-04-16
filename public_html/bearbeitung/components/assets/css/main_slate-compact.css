@@ -2705,7 +2705,7 @@ input[type="search"] {
   .input-group-sm input[type="time"],
   .input-group-sm input[type="datetime-local"],
   .input-group-sm input[type="month"] {
-    line-height: 28px;
+    line-height: 22px;
   }
   input[type="date"].input-lg,
   input[type="time"].input-lg,
@@ -2715,7 +2715,7 @@ input[type="search"] {
   .input-group-lg input[type="time"],
   .input-group-lg input[type="datetime-local"],
   .input-group-lg input[type="month"] {
-    line-height: 50px;
+    line-height: 34px;
   }
 }
 .form-group {
@@ -2797,76 +2797,76 @@ fieldset[disabled] .checkbox label {
   padding-right: 0;
 }
 .input-sm {
-  height: 28px;
-  padding: 5px 10px;
+  height: 22px;
+  padding: 2px 5px;
   font-size: 11px;
   line-height: 1.5;
   border-radius: 3px;
 }
 select.input-sm {
-  height: 28px;
-  line-height: 28px;
+  height: 22px;
+  line-height: 22px;
 }
 textarea.input-sm,
 select[multiple].input-sm {
   height: auto;
 }
 .form-group-sm .form-control {
-  height: 28px;
-  padding: 5px 10px;
+  height: 22px;
+  padding: 2px 5px;
   font-size: 11px;
   line-height: 1.5;
   border-radius: 3px;
 }
 .form-group-sm select.form-control {
-  height: 28px;
-  line-height: 28px;
+  height: 22px;
+  line-height: 22px;
 }
 .form-group-sm textarea.form-control,
 .form-group-sm select[multiple].form-control {
   height: auto;
 }
 .form-group-sm .form-control-static {
-  height: 28px;
+  height: 22px;
   min-height: 28px;
-  padding: 6px 10px;
+  padding: 3px 5px;
   font-size: 11px;
   line-height: 1.5;
 }
 .input-lg {
-  height: 50px;
-  padding: 14px 16px;
+  height: 34px;
+  padding: 6px 10px;
   font-size: 15px;
   line-height: 1.3333333;
   border-radius: 6px;
 }
 select.input-lg {
-  height: 50px;
-  line-height: 50px;
+  height: 34px;
+  line-height: 34px;
 }
 textarea.input-lg,
 select[multiple].input-lg {
   height: auto;
 }
 .form-group-lg .form-control {
-  height: 50px;
-  padding: 14px 16px;
+  height: 34px;
+  padding: 6px 10px;
   font-size: 15px;
   line-height: 1.3333333;
   border-radius: 6px;
 }
 .form-group-lg select.form-control {
-  height: 50px;
-  line-height: 50px;
+  height: 34px;
+  line-height: 34px;
 }
 .form-group-lg textarea.form-control,
 .form-group-lg select[multiple].form-control {
   height: auto;
 }
 .form-group-lg .form-control-static {
-  height: 50px;
+  height: 34px;
   min-height: 32px;
-  padding: 15px 16px;
+  padding: 7px 10px;
   font-size: 15px;
   line-height: 1.3333333;
 }
@@ -2891,16 +2891,16 @@ select[multiple].input-lg {
 .input-lg + .form-control-feedback,
 .input-group-lg + .form-control-feedback,
 .form-group-lg .form-control + .form-control-feedback {
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
 }
 .input-sm + .form-control-feedback,
 .input-group-sm + .form-control-feedback,
 .form-group-sm .form-control + .form-control-feedback {
-  width: 28px;
-  height: 28px;
-  line-height: 28px;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
 }
 .has-success .help-block,
 .has-success .control-label,
@@ -3082,13 +3082,13 @@ select[multiple].input-lg {
 }
 @media (min-width: 768px) {
   .form-horizontal .form-group-lg .control-label {
-    padding-top: 15px;
+    padding-top: 7px;
     font-size: 15px;
   }
 }
 @media (min-width: 768px) {
   .form-horizontal .form-group-sm .control-label {
-    padding-top: 6px;
+    padding-top: 3px;
     font-size: 11px;
   }
 }
@@ -3525,21 +3525,21 @@ fieldset[disabled] .btn-link:focus {
 }
 .btn-lg,
 .btn-group-lg > .btn {
-  padding: 14px 16px;
+  padding: 6px 10px;
   font-size: 15px;
   line-height: 1.3333333;
   border-radius: 6px;
 }
 .btn-sm,
 .btn-group-sm > .btn {
-  padding: 5px 10px;
+  padding: 2px 5px;
   font-size: 11px;
   line-height: 1.5;
   border-radius: 3px;
 }
 .btn-xs,
 .btn-group-xs > .btn {
-  padding: 1px 5px;
+  padding: 1px 3px;
   font-size: 11px;
   line-height: 1.5;
   border-radius: 3px;
@@ -3919,8 +3919,8 @@ tbody.collapse.in {
 .input-group-lg > .form-control,
 .input-group-lg > .input-group-addon,
 .input-group-lg > .input-group-btn > .btn {
-  height: 50px;
-  padding: 14px 16px;
+  height: 34px;
+  padding: 6px 10px;
   font-size: 15px;
   line-height: 1.3333333;
   border-radius: 6px;
@@ -3928,8 +3928,8 @@ tbody.collapse.in {
 select.input-group-lg > .form-control,
 select.input-group-lg > .input-group-addon,
 select.input-group-lg > .input-group-btn > .btn {
-  height: 50px;
-  line-height: 50px;
+  height: 34px;
+  line-height: 34px;
 }
 textarea.input-group-lg > .form-control,
 textarea.input-group-lg > .input-group-addon,
@@ -3942,8 +3942,8 @@ select[multiple].input-group-lg > .input-group-btn > .btn {
 .input-group-sm > .form-control,
 .input-group-sm > .input-group-addon,
 .input-group-sm > .input-group-btn > .btn {
-  height: 28px;
-  padding: 5px 10px;
+  height: 22px;
+  padding: 2px 5px;
   font-size: 11px;
   line-height: 1.5;
   border-radius: 3px;
@@ -3951,8 +3951,8 @@ select[multiple].input-group-lg > .input-group-btn > .btn {
 select.input-group-sm > .form-control,
 select.input-group-sm > .input-group-addon,
 select.input-group-sm > .input-group-btn > .btn {
-  height: 28px;
-  line-height: 28px;
+  height: 22px;
+  line-height: 22px;
 }
 textarea.input-group-sm > .form-control,
 textarea.input-group-sm > .input-group-addon,
@@ -3990,12 +3990,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   border-radius: 4px;
 }
 .input-group-addon.input-sm {
-  padding: 5px 10px;
+  padding: 2px 5px;
   font-size: 11px;
   border-radius: 3px;
 }
 .input-group-addon.input-lg {
-  padding: 14px 16px;
+  padding: 6px 10px;
   font-size: 15px;
   border-radius: 6px;
 }
@@ -4542,8 +4542,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   margin-bottom: 6.5px;
 }
 .navbar-btn.btn-sm {
-  margin-top: 6px;
-  margin-bottom: 6px;
+  margin-top: 9px;
+  margin-bottom: 9px;
 }
 .navbar-btn.btn-xs {
   margin-top: 9px;
@@ -4854,7 +4854,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 }
 .pagination-lg > li > a,
 .pagination-lg > li > span {
-  padding: 14px 16px;
+  padding: 6px 10px;
   font-size: 15px;
   line-height: 1.3333333;
 }
@@ -4870,7 +4870,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 }
 .pagination-sm > li > a,
 .pagination-sm > li > span {
-  padding: 5px 10px;
+  padding: 2px 5px;
   font-size: 11px;
   line-height: 1.5;
 }
@@ -7286,6 +7286,49 @@ a.list-group-item-danger.active:focus {
 .pagination {
   margin: 11px 0;
 }
+.toggle.btn {
+  min-width: 44px !important;
+  min-height: 26px !important;
+}
+.toggle.btn-lg {
+  min-width: 50px !important;
+  min-height: 30px !important;
+}
+.toggle.btn-sm {
+  min-width: 40px !important;
+  min-height: 24px !important;
+}
+.toggle.btn-xs {
+  min-width: 35px !important;
+  min-height: 22px !important;
+}
+.toggle-on.btn {
+  padding-right: 16px !important;
+}
+.toggle-on.btn-lg {
+  padding-right: 22px !important;
+}
+.toggle-on.btn-sm {
+  padding-right: 10px !important;
+}
+.toggle-on.btn-xs {
+  padding-right: 6px !important;
+}
+.toggle-off.btn {
+  padding-left: 16px !important;
+}
+.toggle-off.btn-lg {
+  padding-left: 22px !important;
+}
+.toggle-off.btn-sm {
+  padding-left: 10px !important;
+}
+.toggle-off.btn-xs {
+  padding-left: 6px !important;
+}
+.toggle-handle.btn-lg {
+  width: 0 !important;
+}
 .page-header {
   margin-top: 0;
 }
@@ -9523,13 +9566,13 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
 
 .select2-container.input-sm .select2-choice,
 .input-group-sm .select2-container .select2-choice {
-  height: 28px;
+  height: 22px;
   line-height: 1.5;
   border-radius: 3px;
 }
 .select2-container.input-lg .select2-choice,
 .input-group-lg .select2-container .select2-choice {
-  height: 50px;
+  height: 34px;
   line-height: 1.3333333;
   border-radius: 6px;
 }
@@ -9538,11 +9581,11 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
 }
 .select2-container-multi.input-sm .select2-choices .select2-search-field input,
 .input-group-sm .select2-container-multi .select2-choices .select2-search-field input {
-  height: 26px;
+  height: 20px;
 }
 .select2-container-multi.input-lg .select2-choices .select2-search-field input,
 .input-group-lg .select2-container-multi .select2-choices .select2-search-field input {
-  height: 48px;
+  height: 32px;
 }
 /**
  * Adjust height and line-height for .select2-search-field amd multi-select Select2 widgets.
@@ -9565,7 +9608,7 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
 /* 1 */ .input-group-sm .select2-choice > span:first-child,
 /* 1 */ .input-sm .select2-choices .select2-search-field input,
 .input-group-sm .select2-choices .select2-search-field input {
-  padding: 5px 10px;
+  padding: 2px 5px;
 }
 .input-lg .select2-chosen,
 .input-group-lg .select2-chosen,
@@ -9573,7 +9616,7 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
 /* 1 */ .input-group-lg .select2-choice > span:first-child,
 /* 1 */ .input-lg .select2-choices .select2-search-field input,
 .input-group-lg .select2-choices .select2-search-field input {
-  padding: 14px 16px;
+  padding: 6px 10px;
 }
 .select2-container-multi .select2-choices .select2-search-choice {
   margin-top: 5px;
@@ -10631,6 +10674,112 @@ img.mfp-img {
   left: 0;
   z-index: 9008;
 }
+/*! ========================================================================
+ * Bootstrap Toggle: bootstrap-toggle.css v2.2.0
+ * http://www.bootstraptoggle.com
+ * ========================================================================
+ * Copyright 2014 Min Hur, The New York Times Company
+ * Licensed under MIT
+ * ======================================================================== */
+
+.checkbox label .toggle,
+.checkbox-inline .toggle {
+  margin-left: -20px;
+  margin-right: 5px;
+}
+.toggle {
+  position: relative;
+  overflow: hidden;
+}
+.toggle input[type=checkbox] {
+  display: none;
+}
+.toggle-group {
+  position: absolute;
+  width: 200%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  transition: left 0.35s;
+  -webkit-transition: left 0.35s;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+.toggle.off .toggle-group {
+  left: -100%;
+}
+.toggle-on {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 50%;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+.toggle-off {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  right: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+.toggle-handle {
+  position: relative;
+  margin: 0 auto;
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 100%;
+  width: 0;
+  border-width: 0 1px;
+}
+.toggle.btn {
+  min-width: 59px;
+  min-height: 34px;
+}
+.toggle-on.btn {
+  padding-right: 24px;
+}
+.toggle-off.btn {
+  padding-left: 24px;
+}
+.toggle.btn-lg {
+  min-width: 79px;
+  min-height: 45px;
+}
+.toggle-on.btn-lg {
+  padding-right: 31px;
+}
+.toggle-off.btn-lg {
+  padding-left: 31px;
+}
+.toggle-handle.btn-lg {
+  width: 40px;
+}
+.toggle.btn-sm {
+  min-width: 50px;
+  min-height: 30px;
+}
+.toggle-on.btn-sm {
+  padding-right: 20px;
+}
+.toggle-off.btn-sm {
+  padding-left: 20px;
+}
+.toggle.btn-xs {
+  min-width: 35px;
+  min-height: 22px;
+}
+.toggle-on.btn-xs {
+  padding-right: 12px;
+}
+.toggle-off.btn-xs {
+  padding-left: 12px;
+}
 /*!
  * Datetimepicker for Bootstrap 3
  * version : 4.17.37
@@ -11471,6 +11620,12 @@ table.pgui-cascading-editor tr td .select2-container {
 .form-horizontal .col-input .input-range {
   padding-top: 5px;
 }
+.form-horizontal .col-input .toggle.btn-xs {
+  top: 3px;
+}
+.form-horizontal .col-input .toggle.btn-sm {
+  top: 2px;
+}
 .form-editor-container {
   margin-top: 15px;
 }
@@ -11533,6 +11688,9 @@ table.pgui-cascading-editor tr td .select2-container {
 .signature-pad canvas {
   border: 1px solid #cccccc;
   border-radius: 4px;
+}
+.pgui-toggle-checkbox {
+  display: none;
 }
 @font-face {
   font-family: 'phpgenerator';

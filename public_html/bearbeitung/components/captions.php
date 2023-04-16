@@ -5,10 +5,18 @@ include_once dirname(__FILE__) . '/utils/system_utils.php';
 
 class Captions
 {
+    /** @var array */
     static private $instances = array();
 
+    /** @var string */
     private $encoding;
 
+    /** @var array */
+    private $translations = array();
+
+    /**
+     * @param string $encoding
+     */
     private function __construct($encoding)
     {
         $this->encoding = $encoding;

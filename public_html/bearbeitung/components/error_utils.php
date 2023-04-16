@@ -32,13 +32,14 @@ function ShowSecurityErrorPage($parentPage, $message)
     }
 
     $renderer = new ViewAllRenderer($parentPage->GetLocalizerCaptions());
-
+    $authenticationIsEnabled = !(GetApplication()->GetUserAuthentication() instanceof NullUserAuthentication);
     $errorPage = new CustomErrorPage(
         $parentPage->GetLocalizerCaptions()->GetMessageString('AccessDenied'),
         $parentPage->GetContentEncoding(),
         $message,
-        sprintf($parentPage->GetLocalizerCaptions()->GetMessageString('AccessDeniedErrorSuggestions'),
-            'login.php'.$urlToRedirect),
+        $authenticationIsEnabled ?
+        sprintf($parentPage->GetLocalizerCaptions()->GetMessageString('AccessDeniedErrorSuggestions'), 'login.php'.$urlToRedirect):
+        $parentPage->GetLocalizerCaptions()->GetMessageString('AccessDeniedErrorSuggestions2'),
         $parentPage
     );
 

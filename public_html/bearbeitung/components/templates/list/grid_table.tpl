@@ -19,7 +19,7 @@
                                             <div id="selection-filters-content" class="hide">
                                                 <ul class="list-unstyled dropdown-menu selection-filters">
                                                     {foreach from=$DataGrid.SelectionFilters item=filter}
-                                                    <li><a href="#" class="js-action" data-filter-name="{$filter}" data-url="{$Page->getLink()}" data-handler-name="{$Page->GetRecordsSelectionHandler()}"}>{$filter}</a></li>
+                                                    <li><a href="#" class="js-action" data-filter-name="{$filter}" data-url="{$Page->getLink()}" data-handler-name="{$Page->GetRecordsSelectionHandler()}">{$filter}</a></li>
                                                     {/foreach}
                                                 </ul>
                                             </div>

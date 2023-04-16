@@ -9,6 +9,9 @@ class LoginPage extends CommonPage
     private $loginControl;
     private $renderer;
     private $pageFileName;
+
+    /** @var Captions */
+    private $captions;
     private $inactivityTimeoutExpired;
     /** @var AbstractUserAuthentication */
     private $userAuthentication;

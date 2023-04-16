@@ -2,13 +2,25 @@
 
 class FilterColumnDynamicSearchHandler
 {
+    /** @var EngConnection */
+    private $connection;
+
+    /** @var BaseSelectCommand */
+    private $sourceSelect;
+
+    /** @var ColumnFilterColumn */
+    private $column;
+
+    /** @var Captions */
+    private $captions;
+
     /**
      * @param EngConnection $connection
      * @param BaseSelectCommand $sourceSelect
      * @param ColumnFilterColumn $column
      * @param Captions $captions
      */
-    public function __construct($connection, $sourceSelect, ColumnFilterColumn $column, Captions $captions) {
+    public function __construct($connection, $sourceSelect, $column, $captions) {
         $this->connection = $connection;
         $this->sourceSelect = $sourceSelect;
         $this->column = $column;

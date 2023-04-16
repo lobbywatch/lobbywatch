@@ -48,6 +48,10 @@ define([
 
                     var ids = element.val().split(',');
                     var results = [];
+                    _.each(ids, function (id, i) {
+                        results.push({id: id});
+                    });
+                    var counter = 0;
 
                     _.each(ids, function (id, i) {
                         $.ajax({
@@ -57,13 +61,11 @@ define([
                         }).success(function (data) {
                             $.each(data, function (k, item) {
                                 if (item.id == id) {
-                                    results.push({
-                                        id: item.id,
-                                        text: item.value,
-                                        fields: item.fields
-                                    });
+                                    counter++;
+                                    results[i].text = item.value;
+                                    results[i].fields = item.fields;
 
-                                    if (results.length === ids.length) {
+                                    if (counter === ids.length) {
                                         callback(results);
                                         self.rootElement.trigger('select2-init');
                                     }

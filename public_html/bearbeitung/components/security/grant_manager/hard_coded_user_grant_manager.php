@@ -7,7 +7,12 @@ class HardCodedUserGrantManager extends UserGrantManager {
 
     /** @var IPermissionSet[] */
     private $applicationGrants;
+
+    /** @var string */
     private $defaultUserName;
+
+    /** @var string */
+    private $guestUserName;
 
     /**
      * @param array $dataSourceGrants

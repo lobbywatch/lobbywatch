@@ -1,7 +1,7 @@
-<table border=1>
+<table>
     <tr>
         {foreach item=Caption from=$HeaderCaptions}
-            <td x:str>{$Caption}</td>
+            <td>{$Caption}</td>
         {/foreach}
     </tr>
     {foreach item=Row from=$Rows name=RowsGrid}

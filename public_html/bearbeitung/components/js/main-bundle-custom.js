@@ -8077,9 +8077,226 @@ define('pgui.editors/plain',[
 
 define("jquery.bind-first", function(){});
 
-define('pgui.editors/checkbox',['pgui.editors/plain', 'jquery.bind-first'], function (PlainEditor) {
+/*! ========================================================================
+ * Bootstrap Toggle: bootstrap-toggle.js v2.2.0
+ * http://www.bootstraptoggle.com
+ * ========================================================================
+ * Copyright 2014 Min Hur, The New York Times Company
+ * Licensed under MIT
+ * ======================================================================== */
+
+if (typeof jQuery === 'undefined') {
+  throw new Error('Bootstrap\'s JavaScript requires jQuery')
+}
+
+ +function ($) {
+ 	'use strict';
+
+	// TOGGLE PUBLIC CLASS DEFINITION
+	// ==============================
+
+	var Toggle = function (element, options) {
+		this.$element  = $(element)
+		this.options   = $.extend({}, this.defaults(), options)
+		this.render()
+	}
+
+	Toggle.VERSION  = '2.2.0'
+
+	Toggle.DEFAULTS = {
+		on: 'On',
+		off: 'Off',
+		onstyle: 'primary',
+		offstyle: 'default',
+		size: 'small',
+		style: '',
+		width: null,
+		height: null
+	}
+
+	Toggle.prototype.defaults = function() {
+		return {
+			on: this.$element.attr('data-on') || Toggle.DEFAULTS.on,
+			off: this.$element.attr('data-off') || Toggle.DEFAULTS.off,
+			onstyle: this.$element.attr('data-onstyle') || Toggle.DEFAULTS.onstyle,
+			offstyle: this.$element.attr('data-offstyle') || Toggle.DEFAULTS.offstyle,
+			size: this.$element.attr('data-size') || Toggle.DEFAULTS.size,
+			style: this.$element.attr('data-style') || Toggle.DEFAULTS.style,
+			width: this.$element.attr('data-width') || Toggle.DEFAULTS.width,
+			height: this.$element.attr('data-height') || Toggle.DEFAULTS.height
+		}
+	}
+
+	Toggle.prototype.render = function () {
+		this._onstyle = 'btn-' + this.options.onstyle
+		this._offstyle = 'btn-' + this.options.offstyle
+		var size = this.options.size === 'large' ? 'btn-lg'
+			: this.options.size === 'small' ? 'btn-sm'
+			: this.options.size === 'mini' ? 'btn-xs'
+			: ''
+		var $toggleOn = $('<label class="btn">').html(this.options.on)
+			.addClass(this._onstyle + ' ' + size)
+        var $toggleOnCalcSize = $toggleOn.clone();
+		var $toggleOff = $('<label class="btn">').html(this.options.off)
+			.addClass(this._offstyle + ' ' + size + ' active')
+        var $toggleOffCalcSize = $toggleOff.clone();
+		var $toggleHandle = $('<span class="toggle-handle btn btn-default">')
+			.addClass(size)
+        var $toggleHandleCalcSize = $toggleHandle.clone();
+		var $toggleGroup = $('<div class="toggle-group">')
+			.append($toggleOn, $toggleOff, $toggleHandle)
+		var $toggle = $('<div class="toggle btn" data-toggle="toggle">')
+			.addClass( this.$element.prop('checked') ? this._onstyle : this._offstyle+' off' )
+			.addClass(size).addClass(this.options.style)
+
+		this.$element.wrap($toggle)
+		$.extend(this, {
+			$toggle: this.$element.parent(),
+			$toggleOn: $toggleOn,
+			$toggleOff: $toggleOff,
+			$toggleGroup: $toggleGroup
+		})
+		this.$toggle.append($toggleGroup)
+
+        $toggleOnCalcSize.hide().appendTo(document.body);
+        $toggleOffCalcSize.hide().appendTo(document.body);
+        $toggleHandleCalcSize.hide().appendTo(document.body);
+        var width = this.options.width || Math.max($toggleOnCalcSize.outerWidth(), $toggleOffCalcSize.outerWidth())+($toggleHandleCalcSize.outerWidth()/2)
+		var height = this.options.height || Math.max($toggleOnCalcSize.outerHeight(), $toggleOffCalcSize.outerHeight())
+        $toggleOnCalcSize.remove();
+        $toggleOffCalcSize.remove();
+        $toggleHandleCalcSize.remove();
+
+		$toggleOn.addClass('toggle-on')
+		$toggleOff.addClass('toggle-off')
+		this.$toggle.css({ width: width, height: height })
+		if (this.options.height) {
+			$toggleOn.css('line-height', $toggleOn.height() + 'px')
+			$toggleOff.css('line-height', $toggleOff.height() + 'px')
+		}
+        this.update(true)
+		this.trigger(true)
+	}
+
+	Toggle.prototype.toggle = function () {
+		if (this.$element.prop('checked')) this.off()
+		else this.on()
+	}
+
+	Toggle.prototype.on = function (silent) {
+		if (this.$element.prop('disabled') || this.$element.prop('readonly')) return false
+		this.$toggle.removeClass(this._offstyle + ' off').addClass(this._onstyle)
+		this.$element.prop('checked', true)
+		if (!silent) this.trigger()
+	}
+
+	Toggle.prototype.off = function (silent) {
+        if (this.$element.prop('disabled') || this.$element.prop('readonly')) return false
+		this.$toggle.removeClass(this._onstyle).addClass(this._offstyle + ' off')
+		this.$element.prop('checked', false)
+		if (!silent) this.trigger()
+	}
+
+	Toggle.prototype.enable = function () {
+		this.$toggle.removeAttr('disabled')
+		this.$element.prop('disabled', false)
+	}
+
+	Toggle.prototype.disable = function () {
+		this.$toggle.attr('disabled', 'disabled')
+		this.$element.prop('disabled', true)
+	}
+
+	Toggle.prototype.update = function (silent) {
+		if (this.$element.prop('disabled')) this.disable()
+		else this.enable()
+		if (this.$element.prop('checked')) this.on(silent)
+		else this.off(silent)
+	}
+
+	Toggle.prototype.trigger = function (silent) {
+		this.$element.off('change.bs.toggle')
+		if (!silent) this.$element.change()
+		this.$element.on('change.bs.toggle', $.proxy(function() {
+			this.update()
+		}, this))
+	}
+
+	Toggle.prototype.destroy = function() {
+		this.$element.off('change.bs.toggle')
+		this.$toggleGroup.remove()
+		this.$element.removeData('bs.toggle')
+		this.$element.unwrap()
+	}
+
+	// TOGGLE PLUGIN DEFINITION
+	// ========================
+
+	function Plugin(option) {
+		return this.each(function () {
+			var $this   = $(this)
+			var data    = $this.data('bs.toggle')
+			var options = typeof option == 'object' && option
+
+			if (!data) $this.data('bs.toggle', (data = new Toggle(this, options)))
+			if (typeof option == 'string' && data[option]) data[option]()
+		})
+	}
+
+	var old = $.fn.bootstrapToggle
+
+	$.fn.bootstrapToggle             = Plugin
+	$.fn.bootstrapToggle.Constructor = Toggle
+
+	// TOGGLE NO CONFLICT
+	// ==================
+
+	$.fn.toggle.noConflict = function () {
+		$.fn.bootstrapToggle = old
+		return this
+	}
+
+	// TOGGLE DATA-API
+	// ===============
+
+	$(function() {
+		$('input[type=checkbox][data-toggle^=toggle]').bootstrapToggle()
+	})
+
+	$(document).on('click.bs.toggle', 'div[data-toggle^=toggle]', function(e) {
+		var $checkbox = $(this).find('input[type=checkbox]')
+		$checkbox.bootstrapToggle('toggle')
+		e.preventDefault()
+	})
+
+}(jQuery);
+
+define("bootstrap.toggle", ["jquery"], function(){});
+
+define('pgui.editors/checkbox',['pgui.editors/plain', 'jquery.bind-first', 'bootstrap.toggle'], function (PlainEditor) {
 
     return PlainEditor.extend({
+        init: function (rootElement, readyCallback) {
+            this._super(rootElement, readyCallback);
+
+            if (rootElement.attr('data-editor') === 'toggle') {
+                var toggleOptions  = {
+                    on: rootElement.data('toggle-on-caption'),
+                    off: rootElement.data('toggle-off-caption'),
+                    size: rootElement.data('toggle-size'),
+                    onstyle: rootElement.data('toggle-on-style'),
+                    offstyle: rootElement.data('toggle-off-style')
+                };
+                if (rootElement.data('toggle-width')) {
+                    toggleOptions.width = rootElement.data('toggle-width');
+                }
+                if (rootElement.data('toggle-height')) {
+                    toggleOptions.height = rootElement.data('toggle-height');
+                }
+                rootElement.bootstrapToggle(toggleOptions);
+            }
+        },
+
         getValue: function() {
             return this.rootElement.is(':checked');
         },
@@ -8103,7 +8320,7 @@ define('pgui.editors/checkbox',['pgui.editors/plain', 'jquery.bind-first'], func
                     event.preventDefault();
                     event.stopImmediatePropagation();
                     return false;
-                })
+                });
             } else {
                 $editor.off("click.AUX");
                 $editor.off("change.AUX");
@@ -14825,6 +15042,10 @@ define('pgui.editors/remote_multivalue_select',[
 
                     var ids = element.val().split(',');
                     var results = [];
+                    _.each(ids, function (id, i) {
+                        results.push({id: id});
+                    });
+                    var counter = 0;
 
                     _.each(ids, function (id, i) {
                         $.ajax({
@@ -14834,13 +15055,11 @@ define('pgui.editors/remote_multivalue_select',[
                         }).success(function (data) {
                             $.each(data, function (k, item) {
                                 if (item.id == id) {
-                                    results.push({
-                                        id: item.id,
-                                        text: item.value,
-                                        fields: item.fields
-                                    });
+                                    counter++;
+                                    results[i].text = item.value;
+                                    results[i].fields = item.fields;
 
-                                    if (results.length === ids.length) {
+                                    if (counter === ids.length) {
                                         callback(results);
                                         self.rootElement.trigger('select2-init');
                                     }
@@ -14949,8 +15168,8 @@ define('pgui.editors/radio',['pgui.editors/custom', 'underscore'], function (Cus
         setValue: function(value) {
             this.rootElement.find("input").each(function(i, item) {
                 if ($(item).attr('value') == value) {
-                    $(item).attr('checked', true);
-                }
+                    $(item).prop('checked', true);
+                }  
             });
 
             return this;
@@ -21541,7 +21760,8 @@ define('pgui.editors',[
         static_editor: StaticEditor,
         multiuploader: MultiUploader,
         autocomplete: Autocomplete,
-        signature: Signature
+        signature: Signature,
+        toggle: Checkbox
     };
 
     var EditorsController = events.mixin(Class.extend({
@@ -25951,7 +26171,7 @@ define('pgui.validation',[
                     var validationRules = { };
                     var errorMessageMap = { };
 
-                    $(form).find('input,select,textarea').each(function(inputIndex, input) {
+                    $(form).find('input,select,textarea,div[data-editor="radio"]').each(function(inputIndex, input) {
                         if ($(input).attr('data-validation') != undefined) {
                             var rules = $(input).attr('data-validation').split(' ');
                             var validationRule = { };
@@ -26014,8 +26234,10 @@ define('pgui.validation',[
                                 }
                             }
 
-                            errorMessageMap[$(input).attr('name')] = errorMessages;
-                            validationRules[$(input).attr('name')] = validationRule;
+                            var inputName = $(input).data('editor') === 'radio' ? $(input).data('editor-name') : $(input).attr('name');
+
+                            errorMessageMap[inputName] = errorMessages;
+                            validationRules[inputName] = validationRule;
                         }
 
                     });
@@ -27614,6 +27836,16 @@ define('pgui.form_collection',[
                 autoHideMessage($(alert));
             });
 
+            $form.find('.js-hint').each(function () {
+                $(this).popover({
+                    placement: 'top',
+                    trigger: 'hover',
+                    container: 'body',
+                    html: true,
+                    content: $(this).attr('data-hint')
+                });
+            });
+
             return $form;
         },
 
@@ -28371,11 +28603,10 @@ define('pgui.modal_delete_link',[
                         $modal.remove();
                     });
 
-                    var url = $button.attr('href');
-                    var handlerName = $button.attr('data-delete-handler-name');
+                    var url = $button.data('content-link');
 
                     $.ajax({
-                        url: url + "&hname=" + handlerName,
+                        url: url,
                         dataType: 'json',
                         success: function (response) {
                             if (!response.success) {
@@ -30504,12 +30735,74 @@ define('pgui.image_popup',['underscore', 'jquery.magnific-popup'], function (_) 
     }
 });
 
+define('pgui.toggle',['pgui.utils', 'bootstrap.toggle'], function (utils) {
+
+    return function ($container, $grid) {
+        $container.find('.pgui-toggle-checkbox').each(function (i, el) {
+            var $el = $(el);
+            var toggleOptions  = {
+                on: $el.data('toggle-on-caption'),
+                off: $el.data('toggle-off-caption'),
+                size: $el.data('toggle-size'),
+                onstyle: $el.data('toggle-on-style'),
+                offstyle: $el.data('toggle-off-style')
+            };
+            if ($el.data('toggle-width')) {
+                toggleOptions.width = $el.data('toggle-width');
+            }
+            if ($el.data('toggle-height')) {
+                toggleOptions.height = $el.data('toggle-height');
+            }
+            $el.bootstrapToggle(toggleOptions);
+            if ($el.data('toggle-disabled')) {
+                $el.bootstrapToggle('disable');
+            }
+            var changeFailed = false;
+            $el.change(function() {
+                if (changeFailed) {
+                    changeFailed = false;
+                    return;
+                }
+                var currentElement = $(this);
+                var data = currentElement.data('pk-values') ? currentElement.data('pk-values') : {};
+                data['column'] = currentElement.closest('td').data('column-name');
+                var fieldName = currentElement.data('editor-name');
+                if (currentElement.is(':checked')) {
+                    data[fieldName] = 1;
+                }
+                $.ajax({
+                    method: "POST",
+                    url: currentElement.data('editing-link'),
+                    data: data,
+                    dataType: 'json',
+                    success: function (response) {
+                        if (!response.success) {
+                            changeFailed = true;
+                            $el.bootstrapToggle('toggle');
+                            utils.showErrorMessage(response.message);
+                            return;
+                        }
+                        if (typeof $grid !== 'undefined') {
+                            $grid.showMessage(response.message, response.messageDisplayTime);
+                            var $row = $(response.row);
+                            utils.replaceRow(currentElement.closest('.pg-row'), $row);
+                            $grid.integrateRows($row);
+                        }
+                    }
+                });
+            })
+        });
+
+    }
+});
+
 define('pgui.modal_view',[
     'pgui.field-embedded-video',
     'pgui.cell-edit',
     'pgui.utils',
-    'pgui.image_popup'
-], function(showFieldEmbeddedVideo, initCellEdit, utils, initImagePopup) {
+    'pgui.image_popup',
+    'pgui.toggle'
+], function(showFieldEmbeddedVideo, initCellEdit, utils, initImagePopup, initToggle) {
     var $body = $('body');
 
     return function init(item) {
@@ -30531,6 +30824,7 @@ define('pgui.modal_view',[
 
                 showFieldEmbeddedVideo($modalContainer, false, false);
                 initImagePopup($modalContainer);
+                initToggle($modalContainer);
 
                 $modalContainer.find('[data-edit-url]').each(function (i, el) {
                     var $el = $(el);
@@ -30559,8 +30853,9 @@ define('pgui.inline-edit',[
     'pgui.utils',
     'pgui.field-embedded-video',
     'pgui.image_popup',
+    'pgui.toggle',
     'jquery.query'
-], function (FormCollection, utils, showFieldEmbeddedVideo, initImagePopup) {
+], function (FormCollection, utils, showFieldEmbeddedVideo, initImagePopup, initToggle) {
 
     function createContainer(grid, cancelCallback) {
         return grid.getRowTemplate().on('click', '.js-cancel', function (e) {
@@ -30761,6 +31056,7 @@ define('pgui.inline-edit',[
 
                     showFieldEmbeddedVideo($container, false, false);
                     initImagePopup($container);
+                    initToggle($container);
                 });
 
             });
@@ -31230,7 +31526,8 @@ define('pgui.grid',[
     'pgui.column_group',
     'pgui.grid-details',
     'pgui.form_collection',
-    'pgui.image_popup'
+    'pgui.image_popup',
+    'pgui.toggle'
 ], function(
     Class,
     FilterBuilder,
@@ -31256,7 +31553,8 @@ define('pgui.grid',[
     initColumnGroup,
     initDetails,
     FormCollection,
-    initImagePopup
+    initImagePopup,
+    initToggle
 ) {
 
     function padNumber(number, length) {
@@ -31418,6 +31716,7 @@ define('pgui.grid',[
 
             showFieldEmbeddedVideo($rows);
             initImagePopup($rows);
+            initToggle($rows, self);
 
             $rows.find('[data-edit-url]').each(function (i, el) {
                 var $el = $(el);
@@ -31579,6 +31878,7 @@ define('pgui.grid',[
                     placement: 'top',
                     container: 'body',
                     trigger: 'hover',
+                    html: true,
                     title: $(this).attr('data-field-caption'),
                     content: $(this).attr('data-comment')
                 });
@@ -31959,8 +32259,9 @@ define('pgui.view-page-main',[
     'pgui.selection',
     'pgui.selection-handler',
     'pgui.image_popup',
-    'pgui.modal_view'
-], function(utils, showFieldEmbeddedVideo, initCellEdit, Selection, SelectionHandler, initImagePopup, initModalView) {
+    'pgui.modal_view',
+    'pgui.toggle'
+], function(utils, showFieldEmbeddedVideo, initCellEdit, Selection, SelectionHandler, initImagePopup, initModalView, initToggle) {
 
     return function () {
         var $body = $('body');
@@ -31968,6 +32269,7 @@ define('pgui.view-page-main',[
         utils.updatePopupHints($body);
         showFieldEmbeddedVideo($body);
         initImagePopup($body);
+        initToggle($body);
 
 
         $body.find('[data-edit-url]').each(function (i, el) {

@@ -21,8 +21,6 @@ use ScatterPlot;
 use Spline;
 use StockPlot;
 
-require_once __DIR__ . '/Polyfill.php';
-
 class JpGraph implements IRenderer
 {
     private static $width = 640;
@@ -303,6 +301,8 @@ class JpGraph implements IRenderer
         $seriesPlots = [];
         if ($grouping == 'percentStacked') {
             $sumValues = $this->percentageSumCalculation($groupID, $seriesCount);
+        } else {
+            $sumValues = [];
         }
 
         //    Loop through each data series in turn
@@ -378,6 +378,8 @@ class JpGraph implements IRenderer
         $seriesPlots = [];
         if ($grouping == 'percentStacked') {
             $sumValues = $this->percentageSumCalculation($groupID, $seriesCount);
+        } else {
+            $sumValues = [];
         }
 
         //    Loop through each data series in turn

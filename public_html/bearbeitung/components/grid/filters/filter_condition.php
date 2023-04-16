@@ -7,14 +7,19 @@ include_once dirname(__FILE__) . '/filter_column.php';
 
 class FilterCondition implements FilterComponentInterface
 {
-    /**
-     * @var FilterColumn
-     */
+    /** @var FilterColumn */
     private $column;
 
-    /**
-     * @var bool
-     */
+    /** @var string */
+    private $operator;
+
+    /** @var array */
+    private $values;
+
+    /** @var array */
+    private $displayValues;
+
+    /** @var bool */
     private $isEnabled = true;
 
     /**
@@ -33,7 +38,7 @@ class FilterCondition implements FilterComponentInterface
     {
         $this->column = $column;
         $this->operator = $operator;
-            $this->values = $values;
+        $this->values = $values;
         $this->displayValues = is_null($displayValues)
             ? $values
             : $displayValues;

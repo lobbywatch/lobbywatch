@@ -23,7 +23,17 @@ class CommitEditedValuesGridState extends AbstractCommitValuesGridState
 
     protected function getRealEditColumns()
     {
-        return $this->grid->GetEditColumns();
+        $postWrapper = ArrayWrapper::createPostWrapper();
+        if ($postWrapper->isValueSet('column')) {
+            $realEditColumns = array();
+            $toggleEditColumn = $this->grid->getToggleEditColumn($postWrapper->getValue('column'));
+            if (isset($toggleEditColumn)) {
+                $realEditColumns[] = $toggleEditColumn;
+            }
+            return $realEditColumns;
+        } else {
+            return $this->grid->GetEditColumns();
+        }
     }
 
     public function ProcessMessages()

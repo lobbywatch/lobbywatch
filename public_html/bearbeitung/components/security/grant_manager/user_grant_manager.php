@@ -37,7 +37,7 @@ class NullUserGrantManager extends UserGrantManager
 {
     /** @inheritdoc */
     public function GetPermissionSet($userName, $dataSourceName) {
-        return new AdminPermissionSet();
+        return new PermissionSet(true, true, true, true);
     }
 
     /** @inheritdoc */

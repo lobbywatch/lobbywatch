@@ -15,7 +15,7 @@ abstract class AbstractViewColumn extends ViewColumnGroup implements ColumnInter
     private $fixedWidth = null;
 
     /** @var string */
-    private $description;
+    private $description = '';
 
     /** @var Component */
     public $headerControl;
@@ -34,6 +34,9 @@ abstract class AbstractViewColumn extends ViewColumnGroup implements ColumnInter
 
     /** @var int */
     private $minimalVisibility;
+
+    /** @var string|null */
+    private $nullLabel;
 
     /**
      * @param string $caption
@@ -73,12 +76,12 @@ abstract class AbstractViewColumn extends ViewColumnGroup implements ColumnInter
         return "";
     }
 
-    public function GetDescription()
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function SetDescription($value)
+    public function setDescription($value)
     {
         $this->description = $value;
     }
@@ -149,12 +152,12 @@ abstract class AbstractViewColumn extends ViewColumnGroup implements ColumnInter
     {
     }
 
-    public function SetFixedWidth($value)
+    public function setFixedWidth($value)
     {
         $this->fixedWidth = $value;
     }
 
-    public function GetFixedWidth()
+    public function getFixedWidth()
     {
         return $this->fixedWidth;
     }

@@ -843,7 +843,7 @@ class mPDF
 
 	private $tag;
 
-	public function __construct($mode = '', $format = 'A4', $default_font_size = 0, $default_font = '', $mgl = 15, $mgr = 15, $mgt = 16, $mgb = 16, $mgh = 9, $mgf = 9, $orientation = 'P')
+	public function __construct($mode = '', $format = 'A4', $default_font_size = 0, $default_font = '', $mgl = 15, $mgr = 15, $mgt = 16, $mgb = 16, $mgh = 9, $mgf = 9, $orientation = 'P', $autoScriptToLang = false, $autoLangToFont = false)
 	{
 		/* -- BACKGROUNDS -- */
 		if (!class_exists('grad', false)) {
@@ -1100,6 +1100,8 @@ class mPDF
 		$this->autoPageBreak = true;
 
 		require(_MPDF_PATH . 'config.php'); // config data
+                $this->autoScriptToLang = $autoScriptToLang;
+		$this->autoLangToFont = $autoLangToFont;
 
 		$this->_setPageSize($format, $orientation);
 		$this->DefOrientation = $orientation;

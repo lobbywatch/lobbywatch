@@ -39,7 +39,8 @@
       'trumbowyg.template': 'libs/trumbowyg/plugins/template/trumbowyg.template',
       'bootstrap-file-input': 'libs/fileinput',
       'jquery.autocomplete': 'libs/jquery/jquery.autocomplete',
-      'signature_pad': 'libs/signature_pad'
+      'signature_pad': 'libs/signature_pad',
+      'bootstrap.toggle': 'libs/bootstrap-toggle'
   },
   shim: {
       'jquery.stickytableheaders': ['jquery'],
@@ -56,7 +57,8 @@
       'trumbowyg.preformatted': ['trumbowyg'],
       'trumbowyg.emoji': ['trumbowyg'],
       'trumbowyg.history': ['trumbowyg'],
-      'trumbowyg.template': ['trumbowyg']
+      'trumbowyg.template': ['trumbowyg'],
+      'bootstrap.toggle' : ['jquery']
   }
   // Copied from public_html/bearbeitung/components/js/require-config.js: end
   ,

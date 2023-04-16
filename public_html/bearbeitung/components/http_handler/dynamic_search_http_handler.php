@@ -6,31 +6,34 @@ class DynamicSearchHandler extends AbstractHTTPHandler
 {
     /** @var Dataset */
     private $dataset;
+
     /** @var string */
     private $name;
+
     /** @var string */
     private $idField;
+
     /** @var string */
     private $valueField;
+
     /** @var string */
     private $captionTemplate;
+
     /** @var int */
     private $numberOfValuesToDisplay;
 
     /**
      * @param Dataset $dataset
-     * @param Page|null $parentPage
      * @param string $name
      * @param string $idField
      * @param string $valueField
      * @param string $captionTemplate
      * @param int $numberOfValuesToDisplay
      */
-    public function __construct($dataset, $parentPage, $name, $idField, $valueField, $captionTemplate = null, $numberOfValuesToDisplay = 20)
+    public function __construct($dataset, $name, $idField, $valueField, $captionTemplate = null, $numberOfValuesToDisplay = 20)
     {
         parent::__construct($name);
         $this->dataset = $dataset;
-        $this->parentPage = null;
         $this->name = $name;
         $this->idField = $idField;
         $this->valueField = $valueField;

@@ -18,6 +18,9 @@ class DynamicLookupEditColumn extends CustomEditColumn
     private $lookupDisplayFieldName;
 
     /** @var string */
+    private $captionTemplate;
+
+    /** @var string */
     private $insertFormLink;
 
     /**

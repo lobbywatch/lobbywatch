@@ -20,11 +20,10 @@ define([
                         $modal.remove();
                     });
 
-                    var url = $button.attr('href');
-                    var handlerName = $button.attr('data-delete-handler-name');
+                    var url = $button.data('content-link');
 
                     $.ajax({
-                        url: url + "&hname=" + handlerName,
+                        url: url,
                         dataType: 'json',
                         success: function (response) {
                             if (!response.success) {

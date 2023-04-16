@@ -80,7 +80,6 @@ class ServerSideUserAuthentication extends AbstractUserAuthentication
             return false;
         }
 
-        $connection->Disconnect();
         return true;
     }
 

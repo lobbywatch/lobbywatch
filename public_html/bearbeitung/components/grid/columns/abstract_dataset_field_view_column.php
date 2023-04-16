@@ -265,8 +265,8 @@ abstract class AbstractDatasetFieldViewColumn extends AbstractViewColumn
             'Classes' => $this->GetGridColumnClass(),
             'Sortable' => $this->allowSorting(),
             'Keys' => $this->GetActualKeys(),
-            'Comment' => $this->GetDescription(),
-            'Width' => $this->GetFixedWidth(),
+            'Comment' => $this->getDescription(),
+            'Width' => $this->getFixedWidth(),
             'MinimalVisibility' => $this->getMinimalVisibility(),
             'SortIndex' => $this->getSortIndex(),
             'SortOrderType' => $this->getSortOrderType()

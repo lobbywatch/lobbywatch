@@ -114,7 +114,9 @@ class MyCommandImp extends EngCommandImp {
     public function EscapeString($string) {
         // return mysql_escape_string($string);
         // mysql_real_escape_string requires the connection
-
+        if (is_null($string)) {
+            return '';
+        }
         $replacements = array(
             "\x00" => '\x00',
             "\n" => '\n',

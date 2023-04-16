@@ -12,11 +12,13 @@ class FixedKeysArray implements ArrayAccess, IteratorAggregate
         $this->coll = $coll;
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return array_key_exists($offset, $this->coll);
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         $this->checkOffset($offset);
@@ -24,17 +26,20 @@ class FixedKeysArray implements ArrayAccess, IteratorAggregate
         return $this->coll[$offset];
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         $this->checkOffset($offset);
         $this->coll[$offset] = $value;
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         throw new InvalidArgumentException('Unset operation is not allowed.');
     }
 
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator($this->coll);

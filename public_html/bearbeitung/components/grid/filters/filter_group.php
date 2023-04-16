@@ -6,14 +6,13 @@ include_once dirname(__FILE__) . '/filter_group_operator.php';
 
 class FilterGroup implements FilterComponentInterface
 {
-    /**
-     * @var FilterComponentInterface[]
-     */
+    /** @var string */
+    private $operator;
+
+    /** @var FilterComponentInterface[] */
     private $children = array();
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $isEnabled = true;
 
     /**

@@ -105,6 +105,7 @@ class RssItem
     private $title;
     private $link;
     private $description;
+    private $publicationDate;
 
     public function  __construct($title, $link, $description)
     {

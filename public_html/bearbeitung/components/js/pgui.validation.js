@@ -63,7 +63,7 @@ define([
                     var validationRules = { };
                     var errorMessageMap = { };
 
-                    $(form).find('input,select,textarea').each(function(inputIndex, input) {
+                    $(form).find('input,select,textarea,div[data-editor="radio"]').each(function(inputIndex, input) {
                         if ($(input).attr('data-validation') != undefined) {
                             var rules = $(input).attr('data-validation').split(' ');
                             var validationRule = { };
@@ -126,8 +126,10 @@ define([
                                 }
                             }
 
-                            errorMessageMap[$(input).attr('name')] = errorMessages;
-                            validationRules[$(input).attr('name')] = validationRule;
+                            var inputName = $(input).data('editor') === 'radio' ? $(input).data('editor-name') : $(input).attr('name');
+
+                            errorMessageMap[inputName] = errorMessages;
+                            validationRules[inputName] = validationRule;
                         }
 
                     });
