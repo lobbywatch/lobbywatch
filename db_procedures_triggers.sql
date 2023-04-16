@@ -938,12 +938,12 @@ thisTrigger: BEGIN
   -- Fill parlamentarier.kommissionen on change
   SET @disable_table_logging = 1;
   UPDATE `parlamentarier` p
-    SET p.kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id),
+    SET p.kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.id AND (ik.bis IS NULL OR ik.bis >= NOW()) GROUP BY ik.parlamentarier_id),
       p.updated_date = NEW.updated_date,
       p.updated_visa = CONCAT(NEW.updated_visa, '*')
     WHERE p.id=NEW.parlamentarier_id;
   UPDATE `zutrittsberechtigung` p
-    SET p.parlamentarier_kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.parlamentarier_id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id),
+    SET p.parlamentarier_kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.parlamentarier_id AND (ik.bis IS NULL OR ik.bis >= NOW()) GROUP BY ik.parlamentarier_id),
       p.updated_date = NEW.updated_date,
       p.updated_visa = CONCAT(NEW.updated_visa, '*')
     WHERE p.parlamentarier_id=NEW.parlamentarier_id;
@@ -965,12 +965,12 @@ thisTrigger: BEGIN
   -- Fill parlamentarier.kommissionen on change
   SET @disable_table_logging = 1;
   UPDATE `parlamentarier` p
-    SET p.kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id),
+    SET p.kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.id AND (ik.bis IS NULL OR ik.bis >= NOW()) GROUP BY ik.parlamentarier_id),
       p.updated_date = NEW.updated_date,
       p.updated_visa = CONCAT(NEW.updated_visa, '*')
     WHERE p.id=NEW.parlamentarier_id OR p.id=OLD.parlamentarier_id;
   UPDATE `zutrittsberechtigung` p
-    SET p.parlamentarier_kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.parlamentarier_id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id),
+    SET p.parlamentarier_kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.parlamentarier_id AND (ik.bis IS NULL OR ik.bis >= NOW()) GROUP BY ik.parlamentarier_id),
       p.updated_date = NEW.updated_date,
       p.updated_visa = CONCAT(NEW.updated_visa, '*')
     WHERE p.parlamentarier_id=NEW.parlamentarier_id OR p.parlamentarier_id=OLD.parlamentarier_id;
@@ -1058,7 +1058,7 @@ thisTrigger: BEGIN
         updated_date = NEW.updated_date,
         updated_visa = CONCAT(NEW.updated_visa, '*')
         WHERE
-        kommission_id = NEW.id AND bis IS NULL;
+        kommission_id = NEW.id AND (bis IS NULL OR bis >= NOW());
       -- SET @disable_parlamentarier_kommissionen_update = NULL;
   END IF;
 END
@@ -1549,7 +1549,7 @@ thisTrigger: BEGIN
         updated_date = NEW.updated_date,
         updated_visa = CONCAT(NEW.updated_visa, '*')
       WHERE
-        parlamentarier_id = NEW.id AND bis IS NULL;
+        parlamentarier_id = NEW.id AND (bis IS NULL OR bis >= NOW());
   END IF;
 
   -- Propagate freigabe from parlamentarier to his interessenbindungen
@@ -1564,7 +1564,7 @@ thisTrigger: BEGIN
         updated_date = NEW.updated_date,
         updated_visa = CONCAT(NEW.updated_visa, '*')
         WHERE
-        parlamentarier_id = NEW.id AND bis IS NULL;
+        parlamentarier_id = NEW.id AND (bis IS NULL OR bis >= NOW());
 
       -- TODO organisationen von interessenbindungen?
       -- TODO set non-null freigabe_datum only if freigabe_datum IS NULL
@@ -1999,7 +1999,7 @@ thisTrigger: BEGIN
         updated_date = NEW.updated_date,
         updated_visa = CONCAT(NEW.updated_visa, '*')
       WHERE
-        person_id = NEW.id AND bis IS NULL;
+        person_id = NEW.id AND (bis IS NULL OR bis >= NOW());
   END IF;
 
   -- Propagate freigabe from person to his mandate
@@ -2030,7 +2030,7 @@ thisTrigger: BEGIN
         updated_date = NEW.updated_date,
         updated_visa = CONCAT(NEW.updated_visa, '*')
       WHERE
-        person_id = NEW.id AND bis IS NULL;
+        person_id = NEW.id AND (bis IS NULL OR bis >= NOW());
   END IF;
 
   -- Propagte freigabe to zutrittsberechtigung
