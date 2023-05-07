@@ -77,47 +77,18 @@ include_once dirname(__FILE__) . '/generator_version.php';
 include_once dirname(__FILE__) . '/hash_css_custom.php';
 include_once dirname(__FILE__) . '/hash_css_main.php';
 include_once dirname(__FILE__) . '/hash_js_main_bundle.php';
-// MIGR workaround to support old_bearbeitung
-if (!$old_bearbeitung) {
-  require_once dirname(__FILE__) . '/../bearbeitung/components/common.php';
-  include_once dirname(__FILE__) . '/../bearbeitung/components/http_handler/abstract_http_handler.php';
-} else {
-//   require_once dirname(__FILE__) . '/../old_bearbeitung/components/grid/grid.php';
-//   require_once dirname(__FILE__) . '/../old_bearbeitung/components/common.php';
-//   include_once dirname(__FILE__) . '/../bearbeitung/components/http_handler/abstract_http_handler.php';
-}
-
-// define('LOBBYWATCH_IS_FORMS', true);
+require_once dirname(__FILE__) . '/../bearbeitung/components/common.php';
+include_once dirname(__FILE__) . '/../bearbeitung/components/http_handler/abstract_http_handler.php';
 
 global $lobbywatch_is_forms;
 $lobbywatch_is_forms = true;
 
 $edit_header_message = '';
-// $edit_header_message .= ($env !== 'PRODUCTION' ? "<p>Umgebung: <span style=\"background-color:red\">$env</span></p>" : '');
-/*
-$edit_header_message = "<div class=\"simplebox\"><b>Stand (Version $version " . ($deploy_date_short === $build_date_short ? "<span title=\"Generiert und Hochgeladen am\">$deploy_date_short</span>" : "D<span title=\"Hochgeladen am\">$deploy_date_short</span>/G<span title=\"Forumlare generiert am\">$build_date_short</span>") . ")</b>" . ($env !== 'PRODUCTION' ? " <span style=\"background-color:red\">$env</span>" : '') . ": <i>Alle Tabellen können bearbeitet werden.</i>
-<ul>
-<li>Am besten werden zuerst ein, zwei komplette Fälle quer durch alle Tabellen durchgespielt.
-<li>Das Bearbeiten von alten und das Erfassen von neuen Daten sollte systematisch und abgesprochen erfolgen, wegen der grossen Datenmenge und der Neuheit der Eingabeformulare.</ul></div>";
-*/
-
-// $edit_general_hint = '<div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/book_open.png' . /* MIGR util_data_uri('img/icons/book_open.png') .*/ '" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Bitte die Bearbeitungsdokumentation (vor einer Bearbeitung) beachten und bei Unklarheiten anpassen, siehe <a href="http://lobbywatch.ch/wiki/tiki-index.php?page=Datenerfassung&structure=Lobbywatch-Wiki" target="_blank">Wiki Datenbearbeitung</a> und <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell_simplified.pdf">Vereinfachtes Datenmodell</a> (Komplex: <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell_1page.pdf">1 Seite</a> /<a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell.pdf">4 Seiten</a>).</div></div>';
 $edit_general_hint = '';
 
 lobbywatch_language_initialize('de');
 
-// $params = session_get_cookie_params();
-// df($params, "Session params");
-// df(__FILE__);
-// df(dirname(__FILE__));
-// df($_REQUEST, 'request');
-// df($_SERVER, 'server');
-
-//df_clean();
-
 function setupRSS($page, $dataset) {
-  // MIGR $page->GetCaption ()
-//   $title = ucwords ( $page->GetCaption () );
   $title = 'MIGR';
   $table = str_replace ( '`', '', $dataset->GetName () );
   switch ($table) {
@@ -206,8 +177,6 @@ function fillHintParams(Page $page, &$params) {
   $fr_field_names = [];
   $fr_field_descriptions = [];
   $form_translations = [];
-//   df($page->GetGrid()->GetDataset()->GetName(), '$page->GetGrid()->GetDataset()->GetName()');
-//    df($page->GetDataset()->GetName(), '$page->GetDataset()->GetName()');
   $table_name = getTableName($page);
   if ($params == null) {
     $params = [];
@@ -220,14 +189,9 @@ function fillHintParams(Page $page, &$params) {
 
     $minimal_fields[$name] = is_minimal_field($table_name, $name);
 
-//     df("Names: $raw_name -> $name", 'fields');
-//     df($column->GetData(), 'field data');
-//     df($column->GetCaption(), 'field caption');
     if ($column->IsDataColumn()) {
       $field_translation_key = "$table_name.$name";
       $field_name_de = $column->GetCaption();
-//       df("$field_translation_key = $field_name_de", 'field');
-//       $field_name_fr = "$field_name_de FR";
       $field_name_fr = lobbywatch_translate($field_translation_key, null, 'fr', 'forms', $field_translation_key);
       if ($field_name_fr == $field_translation_key || $field_name_fr == '') {
         $field_name_fr = $field_name_de;
@@ -241,7 +205,6 @@ function fillHintParams(Page $page, &$params) {
         $field_hint_fr = '';
       }
       $hint_fr = htmlspecialchars($field_hint_fr);
-      //       df("$table_name.$name.hint = $field_hint_de", 'field');
       $fr_field_descriptions[$name] = "$table_name.$name.hint";
 
       $hints[$name] = ($hint_fr != '' ? "<p>$hint_fr</p><hr>" : '') . "<p>$hint_de</p>" . "<hr><p>DB: $table_name.$name</p>";
@@ -274,30 +237,21 @@ function fillHintParams(Page $page, &$params) {
     $imported_fields = [];
   }
 
-//   df($table_name, '$table_name');
-//   df($params, 'params before');
   $params = array_merge($params, array('Hints' => $hints, 'MinimalFields' => $minimal_fields, 'FrFieldNames' => $fr_field_names, 'FrFieldDescriptions' => $fr_field_descriptions, 'ImportedFields' => $imported_fields));
-
-//   df($params, 'params after');
-//   df($form_translations, 'form translations');
-//   df("\n" . implode("\n", $form_translations) . "\n", 'form translations');
 }
 
 function getTableName(Page $page) {
   return preg_replace('/`/', '', $page->GetDataset()->GetName());
 }
 function is_minimal_field($table, $field) {
-//   df("$table.$field", 'is_minimal_field');
   switch ($table) {
     case 'parlamentarier':
       switch ($field) {
         case 'email':
         case 'geburtstag':
-//         case 'im_rat_seit': is required
         case 'geschlecht':
         case 'kleinbild':
         case 'parlament_biografie_id':
-//         case 'beruf':
           return true;
         default:
           return false;
@@ -330,7 +284,6 @@ function is_minimal_field($table, $field) {
       }
     case 'organisation':
       switch ($field) {
-//         case 'rechtsform': now required
         case 'interessengruppe_id':
           return true;
         default:
@@ -379,17 +332,6 @@ function before_render(Page $page) {
   write_user_last_access($page);
 
   applyDefaultFilters($page);
-
-//   // Fill info hints
-//   $hints = [];
-//   foreach($page->GetGrid()->GetViewColumns() as $column) {
-//     $raw_name = $column->GetName();
-//     $name = preg_replace('/^(.*?_id).*/', '\1', $raw_name);
-//     $name = preg_replace('/_anzeige_name$/', '', $name);
-//     $hints[$name] = htmlspecialchars($column->GetDescription());
-// //      df("Names: $raw_name -> $name");
-//   }
-//   $GLOBALS['customParams'] = array( 'Hints' => $hints);
 }
 
 function custom_set_db_session_parameters($page) {
@@ -411,44 +353,9 @@ function write_user_last_access($page) {
 }
 
 function applyDefaultFilters(Page $page) {
-  // MIGR $page->AdvancedSearchControl start
-//   $sessionParamName = 'alreadyCalledDefaultFilter_' . $page->GetDataset()->GetName();
-// //   df($_SESSION, 'session before');
-// //   df($_POST, 'post before');
-// //   df(GetApplication()->IsSessionVariableSet($sessionParamName), $sessionParamName);
-//   if(!($column = ($page->AdvancedSearchControl->FindSearchColumnByName('bis')))) {
-//     if(!($column = ($page->AdvancedSearchControl->FindSearchColumnByName('im_rat_bis')))) {
-//       // no bis or im_rat_bis column found, return
-//       return false;
-//     }
-//   }
-// //   df($column->IsFilterActive(), 'IsFilterActive' );
-//   if (!GetApplication()->IsSessionVariableSet($sessionParamName) && !$column->GetFilterIndex()) {
-//     $column->SetFilterIndex('IS NULL');
-//     $column->SetApplyNotOperator(false);
-// //     df($column->IsFilterActive(), 'IsFilterActive after' );
-//     $column->SaveSearchValuesToSession();
-//     GetApplication()->SetSessionVariable($page->AdvancedSearchControl->getName() . 'SearchType', 1);
-// //     df($_SESSION, 'session after');
-//     $page->AdvancedSearchControl->ProcessMessages();
-//     GetApplication()->SetSessionVariable($sessionParamName, true);
-//   }
-  // MIGR $page->AdvancedSearchControl end
 }
 
 function add_custom_header(&$page, &$result) {
-//   <script>
-//   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-//     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-//     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-//   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-//   ga('create', 'UA-45624114-1', 'lobbywatch.ch');
-//   ga('send', 'pageview');
-
-//   </script>
-
-//   <meta name="Generator" content="PHP Generator for MySQL (http://sqlmaestro.com)" />
 $result = <<<'EOD'
   <link rel="shortcut icon" href="/favicon.png" type="image/png" />
 
@@ -462,7 +369,6 @@ EOD;
 
 function parlamentarier_update_photo_metadata($page, &$rowData, &$cancel, &$message, $tableName)
 {
-//   df($rowData, 'parlamentarier_update_photo_metadata $rowData');
   if (isset($rowData['photo'])) {
     $file = $rowData['photo'];
   } else {
@@ -511,8 +417,6 @@ function parlamentarier_update_photo_metadata($page, &$rowData, &$cancel, &$mess
  */
 function parlamentarier_remove_old_photo($page, &$rowData, &$cancel, &$message, $tableName)
 {
-//    df($rowData, 'parlamentarier_remove_old_photo $rowData');
-//    df($tableName);
   if (isset($rowData['photo']) && isset($rowData['id'])) {
     $file = $rowData['photo'];
     $id = $rowData['id'];
@@ -527,8 +431,6 @@ function parlamentarier_remove_old_photo($page, &$rowData, &$cancel, &$message, 
 
   $values = [];
   $page->GetConnection()->ExecQueryToArray("SELECT `id`, `photo` FROM $tableName WHERE `id`=$id", $values);
-//   df("SELECT `photo` FROM $tableName WHERE id=$id");
-//   df($values);
   if (count($values) > 0 ) {
     $old_file = $values[0]['photo'];
   } else {
@@ -562,7 +464,6 @@ function parlamentarier_remove_photo($page, &$rowData, &$cancel, &$message, $tab
 
 function symbol_update_metadata($page, &$rowData, &$cancel, &$message, $tableName)
 {
-  //   df($rowData, 'parlamentarier_update_photo_metadata $rowData');
   if (isset($rowData['symbol_abs'])) {
     $file = $rowData['symbol_abs'];
   } else {
@@ -588,8 +489,6 @@ function symbol_update_metadata($page, &$rowData, &$cancel, &$message, $tableNam
 
     $path_parts = pathinfo($file);
 
-    // Remove path, we want it relative
-    //$rowData['symbol_klein'] = $path_parts['basename'];
     // Remove path to files, we want it relative
     $rowData['symbol_klein_rel'] = preg_replace('/^.*?files\//', '', $rowData['symbol_klein_rel']);
   } else {
@@ -605,8 +504,6 @@ function symbol_update_metadata($page, &$rowData, &$cancel, &$message, $tableNam
 
 function symbol_remove_old($page, &$rowData, &$cancel, &$message, $tableName)
 {
-  //    df($rowData, 'parlamentarier_remove_old_photo $rowData');
-  //    df($tableName);
   if (isset($rowData['symbol_rel']) && isset($rowData['id'])) {
     $file = $rowData['symbol_rel'];
     $small_file = $rowData['symbol_klein_rel'];
@@ -622,8 +519,6 @@ function symbol_remove_old($page, &$rowData, &$cancel, &$message, $tableName)
 
   $values = [];
   $page->GetConnection()->ExecQueryToArray("SELECT `id`, `symbol_rel` FROM $tableName WHERE `id`=$id", $values);
-  //   df("SELECT `photo` FROM $tableName WHERE id=$id");
-  //   df($values);
   if (count($values) > 0 ) {
     $old_file = $values[0]['symbol_rel'];
     $small_old_file= !empty($values[0]['symbol_klein_rel']) ? $values[0]['symbol_klein_rel'] : null;
@@ -649,12 +544,6 @@ function symbol_remove_old($page, &$rowData, &$cancel, &$message, $tableName)
 
 /**
  * Used on delete.
- *
- * @param unknown $page
- * @param unknown $rowData
- * @param unknown $cancel
- * @param unknown $message
- * @param unknown $tableName
  */
 function symbol_remove($page, &$rowData, &$cancel, &$message, $tableName) {
   $target = $rowData['symbol_rel'];
@@ -720,7 +609,6 @@ function check_von_bis_date($von, $bis, &$cancel, &$message) {
 
 function check_organisation_interessengruppe_order($page, &$rowData, &$cancel, &$message, $tableName)
 {
-//   df($rowData, 'check_organisation_interessengruppe_order $rowData');
 
   if ((isset($rowData['interessengruppe2_id']) && !isset($rowData['interessengruppe_id'])) ||
     (isset($rowData['interessengruppe3_id']) && !isset($rowData['interessengruppe2_id']))) {
@@ -732,23 +620,12 @@ function check_organisation_interessengruppe_order($page, &$rowData, &$cancel, &
 
 function clean_fields(/*$page,*/ &$rowData /*, &$cancel, &$message, $tableName*/)
 {
-//   df($rowData);
   // foreach($rowData as $name => &$value) Does not work!
   foreach($rowData as $name => $value) {
     if (is_string($value)) {
-// //       df($value, "Check $name");
-//       // Normalize Unicode/UTF-8, e.g. a? ? ä, U+0061 U+0308 ? U+00E4
-//       $cleaned = Normalizer::normalize($value, Normalizer::FORM_C);
-//       // replace typographic chars
-//       $cleaned = preg_replace('/[«»“”„]/ui', '"', $cleaned);
-//       $cleaned = preg_replace('/[`‘’‚]/ui', "'", $cleaned);
-//       $cleaned = trim($cleaned);
-      // $rowData[$name] = $cleaned;
       $rowData[$name] = clean_str($value);
     }
   }
-//   unset($value);
-//   df($rowData);
 }
 
 // MIGR delete, not used anymore, see customGetPageInfos() and globalOnCustomizePageList()
@@ -760,10 +637,6 @@ function add_more_navigation_links(&$result) {
   $result->AddPage(new PageLink('<span class="wiki">Wiki</span>', '/wiki', 'Wiki', false, false, 'Links'));
   $result->AddPage(new PageLink('<span class="kommissionen">Kommissionen</span>', '/de/daten/kommission', 'Kommissionen', false, false, 'Links'));
   $result->AddPage(new PageLink('<span class="auswertung"><s>Auswertung</s></span>', $GLOBALS['env_dir'] . 'auswertung', 'Auswertung ' . $GLOBALS['env'] , false, false, 'Links'));
-//   $result->AddPage(new PageLink('<span class="state">Stand SGK</span>', 'anteil.php?option=kommission&id=1&id2=47', 'Stand SGK', false, true, 'Links'));
-//   $result->AddPage(new PageLink('<span class="state">Stand UREK</span>', 'anteil.php?option=kommission&id=3&id2=48', 'Stand UREK', false, false, 'Links'));
-//   $result->AddPage(new PageLink('<span class="state">Stand WAK</span>', 'anteil.php?option=kommission&id=11&id2=52', 'Stand WAK', false, false, 'Links'));
-//   $result->AddPage(new PageLink('<span class="state">Stand SiK</span>', 'anteil.php?option=kommission&id=7&id2=50', 'Stand Sik', false, false, 'Links'));
   $result->AddPage(new PageLink('<span class="state">Erstellungsanteil</span>', 'anteil.php?option=erstellungsanteil', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false, 'Links'));
   $result->AddPage(new PageLink('<span class="state">Bearbeitungsanteil</span>', 'anteil.php?option=bearbeitungsanteil', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false, 'Links'));
   $result->AddPage(new PageLink('<span class="state">Erstellungsanteil (Zeitraum)</span>', 'anteil.php?option=erstellungsanteil-periode', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false, 'Links'));
@@ -810,13 +683,10 @@ class PrivateFileDownloadHTTPHandler extends AbstractHTTPHandler
       return false;
     }
     $this->dataset->Close();
-    //df($private_file, '$private_file');
 
     header('Content-type: ' . FormatDatasetFieldsTemplate($this->dataset, $this->contentType));
     if ($this->forceDownload)
       header('Content-Disposition: attachment; filename="' . FormatDatasetFieldsTemplate($this->dataset, $private_file_name) . '"');
-
-//     echo $result;
 //     http://ch1.php.net/file_get_contents
 
 //     https://api.drupal.org/api/drupal/includes!file.inc/function/file_transfer/7
@@ -863,38 +733,6 @@ function DisplayTemplateSimple($TemplateName, $InputObjects, $InputValues, $disp
   $rendered = $smarty->fetch($TemplateName, null, null, $display);
 }
 
-// function mandateList($con, $zutrittsberechtigte_id) {
-//   $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion,
-// GROUP_CONCAT(DISTINCT
-//     CONCAT('<li>', organisation.anzeige_name,
-//     IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(mandat.art, 1)), SUBSTRING(mandat.art, 2)),
-//     IF(mandat.funktion_im_gremium IS NULL OR TRIM(mandat.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(mandat.funktion_im_gremium, 1)), SUBSTRING(mandat.funktion_im_gremium, 2)))),
-//     IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', mandat.beschreibung, '&quot;</small>')))
-//     ORDER BY organisation.anzeige_name
-//     SEPARATOR ' '
-// ) mandate
-// FROM v_zutrittsberechtigung zutrittsberechtigung
-// LEFT JOIN v_mandat mandat
-//   ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id AND mandat.bis IS NULL
-// LEFT JOIN v_organisation organisation
-//   ON mandat.organisation_id = organisation.id
-// WHERE
-//   zutrittsberechtigung.bis IS NULL
-//   AND zutrittsberechtigung.id=:id
-// GROUP BY zutrittsberechtigung.id;";
-//
-//   $result = [];
-//   $sth = $con->prepare($sql);
-//   $sth->execute(array(':id' => $zutrittsberechtigte_id));
-//   $result = $sth->fetchAll();
-//
-//   if (!$result) {
-//     return '<p>keine</p>';
-//   }
-//
-//   return "<ul>\n" . $result[0]['mandate'] . "\n</ul>";
-// }
-
 function getFullUsername($user) {
   switch(strtolower($user)) {
   	case 'otto' :
@@ -914,38 +752,12 @@ function getFullUsername($user) {
   }
 }
 
-/*function getDateTime($value) {
-  if (isset($value))
-    return SMDateTime::Parse($value, '%Y-%m-%d %H:%M:%S');
-  else
-    return null;
-}
-
-function getDate(&$value) {
-  if (isset($value))
-    return SMDateTime::Parse($value, '%Y-%m-%d');
-  else
-    return null;
-}
-
-function getTime(&$value) {
-  if (isset($value))
-    return SMDateTime::Parse($value, '%H:%M:%S');
-  else
-    return null;
-}*/
-
 function getTimestamp($date_str) {
   return SMDateTime::Parse($date_str, 'Y-m-d H:i:s')->GetTimestamp();
 }
 
 /**
  * Set background-color if farbcode is set.
-
- * @param unknown $table_name
- * @param unknown $rowData farbcode
- * @param unknown $rowCellStyles
- * @param unknown $rowStyles
  */
 function customDrawRowFarbcode($table_name, $rowData, &$rowCellStyles, &$rowStyles, &$rowClasses = '', &$cellClasses = []) {
   if (isset($rowData['farbcode'])) {
@@ -956,10 +768,7 @@ function customDrawRowFarbcode($table_name, $rowData, &$rowCellStyles, &$rowStyl
 /**
  * Changes styles of cells.
  *
- * @param unknown $table_name
  * @param unknown $rowData eingabe_abgeschlossen_datum, kontrolliert_datum, freigabe_datum, autorisierung_verschickt_datum, autorisiert_datum, kontrolliert_visa, eingabe_abgeschlossen_visa, im_rat_bis, sitzplatz, email, geburtstag, im_rat_bis, geschlecht, kleinbild, parlament_biografie_id, beruf, farbcode
- * @param unknown $rowCellStyles
- * @param unknown $rowStyles
  */
 function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles, &$rowClasses = '', &$cellClasses = []) {
 
@@ -971,10 +780,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles, &$ro
 /**
  * Changes styles of cells.
  *
- * @param unknown $table_name
  * @param unknown $rowData eingabe_abgeschlossen_datum, kontrolliert_datum, freigabe_datum, autorisierung_verschickt_datum, autorisiert_datum, kontrolliert_visa, eingabe_abgeschlossen_visa, im_rat_bis, sitzplatz, email, geburtstag, im_rat_bis, geschlecht, kleinbild, parlament_biografie_id, beruf, farbcode
- * @param unknown $rowCellStyles
- * @param unknown $rowStyles
  */
 function drawWorkflowStyles($table_name, $rowData, &$rowCellStyles, &$rowStyles, &$rowClasses, &$cellClasses) {
   $workflowStateColors = [];
@@ -997,10 +803,6 @@ function drawWorkflowStyles($table_name, $rowData, &$rowCellStyles, &$rowStyles,
 
   $workflowStateColors = getSettingValue('arbeitsablaufStatusFarben', true, $workflowStateColors);
 
-  //   df($workflowStateColors, '$workflowStateColors');
-
-  //   df(json_encode($workflowStateColors), '$workflowStateColors');
-
   $update_threshold_setting = getSettingValue('ueberarbeitungsDatumSchwellwert', false, '2012-01-01');
   $update_threshold = SMDateTime::Parse($update_threshold_setting, 'Y-m-d');
   $update_threshold_ts = $update_threshold->GetTimestamp();
@@ -1012,52 +814,25 @@ function drawWorkflowStyles($table_name, $rowData, &$rowCellStyles, &$rowStyles,
   $completeness_styles = '';
 
   if ($table_name === 'parlamentarier' || $table_name === 'person') {
-    //df($rowData, '$rowData');
-
-    //df(getTimestamp($rowData['freigabe_datum']), 'getTimestamp($rowData[freigabe_datum])');
-
-    //     df(is_object($rowData['freigabe_datum']), 'is_object($rowData[freigabe_datum]');
-    //     df(is_string($rowData['freigabe_datum']), 'is_string($rowData[freigabe_datum])');
-    //     df(gettype($rowData['freigabe_datum']), 'gettype($rowData[freigabe_datum])');
-
     // Check inconsistencies
     // TODO check ranges
     // TODO do not check only on !getTimestamp, use range
     if ((getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts
         && (!getTimestamp($rowData['autorisierung_verschickt_datum'])
-        //               || !getTimestamp($rowData['kontrolliert_datum'])
             || !getTimestamp($rowData['eingabe_abgeschlossen_datum'])))
         || (getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts
             && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
             && (
-            //               !getTimestamp($rowData['kontrolliert_datum'])
-    //               ||
                 !getTimestamp($rowData['eingabe_abgeschlossen_datum'])))
         || (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
-        //           && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
-    //           && !(getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts)
             && (!getTimestamp($rowData['eingabe_abgeschlossen_datum']
-            //           || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) < 0))
                 ))
             )
         || (!empty($rowData['autorisiert_datum']) && getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts
-        //           && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
-    //           && !(getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts)
             && (!getTimestamp($rowData['eingabe_abgeschlossen_datum']
-            //              || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) < $update_threshold_ts)
-    //           || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) < 0))
                 ))
         )
       ) {
-        //       df($rowData, '$rowData');
-        //       df(getTimestamp($rowData['autorisierung_verschickt_datum']), 'getTimestamp($rowData[autorisierung_verschickt_datum]');
-        //       df(!getTimestamp($rowData['autorisierung_verschickt_datum']), '!getTimestamp($rowData[autorisierung_verschickt_datum]');
-        //       df(getTimestamp($rowData['kontrolliert_datum']), 'getTimestamp($rowData[kontrolliert_datum]');
-        //       df(!getTimestamp($rowData['kontrolliert_datum']), '!getTimestamp($rowData[kontrolliert_datum]');
-        //       df(getTimestamp($rowData['eingabe_abgeschlossen_datum']), 'getTimestamp($rowData[eingabe_abgeschlossen_datum]');
-        //       df(!getTimestamp($rowData['eingabe_abgeschlossen_datum']), '!getTimestamp($rowData[eingabe_abgeschlossen_datum]');
-
-        //       $workflow_styles .= 'background-color: red;';
         $workflow_styles .= 'background-image: url(' . util_data_uri('img/icons/warning.gif') . '); background-repeat: no-repeat;';
 
         }
@@ -1084,20 +859,12 @@ function drawWorkflowStyles($table_name, $rowData, &$rowCellStyles, &$rowStyles,
             && !preg_match('/background-image/',$workflow_styles)
             && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 3600
                 || ($rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa'] && getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 0)
-                //     && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 0
-                    //       && $rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa']
                 )
             ) {
-              //$workflow_styles .= 'border-color: green; border-width: 3px;';
               $workflow_styles .= 'background-image: url(' . util_data_uri('img/tick.png') . '); background-repeat: no-repeat; background-position: bottom right;';
-              //           $workflow_styles .= 'background-image: url(img/icons/fugue/eye.png); background-repeat: no-repeat; background-position: bottom right;';
             } elseif (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
                 && !preg_match('/background-image/',$workflow_styles)
-                //     && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 3600
-                    //       || $rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa'])
                 ) {
-                  //$workflow_styles .= 'border-color: green; border-width: 3px;';
-                  //           $workflow_styles .= 'background-image: url(img/icons/fugue/eye-half.png); background-repeat: no-repeat; background-position: bottom right;';
                   $workflow_styles .= 'background-image: url(' . util_data_uri('img/tick-small-red.png') . '); background-repeat: no-repeat; background-position: bottom right;';
             }
 
@@ -1131,12 +898,11 @@ function drawWorkflowStyles($table_name, $rowData, &$rowCellStyles, &$rowStyles,
                 $completeness_styles .= 'background-image: url(' . util_data_uri('img/icons/fugue/user--exclamation.png') . '); background-repeat: no-repeat; background-position: bottom right;';
               } // else nothing
 
-              if (/*isset($rowData['sitzplatz']) &&*/ isset($rowData['email']) && isset($rowData['geburtstag']) && isset($rowData['im_rat_seit']) && isset($rowData['geschlecht']) && isset($rowData['kleinbild']) && isset($rowData['parlament_biografie_id']) && isset($rowData['beruf']) && $zb_state) {
+              if (isset($rowData['email']) && isset($rowData['geburtstag']) && isset($rowData['im_rat_seit']) && isset($rowData['geschlecht']) && isset($rowData['kleinbild']) && isset($rowData['parlament_biografie_id']) && isset($rowData['beruf']) && $zb_state) {
                 $completeness_styles .= 'background-color: greenyellow;';
-              } elseif (/*isset($rowData['sitzplatz']) ||*/ isset($rowData['email']) || isset($rowData['geburtstag']) || isset($rowData['im_rat_seit']) || isset($rowData['geschlecht']) || isset($rowData['kleinbild']) || isset($rowData['parlament_biografie_id']) || isset($rowData['beruf'])){
+              } elseif (isset($rowData['email']) || isset($rowData['geburtstag']) || isset($rowData['im_rat_seit']) || isset($rowData['geschlecht']) || isset($rowData['kleinbild']) || isset($rowData['parlament_biografie_id']) || isset($rowData['beruf'])){
                 $completeness_styles .= 'background-color: orange;';
               }
-              //checkAndMarkColumnNotNull('sitzplatz', $rowData, $rowCellStyles);
               checkAndMarkColumnNotNull('email', $rowData, $rowCellStyles);
               checkAndMarkColumnNotNull('geburtstag', $rowData, $rowCellStyles);
               checkAndMarkColumnNotNull('im_rat_seit', $rowData, $rowCellStyles);
@@ -1154,25 +920,15 @@ function drawWorkflowStyles($table_name, $rowData, &$rowCellStyles, &$rowStyles,
               checkAndMarkColumnNotNull('email', $rowData, $rowCellStyles);
               checkAndMarkColumnNotNull('geschlecht', $rowData, $rowCellStyles);
               checkAndMarkColumnNotNull('beruf', $rowData, $rowCellStyles);
-              //       checkAndMarkColumnNotNull('funktion', $rowData, $rowCellStyles);
             }
 
             // Write styles
             $rowCellStyles['nachname'] = $completeness_styles;
             $rowCellStyles['id'] = $workflow_styles;
 
-            //     df($rowCellStyles, '$rowCellStyles ' . $rowData['nachname'] . ' ' .$rowData['vorname']);
   } else if($table_name === 'translation_source' || $table_name === 'translation_target') { // BIG IF ELSE not parlamentarier or person
     // do nothing
   } else { // BIG IF ELSE not parlamentarier or person
-    //df($rowData, '$rowData');
-
-    //df(getTimestamp($rowData['freigabe_datum']), 'getTimestamp($rowData[freigabe_datum])');
-
-    //     df(is_object($rowData['freigabe_datum']), 'is_object($rowData[freigabe_datum]');
-    //     df(is_string($rowData['freigabe_datum']), 'is_string($rowData[freigabe_datum])');
-    //     df(gettype($rowData['freigabe_datum']), 'gettype($rowData[freigabe_datum])');
-
     $threshold_apply_list = array('interessenbindung', 'mandat');
     if (!in_array($table_name, $threshold_apply_list)) {
       $update_threshold_ts = 1; // Do not use update threshold for orgnisations
@@ -1185,24 +941,10 @@ function drawWorkflowStyles($table_name, $rowData, &$rowCellStyles, &$rowStyles,
             && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
             && !getTimestamp($rowData['eingabe_abgeschlossen_datum']))
         || (!empty($rowData['autorisiert_datum']) && getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts
-        //           && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
-    //           && !(getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts)
             && (!getTimestamp($rowData['eingabe_abgeschlossen_datum']
-            //              || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) < $update_threshold_ts)
-    //           || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) < 0))
                 ))
         )
       ) {
-        //       df($rowData, '$rowData');
-        //       df(getTimestamp($rowData['autorisierung_verschickt_datum']), 'getTimestamp($rowData[autorisierung_verschickt_datum]');
-        //       df(!getTimestamp($rowData['autorisierung_verschickt_datum']), '!getTimestamp($rowData[autorisierung_verschickt_datum]');
-        //       df(getTimestamp($rowData['kontrolliert_datum']), 'getTimestamp($rowData[kontrolliert_datum]');
-        //       df(!getTimestamp($rowData['kontrolliert_datum']), '!getTimestamp($rowData[kontrolliert_datum]');
-        //       df(getTimestamp($rowData['eingabe_abgeschlossen_datum']), 'getTimestamp($rowData[eingabe_abgeschlossen_datum]');
-        //       df($update_threshold_ts, '$update_threshold_ts');
-        //       df(!getTimestamp($rowData['eingabe_abgeschlossen_datum']), '!getTimestamp($rowData[eingabe_abgeschlossen_datum]');
-
-        //           $workflow_styles .= 'background-color: red;';
         $workflow_styles .= 'background-image: url(' . util_data_uri('img/icons/warning.gif') . '); background-repeat: no-repeat;';
         }
         // Color states
@@ -1210,8 +952,6 @@ function drawWorkflowStyles($table_name, $rowData, &$rowCellStyles, &$rowStyles,
         //else
         if (getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
           $workflow_styles .= "background-color: {$workflowStateColors['freigabe']};";
-            //     } else if (getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts) {
-            //       $rowCellStyles['id'] .= 'background-color: lightblue;';
         } else if (!empty($rowData['autorisiert_datum']) && getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts) {
           $workflow_styles .= "background-color: {$workflowStateColors['autorisiert']};";
         } else if (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts) {
@@ -1224,20 +964,12 @@ function drawWorkflowStyles($table_name, $rowData, &$rowCellStyles, &$rowStyles,
             && !preg_match('/background-image/',$workflow_styles)
             && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 3600
                 || ($rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa'] && getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 0)
-                //     && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 0
-                    //       && $rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa']
                 )
             ) {
-              //$workflow_styles .= 'border-color: green; border-width: 3px;';
               $workflow_styles .= 'background-image: url(' . util_data_uri('img/tick.png') . '); background-repeat: no-repeat; background-position: bottom right;';
-              //           $workflow_styles .= 'background-image: url(img/icons/fugue/eye.png); background-repeat: no-repeat; background-position: bottom right;';
             } elseif (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
                 && !preg_match('/background-image/', $workflow_styles)
-                //     && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 3600
-                    //       || $rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa'])
                 ) {
-                  //$workflow_styles .= 'border-color: green; border-width: 3px;';
-                  //           $workflow_styles .= 'background-image: url(img/icons/fugue/eye-half.png); background-repeat: no-repeat; background-position: bottom right;';
                   $workflow_styles .= 'background-image: url(' . util_data_uri('img/tick-small-red.png') . '); background-repeat: no-repeat; background-position: bottom right;';
             }
 
@@ -1320,11 +1052,8 @@ function drawWorkflowStyles($table_name, $rowData, &$rowCellStyles, &$rowStyles,
               }
               checkAndMarkColumnNotNull('kommission_id', $rowData, $rowCellStyles);
             } elseif ($table_name === 'kommission') {
-              //       df(in_kommission_anzahl($rowData['id'])['num'], 'in_kommission_anzahl($rowData[id][num]');
-              //       if (!isset($rowData['anzahl_nationalraete']) || !isset($rowData['anzahl_staenderaete'])) {
               if (!isset($rowData['anzahl_mitglieder'])) {
                 $completeness_styles .= 'background-color: #FF1493;';
-                //       } elseif ((in_kommission_anzahl($rowData['id'])['NR']['num'] != $rowData['anzahl_nationalraete'] || in_kommission_anzahl($rowData['id'])['SR']['num'] != $rowData['anzahl_staenderaete']) /*&& $rowData['typ'] == 'kommission'*/) {
               } elseif ((in_kommission_anzahl($rowData['id'])['num'] != $rowData['anzahl_mitglieder']) /*&& $rowData['typ'] == 'kommission'*/) {
                 $completeness_styles .= 'background-color: red;'; // deep pink
               } elseif (isset($rowData['parlament_url'])) {
@@ -1369,8 +1098,6 @@ function drawWorkflowStyles($table_name, $rowData, &$rowCellStyles, &$rowStyles,
                     $rowCellStyles['freigabe_datum'] = $completeness_styles;
                 }
               }
-
-              //     df($rowCellStyles, '$rowCellStyles ' . $rowData['nachname'] . ' ' .$rowData['vorname']);
             }
 
 }
@@ -1417,7 +1144,6 @@ function zutrittsberechtigung_state($parlamentarier_id) {
     $zbs = $sth->fetchAll();
 
     // Connection will automatically be closed at the end of the request.
-//     $eng_con->Disconnect();
 
     foreach($zbs as $zb) {
       $zb_state[$zb['parlamentarier_id']][] = $zb;
@@ -1442,14 +1168,10 @@ function zutrittsberechtigung_state($parlamentarier_id) {
     $zbs = $sth->fetchAll();
 
     // Connection will automatically be closed at the end of the request.
-//     $eng_con->Disconnect();
 
     $zb_state[$parlamentarier_id] = $zbs;
 
-//     df($zb_state, '$zb_state');
   }
-
-//   df($zb_state[$parlamentarier_id], '$zb_state[$parlamentarier_id]');
 
   return $zb_state[$parlamentarier_id];
 }
@@ -1471,12 +1193,10 @@ function parlamentarier_state($parlamentarier_id) {
     $zbs = $sth->fetchAll();
 
     // Connection will automatically be closed at the end of the request.
-//     $eng_con->Disconnect();
 
     foreach($zbs as $zb) {
       $parlam_state[$zb['parlamentarier_id']] = $zb;
     }
-//     df($parlam_state, '$parlam_state');
   }
 
   // Fetch a single parlamentarier, should not be called anymore
@@ -1496,14 +1216,10 @@ function parlamentarier_state($parlamentarier_id) {
     $zb = $sth->fetch();
 
     // Connection will automatically be closed at the end of the request.
-//     $eng_con->Disconnect();
 
     $parlam_state[$parlamentarier_id] = $zb;
 
-//     df($parlam_state, '$parlam_state');
   }
-
-//   df($parlam_state[$parlamentarier_id], '$parlam_state[$parlamentarier_id]');
 
   return $parlam_state[$parlamentarier_id];
 }
@@ -1520,8 +1236,6 @@ function in_kommission_anzahl($kommission_id, $rat = null) {
   // Load all zutrittsberechtige on first call
   if (!isset($cache)) {
     // Fetch all the first time
-//     $eng_con = getDBConnection();
-//     $con = $eng_con->GetConnectionHandle();
     // TODO close connection
     $sql = "SELECT in_kommission.kommission_id, count( DISTINCT in_kommission.parlamentarier_id) as num, in_kommission.kommission_abkuerzung, in_kommission.kommission_name, in_kommission.kommission_typ, in_kommission.rat
   FROM v_in_kommission in_kommission
@@ -1529,52 +1243,14 @@ function in_kommission_anzahl($kommission_id, $rat = null) {
 . ( $rat ? " AND in_kommission.rat='$rat'" : '')
 . "  GROUP BY in_kommission.kommission_id, in_kommission.rat;";
 
-//     $zbs = [];
-//     $sth = $con->prepare($sql);
-//     $sth->execute([]);
-//     $zbs = $sth->fetchAll();
-
     $zbs = lobbywatch_forms_db_query($sql, [], array('fetch' => PDO::FETCH_ASSOC))->fetchAll();
 
     // Connection will automatically be closed at the end of the request.
-//     $eng_con->Disconnect();
 
     foreach($zbs as $zb) {
-//       $cache[$zb['kommission_id']][$zb['rat']] = $zb;
       $cache[$zb['kommission_id']] = $zb;
     }
-    //     df($cache, '$cache');
-//   df($cache, 'cache');
   }
-
-//   // Fetch a single parlamentarier, should not be called anymore
-//   if (!isset($cache[$kommission_id])) {
-//     $eng_con = getDBConnection();
-//     $con = $eng_con->GetConnectionHandle();
-//     // TODO close connection
-//     $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.eingabe_abgeschlossen_datum, zutrittsberechtigung.kontrolliert_datum, zutrittsberechtigung.autorisiert_datum, zutrittsberechtigung.freigabe_datum
-//   FROM v_zutrittsberechtigung zutrittsberechtigung
-//   WHERE
-//     zutrittsberechtigung.parlamentarier_id=:id
-//     AND zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW();";
-
-//     $zbs = [];
-//     $sth = $con->prepare($sql);
-//     $sth->execute(array(':id' => $parlamentarier_id));
-//     $zbs = $sth->fetchAll();
-
-//     $eng_con->Disconnect();
-
-//     $cache[$parlamentarier_id] = $zbs;
-
-//     //     df($cache, '$cache');
-//   }
-
-//  df($cache, '$cache');
-//  df($cache[$kommission_id], '$cache[$kommission_id]');
-
-//   df($kommission_id, 'kommission_id');
-
   return (isset($cache[$kommission_id]) ? $cache[$kommission_id] : 0);
 }
 
@@ -1605,14 +1281,10 @@ function globalOnBeforeUpdate($page, &$rowData, &$cancel, &$message, $tableName)
   $userName = $page->GetEnvVar('CURRENT_USER_NAME');
   $datetime = $page->GetEnvVar('CURRENT_DATETIME');
 
-  //if ($userName != 'admin')
-
-  //$rowData['created_visa'] = $userName;
-  //$rowData['created_date'] = $datetime;
   $rowData['updated_visa'] = strtolower($userName);
   $rowData['updated_date'] = $datetime;
 
-  clean_fields(/*$page,*/ $rowData/*, $cancel, $message, $tableName*/);
+  clean_fields($rowData);
 }
 
 function globalOnBeforeDelete($page, &$rowData, &$cancel, &$message, $tableName) {
@@ -1636,15 +1308,13 @@ function globalOnBeforeInsert($page, &$rowData, &$cancel, &$message, $tableName)
   $userName = $page->GetEnvVar('CURRENT_USER_NAME');
   $datetime = $page->GetEnvVar('CURRENT_DATETIME');
 
-  //if ($userName != 'admin')
-
   $rowData['created_visa'] = strtolower($userName);
   $rowData['created_date'] = $datetime;
 
   $rowData['updated_visa'] = strtolower($userName);
   $rowData['updated_date'] = $datetime;
 
-  clean_fields(/*$page,*/ $rowData/*, $cancel, $message, $tableName*/);
+  clean_fields($rowData);
 }
 
 /**
@@ -1664,10 +1334,10 @@ function isFullWorkflowUser() {
   // 5, // rebecca
   // 6, // bane
   18, // philippe
-  37, // Graf, Céline Graf
+  // 37, // Graf, Céline Graf
   // 63, // Flavia, Von Gunten
   // 67, // Alexandra Baertsch
-  69, // Samuel Meier
+  // 69, // Samuel Meier
   71, // Strässle Fabian
   ), false);
 }
@@ -1796,44 +1466,29 @@ function lobbywatch_set_language($langcode = 'de') {
 // customOnCustomRenderColumn('table', $fieldName, $fieldData, $rowData, $customText, $handled);
 function customOnCustomRenderColumn($table, $fieldName, $fieldData, $rowData, &$customText, &$handled) {
 // MIGR OnCustomRenderColumn() start
-//   df($fieldName, '$fieldName');
-//   df($fieldData, 'fieldData');
 
   $update_threshold_setting = getSettingValue('ueberarbeitungsDatumSchwellwert', false, '2012-01-01');
   $update_threshold = SMDateTime::Parse($update_threshold_setting, 'Y-m-d');
   $update_threshold_ts = $update_threshold->GetTimestamp();
   $now_ts = time();
 
-//   $update_threshold_ts = $now_ts;
-
   // Hide edit and delete button if already controlled
   if (($fieldName == 'edit' || $fieldName == 'delete') && (in_array($table, array(/*'parlamentarier',*/ 'zutrittsberechtigung', 'interessenbindung', 'mandat', 'organisation_beziehung', 'in_kommission'))) && !isFullWorkflowUser() && isset($rowData['kontrolliert_datum'])
       && getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts) {
-//     df($rowData['kontrolliert_datum'], "rowData['kontrolliert_datum']");
     $customText = '';
     $handled = true;
   }
 
   $organisation_beziehung_art_map = array('arbeitet fuer' => lt('arbeitet für'),'mitglied von' => lt('Mitglied von'),'tochtergesellschaft von' => '<abbr title="'. lt('z.B. Tochtergesellschaft o. Zweigniederlassung') . '">' . lt('Suborganisation von') . '</abbr>','partner von' => lt('Partner von'),'beteiligt an' => lt('beteiligt an')); // TODO lang
-//   df($table, '$table');
-//   df($fieldName, '$fieldName');
-//   df($fieldData, '$fieldData');
   if ($table == 'organisation_beziehung' && $fieldName == 'art' && array_key_exists($fieldData, $organisation_beziehung_art_map)) {
     $customText = $organisation_beziehung_art_map[$fieldData];
-//     df($customText, '$customText');
     $handled = true;
   } else if ($table == 'parlamentarier' && $fieldName == 'parlament_interessenbindungen') {
     $id = $rowData['id'];
-//     $customText = '<span class="more_hint"><a data-original-title="" href="parlamentarier.php?hname=parlamentarierGrid_parlament_interessenbindungen_handler_view&amp;pk0=' . $id . '" onclick="javascript: pwin = window.open("",null,"height=300,width=400,status=yes,resizable=yes,toolbar=no,menubar=no,location=no,left=150,top=200,scrollbars=yes"); pwin.location="parlamentarier.php?hname=parlamentarierGrid_parlament_interessenbindungen_handler_view&amp;pk0=' . $id . '"; return false;">Show</a></span>';
-//     $customText = 'Test ' . $id;
-//     $handled = true;
   } else if ($table == 'organisation' && $fieldName == 'rechtsform_handelsregister') {
     $id = $rowData['id'];
     $customText = "<abbr title='" . _lobbywatch_get_rechtsform_handelsregister_code_name($fieldData) . "'>$fieldData</abbr>";
     $handled = true;
-//   } else if ($table == 'organisation' && $fieldName == 'uid') {
-//     $customText = "<span title='Link zum Handelsregister'>$fieldData</span>";
-//     $handled = true;
   }
   // MIGR OnCustomRenderColumn() end
 }
@@ -2096,19 +1751,15 @@ function globalOnPreparePage(Page $page) {
       $page->setDescription("${edit_header_message}Tabelle mit Daten zu den Kantonen. Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint");
       break;
     case 'settings':
-//       $page->setDetailedDescription($general_detailed_desc);
       $page->setDescription("${edit_header_message}Einstellungen für Lobbywatch. Die Funktionsweise kann gesteuert werden. Beispielsweise können Angaben zum Arbeitsablauf gesetzt werden.$edit_general_hint");
       break;
     case 'settings_category':
-//       $page->setDetailedDescription($general_detailed_desc);
       $page->setDescription("${edit_header_message}Die Einstellungsparameter können kategorisiert und gruppiert werden.$edit_general_hint");
       break;
     case 'translation_source':
-//       $page->setDetailedDescription($general_detailed_desc);
       $page->setDescription("${edit_header_message}Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. In dieser Tabelle stehen die deutschen Wörter.$edit_general_hint");
       break;
     case 'translation_target':
-//       $page->setDetailedDescription($general_detailed_desc);
       $page->setDescription("${edit_header_message}Übersetzungen der von Lobbywatch verwendeten Wörter.$edit_general_hint");
       break;
     case 'user':
@@ -2116,11 +1767,8 @@ function globalOnPreparePage(Page $page) {
       $page->setDescription("${edit_header_message}Tabelle der DB-Bearbeitungsbenutzer.$edit_general_hint");
       break;
     case 'q_last_updated_tables':
-//       $page->setDetailedDescription('Zeigt die letzten Änderungen der Tabellen an.');
       $page->setDescription("${edit_header_message}Zeigt die letzten Änderungen der Tabellen an.$edit_general_hint");
       break;
-//     default:
-//       df($page->GetPageId();
     }
 }
 
@@ -2134,13 +1782,9 @@ function customOnPreparePage(Page $page) {
  * @param PageList $pageList
  */
 function globalOnCustomizePageList(CommonPage $page, PageList $pageList) {
-//   df($pageList, '$pageList');
-  // $pageList->AddGroup('Auswertungen');
-
   $pageList->AddPageAt(new PageLink('<span class="overview">Vergütungsübersicht</span>', 'parlamentarier_overview.php', 'Parlamentarierübersicht auf einer Seite mit den Interessenbindungen inkl. Vergütung', false, false, 'Auswertungen'), 0);
   $pageList->AddPageAt(new PageLink('<span class="state">Erstellungsanteil</span>', 'anteil.php?option=erstellungsanteil', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false, 'Auswertungen'), 1);
   $pageList->AddPageAt(new PageLink('<span class="state">Bearbeitungsanteil</span>', 'anteil.php?option=bearbeitungsanteil', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false, 'Auswertungen'), 2);
-  // $pageList->AddPage(new PageLink('<span class="auswertung"><s>Auswertung</s></span>', $GLOBALS['env_dir'] . 'auswertung', 'Auswertung ' . $GLOBALS['env'] , false, false, 'Auswertungen'));
 
   $pageList->AddGroup('Links');
 
@@ -2148,55 +1792,22 @@ function globalOnCustomizePageList(CommonPage $page, PageList $pageList) {
   $pageList->AddPage(new PageLink('<span class="website">CMS</span>', '/', 'CMS', false, false, 'Links'));
   $pageList->AddPage(new PageLink('<span class="wiki">Wiki</span>', '/wiki', 'Wiki', false, false, 'Links'));
   $pageList->AddPage(new PageLink('<span class="kommissionen">Kommissionen</span>', '/de/daten/kommission', 'Kommissionen', false, false, 'Links'));
-  //   $pageList->AddPage(new PageLink('<span class="state">Stand SGK</span>', 'anteil.php?option=kommission&id=1&id2=47', 'Stand SGK', false, true, 'Links'));
-  //   $pageList->AddPage(new PageLink('<span class="state">Stand UREK</span>', 'anteil.php?option=kommission&id=3&id2=48', 'Stand UREK', false, false, 'Links'));
-  //   $pageList->AddPage(new PageLink('<span class="state">Stand WAK</span>', 'anteil.php?option=kommission&id=11&id2=52', 'Stand WAK', false, false, 'Links'));
-  //   $pageList->AddPage(new PageLink('<span class="state">Stand SiK</span>', 'anteil.php?option=kommission&id=7&id2=50', 'Stand Sik', false, false, 'Links'));
-//   $pageList->AddPage(new PageLink('<span class="state">Erstellungsanteil (Zeitraum)</span>', 'anteil.php?option=erstellungsanteil-periode', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false, 'Links'));
-//   $pageList->AddPage(new PageLink('<span class="state">Bearbeitungsanteil (Zeitraum)</span>', 'anteil.php?option=bearbeitungsanteil-periode', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false, 'Links'));
 }
 
 /**
  * http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_14_global_after_update_record/
- *
- * @param Page $page
- * @param array $rowData
- * @param string $tableName
- * @param bool $success
- * @param string $message
- * @param int $messageDisplayTime
  */
 function globalOnAfterInsertRecord(Page $page, $rowData, $tableName, &$success, &$message, &$messageDisplayTime) {
 }
 
 /**
  * http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_15_global_after_insert_record/
- *
- * @param Page $page
- * @param array $rowData
- * @param string $tableName
- * @param bool $success
- * @param string $message
- * @param int $messageDisplayTime
  */
 function globalOnAfterUpdateRecord(Page $page, $rowData, $tableName, &$success, &$message, &$messageDisplayTime) {
-//   if ($success) {
-//     $message = 'Record processed successfully.';
-//   } else {
-//     $message = '<p>Something wrong happened. ' .
-//         '<a class="alert-link" href="mailto:admin@example.com">Contact developers</a> for more info.</p>';
-//   }
 }
 
 /**
  * http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_16_global_after_delete_record/
- *
- * @param Page $page
- * @param array $rowData
- * @param string $tableName
- * @param bool $success
- * @param string $message
- * @param int $messageDisplayTime
  */
 function globalOnAfterDeleteRecord(Page $page, $rowData, $tableName, &$success, &$message, &$messageDisplayTime) {
 }
@@ -2233,7 +1844,6 @@ function globalOnAfterDeleteRecord(Page $page, $rowData, $tableName, &$success, 
  */
 function customOnGetCustomFormLayout(Page $page, $mode, FixedKeysArray $columns, FormLayout $layout) {
   if ($page->GetPageId() === 'partei') {
-//     df($mode, '$mode');
   }
 }
 
@@ -2250,22 +1860,6 @@ function customOnGetCustomFormLayout(Page $page, $mode, FixedKeysArray $columns,
  * @param ViewColumnGroup $columnGroup The default (root) group. By default all column headers are placed in this group.
  */
 function customOnGetCustomColumnGroup(Page $page, FixedKeysArray $columns, ViewColumnGroup $columnGroup) {
-//   if ($page->GetPageId() === 'parlamentarier') {
-//     $columnGroup->add(new ViewColumnGroup('Im Rat',
-//       array(
-//         $columns['im_rat_seit'],
-//         $columns['im_rat_bis'],
-//       )
-//     ));
-//   }
-//   $columnGroup->add(new ViewColumnGroup('Eingabe abgeschlossen',
-//     array(
-//       $columns['eingabe_abgeschlossen_datum'],
-//       $columns['eingabe_abgeschlossen_visa'],
-//     )
-//   ));
-//   $columns['eingabe_abgeschlossen_datum']->setCaption('Datum');
-//   $columns['eingabe_abgeschlossen_visa']->setCaption('Visa');
 }
 
 // Call: defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);
@@ -2274,18 +1868,6 @@ function defaultOnGetCustomTemplate(Page $page, $part, $mode, &$result, &$params
     $params = [];
   }
   // MIGR OnGetCustomTemplate()
-  //   if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
-  //     $result = 'edit/grid.tpl';
-  //   } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
-  //     $result = 'insert/grid.tpl';
-  //   } else if ($part == PagePart::RecordCard && $mode == PageMode::View) {
-  //     $result = 'view/grid.tpl';
-  //   } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
-  //     $result = 'list/grid.tpl';
-  //   } else if ($part == PagePart::PageList) {
-  //     $result = 'page_list.tpl';
-  //   }
-
 }
 
 /**
@@ -2319,21 +1901,6 @@ function globalOnGetCustomTemplate($type, $part, $mode, &$result, &$params, Comm
 function customGetPageInfos(array $pageInfos) {
   return $pageInfos;
 }
-
-// Copied from old since new ShowErrorPage(Exception) requires an Exception as argument
-/*function ShowErrorPageMessage($message)
-{
-  $smarty = new Smarty();
-  $smarty->template_dir = '/components/templates';
-  $smarty->assign('Message', $message);
-  $captions = GetCaptions('UTF-8');
-  $smarty->assign('Captions', $captions);
-  $smarty->assign('App', array(
-      'ContentEncoding' => 'UTF-8',
-      'PageCaption' => $captions->GetMessageString('Error')
-  ));
-  $smarty->display('error_page.tpl');
-}*/
 
 // Must not be in utils.php since in Drupal we use a similar function
 function set_db_session_parameters($con) {

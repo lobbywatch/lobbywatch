@@ -4,23 +4,11 @@
  * This file was written quick and dirty. ;-)
  */
 
-//phpinfo();
 
 include_once dirname(__FILE__) . '/../custom/custom_page.php';
 
 
 // Main
-
-// lobbywatch_set_language('fr');
-
-// df(lt('test'), 'lt-test');
-
-// df(lobbywatch_lang_field('organisation.name'));
-// df(lobbywatch_lang_field('organisation.name_de'));
-
-// lobbywatch_set_language('de');
-// df(lobbywatch_lang_field('organisation.name'));
-// df(lobbywatch_lang_field('organisation.name_de'));
 
 try {
     $con = getDBConnectionHandle();
@@ -45,16 +33,6 @@ try {
     } else {
       throw new Exception('ID parameter missing, e.g. ?pk=215');
    }
-
-//     $con_factory = new MyPDOConnectionFactory();
-//     $options = GetConnectionOptions();
-//     $eng_con = $con_factory->CreateConnection($options);
-// //     try {
-//       $eng_con->Connect();
-//       $con = $eng_con->GetConnectionHandle();
-// //         df($eng_con->Connected(), 'connected');
-// //         df($con, 'con');
-//       $cmd = $con_factory->CreateEngCommandImp();
 
     $lang = $parlamentarier_lang = get_parlamentarier_lang($con, $id);
     lobbywatch_set_language($lang);
@@ -89,7 +67,6 @@ try {
     $emailEndParlam = getSettingValue("parlamentarier${re}AutorisierungEmailSchluss$lang_suffix", false, '<br><br>Freundliche Grüsse<br>%name%');
     $emailEndParlam = StringUtils::ReplaceVariableInTemplate($emailEndParlam, 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
 
-    //df($rowData);
     $rowCellStyles = [];
     $rowStyles = '';
     $rowClasses = '';
@@ -107,7 +84,6 @@ try {
     $zbRetDetail = zutrittsberechtigteForParlamentarier($con, $id, false);
     $zbRet = zutrittsberechtigteForParlamentarier($con, $id, true);
     $zbList = $zbRet['zutrittsberechtigte'];
-//         df($zbRet, '$zbRet');
 
     $mailtoParlam = 'mailto:' . rawurlencode($rowData["email"]) . '?subject=' . rawurlencode($emailSubjectParlam) . '&body=' . rawurlencode('[Kopiere von Vorlage]') . '&bcc=redaktion@lobbywatch.ch';
 

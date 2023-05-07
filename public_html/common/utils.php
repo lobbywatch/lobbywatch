@@ -1236,7 +1236,7 @@ function get_lang_suffix($lang = null) {
 function get_lang() {
   global $language;
 
-//   df($language, '$language');
+
   $langcode = isset($language->language) ? $language->language : 'de';
   return $langcode;
 }
@@ -1257,39 +1257,26 @@ function getSettingValue($key, $json = false, $defaultValue = null) {
   $settings = &php_static_cache(__FUNCTION__);
   if (!isset($settings)) {
     // Initially, fetch all at once
-//     $eng_con = getDBConnection();
     $values = [];
     try {
       $con = get_PDO_lobbywatch_DB_connection();
-//       $con->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
       $sql = "SELECT id, key_name, value FROM settings"; // v_settings does not work: SQLSTATE[HY000]: General error: 1615 Prepared statement needs to be re-prepared
-//       $values = $con->query($sql);
       $sth = $con->prepare($sql);
       $sth->execute([]);
       $values = $sth->fetchAll();
     } finally {
       // Connection will automatically be closed at the end of the request.
-      //       $eng_con->Disconnect();
     }
-
-    //   df($values, '$values');
-    //   df($defaultValue, '$defaultValue');
-    //   df($values[0]['value'], '$values[0][value]');
-
-    //   df(getSettingCategoryValues('Test'), 'Test');
-    //   df(getSettingCategoryValues('Test3', 'nothing'), 'Test nothing');
 
     foreach($values as $value) {
       // Take the first result
       $settings[$value['key_name']] =  $value['value'];
     }
-    //     df($settings, 'settings');
   }
   if (!isset($settings[$key])) {
     // If this function is being called for the first time for a particular
     // index field, then execute code needed to index the information already
     // available in $settings by the desired field.
-//     $eng_con = getDBConnection();
     $values = [];
     try {
       $con = get_PDO_lobbywatch_DB_connection();
@@ -1304,13 +1291,6 @@ function getSettingValue($key, $json = false, $defaultValue = null) {
       // Connection will automatically be closed at the end of the request.
       //       $eng_con->Disconnect();
     }
-
-    //   df($values, '$values');
-    //   df($defaultValue, '$defaultValue');
-    //   df($values[0]['value'], '$values[0][value]');
-
-    //   df(getSettingCategoryValues('Test'), 'Test');
-    //   df(getSettingCategoryValues('Test3', 'nothing'), 'Test nothing');
 
     if (count($values) > 1) {
       throw new Exception('Too many values for setting "' . $key . '""');
@@ -1577,8 +1557,6 @@ function lobbywatch_forms_db_query($query, array $args = [], array $options = []
     $eng_con->Connect();
     $con = $eng_con->GetConnectionHandle();
     $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-    //         df($eng_con->Connected(), 'connected');
-    //         df($con, 'con');
     $cmd = $con_factory->CreateEngCommandImp();
 
     if (function_exists('set_db_session_parameters')) {
@@ -1587,12 +1565,10 @@ function lobbywatch_forms_db_query($query, array $args = [], array $options = []
       utils_set_db_session_parameters($con);
     }
 
-//   return Database::getConnection($options['target'])->query($query, $args, $options);
     // Use default values if not already set.
     $options += lobbywatch_PDO_defaultOptions();
 
     lobbywatch_DB_expandArguments($query, $args);
-//     $stmt = $this->prepareQuery($query);
     $query = lobbywatch_prefixTables($query);
     $stmt = $con->prepare($query);
 
@@ -1619,7 +1595,6 @@ function lobbywatch_forms_db_query($query, array $args = [], array $options = []
       case LW_DB_RETURN_AFFECTED:
         return $stmt->rowCount();
       case LW_DB_RETURN_INSERT_ID:
-//         return $this->lastInsertId();
         return;
       case LW_DB_RETURN_NULL:
         return;
@@ -1629,32 +1604,13 @@ function lobbywatch_forms_db_query($query, array $args = [], array $options = []
     }
     catch (PDOException $e) {
       if ($options['throw_exception']) {
-        // Add additional debug information.
-//         if ($query instanceof DatabaseStatementInterface) {
-//           $e->query_string = $stmt->getQueryString();
-//         }
-//         else {
-          $e->query_string = $query;
-//         }
+        $e->query_string = $query;
         $e->args = $args;
         throw $e;
       }
       return NULL;
-//     }
-
-
-//     //         df($sql);
-//     $result = [];
-
-//     $result = $sth->fetchAll();
-
-//     if (!$result) {
-//       df($eng_con->LastError());
-//       throw new Exception('ID not found');
-//     }
   } finally {
     // Connection will automatically be closed at the end of the request.
-    //     $eng_con->Disconnect();
   }
 }
 
@@ -2013,7 +1969,6 @@ function _lobbywatch_ws_get_land_id($iso2) {
       FROM v_$table $table
       WHERE $table.`iso2`=:iso2";
 
-//     df($sql , 'sql');
     if (is_lobbywatch_forms()) {
         $result = lobbywatch_forms_db_query($sql, array(':iso2' => $iso2));
     } else {
@@ -2028,15 +1983,8 @@ function _lobbywatch_ws_get_land_id($iso2) {
     }
 
     $items = $result->fetchColumn(0);
-//     df($items, 'items');
-
-//     $count = count($items);
-//     $success = $count == 1;
-//     $message .= count($items) . " record(s) found";
     $ret = $items;
   } catch(Exception $e) {
-//     $message .= _utils_get_exception($e);
-//     $success = false;
     $ret = null;
   } finally {
   }
@@ -3145,12 +3093,6 @@ global $transaction_date;
 global $sql_transaction_date;
 global $errors;
 
-// Check for !empty($parlamentarier_db_obj->$field) for new DB entries
-//   df($parlamentarier_db_obj, '$parlamentarier_db_obj');
-//   df($field, '$field');
-//   df($val, '$val');
-//   df($parlamentarier_db_obj->$field, '$parlamentarier_db_obj->$field');
-
   $db_val = $parlamentarier_db_obj->$field ?? null;
 
   if (is_bool($val)) {
@@ -3289,8 +3231,6 @@ function _lobbywatch_fetch_organisation_title($table, $id) {
       $record = $result->fetchAssoc();
       $title = translate_record_field($record, 'name_de') . ($record['ort'] ? ', ' . $record['ort'] : '');
     }
-    //     df($record, '$record');
-    //     df($url_name, '$url_name');
   } finally {
     // Go back to the default database,
     // otherwise Drupal will not be able to access it's own data later on.
@@ -3345,7 +3285,6 @@ function fillZutrittsberechtigterEmail($i, $rowData, $zbList, $emailEndZb, $mail
 }
 
 function organisationsbeziehungen($con, $organisationen_id_comma_list, $for_email = false, $check_unpublished = true) {
-//   df($organisationen_id_comma_list);
   $admin = false;
   $num_arbeitet_fuer = $admin ? 2 : 0;
   $num_tochtergesellschaft_von = $admin ? 3 : 0;
@@ -3444,22 +3383,6 @@ function zutrittsberechtigteForParlamentarier($con, $parlamentarier_id, $for_ema
   (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW())
   AND zutrittsberechtigung.parlamentarier_id=:id
 GROUP BY zutrittsberechtigung.id;";
-
-  //         df($sql);
-  //         $eng_con->ExecQueryToArray($sql, $result);
-  //          df($eng_con->LastError(), 'last error');
-  //         $eng_con->Disconnect();
-  //         df($result, 'result');
-  //         $preview = $rowData['email_text_html'];
-
-  //         $q = $con->query($sql);
-  //         $result2 = $q->fetchAll();
-  //         df($eng_con->LastError(), 'last error');
-  //         df($q, 'q');
-  //         df($result2, 'result2');
-
-  //       $sth = $con->prepare($sql);
-  //       $sth->execute(array(':id' => $id));
   $zbs = lobbywatch_forms_db_query($sql, array(':id' => $parlamentarier_id));
 
   $gaeste = [];
@@ -3517,9 +3440,6 @@ GROUP BY zutrittsberechtigung.id;";
     $sth->execute(array(':id' => $id));
     $gast = $sth->fetchAll();
 
-//     df($gast, 'gast');
-
-
     $gast[0]['organisationsbeziehungen'] = organisationsbeziehungen($con, $gast[0]["organisationen_from_mandate"]);
 
     $gaeste = array_merge($gaeste, $gast);
@@ -3567,22 +3487,6 @@ function get_parlamentarier_lang($con, $id) {
     $sql = "SELECT parlamentarier.arbeitssprache FROM v_parlamentarier_simple parlamentarier
           WHERE
   parlamentarier.id=:id;";
-
-//         df($sql);
-//         $eng_con->ExecQueryToArray($sql, $result);
-//          df($eng_con->LastError(), 'last error');
-//         $eng_con->Disconnect();
-//         df($result, 'result');
-//         $preview = $rowData['email_text_html'];
-
-//         $q = $con->query($sql);
-//         $result2 = $q->fetchAll();
-//         df($eng_con->LastError(), 'last error');
-//         df($q, 'q');
-//         df($result2, 'result2');
-
-//       $sth = $con->prepare($sql);
-//       $sth->execute(array(':id' => $id));
       $obj = lobbywatch_forms_db_query($sql, array(':id' => $id))->fetch();
       if (!$obj) {
         throw new Exception("ID not found '$id'");
@@ -3688,23 +3592,7 @@ WHERE
   parlamentarier.id=:id" .
   ($include_parlamentarische_gruppen_members ? "" : " AND NOT (interessenbindung.art = 'mitglied' AND organisation.rechtsform IN ('Parlamentarische Gruppe', 'Parlamentarische Freundschaftsgruppe'))") .
 " GROUP BY parlamentarier.id;";
-
-        // df($sql);
         $result = [];
-//         $eng_con->ExecQueryToArray($sql, $result);
-//          df($eng_con->LastError(), 'last error');
-//         $eng_con->Disconnect();
-//         df($result, 'result');
-//         $preview = $rowData['email_text_html'];
-
-//         $q = $con->query($sql);
-//         $result2 = $q->fetchAll();
-//         df($eng_con->LastError(), 'last error');
-//         df($q, 'q');
-//         df($result2, 'result2');
-
-//       $sth = $con->prepare($sql);
-//       $sth->execute(array(':id' => $id));
       $options = array(
         'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
       );
@@ -3713,13 +3601,8 @@ WHERE
 //       $result = $sth->fetchAll();
 
       if (!$result) {
-//         df($eng_con->LastError());
         throw new Exception("ID not found '$id'");
       }
-//     } finally {
-//       // Connection will automatically be closed at the end of the request.
-// //       $eng_con->Disconnect();
-//     }
 
     $rowData = $result[0];
     return $rowData;
@@ -3767,7 +3650,6 @@ LIMIT 1;
   $result = lobbywatch_forms_db_query($sql, array(':id' => $id), $options)->fetchAll();
 
   if (!$result) {
-//         df($eng_con->LastError());
     throw new Exception("ID not found '$id'");
   }
   $rowData = $result[0];
@@ -3790,7 +3672,6 @@ LIMIT 1;
   $result = lobbywatch_forms_db_query($sql, array(':id' => $id), $options)->fetchAll();
 
   if (!$result) {
-//         df($eng_con->LastError());
     throw new Exception("ID not found '$id'");
   }
   $rowData = $result[0];
@@ -3867,8 +3748,6 @@ GROUP BY parlamentarier.id;";
 // SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL, 1, 0)) interessenbindungen_sum_all,
 // SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL, 1, 0)) verguetung_sum
 
-
-//         df($sql);
   $result = [];
   $options = array(
     'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
@@ -3878,7 +3757,6 @@ GROUP BY parlamentarier.id;";
 //       $result = $sth->fetchAll();
 
   if (!$result) {
-//         df($eng_con->LastError());
     throw new Exception("ID not found '$id'");
   }
   $rowData = $result[0];
