@@ -4277,3 +4277,8 @@ ALTER TABLE `parlamentarier`
   RENAME INDEX `idx_bfs_gemeinde_id` TO `idx_bfs_gemeinde_nr`,
   ADD CONSTRAINT `fk_parlamentarier_bfs_gemeinde_nr` FOREIGN KEY (`bfs_gemeinde_nr`) REFERENCES `bfs_gemeinde`(`gdenr`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 ALTER TABLE `parlamentarier_log` CHANGE `bfs_gemeinde_id` `bfs_gemeinde_nr` SMALLINT(5) UNSIGNED NULL DEFAULT NULL COMMENT 'BFS Gemeindenummer (BFS GDENR)';
+
+-- 22.10.2022 add bfs_gemeinde (proposed)
+
+/* ALTER TABLE `bfs_gemeinde`
+  ADD COLUMN `freigabe_datum` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)' AFTER `gdemutdat`; */
