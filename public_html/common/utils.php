@@ -458,7 +458,7 @@ function util_data_uri($file, $mime = '') {
 }
 
 function _lobbywatch_bindungsart($pers, $ib, $org) {
-  $interessenbindungArtList = array('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','finanziell','gesellschafter');
+  $interessenbindungArtList = ['mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','finanziell','gesellschafter'];
   $art = " CASE ";
   foreach($interessenbindungArtList as $interessenbindungArt) {
     $art .= "  WHEN $ib.art = '$interessenbindungArt' THEN " . lts("$interessenbindungArt") . "\n";
@@ -3613,7 +3613,7 @@ function _lobbywatch_interessenbindung_verguetung_SQL($jahr) {
   WHEN interessenbindung_jahr_current.verguetung = 0 THEN CONCAT(" . lts('Entschädigung pro Jahr: CHF 0.-, ehrenamtlich') . ")
   WHEN interessenbindung_jahr_current.verguetung = 1 THEN CONCAT(" . lts('bezahlte Tätigkeit, Entschädigung pro Jahr:') . ", ' CHF ________')
   WHEN interessenbindung_jahr_current.verguetung > 1 THEN CONCAT(" . lts('bezahlte Tätigkeit, Entschädigung pro Jahr:') . ", ' CHF ', FORMAT(interessenbindung_jahr_current.verguetung, 'C', 'de_CH'), '.-')
-  WHEN interessenbindung_jahr_current.verguetung IS NULL THEN CONCAT(" . lts('unklar: ehrenamtlich/bezahlt? (Entschädigung pro Jahr:') . ", ' CHF ________)')
+  WHEN interessenbindung_jahr_current.verguetung IS NULL THEN CONCAT(" . lts('<b>unklar: ehrenamtlich/bezahlt?</b> (Entschädigung pro Jahr:') . ", ' CHF ________)')
   ELSE 'ERROR: Unbekannter Fall bei der Vergütung'
   END";
 }
