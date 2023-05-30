@@ -527,13 +527,13 @@ function _lobbywatch_bindungsart($pers, $ib, $org) {
 //       IF(interessenbindung.funktion_im_gremium IS NULL OR TRIM(interessenbindung.funktion_im_gremium) IN ('', 'mitglied'), '', CONCAT(', ',CONCAT(UCASE(LEFT(interessenbindung.funktion_im_gremium, 1)), SUBSTRING(interessenbindung.funktion_im_gremium, 2))))";
 }
 
-function _lobbywatch_get_rechtsform_translation_SQL($org) {
-  $rechtsformList = array('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission','Einfache Gesellschaft');
+function _lobbywatch_get_rechtsform_translation_SQL($org, bool $for_email = false, string $name_field = null) {
+  $rechtsformList = ['AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission','Einfache Gesellschaft'];
   $sql = " CASE ";
   foreach($rechtsformList as $rechtsform) {
-    $sql .= "  WHEN $org.rechtsform = '$rechtsform' THEN " . lts("$rechtsform") . "\n";
+    $sql .= "  WHEN $org.rechtsform = '$rechtsform' THEN " . (!$for_email ? lts("$rechtsform") : " IF(INSTR($name_field, " . lts("$rechtsform") . ") > 0,'', CONCAT(" . lts("$rechtsform") . ", ', '))") . "\n";
   }
-  $sql .= "  ELSE CONCAT(UCASE(LEFT($org.rechtsform, 1)), SUBSTRING($org.rechtsform, 2))
+  $sql .= "  ELSE CONCAT(UCASE(LEFT($org.rechtsform, 1)), SUBSTRING($org.rechtsform, 2)" . ($for_email ? ", ', '" : "") . ")
   END ";
   return $sql;
 }
@@ -3519,8 +3519,7 @@ GROUP_CONCAT(DISTINCT
 ) interessenbindungen,
 GROUP_CONCAT(DISTINCT
     IF(interessenbindung.bis IS NULL OR interessenbindung.bis > NOW(), CONCAT('<li>', " . lobbywatch_lang_field('organisation.name_de') . ",
-    IF(FALSE AND (organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = ''), '', CONCAT(', ', ". _lobbywatch_get_rechtsform_translation_SQL("organisation") . ")),
-    IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ',
+    IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', ". _lobbywatch_get_rechtsform_translation_SQL("organisation", true, lobbywatch_lang_field('organisation.name_de')) . ")),
     IF(" . lobbywatch_lang_field('interessenbindung.beschreibung') . " IS NULL OR TRIM(" . lobbywatch_lang_field('interessenbindung.beschreibung') . ") = '', " . _lobbywatch_bindungsart('parlamentarier', 'interessenbindung', 'organisation') . ", CONCAT(" . lobbywatch_lang_field('interessenbindung.beschreibung') . "))"
     . "," . _lobbywatch_interessenbindung_verguetung_SQL($jahr) ."
     ), '')
@@ -3614,7 +3613,7 @@ function _lobbywatch_interessenbindung_verguetung_SQL($jahr) {
   WHEN interessenbindung_jahr_current.verguetung = 0 THEN CONCAT(" . lts('Entschädigung pro Jahr: CHF 0.-, ehrenamtlich') . ")
   WHEN interessenbindung_jahr_current.verguetung = 1 THEN CONCAT(" . lts('bezahlte Tätigkeit, Entschädigung pro Jahr:') . ", ' CHF ________')
   WHEN interessenbindung_jahr_current.verguetung > 1 THEN CONCAT(" . lts('bezahlte Tätigkeit, Entschädigung pro Jahr:') . ", ' CHF ', FORMAT(interessenbindung_jahr_current.verguetung, 'C', 'de_CH'), '.-')
-  WHEN interessenbindung_jahr_current.verguetung IS NULL THEN CONCAT(" . lts('Entschädigung pro Jahr:') . ", ' CHF ________')
+  WHEN interessenbindung_jahr_current.verguetung IS NULL THEN CONCAT(" . lts('unklar: ehrenamtlich/bezahlt? (Entschädigung pro Jahr:') . ", ' CHF ________)')
   ELSE 'ERROR: Unbekannter Fall bei der Vergütung'
   END";
 }
