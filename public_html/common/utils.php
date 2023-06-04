@@ -516,7 +516,7 @@ function _lobbywatch_bindungsart($pers, $ib, $org) {
     WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'F' THEN " . lts('Geschäftsleitung') . "
     WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'M' THEN " . lts('Geschäftsleitung') . "
     /* Beirat/Patronatskomitee/Expertenkommission/Advisory Board */
-    WHEN $ib.art = 'beirat' THEN CONCAT(" . lts('Beirat/Patronatskomitee/Expertenkommission/Advisory Board') . ",
+    WHEN $ib.art = 'beirat' THEN CONCAT(" . lts('Beirat') . ",
     IF($ib.funktion_im_gremium IS NULL OR TRIM($ib.funktion_im_gremium) IN ('', 'mitglied'), '', CONCAT(', ',CONCAT(UCASE(LEFT($funktion_im_gremium, 1)), SUBSTRING($funktion_im_gremium, 2)))))
   /* Else */
     ELSE CONCAT(CONCAT(UCASE(LEFT($art, 1)), SUBSTRING($art, 2)),
