@@ -61,10 +61,11 @@ try {
       $isParlReAuthorization = isset($rowData['autorisiert_datum']);
     }
     $re = $isParlReAuthorization ? 'Re' : '';
+    $reForEnd = $isParlReAuthorization || $isParlAuthorizationReminder ? 'Re' : '';
 
     $emailSubjectParlam = getSettingValue("parlamentarierAutorisierungEmailSubject$lang_suffix", false, 'Interessenbindungen');
     $emailIntroParlam = getSettingValue("parlamentarier${re}Autorisierung${reminder}EmailEinleitung$lang_suffix", false, '[Einleitung]<br><br>');
-    $emailEndParlam = getSettingValue("parlamentarier${re}AutorisierungEmailSchluss$lang_suffix", false, '<br><br>Freundliche Grüsse<br>%name%');
+    $emailEndParlam = getSettingValue("parlamentarier${reForEnd}AutorisierungEmailSchluss$lang_suffix", false, '<br><br>Freundliche Grüsse<br>%name%');
     $emailEndParlam = StringUtils::ReplaceVariableInTemplate($emailEndParlam, 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
 
     $rowCellStyles = [];
