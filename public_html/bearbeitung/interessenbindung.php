@@ -694,7 +694,19 @@
             $column = new TextViewColumn('verguetung', 'verguetung', 'Vergütung CHF/Jahr', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->setDescription('Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.');
+            $column->setDescription('Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung:<br><ul>
+            <li>-1 = bezahlendes Mitglied
+            <li>0 = ehrenamtlich
+            <li>1 = bezahlt (Betrag unbekannt)
+            <li>2 = CHF 0 – 2\'500 pro Jahr
+            <li>2\'502 = CHF 2\'500 – 5\'000 pro Jahr
+            <li>5\'002 = CHF 5\'000 – 10\'000 pro Jahr
+            <li>10\'002 = CHF 10\'000 – 25\'000 pro Jahr
+            <li>25\'002 = CHF 25\'000 – 50\'000 pro Jahr
+            <li>50\'002 = CHF 50\'000 – 100\'000 pro Jahr
+            <li>100\'002 = über CHF 100\'000 pro Jahr
+            <li>>1 = Vergütung in CHF pro Jahr (exakter Betrag)
+            </ul>');
             $grid->AddViewColumn($column);
             //
             // View column for beschreibung field
@@ -1015,7 +1027,9 @@
             $editColumn = new CustomEditColumn('Vergütung CHF/Jahr', 'verguetung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $editColumn->GetCaption()));
+            $validator = new MaxValueValidator(9999999, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new MinValueValidator(-1, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -1273,7 +1287,9 @@
             $editColumn = new CustomEditColumn('Vergütung CHF/Jahr', 'verguetung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $editColumn->GetCaption()));
+            $validator = new MaxValueValidator(9999999, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new MinValueValidator(-1, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -1481,7 +1497,9 @@
             $editColumn = new CustomEditColumn('Vergütung CHF/Jahr', 'verguetung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $editColumn->GetCaption()));
+            $validator = new MaxValueValidator(9999999, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new MinValueValidator(-1, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -6690,7 +6708,19 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->setDescription('Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion. -1 = bezahlendes Mitglied 0 = ehrenamtlich 1 = bezahlt >1 = Vergütung in CHF pro Jahr');
+            $column->setDescription('Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung:<br><ul>
+            <li>-1 = bezahlendes Mitglied
+            <li>0 = ehrenamtlich
+            <li>1 = bezahlt (Betrag unbekannt)
+            <li>2 = CHF 0 – 2\'500 pro Jahr
+            <li>2\'502 = CHF 2\'500 – 5\'000 pro Jahr
+            <li>5\'002 = CHF 5\'000 – 10\'000 pro Jahr
+            <li>10\'002 = CHF 10\'000 – 25\'000 pro Jahr
+            <li>25\'002 = CHF 25\'000 – 50\'000 pro Jahr
+            <li>50\'002 = CHF 50\'000 – 100\'000 pro Jahr
+            <li>100\'002 = über CHF 100\'000 pro Jahr
+            <li>>1 = Vergütung in CHF pro Jahr (exakter Betrag)
+            </ul>');
             $grid->AddViewColumn($column);
             //
             // View column for jahr_minus_1_verguetung field
@@ -6701,7 +6731,19 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->setDescription('Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion. -1 = bezahlendes Mitglied 0 = ehrenamtlich 1 = bezahlt >1 = Vergütung in CHF pro Jahr');
+            $column->setDescription('Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung:<br><ul>
+            <li>-1 = bezahlendes Mitglied
+            <li>0 = ehrenamtlich
+            <li>1 = bezahlt (Betrag unbekannt)
+            <li>2 = CHF 0 – 2\'500 pro Jahr
+            <li>2\'502 = CHF 2\'500 – 5\'000 pro Jahr
+            <li>5\'002 = CHF 5\'000 – 10\'000 pro Jahr
+            <li>10\'002 = CHF 10\'000 – 25\'000 pro Jahr
+            <li>25\'002 = CHF 25\'000 – 50\'000 pro Jahr
+            <li>50\'002 = CHF 50\'000 – 100\'000 pro Jahr
+            <li>100\'002 = über CHF 100\'000 pro Jahr
+            <li>>1 = Vergütung in CHF pro Jahr (exakter Betrag)
+            </ul>');
             $grid->AddViewColumn($column);
             //
             // View column for verguetung field
@@ -6712,7 +6754,19 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->setDescription('Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion. -1 = bezahlendes Mitglied 0 = ehrenamtlich 1 = bezahlt >1 = Vergütung in CHF pro Jahr');
+            $column->setDescription('Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung:<br><ul>
+            <li>-1 = bezahlendes Mitglied
+            <li>0 = ehrenamtlich
+            <li>1 = bezahlt (Betrag unbekannt)
+            <li>2 = CHF 0 – 2\'500 pro Jahr
+            <li>2\'502 = CHF 2\'500 – 5\'000 pro Jahr
+            <li>5\'002 = CHF 5\'000 – 10\'000 pro Jahr
+            <li>10\'002 = CHF 10\'000 – 25\'000 pro Jahr
+            <li>25\'002 = CHF 25\'000 – 50\'000 pro Jahr
+            <li>50\'002 = CHF 50\'000 – 100\'000 pro Jahr
+            <li>100\'002 = über CHF 100\'000 pro Jahr
+            <li>>1 = Vergütung in CHF pro Jahr (exakter Betrag)
+            </ul>');
             $grid->AddViewColumn($column);
             //
             // View column for von field

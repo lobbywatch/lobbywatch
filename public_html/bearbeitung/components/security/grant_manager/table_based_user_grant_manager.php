@@ -68,6 +68,9 @@ class TableBasedUserGrantManager extends UserGrantManager
 
     public function RetrieveSecurityInfo($userName, $includePublic = true)
     {
+        if ($userName == 'guest' && !$this->allowGuest) {
+            return array();
+        }
         $queryBuilder = new SelectCommand($this->connectionFactory->CreateEngCommandImp());
 
         $queryBuilder->AddField($this->usersTable, $this->users_UserId, FieldType::Number, 'users_user_id');

@@ -64,14 +64,14 @@ class RssChannel
         $result = '';
         AddStr($result, '<item>');
         
-        AddStr($result, RssUtils::CreateTag('title', htmlspecialchars($rssItem->GetTitle())));
-        AddStr($result, RssUtils::CreateTag('link', htmlspecialchars($rssItem->GetLink())));
+        AddStr($result, RssUtils::CreateTag('title', $this->escapeXmlString($rssItem->GetTitle())));
+        AddStr($result, RssUtils::CreateTag('link', $this->escapeXmlString($rssItem->GetLink())));
         AddStr($result, RssUtils::CreateTag('description', $rssItem->GetDescription(), true));
         if ($rssItem->GetPublicationDate() != null)
             AddStr($result,
                 RssUtils::CreateTag(
                         'pubDate',
-                        htmlspecialchars($rssItem->GetPublicationDate()->ToRfc822String())
+                        $this->escapeXmlString($rssItem->GetPublicationDate()->ToRfc822String())
                         )
                     );
         
@@ -86,8 +86,8 @@ class RssChannel
         AddStr($result, '<rss version="2.0">');
         AddStr($result, '<channel>');
         
-        AddStr($result, RssUtils::CreateTag('title', htmlspecialchars($this->GetTitle())));
-        AddStr($result, RssUtils::CreateTag('link', htmlspecialchars($this->GetLink())));
+        AddStr($result, RssUtils::CreateTag('title', $this->escapeXmlString($this->GetTitle())));
+        AddStr($result, RssUtils::CreateTag('link', $this->escapeXmlString($this->GetLink())));
         AddStr($result, RssUtils::CreateTag('description', $this->GetDescription()));
 
         foreach($this->GetItems() as $item)
@@ -97,6 +97,10 @@ class RssChannel
         AddStr($result, '</rss>');
 
         return $result;
+    }
+
+    private function escapeXmlString($value) {
+        return htmlspecialchars($value, ENT_COMPAT, 'utf-8');
     }
 }
 

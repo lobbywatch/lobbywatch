@@ -50,6 +50,9 @@ define(['pgui.utils', 'bootstrap.toggle'], function (utils) {
                             var $row = $(response.row);
                             utils.replaceRow(currentElement.closest('.pg-row'), $row);
                             $grid.integrateRows($row);
+                            if ($grid.getReloadPageAfterAjaxOperation()) {
+                                location.reload();
+                            }
                         }
                     }
                 });

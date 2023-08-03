@@ -1,11 +1,5 @@
 <?php
 
-// require_once 'components/common.php';
-// require_once 'components/common_utils.php';
-// require_once 'components/dataset/dataset.php';
-// require_once 'components/rss_feed_generator.php';
-// require_once 'components/grid/grid.php'; // TODO : remove
-
 include_once dirname(__FILE__) . '/' . 'common.php';
 include_once dirname(__FILE__) . '/' . 'common_utils.php';
 include_once dirname(__FILE__) . '/' . 'dataset/dataset.php';
@@ -30,7 +24,6 @@ class DatasetRssGenerator
         $channelTitle, $channelLink, $channelDescription,
         $itemTitleTemplate, $itemLinkTemplate, $itemDescriptionTemplate)
     {
-        //parent::__construct();
         $this->dataset = $dataset;
         //
         $this->channelTitle = $channelTitle;

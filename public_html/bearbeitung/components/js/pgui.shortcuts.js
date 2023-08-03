@@ -10,7 +10,7 @@ define(['jquery.hotkeys'], function () {
         {
             keys: ['Ctrl+[', 'Ctrl+]'],
             selector: '.toggle-sidebar',
-            scope: 'common',
+            scope: 'common'
         },
         {
             keys: ['Ctrl+left'],
@@ -139,7 +139,7 @@ define(['jquery.hotkeys'], function () {
 
     return {
         push: push,
-        pop: pop,
+        pop: pop
     };
 
 });

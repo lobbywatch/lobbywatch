@@ -246,7 +246,7 @@ define('pgui.shortcuts',['jquery.hotkeys'], function () {
         {
             keys: ['Ctrl+[', 'Ctrl+]'],
             selector: '.toggle-sidebar',
-            scope: 'common',
+            scope: 'common'
         },
         {
             keys: ['Ctrl+left'],
@@ -375,7 +375,7 @@ define('pgui.shortcuts',['jquery.hotkeys'], function () {
 
     return {
         push: push,
-        pop: pop,
+        pop: pop
     };
 
 });
@@ -30787,6 +30787,9 @@ define('pgui.toggle',['pgui.utils', 'bootstrap.toggle'], function (utils) {
                             var $row = $(response.row);
                             utils.replaceRow(currentElement.closest('.pg-row'), $row);
                             $grid.integrateRows($row);
+                            if ($grid.getReloadPageAfterAjaxOperation()) {
+                                location.reload();
+                            }
                         }
                     }
                 });

@@ -1,4 +1,4 @@
-<Project version="22.8.0.5" edition="pro" localizationFileName="public_html\bearbeitung\components\lang.en.lobbywatch.php" phpDriver="2" outputPath="public_html\bearbeitung" copySystemFiles="true" generateModifiedDataOnly="true" outputFilesExtension="php" colorSchemeName="default-compact">
+<Project version="22.8.0.7" edition="pro" localizationFileName="public_html\bearbeitung\components\lang.en.lobbywatch.php" phpDriver="2" outputPath="public_html\bearbeitung" copySystemFiles="true" generateModifiedDataOnly="true" outputFilesExtension="php" colorSchemeName="default-compact">
   <ConnectionOptions host="localhost" port="3306" login="" password="hidden" database="" client_encoding="utf8" allow_old_password="false">
     <ssh_secure secure="false" port="22" authentication_mode="0"/>
     <http_tunnel tunneling="false" url="">
@@ -25407,19 +25407,55 @@ $edit_general_hint        </BeforeGridText>
               </Values>
             </EditProperties>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="jahr_minus_2_verguetung" caption="Vergütung {[[YEAR-2]]} CHF/J" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion. -1 = bezahlendes Mitglied 0 = ehrenamtlich 1 = bezahlt &gt;1 = Vergütung in CHF pro Jahr" canSetNull="true" readOnly="true" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="jahr_minus_2_verguetung" caption="Vergütung {[[YEAR-2]]} CHF/J" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung:&lt;br&gt;&lt;ul&gt;
+&lt;li&gt;-1 = bezahlendes Mitglied
+&lt;li&gt;0 = ehrenamtlich
+&lt;li&gt;1 = bezahlt (Betrag unbekannt)
+&lt;li&gt;2 = CHF 0 – 2'500 pro Jahr
+&lt;li&gt;2'502 = CHF 2'500 – 5'000 pro Jahr
+&lt;li&gt;5'002 = CHF 5'000 – 10'000 pro Jahr
+&lt;li&gt;10'002 = CHF 10'000 – 25'000 pro Jahr
+&lt;li&gt;25'002 = CHF 25'000 – 50'000 pro Jahr
+&lt;li&gt;50'002 = CHF 50'000 – 100'000 pro Jahr
+&lt;li&gt;100'002 = über CHF 100'000 pro Jahr
+&lt;li&gt;&gt;1 = Vergütung in CHF pro Jahr (exakter Betrag)
+&lt;/ul&gt;" canSetNull="true" readOnly="true" selectedFilterOperators="1573119">
             <ViewProperties type="text">
               <Format type="number" thousandSeparator="'"/>
             </ViewProperties>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="jahr_minus_1_verguetung" caption="Vergütung {[[YEAR-1]]} CHF/J" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion. -1 = bezahlendes Mitglied 0 = ehrenamtlich 1 = bezahlt &gt;1 = Vergütung in CHF pro Jahr" canSetNull="true" readOnly="true" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="jahr_minus_1_verguetung" caption="Vergütung {[[YEAR-1]]} CHF/J" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung:&lt;br&gt;&lt;ul&gt;
+&lt;li&gt;-1 = bezahlendes Mitglied
+&lt;li&gt;0 = ehrenamtlich
+&lt;li&gt;1 = bezahlt (Betrag unbekannt)
+&lt;li&gt;2 = CHF 0 – 2'500 pro Jahr
+&lt;li&gt;2'502 = CHF 2'500 – 5'000 pro Jahr
+&lt;li&gt;5'002 = CHF 5'000 – 10'000 pro Jahr
+&lt;li&gt;10'002 = CHF 10'000 – 25'000 pro Jahr
+&lt;li&gt;25'002 = CHF 25'000 – 50'000 pro Jahr
+&lt;li&gt;50'002 = CHF 50'000 – 100'000 pro Jahr
+&lt;li&gt;100'002 = über CHF 100'000 pro Jahr
+&lt;li&gt;&gt;1 = Vergütung in CHF pro Jahr (exakter Betrag)
+&lt;/ul&gt;" canSetNull="true" readOnly="true" selectedFilterOperators="1573119">
             <ViewProperties type="text">
               <Format type="number" thousandSeparator="'"/>
             </ViewProperties>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="verguetung" caption="Vergütung {[[YEAR]]} CHF/J" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion. -1 = bezahlendes Mitglied 0 = ehrenamtlich 1 = bezahlt &gt;1 = Vergütung in CHF pro Jahr" canSetNull="true" readOnly="true" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="verguetung" caption="Vergütung {[[YEAR]]} CHF/J" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung:&lt;br&gt;&lt;ul&gt;
+&lt;li&gt;-1 = bezahlendes Mitglied
+&lt;li&gt;0 = ehrenamtlich
+&lt;li&gt;1 = bezahlt (Betrag unbekannt)
+&lt;li&gt;2 = CHF 0 – 2'500 pro Jahr
+&lt;li&gt;2'502 = CHF 2'500 – 5'000 pro Jahr
+&lt;li&gt;5'002 = CHF 5'000 – 10'000 pro Jahr
+&lt;li&gt;10'002 = CHF 10'000 – 25'000 pro Jahr
+&lt;li&gt;25'002 = CHF 25'000 – 50'000 pro Jahr
+&lt;li&gt;50'002 = CHF 50'000 – 100'000 pro Jahr
+&lt;li&gt;100'002 = über CHF 100'000 pro Jahr
+&lt;li&gt;&gt;1 = Vergütung in CHF pro Jahr (exakter Betrag)
+&lt;/ul&gt;" canSetNull="true" readOnly="true" selectedFilterOperators="1573119">
             <ViewProperties type="text">
               <Format type="number" thousandSeparator="'"/>
             </ViewProperties>
@@ -26034,11 +26070,23 @@ $edit_general_hint        </BeforeGridText>
                     <DigitsClientValidatorInfo enabled="true"/>
                   </Validators>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="verguetung" caption="Vergütung CHF/Jahr" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion." selectedFilterOperators="1573119">
+                <ColumnPresentation fieldName="verguetung" caption="Vergütung CHF/Jahr" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung:&lt;br&gt;&lt;ul&gt;
+&lt;li&gt;-1 = bezahlendes Mitglied
+&lt;li&gt;0 = ehrenamtlich
+&lt;li&gt;1 = bezahlt (Betrag unbekannt)
+&lt;li&gt;2 = CHF 0 – 2'500 pro Jahr
+&lt;li&gt;2'502 = CHF 2'500 – 5'000 pro Jahr
+&lt;li&gt;5'002 = CHF 5'000 – 10'000 pro Jahr
+&lt;li&gt;10'002 = CHF 10'000 – 25'000 pro Jahr
+&lt;li&gt;25'002 = CHF 25'000 – 50'000 pro Jahr
+&lt;li&gt;50'002 = CHF 50'000 – 100'000 pro Jahr
+&lt;li&gt;100'002 = über CHF 100'000 pro Jahr
+&lt;li&gt;&gt;1 = Vergütung in CHF pro Jahr (exakter Betrag)
+&lt;/ul&gt;" selectedFilterOperators="1573119">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="0" suffix="Fr./Jahr"/>
                   <Validators>
-                    <DigitsClientValidatorInfo enabled="true"/>
+                    <RangeClientValidatorInfo enabled="true" maxValue="9999999" minValue="-1"/>
                   </Validators>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Beschreibung der Vergütung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
@@ -27013,7 +27061,19 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
               <DigitsClientValidatorInfo enabled="true"/>
             </Validators>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="verguetung" caption="Vergütung CHF/J" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion. -1 = bezahlendes Mitglied 0 = ehrenamtlich 1 = bezahlt &gt; 1 = Vergütung in CHF pro Jahr" totalFunction="2" defaultInsertValue="0" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="verguetung" caption="Vergütung CHF/J" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung:&lt;br&gt;&lt;ul&gt;
+&lt;li&gt;-1 = bezahlendes Mitglied
+&lt;li&gt;0 = ehrenamtlich
+&lt;li&gt;1 = bezahlt (Betrag unbekannt)
+&lt;li&gt;2 = CHF 0 – 2'500 pro Jahr
+&lt;li&gt;2'502 = CHF 2'500 – 5'000 pro Jahr
+&lt;li&gt;5'002 = CHF 5'000 – 10'000 pro Jahr
+&lt;li&gt;10'002 = CHF 10'000 – 25'000 pro Jahr
+&lt;li&gt;25'002 = CHF 25'000 – 50'000 pro Jahr
+&lt;li&gt;50'002 = CHF 50'000 – 100'000 pro Jahr
+&lt;li&gt;100'002 = über CHF 100'000 pro Jahr
+&lt;li&gt;&gt;1 = Vergütung in CHF pro Jahr (exakter Betrag)
+&lt;/ul&gt;" totalFunction="2" defaultInsertValue="0" selectedFilterOperators="1573119">
             <ViewProperties type="text">
               <Format type="number" thousandSeparator="'"/>
             </ViewProperties>
