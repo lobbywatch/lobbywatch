@@ -1,7 +1,8 @@
 from datetime import datetime
 import subprocess
 
-import MySQLdb
+# import MySQLdb
+import mariadb
 import sys
 import os
 import re
@@ -26,23 +27,24 @@ def connect(db_name):
           format(connection_info[3], connection_info[2]))
 
     try:
-        database = MySQLdb.connect(
+        database = mariadb.connect(
             user=connection_info[0],
             passwd=connection_info[1],
             host=connection_info[2],
             db=connection_info[3],
             port=int(connection_info[4]),
-            charset='utf8mb4',
-            use_unicode=True)
-    except MySQLdb.OperationalError:
-        database = MySQLdb.connect(
+            # charset='utf8mb4',
+            # use_unicode=True
+            )
+    except mariadb.OperationalError:
+        database = mariadb.connect(
             user=connection_info[0],
             passwd=connection_info[1],
             host=connection_info[2],
             db=connection_info[3],
             port=int(connection_info[4]),
-            charset='utf8mb4',
-            use_unicode=True,
+            # charset='utf8mb4',
+            # use_unicode=True,
             unix_socket="/home/rkurmann/dev/web/mysql/mysql57/data/mysql.sock")
         print("-- Using docker MySQL")
 
@@ -142,7 +144,8 @@ def get_parlamentarier_id_by_name(database, names, prename_first: bool):
 
 # get a parlamentarier dict by parlamentarier_id
 def get_parlamentarier_dict(database, parlamentarier_id):
-    with database.cursor(MySQLdb.cursors.DictCursor) as cursor:
+    # with database.cursor(MySQLdb.cursors.DictCursor) as cursor:
+    with database.cursor(dictionary = True) as cursor:
         parlamentarier = None
         query = """
         SELECT *

@@ -1,4 +1,5 @@
 requests
-mysqlclient
+# mysqlclient
+mariadb
 PyPDF2
 guess_language-spirit
