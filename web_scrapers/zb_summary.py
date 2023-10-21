@@ -100,19 +100,19 @@ class SummaryRow:
             self.parlamentarier_id.rjust(3),
             mark,
             self.gast1_name[:12].ljust(12),
-            self.gast1_id.rjust(3),
+            self.gast1_id.rjust(4),
             self.gast1_changes.ljust(13),
             self.gast2_name[:12].ljust(12),
-            self.gast2_id.rjust(3),
+            self.gast2_id.rjust(4),
             self.gast2_changes.ljust(13),
             self.gast1_name_old[:12].ljust(12),
-            self.gast1_id_old.rjust(3),
+            self.gast1_id_old.rjust(4),
             self.gast2_name_old[:12].ljust(12),
-            self.gast2_id_old.rjust(3))
+            self.gast2_id_old.rjust(4))
 
 
 def write_header():
-    return "No |    | Parlamentarier | ID  ‖ Gast 1       | ID  | Changes       ‖ Gast 2       | ID  | Changes       ‖ -Gast 1      | ID  | -Gast 2      | ID  |"
+    return "No |    | Parlamentarier | ID  ‖ Gast 1       | ID   | Changes       ‖ Gast 2       | ID   | Changes       ‖ -Gast 1      | ID   | -Gast 2      | ID   |"
 
 
 def _display_name(names):

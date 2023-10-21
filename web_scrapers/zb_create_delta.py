@@ -104,8 +104,8 @@ def sync_data(conn, filename, council, batch_time):
 
             #load info about parlamentarier
             kanton_id = db.get_kanton_id(conn, parlamentarier["canton"])
-            partei_id = db.get_partei_id(conn, parlamentarier["party"])
-            parlamentarier_id = db.get_parlamentarier_id(conn, parlamentarier["names"], kanton_id, partei_id)
+            fraktion_id = db.get_fraktion_id(conn, parlamentarier["faction"])
+            parlamentarier_id = db.get_parlamentarier_id_by_names_kanton_fraktion(conn, parlamentarier["names"], kanton_id, fraktion_id)
             parlamentarier["id"] = parlamentarier_id
             parlamentarier_db_dict = db.get_parlamentarier_dict(conn, parlamentarier_id)
             parlamentarier_active = parlamentarier_db_dict['im_rat_bis'] == None or parlamentarier_db_dict['im_rat_bis'] > date.today()

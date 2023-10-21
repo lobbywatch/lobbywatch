@@ -10,7 +10,7 @@ def insert_zutrittsberechtigung(parlamentarier_id, person_id, funktion, date, pd
             parlamentarier_id,
             person_id if person_id is not None else "(SELECT LAST_INSERT_ID())",
             _escape_string(funktion),
-            _date_as_sql_string(date),
+            _date_as_sql_string(pdf_date),
             "{0}/import/{1}: Erzeugt (PDF {2})".format(_date_as_sql_string(date), user, _datetime_as_sql_string(pdf_date)),
             "import",
             _datetime_as_sql_string(date),
@@ -38,7 +38,7 @@ def update_function_of_zutrittsberechtigung(zutrittsberechtigung_id, function, d
 # end a zutrittsberechtigung
 def end_zutrittsberechtigung(zutrittsberechtigung_id, date, pdf_date):
     query = "UPDATE `zutrittsberechtigung` SET `bis` = STR_TO_DATE('{0}', '%d.%m.%Y'), `notizen` = CONCAT_WS('\\n\\n', '{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
-        _date_as_sql_string(date),
+        _date_as_sql_string(pdf_date),
         "{0}/import/{1}: Bis-Datum gesetzt (PDF {2})".format(
             _date_as_sql_string(date), user, _datetime_as_sql_string(pdf_date)),
         "import",
@@ -51,18 +51,16 @@ def end_zutrittsberechtigung(zutrittsberechtigung_id, date, pdf_date):
 
 # insert a new person
 def insert_person(guest, date, pdf_date):
-    query = "INSERT INTO `person` (`nachname`, `vorname`, `zweiter_vorname`, geschlecht, `beschreibung_de`, `created_visa`, `created_date`, `updated_visa`, `updated_date`, `updated_by_import`, `notizen`) VALUES ('{0}', '{1}', '{2}', '{9}', '{3}', '{4}', STR_TO_DATE('{5}', '%d.%m.%Y %T'), '{6}', STR_TO_DATE('{7}', '%d.%m.%Y %T'), STR_TO_DATE('{7}', '%d.%m.%Y %T'), '{8}');\n".format(
+    query = "INSERT INTO `person` (`nachname`, `vorname`, `zweiter_vorname`, `beschreibung_de`, `created_visa`, `created_date`, `updated_visa`, `updated_date`, `updated_by_import`, `notizen`) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', STR_TO_DATE('{5}', '%d.%m.%Y %T'), '{6}', STR_TO_DATE('{7}', '%d.%m.%Y %T'), STR_TO_DATE('{7}', '%d.%m.%Y %T'), '{8}');\n".format(
             _escape_string(guest["names"][0]),
             _escape_string(guest["names"][1]),
-            _escape_string(guest["names"][2] if len(
-                guest["names"]) > 2 else ""),
+            _escape_string(guest["names"][2] if len(guest["names"]) > 2 else ""),
             _escape_string(guest["function"]),
             "import",
             _datetime_as_sql_string(date),
             "import",
             _datetime_as_sql_string(date),
-            "{0}/import/{1}: Erzeugt (PDF {2})".format(_date_as_sql_string(date), user,  _datetime_as_sql_string(pdf_date)),
-            _escape_string(guest["gender"])
+            "{0}/import/{1}: Erzeugt (PDF {2})".format(_date_as_sql_string(date), user,  _datetime_as_sql_string(pdf_date))
     )
 
     return query

@@ -1,7 +1,9 @@
-from PyPDF2 import PdfReader
 import re
-import requests
 from datetime import datetime
+
+import requests
+from pypdf import PdfReader
+
 
 # https://stackoverflow.com/questions/14209214/reading-the-pdf-properties-metadata-in-python
 # Returns creation date of PDF

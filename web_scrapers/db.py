@@ -90,8 +90,30 @@ def get_partei_id(database, partei_kuerzel):
     return partei_id[0]
 
 
+# get factionb by faction_kuerzel
+def get_fraktion_id(database, fraktion_kuerzel):
+    if not fraktion_kuerzel:
+        return None
+
+    with database.cursor() as cursor:
+        cursor.execute("""
+        SELECT id
+        FROM fraktion
+        WHERE abkuerzung = '{0}'
+        """.format(fraktion_kuerzel))
+
+        faction_id = cursor.fetchone()
+
+        if faction_id is None:
+            print("\n\nDATA INTEGRITY FAILURE: Fraktion '{}' referenced in PDF is not in database. Aborting.".format(
+                fraktion_kuerzel))
+            sys.exit(1)
+
+    return faction_id[0]
+
+
 # get a parlamentarier_id by names, kanton_id and partei_id
-def get_parlamentarier_id(database, names, kanton_id, partei_id):
+def get_parlamentarier_id_by_names_kanton_partei(database, names, kanton_id, partei_id):
     with database.cursor() as cursor:
         query = """
         SELECT id
@@ -106,6 +128,33 @@ def get_parlamentarier_id(database, names, kanton_id, partei_id):
             query += " AND partei_id = '{}'".format(partei_id)
         else:
             query += " AND partei_id IS NULL"
+
+        for description in ["NV", "NZV", "NNV", "NVV", "NNNV", "NS"]:
+            current_query = query + _generate_name_query(description, names, False)
+            cursor.execute(current_query)
+            result = cursor.fetchall()
+            if result and len(result) == 1:
+                (parlamentarier_id, ) = result[0]
+                return parlamentarier_id
+
+    print(
+        "\n\nDATA INTEGRITY FAILURE: Member of parliament '{0}' referenced in PDF is not in database. Aborting.".format(names))
+    sys.exit(1)
+
+
+# get a parlamentarier_id by names, kanton_id and partei_id
+def get_parlamentarier_id_by_names_kanton_fraktion(database, names, kanton_id, faction_id):
+    with database.cursor() as cursor:
+        query = """
+        SELECT id
+        FROM parlamentarier
+        WHERE kanton_id = {0}
+        """.format(kanton_id)
+
+        if faction_id:
+            query += " AND fraktion_id = '{}'".format(faction_id)
+        else:
+            query += " AND fraktion_id IS NULL"
 
         for description in ["NV", "NZV", "NNV", "NVV", "NNNV", "NS"]:
             current_query = query + _generate_name_query(description, names, False)
@@ -352,7 +401,7 @@ def get_pg_interessenbindungen_managed_by_import(group_type, database):
         INNER JOIN parlamentarier parl ON ib.parlamentarier_id = parl.id
         WHERE org.rechtsform = '{}'
         AND ib.updated_by_import IS NOT NULL
-        AND (ib.bis IS NULL OR ib.bis > NOW());
+        AND (ib.bis IS NULL OR ib.bis >= NOW());
         """.format("Parlamentarische Freundschaftsgruppe" if group_type == 'friendship_group' else "Parlamentarische Gruppe")
 
         cursor.execute(query)
@@ -425,7 +474,7 @@ def get_guests(conn, parlamentarier_id):
         SELECT person_id, funktion, id
         FROM zutrittsberechtigung
         WHERE parlamentarier_id = '{0}'
-        AND (bis IS NULL OR bis > NOW())
+        AND (bis IS NULL OR bis >= NOW())
         """.format(parlamentarier_id)
 
         # get additional information for loaded guest
@@ -439,6 +488,9 @@ def get_guests(conn, parlamentarier_id):
 
         cursor.execute(guest_query)
         existing_guests = cursor.fetchall()
+
+        if (count_guests := len(existing_guests)) > 2:
+            raise Exception("DATA INTEGRITY FAILURE! Too many guests in DB: {}, parlamentarier_id={}".format(count_guests, parlamentarier_id))
 
         existing_guest_1 = extract_existing_guest(
             conn, *existing_guests[0]) if len(existing_guests) > 0 else None
@@ -492,7 +544,7 @@ def get_active_parlamentarier(conn):
         query = """
         SELECT id, nachname, vorname
         FROM parlamentarier
-        WHERE (im_rat_bis IS NULL OR im_rat_bis > NOW())
+        WHERE (im_rat_bis IS NULL OR im_rat_bis >= NOW())
         """
         cursor.execute(query)
         parlamentarier = cursor.fetchall()

@@ -86,6 +86,9 @@ FULL_DUMP_PARAMETER=''
 DUMP_TYPE_NAME='DATA dump'
 processRetired=''
 
+# set python interpreter, default python3 if not set
+LW_PYTHON="${LW_PYTHON:-python3}"
+
 POSITIONAL=()
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 while test $# -gt 0; do
@@ -434,9 +437,9 @@ if ! $nozb ; then
     last_zb_pdf_nr=''
     last_zb_pdf_sr=''
   fi
-  python3 $zb_script_path/zb_create_json.py $last_zb_pdf_nr $last_zb_pdf_sr
+  $LW_PYTHON $zb_script_path/zb_create_json.py $last_zb_pdf_nr $last_zb_pdf_sr
   echo "Writing zb_delta.sql based on $db..."
-  export ZB_DELTA_FILE=sql/zb_delta_`date +"%Y%m%dT%H%M%S"`.sql; python3 $zb_script_path/zb_create_delta.py --db=$db | tee $ZB_DELTA_FILE
+  export ZB_DELTA_FILE=sql/zb_delta_`date +"%Y%m%dT%H%M%S"`.sql; $LW_PYTHON $zb_script_path/zb_create_delta.py --db=$db | tee $ZB_DELTA_FILE
 
   if $verbose ; then
     echo "Zutrittsberechtigung SQL: $ZB_DELTA_FILE"
@@ -472,9 +475,9 @@ if ! $nopg ; then
   else
     last_pg_pdf=''
   fi
-  python3 $pg_script_path/pg_create_json.py $last_pg_pdf
+  $LW_PYTHON $pg_script_path/pg_create_json.py $last_pg_pdf
   echo "Writing pg_delta.sql..."
-  python3 $pg_script_path/pg_create_delta.py --db=$db | tee $PG_DELTA_FILE
+  $LW_PYTHON $pg_script_path/pg_create_delta.py --db=$db | tee $PG_DELTA_FILE
 
   if ! $automatic ; then
     askContinueYn "Run parlamentarische Freundschaftsgruppen (fpg) python '$db' on '$HOSTNAME'?"
@@ -486,9 +489,9 @@ if ! $nopg ; then
   else
     last_pg_pdf=''
   fi
-  python3 $pg_script_path/pg_create_json.py --group_type friendship $last_pg_pdf
+  $LW_PYTHON $pg_script_path/pg_create_json.py --group_type friendship $last_pg_pdf
   echo "Writing pg_delta.sql..."
-  python3 $pg_script_path/pg_create_delta.py --group_type friendship --db=$db | tee --append $PG_DELTA_FILE
+  $LW_PYTHON $pg_script_path/pg_create_delta.py --group_type friendship --db=$db | tee --append $PG_DELTA_FILE
 
   if $verbose ; then
     echo "Parlamentarische Gruppen SQL: $PG_DELTA_FILE"

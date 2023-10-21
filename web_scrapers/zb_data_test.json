@@ -1,0 +1,348 @@
+[
+  {
+    "names": [
+      "Addor",
+      "Jean-Luc"
+    ],
+    "faction": "V",
+    "canton": "VS",
+    "guests": [
+      {
+        "names": [
+          "Mayer",
+          "Patrick"
+        ],
+        "function": "Collaborateur(rice) personnel(le)"
+      },
+      {
+        "names": [
+          "Perrin",
+          "Yvan"
+        ],
+        "function": "Collaborateur(rice) personnel(le)"
+      }
+    ]
+  },
+  {
+    "names": [
+      "Aebi",
+      "Andreas"
+    ],
+    "faction": "V",
+    "canton": "BE",
+    "guests": [
+      {
+        "names": [
+          "Dorothea",
+          "Aebi-Keller"
+        ],
+        "function": "Gast"
+      },
+      {
+        "names": [
+          "Wyss",
+          "Andreas"
+        ],
+        "function": "Persönliche/r Mitarbeiter/in"
+      }
+    ]
+  },
+  {
+    "names": [
+      "Aebischer",
+      "Matthias"
+    ],
+    "faction": "S",
+    "canton": "BE",
+    "guests": [
+      {
+        "names": [
+          "Bütikofer",
+          "Etienne"
+        ],
+        "function": "Interessenvertreter/in: Bildungsorganisation savoirsuisse"
+      },
+      {
+        "names": [
+          "Merkli",
+          "Christoph"
+        ],
+        "function": "Interessenvertreter/in: Pro Velo Schweiz"
+      }
+    ]
+  },
+  {
+    "names": [
+      "Aeschi",
+      "Thomas"
+    ],
+    "faction": "V",
+    "canton": "ZG",
+    "guests": []
+  },
+  {
+    "names": [
+      "Bendahan",
+      "Samuel"
+    ],
+    "faction": "S",
+    "canton": "VD",
+    "guests": [
+      {
+        "names": [
+          "Francillon",
+          "Alice"
+        ],
+        "function": "Représentant(e) de: Canton de Vaud (Office des affaires extérieures)"
+      },
+      {
+        "names": [
+          "Wyss",
+          "Reto"
+        ],
+        "function": "Représentant(e) de: Schweizerischer Gewerkschaftsbund (SGB)"
+      }
+    ]
+  },
+  {
+    "names": [
+      "Bulliard-Marbach",
+      "Christine"
+    ],
+    "faction": "M-E",
+    "canton": "FR",
+    "guests": [
+      {
+        "names": [
+          "Bulliard",
+          "Daniel"
+        ],
+        "function": "Gast"
+      },
+      {
+        "names": [
+          "Pilloud",
+          "Xavier"
+        ],
+        "function": "Gast"
+      }
+    ]
+  },
+  {
+    "names": [
+      "Cattaneo",
+      "Rocco"
+    ],
+    "faction": "RL",
+    "canton": "TI",
+    "guests": [
+      {
+        "names": [
+          "Aeppli",
+          "Alfred"
+        ],
+        "function": "Gast"
+      },
+      {
+        "names": [
+          "Margaroli-Ferrini",
+          "Daniela"
+        ],
+        "function": "Gast"
+      }
+    ]
+  },
+  {
+    "names": [
+      "Fehlmann",
+      "Rielle",
+      "Laurence"
+    ],
+    "faction": "S",
+    "canton": "GE",
+    "guests": [
+      {
+        "names": [
+          "Ruggia",
+          "Luciano"
+        ],
+        "function": "Représentant(e) de: Association suisse pour la prévention du"
+      },
+      {
+        "names": [
+          "Tomisawa",
+          "Sacra"
+        ],
+        "function": "Représentant(e) de: ellips public affairs & consulting"
+      }
+    ]
+  },
+  {
+    "names": [
+      "Flach",
+      "Beat"
+    ],
+    "faction": "GL",
+    "canton": "AG",
+    "guests": [
+      {
+        "names": [
+          "Kühni",
+          "Philippe",
+          "David",
+          "Martin"
+        ],
+        "function": "Persönliche/r Mitarbeiter/in"
+      },
+      {
+        "names": [
+          "Weidmann",
+          "Yves",
+          "Samuel"
+        ],
+        "function": "Interessenvertreter/in: interpharma iph"
+      }
+    ]
+  },
+  {
+    "names": [
+      "Giacometti",
+      "Anna"
+    ],
+    "faction": "RL",
+    "canton": "GR",
+    "guests": [
+      {
+        "names": [
+          "Falchi",
+          "Melo",
+          "Esquerdo",
+          "Fernanda"
+        ],
+        "function": "Interessenvertreter/in: Schweizerischer Gehörlosenbund SGB-FSS"
+      },
+      {
+        "names": [
+          "Marty",
+          "André"
+        ],
+        "function": "Interessenvertreter/in: Schweizerischer Gehörlosenbund SGB-FSS"
+      }
+    ]
+  },
+  {
+    "names": [
+      "Imark",
+      "Christian"
+    ],
+    "faction": "V",
+    "canton": "SO",
+    "guests": [
+      {
+        "names": [
+          "Borner",
+          "Daniel"
+        ],
+        "function": "Interessenvertreter/in: Gastro Suisse"
+      },
+      {
+        "names": [
+          "Imark-Schmidhalter",
+          "Carmen"
+        ],
+        "function": "Gast"
+      }
+    ]
+  },
+  {
+    "names": [
+      "Locher",
+      "Benguerel",
+      "Sandra"
+    ],
+    "faction": "S",
+    "canton": "GR",
+    "guests": [
+      {
+        "names": [
+          "Dietler",
+          "Christof"
+        ],
+        "function": "Interessenvertreter/in: Mitinhaber pluswert gmbh"
+      },
+      {
+        "names": [
+          "Rösler",
+          "Dagmar"
+        ],
+        "function": "Interessenvertreter/in: Lehrerinnen und Lehrer Schweiz LCH"
+      }
+    ]
+  },
+  {
+    "names": [
+      "Zuberbühler",
+      "David"
+    ],
+    "faction": "V",
+    "canton": "AR",
+    "guests": []
+  },
+  {
+    "names": [
+      "Friedli",
+      "Esther"
+    ],
+    "faction": "V",
+    "canton": "SG",
+    "guests": []
+  },
+  {
+    "names": [
+      "Wismer-Felder",
+      "Priska"
+    ],
+    "faction": "M-E",
+    "canton": "LU",
+    "guests": [
+      {
+        "names": [
+          "Boog",
+          "Luca"
+        ],
+        "function": "Interessenvertreter/in: Die Junge Mitte Kanton Luzern"
+      },
+      {
+        "names": [
+          "Bucher",
+          "Markus"
+        ],
+        "function": ""
+      }
+    ]
+  },
+  {
+    "names": [
+      "Michel",
+      "Matthias"
+    ],
+    "faction": "RL",
+    "canton": "ZG",
+    "guests": [
+      {
+        "names": [
+          "Brun",
+          "Gian"
+        ],
+        "function": "Persönliche/r Mitarbeiter/in"
+      },
+      {
+        "names": [
+          "Mühlethaler",
+          "Jan"
+        ],
+        "function": "Interessenvertreter/in: Schweizerischer Versicherungsverband SVV"
+      }
+    ]
+  }
+]

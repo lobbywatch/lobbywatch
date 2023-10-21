@@ -1,5 +1,6 @@
 requests
 # mysqlclient
 mariadb
-PyPDF2
+pypdf
 guess_language-spirit
+pytest
