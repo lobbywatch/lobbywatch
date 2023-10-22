@@ -17,7 +17,8 @@
 # Include common functions
 . common.sh
 
-enable_fail_onerror_no_vars_check
+# enable_fail_onerror_no_vars_check
+enable_fail_onerror_no_vars_no_pipe
 
 PHP="php -d error_reporting=E_ALL"
 LOCAL_PHP="php -d error_reporting=E_ALL"
@@ -104,7 +105,7 @@ while test $# -gt 0; do
                         echo "-d, --downloadallbak             Download all remote backups"
                         echo "-f, --full-dump                  Import full DB dump which replaces the current DB"
                         echo "-i, --onlyimport                 Import last remote prod backup, no backup (implies -B, production update not possible)"
-                        echo "-D, --no-dl-pdf                  No download PDFs, use last PDFs"
+                        echo "-D, --no-dl-pdf                  No download PDFs, use latest PDFs from backup"
                         echo "-r, --refresh                    Refresh views"
                         echo "-P, --noparlam                   Do not run parlamentarier script"
                         echo "-R, --noretired                  Do not sync retired parlamentarier"
@@ -429,10 +430,13 @@ if ! $nozb ; then
   fi
   mkdir -p web_scrapers/backup web_scrapers/archive
   echo "Writing zb.json..."
-  if $lastpdf ; then
-    last_zb_pdf_nr=$(ls -t web_scrapers/backup/*zutrittsberechtigte-nr.pdf | head -1)
-    last_zb_pdf_sr=$(ls -t web_scrapers/backup/*zutrittsberechtigte-sr.pdf | head -1)
-    echo "Last PDFs $last_zb_pdf_nr $last_zb_pdf_sr"
+  if $lastpdf; then
+    echo "Use latest zb PDF by filename from web_scrapers/backup/"
+    # -r: reverse order
+    # -t: by time
+    last_zb_pdf_nr=$(ls -r web_scrapers/backup/*zutrittsberechtigte-nr.pdf | head -1)
+    last_zb_pdf_sr=$(ls -r web_scrapers/backup/*zutrittsberechtigte-sr.pdf | head -1)
+    echo "Latest PDFs $last_zb_pdf_nr $last_zb_pdf_sr"
   else
     last_zb_pdf_nr=''
     last_zb_pdf_sr=''
