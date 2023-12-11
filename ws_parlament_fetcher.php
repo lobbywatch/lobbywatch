@@ -605,13 +605,15 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
 
     if (!empty($img_content) && ($convert_images || $download_images || $id === NEW_ID || empty($parlamentarier_db_obj->parlament_number))) {
       $filename = "$val";
-      $img = "$img_path/gross/$filename";
-      create_parent_dir_if_not_exists($img);
-      if (file_exists("$img_path/original/$filename") && filesize("$img_path/original/$filename") > 0) {
-        exec("/usr/bin/convert $img_path/original/$filename -filter Lanczos -resize 150x211 -quality 90 $img");
-      } else {
-        exec("/usr/bin/convert $img_path/portrait-260/$filename -filter Lanczos -resize 150x211 -quality 90 $img");
-        $fields[] = "**originalImageMissing(convert)** ";
+      foreach (["gross" => "150x211", "klein" => "44x62"] as $size => $img_size) {
+        $img = "$img_path/$size/$filename";
+        create_parent_dir_if_not_exists($img);
+        if (file_exists("$img_path/original/$filename") && filesize("$img_path/original/$filename") > 0) {
+          exec("/usr/bin/convert $img_path/original/$filename -filter Lanczos -resize $img_size -quality 90 $img");
+        } else {
+          exec("/usr/bin/convert $img_path/portrait-260/$filename -filter Lanczos -resize $img_size -quality 90 $img");
+          $fields[] = "**originalImageMissing(convert)** ";
+        }
       }
 
       // Imagemagick is not available in XAMPP
