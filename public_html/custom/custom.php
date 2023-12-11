@@ -747,6 +747,10 @@ function getFullUsername($user) {
   	  return 'Céline Graf';
     case 'samuel' :
   	  return 'Samuel Meier';
+    case 'fabian' :
+  	  return 'Fabian Strässle';
+    case 'alice' :
+  	  return 'Alice Kohli';
     default:
   	  return '';
   }
@@ -1333,6 +1337,7 @@ function isFullWorkflowUser() {
   4, // thomas
   // 5, // rebecca
   // 6, // bane
+  12, // Alice Kohli
   18, // philippe
   // 37, // Graf, Céline Graf
   // 63, // Flavia, Von Gunten
