@@ -583,7 +583,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
       $fields[] = "$field $msg";
    }
 
-    if ($download_images || $id === NEW_ID) {
+    if ($download_images || $id === NEW_ID || empty($parlamentarier_db_obj->parlament_number)) {
       $url = "https://www.parlament.ch/SiteCollectionImages/profil/original/$filename";
       $img = "$img_path/original/$filename";
       create_parent_dir_if_not_exists($img);
@@ -603,8 +603,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
       $fields[] = "downloadImage";
     }
 
-    if ($convert_images || $download_images || $id === NEW_ID) {
-
+    if (!empty($img_content) && ($convert_images || $download_images || $id === NEW_ID || empty($parlamentarier_db_obj->parlament_number))) {
       $filename = "$val";
       $img = "$img_path/gross/$filename";
       create_parent_dir_if_not_exists($img);
@@ -1285,6 +1284,7 @@ function getMilGradId($militaryGrade) {
     case 'Adjutant h UOF aD': // fallthrough
     case 'Adjutant Unteroffizier': return 11;
     case 'Stabsadjutant': return 12;
+    case 'Stabsadjudant': return 12; // Added to support typo
     case 'Hauptadjutant': return 13;
     case 'Chefadjutant': return 14;
     case 'Leutnant': return 15;
@@ -1775,7 +1775,7 @@ function parlamentarierOhneBiografieID() {
   $i = 0;
   foreach($res as $obj) {
     $i++;
-    print("$i. $obj->vorname $obj->nachname id=$obj->id\n");
+    print("$i. $obj->nachname, $obj->vorname id=$obj->id\n");
   }
   print("Parlamentarier ohne Biografie-ID Ende\n");
   print("------------------------------------------------*/\n\n");
