@@ -30,11 +30,23 @@ class MemberOfParliament(Entity):
         # this entire text is passed into the constructor
         full_name = self.clean_string(s)
         self.names = split_names(full_name)
+        self.names = self.fix_names(self.names)
+
+    def fix_names(self, names):
+        if names == ['Docourt', 'Ducommun-', 'dit-Boudry', 'Martine']:
+            return ['Docourt', 'Martine']
+        elif names == ['Bally', 'Frehner', 'Maja']:
+            return ['Bally', 'Maya']
+        else:
+            return names
 
     # <faction>/<canton>
     def set_faction_and_canton(self, s):
         faction_and_canton = s.split("/")
         self.faction = faction_and_canton[0].strip()
+        # Hack for wrong faction
+        if self.faction == 'los' and self.names == ['Poggia', 'Mauro']:
+            self.faction = 'V'
         self.canton = faction_and_canton[1].strip()
 
         # TODO remove
@@ -52,6 +64,7 @@ class MemberOfParliament(Entity):
     def append_names(self, s):
         names = self.clean_string(s)
         self.names += split_names(names)
+        self.names = self.fix_names(self.names)
 
 # represents a guest of a member of parliament
 class Guest(Entity):
