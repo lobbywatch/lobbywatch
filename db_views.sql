@@ -1101,23 +1101,22 @@ FROM `v_organisation_simple` organisation
 LEFT JOIN `v_interessengruppe` interessengruppe
 ON (organisation.interessengruppe_id = interessengruppe.id OR organisation.interessengruppe2_id = interessengruppe.id OR organisation.interessengruppe3_id = interessengruppe.id);
 
---  DROP TABLE IF EXISTS `mv_organisation_medium`;
---  CREATE TABLE IF NOT EXISTS `mv_organisation_medium`
---  ENGINE = InnoDB
---  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
---  COMMENT='Materialzed view for v_organisation_medium'
---  AS SELECT * FROM `v_organisation_medium_raw`;
---  ALTER TABLE `mv_organisation_medium`
---  ADD PRIMARY KEY (`id`),
---  ADD KEY `idx_id_freigabe` (`id`, `freigabe_datum`),
---  ADD KEY `idx_name_de` (`name_de`, `freigabe_datum`),
---  ADD KEY `idx_name_fr` (`name_fr`, `freigabe_datum`),
---  ADD KEY `idx_name_it` (`name_it`, `freigabe_datum`),
---  ADD KEY `idx_anzeige_name` (`anzeige_name`, `freigabe_datum`),
---  CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
-
---  CREATE OR REPLACE VIEW `v_organisation_medium` AS
---  SELECT * FROM `mv_organisation_medium_raw`;
+DROP TABLE IF EXISTS `mv_organisation_medium`;
+CREATE TABLE IF NOT EXISTS `mv_organisation_medium`
+ENGINE = InnoDB
+DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+COMMENT='Materialzed view for v_organisation_medium'
+AS SELECT * FROM `v_organisation_medium_raw`;
+ALTER TABLE `mv_organisation_medium`
+ADD PRIMARY KEY (`id`),
+ADD KEY `idx_id_freigabe` (`id`, `freigabe_datum`),
+ADD KEY `idx_name_de` (`name_de`, `freigabe_datum`),
+ADD KEY `idx_name_fr` (`name_fr`, `freigabe_datum`),
+ADD KEY `idx_name_it` (`name_it`, `freigabe_datum`),
+ADD KEY `idx_anzeige_name` (`anzeige_name`, `freigabe_datum`),
+CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+CREATE OR REPLACE VIEW `v_organisation_medium` AS
+SELECT * FROM `mv_organisation_medium`;
 
 CREATE OR REPLACE VIEW `v_parlamentarier_simple` AS
 SELECT
@@ -1214,7 +1213,7 @@ IF(organisation.vernehmlassung IN ('immer', 'punktuell')
 ) wirksamkeit,
 parlamentarier.im_rat_seit as parlamentarier_im_rat_seit
 FROM `v_interessenbindung_simple` interessenbindung
-INNER JOIN `v_organisation_medium_raw` organisation
+INNER JOIN `v_organisation_medium` organisation
 ON interessenbindung.organisation_id = organisation.id
 INNER JOIN `v_parlamentarier_simple` parlamentarier
 ON interessenbindung.parlamentarier_id = parlamentarier.id;
@@ -1229,7 +1228,7 @@ IF((organisation.vernehmlassung IN ('immer', 'punktuell')
   AND mandat.art IN ('taetig','beirat','finanziell'))
   OR (mandat.art IN ('geschaeftsfuehrend','vorstand')), 'mittel', 'tief')) wirksamkeit
 FROM `v_mandat_simple` mandat
-INNER JOIN `v_organisation_medium_raw` organisation
+INNER JOIN `v_organisation_medium` organisation
 ON mandat.organisation_id = organisation.id
 INNER JOIN `v_person_simple` person
 ON mandat.person_id = person.id;
@@ -1303,7 +1302,7 @@ WHEN 'mittel' THEN 2
 WHEN 'tief' THEN 1
 ELSE 0
 END AS lobbyeinfluss_index
-FROM `v_organisation_medium_raw` organisation
+FROM `v_organisation_medium` organisation
 LEFT JOIN `v_organisation_lobbyeinfluss_raw` lobbyeinfluss
 ON lobbyeinfluss.id = organisation.id
 LEFT JOIN `v_country` country
@@ -1401,35 +1400,38 @@ LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_mittel_nach_wahl ON
 LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_tief_nach_wahl ON parlamentarier.id = interessenbindung_tief_nach_wahl.parlamentarier_id AND (interessenbindung_tief_nach_wahl.bis IS NULL OR interessenbindung_tief_nach_wahl.bis >= NOW()) AND interessenbindung_tief_nach_wahl.wirksamkeit='tief' AND interessenbindung_tief_nach_wahl.von > parlamentarier.im_rat_seit
 GROUP BY parlamentarier.id;
 
+CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor` AS
+SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
+
 -- mv_parlamentarier_lobbyfaktor is workaround against
 -- Workaround for: ERROR 2013 (HY000): Lost connection to MySQL server during query
 -- later for v_parlamentarier_raw
 
-DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor`;
-CREATE TABLE IF NOT EXISTS `mv_parlamentarier_lobbyfaktor`
-ENGINE = InnoDB
-DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
-COMMENT='Materialzed view for v_parlamentarier_lobbyfaktor'
-AS SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
-ALTER TABLE `mv_parlamentarier_lobbyfaktor`
-ADD PRIMARY KEY (`id`),
-CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
-
-CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor` AS
-SELECT * FROM `mv_parlamentarier_lobbyfaktor`;
-
--- Todo: Replace MAX() with window function (CTE) in MySQL 8.0
-CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor_max_raw` AS
-SELECT
-1 as id,
-MAX(lobbyfaktor.anzahl_interessenbindung_tief) as anzahl_interessenbindung_tief_max,
-MAX(lobbyfaktor.anzahl_interessenbindung_mittel) as anzahl_interessenbindung_mittel_max,
-MAX(lobbyfaktor.anzahl_interessenbindung_hoch) as anzahl_interessenbindung_hoch_max,
-MAX(lobbyfaktor) as lobbyfaktor_max,
-NOW() as refreshed_date
-FROM `v_parlamentarier_lobbyfaktor` lobbyfaktor
--- GROUP BY lobbyfaktor.id
-;
+-- DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor`;
+-- CREATE TABLE IF NOT EXISTS `mv_parlamentarier_lobbyfaktor`
+-- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+-- COMMENT='Materialzed view for v_parlamentarier_lobbyfaktor'
+-- AS SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
+-- ALTER TABLE `mv_parlamentarier_lobbyfaktor`
+-- ADD PRIMARY KEY (`id`),
+-- CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+--
+-- CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor` AS
+-- SELECT * FROM `mv_parlamentarier_lobbyfaktor`;
+--
+-- -- Todo: Replace MAX() with window function (CTE) in MySQL 8.0
+-- CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor_max_raw` AS
+-- SELECT
+-- 1 as id,
+-- MAX(lobbyfaktor.anzahl_interessenbindung_tief) as anzahl_interessenbindung_tief_max,
+-- MAX(lobbyfaktor.anzahl_interessenbindung_mittel) as anzahl_interessenbindung_mittel_max,
+-- MAX(lobbyfaktor.anzahl_interessenbindung_hoch) as anzahl_interessenbindung_hoch_max,
+-- MAX(lobbyfaktor) as lobbyfaktor_max,
+-- NOW() as refreshed_date
+-- FROM `v_parlamentarier_lobbyfaktor` lobbyfaktor
+-- -- GROUP BY lobbyfaktor.id
+-- ;
 
 CREATE OR REPLACE VIEW `v_parlamentarier_transparenz` AS
 SELECT parlamentarier_transparenz.*,
@@ -1666,22 +1668,21 @@ LEFT JOIN v_parlamentarier_transparenz_calculated transparenz ON transparenz.par
 LEFT JOIN v_parlamentarier_transparenz_last_stichdatum_published parlamentarier_transparenz ON parlamentarier_transparenz.parlamentarier_id = parlamentarier.id
   GROUP BY parlamentarier.id;
 
---  DROP TABLE IF EXISTS `mv_parlamentarier_medium`;
---  CREATE TABLE IF NOT EXISTS `mv_parlamentarier_medium`
---  ENGINE = InnoDB
---  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
---  COMMENT='Materialzed view for v_parlamentarier_medium'
---  AS SELECT * FROM `v_parlamentarier_medium_raw`;
---  ALTER TABLE `mv_parlamentarier_medium`
---  ADD PRIMARY KEY (`id`),
---  ADD KEY `idx_id_freigabe_bis` (`id`, `freigabe_datum`, `im_rat_bis`),
---  ADD KEY `idx_id_bis` (`id`, `im_rat_bis`),
---  ADD KEY `idx_anzeige_name_freigabe_bis` (`anzeige_name`, `freigabe_datum`, `im_rat_bis`),
---  ADD KEY `idx_anzeige_name_bis` (`anzeige_name`, `im_rat_bis`),
---  CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
-
---  CREATE OR REPLACE VIEW `v_parlamentarier_medium` AS
---  SELECT * FROM `mv_parlamentarier_medium_raw`;
+DROP TABLE IF EXISTS `mv_parlamentarier_medium`;
+CREATE TABLE IF NOT EXISTS `mv_parlamentarier_medium`
+ENGINE = InnoDB
+DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+COMMENT='Materialzed view for v_parlamentarier_medium'
+AS SELECT * FROM `v_parlamentarier_medium_raw`;
+ALTER TABLE `mv_parlamentarier_medium`
+ADD PRIMARY KEY (`id`),
+ADD KEY `idx_id_freigabe_bis` (`id`, `freigabe_datum`, `im_rat_bis`),
+ADD KEY `idx_id_bis` (`id`, `im_rat_bis`),
+ADD KEY `idx_anzeige_name_freigabe_bis` (`anzeige_name`, `freigabe_datum`, `im_rat_bis`),
+ADD KEY `idx_anzeige_name_bis` (`anzeige_name`, `im_rat_bis`),
+CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+CREATE OR REPLACE VIEW `v_parlamentarier_medium` AS
+SELECT * FROM `mv_parlamentarier_medium`;
 
 CREATE OR REPLACE VIEW `v_parlamentarier_raw` AS
 SELECT parlamentarier.*,
@@ -1697,7 +1698,7 @@ ROUND(lobbyfaktor.lobbyfaktor / lobbyfaktor_max.lobbyfaktor_max, 3) as lobbyfakt
 lobbyfaktor_max.anzahl_interessenbindung_tief_max,
 lobbyfaktor_max.anzahl_interessenbindung_mittel_max,
 lobbyfaktor_max.anzahl_interessenbindung_hoch_max
-FROM `v_parlamentarier_medium_raw` parlamentarier
+FROM `v_parlamentarier_medium` parlamentarier
 LEFT JOIN `v_parlamentarier_lobbyfaktor` lobbyfaktor ON parlamentarier.id = lobbyfaktor.id
 , v_parlamentarier_lobbyfaktor_max_raw lobbyfaktor_max
 GROUP BY parlamentarier.id;
@@ -1893,7 +1894,7 @@ FROM `v_zutrittsberechtigung_simple_compat` zutrittsberechtigung
 -- ON person.id = zutrittsberechtigung.person_id
 LEFT JOIN `v_partei` partei
 ON zutrittsberechtigung.partei_id=partei.id
-LEFT JOIN `v_parlamentarier_raw` parlamentarier
+LEFT JOIN `v_parlamentarier` parlamentarier
 ON parlamentarier.id = zutrittsberechtigung.parlamentarier_id
 LEFT JOIN `v_zutrittsberechtigung_lobbyfaktor_raw` lobbyfaktor ON zutrittsberechtigung.person_id = lobbyfaktor.person_id
 LEFT JOIN `v_interessengruppe` interessengruppe ON zutrittsberechtigung.beruf_interessengruppe_id = interessengruppe.id
@@ -1949,7 +1950,7 @@ organisation.lobbyeinfluss organisation_lobbyeinfluss,
 -- parlamentarier.lobbyfaktor parlamentarier_lobbyfaktor,
 NOW() as refreshed_date
 FROM `v_mandat_medium_raw` mandat
-INNER JOIN `v_organisation_raw` organisation
+INNER JOIN `v_organisation` organisation
 ON mandat.organisation_id = organisation.id;
 
 DROP TABLE IF EXISTS `mv_mandat`;
@@ -1986,7 +1987,7 @@ organisation.lobbyeinfluss organisation_lobbyeinfluss,
 -- parlamentarier.lobbyfaktor parlamentarier_lobbyfaktor, -- TODO XXX
 NOW() as refreshed_date
 FROM `v_interessenbindung_medium_raw` interessenbindung
-INNER JOIN `v_organisation_raw` organisation ON interessenbindung.organisation_id = organisation.id
+INNER JOIN `v_organisation` organisation ON interessenbindung.organisation_id = organisation.id
 -- INNER JOIN `v_parlamentarier_raw` parlamentarier ON interessenbindung.parlamentarier_id = parlamentarier.id  -- TODO XXX
 ;
 
