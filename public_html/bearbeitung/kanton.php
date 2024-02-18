@@ -2706,7 +2706,7 @@
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
+                    new StringField('parteifunktion'),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
                     new DateField('im_rat_seit', true),

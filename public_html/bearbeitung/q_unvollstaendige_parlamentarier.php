@@ -59,20 +59,20 @@
               $selectQuery, $insertQuery, $updateQuery, $deleteQuery, 'q_unvollstaendige_parlamentarier');
             $this->dataset->addFields(
                 array(
-                    new IntegerField('id', true, true),
-                    new StringField('nachname', true),
-                    new StringField('vorname', true),
+                    new IntegerField('id', false, true),
+                    new StringField('nachname'),
+                    new StringField('vorname'),
                     new StringField('vorname_kurz'),
                     new StringField('zweiter_vorname'),
                     new StringField('buergerorte'),
-                    new IntegerField('rat_id', true),
-                    new IntegerField('kanton_id', true),
+                    new IntegerField('rat_id'),
+                    new IntegerField('kanton_id'),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
+                    new StringField('parteifunktion'),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
-                    new DateField('im_rat_seit', true),
+                    new DateField('im_rat_seit'),
                     new DateField('im_rat_bis'),
                     new DateField('ratswechsel'),
                     new DateField('ratsunterbruch_von'),
@@ -101,9 +101,9 @@
                     new StringField('homepage_2'),
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
-                    new StringField('parlament_beruf_json'),
+                    new BlobField('parlament_beruf_json'),
                     new StringField('parlament_interessenbindungen'),
-                    new StringField('parlament_interessenbindungen_json'),
+                    new BlobField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
                     new StringField('twitter_name'),
                     new StringField('instagram_profil'),
@@ -137,10 +137,10 @@
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),
                     new DateTimeField('freigabe_datum'),
-                    new StringField('created_visa', true),
-                    new DateTimeField('created_date', true),
+                    new StringField('created_visa'),
+                    new DateTimeField('created_date'),
                     new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true)
+                    new DateTimeField('updated_date')
                 )
             );
             $this->dataset->AddLookupField('rat_id', 'rat', new IntegerField('id'), new StringField('abkuerzung', false, false, false, false, 'rat_id_abkuerzung', 'rat_id_abkuerzung_rat'), 'rat_id_abkuerzung_rat');
@@ -1018,20 +1018,6 @@
             $filterBuilder->addColumn(
                 $columns['parlament_interessenbindungen_json'],
                 array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
-                    FilterConditionOperator::BEGINS_WITH => $main_editor,
-                    FilterConditionOperator::ENDS_WITH => $main_editor,
-                    FilterConditionOperator::IS_LIKE => $main_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -1066,20 +1052,6 @@
             $filterBuilder->addColumn(
                 $columns['parlament_beruf_json'],
                 array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
-                    FilterConditionOperator::BEGINS_WITH => $main_editor,
-                    FilterConditionOperator::ENDS_WITH => $main_editor,
-                    FilterConditionOperator::IS_LIKE => $main_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )

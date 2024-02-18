@@ -1400,38 +1400,38 @@ LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_mittel_nach_wahl ON
 LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_tief_nach_wahl ON parlamentarier.id = interessenbindung_tief_nach_wahl.parlamentarier_id AND (interessenbindung_tief_nach_wahl.bis IS NULL OR interessenbindung_tief_nach_wahl.bis >= NOW()) AND interessenbindung_tief_nach_wahl.wirksamkeit='tief' AND interessenbindung_tief_nach_wahl.von > parlamentarier.im_rat_seit
 GROUP BY parlamentarier.id;
 
-CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor` AS
-SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
+-- CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor` AS
+-- SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
 
 -- mv_parlamentarier_lobbyfaktor is workaround against
 -- Workaround for: ERROR 2013 (HY000): Lost connection to MySQL server during query
 -- later for v_parlamentarier_raw
 
--- DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor`;
--- CREATE TABLE IF NOT EXISTS `mv_parlamentarier_lobbyfaktor`
--- ENGINE = InnoDB
--- DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
--- COMMENT='Materialzed view for v_parlamentarier_lobbyfaktor'
--- AS SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
--- ALTER TABLE `mv_parlamentarier_lobbyfaktor`
--- ADD PRIMARY KEY (`id`),
--- CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
---
--- CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor` AS
--- SELECT * FROM `mv_parlamentarier_lobbyfaktor`;
---
--- -- Todo: Replace MAX() with window function (CTE) in MySQL 8.0
--- CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor_max_raw` AS
--- SELECT
--- 1 as id,
--- MAX(lobbyfaktor.anzahl_interessenbindung_tief) as anzahl_interessenbindung_tief_max,
--- MAX(lobbyfaktor.anzahl_interessenbindung_mittel) as anzahl_interessenbindung_mittel_max,
--- MAX(lobbyfaktor.anzahl_interessenbindung_hoch) as anzahl_interessenbindung_hoch_max,
--- MAX(lobbyfaktor) as lobbyfaktor_max,
--- NOW() as refreshed_date
--- FROM `v_parlamentarier_lobbyfaktor` lobbyfaktor
--- -- GROUP BY lobbyfaktor.id
--- ;
+DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor`;
+CREATE TABLE IF NOT EXISTS `mv_parlamentarier_lobbyfaktor`
+ENGINE = InnoDB
+DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+COMMENT='Materialzed view for v_parlamentarier_lobbyfaktor'
+AS SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
+ALTER TABLE `mv_parlamentarier_lobbyfaktor`
+ADD PRIMARY KEY (`id`),
+CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+
+CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor` AS
+SELECT * FROM `mv_parlamentarier_lobbyfaktor`;
+
+-- Todo: Replace MAX() with window function (CTE) in MySQL 8.0
+CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor_max_raw` AS
+SELECT
+1 as id,
+MAX(lobbyfaktor.anzahl_interessenbindung_tief) as anzahl_interessenbindung_tief_max,
+MAX(lobbyfaktor.anzahl_interessenbindung_mittel) as anzahl_interessenbindung_mittel_max,
+MAX(lobbyfaktor.anzahl_interessenbindung_hoch) as anzahl_interessenbindung_hoch_max,
+MAX(lobbyfaktor) as lobbyfaktor_max,
+NOW() as refreshed_date
+FROM `v_parlamentarier_lobbyfaktor` lobbyfaktor
+-- GROUP BY lobbyfaktor.id
+;
 
 CREATE OR REPLACE VIEW `v_parlamentarier_transparenz` AS
 SELECT parlamentarier_transparenz.*,

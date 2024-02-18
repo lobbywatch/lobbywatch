@@ -2084,8 +2084,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -2141,8 +2141,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -2198,8 +2198,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -2255,8 +2255,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -2312,8 +2312,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -2560,8 +2560,7 @@
                     new StringField('created_visa', true),
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true),
-                    new StringField('organisation_name_de_rechtsform_unique', true)
+                    new DateTimeField('updated_date', true)
                 )
             );
             $this->dataset->AddLookupField('interessengruppe_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'interessengruppe_id_anzeige_name', 'interessengruppe_id_anzeige_name_v_interessengruppe_simple'), 'interessengruppe_id_anzeige_name_v_interessengruppe_simple');
@@ -2651,7 +2650,6 @@
                 new FilterColumn($this->dataset, 'wikidata_qid', 'wikidata_qid', 'Wikidata Qid'),
                 new FilterColumn($this->dataset, 'linkedin_profil_url', 'linkedin_profil_url', 'Linkedin Profil Url'),
                 new FilterColumn($this->dataset, 'xing_profil_name', 'xing_profil_name', 'Xing Profil Name'),
-                new FilterColumn($this->dataset, 'organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique'),
                 new FilterColumn($this->dataset, 'ehra_id', 'ehra_id', 'Ehra Id'),
                 new FilterColumn($this->dataset, 'ch_id', 'ch_id', 'Ch Id'),
                 new FilterColumn($this->dataset, 'bfs_gemeinde_nr', 'bfs_gemeinde_nr', 'Bfs Gemeindenummer')
@@ -2708,7 +2706,6 @@
                 ->addColumn($columns['wikidata_qid'])
                 ->addColumn($columns['linkedin_profil_url'])
                 ->addColumn($columns['xing_profil_name'])
-                ->addColumn($columns['organisation_name_de_rechtsform_unique'])
                 ->addColumn($columns['ehra_id'])
                 ->addColumn($columns['ch_id'])
                 ->addColumn($columns['bfs_gemeinde_nr']);
@@ -3889,30 +3886,6 @@
                 )
             );
             
-            $main_editor = new TextEdit('organisation_name_de_rechtsform_unique');
-            
-            $filterBuilder->addColumn(
-                $columns['organisation_name_de_rechtsform_unique'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
-                    FilterConditionOperator::BEGINS_WITH => $main_editor,
-                    FilterConditionOperator::ENDS_WITH => $main_editor,
-                    FilterConditionOperator::IS_LIKE => $main_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
-            
             $main_editor = new TextEdit('ehra_id_edit');
             
             $filterBuilder->addColumn(
@@ -4406,15 +4379,6 @@
             $column->setDescription('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link');
             $grid->AddViewColumn($column);
             //
-            // View column for organisation_name_de_rechtsform_unique field
-            //
-            $column = new TextViewColumn('organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->setDescription('Kombination aus name_de, rechtsform und inaktiv muss eindeutig sein. (Fachlicher unique constraint)');
-            $grid->AddViewColumn($column);
-            //
             // View column for ehra_id field
             //
             $column = new NumberViewColumn('ehra_id', 'ehra_id', 'Ehra Id', $this->dataset);
@@ -4825,14 +4789,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for organisation_name_de_rechtsform_unique field
-            //
-            $column = new TextViewColumn('organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for ehra_id field
             //
             $column = new NumberViewColumn('ehra_id', 'ehra_id', 'Ehra Id', $this->dataset);
@@ -4985,8 +4941,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -5042,8 +4998,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -5099,8 +5055,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -5459,16 +5415,6 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for organisation_name_de_rechtsform_unique field
-            //
-            $editor = new TextAreaEdit('organisation_name_de_rechtsform_unique_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Organisation Name De Rechtsform Unique', 'organisation_name_de_rechtsform_unique', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
             // Edit column for ehra_id field
             //
             $editor = new TextEdit('ehra_id_edit');
@@ -5594,8 +5540,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -5651,8 +5597,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -5708,8 +5654,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -6194,16 +6140,6 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
-            // Edit column for organisation_name_de_rechtsform_unique field
-            //
-            $editor = new TextAreaEdit('organisation_name_de_rechtsform_unique_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Organisation Name De Rechtsform Unique', 'organisation_name_de_rechtsform_unique', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
             // Edit column for ehra_id field
             //
             $editor = new TextEdit('ehra_id_edit');
@@ -6362,8 +6298,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -6419,8 +6355,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -6476,8 +6412,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -6832,16 +6768,6 @@
             $editor = new TextAreaEdit('xing_profil_name_edit', 50, 8);
             $editColumn = new CustomEditColumn('Xing Profil Name', 'xing_profil_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for organisation_name_de_rechtsform_unique field
-            //
-            $editor = new TextAreaEdit('organisation_name_de_rechtsform_unique_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Organisation Name De Rechtsform Unique', 'organisation_name_de_rechtsform_unique', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
-            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -7259,14 +7185,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for organisation_name_de_rechtsform_unique field
-            //
-            $column = new TextViewColumn('organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for ehra_id field
             //
             $column = new NumberViewColumn('ehra_id', 'ehra_id', 'Ehra Id', $this->dataset);
@@ -7668,14 +7586,6 @@
             // View column for xing_profil_name field
             //
             $column = new TextViewColumn('xing_profil_name', 'xing_profil_name', 'Xing Profil Name', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for organisation_name_de_rechtsform_unique field
-            //
-            $column = new TextViewColumn('organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddExportColumn($column);
@@ -8131,14 +8041,6 @@
             $grid->AddCompareColumn($column);
             
             //
-            // View column for organisation_name_de_rechtsform_unique field
-            //
-            $column = new TextViewColumn('organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $grid->AddCompareColumn($column);
-            
-            //
             // View column for ehra_id field
             //
             $column = new NumberViewColumn('ehra_id', 'ehra_id', 'Ehra Id', $this->dataset);
@@ -8293,8 +8195,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -8340,8 +8242,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -8387,8 +8289,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -8434,8 +8336,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -8481,8 +8383,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -8528,8 +8430,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -8575,8 +8477,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -8759,7 +8661,7 @@
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
+                    new StringField('parteifunktion'),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
                     new DateField('im_rat_seit', true),
@@ -12105,8 +12007,8 @@
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -12177,8 +12079,8 @@
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -12293,8 +12195,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -13053,8 +12955,8 @@
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -13125,8 +13027,8 @@
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -13241,8 +13143,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -14134,8 +14036,8 @@
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -14206,8 +14108,8 @@
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -14322,8 +14224,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -16792,8 +16694,8 @@
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -16854,8 +16756,8 @@
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -16901,8 +16803,8 @@
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -16948,8 +16850,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -18331,8 +18233,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -18599,8 +18501,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -18848,8 +18750,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -19745,8 +19647,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -19802,8 +19704,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -19859,8 +19761,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -19916,8 +19818,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -19973,8 +19875,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('angaben_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')

@@ -67,7 +67,6 @@
                     new DateTimeField('created_date'),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date'),
-                    new StringField('in_rat_parlamentarier_rat_unique'),
                     new IntegerField('log_id', true, true, true),
                     new StringField('action', true),
                     new StringField('state'),
@@ -126,7 +125,6 @@
                 new FilterColumn($this->dataset, 'created_date', 'created_date', 'Created Date'),
                 new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', 'Updated Visa'),
                 new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date'),
-                new FilterColumn($this->dataset, 'in_rat_parlamentarier_rat_unique', 'in_rat_parlamentarier_rat_unique', 'In Rat Parlamentarier Rat Unique'),
                 new FilterColumn($this->dataset, 'log_id', 'log_id', 'Log Id'),
                 new FilterColumn($this->dataset, 'action', 'action', 'Action'),
                 new FilterColumn($this->dataset, 'state', 'state', 'State'),
@@ -156,7 +154,6 @@
                 ->addColumn($columns['created_date'])
                 ->addColumn($columns['updated_visa'])
                 ->addColumn($columns['updated_date'])
-                ->addColumn($columns['in_rat_parlamentarier_rat_unique'])
                 ->addColumn($columns['log_id'])
                 ->addColumn($columns['action'])
                 ->addColumn($columns['state'])
@@ -615,31 +612,6 @@
                 )
             );
             
-            $main_editor = new TextEdit('in_rat_parlamentarier_rat_unique_edit');
-            $main_editor->SetMaxLength(45);
-            
-            $filterBuilder->addColumn(
-                $columns['in_rat_parlamentarier_rat_unique'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
-                    FilterConditionOperator::BEGINS_WITH => $main_editor,
-                    FilterConditionOperator::ENDS_WITH => $main_editor,
-                    FilterConditionOperator::IS_LIKE => $main_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
-            
             $main_editor = new TextEdit('log_id_edit');
             
             $filterBuilder->addColumn(
@@ -945,14 +917,6 @@
             $column->setDescription('Abgeändert am');
             $grid->AddViewColumn($column);
             //
-            // View column for in_rat_parlamentarier_rat_unique field
-            //
-            $column = new TextViewColumn('in_rat_parlamentarier_rat_unique', 'in_rat_parlamentarier_rat_unique', 'In Rat Parlamentarier Rat Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->setDescription('Kombination aus parlamentarier_id, rat_id und bis muss eindeutig sein. (Fachlicher unique constraint)');
-            $grid->AddViewColumn($column);
-            //
             // View column for log_id field
             //
             $column = new TextViewColumn('log_id', 'log_id', 'Log Id', $this->dataset);
@@ -1130,13 +1094,6 @@
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for in_rat_parlamentarier_rat_unique field
-            //
-            $column = new TextViewColumn('in_rat_parlamentarier_rat_unique', 'in_rat_parlamentarier_rat_unique', 'In Rat Parlamentarier Rat Unique', $this->dataset);
-            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1340,13 +1297,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for in_rat_parlamentarier_rat_unique field
-            //
-            $column = new TextViewColumn('in_rat_parlamentarier_rat_unique', 'in_rat_parlamentarier_rat_unique', 'In Rat Parlamentarier Rat Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for log_id field
             //
             $column = new TextViewColumn('log_id', 'log_id', 'Log Id', $this->dataset);
@@ -1518,13 +1468,6 @@
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for in_rat_parlamentarier_rat_unique field
-            //
-            $column = new TextViewColumn('in_rat_parlamentarier_rat_unique', 'in_rat_parlamentarier_rat_unique', 'In Rat Parlamentarier Rat Unique', $this->dataset);
-            $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
@@ -1851,7 +1794,7 @@
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
+                    new StringField('parteifunktion'),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
                     new DateField('im_rat_seit', true),
@@ -1929,14 +1872,14 @@
                     new IntegerField('aktiv'),
                     new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_seit_unix'),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix', true),
+                    new IntegerField('von_unix'),
                     new IntegerField('bis_unix')
                 )
             );
@@ -1992,8 +1935,8 @@
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -2025,7 +1968,7 @@
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
+                    new StringField('parteifunktion'),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
                     new DateField('im_rat_seit', true),
@@ -2103,14 +2046,14 @@
                     new IntegerField('aktiv'),
                     new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_seit_unix'),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix', true),
+                    new IntegerField('von_unix'),
                     new IntegerField('bis_unix')
                 )
             );
@@ -2314,8 +2257,7 @@
                     new StringField('created_visa', true),
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true),
-                    new StringField('in_rat_parlamentarier_rat_unique', true)
+                    new DateTimeField('updated_date', true)
                 )
             );
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
@@ -2367,8 +2309,7 @@
                 new FilterColumn($this->dataset, 'created_visa', 'created_visa', 'Created Visa'),
                 new FilterColumn($this->dataset, 'created_date', 'created_date', 'Created Date'),
                 new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', 'Updated Visa'),
-                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date'),
-                new FilterColumn($this->dataset, 'in_rat_parlamentarier_rat_unique', 'in_rat_parlamentarier_rat_unique', 'In Rat Parlamentarier Rat Unique')
+                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date')
             );
         }
     
@@ -3237,7 +3178,7 @@
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
+                    new StringField('parteifunktion'),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
                     new DateField('im_rat_seit', true),
@@ -3315,14 +3256,14 @@
                     new IntegerField('aktiv'),
                     new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_seit_unix'),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix', true),
+                    new IntegerField('von_unix'),
                     new IntegerField('bis_unix')
                 )
             );
@@ -3387,8 +3328,8 @@
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -3429,7 +3370,7 @@
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
+                    new StringField('parteifunktion'),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
                     new DateField('im_rat_seit', true),
@@ -3507,14 +3448,14 @@
                     new IntegerField('aktiv'),
                     new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_seit_unix'),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix', true),
+                    new IntegerField('von_unix'),
                     new IntegerField('bis_unix')
                 )
             );
@@ -3700,7 +3641,7 @@
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
+                    new StringField('parteifunktion'),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
                     new DateField('im_rat_seit', true),
@@ -3778,14 +3719,14 @@
                     new IntegerField('aktiv'),
                     new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_seit_unix'),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix', true),
+                    new IntegerField('von_unix'),
                     new IntegerField('bis_unix')
                 )
             );
@@ -3850,8 +3791,8 @@
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -3892,7 +3833,7 @@
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
+                    new StringField('parteifunktion'),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
                     new DateField('im_rat_seit', true),
@@ -3970,14 +3911,14 @@
                     new IntegerField('aktiv'),
                     new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_seit_unix'),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix', true),
+                    new IntegerField('von_unix'),
                     new IntegerField('bis_unix')
                 )
             );
@@ -4168,7 +4109,7 @@
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
+                    new StringField('parteifunktion'),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
                     new DateField('im_rat_seit', true),
@@ -4246,14 +4187,14 @@
                     new IntegerField('aktiv'),
                     new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_seit_unix'),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix', true),
+                    new IntegerField('von_unix'),
                     new IntegerField('bis_unix')
                 )
             );
@@ -4318,8 +4259,8 @@
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -4360,7 +4301,7 @@
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
+                    new StringField('parteifunktion'),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
                     new DateField('im_rat_seit', true),
@@ -4438,14 +4379,14 @@
                     new IntegerField('aktiv'),
                     new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_seit_unix'),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix', true),
+                    new IntegerField('von_unix'),
                     new IntegerField('bis_unix')
                 )
             );
@@ -5099,7 +5040,7 @@
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
+                    new StringField('parteifunktion'),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
                     new DateField('im_rat_seit', true),
@@ -5177,14 +5118,14 @@
                     new IntegerField('aktiv'),
                     new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_seit_unix'),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix', true),
+                    new IntegerField('von_unix'),
                     new IntegerField('bis_unix')
                 )
             );
@@ -5240,8 +5181,8 @@
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -5273,7 +5214,7 @@
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
+                    new StringField('parteifunktion'),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
                     new DateField('im_rat_seit', true),
@@ -5351,14 +5292,14 @@
                     new IntegerField('aktiv'),
                     new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_seit_unix'),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix', true),
+                    new IntegerField('von_unix'),
                     new IntegerField('bis_unix')
                 )
             );
@@ -5388,7 +5329,7 @@
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
+                    new StringField('parteifunktion'),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
                     new DateField('im_rat_seit', true),
@@ -5466,14 +5407,14 @@
                     new IntegerField('aktiv'),
                     new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_seit_unix'),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix', true),
+                    new IntegerField('von_unix'),
                     new IntegerField('bis_unix')
                 )
             );
@@ -5529,8 +5470,8 @@
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -5562,7 +5503,7 @@
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
+                    new StringField('parteifunktion'),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
                     new DateField('im_rat_seit', true),
@@ -5640,14 +5581,14 @@
                     new IntegerField('aktiv'),
                     new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_seit_unix'),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix', true),
+                    new IntegerField('von_unix'),
                     new IntegerField('bis_unix')
                 )
             );
@@ -5677,7 +5618,7 @@
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
+                    new StringField('parteifunktion'),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
                     new DateField('im_rat_seit', true),
@@ -5755,14 +5696,14 @@
                     new IntegerField('aktiv'),
                     new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_seit_unix'),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix', true),
+                    new IntegerField('von_unix'),
                     new IntegerField('bis_unix')
                 )
             );
@@ -5818,8 +5759,8 @@
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -5851,7 +5792,7 @@
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
+                    new StringField('parteifunktion'),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
                     new DateField('im_rat_seit', true),
@@ -5929,14 +5870,14 @@
                     new IntegerField('aktiv'),
                     new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_seit_unix'),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix', true),
+                    new IntegerField('von_unix'),
                     new IntegerField('bis_unix')
                 )
             );
@@ -5966,7 +5907,7 @@
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
+                    new StringField('parteifunktion'),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
                     new DateField('im_rat_seit', true),
@@ -6044,14 +5985,14 @@
                     new IntegerField('aktiv'),
                     new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_seit_unix'),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix', true),
+                    new IntegerField('von_unix'),
                     new IntegerField('bis_unix')
                 )
             );
@@ -6107,8 +6048,8 @@
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -6140,7 +6081,7 @@
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
+                    new StringField('parteifunktion'),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
                     new DateField('im_rat_seit', true),
@@ -6218,14 +6159,14 @@
                     new IntegerField('aktiv'),
                     new IntegerField('published', true),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_seit_unix'),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix', true),
+                    new IntegerField('von_unix'),
                     new IntegerField('bis_unix')
                 )
             );

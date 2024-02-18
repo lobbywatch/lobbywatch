@@ -71,7 +71,6 @@
                     new DateTimeField('created_date'),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date'),
-                    new StringField('organisation_beziehung_organisation_ziel_organisation_art_unique'),
                     new IntegerField('log_id', true, true, true),
                     new StringField('action', true),
                     new StringField('state'),
@@ -137,8 +136,7 @@
                 new FilterColumn($this->dataset, 'action', 'action', 'Action'),
                 new FilterColumn($this->dataset, 'state', 'state', 'State'),
                 new FilterColumn($this->dataset, 'action_date', 'action_date', 'Action Date'),
-                new FilterColumn($this->dataset, 'snapshot_id', 'snapshot_id_beschreibung', 'Snapshot Id'),
-                new FilterColumn($this->dataset, 'organisation_beziehung_organisation_ziel_organisation_art_unique', 'organisation_beziehung_organisation_ziel_organisation_art_unique', 'Organisation Beziehung Organisation Ziel Organisation Art Unique')
+                new FilterColumn($this->dataset, 'snapshot_id', 'snapshot_id_beschreibung', 'Snapshot Id')
             );
         }
     
@@ -2127,10 +2125,9 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new StringField('organisation_name_de_rechtsform_unique', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -2209,10 +2206,9 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new StringField('organisation_name_de_rechtsform_unique', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -2422,8 +2418,7 @@
                     new StringField('created_visa', true),
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true),
-                    new StringField('organisation_beziehung_organisation_ziel_organisation_art_unique', true)
+                    new DateTimeField('updated_date', true)
                 )
             );
             $this->dataset->AddLookupField('organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('searchable_name', false, false, false, false, 'organisation_id_searchable_name', 'organisation_id_searchable_name_v_organisation_simple'), 'organisation_id_searchable_name_v_organisation_simple');
@@ -2478,8 +2473,7 @@
                 new FilterColumn($this->dataset, 'created_visa', 'created_visa', 'Created Visa'),
                 new FilterColumn($this->dataset, 'created_date', 'created_date', 'Created Date'),
                 new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', 'Updated Visa'),
-                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date'),
-                new FilterColumn($this->dataset, 'organisation_beziehung_organisation_ziel_organisation_art_unique', 'organisation_beziehung_organisation_ziel_organisation_art_unique', 'Organisation Beziehung Organisation Ziel Organisation Art Unique')
+                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date')
             );
         }
     
@@ -3530,10 +3524,9 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new StringField('organisation_name_de_rechtsform_unique', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -3636,10 +3629,9 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new StringField('organisation_name_de_rechtsform_unique', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -3905,10 +3897,9 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new StringField('organisation_name_de_rechtsform_unique', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -4011,10 +4002,9 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new StringField('organisation_name_de_rechtsform_unique', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -4294,10 +4284,9 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new StringField('organisation_name_de_rechtsform_unique', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -4400,10 +4389,9 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new StringField('organisation_name_de_rechtsform_unique', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -5264,10 +5252,9 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new StringField('organisation_name_de_rechtsform_unique', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -5346,10 +5333,9 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new StringField('organisation_name_de_rechtsform_unique', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -5428,10 +5414,9 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new StringField('organisation_name_de_rechtsform_unique', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -5510,10 +5495,9 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new StringField('organisation_name_de_rechtsform_unique', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -5592,10 +5576,9 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new StringField('organisation_name_de_rechtsform_unique', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -5674,10 +5657,9 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new StringField('organisation_name_de_rechtsform_unique', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -5756,10 +5738,9 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new StringField('organisation_name_de_rechtsform_unique', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -5838,10 +5819,9 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new StringField('organisation_name_de_rechtsform_unique', true),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')

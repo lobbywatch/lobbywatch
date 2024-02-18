@@ -2807,8 +2807,8 @@
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -3010,7 +3010,7 @@
                     new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion', true),
+                    new StringField('parteifunktion'),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
                     new DateField('im_rat_seit', true),
@@ -6236,8 +6236,8 @@
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -6308,8 +6308,8 @@
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -6424,8 +6424,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -6562,8 +6562,8 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de', true),
                     new StringField('abkuerzung_de', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true)
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix')
                 )
             );
             $editColumn = new LookUpEditColumn(
@@ -7160,8 +7160,8 @@
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -7232,8 +7232,8 @@
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -7348,8 +7348,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -7486,8 +7486,8 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de', true),
                     new StringField('abkuerzung_de', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true)
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix')
                 )
             );
             $editColumn = new LookUpEditColumn(
@@ -8226,8 +8226,8 @@
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -8298,8 +8298,8 @@
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -8414,8 +8414,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -8552,8 +8552,8 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de', true),
                     new StringField('abkuerzung_de', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true)
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix')
                 )
             );
             $editColumn = new LookUpEditColumn(
@@ -10805,8 +10805,8 @@
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -10867,8 +10867,8 @@
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -10914,8 +10914,8 @@
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -10961,8 +10961,8 @@
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -10997,8 +10997,8 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de', true),
                     new StringField('abkuerzung_de', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true)
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix')
                 )
             );
             $handler = new DynamicSearchHandler($lookupDataset, 'filter_builder_partei_parlamentarier_militaerischer_grad_id_search', 'id', 'name', null, 20);
@@ -15227,8 +15227,8 @@
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -15607,8 +15607,8 @@
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -15991,8 +15991,8 @@
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -17233,8 +17233,8 @@
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
                     new IntegerField('published', true),
-                    new IntegerField('created_date_unix', true),
-                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('created_date_unix'),
+                    new IntegerField('updated_date_unix'),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')

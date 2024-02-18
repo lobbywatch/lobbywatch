@@ -4292,3 +4292,147 @@ INSERT INTO bfs_gemeinde SET GDEKT='AG', GDEBZNR=1905, GDENR=4139, GDENAME='Menz
 INSERT INTO bfs_gemeinde SET GDEKT='AG', GDEBZNR=1906, GDENR=4186, GDENAME='Herznach-Ueken', GDENAMK='Herznach-Ueken', GDEBZNA='Bezirk Laufenburg', GDEKTNA='Aargau', GDEMUTDAT='2023-01-01', created_visa='import', updated_visa='import' ON DUPLICATE KEY UPDATE GDEKT='AG', GDEBZNR=1906, GDENR=4186, GDENAME='Herznach-Ueken', GDENAMK='Herznach-Ueken', GDEBZNA='Bezirk Laufenburg', GDEKTNA='Aargau', GDEMUTDAT='2023-01-01', created_visa='import', updated_visa='import';
 INSERT INTO bfs_gemeinde SET GDEKT='JU', GDEBZNR=2602, GDENR=6743, GDENAME='Les Breuleux', GDENAMK='Les Breuleux', GDEBZNA='District des Franches-Montagnes', GDEKTNA='Jura', GDEMUTDAT='2023-01-01', created_visa='import', updated_visa='import' ON DUPLICATE KEY UPDATE GDEKT='JU', GDEBZNR=2602, GDENR=6743, GDENAME='Les Breuleux', GDENAMK='Les Breuleux', GDEBZNA='District des Franches-Montagnes', GDEKTNA='Jura', GDEMUTDAT='2023-01-01', created_visa='import', updated_visa='import';
 INSERT INTO bfs_gemeinde SET GDEKT='JU', GDEBZNR=2603, GDENR=6811, GDENAME='Damphreux-Lugnez', GDENAMK='Damphreux-Lugnez', GDEBZNA='District de Porrentruy', GDEKTNA='Jura', GDEMUTDAT='2023-01-01', created_visa='import', updated_visa='import' ON DUPLICATE KEY UPDATE GDEKT='JU', GDEBZNR=2603, GDENR=6811, GDENAME='Damphreux-Lugnez', GDENAMK='Damphreux-Lugnez', GDEBZNA='District de Porrentruy', GDEKTNA='Jura', GDEMUTDAT='2023-01-01', created_visa='import', updated_visa='import';
+
+-- 16.12.2023 remove VIRTUAL NOT NULL due to incompatibility with MariaDB 10.6
+
+-- https://jira.mariadb.org/browse/MDEV-10964
+
+ALTER TABLE `in_fraktion`
+  CHANGE `updated_visa` `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgeändert von',
+  CHANGE `in_fraktion_parlamentarier_fraktion_unique` `in_fraktion_parlamentarier_fraktion_unique` VARCHAR(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci AS (concat_ws('_',`parlamentarier_id`,`fraktion_id`,ifnull(`bis`,'9999-12-31'))) VIRTUAL COMMENT 'Kombination aus parlamentarier_id, fraktion_id und bis muss eindeutig sein. (Fachlicher unique constraint)';
+
+ALTER TABLE `in_kommission`
+  CHANGE `in_kommission_parlamentarier_kommission_funktion_unique` `in_kommission_parlamentarier_kommission_funktion_unique` VARCHAR(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`parlamentarier_id`,`kommission_id`,`funktion`,ifnull(`bis`,'9999-12-31'))) VIRTUAL COMMENT 'Kombination aus parlamentarier_id, kommission_id, funktion und bis muss eindeutig sein. (Fachlicher unique constraint)';
+
+ALTER TABLE `in_partei`
+  CHANGE `in_partei_parlamentarier_partei_unique` `in_partei_parlamentarier_partei_unique` VARCHAR(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`parlamentarier_id`,`partei_id`,ifnull(`bis`,'9999-12-31'))) VIRTUAL COMMENT 'Kombination aus parlamentarier_id, partei_id und bis muss eindeutig sein. (Fachlicher unique constraint)';
+
+ALTER TABLE `in_rat`
+  CHANGE `in_rat_parlamentarier_rat_unique` `in_rat_parlamentarier_rat_unique` VARCHAR(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`parlamentarier_id`,`rat_id`,ifnull(`bis`,'9999-12-31'))) VIRTUAL COMMENT 'Kombination aus parlamentarier_id, rat_id und bis muss eindeutig sein. (Fachlicher unique constraint)';
+
+ALTER TABLE `organisation`
+  CHANGE `organisation_name_de_rechtsform_unique` `organisation_name_de_rechtsform_unique` VARCHAR(195) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`name_de`,`rechtsform`,ifnull(`inaktiv`,FALSE))) VIRTUAL COMMENT 'Kombination aus name_de, rechtsform und inaktiv muss eindeutig sein. (Fachlicher unique constraint)';
+
+ALTER TABLE `organisation_beziehung`
+  CHANGE `organisation_beziehung_organisation_ziel_organisation_art_unique` `organisation_beziehung_organisation_ziel_organisation_art_unique` VARCHAR(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`organisation_id`,`ziel_organisation_id`,`art`,ifnull(`bis`,'9999-12-31'))) VIRTUAL COMMENT 'Kombination aus organisation_id, ziel_organisation_id, art und bis muss eindeutig sein. (Fachlicher unique constraint)';
+
+ALTER TABLE `person`
+  CHANGE `person_nachname_zweiter_name_vorname_unique` `person_nachname_zweiter_name_vorname_unique` VARCHAR(220) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`nachname`,`vorname`,ifnull(`zweiter_vorname`,'-'),ifnull(`namensunterscheidung`,'-'))) VIRTUAL COMMENT 'Kombination aus nachname, vorname, zweiter_vorname und namensunterscheidung muss eindeutig sein. (Fachlicher unique constraint)';
+
+ALTER TABLE `zutrittsberechtigung`
+  CHANGE `zutrittsberechtigung_parlamentarier_person_unique` `zutrittsberechtigung_parlamentarier_person_unique` VARCHAR(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`parlamentarier_id`,`person_id`,ifnull(`bis`,'9999-12-31'))) VIRTUAL COMMENT 'Kombination aus parlamentarier_id, person_id und bis muss eindeutig sein. (Fachlicher unique constraint)';
+
+-- 22.12.2023 fix ERROR 1067 (42000) at line 1672: Invalid default value for 'parteifunktion'
+
+ALTER TABLE `parlamentarier`
+  CHANGE `parteifunktion` `parteifunktion` ENUM('mitglied','praesident','vizepraesident') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Partei';
+
+ALTER TABLE `parlamentarier_log`
+  CHANGE `parteifunktion` `parteifunktion` ENUM('mitglied','praesident','vizepraesident') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Partei';
+
+-- 22.12.2023 drop VIRTUAL before MariaDB 10.6 migration
+
+-- https://jira.mariadb.org/browse/MDEV-10964
+
+ALTER TABLE `in_fraktion`
+  DROP `in_fraktion_parlamentarier_fraktion_unique`;
+
+ALTER TABLE `in_kommission`
+  DROP `in_kommission_parlamentarier_kommission_funktion_unique`;
+
+ALTER TABLE `in_partei`
+  DROP `in_partei_parlamentarier_partei_unique`;
+
+ALTER TABLE `in_rat`
+  DROP `in_rat_parlamentarier_rat_unique`;
+
+ALTER TABLE `organisation`
+  DROP `organisation_name_de_rechtsform_unique`;
+
+ALTER TABLE `organisation_beziehung`
+  DROP `organisation_beziehung_organisation_ziel_organisation_art_unique`;
+
+ALTER TABLE `person`
+  DROP `person_nachname_zweiter_name_vorname_unique`;
+
+ALTER TABLE `zutrittsberechtigung`
+  DROP `zutrittsberechtigung_parlamentarier_person_unique`;
+
+-- 22.12.2023 add VIRTUAL after MariaDB 10.6 migration
+
+ALTER TABLE `in_fraktion`
+  CHANGE `updated_visa` `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgeändert von',
+  ADD `in_fraktion_parlamentarier_fraktion_unique` VARCHAR(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci AS (concat_ws('_',`parlamentarier_id`,`fraktion_id`,ifnull(`bis`,'9999-12-31'))) VIRTUAL UNIQUE COMMENT 'Kombination aus parlamentarier_id, fraktion_id und bis muss eindeutig sein. (Fachlicher unique constraint)' AFTER `updated_date`;
+
+ALTER TABLE `in_fraktion_log`
+  ADD `in_fraktion_parlamentarier_fraktion_unique` VARCHAR(0) NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+
+ALTER TABLE `in_kommission`
+  ADD `in_kommission_parlamentarier_kommission_funktion_unique` VARCHAR(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`parlamentarier_id`,`kommission_id`,`funktion`,ifnull(`bis`,'9999-12-31'))) VIRTUAL UNIQUE COMMENT 'Kombination aus parlamentarier_id, kommission_id, funktion und bis muss eindeutig sein. (Fachlicher unique constraint)' AFTER `updated_date`;
+
+ALTER TABLE `in_kommission_log`
+  ADD `in_kommission_parlamentarier_kommission_funktion_unique` VARCHAR(0) NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+
+ALTER TABLE `in_partei`
+  ADD `in_partei_parlamentarier_partei_unique` VARCHAR(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`parlamentarier_id`,`partei_id`,ifnull(`bis`,'9999-12-31'))) VIRTUAL UNIQUE COMMENT 'Kombination aus parlamentarier_id, partei_id und bis muss eindeutig sein. (Fachlicher unique constraint)' AFTER `updated_date`;
+
+ALTER TABLE `in_partei_log`
+  ADD `in_partei_parlamentarier_partei_unique` VARCHAR(0) NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+
+ALTER TABLE `in_rat`
+  ADD `in_rat_parlamentarier_rat_unique` VARCHAR(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`parlamentarier_id`,`rat_id`,ifnull(`bis`,'9999-12-31'))) VIRTUAL UNIQUE COMMENT 'Kombination aus parlamentarier_id, rat_id und bis muss eindeutig sein. (Fachlicher unique constraint)' AFTER `updated_date`;
+
+ALTER TABLE `in_rat_log`
+  ADD `in_rat_parlamentarier_rat_unique` VARCHAR(0) NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+
+ALTER TABLE `organisation`
+  ADD `organisation_name_de_rechtsform_unique` VARCHAR(195) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`name_de`,`rechtsform`,ifnull(`inaktiv`,FALSE))) VIRTUAL UNIQUE COMMENT 'Kombination aus name_de, rechtsform und inaktiv muss eindeutig sein. (Fachlicher unique constraint)' AFTER `updated_date`;
+
+ALTER TABLE `organisation_log`
+  ADD `organisation_name_de_rechtsform_unique` VARCHAR(0) NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+
+ALTER TABLE `organisation_beziehung`
+  ADD `organisation_beziehung_organisation_ziel_organisation_art_unique` VARCHAR(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`organisation_id`,`ziel_organisation_id`,`art`,ifnull(`bis`,'9999-12-31'))) VIRTUAL UNIQUE COMMENT 'Kombination aus organisation_id, ziel_organisation_id, art und bis muss eindeutig sein. (Fachlicher unique constraint)' AFTER `updated_date`;
+
+ALTER TABLE `organisation_beziehung_log`
+  ADD `organisation_beziehung_organisation_ziel_organisation_art_unique` VARCHAR(0) NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+
+ALTER TABLE `person`
+  ADD `person_nachname_zweiter_name_vorname_unique` VARCHAR(220) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`nachname`,`vorname`,ifnull(`zweiter_vorname`,'-'),ifnull(`namensunterscheidung`,'-'))) VIRTUAL UNIQUE COMMENT 'Kombination aus nachname, vorname, zweiter_vorname und namensunterscheidung muss eindeutig sein. (Fachlicher unique constraint)' AFTER `updated_date`;
+
+ALTER TABLE `person_log`
+  ADD `person_nachname_zweiter_name_vorname_unique` VARCHAR(0) NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+
+ALTER TABLE `zutrittsberechtigung`
+  ADD `zutrittsberechtigung_parlamentarier_person_unique` VARCHAR(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`parlamentarier_id`,`person_id`,ifnull(`bis`,'9999-12-31'))) VIRTUAL UNIQUE COMMENT 'Kombination aus parlamentarier_id, person_id und bis muss eindeutig sein. (Fachlicher unique constraint)' AFTER `updated_date`;
+
+ALTER TABLE `zutrittsberechtigung_log`
+  ADD `zutrittsberechtigung_parlamentarier_person_unique` VARCHAR(0) NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+
+-- 06.02.2024 drop VIRTUAL in log before MariaDB 10.6 migration
+
+-- https://jira.mariadb.org/browse/MDEV-10964
+
+ALTER TABLE `in_fraktion_log`
+  DROP `in_fraktion_parlamentarier_fraktion_unique`;
+
+ALTER TABLE `in_kommission_log`
+  DROP `in_kommission_parlamentarier_kommission_funktion_unique`;
+
+ALTER TABLE `in_partei_log`
+  DROP `in_partei_parlamentarier_partei_unique`;
+
+ALTER TABLE `in_rat_log`
+  DROP `in_rat_parlamentarier_rat_unique`;
+
+ALTER TABLE `organisation_log`
+  DROP `organisation_name_de_rechtsform_unique`;
+
+ALTER TABLE `organisation_beziehung_log`
+  DROP `organisation_beziehung_organisation_ziel_organisation_art_unique`;
+
+ALTER TABLE `person_log`
+  DROP `person_nachname_zweiter_name_vorname_unique`;
+
+ALTER TABLE `zutrittsberechtigung_log`
+  DROP `zutrittsberechtigung_parlamentarier_person_unique`;
