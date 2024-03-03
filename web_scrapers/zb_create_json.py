@@ -84,6 +84,8 @@ class Guest(Entity):
         .replace("Grunder Michael", "Grunder Michel")
         .replace("Voegeli Tobias", "Vögeli Tobias")
         .replace("Durig Terence", "Durig Térence")
+        .replace("Giovanoli Remco", "Giovanoli Remco André")
+        .replace("Rosenkrantz Linda", "Rosenkranz Linda")
         )
 
     def remove_title(self, name):
