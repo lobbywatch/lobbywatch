@@ -11,6 +11,9 @@ from typing import Union
 import pdf_helpers
 from utils import clean_str, clean_whitespace
 
+TITLE_CSV = "zb_title.csv"
+DATA_CSV = "zb_data.csv"
+CONTENT_PDF = "zb_file-content.pdf"
 
 def split_names(names):
     return names.replace('"', "").replace(".", "").split(" ")
@@ -294,14 +297,16 @@ def is_faction_and_canton(s):
 
 
 # write member of parliament and guests to json file
-def write_to_json(guests_data, archive_pdf_name, filename, url, creation_date, imported_date):
+def write_to_json(guests_data, archive_pdf_name, filename, url, creation_date, modified_date, imported_date, stand_date):
     metadata_data = {
                 "metadata": {
                     "archive_pdf_name": archive_pdf_name,
                     "filename": filename,
                     "url": url,
                     "pdf_creation_date": creation_date.isoformat(' '), # , timespec is addedin Python 3.6: 'seconds'
-                    "imported_date": imported_date.isoformat(' ') # , timespec is addedin Python 3.6: 'seconds'
+                    "pdf_modified_date": modified_date.isoformat(' '), # , timespec is addedin Python 3.6: 'seconds'
+                    "imported_date": imported_date.isoformat(' '), # , timespec is addedin Python 3.6: 'seconds'
+                    "stand_date": stand_date.isoformat()
                 },
                 "data": guests_data
     }
@@ -318,13 +323,12 @@ def get_script_path():
 
 # download a pdf containing the guest lists of members of parlament in a table
 # then parse the file into json and save the json files to disk
-def scrape_pdf(url: str, local_pdf: str, filename: str, suffix: str):
+def scrape_pdf(url: str, local_pdf: str, json_filename: str, suffix: str):
     script_path = get_script_path()
-    stripped_file_name = None
     try:
         raw_pdf_name = url.split("/")[-1]
         import_date = datetime.now().replace(microsecond=0)
-        pdf_name = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, raw_pdf_name)
+        pdf_name = "{}-{}".format(import_date.strftime("%Y-%m-%d"), raw_pdf_name)
         if local_pdf is None:
             print("\ndownloading " + url)
             pdf_helpers.get_pdf_from_admin_ch(url, pdf_name)
@@ -333,39 +337,51 @@ def scrape_pdf(url: str, local_pdf: str, filename: str, suffix: str):
             copyfile(local_pdf, pdf_name)
 
         print("\nextracting metadata...")
-        creation_date = pdf_helpers.extract_creation_date(pdf_name)
-        archive_pdf_name = "{}-{:02d}-{:02d}-{}".format(creation_date.year, creation_date.month, creation_date.day, raw_pdf_name)
-        archive_filename = "{}-{:02d}-{:02d}-{}".format(creation_date.year, creation_date.month, creation_date.day, filename)
-        print("\nPDF creation date: {:02d}.{:02d}.{}\n".format(creation_date.day, creation_date.month, creation_date.year))
+        creation_date, modified_date = pdf_helpers.extract_creation_date(pdf_name)
+
+        tabula_path = script_path + "/tabula-1.0.5-jar-with-dependencies.jar"
+        print("parsing title page PDF...")
+        cmd = ["java", "-Djava.util.logging.config.file=web_scrapers/logging.properties", "-jar", tabula_path, pdf_name, "-o", TITLE_CSV, "--pages", "1", "-t", "-i"]
+        print(" ".join(cmd))
+        call(cmd, stderr=None)
+        stand_date = pdf_helpers.read_stand(TITLE_CSV)
+        print("\nStand: {}".format(stand_date.strftime("%d.%m.%Y")))
+        print("PDF creation date: {}".format(creation_date.strftime("%d.%m.%Y")))
+        print("PDF modified date: {}\n".format(modified_date.strftime("%d.%m.%Y")))
+        archive_pdf_name = "{}-{}".format(stand_date.strftime("%Y-%m-%d"), raw_pdf_name)
 
         print("removing first page of PDF...")
-        stripped_file_name = "zb_file-stripped.pdf"
-        call(["qpdf", "--pages", pdf_name, "2-z", "--", pdf_name, stripped_file_name])
+        call(["qpdf", "--pages", pdf_name, "2-z", "--", pdf_name, CONTENT_PDF])
 
-        print("parsing PDF...")
-        tabula_path = script_path + "/tabula-1.0.5-jar-with-dependencies.jar"
-        cmd = ["java", "-Djava.util.logging.config.file=web_scrapers/logging.properties", "-jar", tabula_path, stripped_file_name, "-o", "zb_data.csv", "--pages", "all", "-i"]
+        print("parsing content PDF...")
+        cmd = ["java", "-Djava.util.logging.config.file=web_scrapers/logging.properties", "-jar", tabula_path, CONTENT_PDF, "-o", DATA_CSV, "--pages", "all", "-i"]
         print(" ".join(cmd))
         call(cmd, stderr=None)
 
         print("cleaning up parsed data...")
-        guests = read_guests("zb_data.csv")
+        guests = read_guests(DATA_CSV)
 
-        print("writing " + filename + "...")
-        write_to_json(guests, archive_pdf_name, filename, url, creation_date, import_date)
+        print("writing " + json_filename + "...")
+        write_to_json(guests, archive_pdf_name, json_filename, url, creation_date, modified_date, import_date, stand_date)
 
-        print("archiving...")
-        copyfile(pdf_name, script_path + "/archive/{}".format(archive_pdf_name))
-        copyfile(filename, script_path + "/archive/{}".format(archive_filename))
+        if local_pdf is None:
+            archive_json_filename = "{}-{}".format(creation_date.strftime("%Y-%m-%d"), json_filename)
+            print("archiving PDF " + archive_pdf_name)
+            copyfile(pdf_name, script_path + "/archive/{}".format(archive_pdf_name))
+            print("archiving JSON ...")
+            copyfile(json_filename, script_path + "/archive/{}".format(archive_json_filename))
 
     finally:
         print("cleaning up...")
-        os.rename(pdf_name, script_path + "/backup/{}".format(pdf_name))
-        backup_filename = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, filename)
-        copyfile(filename, script_path + "/backup/{}".format(backup_filename))
-        if stripped_file_name and os.path.isfile(stripped_file_name): os.remove(stripped_file_name)
-        # if os.path.isfile("zb_data.csv"): os.remove("zb_data.csv")
-        if os.path.isfile("zb_data.csv"): os.rename("zb_data.csv", "zb_data_{}.csv".format(suffix))
+        if local_pdf is None:
+            os.rename(pdf_name, script_path + "/backup/{}".format(pdf_name))
+        else:
+            if os.path.isfile(pdf_name): os.remove(pdf_name)
+        backup_filename = "{}-{}".format(import_date.strftime("%Y-%m-%d"), json_filename)
+        if os.path.isfile(json_filename): copyfile(json_filename, script_path + "/backup/{}".format(backup_filename))
+        if os.path.isfile(CONTENT_PDF): os.remove(CONTENT_PDF)
+        if os.path.isfile(TITLE_CSV): os.remove(TITLE_CSV)
+        if os.path.isfile(DATA_CSV): os.rename(DATA_CSV, "zb_data_{}.csv".format(suffix))
 
 # scrape the nationalrat and ständerat guest lists and write them to
 # structured JSON files

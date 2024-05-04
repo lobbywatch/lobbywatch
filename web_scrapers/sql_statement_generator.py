@@ -11,7 +11,7 @@ def insert_zutrittsberechtigung(parlamentarier_id, person_id, funktion, date, pd
             person_id if person_id is not None else "(SELECT LAST_INSERT_ID())",
             _escape_string(funktion),
             _date_as_sql_string(pdf_date),
-            "{0}/import/{1}: Erzeugt (PDF {2})".format(_date_as_sql_string(date), user, _datetime_as_sql_string(pdf_date)),
+            "{0}/import/{1}: Erzeugt (PDF {2})".format(_date_as_sql_string(date), user, _date_as_sql_string(pdf_date)),
             "import",
             _datetime_as_sql_string(date),
             "import",
@@ -26,7 +26,7 @@ def update_function_of_zutrittsberechtigung(zutrittsberechtigung_id, function, d
     query = "UPDATE `zutrittsberechtigung` SET `funktion` = '{0}', `notizen` = CONCAT_WS('\\n\\n', '{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
         _escape_string(function),
         "{0}/import/{1}: Funktion geändert (PDF {2})".format(
-            _date_as_sql_string(date), user, _datetime_as_sql_string(pdf_date)),
+            _date_as_sql_string(date), user, _date_as_sql_string(pdf_date)),
         "import",
         _datetime_as_sql_string(date),
         zutrittsberechtigung_id
@@ -40,7 +40,7 @@ def end_zutrittsberechtigung(zutrittsberechtigung_id, date, pdf_date):
     query = "UPDATE `zutrittsberechtigung` SET `bis` = STR_TO_DATE('{0}', '%d.%m.%Y'), `notizen` = CONCAT_WS('\\n\\n', '{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
         _date_as_sql_string(pdf_date),
         "{0}/import/{1}: Bis-Datum gesetzt (PDF {2})".format(
-            _date_as_sql_string(date), user, _datetime_as_sql_string(pdf_date)),
+            _date_as_sql_string(date), user, _date_as_sql_string(pdf_date)),
         "import",
         _datetime_as_sql_string(date),
         zutrittsberechtigung_id
@@ -60,7 +60,7 @@ def insert_person(guest, date, pdf_date):
             _datetime_as_sql_string(date),
             "import",
             _datetime_as_sql_string(date),
-            "{0}/import/{1}: Erzeugt (PDF {2})".format(_date_as_sql_string(date), user,  _datetime_as_sql_string(pdf_date))
+            "{0}/import/{1}: Erzeugt (PDF {2})".format(_date_as_sql_string(date), user,  _date_as_sql_string(pdf_date))
     )
 
     return query
@@ -90,7 +90,7 @@ SET @last_parlamentarische_gruppe = LAST_INSERT_ID();
             _datetime_as_sql_string(date),
             "import",
             _datetime_as_sql_string(date),
-            "{0}/import/{1}: Erzeugt (PDF {2})".format(_date_as_sql_string(date), user, _datetime_as_sql_string(pdf_date)),
+            "{0}/import/{1}: Erzeugt (PDF {2})".format(_date_as_sql_string(date), user, _date_as_sql_string(pdf_date)),
             "import",
             _datetime_as_sql_string(date)
     )
@@ -102,7 +102,7 @@ def update_sekretariat_organisation(organisation_id, sekretariat, batch_time, pd
     query = "UPDATE `organisation` SET `sekretariat` = '{0}', `notizen` = CONCAT_WS('\\n\\n', '{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
         _escape_string(sekretariat),
         "{0}/import/{1}: Sekretariat geändert (PDF {2})".format(
-            _date_as_sql_string(batch_time), user, _datetime_as_sql_string(pdf_date)),
+            _date_as_sql_string(batch_time), user, _date_as_sql_string(pdf_date)),
         "import",
         _datetime_as_sql_string(batch_time),
         organisation_id
@@ -114,7 +114,7 @@ def update_sekretariat_organisation(organisation_id, sekretariat, batch_time, pd
 def update_name_de_organisation(organisation_id, name_de, batch_time, pdf_date):
     query = "UPDATE `organisation` SET `name_de` = {}, `notizen` = CONCAT_WS('\\n\\n', '{}', notizen), `updated_visa` = '{}', `updated_date` = STR_TO_DATE('{}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{}', '%d.%m.%Y %T') WHERE `id` = {};\n".format(
         _quote_str_or_NULL(_escape_string(name_de)),
-        "{0}/import/{1}: Name DE geändert (PDF {2})".format(_date_as_sql_string(batch_time), user, _datetime_as_sql_string(pdf_date)),
+        "{0}/import/{1}: Name DE geändert (PDF {2})".format(_date_as_sql_string(batch_time), user, _date_as_sql_string(pdf_date)),
         "import",
         _datetime_as_sql_string(batch_time),
         _datetime_as_sql_string(batch_time),
@@ -127,7 +127,7 @@ def update_name_de_organisation(organisation_id, name_de, batch_time, pdf_date):
 def update_name_fr_organisation(organisation_id, name_fr, batch_time, pdf_date):
     query = "UPDATE `organisation` SET `name_fr` = {}, `notizen` = CONCAT_WS('\\n\\n', '{}', notizen), `updated_visa` = '{}', `updated_date` = STR_TO_DATE('{}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{}', '%d.%m.%Y %T') WHERE `id` = {};\n".format(
         _quote_str_or_NULL(_escape_string(name_fr)),
-        "{0}/import/{1}: Name FR geändert (PDF {2})".format(_date_as_sql_string(batch_time), user, _datetime_as_sql_string(pdf_date)),
+        "{0}/import/{1}: Name FR geändert (PDF {2})".format(_date_as_sql_string(batch_time), user, _date_as_sql_string(pdf_date)),
         "import",
         _datetime_as_sql_string(batch_time),
         _datetime_as_sql_string(batch_time),
@@ -140,7 +140,7 @@ def update_name_fr_organisation(organisation_id, name_fr, batch_time, pdf_date):
 def update_name_it_organisation(organisation_id, name_it, batch_time, pdf_date):
     query = "UPDATE `organisation` SET `name_it` = {}, `notizen` = CONCAT_WS('\\n\\n', '{}', notizen), `updated_visa` = '{}', `updated_date` = STR_TO_DATE('{}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{}', '%d.%m.%Y %T') WHERE `id` = {};\n".format(
         _quote_str_or_NULL(_escape_string(name_it)),
-        "{0}/import/{1}: Name IT geändert (PDF {2})".format(_date_as_sql_string(batch_time), user, _datetime_as_sql_string(pdf_date)),
+        "{0}/import/{1}: Name IT geändert (PDF {2})".format(_date_as_sql_string(batch_time), user, _date_as_sql_string(pdf_date)),
         "import",
         _datetime_as_sql_string(batch_time),
         _datetime_as_sql_string(batch_time),
@@ -157,7 +157,7 @@ def update_adresse_organisation(organisation_id, adresse_str, adresse_zusatz, ad
         _quote_str_or_NULL(_escape_string(adresse_plz)),
         _quote_str_or_NULL(_escape_string(adresse_ort)),
         "{0}/import/{1}: Adresse geändert (PDF {2})".format(
-            _date_as_sql_string(batch_time), user, _datetime_as_sql_string(pdf_date)),
+            _date_as_sql_string(batch_time), user, _date_as_sql_string(pdf_date)),
         "import",
         _datetime_as_sql_string(batch_time),
         organisation_id
@@ -170,7 +170,7 @@ def update_homepage_organisation(organisation_id, homepage, batch_time, pdf_date
     query = "UPDATE `organisation` SET `homepage` = {0}, `notizen` = CONCAT_WS('\\n\\n', '{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
         _quote_str_or_NULL(_escape_string(homepage)),
         "{0}/import/{1}: Homepage geändert (PDF {2})".format(
-            _date_as_sql_string(batch_time), user, _datetime_as_sql_string(pdf_date)),
+            _date_as_sql_string(batch_time), user, _date_as_sql_string(pdf_date)),
         "import",
         _datetime_as_sql_string(batch_time),
         organisation_id
@@ -182,7 +182,7 @@ def update_alias_organisation(organisation_id, alias, batch_time, pdf_date):
     query = "UPDATE `organisation` SET `alias_namen_de` = {0}, `notizen` = CONCAT_WS('\\n\\n', '{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
         _quote_str_or_NULL(_escape_string(alias)),
         "{0}/import/{1}: Alias geändert (PDF {2})".format(
-            _date_as_sql_string(batch_time), user, _datetime_as_sql_string(pdf_date)),
+            _date_as_sql_string(batch_time), user, _date_as_sql_string(pdf_date)),
         "import",
         _datetime_as_sql_string(batch_time),
         organisation_id
@@ -194,7 +194,7 @@ def update_beschreibung_organisation(organisation_id, beschreibung, batch_time, 
     query = "UPDATE `organisation` SET `beschreibung` = {0}, `notizen` = CONCAT_WS('\\n\\n', '{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
         _quote_str_or_NULL(_escape_string(beschreibung)),
         "{0}/import/{1}: Beschreibung geändert (PDF {2})".format(
-            _date_as_sql_string(batch_time), user, _datetime_as_sql_string(pdf_date)),
+            _date_as_sql_string(batch_time), user, _date_as_sql_string(pdf_date)),
         "import",
         _datetime_as_sql_string(batch_time),
         organisation_id
@@ -206,7 +206,7 @@ def update_inaktiv_organisation(group_type, organisation_id, inaktiv, batch_time
     query = "UPDATE `organisation` SET `inaktiv` = {0}, rechtsform='{5}', `notizen` = CONCAT_WS('\\n\\n', '{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
         1 if inaktiv else 0,
         "{0}/import/{1}: Parlamentarische Gruppe {3} (PDF {2})".format(
-            _date_as_sql_string(batch_time), user, _datetime_as_sql_string(pdf_date), "inaktiv" if inaktiv else "aktiv"),
+            _date_as_sql_string(batch_time), user, _date_as_sql_string(pdf_date), "inaktiv" if inaktiv else "aktiv"),
         "import",
         _datetime_as_sql_string(batch_time),
         organisation_id,
@@ -219,7 +219,7 @@ def update_beschreibung_interessenbindung(interessenbindung_id, funktion_im_grem
     query = "UPDATE `interessenbindung` SET `funktion_im_gremium`={7}, `beschreibung` = {0}, `beschreibung_fr` = {5},`quelle` = '{8}',  `quelle_url` = {6}, `notizen` = CONCAT_WS('\\n\\n', '{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
         _quote_str_or_NULL(_escape_string(beschreibung)),
         "{0}/import/{1}: Beschreibung geändert (PDF {2})".format(
-            _date_as_sql_string(batch_time), user, _datetime_as_sql_string(pdf_date)),
+            _date_as_sql_string(batch_time), user, _date_as_sql_string(pdf_date)),
         "import",
         _datetime_as_sql_string(batch_time),
         interessenbindung_id,
@@ -251,7 +251,7 @@ def insert_interessenbindung_parlamentarische_gruppe(parlamentarier_id,
         _datetime_as_sql_string(date),
         "import",
         _datetime_as_sql_string(date),
-        "{0}/import/{1}: Erzeugt (PDF {2})".format(_date_as_sql_string(date), user, _datetime_as_sql_string(pdf_date)),
+        "{0}/import/{1}: Erzeugt (PDF {2})".format(_date_as_sql_string(date), user, _date_as_sql_string(pdf_date)),
         "import",
         _datetime_as_sql_string(date),
         "import",
@@ -265,7 +265,7 @@ def end_interessenbindung(interessenbindung_id, stichdatum, batch_time, pdf_date
     query = "UPDATE `interessenbindung` SET `bis` = STR_TO_DATE('{0}', '%d.%m.%Y'), `notizen` = CONCAT_WS('\\n\\n', '{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
         _date_as_sql_string(stichdatum),
         "{0}/import/{1}: Bis-Datum gesetzt (PDF {2})".format(
-            _date_as_sql_string(batch_time), user, _datetime_as_sql_string(pdf_date)),
+            _date_as_sql_string(batch_time), user, _date_as_sql_string(pdf_date)),
         "import",
         _datetime_as_sql_string(batch_time),
        interessenbindung_id

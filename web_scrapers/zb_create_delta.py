@@ -92,9 +92,13 @@ def sync_data(conn, filename, council, batch_time):
     with open(filename) as data_file:
         content = json.load(data_file)
         pdf_date_str = content["metadata"]["pdf_creation_date"]
-        pdf_date = datetime.strptime(pdf_date_str, "%Y-%m-%d %H:%M:%S") # 2019-07-12 14:55:08
+        stand_date_str = content["metadata"]["stand_date"]
+        pdf_creation_date = datetime.strptime(pdf_date_str, "%Y-%m-%d %H:%M:%S") # 2019-07-12 14:55:08
+        stand_date = datetime.strptime(stand_date_str, "%Y-%m-%d").date() # 2019-07-12
+        pdf_date = stand_date
         archive_pdf_name = content["metadata"]["archive_pdf_name"]
-        print("-- PDF creation date: {}".format(pdf_date))
+        print("-- PDF stand: {}".format(stand_date))
+        print("-- PDF creation date: {}".format(pdf_creation_date))
         print("-- PDF archive file: {}".format(archive_pdf_name))
         print("-- URL: {}".format(content["metadata"]["url"]))
         print("-- ----------------------------- ")

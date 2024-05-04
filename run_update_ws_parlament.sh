@@ -42,8 +42,10 @@ ARCHIVE_PDF_DIR="web_scrapers/archive"
 MAIL_TO="redaktion@lobbywatch.ch,roland.kurmann@lobbywatch.ch"
 subject="Lobbywatch-Import:"
 nobackup=false
+allowProdWithoutBackup=false
 downloadallbak=false
 lastpdf=false
+pdf_date=''
 onlydownloadlastbak=false
 import=false
 refresh=""
@@ -87,6 +89,8 @@ FULL_DUMP_PARAMETER=''
 DUMP_TYPE_NAME='DATA dump'
 processRetired=''
 
+LW_PYTHON="python3.11"
+
 # set python interpreter, default python3 if not set
 LW_PYTHON="${LW_PYTHON:-python3}"
 
@@ -104,8 +108,9 @@ while test $# -gt 0; do
                         echo "-o, --onlydownloadlastbak        No remote prod backup, only download (and import) last remote prod backup (useful for development, production update not possible)"
                         echo "-d, --downloadallbak             Download all remote backups"
                         echo "-f, --full-dump                  Import full DB dump which replaces the current DB"
-                        echo "-i, --onlyimport                 Import last remote prod backup, no backup (implies -B, production update not possible)"
+                        echo "-i, --onlyimport                 Import last remote prod backup, no backup (implies -B, production update not possible unless -A)"
                         echo "-D, --no-dl-pdf                  No download PDFs, use latest PDFs from backup"
+                        echo "    --pdf-date=DATE              No download PDFs, use PDFs from backup with DATE prefix, eg 2024-05-03"
                         echo "-r, --refresh                    Refresh views"
                         echo "-P, --noparlam                   Do not run parlamentarier script"
                         echo "-R, --noretired                  Do not sync retired parlamentarier"
@@ -120,6 +125,7 @@ while test $# -gt 0; do
                         echo "-W, --onlywikidata               Run ONLY update wikidata script"
                         echo "-G, --nopg                       Do not run parlamentarische Gruppen script"
                         echo "-a, --automatic                  Automatic"
+                        echo "-A, --allow-p-wo-bak             Allow PROD import without PROD-backup"
                         echo "-M, --nomail                     No email notification"
                         echo "-t, --test                       Test mode (no remote PROD changes)"
                         echo "-T, --no-remote                  Test mode (no remote changes), implies -t"
@@ -155,6 +161,10 @@ while test $# -gt 0; do
                         ;;
                 -D|--no-dl-pdf)
                         lastpdf=true
+                        shift
+                        ;;
+                --pdf-date=*)
+                        pdf_date="${1#*=}"
                         shift
                         ;;
                 -r|--refresh)
@@ -215,6 +225,10 @@ while test $# -gt 0; do
                 -a|--automatic)
                         automatic=true
                         progress=""
+                        shift
+                        ;;
+                -A|--allow-p-wo-bak)
+                        allowProdWithoutBackup=true
                         shift
                         ;;
                 -t|--test)
@@ -434,14 +448,18 @@ if ! $nozb ; then
     echo "Use latest zb PDF by filename from web_scrapers/backup/"
     # -r: reverse order
     # -t: by time
-    last_zb_pdf_nr=$(ls -r web_scrapers/backup/*zutrittsberechtigte-nr.pdf | head -1)
-    last_zb_pdf_sr=$(ls -r web_scrapers/backup/*zutrittsberechtigte-sr.pdf | head -1)
-    echo "Latest PDFs $last_zb_pdf_nr $last_zb_pdf_sr"
+    zb_pdf_nr=$(ls -r web_scrapers/backup/*zutrittsberechtigte-nr.pdf | head -1)
+    zb_pdf_sr=$(ls -r web_scrapers/backup/*zutrittsberechtigte-sr.pdf | head -1)
+    echo "Latest PDFs $zb_pdf_nr $zb_pdf_sr"
+  elif [ -n "$pdf_date" ]; then
+    zb_pdf_nr=$(ls -r web_scrapers/import/$pdf_date*zutrittsberechtigte-nr.pdf | head -1)
+    zb_pdf_sr=$(ls -r web_scrapers/import/$pdf_date*zutrittsberechtigte-sr.pdf | head -1)
+    echo "PDFs from $pdf_date: $zb_pdf_nr $zb_pdf_sr"
   else
-    last_zb_pdf_nr=''
-    last_zb_pdf_sr=''
+    zb_pdf_nr=''
+    zb_pdf_sr=''
   fi
-  $LW_PYTHON $zb_script_path/zb_create_json.py $last_zb_pdf_nr $last_zb_pdf_sr
+  $LW_PYTHON $zb_script_path/zb_create_json.py $zb_pdf_nr $zb_pdf_sr
   echo "Writing zb_delta.sql based on $db..."
   export ZB_DELTA_FILE=sql/zb_delta_`date +"%Y%m%dT%H%M%S"`.sql; $LW_PYTHON $zb_script_path/zb_create_delta.py --db=$db | tee $ZB_DELTA_FILE
 
@@ -474,12 +492,15 @@ if ! $nopg ; then
   mkdir -p web_scrapers/backup web_scrapers/archive
   echo "Writing pg.json..."
   if $lastpdf ; then
-    last_pg_pdf=$(ls -t web_scrapers/backup/*gruppen*.pdf | head -1)
-    echo "Last PDF $last_pg_pdf"
+    pg_pdf=$(ls -t web_scrapers/backup/*gruppen*.pdf | head -1)
+    echo "Last PDF $pg_pdf"
+  elif [ -n "$pdf_date" ]; then
+    pg_pdf=$(ls -t web_scrapers/import/$pdf_date*gruppen*.pdf | head -1)
+    echo "Use PDF with date $pdf_date: $pg_pdf"
   else
-    last_pg_pdf=''
+    pg_pdf=''
   fi
-  $LW_PYTHON $pg_script_path/pg_create_json.py $last_pg_pdf
+  $LW_PYTHON $pg_script_path/pg_create_json.py $pg_pdf
   echo "Writing pg_delta.sql..."
   $LW_PYTHON $pg_script_path/pg_create_delta.py --db=$db | tee $PG_DELTA_FILE
 
@@ -488,12 +509,15 @@ if ! $nopg ; then
   fi
   echo "Writing pg.json..."
   if $lastpdf ; then
-    last_pg_pdf=$(ls -t web_scrapers/backup/*freundschaftsgruppe*.pdf | head -1)
-    echo "Last PDF $last_pg_pdf"
+    pg_pdf=$(ls -t web_scrapers/backup/*freundschaftsgruppe*.pdf | head -1)
+    echo "Last PDF $pg_pdf"
+  elif [ -n "$pdf_date" ]; then
+    pg_pdf=$(ls -t web_scrapers/import/$pdf_date*freundschaftsgruppe*.pdf | head -1)
+    echo "Use PDF with date $pdf_date: $pg_pdf"
   else
-    last_pg_pdf=''
+    pg_pdf=''
   fi
-  $LW_PYTHON $pg_script_path/pg_create_json.py --group_type friendship $last_pg_pdf
+  $LW_PYTHON $pg_script_path/pg_create_json.py --group_type friendship $pg_pdf
   echo "Writing pg_delta.sql..."
   $LW_PYTHON $pg_script_path/pg_create_delta.py --group_type friendship --db=$db | tee --append $PG_DELTA_FILE
 
@@ -681,10 +705,7 @@ fi
 # Remote PROD
 ###############################################################################
 
-# boolean variable does not work as expected in bash
-# update_prod=! $test && ! $nosql && ! $onlydownloadlastbak && ! $import
-
-if ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import && $remote_op; then
+if ! $test && ! $nosql && ! $onlydownloadlastbak && (! $import || $allowProdWithoutBackup) && (! $nobackup || $allowProdWithoutBackup) && $remote_op; then
   # OK
   :
 else
@@ -693,9 +714,11 @@ else
   $nosql && echo 'Parameter nosql is set'
   $onlydownloadlastbak && echo 'Parameter onlydownloadlastbak is set'
   $import && echo 'Parameter import is set'
+  $nobackup && echo 'Parameter nobackup is set'
+  $allowProdWithoutBackup || echo 'Parameter allowProdWithoutBackup is not set'
 fi
 
-if ! $noparlam && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import && $remote_op; then
+if ! $noparlam && ! $test && ! $nosql && ! $onlydownloadlastbak && (! $import || $allowProdWithoutBackup) && (! $nobackup || $allowProdWithoutBackup) && $remote_op; then
   if ! $automatic ; then
     askContinueYn "Run parlam SQL in REMOTE PROD?"
   fi
@@ -706,28 +729,28 @@ if ! $noparlam && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import && 
   fi
 fi
 
-if ! $nozb && $ZB_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import && $remote_op; then
+if ! $nozb && $ZB_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && (! $import || $allowProdWithoutBackup) && (! $nobackup || $allowProdWithoutBackup) && $remote_op; then
   if ! $automatic ; then
     askContinueYn "Run zb SQL in REMOTE PROD?"
   fi
   ./deploy.sh -p -q -s $ZB_DELTA_FILE
 fi
 
-if ! $nopg && $PG_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import && $remote_op; then
+if ! $nopg && $PG_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && (! $import || $allowProdWithoutBackup) && (! $nobackup || $allowProdWithoutBackup) && $remote_op; then
   if ! $automatic ; then
     askContinueYn "Run pg SQL in REMOTE PROD?"
   fi
   ./deploy.sh -p -q -s $PG_DELTA_FILE
 fi
 
-if $uid && $U_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import && $remote_op; then
+if $uid && $U_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && (! $import || $allowProdWithoutBackup) && (! $nobackup || $allowProdWithoutBackup) && $remote_op; then
   if ! $automatic ; then
     askContinueYn "Run uid SQL in REMOTE PROD?"
   fi
   ./deploy.sh -p -q -s $U_FILE
 fi
 
-if $wikidata && $W_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import && $remote_op; then
+if $wikidata && $W_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && (! $import || $allowProdWithoutBackup) && (! $nobackup || $allowProdWithoutBackup) && $remote_op; then
   if ! $automatic ; then
     askContinueYn "Run wikidata SQL in REMOTE PROD?"
   fi
@@ -735,7 +758,7 @@ if $wikidata && $W_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && !
 fi
 
 # Run after import DB script for fixes
-if $enable_after_import_script && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import && $remote_op; then
+if $enable_after_import_script && ! $test && ! $nosql && ! $onlydownloadlastbak && (! $import || $allowProdWithoutBackup) && (! $nobackup || $allowProdWithoutBackup) && $remote_op; then
   if ! $automatic ; then
       askContinueYn "Run $after_import_DB_script in REMOTE PROD $db?"
   fi
@@ -743,7 +766,7 @@ if $enable_after_import_script && ! $test && ! $nosql && ! $onlydownloadlastbak 
 fi
 
 # Upload images of new paramentarier
-if $IMAGE_CHANGED && ! $noimageupload && ! $test && ! $onlydownloadlastbak && ! $import && $remote_op; then
+if $IMAGE_CHANGED && ! $noimageupload && ! $test && ! $onlydownloadlastbak && (! $import || $allowProdWithoutBackup) && (! $nobackup || $allowProdWithoutBackup) && $remote_op; then
   if ! $automatic ; then
     askContinueYn "Upload images to REMOTE PROD?"
   fi

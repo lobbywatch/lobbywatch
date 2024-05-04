@@ -39,8 +39,8 @@ charset="utf8mb4"
 
 MYSQL_CONTAINER=mysql57
 
-docker exec -it $MYSQL_CONTAINER mysql --help >/dev/null 2>&1 && IS_DOCKER=true || IS_DOCKER=false
-# IS_DOCKER=false
+# docker exec -it $MYSQL_CONTAINER mysql --help >/dev/null 2>&1 && IS_DOCKER=true || IS_DOCKER=false
+IS_DOCKER=false
 if $IS_DOCKER ; then
   MYSQLDUMP="docker exec -it $MYSQL_CONTAINER mysqldump --default-character-set=$charset"
   MYSQL="docker exec -i $MYSQL_CONTAINER mysql --default-character-set=$charset"
@@ -50,8 +50,8 @@ else
 fi
 
 
-user=root
-# user=script
+# user=root
+user=script
 
 # $MYSQLDUMP -u $user --skip-extended-insert --dump-date --hex-blob --routines --databases lobbywatch --add-drop-database > /tmp/db_out.sql
 $MYSQL -u $user -e "DROP DATABASE IF EXISTS $db_dest; CREATE DATABASE IF NOT EXISTS $db_dest DEFAULT CHARACTER SET $charset;"

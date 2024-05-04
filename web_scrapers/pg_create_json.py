@@ -13,53 +13,45 @@ import literals
 import pdf_helpers
 from utils import clean_whitespace, clean_str, replace_bullets
 
-MEMBER_LINE_START = ('NR', 'SR', 'N ', 'S ')
+TITLE_CSV = "pg_title.csv"
+DATA_CSV = "pg_data.csv"
+CONTENT_PDF = "pg_file-content.pdf"
 
 class ReadingMode(Enum):
     TITLE = auto()
     PRESIDENTS = auto()
     PRESIDENTS_SKIP_NEXT = auto()
     SEKRETARIAT = auto()
+    BESCHREIBUNG = auto()
     ZWECK = auto()
-    ART_DER_AKTIVITAETEN = auto()
-    MITGLIEDERLISTE = auto()
+    AKTIVITAETEN = auto()
+    MITGLIEDER = auto()
+    KONSTITUIERUNG = auto()
 
+LABEL_MITGLIEDER = 'Mitglieder / Membres / Membri'
+LABEL_KONSTITUIERUNG = 'Konstituierung / Constitution / Costituzione'
+LABEL_BESCHREIBUNG = 'Beschreibung / Description / Descrizione'
+LABEL_ZWECK = 'Zweck / Objectif / Scopo'
+LABEL_SEKRETARIAT = 'Sekretariat / Secrétariat / Segreteria'
+LABEL_PRESIDENT = 'Präsident/innen / Présidents/es / Presidenti'
+LABEL_AKTIVITAETEN = 'Aktivitäten / Activités / Attività'
 
-def is_president(line):
-    return any(map(line.startswith, literals.president_mapping)) or line.startswith('Co- ')
+def extract_name_and_president_title(line):
+    parts = line.split(',')
+    return parts[0].strip(), parts[1].strip()
 
-def extract_president_title(line):
-    title = None
-    if ':' in line:
-        title = line.split(':')[0]
-    else:
-        # Clean in case of missing :
-        for keyword in literals.president_mapping:
-            if keyword in line:
-                title = keyword
-                break
+def extract_mitglied(line):
+    matched_mitglied = match_mitglied(line)
+    if matched_mitglied == None:
+        return line.strip(), None, None, None
+    name = matched_mitglied.group(1)
+    rat = matched_mitglied.group(2)
+    fraktion = matched_mitglied.group(4)
+    kanton = matched_mitglied.group(5)
+    return name, rat, fraktion, kanton
 
-    if not title:
-        print('No title found found in line "{}". Abort'.format(line))
-        exit(1)
-
-    return title.strip()
-
-# Split as well for Italien ' e ', case "CN Anna Giacometti e CN Marco Romano"
-def extract_presidents(line):
-    if ':' in line:
-        line = line.split(':')[1]
-    # Clean in case of missing :
-    for keyword in literals.president_mapping:
-        line = line.replace(keyword, '')
-    names = re.split(r',| e |;', line)
-    names = [re.sub(r'(Nationalratspräsidentin|Nationalratspräsident|Vizepräsident des Nationalrates|des Nationalrates|Vizepräsidentin des Nationalrates|Nationalrätin|Nationalrat|CN|Conseillère nationale|Conseiller national|Cusseglier naziunal|N)\s', 'NR ', re.sub(r'(Ständeratspräsidentin|Ständeratspräsident|Vizepräsident des Ständerates|Vizepräsidentin des Ständerates|des Ständerates|Ständerätin|Ständerat|CE|Conseillère aux Etats|Conseiller aux Etats|S)\s', 'SR ', re.sub(r'(Herr|Frau|Monsieur le|Madame la|Dr.|Co-)', '', name))).strip() for name in names if name.strip() not in ['', "vakant", "Vakant", "folgt", "Noch offen", "(wird angestrebt, 2. Person ist noch vakant)", "(wird angestrebt", "2. Person ist noch vakant)"]]
-    return names
-
-
-def is_sekretariat(line):
-    return line.startswith('Sekretariat:') or line.startswith('Co-Sekretariat:') or line.startswith("Sekretariate:")
-
+def match_mitglied(line):
+    return re.search(r'(.+)\s+(NR/CN/CN|SR/CE/CS)\s+(Fraktion|Groupe)\s+([-A-Z]+)\s+([A-Z]{2})\s*', line)
 
 def extract_sekretariat(line):
     if ':' in line and '://' not in line:
@@ -83,21 +75,22 @@ def read_groups(filename):
 
     is_new_page = True
     page = 1
-    reading_mode = None
+    reading_mode = ReadingMode.TITLE
     titles = []
     presidents = []
     sekretariat = []
     konstituierung = None
+    beschreibung = []
     zweck = []
-    art_der_aktivitaeten = []
+    aktivitaeten = []
     mitglieder = []
-    president_titles = set()
+    passed_reading_modes = [reading_mode]
 
     lines = [clean_whitespace(clean_str(' '.join(row))) for row in rows if ''.join(row).strip() != '']
     for i, line in enumerate(lines):
 
-        match_page = re.search(r'Seite\s*(\d+)\s*/\s*\d+', line)
-        if line == '' or line.startswith('Fortsetzung:') or line.lower() in ['folgt', 'vakant']:
+        match_page = re.search(r'^(\d+)\s*/\s*\d+$', line)
+        if line == '' or line.startswith('Fortsetzung:') or line.lower() in ['folgt', 'vakant', '()']:
             continue
         elif match_page:
             is_new_page = True
@@ -111,79 +104,95 @@ def read_groups(filename):
 
         if is_new_page:
             is_new_page = False
-            if line.startswith('Mitgliederliste') or line.startswith('Konstituierung') or line.startswith('Art der ') or line.startswith('Zweck:'):
-                # not a new group on the new page
-                continue
-            elif line.startswith(MEMBER_LINE_START) or next_line.startswith(MEMBER_LINE_START):
-                # continue normally as it is a group member
-                pass
-            else:
-                # save previous page
-                if titles:
-                    if not presidents:
-                        print("-- WARN: no presidents for group '{}'".format(titles[0]))
-                    groups.append((titles, presidents, sekretariat, konstituierung, zweck, art_der_aktivitaeten, mitglieder))
+
+            # save previous page
+            if not match_mitglied(line) and titles and (sekretariat or konstituierung or aktivitaeten or zweck) and ReadingMode.PRESIDENTS in passed_reading_modes and ReadingMode.MITGLIEDER in passed_reading_modes and len(passed_reading_modes) > 4:
+                if not presidents:
+                    print("-- WARN: no presidents for group '{}'".format(titles[0]))
+                if not mitglieder:
+                    print("-- WARN: no mitglieder for group '{}'".format(titles[0]))
+                if not sekretariat:
+                    print("-- WARN: no sekretariat for group '{}'".format(titles[0]))
+                duplicate_reading_modes = set([reading_mode for reading_mode in passed_reading_modes if passed_reading_modes.count(reading_mode) > 1])
+                if len(duplicate_reading_modes) > 1:
+                    raise Exception("ERROR: duplicate reading modes: {}".format(duplicate_reading_modes))
+                if len(titles[0]) > 75 or (len(titles) > 1 and len(titles[1]) > 90) or (len(titles) > 2 and len(titles[2])) > 90 or len(titles) > 3:
+                    raise Exception("ERROR: title too long:\n titles={}".format(titles))
+                groups.append((titles, presidents, sekretariat, konstituierung, beschreibung, zweck, aktivitaeten, mitglieder))
+
                 reading_mode = ReadingMode.TITLE
                 titles = []
                 presidents = []
                 sekretariat = []
                 konstituierung = None
+                beschreibung = []
                 zweck = []
-                art_der_aktivitaeten = []
+                aktivitaeten = []
                 mitglieder = []
+                passed_reading_modes = [reading_mode]
 
         # reading_mode checks must be in reverse order as in the document
-        if line.startswith('Mitgliederliste'):
-            reading_mode = ReadingMode.MITGLIEDERLISTE
+        if line.startswith(LABEL_PRESIDENT):
+            reading_mode = ReadingMode.PRESIDENTS
+            passed_reading_modes.append(reading_mode)
 
-        elif line.startswith('Konstituierung:'):
-            reading_mode = None
-            str = line.replace('Konstituierung:', '').replace('Le', '').replace(', cf courrier de création en 3 langues ci-joint', '').replace('in Bern', '').strip()
-            if str and not str in ['--', '-']:
-                konstituierung = str
+        elif line.startswith(LABEL_SEKRETARIAT):
+            reading_mode = ReadingMode.SEKRETARIAT
+            passed_reading_modes.append(reading_mode)
 
-        elif line.startswith('Art der ') or reading_mode == ReadingMode.ART_DER_AKTIVITAETEN:
-            reading_mode = ReadingMode.ART_DER_AKTIVITAETEN
-            str = replace_bullets(re.sub(r'(Art der|geplanten|Aktivitäten:)', '', line))
-            if str:
-                art_der_aktivitaeten.append(str)
+        elif line.startswith(LABEL_KONSTITUIERUNG):
+            reading_mode = ReadingMode.KONSTITUIERUNG
+            passed_reading_modes.append(reading_mode)
 
-        elif line.startswith('Zweck:') or reading_mode == ReadingMode.ZWECK:
+        elif line.startswith(LABEL_BESCHREIBUNG):
+            reading_mode = ReadingMode.BESCHREIBUNG
+            passed_reading_modes.append(reading_mode)
+
+        elif line.startswith(LABEL_ZWECK):
             reading_mode = ReadingMode.ZWECK
-            text = replace_bullets(line.replace('Zweck:', '').replace('--', ''))
+            passed_reading_modes.append(reading_mode)
+
+        elif line.startswith(LABEL_AKTIVITAETEN):
+            reading_mode = ReadingMode.AKTIVITAETEN
+            passed_reading_modes.append(reading_mode)
+
+        elif line.startswith(LABEL_MITGLIEDER):
+            reading_mode = ReadingMode.MITGLIEDER
+            passed_reading_modes.append(reading_mode)
+
+        elif reading_mode == ReadingMode.BESCHREIBUNG:
+            text = replace_bullets(line.replace('--', ''))
             if text:
                 zweck.append(text)
 
-        elif is_sekretariat(line) or reading_mode == ReadingMode.SEKRETARIAT:
-            reading_mode = ReadingMode.SEKRETARIAT
+        elif reading_mode == ReadingMode.ZWECK:
+            text = replace_bullets(line.replace('--', ''))
+            if text:
+                zweck.append(text)
+
+        elif reading_mode == ReadingMode.SEKRETARIAT:
             sekretariat += extract_sekretariat(line)
 
-        # avoid reading on second line, case separete Co-, second line PräsidentInnen (PG Mehrsprachigkeit CH)
-        elif is_president(line) and reading_mode != ReadingMode.PRESIDENTS_SKIP_NEXT:
-            if line.startswith('Co- '):
-                reading_mode = ReadingMode.PRESIDENTS_SKIP_NEXT
-                president_title = extract_president_title('Co-' + next_line)
-            else:
-                reading_mode = ReadingMode.PRESIDENTS
-                president_title = extract_president_title(line)
-            president_titles.add(president_title)
-            for president in extract_presidents(line):
-                presidents.append((fix_parlamentarian_name_typos(president), president_title))
+        elif reading_mode == ReadingMode.PRESIDENTS:
+            name, president_title = extract_name_and_president_title(line)
+            presidents.append((fix_parlamentarian_name_typos(name), president_title))
 
-        elif reading_mode == ReadingMode.PRESIDENTS or reading_mode == ReadingMode.PRESIDENTS_SKIP_NEXT:
-            reading_mode = ReadingMode.PRESIDENTS
-            for president in extract_presidents(line):
-                presidents.append((fix_parlamentarian_name_typos(president), president_title))
-
-        elif reading_mode == ReadingMode.MITGLIEDERLISTE and line.startswith(MEMBER_LINE_START):
-            mitglieder.append((fix_parlamentarian_name_typos(line).replace('S ', 'SR ').replace('N ', 'NR '), None))
+        elif reading_mode == ReadingMode.MITGLIEDER:
+            name, rat, fraktion, kanton = extract_mitglied(line)
+            # name is one several lines
+            if rat == None:
+                last_mitglied = mitglieder.pop()
+                name = last_mitglied[0] + " " + name
+                if len(name) > 150:
+                    raise Exception("ERROR: name is too long: {}".format(name))
+            mitglieder.append((fix_parlamentarian_name_typos(name), None))
 
         elif reading_mode == ReadingMode.TITLE:
             titles.append(line)
 
     # save last page
     if titles and presidents:
-        groups.append((titles, presidents, sekretariat, konstituierung, zweck, art_der_aktivitaeten, mitglieder))
+        groups.append((titles, presidents, sekretariat, konstituierung, beschreibung, zweck, aktivitaeten, mitglieder))
 
     # print counts for sanity check
     print("\n{} parlamentarische Gruppen\n"
@@ -196,12 +205,12 @@ def read_groups(filename):
 # The PDF containing the co-presidents of the parlamentarische Gruppen
 # has spelling errors in certain names. Correct them here:
 def fix_parlamentarian_name_typos(name):
-    return name.replace("Margrit Kiener Nellen", "Margret Kiener Nellen").replace("Matthias Reynard", "Mathias Reynard").replace("Isabelle Chevallay", "Isabelle Chevalley").replace("Juerg", "Jürg").replace('Prisca Seiler Graf', 'Priska Seiler Graf').replace('Buillard-Marbach', 'Bulliard-Marbach').replace('Bulliard-Marchbach', 'Bulliard-Marbach').replace('Buillard', 'Bulliard').replace('Herzog Evy', 'Herzog Eva').replace('Levraz', 'Levrat').replace('Levart', 'Levrat').replace('Candidas', 'Candinas').replace('de Quatro', 'de Quattro').replace('Pieren Nadja', 'Umbricht Pieren Nadja').replace('Barille', 'Barrile').replace('Julliard', 'Juillard').replace('Funicello','Funiciello').replace('Franzsiska', 'Franziska')
+    return name.replace("Margrit Kiener Nellen", "Margret Kiener Nellen").replace("Matthias Reynard", "Mathias Reynard").replace("Isabelle Chevallay", "Isabelle Chevalley").replace("Juerg", "Jürg").replace('Prisca Seiler Graf', 'Priska Seiler Graf').replace('Buillard-Marbach', 'Bulliard-Marbach').replace('Bulliard-Marchbach', 'Bulliard-Marbach').replace('Buillard', 'Bulliard').replace('Herzog Evy', 'Herzog Eva').replace('Levraz', 'Levrat').replace('Levart', 'Levrat').replace('Candidas', 'Candinas').replace('de Quatro', 'de Quattro').replace('Pieren Nadja', 'Umbricht Pieren Nadja').replace('Barille', 'Barrile').replace('Julliard', 'Juillard').replace('Funicello','Funiciello').replace('Franzsiska', 'Franziska').replace('Mathias Jakob Zopfi', 'Mathias Zopfi')
     #.replace('Schlatter-Schmid', 'Schlatter').replace('Rüegger-Hurschler', 'Rüegger')
 
 def normalize_namen(groups):
     new_groups = []
-    for titles, members, sekretariat, konstituierung, zweck, art_der_aktivitaeten, mitgliederliste in groups:
+    for titles, members, sekretariat, konstituierung, beschreibung, zweck, art_der_aktivitaeten, mitgliederliste in groups:
         title_de = titles[0]
         title_fr = titles[1] if len(titles) > 1 else None
         title_it = titles[2] if len(titles) > 2 else None
@@ -211,11 +220,11 @@ def normalize_namen(groups):
         if (title_it and not guess_language(title_it, ['de', 'fr', 'it']) in ['it', 'UNKNOWN']):
             print("Warning: title_it '{}' guess lanuage is guessed '{}'\n".format(title_it, guess_language(title_it, ['de', 'fr', 'it'])))
 
-        new_groups.append((clean_whitespace(title_de), clean_whitespace(title_fr), clean_whitespace(title_it), members, sekretariat, konstituierung, zweck, art_der_aktivitaeten, mitgliederliste))
+        new_groups.append((clean_whitespace(title_de), clean_whitespace(title_fr), clean_whitespace(title_it), members, sekretariat, konstituierung, beschreibung, zweck, art_der_aktivitaeten, mitgliederliste))
     return new_groups
 
 # write member of parliament and guests to json file
-def write_to_json(groups, archive_pdf_name, filename, url, creation_date, imported_date):
+def write_to_json(groups, archive_pdf_name, filename, url, creation_date, modified_date, imported_date, stand_date, group_type):
     data = [{
             "name_de": title_de,
             "name_fr": title_fr,
@@ -223,10 +232,11 @@ def write_to_json(groups, archive_pdf_name, filename, url, creation_date, import
             "praesidium": members,
             "sekretariat": sekretariat,
             "konstituierung": konstituierung,
+            "beschreibung": beschreibung,
             "zweck": zweck,
             "art_der_aktivitaeten": art_der_aktivitaeten,
             "mitglieder": mitgliederliste
-            } for (title_de, title_fr, title_it, members, sekretariat, konstituierung, zweck, art_der_aktivitaeten, mitgliederliste) in groups]
+            } for (title_de, title_fr, title_it, members, sekretariat, konstituierung, beschreibung, zweck, art_der_aktivitaeten, mitgliederliste) in groups]
 
     metadata_data = {
                 "metadata": {
@@ -234,13 +244,16 @@ def write_to_json(groups, archive_pdf_name, filename, url, creation_date, import
                     "filename": filename,
                     "url": url,
                     "pdf_creation_date": creation_date.isoformat(' '), # , timespec='minutes'
-                    "imported_date": imported_date.isoformat(' ')
+                    "pdf_modified_date": modified_date.isoformat(' '), # , timespec='minutes'
+                    "imported_date": imported_date.isoformat(' '),
+                    "stand_date": stand_date.isoformat(),
+                    "group_type": group_type
                 },
                 "data": data
     }
 
     with open(filename, "wb") as json_file:
-        contents = json.dumps(metadata_data, indent=4,
+        contents = json.dumps(metadata_data, indent=2,
                               separators=(',', ': '),
                               ensure_ascii=False).encode("utf-8")
         json_file.write(contents)
@@ -269,14 +282,13 @@ def scarpe_friendship_groups(local_pdf):
     filename = "parlamentarische-freundschaftsgruppen.json"
     scarpe_parl_pdf("friendship_group", url, filename, local_pdf)
 
-def scarpe_parl_pdf(group_type, url, filename, local_pdf):
+def scarpe_parl_pdf(group_type, url, json_filename, local_pdf):
     print("\ntype: {}".format(group_type))
     script_path = os.path.dirname(os.path.realpath(__file__))
-    stripped_file_name = None
     try:
         import_date = datetime.now().replace(microsecond=0)
         raw_pdf_name = url.split("/")[-1]
-        pdf_name = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, raw_pdf_name)
+        pdf_name = "{}-{}".format(import_date.strftime("%Y-%m-%d"), raw_pdf_name)
         if local_pdf is None:
             print("\ndownloading " + url)
             pdf_helpers.get_pdf_from_admin_ch(url, pdf_name)
@@ -285,40 +297,52 @@ def scarpe_parl_pdf(group_type, url, filename, local_pdf):
             copyfile(local_pdf, pdf_name)
 
         print("\nextracting metadata...")
-        creation_date = pdf_helpers.extract_creation_date(pdf_name)
-        archive_pdf_name = "{}-{:02d}-{:02d}-{}".format(creation_date.year, creation_date.month, creation_date.day, raw_pdf_name)
-        archive_filename = "{}-{:02d}-{:02d}-{}".format(creation_date.year, creation_date.month, creation_date.day, filename)
-        print("\nPDF creation date: {:02d}.{:02d}.{}\n".format(creation_date.day, creation_date.month, creation_date.year))
+        creation_date, modified_date = pdf_helpers.extract_creation_date(pdf_name)
+
+        tabula_path = script_path + "/tabula-1.0.5-jar-with-dependencies.jar"
+        print("parsing title page PDF...")
+        cmd = ["java", "-Djava.util.logging.config.file=web_scrapers/logging.properties", "-jar", tabula_path, pdf_name, "-o", TITLE_CSV, "--pages", "1", "-t", "-i"]
+        call(cmd, stderr=None)
+        stand_date = pdf_helpers.read_stand(TITLE_CSV)
+        archive_pdf_name = "{}-{}".format(stand_date.strftime("%Y-%m-%d"), raw_pdf_name)
+
+        print("\nStand: {}".format(stand_date.strftime("%d.%m.%Y")))
+        print("PDF creation date: {}".format(creation_date.strftime("%d.%m.%Y")))
+        print("PDF modified date: {}\n".format(modified_date.strftime("%d.%m.%Y")))
 
         print("removing first page of PDF...")
-        stripped_file_name = "pg_file-stripped.pdf"
-        call(["qpdf", "--pages", pdf_name, "2-z", "--", pdf_name, stripped_file_name])
+        call(["qpdf", "--pages", pdf_name, "2-z", "--", pdf_name, CONTENT_PDF])
 
         print("parsing PDF...")
-        tabula_path = script_path + "/tabula-1.0.5-jar-with-dependencies.jar"
-        cmd = ["java", "-Djava.util.logging.config.file=web_scrapers/logging.properties", "-jar", tabula_path, stripped_file_name, "-o", "pg_data.csv", "--pages", "all", "-t", "-i"]
+        cmd = ["java", "-Djava.util.logging.config.file=web_scrapers/logging.properties", "-jar", tabula_path, CONTENT_PDF, "-o", DATA_CSV, "--pages", "all", "-t", "-i"]
         print(" ".join(cmd))
         call(cmd, stderr=None)
 
         print("reading parsed data...")
-        groups = read_groups("pg_data.csv")
+        groups = read_groups(DATA_CSV)
         groups = normalize_namen(groups)
 
-        print("writing " + filename + "...")
-        write_to_json(groups, archive_pdf_name, filename, url, creation_date, import_date)
+        print("writing " + json_filename + "...")
+        write_to_json(groups, archive_pdf_name, json_filename, url, creation_date, modified_date, import_date, stand_date, group_type)
 
         if local_pdf is None:
-            print("archiving...")
+            archive_json_filename = "{}-{}".format(stand_date.strftime("%Y-%m-%d"), json_filename)
+            print("archiving PDF " + archive_pdf_name)
             copyfile(pdf_name, script_path + "/archive/{}".format(archive_pdf_name))
-            copyfile(filename, script_path + "/archive/{}".format(archive_filename))
+            print("archiving JSON ...")
+            copyfile(json_filename, script_path + "/archive/{}".format(archive_json_filename))
 
     finally:
         print("cleaning up...")
-        os.rename(pdf_name, script_path + "/backup/{}".format(pdf_name))
-        backup_filename = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, filename)
-        copyfile(filename, script_path + "/backup/{}".format(backup_filename))
-        if stripped_file_name and os.path.isfile(stripped_file_name): os.remove(stripped_file_name)
-        if os.path.isfile("pg_data.csv"): os.remove("pg_data.csv")
+        if local_pdf is None:
+            if os.path.isfile(pdf_name): os.rename(pdf_name, script_path + "/backup/{}".format(pdf_name))
+        else:
+            if os.path.isfile(pdf_name): os.remove(pdf_name)
+        backup_json_filename = "{}-{}".format(import_date.strftime("%Y-%m-%d"), json_filename)
+        if os.path.isfile(json_filename): copyfile(json_filename, script_path + "/backup/{}".format(backup_json_filename))
+        if os.path.isfile(CONTENT_PDF): os.remove(CONTENT_PDF)
+        if os.path.isfile(DATA_CSV): os.remove(DATA_CSV)
+        if os.path.isfile(TITLE_CSV): os.remove(TITLE_CSV)
 
 
 #main method

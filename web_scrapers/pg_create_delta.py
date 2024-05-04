@@ -113,15 +113,22 @@ def sync_data(group_type, conn, filename, batch_time):
 
     with open(filename) as data_file:
         content = json.load(data_file)
-        pdf_date_str = content["metadata"]["pdf_creation_date"]
+        pdf_creation_date_str = content["metadata"]["pdf_creation_date"]
+        stand_date_str = content["metadata"]["stand_date"]
         archive_pdf_name = content["metadata"]["archive_pdf_name"]
         url = content["metadata"]["url"]
-        pdf_date = datetime.strptime(pdf_date_str, "%Y-%m-%d %H:%M:%S") # 2019-07-12 14:55:08
-        stichdatum = pdf_date
-        print("-- PDF creation date: {}".format(pdf_date))
+        meta_group_type = content["metadata"]["group_type"]
+        pdf_creation_date = datetime.strptime(pdf_creation_date_str, "%Y-%m-%d %H:%M:%S") # 2019-07-12 14:55:08
+        stand_date = datetime.strptime(stand_date_str, "%Y-%m-%d").date() # 2019-07-12
+        pdf_date = stand_date
+        stichdatum = stand_date
+        print("-- PDF stand: {}".format(stand_date))
+        print("-- PDF creation date: {}".format(pdf_creation_date))
         print("-- PDF archive file: {}".format(archive_pdf_name))
         print("-- URL: {}".format(content["metadata"]["url"]))
         print("-- ----------------------------- ")
+
+        assert group_type == meta_group_type, "meta_group_type must be equal"
 
         handle_removed_groups(group_type, content, conn, summary, stichdatum, batch_time, pdf_date)
 
@@ -150,7 +157,7 @@ def sync_data(group_type, conn, filename, batch_time):
             processed_parlamentarier_ids = []
             for member, title in members:
                 names = get_names(member)
-                parlamentarier_id, parlamentarier_bis = db.get_parlamentarier_id_by_name(conn, names, False)
+                parlamentarier_id, parlamentarier_bis = db.get_parlamentarier_id_by_name(conn, names, title != None)
 
                 if not parlamentarier_id:
                     print("DATA INTEGRITY FAILURE: Parlamentarier '{}' of group '{}' not found in database.".format(member, name_de))
@@ -239,7 +246,7 @@ def handle_removed_groups(group_type, content, conn, summary, stichdatum, batch_
                             parlamentarier_id, parlamentarier_bis = parlamentarier_id_cache[parl_key]
                         else:
                             names = get_names(member)
-                            parlamentarier_id, parlamentarier_bis = db.get_parlamentarier_id_by_name(conn, names, False)
+                            parlamentarier_id, parlamentarier_bis = db.get_parlamentarier_id_by_name(conn, names, title != None)
                             parlamentarier_id_cache[parl_key] = (parlamentarier_id, parlamentarier_bis)
 
                         if not parlamentarier_id:
@@ -268,6 +275,7 @@ def handle_removed_groups(group_type, content, conn, summary, stichdatum, batch_
                 print("\n-- Interessenbindung zwischen Parlamentarier '{}' und Gruppe '{}' als {}{} nicht mehr vorhanden".format(full_name, org_name, ib_art, '/' + ib_funktion_im_gremium if ib_funktion_im_gremium else ''))
                 print(sql_statement_generator.end_interessenbindung(ib_id, stichdatum, batch_time, pdf_date))
 
+                summary.set_parlamentarier_name(parl_id, full_name)
                 summary.gruppe_beendet(parl_id, ib_id, org_name, ib_art)
 
         for processed_org_name, processed_org_val in processed_org_name.items():
@@ -480,19 +488,22 @@ def handle_organisation(group_type, rechtsform, group, inaktiv, name_de, name_fr
 
 
 def get_pg_beschreibung(name_de, group, organisation_id, summary, conn, batch_time, pdf_date):
+    beschreibung = join_respecting_lists_and_trennzeichen(group["beschreibung"]) if group["beschreibung"] != None else None
     zweck = join_respecting_lists_and_trennzeichen(group["zweck"]) if group["zweck"] != None else None
     aktivitaeten = join_respecting_lists_and_trennzeichen(group["art_der_aktivitaeten"]) if group["art_der_aktivitaeten"] != None else None
     gruendungsjahr = re.sub(r'.*(\d{4}).*', r'\g<1>', group["konstituierung"]) if group["konstituierung"] != None else None
 
-    beschreibung = []
+    gruppenbeschreibung = []
+    if beschreibung:
+        gruppenbeschreibung.append(beschreibung)
     if zweck:
-        beschreibung.append(zweck)
+        gruppenbeschreibung.append(zweck)
     if aktivitaeten:
-        beschreibung.append('Aktivitäten:\n' + aktivitaeten)
+        gruppenbeschreibung.append('Aktivitäten:\n' + aktivitaeten)
     if gruendungsjahr:
-        beschreibung.append('Gründung: ' + gruendungsjahr)
+        gruppenbeschreibung.append('Gründung: ' + gruendungsjahr)
 
-    return '\n\n'.join(beschreibung)
+    return '\n\n'.join(gruppenbeschreibung)
 
 def join_respecting_lists_and_trennzeichen(list):
     str = ''

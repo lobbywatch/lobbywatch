@@ -76,6 +76,13 @@ def common_start(names):
 
 # create vorname, zweiter_vorname and name from a untyped list of names according to a pattern
 def parse_name_combination(names, pattern):
+    """
+    V,v: Vornname
+    Z,z: Zwischenname
+    N,n: Nachname
+    VV: concatenate with space, e.g. Simon Peter
+    Vv: concatenate with "-", e.g Hans-Peter
+    """
     vorname = ""
     zweiter_vorname = ""
     vorname_kurz = ""
@@ -83,12 +90,18 @@ def parse_name_combination(names, pattern):
     for name, value in zip(names, pattern):
         if value == "V":
             vorname += " " + name
+        elif value == "v":
+            vorname += "-" + name
         elif value == "Z":
             zweiter_vorname += " " + name
+        elif value == "z":
+            zweiter_vorname += "-" + name
         elif value == "K":
             vorname_kurz += " " + name
         elif value == "N":
             nachname += " " + name
+        elif value == "n":
+            nachname += "-" + name
         elif value == "S":
             vorname += " %" + name
 

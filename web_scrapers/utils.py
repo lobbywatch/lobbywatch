@@ -25,10 +25,10 @@ def escape_newlines(str):
 
 # the current date formatted as a string MySQL can understand
 def _date_as_sql_string(date):
-    return "{0:02d}.{1:02d}.{2}".format(date.day, date.month, date.year)
+    return date.strftime("%d.%m.%Y")
 
-def _datetime_as_sql_string(date):
-    return "{0:02d}.{1:02d}.{2} {3:02d}:{4:02d}:{5:02d}".format(date.day, date.month, date.year, date.hour, date.minute, date.second)
+def _datetime_as_sql_string(datetime):
+    return datetime.strftime("%d.%m.%Y %H:%M:%S")
 
 def clean_str(str):
     if str == None: return None

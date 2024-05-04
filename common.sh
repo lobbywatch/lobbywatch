@@ -178,6 +178,23 @@ checkLocalMySQLRunning() {
         # if [ ! -e "$mysqlSock" ]; then
         $MYSQLADMIN -h$HOSTNAME -u$DB_USER processlist >/dev/null 2>&1 && OK=true || OK=false
         if ! $OK ; then
+          askContinueYn "Service mariadb not running. Start?"
+
+          sudo systemctl start mariadb
+
+          echo "Wait MySQL starting..."
+          wait_mysql $wait_secs || {
+            echo "DB not running after $wait_secs s"
+            exit 1
+          }
+          systemctl status mariadb
+        fi
+        ;;
+      "rkurmannDocker" )
+        # mysqlSock="$HOME/dev/web/mysql/mysql57/data/mysql.sock"
+        # if [ ! -e "$mysqlSock" ]; then
+        $MYSQLADMIN -h$HOSTNAME -u$DB_USER processlist >/dev/null 2>&1 && OK=true || OK=false
+        if ! $OK ; then
           askContinueYn "Docker $MYSQL_CONTAINER not running. Start?"
 
           docker start $MYSQL_CONTAINER
@@ -272,8 +289,20 @@ _alarm() {
 #   \kill -9 $pid > /dev/null 2> /dev/null
 }
 
-beep() {
+xbeep() {
+  :
+}
+
+alarm() {
   _alarm 400 200
+}
+
+bell() {
+  echo -e '\a'
+}
+
+beep() {
+  bell
 }
 
 ask_PW() {
@@ -338,7 +367,7 @@ enable_fail_onerror_no_vars_check() {
   # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
   trap 'abort "Error trapped" $LINENO' ERR
   # https://sipb.mit.edu/doc/safe-shell/
-  set -e -o pipefail
+  set -e +u -o pipefail
   # set -u
 }
 
@@ -355,7 +384,7 @@ enable_fail_onerror_no_vars_no_pipe() {
   # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
   trap 'abort "Error trapped" $LINENO' ERR
   # https://sipb.mit.edu/doc/safe-shell/
-  set -e +o pipefail
+  set -e +u +o pipefail
 }
 
 disable_fail_onerror() {

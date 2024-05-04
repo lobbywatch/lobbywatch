@@ -170,7 +170,7 @@ def get_parlamentarier_id_by_names_kanton_fraktion(database, names, kanton_id, f
 
 
 def get_parlamentarier_id_by_name(database, names, prename_first: bool):
-    name_patterns = ["VN", "VZN", "VVN", "VNN", "SN", "N"] if prename_first else ["NV", "NVZ", "NVV", "NNV", "NNVV", "NNNV", "NN", "SN", "N"]
+    name_patterns = ["VN", "VZN", "VVN", "VvN", "VNN", "VNn", "SN", "N"] if prename_first else ["NV", "NVZ", "NVV", "NVv", "NNV", "NnV", "NNVV", "NNNV", "NN", "SN", "N"]
     with database.cursor() as cursor:
         query = """
         SELECT id, im_rat_bis
@@ -241,15 +241,18 @@ def get_person_id(database, names):
 def get_organisation_id(database, name_de, name_fr, name_it):
     with database.cursor() as cursor:
         organisation_id = None
+        # Exlcude Wasser since Wasser matches also with Wasserstoff
         query = """
 SELECT id, inaktiv, rechtsform
 FROM organisation
-WHERE (name_de LIKE '{0}%'
+WHERE (
+name_de = '{0}'
+OR (name_de LIKE '{0}%' AND '{0}' <> 'Wasser')
 OR name_de LIKE 'Parlamentarische Gruppe%{0}'
 OR CONCAT_WS(' ', name_de, abkuerzung_de) LIKE 'Parlamentarische Gruppe%{0}'
 OR name_de LIKE 'Parlamentarische%{0}'
 OR (CHAR_LENGTH(name_de) > 8 AND LOWER(name_de) = LOWER(SUBSTR('{0}', 1, CHAR_LENGTH(name_de))))
-OR (CHAR_LENGTH('{0}') > 8 AND LOWER('{0}') = LOWER(SUBSTR(name_de, 1, CHAR_LENGTH('{0}')))))
+OR (CHAR_LENGTH('{0}') > 8 AND LOWER('{0}') = LOWER(SUBSTR(name_de, 1, CHAR_LENGTH('{0}')))) AND '{0}' <> 'Wasser')
 AND rechtsform IN ('Parlamentarische Gruppe', 'Parlamentarische Freundschaftsgruppe')
         """.format(escape_SQL(name_de))
 

@@ -7,6 +7,8 @@ SCRIPT_DIR=`dirname "$0"`
 
 enable_fail_onerror
 
+set +x
+
 # Copy PROD backup to lobbywatchtest
 # ./deploy.sh -b -o -p
 # ./deploy.sh -r -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
