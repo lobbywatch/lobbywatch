@@ -111,4 +111,14 @@ class ActionList {
         }
         return false;
     }
+
+    public function removeOperation($operationName) {
+        foreach ($this->operations as $key => $operation) {
+            if ($operation->GetName() == $operationName) {
+                unset($this->operations[$key]);
+                break;
+            }
+        }
+    }
+
 }

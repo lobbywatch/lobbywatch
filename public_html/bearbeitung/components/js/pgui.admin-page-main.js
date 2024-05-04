@@ -3,12 +3,11 @@ define([
     'pgui.localizer',
     'libs/sprintf',
     'pgui.utils',
+    'knockout',
     'pgui.change_password_dialog',
     'bootbox',
-    'mootools-core',
-    'jquery.tmpl',
-    'knockout'
-], function (PhpGenUserManagementApi, localizer, sprintf, utils) {
+    'mootools-core'
+], function (PhpGenUserManagementApi, localizer, sprintf, utils, ko) {
 
     return function () {
 

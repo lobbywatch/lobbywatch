@@ -138,7 +138,7 @@
     </thead>
 
 {literal}
-    <tbody data-bind="template: { name: 'usersRowTemplate', foreach: usersOnCurrentPage }">
+    <tbody data-bind="template: { name: 'usersRowTemplate', foreach: usersOnCurrentPage }"></tbody>
     <script type="text/html" id="usersRowTemplate">
 
         <tr class="pg-row users-row">
@@ -217,7 +217,6 @@
             <td class="page-grant"><input type="checkbox" data-bind="checked: deleteGrant" /></td>
         </tr>
     </script>
-    </tbody>
 {/literal}
 </table>
 

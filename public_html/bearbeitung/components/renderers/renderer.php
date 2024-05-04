@@ -1011,18 +1011,17 @@ abstract class Renderer
      */
     public function RenderVerticalGrid(VerticalGrid $verticalGrid)
     {
-        $grid = $verticalGrid->GetGrid();
-        $page = $grid->GetPage();
-        $page->UpdateValuesFromUrl();
-
-        $this->SetHTTPContentTypeByPage($verticalGrid->GetGrid()->GetPage());
-        $modalFormSize = $verticalGrid->GetGrid()->GetPage()->getModalFormSize();
-
         if ($verticalGrid->isCommit()) {
-            $this->result = SystemUtils::ToJSON($verticalGrid->GetResponse());
+            header('Content-Type: application/json; charset=utf-8');
+            $this->result = json_encode($verticalGrid->GetResponse());
             return;
         }
+        $grid = $verticalGrid->GetGrid();
+        $page = $grid->GetPage();
 
+        $this->SetHTTPContentTypeByPage($page);
+        $page->UpdateValuesFromUrl();
+        $modalFormSize = $page->getModalFormSize();
         $isModal = $verticalGrid->isModal();
         $isInline = $verticalGrid->isInline();
 

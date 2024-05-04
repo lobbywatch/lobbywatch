@@ -55,7 +55,7 @@ define([
                                     url: level.rootElement.data("url"),
                                     data: {term2: parentLevel.getValue()},
                                     dataType: "json"
-                                }).success(function (data) {
+                                }).done(function (data) {
                                     $.each(data, function (k, item) {
                                         level.addItem(
                                             item.id,

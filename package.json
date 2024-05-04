@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "requirejs": "^2.3.6",
+    "terser": "^5.31.0"
+  }
+}

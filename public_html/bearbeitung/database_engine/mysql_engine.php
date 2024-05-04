@@ -147,7 +147,7 @@ class MyCommandImp extends EngCommandImp {
     }
 
     /** @inheritdoc */
-    public function getSelectSQLWithLimitation($selectSQL, $limitNumber, $limitOffset) {
+    public function getSelectSQLWithLimitation($selectSQL, $limitNumber, $limitOffset, $hasSorting) {
         return $selectSQL . ' ' . sprintf('LIMIT %d, %d', $limitOffset, $limitNumber);
     }
 }

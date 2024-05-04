@@ -65,5 +65,6 @@
     name: "main",
 //     include: ["foo/bar/bee"],
     insertRequire: ['main'],
-    out: "public_html/bearbeitung/components/js/main-bundle-custom.js",
+    optimize: 'none',
+    out: "public_html/bearbeitung/components/js/main-bundle-custom.raw.js",
 })

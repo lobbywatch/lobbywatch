@@ -133,7 +133,7 @@ define([
                     var selectionData = self.selection.getData();
                     var formData = {
                         operation: 'delsel',
-                        recordCount: selectionData.length,
+                        recordCount: selectionData.length
                     };
 
                     _.each(selectionData, function (keys, i) {

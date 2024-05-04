@@ -126,4 +126,34 @@ class QueryDataset extends Dataset
         );
     }
 
+    /**  @param string $sql */
+    public function setInsertSql($sql) {
+        $this->insertSql = $sql;
+    }
+
+    /**  @return string */
+    public function getInsertSql() {
+        return $this->insertSql;
+    }
+
+    /**  @param string $sql */
+    public function setUpdateSql($sql) {
+        $this->updateSql = $sql;
+    }
+
+    /**  @return string */
+    public function getUpdateSql() {
+        return $this->updateSql;
+    }
+
+    /**  @param string $sql */
+    public function setDeleteSql($sql) {
+        $this->deleteSql = $sql;
+    }
+
+    /**  @return string */
+    public function getDeleteSql() {
+        return $this->deleteSql;
+    }
+
 }

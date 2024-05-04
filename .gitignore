@@ -85,3 +85,5 @@ parlamentarische-freundschaftsgruppen.json
 *-stripped.pdf
 *-content.pdf
 *.new
+node_modules/*
+public_html/bearbeitung/components/js/main-bundle-custom.raw.js

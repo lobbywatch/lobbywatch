@@ -1,7 +1,7 @@
 define([
     'pgui.localizer',
     'pgui.utils',
-    'bootbox',
+    'bootbox'
 ], function(localizer, utils) {
 
     return function ($container, grid) {

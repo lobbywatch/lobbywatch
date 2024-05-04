@@ -157,7 +157,7 @@ abstract class AbstractSelectQueryBuilder {
             StringUtils::AddStr($result, sprintf('ORDER BY %s', $this->orderBy), ' ');
         }
         if ($this->hasLimitation()) {
-            $result = $this->commandImp->getSelectSQLWithLimitation($result, $this->limitNumber, $this->limitOffset);
+            $result = $this->commandImp->getSelectSQLWithLimitation($result, $this->limitNumber, $this->limitOffset, $this->hasSorting());
         }
         return $result;
     }

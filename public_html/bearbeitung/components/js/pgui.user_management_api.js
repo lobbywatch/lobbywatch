@@ -10,7 +10,7 @@ define([], function() {
                 $.extend({},
                     {'hname': functionShortName},
                     data))
-                .success(
+                .done(
                 function (data) {
                     if (data.status == 'error')
                         result.reject(data.result);
@@ -21,7 +21,7 @@ define([], function() {
                             result.resolve();
                     }
                 })
-                .error(
+                .fail(
                 function (xhr, status, errorMessage) {
                     result.reject(status + ': ' + errorMessage);
                 });

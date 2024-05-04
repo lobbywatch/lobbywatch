@@ -8,7 +8,7 @@ class SpinEdit extends CustomEditor {
     private $useConstraints = false;
     private $minValue;
     private $maxValue;
-    private $step;
+    private $step = 1;
 
     public function GetMaxValue() {
         return $this->maxValue;

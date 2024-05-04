@@ -938,9 +938,10 @@ abstract class EngCommandImp
      * @param string $selectSQL
      * @param int $limitNumber
      * @param int $limitOffset
+     * @param boolean $hasSorting
      * @return string
      */
-    public function getSelectSQLWithLimitation($selectSQL, $limitNumber, $limitOffset) {
+    public function getSelectSQLWithLimitation($selectSQL, $limitNumber, $limitOffset, $hasSorting) {
         return $selectSQL;
     }
 }

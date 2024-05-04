@@ -67,7 +67,7 @@ define([
     function getApi($el, cb) {
         var url = $el.data('url');
         $.getJSON('https://noembed.com/embed', {url: url})
-            .success(function(response) {
+            .done(function(response) {
                 $el.data('api', response);
                 if (response.type !== 'video') {
                     $el.html(url);
@@ -76,7 +76,7 @@ define([
                 }
                 cb(response);
             })
-            .error(function() {
+            .fail(function() {
                 $el.html(url);
                 $el.find('.pgui-field-embedded-video-preloader').remove();
             });

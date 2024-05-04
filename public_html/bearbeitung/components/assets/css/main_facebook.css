@@ -10952,6 +10952,7 @@ body {
   position: relative;
   border: 0;
   box-shadow: none;
+  display: block;
 }
 .modal {
   text-align: center;

@@ -62,7 +62,7 @@ define([
                         url: $el.data("url"),
                         data: {id: id},
                         dataType: "json"
-                    }).success(function (data) {
+                    }).done(function (data) {
                         $.each(data, function (k, item) {
                             if (item.id == id) {
                                 callback({

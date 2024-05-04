@@ -324,4 +324,10 @@ class UploadFileToFolderColumn extends CustomEditColumn
     {
         $this->replaceUploadedFileIfExist = $replaceUploadedFileIfExist;
     }
+
+    public function SetTargetFolderTemplate($value)
+    {
+        $this->targetFolderTemplate = $value;
+    }
+
 }
