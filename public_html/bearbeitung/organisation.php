@@ -900,6 +900,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -1062,6 +1063,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -1673,6 +1675,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -1754,6 +1757,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -3492,6 +3496,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -4393,6 +4398,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -4624,6 +4630,7 @@
                     new DateTimeField('created_date'),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date'),
+                    new StringField('organisation_name_de_rechtsform_unique'),
                     new IntegerField('log_id', true, true, true),
                     new StringField('action', true),
                     new StringField('state'),
@@ -4726,7 +4733,8 @@
                 new FilterColumn($this->dataset, 'action_date', 'action_date', 'Action Date'),
                 new FilterColumn($this->dataset, 'snapshot_id', 'snapshot_id_beschreibung', 'Snapshot Id'),
                 new FilterColumn($this->dataset, 'ehra_id', 'ehra_id', 'Ehra Id'),
-                new FilterColumn($this->dataset, 'ch_id', 'ch_id', 'Ch Id')
+                new FilterColumn($this->dataset, 'ch_id', 'ch_id', 'Ch Id'),
+                new FilterColumn($this->dataset, 'organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique')
             );
         }
     
@@ -4790,7 +4798,8 @@
                 ->addColumn($columns['action'])
                 ->addColumn($columns['state'])
                 ->addColumn($columns['action_date'])
-                ->addColumn($columns['snapshot_id']);
+                ->addColumn($columns['snapshot_id'])
+                ->addColumn($columns['organisation_name_de_rechtsform_unique']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -6258,6 +6267,30 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('organisation_name_de_rechtsform_unique_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['organisation_name_de_rechtsform_unique'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -6782,6 +6815,14 @@
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->setDescription('Fremdschlüssel zu einem Snapshot');
             $grid->AddViewColumn($column);
+            //
+            // View column for organisation_name_de_rechtsform_unique field
+            //
+            $column = new TextViewColumn('organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->setDescription('Platzhalter für fachlichen unique constraint');
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -7233,16 +7274,37 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for organisation_name_de_rechtsform_unique field
+            //
+            $column = new TextViewColumn('organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
         }
     
         protected function AddEditColumns(Grid $grid)
         {
-    
+            //
+            // Edit column for organisation_name_de_rechtsform_unique field
+            //
+            $editor = new TextEdit('organisation_name_de_rechtsform_unique_edit');
+            $editColumn = new CustomEditColumn('Organisation Name De Rechtsform Unique', 'organisation_name_de_rechtsform_unique', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
         }
     
         protected function AddMultiEditColumns(Grid $grid)
         {
-    
+            //
+            // Edit column for organisation_name_de_rechtsform_unique field
+            //
+            $editor = new TextEdit('organisation_name_de_rechtsform_unique_edit');
+            $editColumn = new CustomEditColumn('Organisation Name De Rechtsform Unique', 'organisation_name_de_rechtsform_unique', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddToggleEditColumns(Grid $grid)
@@ -7252,7 +7314,14 @@
     
         protected function AddInsertColumns(Grid $grid)
         {
-    
+            //
+            // Edit column for organisation_name_de_rechtsform_unique field
+            //
+            $editor = new TextEdit('organisation_name_de_rechtsform_unique_edit');
+            $editColumn = new CustomEditColumn('Organisation Name De Rechtsform Unique', 'organisation_name_de_rechtsform_unique', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -7710,6 +7779,13 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for organisation_name_de_rechtsform_unique field
+            //
+            $column = new TextViewColumn('organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -8161,6 +8237,13 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddExportColumn($column);
+            
+            //
+            // View column for organisation_name_de_rechtsform_unique field
+            //
+            $column = new TextViewColumn('organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
         }
     
         private function AddCompareColumns(Grid $grid)
@@ -8601,6 +8684,13 @@
             $column = new TextViewColumn('snapshot_id', 'snapshot_id_beschreibung', 'Snapshot Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for organisation_name_de_rechtsform_unique field
+            //
+            $column = new TextViewColumn('organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
         }
     
@@ -10566,6 +10656,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -11079,6 +11170,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -11644,6 +11736,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -12644,6 +12737,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -30156,6 +30250,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -30526,6 +30621,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -30987,6 +31083,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -31733,6 +31830,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -33450,6 +33548,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -33925,6 +34024,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -34433,6 +34533,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -35665,6 +35766,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -36946,6 +37048,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -37238,6 +37341,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -37649,6 +37753,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -38588,6 +38693,7 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique'),
                     new IntegerField('published', true),
                     new IntegerField('created_date_unix'),
                     new IntegerField('updated_date_unix'),
@@ -38815,7 +38921,8 @@
                     new StringField('created_visa', true),
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true)
+                    new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique')
                 )
             );
             $this->dataset->AddLookupField('bfs_gemeinde_nr', 'v_bfs_gemeinde', new IntegerField('gdenr'), new StringField('anzeige_name', false, false, false, false, 'bfs_gemeinde_nr_anzeige_name', 'bfs_gemeinde_nr_anzeige_name_v_bfs_gemeinde'), 'bfs_gemeinde_nr_anzeige_name_v_bfs_gemeinde');
@@ -38915,7 +39022,8 @@
                 new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date'),
                 new FilterColumn($this->dataset, 'ALT_branche_id', 'ALT_branche_id', 'ALT Branche Id'),
                 new FilterColumn($this->dataset, 'ehra_id', 'ehra_id', 'Ehra Id'),
-                new FilterColumn($this->dataset, 'ch_id', 'ch_id', 'Ch Id')
+                new FilterColumn($this->dataset, 'ch_id', 'ch_id', 'Ch Id'),
+                new FilterColumn($this->dataset, 'organisation_name_de_rechtsform_uid_unique', 'organisation_name_de_rechtsform_uid_unique', 'Organisation Name De Rechtsform Uid Unique')
             );
         }
     
@@ -38951,7 +39059,8 @@
                 ->addColumn($columns['sekretariat'])
                 ->addColumn($columns['wikidata_qid'])
                 ->addColumn($columns['notizen'])
-                ->addColumn($columns['updated_by_import']);
+                ->addColumn($columns['updated_by_import'])
+                ->addColumn($columns['organisation_name_de_rechtsform_uid_unique']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -40429,6 +40538,30 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('organisation_name_de_rechtsform_uid_unique');
+            
+            $filterBuilder->addColumn(
+                $columns['organisation_name_de_rechtsform_uid_unique'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -41099,6 +41232,15 @@
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->setDescription('Abgeändert am');
             $grid->AddViewColumn($column);
+            //
+            // View column for organisation_name_de_rechtsform_uid_unique field
+            //
+            $column = new TextViewColumn('organisation_name_de_rechtsform_uid_unique', 'organisation_name_de_rechtsform_uid_unique', 'Organisation Name De Rechtsform Uid Unique', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->setDescription('Kombination aus name_de, rechtsform, uid und inaktiv muss eindeutig sein. (Fachlicher unique constraint)');
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -41542,6 +41684,14 @@
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for organisation_name_de_rechtsform_uid_unique field
+            //
+            $column = new TextViewColumn('organisation_name_de_rechtsform_uid_unique', 'organisation_name_de_rechtsform_uid_unique', 'Organisation Name De Rechtsform Uid Unique', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -42511,6 +42661,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for organisation_name_de_rechtsform_uid_unique field
+            //
+            $editor = new TextAreaEdit('organisation_name_de_rechtsform_uid_unique_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Organisation Name De Rechtsform Uid Unique', 'organisation_name_de_rechtsform_uid_unique', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
         }
     
         protected function AddMultiEditColumns(Grid $grid)
@@ -43412,6 +43571,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for organisation_name_de_rechtsform_uid_unique field
+            //
+            $editor = new TextAreaEdit('organisation_name_de_rechtsform_uid_unique_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Organisation Name De Rechtsform Uid Unique', 'organisation_name_de_rechtsform_uid_unique', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddToggleEditColumns(Grid $grid)
@@ -44261,6 +44429,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for organisation_name_de_rechtsform_uid_unique field
+            //
+            $editor = new TextAreaEdit('organisation_name_de_rechtsform_uid_unique_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Organisation Name De Rechtsform Uid Unique', 'organisation_name_de_rechtsform_uid_unique', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(true && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -44711,6 +44888,14 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for organisation_name_de_rechtsform_uid_unique field
+            //
+            $column = new TextViewColumn('organisation_name_de_rechtsform_uid_unique', 'organisation_name_de_rechtsform_uid_unique', 'Organisation Name De Rechtsform Uid Unique', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -45155,6 +45340,14 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
+            
+            //
+            // View column for organisation_name_de_rechtsform_uid_unique field
+            //
+            $column = new TextViewColumn('organisation_name_de_rechtsform_uid_unique', 'organisation_name_de_rechtsform_uid_unique', 'Organisation Name De Rechtsform Uid Unique', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddExportColumn($column);
         }
     
         private function AddCompareColumns(Grid $grid)
@@ -45598,6 +45791,14 @@
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for organisation_name_de_rechtsform_uid_unique field
+            //
+            $column = new TextViewColumn('organisation_name_de_rechtsform_uid_unique', 'organisation_name_de_rechtsform_uid_unique', 'Organisation Name De Rechtsform Uid Unique', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
             $grid->AddCompareColumn($column);
         }
     

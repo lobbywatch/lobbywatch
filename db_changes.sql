@@ -4436,3 +4436,54 @@ ALTER TABLE `person_log`
 
 ALTER TABLE `zutrittsberechtigung_log`
   DROP `zutrittsberechtigung_parlamentarier_person_unique`;
+
+-- 18.04.2023 add VIRTUAL after MariaDB 10.6 migration
+
+ALTER TABLE `in_fraktion`
+  CHANGE `updated_visa` `updated_visa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Abgeändert von',
+  ADD `in_fraktion_parlamentarier_fraktion_unique` VARCHAR(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci AS (concat_ws('_',`parlamentarier_id`,`fraktion_id`,ifnull(`bis`,'9999-12-31'))) VIRTUAL UNIQUE COMMENT 'Kombination aus parlamentarier_id, fraktion_id und bis muss eindeutig sein. (Fachlicher unique constraint)' AFTER `updated_date`;
+
+ALTER TABLE `in_fraktion_log`
+  ADD `in_fraktion_parlamentarier_fraktion_unique` VARCHAR(0) NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+
+ALTER TABLE `in_kommission`
+  ADD `in_kommission_parlamentarier_kommission_funktion_unique` VARCHAR(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`parlamentarier_id`,`kommission_id`,`funktion`,ifnull(`bis`,'9999-12-31'))) VIRTUAL UNIQUE COMMENT 'Kombination aus parlamentarier_id, kommission_id, funktion und bis muss eindeutig sein. (Fachlicher unique constraint)' AFTER `updated_date`;
+
+ALTER TABLE `in_kommission_log`
+  ADD `in_kommission_parlamentarier_kommission_funktion_unique` VARCHAR(0) NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+
+ALTER TABLE `in_partei`
+  ADD `in_partei_parlamentarier_partei_unique` VARCHAR(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`parlamentarier_id`,`partei_id`,ifnull(`bis`,'9999-12-31'))) VIRTUAL UNIQUE COMMENT 'Kombination aus parlamentarier_id, partei_id und bis muss eindeutig sein. (Fachlicher unique constraint)' AFTER `updated_date`;
+
+ALTER TABLE `in_partei_log`
+  ADD `in_partei_parlamentarier_partei_unique` VARCHAR(0) NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+
+ALTER TABLE `in_rat`
+  ADD `in_rat_parlamentarier_rat_unique` VARCHAR(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`parlamentarier_id`,`rat_id`,ifnull(`bis`,'9999-12-31'))) VIRTUAL UNIQUE COMMENT 'Kombination aus parlamentarier_id, rat_id und bis muss eindeutig sein. (Fachlicher unique constraint)' AFTER `updated_date`;
+
+ALTER TABLE `in_rat_log`
+  ADD `in_rat_parlamentarier_rat_unique` VARCHAR(0) NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+
+ALTER TABLE `organisation`
+  ADD `organisation_name_de_rechtsform_uid_unique` VARCHAR(195) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`name_de`,`rechtsform`,ifnull(`uid`,FALSE),ifnull(`inaktiv`,FALSE))) VIRTUAL UNIQUE COMMENT 'Kombination aus name_de, rechtsform, uid und inaktiv muss eindeutig sein. (Fachlicher unique constraint)' AFTER `updated_date`;
+
+ALTER TABLE `organisation_log`
+  ADD `organisation_name_de_rechtsform_unique` VARCHAR(0) NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+
+ALTER TABLE `organisation_beziehung`
+  ADD `organisation_beziehung_organisation_ziel_organisation_art_unique` VARCHAR(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`organisation_id`,`ziel_organisation_id`,`art`,ifnull(`bis`,'9999-12-31'))) VIRTUAL UNIQUE COMMENT 'Kombination aus organisation_id, ziel_organisation_id, art und bis muss eindeutig sein. (Fachlicher unique constraint)' AFTER `updated_date`;
+
+ALTER TABLE `organisation_beziehung_log`
+  ADD `organisation_beziehung_organisation_ziel_organisation_art_unique` VARCHAR(0) NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+
+ALTER TABLE `person`
+  ADD `person_nachname_zweiter_name_vorname_unique` VARCHAR(220) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`nachname`,`vorname`,ifnull(`zweiter_vorname`,'-'),ifnull(`namensunterscheidung`,'-'))) VIRTUAL UNIQUE COMMENT 'Kombination aus nachname, vorname, zweiter_vorname und namensunterscheidung muss eindeutig sein. (Fachlicher unique constraint)' AFTER `updated_date`;
+
+ALTER TABLE `person_log`
+  ADD `person_nachname_zweiter_name_vorname_unique` VARCHAR(0) NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+
+ALTER TABLE `zutrittsberechtigung`
+  ADD `zutrittsberechtigung_parlamentarier_person_unique` VARCHAR(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat_ws('_',`parlamentarier_id`,`person_id`,ifnull(`bis`,'9999-12-31'))) VIRTUAL UNIQUE COMMENT 'Kombination aus parlamentarier_id, person_id und bis muss eindeutig sein. (Fachlicher unique constraint)' AFTER `updated_date`;
+
+ALTER TABLE `zutrittsberechtigung_log`
+  ADD `zutrittsberechtigung_parlamentarier_person_unique` VARCHAR(0) NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;

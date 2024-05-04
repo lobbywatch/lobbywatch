@@ -2560,7 +2560,8 @@
                     new StringField('created_visa', true),
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
-                    new DateTimeField('updated_date', true)
+                    new DateTimeField('updated_date', true),
+                    new StringField('organisation_name_de_rechtsform_uid_unique')
                 )
             );
             $this->dataset->AddLookupField('interessengruppe_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'interessengruppe_id_anzeige_name', 'interessengruppe_id_anzeige_name_v_interessengruppe_simple'), 'interessengruppe_id_anzeige_name_v_interessengruppe_simple');
@@ -2652,7 +2653,8 @@
                 new FilterColumn($this->dataset, 'xing_profil_name', 'xing_profil_name', 'Xing Profil Name'),
                 new FilterColumn($this->dataset, 'ehra_id', 'ehra_id', 'Ehra Id'),
                 new FilterColumn($this->dataset, 'ch_id', 'ch_id', 'Ch Id'),
-                new FilterColumn($this->dataset, 'bfs_gemeinde_nr', 'bfs_gemeinde_nr', 'Bfs Gemeindenummer')
+                new FilterColumn($this->dataset, 'bfs_gemeinde_nr', 'bfs_gemeinde_nr', 'Bfs Gemeindenummer'),
+                new FilterColumn($this->dataset, 'organisation_name_de_rechtsform_uid_unique', 'organisation_name_de_rechtsform_uid_unique', 'Organisation Name De Rechtsform Uid Unique')
             );
         }
     
@@ -2708,7 +2710,8 @@
                 ->addColumn($columns['xing_profil_name'])
                 ->addColumn($columns['ehra_id'])
                 ->addColumn($columns['ch_id'])
-                ->addColumn($columns['bfs_gemeinde_nr']);
+                ->addColumn($columns['bfs_gemeinde_nr'])
+                ->addColumn($columns['organisation_name_de_rechtsform_uid_unique']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -3946,6 +3949,30 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('organisation_name_de_rechtsform_uid_unique');
+            
+            $filterBuilder->addColumn(
+                $columns['organisation_name_de_rechtsform_uid_unique'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -4408,6 +4435,15 @@
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->setDescription('BFS Gemeindenummer (BFS GDENR)');
             $grid->AddViewColumn($column);
+            //
+            // View column for organisation_name_de_rechtsform_uid_unique field
+            //
+            $column = new TextViewColumn('organisation_name_de_rechtsform_uid_unique', 'organisation_name_de_rechtsform_uid_unique', 'Organisation Name De Rechtsform Uid Unique', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->setDescription('Kombination aus name_de, rechtsform, uid und inaktiv muss eindeutig sein. (Fachlicher unique constraint)');
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -4813,6 +4849,14 @@
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for organisation_name_de_rechtsform_uid_unique field
+            //
+            $column = new TextViewColumn('organisation_name_de_rechtsform_uid_unique', 'organisation_name_de_rechtsform_uid_unique', 'Organisation Name De Rechtsform Uid Unique', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -5438,6 +5482,15 @@
             //
             $editor = new TextEdit('bfs_gemeinde_nr_edit');
             $editColumn = new CustomEditColumn('Bfs Gemeindenummer', 'bfs_gemeinde_nr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for organisation_name_de_rechtsform_uid_unique field
+            //
+            $editor = new TextAreaEdit('organisation_name_de_rechtsform_uid_unique_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Organisation Name De Rechtsform Uid Unique', 'organisation_name_de_rechtsform_uid_unique', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -6166,6 +6219,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for organisation_name_de_rechtsform_uid_unique field
+            //
+            $editor = new TextAreaEdit('organisation_name_de_rechtsform_uid_unique_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Organisation Name De Rechtsform Uid Unique', 'organisation_name_de_rechtsform_uid_unique', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddToggleEditColumns(Grid $grid)
@@ -6798,6 +6860,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for organisation_name_de_rechtsform_uid_unique field
+            //
+            $editor = new TextAreaEdit('organisation_name_de_rechtsform_uid_unique_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Organisation Name De Rechtsform Uid Unique', 'organisation_name_de_rechtsform_uid_unique', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -7210,6 +7281,14 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for organisation_name_de_rechtsform_uid_unique field
+            //
+            $column = new TextViewColumn('organisation_name_de_rechtsform_uid_unique', 'organisation_name_de_rechtsform_uid_unique', 'Organisation Name De Rechtsform Uid Unique', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -7615,6 +7694,14 @@
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for organisation_name_de_rechtsform_uid_unique field
+            //
+            $column = new TextViewColumn('organisation_name_de_rechtsform_uid_unique', 'organisation_name_de_rechtsform_uid_unique', 'Organisation Name De Rechtsform Uid Unique', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
             $grid->AddExportColumn($column);
         }
     
@@ -8065,6 +8152,14 @@
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for organisation_name_de_rechtsform_uid_unique field
+            //
+            $column = new TextViewColumn('organisation_name_de_rechtsform_uid_unique', 'organisation_name_de_rechtsform_uid_unique', 'Organisation Name De Rechtsform Uid Unique', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
             $grid->AddCompareColumn($column);
         }
     
