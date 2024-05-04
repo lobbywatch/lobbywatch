@@ -2361,7 +2361,7 @@ function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose, $
 }
 
 /** Retries sleep time 2**($i + 3). $i = 9 -> totally 2.3h sleep ((2**13 - 1)  / 3600) */
-function ws_search_uid_bfs_raw($name, $plz, $ort, $rechtsform, $n = 50, $client, &$data, $verbose, $num_retries = 0, &$retry_log = '') {
+function ws_search_uid_bfs_raw($name, $plz, $ort, $rechtsform, $n, $client, &$data, $verbose, $num_retries = 0, &$retry_log = '') {
   /* Invoke webservice method with your parameters. */
   $response = null;
   try {
@@ -3047,7 +3047,7 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
   }
 
   $val_raw = $field_ws ?? null;
-  $is_date = !is_array($val_raw) && !is_object($val_raw) && /*isset($parlamentarier_db_obj->field) && is_string($db_val) &&*/ preg_match('/^\d{4}-\d{2}-\d{2}/', $val_raw);
+  $is_date = !empty($val_raw) && !is_array($val_raw) && !is_object($val_raw) && /*isset($parlamentarier_db_obj->field) && is_string($db_val) &&*/ preg_match('/^\d{4}-\d{2}-\d{2}/', $val_raw);
   if ($is_date) {
     $val = substr($val_raw, 0, 10);
   } elseif ($id_function != null) {
@@ -3193,6 +3193,9 @@ function getValueFromWSFieldNameConvertDateEmptyAsNull($ws_field, $parlamentarie
  * "/Date(1448841600000)/" -> "2015-11-30"
  */
 function convertJsonDateToISODate($json_date_str, $format = 'isodate') {
+  if (empty($json_date_str)) {
+    return null;
+  }
   if (preg_match('%/Date\((\d+)([+-]\d{4})?\)/%', $json_date_str, $matches)) {
     $unix_timesamp_s = $matches[1] / 1000;
     if ($format == 'timestamp') {
@@ -3777,6 +3780,9 @@ function create_parent_dir_if_not_exists($filename) {
  * Forms save it with " instead of '.
  */
 function normalizeDBHtmlParlamentInteressenbindungen($str) {
+  if (empty($str)) {
+    return null;
+  }
   $normalized = str_replace(array("\r\n","\n","\r"), "\n", $str);
   $normalized = preg_replace('%<table border="0"><thead><tr><th>Name</th><th>Rechtsform</th><th><abbr title="Gremium">Gr.</abbr></th><th><abbr title="Funktion">F.</abbr></th></tr></thead>%',
       "<table border='0'><thead><tr><th>Name</th><th>Rechtsform</th><th><abbr title='Gremium'>Gr.</abbr></th><th><abbr title='Funktion'>F.</abbr></th></tr></thead>",

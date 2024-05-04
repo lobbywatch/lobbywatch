@@ -1267,6 +1267,9 @@ function checkSprache($language) {
 // TODO get by Query from DB
 function getMilGradId($militaryGrade) {
   global $errors;
+  if (empty($militaryGrade)) {
+    return null;
+  }
   $val = preg_replace('/( aD| EMG)$/', '', $militaryGrade);
   switch($val) {
     case 'Rekrut': return 1;

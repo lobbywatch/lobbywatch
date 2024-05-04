@@ -31,8 +31,8 @@ def run():
 
 
 def print_summary(summary, batch_time):
-    print("""/*\n\nactive Parlamentarische Gruppen on {}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}
-    """.format(batch_time.day, batch_time.month, batch_time.year, batch_time.hour, batch_time.minute, batch_time.second))
+    print("""/*\n\nactive Parlamentarische Gruppen on {}
+    """.format(batch_time.strftime("%d.%m.%Y %T")))
 
     summary.print_parlamentarier()
     print("\n\n")
