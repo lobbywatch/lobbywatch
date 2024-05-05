@@ -89,7 +89,7 @@ FULL_DUMP_PARAMETER=''
 DUMP_TYPE_NAME='DATA dump'
 processRetired=''
 
-LW_PYTHON="python3.11"
+# LW_PYTHON="python3.11"
 
 # set python interpreter, default python3 if not set
 LW_PYTHON="${LW_PYTHON:-python3}"
