@@ -171,8 +171,7 @@
                 ->addColumn($columns['action'])
                 ->addColumn($columns['state'])
                 ->addColumn($columns['action_date'])
-                ->addColumn($columns['snapshot_id'])
-                ->addColumn($columns['zutrittsberechtigung_parlamentarier_person_unique']);
+                ->addColumn($columns['snapshot_id']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -844,30 +843,6 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
-            
-            $main_editor = new TextEdit('zutrittsberechtigung_parlamentarier_person_unique_edit');
-            
-            $filterBuilder->addColumn(
-                $columns['zutrittsberechtigung_parlamentarier_person_unique'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
-                    FilterConditionOperator::BEGINS_WITH => $main_editor,
-                    FilterConditionOperator::ENDS_WITH => $main_editor,
-                    FilterConditionOperator::IS_LIKE => $main_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -1117,14 +1092,6 @@
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->setDescription('Fremdschlüssel zu einem Snapshot');
             $grid->AddViewColumn($column);
-            //
-            // View column for zutrittsberechtigung_parlamentarier_person_unique field
-            //
-            $column = new TextViewColumn('zutrittsberechtigung_parlamentarier_person_unique', 'zutrittsberechtigung_parlamentarier_person_unique', 'Zutrittsberechtigung Parlamentarier Person Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->setDescription('Platzhalter für fachlichen unique constraint');
-            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -1332,37 +1299,16 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for zutrittsberechtigung_parlamentarier_person_unique field
-            //
-            $column = new TextViewColumn('zutrittsberechtigung_parlamentarier_person_unique', 'zutrittsberechtigung_parlamentarier_person_unique', 'Zutrittsberechtigung Parlamentarier Person Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
         }
     
         protected function AddEditColumns(Grid $grid)
         {
-            //
-            // Edit column for zutrittsberechtigung_parlamentarier_person_unique field
-            //
-            $editor = new TextEdit('zutrittsberechtigung_parlamentarier_person_unique_edit');
-            $editColumn = new CustomEditColumn('Zutrittsberechtigung Parlamentarier Person Unique', 'zutrittsberechtigung_parlamentarier_person_unique', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
+    
         }
     
         protected function AddMultiEditColumns(Grid $grid)
         {
-            //
-            // Edit column for zutrittsberechtigung_parlamentarier_person_unique field
-            //
-            $editor = new TextEdit('zutrittsberechtigung_parlamentarier_person_unique_edit');
-            $editColumn = new CustomEditColumn('Zutrittsberechtigung Parlamentarier Person Unique', 'zutrittsberechtigung_parlamentarier_person_unique', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
+    
         }
     
         protected function AddToggleEditColumns(Grid $grid)
@@ -1372,14 +1318,7 @@
     
         protected function AddInsertColumns(Grid $grid)
         {
-            //
-            // Edit column for zutrittsberechtigung_parlamentarier_person_unique field
-            //
-            $editor = new TextEdit('zutrittsberechtigung_parlamentarier_person_unique_edit');
-            $editColumn = new CustomEditColumn('Zutrittsberechtigung Parlamentarier Person Unique', 'zutrittsberechtigung_parlamentarier_person_unique', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
+    
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -1593,13 +1532,6 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddPrintColumn($column);
-            
-            //
-            // View column for zutrittsberechtigung_parlamentarier_person_unique field
-            //
-            $column = new TextViewColumn('zutrittsberechtigung_parlamentarier_person_unique', 'zutrittsberechtigung_parlamentarier_person_unique', 'Zutrittsberechtigung Parlamentarier Person Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -1807,13 +1739,6 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddExportColumn($column);
-            
-            //
-            // View column for zutrittsberechtigung_parlamentarier_person_unique field
-            //
-            $column = new TextViewColumn('zutrittsberechtigung_parlamentarier_person_unique', 'zutrittsberechtigung_parlamentarier_person_unique', 'Zutrittsberechtigung Parlamentarier Person Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
         }
     
         private function AddCompareColumns(Grid $grid)
@@ -2013,13 +1938,6 @@
             $column = new TextViewColumn('snapshot_id', 'snapshot_id_beschreibung', 'Snapshot Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for zutrittsberechtigung_parlamentarier_person_unique field
-            //
-            $column = new TextViewColumn('zutrittsberechtigung_parlamentarier_person_unique', 'zutrittsberechtigung_parlamentarier_person_unique', 'Zutrittsberechtigung Parlamentarier Person Unique', $this->dataset);
-            $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
         }
     
@@ -2576,8 +2494,7 @@
                 ->addColumn($columns['funktion'])
                 ->addColumn($columns['funktion_fr'])
                 ->addColumn($columns['notizen'])
-                ->addColumn($columns['updated_by_import'])
-                ->addColumn($columns['zutrittsberechtigung_parlamentarier_person_unique']);
+                ->addColumn($columns['updated_by_import']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -3133,31 +3050,6 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
-            
-            $main_editor = new TextEdit('zutrittsberechtigung_parlamentarier_person_unique_edit');
-            $main_editor->SetMaxLength(35);
-            
-            $filterBuilder->addColumn(
-                $columns['zutrittsberechtigung_parlamentarier_person_unique'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
-                    FilterConditionOperator::BEGINS_WITH => $main_editor,
-                    FilterConditionOperator::ENDS_WITH => $main_editor,
-                    FilterConditionOperator::IS_LIKE => $main_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -3406,14 +3298,6 @@
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->setDescription('Abgeändert am');
             $grid->AddViewColumn($column);
-            //
-            // View column for zutrittsberechtigung_parlamentarier_person_unique field
-            //
-            $column = new TextViewColumn('zutrittsberechtigung_parlamentarier_person_unique', 'zutrittsberechtigung_parlamentarier_person_unique', 'Zutrittsberechtigung Parlamentarier Person Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->setDescription('Kombination aus parlamentarier_id, person_id und bis muss eindeutig sein. (Fachlicher unique constraint)');
-            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -3587,13 +3471,6 @@
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for zutrittsberechtigung_parlamentarier_person_unique field
-            //
-            $column = new TextViewColumn('zutrittsberechtigung_parlamentarier_person_unique', 'zutrittsberechtigung_parlamentarier_person_unique', 'Zutrittsberechtigung Parlamentarier Person Unique', $this->dataset);
-            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -3986,16 +3863,6 @@
             $editor = new DateTimeEdit('updated_date_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for zutrittsberechtigung_parlamentarier_person_unique field
-            //
-            $editor = new TextEdit('zutrittsberechtigung_parlamentarier_person_unique_edit');
-            $editor->SetMaxLength(35);
-            $editColumn = new CustomEditColumn('Zutrittsberechtigung Parlamentarier Person Unique', 'zutrittsberechtigung_parlamentarier_person_unique', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -4393,16 +4260,6 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for zutrittsberechtigung_parlamentarier_person_unique field
-            //
-            $editor = new TextEdit('zutrittsberechtigung_parlamentarier_person_unique_edit');
-            $editor->SetMaxLength(35);
-            $editColumn = new CustomEditColumn('Zutrittsberechtigung Parlamentarier Person Unique', 'zutrittsberechtigung_parlamentarier_person_unique', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddToggleEditColumns(Grid $grid)
@@ -4718,16 +4575,6 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for zutrittsberechtigung_parlamentarier_person_unique field
-            //
-            $editor = new TextEdit('zutrittsberechtigung_parlamentarier_person_unique_edit');
-            $editor->SetMaxLength(35);
-            $editColumn = new CustomEditColumn('Zutrittsberechtigung Parlamentarier Person Unique', 'zutrittsberechtigung_parlamentarier_person_unique', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(true && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -4908,13 +4755,6 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
-            
-            //
-            // View column for zutrittsberechtigung_parlamentarier_person_unique field
-            //
-            $column = new TextViewColumn('zutrittsberechtigung_parlamentarier_person_unique', 'zutrittsberechtigung_parlamentarier_person_unique', 'Zutrittsberechtigung Parlamentarier Person Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -5089,13 +4929,6 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
-            
-            //
-            // View column for zutrittsberechtigung_parlamentarier_person_unique field
-            //
-            $column = new TextViewColumn('zutrittsberechtigung_parlamentarier_person_unique', 'zutrittsberechtigung_parlamentarier_person_unique', 'Zutrittsberechtigung Parlamentarier Person Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
         }
     
         private function AddCompareColumns(Grid $grid)
@@ -5269,13 +5102,6 @@
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for zutrittsberechtigung_parlamentarier_person_unique field
-            //
-            $column = new TextViewColumn('zutrittsberechtigung_parlamentarier_person_unique', 'zutrittsberechtigung_parlamentarier_person_unique', 'Zutrittsberechtigung Parlamentarier Person Unique', $this->dataset);
-            $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
         }
     

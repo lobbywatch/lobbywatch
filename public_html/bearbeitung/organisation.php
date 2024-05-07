@@ -4798,8 +4798,7 @@
                 ->addColumn($columns['action'])
                 ->addColumn($columns['state'])
                 ->addColumn($columns['action_date'])
-                ->addColumn($columns['snapshot_id'])
-                ->addColumn($columns['organisation_name_de_rechtsform_unique']);
+                ->addColumn($columns['snapshot_id']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -6267,30 +6266,6 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
-            
-            $main_editor = new TextEdit('organisation_name_de_rechtsform_unique_edit');
-            
-            $filterBuilder->addColumn(
-                $columns['organisation_name_de_rechtsform_unique'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
-                    FilterConditionOperator::BEGINS_WITH => $main_editor,
-                    FilterConditionOperator::ENDS_WITH => $main_editor,
-                    FilterConditionOperator::IS_LIKE => $main_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -6815,14 +6790,6 @@
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->setDescription('Fremdschlüssel zu einem Snapshot');
             $grid->AddViewColumn($column);
-            //
-            // View column for organisation_name_de_rechtsform_unique field
-            //
-            $column = new TextViewColumn('organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->setDescription('Platzhalter für fachlichen unique constraint');
-            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -7274,37 +7241,16 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for organisation_name_de_rechtsform_unique field
-            //
-            $column = new TextViewColumn('organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
         }
     
         protected function AddEditColumns(Grid $grid)
         {
-            //
-            // Edit column for organisation_name_de_rechtsform_unique field
-            //
-            $editor = new TextEdit('organisation_name_de_rechtsform_unique_edit');
-            $editColumn = new CustomEditColumn('Organisation Name De Rechtsform Unique', 'organisation_name_de_rechtsform_unique', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
+    
         }
     
         protected function AddMultiEditColumns(Grid $grid)
         {
-            //
-            // Edit column for organisation_name_de_rechtsform_unique field
-            //
-            $editor = new TextEdit('organisation_name_de_rechtsform_unique_edit');
-            $editColumn = new CustomEditColumn('Organisation Name De Rechtsform Unique', 'organisation_name_de_rechtsform_unique', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
+    
         }
     
         protected function AddToggleEditColumns(Grid $grid)
@@ -7314,14 +7260,7 @@
     
         protected function AddInsertColumns(Grid $grid)
         {
-            //
-            // Edit column for organisation_name_de_rechtsform_unique field
-            //
-            $editor = new TextEdit('organisation_name_de_rechtsform_unique_edit');
-            $editColumn = new CustomEditColumn('Organisation Name De Rechtsform Unique', 'organisation_name_de_rechtsform_unique', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
+    
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -7779,13 +7718,6 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddPrintColumn($column);
-            
-            //
-            // View column for organisation_name_de_rechtsform_unique field
-            //
-            $column = new TextViewColumn('organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -8237,13 +8169,6 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $grid->AddExportColumn($column);
-            
-            //
-            // View column for organisation_name_de_rechtsform_unique field
-            //
-            $column = new TextViewColumn('organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
         }
     
         private function AddCompareColumns(Grid $grid)
@@ -8684,13 +8609,6 @@
             $column = new TextViewColumn('snapshot_id', 'snapshot_id_beschreibung', 'Snapshot Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for organisation_name_de_rechtsform_unique field
-            //
-            $column = new TextViewColumn('organisation_name_de_rechtsform_unique', 'organisation_name_de_rechtsform_unique', 'Organisation Name De Rechtsform Unique', $this->dataset);
-            $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
         }
     
@@ -39059,8 +38977,7 @@
                 ->addColumn($columns['sekretariat'])
                 ->addColumn($columns['wikidata_qid'])
                 ->addColumn($columns['notizen'])
-                ->addColumn($columns['updated_by_import'])
-                ->addColumn($columns['organisation_name_de_rechtsform_uid_unique']);
+                ->addColumn($columns['updated_by_import']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -40538,30 +40455,6 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
-            
-            $main_editor = new TextEdit('organisation_name_de_rechtsform_uid_unique');
-            
-            $filterBuilder->addColumn(
-                $columns['organisation_name_de_rechtsform_uid_unique'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
-                    FilterConditionOperator::BEGINS_WITH => $main_editor,
-                    FilterConditionOperator::ENDS_WITH => $main_editor,
-                    FilterConditionOperator::IS_LIKE => $main_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -41232,15 +41125,6 @@
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->setDescription('Abgeändert am');
             $grid->AddViewColumn($column);
-            //
-            // View column for organisation_name_de_rechtsform_uid_unique field
-            //
-            $column = new TextViewColumn('organisation_name_de_rechtsform_uid_unique', 'organisation_name_de_rechtsform_uid_unique', 'Organisation Name De Rechtsform Uid Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->setDescription('Kombination aus name_de, rechtsform, uid und inaktiv muss eindeutig sein. (Fachlicher unique constraint)');
-            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -41684,14 +41568,6 @@
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for organisation_name_de_rechtsform_uid_unique field
-            //
-            $column = new TextViewColumn('organisation_name_de_rechtsform_uid_unique', 'organisation_name_de_rechtsform_uid_unique', 'Organisation Name De Rechtsform Uid Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -42661,15 +42537,6 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for organisation_name_de_rechtsform_uid_unique field
-            //
-            $editor = new TextAreaEdit('organisation_name_de_rechtsform_uid_unique_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Organisation Name De Rechtsform Uid Unique', 'organisation_name_de_rechtsform_uid_unique', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
         }
     
         protected function AddMultiEditColumns(Grid $grid)
@@ -43571,15 +43438,6 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for organisation_name_de_rechtsform_uid_unique field
-            //
-            $editor = new TextAreaEdit('organisation_name_de_rechtsform_uid_unique_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Organisation Name De Rechtsform Uid Unique', 'organisation_name_de_rechtsform_uid_unique', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddToggleEditColumns(Grid $grid)
@@ -44429,15 +44287,6 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for organisation_name_de_rechtsform_uid_unique field
-            //
-            $editor = new TextAreaEdit('organisation_name_de_rechtsform_uid_unique_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Organisation Name De Rechtsform Uid Unique', 'organisation_name_de_rechtsform_uid_unique', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(true && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -44888,14 +44737,6 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
-            
-            //
-            // View column for organisation_name_de_rechtsform_uid_unique field
-            //
-            $column = new TextViewColumn('organisation_name_de_rechtsform_uid_unique', 'organisation_name_de_rechtsform_uid_unique', 'Organisation Name De Rechtsform Uid Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -45340,14 +45181,6 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
-            
-            //
-            // View column for organisation_name_de_rechtsform_uid_unique field
-            //
-            $column = new TextViewColumn('organisation_name_de_rechtsform_uid_unique', 'organisation_name_de_rechtsform_uid_unique', 'Organisation Name De Rechtsform Uid Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $grid->AddExportColumn($column);
         }
     
         private function AddCompareColumns(Grid $grid)
@@ -45791,14 +45624,6 @@
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for organisation_name_de_rechtsform_uid_unique field
-            //
-            $column = new TextViewColumn('organisation_name_de_rechtsform_uid_unique', 'organisation_name_de_rechtsform_uid_unique', 'Organisation Name De Rechtsform Uid Unique', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
             $grid->AddCompareColumn($column);
         }
     
