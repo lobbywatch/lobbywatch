@@ -15,7 +15,7 @@
         <title>Error</title>
     {/if}
 
-    <link rel="stylesheet" type="text/css" href="{$StyleFile|default:'components/assets/css/main.css'}{if $StyleFile == ''}?h={$hash_css_main}{/if}" />
+    <link rel="stylesheet" type="text/css" href="{$StyleFile|default:'components/assets/css/main.css'}{if empty($StyleFile)}?h={$hash_css_main}{/if}" />
     <link rel="stylesheet" type="text/css" href="components/assets/css/custom/custom.css?h={$hash_css_custom}" />
     {if !GetOfflineMode() && isset($ExternalServicesLoadingBlock)}
         {$ExternalServicesLoadingBlock}
