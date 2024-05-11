@@ -24,6 +24,8 @@ node_modules/requirejs/bin/r.js -o require-build-custom.js
 
 node_modules/terser/bin/terser public_html/bearbeitung/components/js/main-bundle-custom.raw.js -c --emca 2016 -m > public_html/bearbeitung/components/js/main-bundle-custom.js
 
+# cp public_html/bearbeitung/components/js/main-bundle-custom.raw.js public_html/bearbeitung/components/js/main-bundle-custom.js
+
 mv $bundle_hash_file $bundle_hash_file.bak
 echo -e "<?php\n// Generated file\n\$hash_js_main_bundle = '`sha1sum $js_dir/$file | cut -c -7`';" > $bundle_hash_file
 diff -u0 $bundle_hash_file.bak $bundle_hash_file | tail -2

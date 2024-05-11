@@ -25,7 +25,6 @@
       'datepicker': 'libs/bootstrap-datetimepicker.min',
       'pgui.admin_panel': 'pgui.admin_panel',
       'mootools-core': 'libs/mootools-core',
-      'jquery.tmpl': 'libs/jquery/jquery.tmpl',
       'knockout': 'libs/knockout',
       'trumbowyg': 'libs/trumbowyg/trumbowyg',
       'trumbowyg.colors': 'libs/trumbowyg/plugins/colors/trumbowyg.colors.min',
@@ -45,7 +44,6 @@
   shim: {
       'jquery.stickytableheaders': ['jquery'],
       'jquery.hotkeys': ['jquery'],
-      'knockout': ['jquery.tmpl'],
       'datepicker': ['moment'],
       'bootstrap': ['jquery'],
       'trumbowyg.colors': ['trumbowyg'],

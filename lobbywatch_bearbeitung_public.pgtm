@@ -380,7 +380,7 @@ DELETE FROM interessenbindung WHERE id = :id        </Statement>
     <DataSource name="in_partei"/>
     <DataSource name="in_fraktion"/>
   </DataSources>
-  <Presentation disableMagicQuotesRuntime="false" showEnvironmentVariables="false" showExecutedQueries="false" showPHPErrorsAndWarnings="false" minifyJavaScriptCode="false">
+  <Presentation disableMagicQuotesRuntime="false" showEnvironmentVariables="false" showExecutedQueries="false" showPHPErrorsAndWarnings="false">
     <Pages>
       <Page type="table" tableName="organisation" numberByDataSource="0" fileName="organisation" caption="Organisation" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Organisation&lt;/span&gt;" viewFormCaptionTemplate="Organisation &quot;%name_de%&quot;" editFormCaptionTemplate="Edit Organisation &quot;%name_de%&quot;" insertFormCaption="Add new Organisation" addSeveralRecordsAtATimeValues="2,3,4,5" groupName="&lt;span class=&quot;entity-menu important-entity-menu&quot;&gt;Subjekte&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
         <DefaultSortedColumns>

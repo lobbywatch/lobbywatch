@@ -216,7 +216,7 @@ function GetNullLabel()
 
 function UseMinifiedJS()
 {
-    return false;
+    return true;
 }
 
 function GetOfflineMode()
