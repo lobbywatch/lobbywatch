@@ -655,6 +655,7 @@ class PrivateFileDownloadHTTPHandler extends AbstractHTTPHandler
   private $fieldName;
   private $contentType;
   private $downloadFileName;
+  private $forceDownload = true;
 
   public function __construct($dataset, $fieldName, $name, $contentType, $downloadFileName, $forceDownload = true)
   {
@@ -1633,7 +1634,7 @@ function globalOnPreparePage(Page $page) {
 <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Durch die Rechtsform einer Organisation wird bei einer Interessenbindung bestimmt, ob ein Vorstand ein Stiftungsrat oder ein Verwaltungsrat ist.</div></div><a id="plugin-edit-remarksbox7" href="javascript:void(1)" class="editplugin"><img src="img/icons/wiki_plugin_edit.png" alt="Edit Plugin:remarksbox" title="Edit Plugin:remarksbox" class="icon" width="16" height="16"></a>
 </div>'
       . $general_detailed_desc);
-      $page->setDescription("${edit_header_message}Organisationen, die Lobbying im Parlament betreiben. Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint");
+      $page->setDescription("{$edit_header_message}Organisationen, die Lobbying im Parlament betreiben. Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint");
       break;
   case 'parlamentarier':
       $page->setDetailedDescription('<div class="wiki-table-help">
@@ -1651,11 +1652,11 @@ function globalOnPreparePage(Page $page) {
 </p>
 </div>'
       . $general_detailed_desc);
-      $page->setDescription("${edit_header_message}" . '<a class="wiki external" target="_blank" href="https://www.parlament.ch/de/organe-home" rel="_blank external nofollow">Parlamentarier</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" width="15" height="14"> des Parlamentes.' . " Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint");
+      $page->setDescription("{$edit_header_message}" . '<a class="wiki external" target="_blank" href="https://www.parlament.ch/de/organe-home" rel="_blank external nofollow">Parlamentarier</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" width="15" height="14"> des Parlamentes.' . " Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint");
       break;
   case 'person':
       $page->setDetailedDescription($general_detailed_desc);
-      $page->setDescription("${edit_header_message}Diese Tabelle enthält Lobbyisten und Leute mit Zugang ins Parlament. Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint");
+      $page->setDescription("{$edit_header_message}Diese Tabelle enthält Lobbyisten und Leute mit Zugang ins Parlament. Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint");
       break;
   case 'interessenbindung':
       $page->setDetailedDescription('
@@ -1745,34 +1746,34 @@ function globalOnPreparePage(Page $page) {
       break;
     case 'partei':
       $page->setDetailedDescription($general_detailed_desc);
-      $page->setDescription("${edit_header_message}Liste der Parteien. Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint");
+      $page->setDescription("{$edit_header_message}Liste der Parteien. Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint");
       break;
     case 'fraktion':
       $page->setDetailedDescription($general_detailed_desc);
-      $page->setDescription("${edit_header_message}Tabelle der Bundeshausfraktionen. Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint");
+      $page->setDescription("{$edit_header_message}Tabelle der Bundeshausfraktionen. Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint");
       break;
     case 'kanton':
       $page->setDetailedDescription($general_detailed_desc);
-      $page->setDescription("${edit_header_message}Tabelle mit Daten zu den Kantonen. Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint");
+      $page->setDescription("{$edit_header_message}Tabelle mit Daten zu den Kantonen. Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint");
       break;
     case 'settings':
-      $page->setDescription("${edit_header_message}Einstellungen für Lobbywatch. Die Funktionsweise kann gesteuert werden. Beispielsweise können Angaben zum Arbeitsablauf gesetzt werden.$edit_general_hint");
+      $page->setDescription("{$edit_header_message}Einstellungen für Lobbywatch. Die Funktionsweise kann gesteuert werden. Beispielsweise können Angaben zum Arbeitsablauf gesetzt werden.$edit_general_hint");
       break;
     case 'settings_category':
-      $page->setDescription("${edit_header_message}Die Einstellungsparameter können kategorisiert und gruppiert werden.$edit_general_hint");
+      $page->setDescription("{$edit_header_message}Die Einstellungsparameter können kategorisiert und gruppiert werden.$edit_general_hint");
       break;
     case 'translation_source':
-      $page->setDescription("${edit_header_message}Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. In dieser Tabelle stehen die deutschen Wörter.$edit_general_hint");
+      $page->setDescription("{$edit_header_message}Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. In dieser Tabelle stehen die deutschen Wörter.$edit_general_hint");
       break;
     case 'translation_target':
-      $page->setDescription("${edit_header_message}Übersetzungen der von Lobbywatch verwendeten Wörter.$edit_general_hint");
+      $page->setDescription("{$edit_header_message}Übersetzungen der von Lobbywatch verwendeten Wörter.$edit_general_hint");
       break;
     case 'user':
       $page->setDetailedDescription('Neue Benutzer müssen über das Admin-Panel angelegt werden.');
-      $page->setDescription("${edit_header_message}Tabelle der DB-Bearbeitungsbenutzer.$edit_general_hint");
+      $page->setDescription("{$edit_header_message}Tabelle der DB-Bearbeitungsbenutzer.$edit_general_hint");
       break;
     case 'q_last_updated_tables':
-      $page->setDescription("${edit_header_message}Zeigt die letzten Änderungen der Tabellen an.$edit_general_hint");
+      $page->setDescription("{$edit_header_message}Zeigt die letzten Änderungen der Tabellen an.$edit_general_hint");
       break;
     }
 }

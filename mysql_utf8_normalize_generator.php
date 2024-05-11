@@ -239,7 +239,7 @@ SELECT
 FROM
     INFORMATION_SCHEMA.COLUMNS
 WHERE
-    TABLE_SCHEMA = '${db_connection['database']}' AND
+    TABLE_SCHEMA = '{$db_connection['database']}' AND
     DATA_TYPE IN ('VARCHAR', 'TEXT', 'LONGTEXT', 'MEDIUMTEXT', 'TINYTEXT') AND
     TABLE_NAME IN ('" . implode("', '", array_keys($workflow_tables)) . "') AND
     EXTRA NOT LIKE '%GENERATED%' AND

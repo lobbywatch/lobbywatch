@@ -763,7 +763,7 @@ class CsvExporter extends FlatExporter {
   }
 
   function formatFieldAlias(string $table, string $field): string {
-    return "${table}_$field";
+    return "{$table}_$field";
   }
 
 }
@@ -1033,7 +1033,7 @@ class JsonExporter extends AggregatedExporter {
   }
 
   function formatFieldAlias(string $table, string $field): string {
-    return "${table}_$field";
+    return "{$table}_$field";
   }
 
   function getFileHeader(bool $wrap, $transaction_date): array {
@@ -1070,7 +1070,7 @@ class JsonOrientDBExporter extends AbstractExporter {
   }
 
   function formatFieldAlias(string $table, string $field): string {
-    return "${table}_$field";
+    return "{$table}_$field";
   }
 
   function supportsOneFile(): bool {
@@ -1337,7 +1337,7 @@ class XmlExporter extends AggregatedExporter {
   }
 
   function getTableHeader(string $table, array $export_header, array $table_create_lines, array $table_meta, bool $wrap, bool $first): array {
-    return ["<${table}_liste>"];
+    return ["<{$table}_liste>"];
   }
   function formatRow(array $row, array $data_types, int $level, string $table_key, string $table, array $table_meta): string {
     if ($this->as_attributes) {
@@ -1348,7 +1348,7 @@ class XmlExporter extends AggregatedExporter {
     return str_repeat("\t", $level) . $this->array2xml($table, $table, $row);
   }
   function getTableFooter(string $table, array $table_meta, bool $wrap, bool $last): array {
-    return ["$this->eol</${table}_liste>"];
+    return ["$this->eol</{$table}_liste>"];
   }
   function getFileFooter(bool $wrap): array {
     return [];
@@ -1399,7 +1399,7 @@ class XmlExporter extends AggregatedExporter {
         $key = $name;
       }
       if (is_array($value)) {
-        $subnode = $xml_data->addChild(isset($value[0]) && is_array($value[0]) ? "${key}_liste" : $key);
+        $subnode = $xml_data->addChild(isset($value[0]) && is_array($value[0]) ? "{$key}_liste" : $key);
         $this->array2xmlObj($key, $value, $subnode);
       } elseif (utils_startsWith($key, '@')) {
         $xml_data->addAttribute(mb_substr("$key", 1), htmlspecialchars("$value", ENT_XML1));
@@ -1429,7 +1429,7 @@ class GraphMLExporter extends XmlExporter {
   }
 
   function formatFieldAlias(string $table, string $field): string {
-    return "${table}_$field";
+    return "{$table}_$field";
   }
 
   function prefersOneFile(): bool {
@@ -1491,7 +1491,7 @@ class GraphMLExporter extends XmlExporter {
       } else {
         continue;
       }
-      $xml[] = "<key id=\"${col['col']}\" for=\"" . $forMapping[$col['source']] . "\" attr.name=\"${col['col']}\" attr.type=\"" . $typeMapping[$col['type']] . "\" />";
+      $xml[] = "<key id=\"{$col['col']}\" for=\"" . $forMapping[$col['source']] . "\" attr.name=\"{$col['col']}\" attr.type=\"" . $typeMapping[$col['type']] . "\" />";
     }
     $xml[] = "<graph id=\"LobbywatchGraph\" edgedefault=\"directed\">";
     return $xml;
@@ -1513,11 +1513,11 @@ class GraphMLExporter extends XmlExporter {
     $xml_data = $xml_root->addChild($type);
     if ($type == 'node') {
       $label = ':' . ucfirst($table);
-      $xml_data->addAttribute("id", htmlspecialchars("${table_key}_${row['id']}", ENT_XML1));
+      $xml_data->addAttribute("id", htmlspecialchars("{$table_key}_{$row['id']}", ENT_XML1));
       $xml_data->addChild("data", htmlspecialchars($label, ENT_XML1))
         ->addAttribute("key", htmlspecialchars('labels', ENT_XML1));
     } elseif ($type == 'edge') {
-      $xml_data->addAttribute("id", htmlspecialchars("edge_${table_key}_${row['id']}", ENT_XML1));
+      $xml_data->addAttribute("id", htmlspecialchars("edge_{$table_key}_{$row['id']}", ENT_XML1));
 
       $type_col = $table_meta['type_col'] ?? null;
       $extra_val = $table_meta['name'] ?? null;
@@ -1557,14 +1557,14 @@ class GraphMLExporter extends XmlExporter {
           $id_space_raw = $table_meta['start_id_space'] ?? $col;
           $id_space = preg_replace('/_id$/', '', $id_space_raw);
           $start_id = $row[$table_meta['start_id']];
-          $xml_data->addAttribute("source", htmlspecialchars("${id_space}_$start_id", ENT_XML1));
+          $xml_data->addAttribute("source", htmlspecialchars("{$id_space}_$start_id", ENT_XML1));
           // $header_field .= ":START_ID($id_space)";
           // $skip_rows_for_empty_field = true;
         } elseif ($col == $table_meta['end_id']) {
           $id_space_raw = $table_meta['end_id_space'] ?? $col;
           $id_space = preg_replace('/_id$/', '', $id_space_raw);
           $end_id = $row[$table_meta['end_id']];
-          $xml_data->addAttribute("target", htmlspecialchars("${id_space}_$end_id", ENT_XML1));
+          $xml_data->addAttribute("target", htmlspecialchars("{$id_space}_$end_id", ENT_XML1));
           // $header_field .= ":END_ID($id_space)";
           // $skip_rows_for_empty_field = true;
         }
@@ -1859,12 +1859,12 @@ Parameters:
     if ($options['slow']) {
       $filter['slow'] = $options['slow'];
       if ($filter['slow'] < 0 || $filter['slow'] > 3) {
-        throw new RuntimeException("Parlameter slow not in range [0..3]: ${filter['slow']}");
+        throw new RuntimeException("Parlameter slow not in range [0..3]: {$filter['slow']}");
       }
     } else {
       $filter['slow'] = 3;
     }
-    print("-- Speed filter: ${filter['slow']}\n");
+    print("-- Speed filter: {$filter['slow']}\n");
   }
 
   $db = get_PDO_lobbywatch_DB_connection($db_name, $user_prefix, false);
@@ -2249,7 +2249,7 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
       print("additional_export_cols:\n");
       print_r($additional_export_cols);
       print("actual cols:\n");
-      print_r(array_map(function($e) {return "${e['TABLE_NAME']}.${e['COLUMN_NAME']}";}, $join_cols));
+      print_r(array_map(function($e) {return "{$e['TABLE_NAME']}.{$e['COLUMN_NAME']}";}, $join_cols));
       throw new RuntimeException("Additional join cols not same count for '$table_key': " . (count($table_meta['additional_join_cols']) + count($additional_export_cols)) . ' != ' . count($join_cols));
     }
   }
@@ -2321,7 +2321,7 @@ function export_tables(IExporter $exporter, array $tables, int $parent_id = null
     $docu_file = $parent_docu_file;
 
     if ($exporter->hasHeaderDeclaration()) {
-      if ($verbose > 2) print("${level_indent}Generate header declaration...");
+      if ($verbose > 2) print("{$level_indent}Generate header declaration...");
       // Get all attributes for header declaration
       $all_cols = [];
       foreach ($tables as $num_key => $table_meta) {
@@ -2353,14 +2353,14 @@ function export_tables(IExporter $exporter, array $tables, int $parent_id = null
     if ($verbose > 0 && $level < 2 || $verbose > 2) print("$level_indent$tkey [$formatName]\n");
 
     if (($table_meta['slow'] ?? 0) > $filter['slow']) {
-      if ($verbose > 0 && $level < 2 || $verbose > 2) print("${level_indent}Skip slow export (${table_meta['slow']} > ${filter['slow']})\n\n");
+      if ($verbose > 0 && $level < 2 || $verbose > 2) print("{$level_indent}Skip slow export ({$table_meta['slow']} > {$filter['slow']})\n\n");
       continue;
     }
 
     list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols, $select_cols, $select_alias_cols, $alias_map, $select_field_map, $table_alias_map, $alias_table_map, $id_alias) = getSqlData("$num_key", $table_meta, $table_schema, $level, $filter, $exporter, $db);
 
     if ($storage_type == 'multi_file') {
-      $export_file_base_name = "${source}_$table_key";
+      $export_file_base_name = "{$source}_$table_key";
       $export_file_name = "$export_file_base_name." . $exporter->getFileSuffix();
       $export_file_path_name = "$path/$export_file_name";
       $export_file = fopen($export_file_path_name, 'w');
@@ -2428,7 +2428,7 @@ function export_tables(IExporter $exporter, array $tables, int $parent_id = null
         }
       } else {
         // Remove cols from create table statement
-        if ($verbose > 3) print("${level_indent}Clean create: $col\n");
+        if ($verbose > 3) print("{$level_indent}Clean create: $col\n");
         $table_create_lines = array_filter($table_create_lines, function ($line) use ($col) {return strpos($line, "`$col`") === false;});
       }
     }
@@ -2471,7 +2471,7 @@ function export_tables(IExporter $exporter, array $tables, int $parent_id = null
         } else {
           $n = 0;
         }
-        $aggregated_tables_data["${table}"] = $rows_data;
+        $aggregated_tables_data["{$table}"] = $rows_data;
       } else {
         $n = $rows_data;
         fwrite($export_file, implode($eol, $exporter->getTableFooter($table, $table_meta, $storage_type != 'multi_file', $storage_type == 'multi_file' || $i === count($tables) - 1)) . $eol);
@@ -2500,7 +2500,7 @@ function export_tables(IExporter $exporter, array $tables, int $parent_id = null
 
     $end_export_table = microtime(true);
 
-    if ($verbose > 0 && $level < 2 || $verbose > 2) print("${level_indent}Exported $n rows having $num_cols cols in " . round($end_export_table - $start_export_table) . "s\n");
+    if ($verbose > 0 && $level < 2 || $verbose > 2) print("{$level_indent}Exported $n rows having $num_cols cols in " . round($end_export_table - $start_export_table) . "s\n");
     if ($verbose > 0 && $level < 2) print("\n");
     $i++;
   }

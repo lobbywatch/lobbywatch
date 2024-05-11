@@ -106,7 +106,7 @@ foreach ($tables as $table => $name) {
   );";
   $view_queries[] = "SELECT * FROM v_last_updated_$table";
 
-  $snapshots[] = "   INSERT INTO `${table}_log`
+  $snapshots[] = "   INSERT INTO `{$table}_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `$table`;";
 
   $created_visa[] = "SELECT '$table' as table_name, id, lower(created_visa) as visa FROM $table";
@@ -172,7 +172,7 @@ foreach ($tables as $table => $name) {
   $timestamp56[] = "ALTER TABLE $table
     MODIFY COLUMN `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
     MODIFY COLUMN `updated_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am';";
-  $timestamp56[] = "ALTER TABLE ${table}_log MODIFY COLUMN `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion';";
+  $timestamp56[] = "ALTER TABLE {$table}_log MODIFY COLUMN `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion';";
 }
 
 // --UNION

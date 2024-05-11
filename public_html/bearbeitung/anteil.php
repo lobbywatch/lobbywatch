@@ -141,12 +141,12 @@ catch(Exception $e)
          <h2>Anteil</h2>
       </p>
       <?php print("<p>
-        <a href='${_SERVER['PHP_SELF']}?option=bearbeitungsanteil'>Bearbeitungsanteil</a>
-        | <a href='${_SERVER['PHP_SELF']}?option=bearbeitungsanteil-periode'>Bearbeitungsanteil-periode</a>
-        | <a href='${_SERVER['PHP_SELF']}?option=erstellungsanteil'>Erstellungsanteil</a>
-        | <a href='${_SERVER['PHP_SELF']}?option=erstellungsanteil-periode'>Erstellungsanteil-periode</a>
-        | <a href='${_SERVER['PHP_SELF']}?option=kommission'>Kommission</a>
-        | <a href='${_SERVER['PHP_SELF']}?option=ParlamentNachParteien'>ParlamentNachParteien</a>
+        <a href='{$_SERVER['PHP_SELF']}?option=bearbeitungsanteil'>Bearbeitungsanteil</a>
+        | <a href='{$_SERVER['PHP_SELF']}?option=bearbeitungsanteil-periode'>Bearbeitungsanteil-periode</a>
+        | <a href='{$_SERVER['PHP_SELF']}?option=erstellungsanteil'>Erstellungsanteil</a>
+        | <a href='{$_SERVER['PHP_SELF']}?option=erstellungsanteil-periode'>Erstellungsanteil-periode</a>
+        | <a href='{$_SERVER['PHP_SELF']}?option=kommission'>Kommission</a>
+        | <a href='{$_SERVER['PHP_SELF']}?option=ParlamentNachParteien'>ParlamentNachParteien</a>
         </p>"); ?>
       <p>
          <h3 id="pagetitle">Titel</h3>

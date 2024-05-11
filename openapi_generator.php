@@ -32,7 +32,7 @@ foreach($tables as $table) {
     print("
   /$call_type/$table_id/$type/id/{id}:
     get:
-      operationId: get${type_camel}${table_id_camel}Id
+      operationId: get{$type_camel}{$table_id_camel}Id
       summary: Get $name by ID
       description: Return a single $name
       tags:
@@ -73,7 +73,7 @@ if ($table['listCall']) {
   print("
   /$call_type/$table_id/$type/list:
     get:
-      operationId: get${type_camel}${table_id_camel}List
+      operationId: get{$type_camel}{$table_id_camel}List
       summary: Get list of $name
       description: Return a list of $name
       tags:
@@ -112,7 +112,7 @@ if ($table['searchCall']) {
   print("
   /$call_type/$table_id/$type/list/{str}:
     get:
-      operationId: get${type_camel}${table_id_camel}List
+      operationId: get{$type_camel}{$table_id_camel}List
       summary: Get list of $name
       description: Return a list of $name
       tags:

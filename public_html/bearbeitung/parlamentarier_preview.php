@@ -64,8 +64,8 @@ try {
     $reForEnd = $isParlReAuthorization || $isParlAuthorizationReminder ? 'Re' : '';
 
     $emailSubjectParlam = getSettingValue("parlamentarierAutorisierungEmailSubject$lang_suffix", false, 'Interessenbindungen');
-    $emailIntroParlam = getSettingValue("parlamentarier${re}Autorisierung${reminder}EmailEinleitung$lang_suffix", false, '[Einleitung]<br><br>');
-    $emailEndParlam = getSettingValue("parlamentarier${reForEnd}AutorisierungEmailSchluss$lang_suffix", false, '<br><br>Freundliche Grüsse<br>%name%');
+    $emailIntroParlam = getSettingValue("parlamentarier{$re}Autorisierung{$reminder}EmailEinleitung$lang_suffix", false, '[Einleitung]<br><br>');
+    $emailEndParlam = getSettingValue("parlamentarier{$reForEnd}AutorisierungEmailSchluss$lang_suffix", false, '<br><br>Freundliche Grüsse<br>%name%');
     $emailEndParlam = StringUtils::ReplaceVariableInTemplate($emailEndParlam, 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
 
     $rowCellStyles = [];
@@ -121,8 +121,8 @@ try {
 
       $emailSubjectZb[$i] = getSettingValue("zutrittsberechtigterAutorisierungEmailSubject$lang_suffix", false, 'Zugangsberechtigung ins Parlament');
 
-      $emailIntroZb[$i] = StringUtils::ReplaceVariableInTemplate(getSettingValue("zutrittsberechtigter${re}Autorisierung${reminder}EmailEinleitung$lang_suffix", false, '[Einleitung]<br><br>Zutrittsberechtigung erhalten von %parlamentarierName%.'), 'parlamentarierName', $rowData["parlamentarier_name2"]);
-      $emailEndZb[$i] = StringUtils::ReplaceVariableInTemplate(getSettingValue("zutrittsberechtigter${re}AutorisierungEmailSchluss$lang_suffix", false, '<br><br>Freundliche Grüsse<br>%name%'), 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
+      $emailIntroZb[$i] = StringUtils::ReplaceVariableInTemplate(getSettingValue("zutrittsberechtigter{$re}Autorisierung{$reminder}EmailEinleitung$lang_suffix", false, '[Einleitung]<br><br>Zutrittsberechtigung erhalten von %parlamentarierName%.'), 'parlamentarierName', $rowData["parlamentarier_name2"]);
+      $emailEndZb[$i] = StringUtils::ReplaceVariableInTemplate(getSettingValue("zutrittsberechtigter{$re}AutorisierungEmailSchluss$lang_suffix", false, '<br><br>Freundliche Grüsse<br>%name%'), 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
 
       $rowCellStylesZb[$i] = [];
       $rowStyles = '';

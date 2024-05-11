@@ -27,4 +27,4 @@ if ($db_name != null && $db_name != 'DEFAULT') {
   $db_con = $db_connection;
 }
 
-print("${db_con["reader_username"]}:${db_con["reader_password"]}:${db_con["server"]}:${db_con["database"]}:${db_con["port"]}");
+print("{$db_con["reader_username"]}:{$db_con["reader_password"]}:{$db_con["server"]}:{$db_con["database"]}:{$db_con["port"]}");

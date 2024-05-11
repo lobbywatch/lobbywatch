@@ -201,7 +201,7 @@ function migrate_parlament_interessenbindungen_to_Json($table_name, $id_field, $
 
     $id = $row[$id_field];
 
-    print("-- $i, ${row['nachname']}, $id_field=$id\n");
+    print("-- $i, {$row['nachname']}, $id_field=$id\n");
 
     $db_ib = $row['parlament_interessenbindungen'];
     $db_ib_clean = str_replace(array("\r\n","\n","\r"), "\n", $db_ib, $clean_count);
@@ -327,7 +327,7 @@ function migrate_unused_user_visa($table_schema, $records_limit = false) {
 
     $clean_script = [];
 
-    print("User $id, $name, ${row_user['nachname']} ${row_user['vorname']}, ${row_user['last_login']}, ${row_user['last_access']}, ${row_user['email']}\n");
+    print("User $id, $name, {$row_user['nachname']} {$row_user['vorname']}, {$row_user['last_login']}, {$row_user['last_access']}, {$row_user['email']}\n");
 
     if (array_key_exists($name, $rename_users)) {
       $new_name = $rename_users[$name];

@@ -409,7 +409,7 @@ function get_PDO_lobbywatch_DB_connection($db_name = null, $user_prefix = 'reade
     $initArr[PDO::ATTR_PERSISTENT] = true;
     if ($utc) $initArr[PDO::MYSQL_ATTR_INIT_COMMAND] = "SET time_zone = '+00:00'";
     $db_schema = $db_con['database'];
-    $db = new PDO("mysql:host={$db_con['server']};port={$db_con['port']};dbname=$db_schema;charset=utf8mb4", $db_con["{$user_prefix}username"], $db_con["${user_prefix}password"], $initArr);
+    $db = new PDO("mysql:host={$db_con['server']};port={$db_con['port']};dbname=$db_schema;charset=utf8mb4", $db_con["{$user_prefix}username"], $db_con["{$user_prefix}password"], $initArr);
     // Disable prepared statement emulation, http://stackoverflow.com/questions/60174/how-can-i-prevent-sql-injection-in-php
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -558,7 +558,7 @@ function _lobbywatch_organisation_beziehung_SELECT_SQL($alias_suffix_base, $tran
   $sql = "";
 
   for ($i = 0; $i <= $transitiv_num; $i++) {
-    $alias_suffix = "${alias_suffix_base}_$i";
+    $alias_suffix = "{$alias_suffix_base}_$i";
     $sql .= "
       GROUP_CONCAT(DISTINCT
       CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe("organisation_$alias_suffix") . ", '>', IF(organisation_beziehung_$alias_suffix.bis < NOW(), '<s>', ''), " . ($linkOrganisation ? "'<a href=\"/$lang/daten/organisation/', organisation_$alias_suffix.id, '\">', " : '') . lobbywatch_lang_field("organisation_$alias_suffix.anzeige_name_de") . ", " . ($linkOrganisation ? "'</a>', " : '') . "
@@ -579,8 +579,8 @@ function _lobbywatch_organisation_beziehung_FROM_SQL($master_organisation_name, 
   $cur_organisation_id = "$master_organisation_name.id";
   $cur_organisation_id_reverse = "$master_organisation_name.id";
   for ($i = 0; $i <= $transitiv_num; $i++) {
-    $tech_name = "${name_suffix}_$i";
-    $tech_name_reverse = "${name_reverse_suffix}_$i";
+    $tech_name = "{$name_suffix}_$i";
+    $tech_name_reverse = "{$name_reverse_suffix}_$i";
     $sql .= "
     LEFT JOIN v_organisation_beziehung organisation_beziehung_$tech_name
     ON organisation_beziehung_$tech_name.organisation_id = $cur_organisation_id
@@ -2260,7 +2260,7 @@ function ws_get_organization_from_zefix_rest($uid_raw, &$data, $verbose, $test_m
     $base_url = $test_mode ? 'https://www.zefixintg.admin.ch/ZefixPublicREST/api/v1/company/uid' : 'https://www.zefix.admin.ch/ZefixPublicREST/api/v1/company/uid';
     $url = "$base_url/CHE$uid";
     if ($verbose > 8) print("URL: $url\n");
-    $basicAuthUsernamePassword = "{$zefix_ws_login['username']}:${zefix_ws_login['password']}";
+    $basicAuthUsernamePassword = "{$zefix_ws_login['username']}:{$zefix_ws_login['password']}";
     $response_raw = callAPI('GET', $url, false, $basicAuthUsernamePassword);
     $response_json = decodeJson($response_raw);
     if (isset($response_json)) {
@@ -2334,7 +2334,7 @@ function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose, $
             sleep(2**($i + 3));
           } else {
             $fault = (array) $e->detail->BusinessFault;
-            throw new Exception("${fault['Error']} [op=${fault['Operation']}]: ${fault['ErrorDetail']}", $e->getCode(), $e);
+            throw new Exception("{$fault['Error']} [op={$fault['Operation']}]: {$fault['ErrorDetail']}", $e->getCode(), $e);
           }
         } else {
           throw $e;
@@ -2400,7 +2400,7 @@ function ws_search_uid_bfs_raw($name, $plz, $ort, $rechtsform, $n, $client, &$da
             sleep(2**($i + 3));
           } else {
             $fault = (array) $e->detail->businessFault;
-            throw new Exception("${fault['error']} [op=${fault['operation']}]: ${fault['errorDetail']}", $e->getCode(), $e);
+            throw new Exception("{$fault['error']} [op={$fault['operation']}]: {$fault['errorDetail']}", $e->getCode(), $e);
           }
         } else {
           throw $e;
@@ -3356,18 +3356,18 @@ function print_organisation_beziehung($record, $relation, $field_name_base, $tra
   $adminBool = $admin ? "1" : "0";
 
   $markup = '';
-  if ($record["${field_name_base}_0"] ?? false) {
+  if ($record["{$field_name_base}_0"] ?? false) {
     $markup .= $record['organisation'] . " <b>$relation</b>"
     . '<ul>'
-        . $record["${field_name_base}_0"]
+        . $record["{$field_name_base}_0"]
         . '</ul>';
 //     if ($admin) {
 //       $markup .= "<div class='admin'>";
 //       for($i = 1; $i <= $transitiv_num; $i++) {
-//         if ($record["${field_name_base}_$i"]) {
+//         if ($record["{$field_name_base}_$i"]) {
 //           $markup .= '<h4>'. lt('Transitiv') . ' ' . $i . '</h4>'
 //               . '<ul>'
-//                   . $record["${field_name_base}_$i"]
+//                   . $record["{$field_name_base}_$i"]
 //                   . '</ul>';
 //           } else {
 //             break;
