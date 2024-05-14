@@ -595,8 +595,11 @@ abstract class AbstractExporter implements IExporter {
     $start_space = $start_space == 'id' ? $table_meta['table'] : $start_space;
     $sourceNode = camelize($start_space);
 
-    $end_space = preg_replace('/_id$/', '', $table_meta['end_id_space'] ?? ($table_meta['end_id']) ?? null);
-    $end_space = $end_space == 'id' ? $table_meta['table'] : $end_space;
+    $end_space = $table_meta['end_id_space'] ?? ($table_meta['end_id']) ?? null;
+    if ($end_space) {
+      $end_space = preg_replace('/_id$/', '', $end_space);
+      $end_space = $end_space == 'id' ? $table_meta['table'] : $end_space;
+    }
     $targetNode = camelize($end_space);
 
     return [$edgeName, $startId, $start_space, $sourceNode, $endId, $end_space, $targetNode];
@@ -1974,7 +1977,7 @@ Parameters:
 // DONE one big input table with all definitions: format preferences in table?, restrictions/characteristics
 // DONE strategy: 1. keep dedicated export functions, 2. extend/enrich structured export function with dedicated functionality
 
-function export(IExporter $exporter, string $table_schema, string $path, array $filter, string $eol = "\n", string $storage_type = 'multi_file', $records_limit = false, PDO $db) {
+function export(IExporter $exporter, string $table_schema, string $path, array $filter, string $eol, string $storage_type, $records_limit, PDO $db) {
   global $verbose;
   global $data_source;
   global $intern_fields;
@@ -2308,7 +2311,7 @@ function getColNames(array $row, array $table_alias_map, array $alias_map, array
   return [$table_name, $col, $data_type, $virtual_col, $table_name_alias, $alias, $select_field, $col_comment];
 }
 
-function export_tables(IExporter $exporter, array $tables, int $parent_id = null, array $parent_row = null, $level, string $table_schema, ?string $path, array $filter, string $eol = "\n", string $format = 'json', string $storage_type, $parent_export_file, $parent_docu_file, $records_limit = false, array &$cmd_args, PDO $db, array &$docu_table_written) {
+function export_tables(IExporter $exporter, array $tables, int|null $parent_id, array|null $parent_row, $level, string $table_schema, ?string $path, array $filter, string $eol, string $format, string $storage_type, $parent_export_file, $parent_docu_file, $records_limit, array &$cmd_args, PDO $db, array &$docu_table_written) {
   global $verbose;
   global $intern_fields;
   global $transaction_date;
@@ -2434,11 +2437,13 @@ function export_tables(IExporter $exporter, array $tables, int $parent_id = null
     }
 
     // remove trailing comma in last definition line 2nd last line
-    end($table_create_lines);
-    $last_declaration = prev($table_create_lines);
-    $last_declaration_key = key($table_create_lines);
-    $table_create_lines[$last_declaration_key] = preg_replace('/,$/', '', $last_declaration);
-    reset($table_create_lines);
+    if ($table_create_lines) {
+      end($table_create_lines);
+      $last_declaration = prev($table_create_lines);
+      $last_declaration_key = key($table_create_lines);
+      $table_create_lines[$last_declaration_key] = preg_replace('/,$/', '', $last_declaration);
+      reset($table_create_lines);
+    }
 
     $num_cols = count($select_fields);
 
@@ -2590,7 +2595,7 @@ function getHistCondition(array $table_meta, string $table_alias, string $query_
 }
 
 // Check: add freigabe_datum and bis to indexes to speed up queries
-function buildRowsSelect(string $table, string $query_table_alias, string $query_table_with_alias, array $table_meta, array $select_fields, array $filter, $records_limit): array {
+function buildRowsSelect(string $table, string $query_table_alias, string $query_table_with_alias, array $table_meta, array $select_fields, array $filter, $format, $records_limit): array {
   $type_col = $table_meta['type_col'] ?? null;
   $parent_id_col = $table_meta['parent_id'] ?? null;
   $freigabe_datum = $table_meta['freigabe_datum'] ?? 'freigabe_datum';
@@ -2636,7 +2641,7 @@ function buildRowsSelect(string $table, string $query_table_alias, string $query
 
   $sql_join = ' '. implode(' ', $sql_joins);
 
-  $sql_order = " ORDER BY $query_table_alias." . ($table_meta['order_by'] ?? $table_meta['id'] ?? 'id');
+  $sql_order = " ORDER BY " . (empty($table_meta['order_by']) || !str_contains($table_meta['order_by'], '.') ? "$query_table_alias." : '') . ($table_meta['order_by'] ?? $table_meta['id'] ?? 'id');
 
   $sql_limit = '';
   if ($records_limit > 0) {
@@ -2648,7 +2653,7 @@ function buildRowsSelect(string $table, string $query_table_alias, string $query
   return [$sql, $parent_id_col, $sql_select, $sql_from, $sql_join, $sql_where, $sql_order, $sql_limit];
 }
 
-function export_rows(IExporter $exporter, string $id_alias, int $parent_id = null, array $parent_row = null, $db, array $select_fields, bool $has_extra_col, string $table_schema, string $table_key, string $table, string $query_table, string $query_table_with_alias, string $query_table_alias, array $table_meta, array $data_types, array $skip_rows_for_empty_field, $filter, string $eol = "\n", string $format = 'json', int $level = 1, $records_limit, $export_file, $docu_file, &$cmd_args, &$docu_table_written) {
+function export_rows(IExporter $exporter, string $id_alias, int $parent_id = null, array $parent_row = null, $db, array $select_fields, bool $has_extra_col, string $table_schema, string $table_key, string $table, string $query_table, string $query_table_with_alias, string $query_table_alias, array $table_meta, array $data_types, array $skip_rows_for_empty_field, $filter, string $eol, string $format, int $level, $records_limit, $export_file, $docu_file, &$cmd_args, &$docu_table_written) {
   global $verbose;
 
   $num_indicator = 20;

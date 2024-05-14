@@ -3831,6 +3831,9 @@ function getNotizenPlaceholder() {
 
 // https://stackoverflow.com/questions/2791998/convert-dashes-to-camelcase-in-php
 function camelize($input, $separator = '_', $capitalizeFirstCharacter = true) {
+  if (empty($input)) {
+    return null;
+  }
   $str = str_replace($separator, '', ucwords($input, $separator));
 
   if (!$capitalizeFirstCharacter) {
