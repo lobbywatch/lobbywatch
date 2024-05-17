@@ -119,7 +119,6 @@ abstract class AbstractCommitEditSelectedOperationValuesGridState extends Commit
 
     // Similar to globalOnBeforeUpdate
     protected function setDBUpdatedMetaData() {
-      // df($this->grid->GetDataset()->GetFieldValueByName('id'));
       $this->grid->GetDataset()->SetFieldValueByName('updated_visa', $this->userName);
       $this->grid->GetDataset()->SetFieldValueByName('updated_date', $this->transactionDateTime);
     }
@@ -134,7 +133,6 @@ abstract class AbstractCommitEditSelectedOperationValuesGridState extends Commit
 
 class InputFinishedSelectedGridState extends AbstractCommitEditSelectedOperationValuesGridState {
   protected function DoOperation($rowValues) {
-    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
     $this->grid->GetDataset()->SetFieldValueByName('eingabe_abgeschlossen_visa', $this->userName);
     $this->grid->GetDataset()->SetFieldValueByName('eingabe_abgeschlossen_datum', $this->transactionDateTime);
   }
@@ -142,7 +140,6 @@ class InputFinishedSelectedGridState extends AbstractCommitEditSelectedOperation
 
 class DeInputFinishedSelectedGridState extends AbstractCommitEditSelectedOperationValuesGridState {
   protected function DoOperation($rowValues) {
-    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
     $this->grid->GetDataset()->SetFieldValueByName('eingabe_abgeschlossen_visa', null);
     $this->grid->GetDataset()->SetFieldValueByName('eingabe_abgeschlossen_datum', null);
   }
@@ -150,7 +147,6 @@ class DeInputFinishedSelectedGridState extends AbstractCommitEditSelectedOperati
 
 class ControlledSelectedGridState extends AbstractCommitEditSelectedOperationValuesGridState {
   protected function DoOperation($rowValues) {
-    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
     $this->grid->GetDataset()->SetFieldValueByName('kontrolliert_visa', $this->userName);
     $this->grid->GetDataset()->SetFieldValueByName('kontrolliert_datum', $this->transactionDateTime);
   }
@@ -158,7 +154,6 @@ class ControlledSelectedGridState extends AbstractCommitEditSelectedOperationVal
 
 class DeControlledSelectedGridState extends AbstractCommitEditSelectedOperationValuesGridState {
   protected function DoOperation($rowValues) {
-    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
     $this->grid->GetDataset()->SetFieldValueByName('kontrolliert_visa', null);
     $this->grid->GetDataset()->SetFieldValueByName('kontrolliert_datum', null);
   }
@@ -166,7 +161,6 @@ class DeControlledSelectedGridState extends AbstractCommitEditSelectedOperationV
 
 class AuthorizationSentSelectedGridState extends AbstractCommitEditSelectedOperationValuesGridState {
   protected function DoOperation($rowValues) {
-    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
     $this->grid->GetDataset()->SetFieldValueByName('autorisierung_verschickt_visa', $this->userName);
     $this->grid->GetDataset()->SetFieldValueByName('autorisierung_verschickt_datum', $this->date);
   }
@@ -174,7 +168,6 @@ class AuthorizationSentSelectedGridState extends AbstractCommitEditSelectedOpera
 
 class DeAuthorizationSentSelectedGridState extends AbstractCommitEditSelectedOperationValuesGridState {
   protected function DoOperation($rowValues) {
-    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
     $this->grid->GetDataset()->SetFieldValueByName('autorisierung_verschickt_visa', null);
     $this->grid->GetDataset()->SetFieldValueByName('autorisierung_verschickt_datum', null);
   }
@@ -182,7 +175,6 @@ class DeAuthorizationSentSelectedGridState extends AbstractCommitEditSelectedOpe
 
 class AuthorizationReminderSentSelectedGridState extends AbstractCommitEditSelectedOperationValuesGridState {
   protected function DoOperation($rowValues) {
-    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
     $this->grid->GetDataset()->SetFieldValueByName('autorisierung_reminder_verschickt_visa', $this->userName);
     $this->grid->GetDataset()->SetFieldValueByName('autorisierung_reminder_verschickt_datum', $this->date);
   }
@@ -190,7 +182,6 @@ class AuthorizationReminderSentSelectedGridState extends AbstractCommitEditSelec
 
 class DeAuthorizationReminderSentSelectedGridState extends AbstractCommitEditSelectedOperationValuesGridState {
   protected function DoOperation($rowValues) {
-    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
     $this->grid->GetDataset()->SetFieldValueByName('autorisierung_reminder_verschickt_visa', null);
     $this->grid->GetDataset()->SetFieldValueByName('autorisierung_reminder_verschickt_datum', null);
   }
@@ -198,7 +189,6 @@ class DeAuthorizationReminderSentSelectedGridState extends AbstractCommitEditSel
 
 class AuthorizeSelectedGridState extends AbstractCommitEditSelectedOperationValuesGridState {
   protected function DoOperation($rowValues) {
-    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
     $this->grid->GetDataset()->SetFieldValueByName('autorisiert_visa', $this->userName);
     $this->grid->GetDataset()->SetFieldValueByName('autorisiert_datum', $this->date);
   }
@@ -206,7 +196,6 @@ class AuthorizeSelectedGridState extends AbstractCommitEditSelectedOperationValu
 
 class DeAuthorizeSelectedGridState extends AbstractCommitEditSelectedOperationValuesGridState {
   protected function DoOperation($rowValues) {
-    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
     $this->grid->GetDataset()->SetFieldValueByName('autorisiert_visa', null);
     $this->grid->GetDataset()->SetFieldValueByName('autorisiert_datum', null);
   }
@@ -214,7 +203,6 @@ class DeAuthorizeSelectedGridState extends AbstractCommitEditSelectedOperationVa
 
 class ReleaseSelectedGridState extends AbstractCommitEditSelectedOperationValuesGridState {
   protected function DoOperation($rowValues) {
-    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
     $this->grid->GetDataset()->SetFieldValueByName('freigabe_visa', $this->userName);
     $this->grid->GetDataset()->SetFieldValueByName('freigabe_datum', $this->date);
   }
@@ -222,7 +210,6 @@ class ReleaseSelectedGridState extends AbstractCommitEditSelectedOperationValues
 
 class DeReleaseSelectedGridState extends AbstractCommitEditSelectedOperationValuesGridState {
   protected function DoOperation($rowValues) {
-    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
     $this->grid->GetDataset()->SetFieldValueByName('freigabe_visa', null);
     $this->grid->GetDataset()->SetFieldValueByName('freigabe_datum', null);
   }
@@ -243,7 +230,6 @@ class ClearImRatBisSelectedGridState extends AbstractCommitEditSelectedOperation
 class SetEhrenamtlichSelectedGridState extends AbstractCommitEditSelectedOperationValuesGridState {
   protected function DoOperation($rowValues) {
     $id = $this->grid->GetDataset()->GetFieldValueByName('id');
-//     df($id, "SetEhrenamtlichSelectedGridState.DoOperation($rowValues) id");
     $sql_date = "STR_TO_DATE('$this->transactionDateTime','%d-%m-%Y %T')";
     $table_raw = preg_replace('/[`]/i', '', $this->grid->GetDataset()->GetName());
     $table = preg_replace('/^vf_/i', '', $table_raw);
@@ -264,7 +250,6 @@ class SetEhrenamtlichSelectedGridState extends AbstractCommitEditSelectedOperati
 class SetBezahltSelectedGridState extends AbstractCommitEditSelectedOperationValuesGridState {
   protected function DoOperation($rowValues) {
     $id = $this->grid->GetDataset()->GetFieldValueByName('id');
-    // df($id, "SetBezahltSelectedGridState.DoOperation($rowValues) id");
     $sql_date = "STR_TO_DATE('$this->transactionDateTime','%d-%m-%Y %T')";
     $table_raw = preg_replace('/[`]/i', '', $this->grid->GetDataset()->GetName());
     $table = preg_replace('/^vf_/i', '', $table_raw);
