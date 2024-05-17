@@ -3178,9 +3178,7 @@ function organisationsbeziehungen($con, $organisationen_id_comma_list, $for_emai
          . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
     GROUP BY organisation.id";
 
-//     df($sql, 'sql');
     $result = lobbywatch_forms_db_query($sql, array(':ids' => $organisation_id), array('fetch' => PDO::FETCH_ASSOC))->fetch();
-//     df($result, 'result');
 
     $inner_markup .= print_organisation_beziehung($result, lt('arbeitet für'), 'arbeitet_fuer', $num_arbeitet_fuer);
     $inner_markup .= print_organisation_beziehung($result, lt('Tochtergesellschaften'), 'tochtergesellschaften', $num_tochtergesellschaft_von);
@@ -3283,8 +3281,6 @@ GROUP BY zutrittsberechtigung.id;";
   WHERE
     zutrittsberechtigung.id=:id
   GROUP BY zutrittsberechtigung.id;";
-
-    //     df($sql, 'sql');
 
     $res = [];
     $sth = $con->prepare($sql);
@@ -3497,7 +3493,7 @@ WHERE parlamentarier.id=:id
 ORDER BY log_id DESC
 LIMIT 1;
 ";
-//         df($sql);
+
   $result = [];
   $options = array(
     'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
@@ -3572,9 +3568,7 @@ GROUP BY parlamentarier.id;";
   $options = array(
     'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
   );
-  // df($sql, 'sql');
   $result = lobbywatch_forms_db_query($sql, array(':id' => $id), $options)->fetchAll();
-//       $result = $sth->fetchAll();
 
   if (!$result) {
     throw new Exception("ID not found '$id'");

@@ -147,9 +147,6 @@ try {
     $state = '<table style="margin-top: 1em; margin-bottom: 1em;">
               <tr><td style="padding: 16px; '. $rowCellStyles['id'] . '" title="Status des Arbeitsablaufes dieses Parlamenteriers">Arbeitsablauf</td><td style="padding: 16px; '. $rowCellStyles['nachname'] . '" title="Status der Vollständigkeit der Felder dieses Parlamenteriers">Vollständigkeit</td></tr></table>';
 
-//     $trans = lt('Ihre Interessenbindungen:');
-//     df($trans);
-
     $viewData = new CommonPageViewData();
     $viewData
     ->setTitle($rowData["parlamentarier_name"] . ' - Vorschau')

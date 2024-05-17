@@ -8,12 +8,6 @@
     $host = $db_connection['server'];
     $database = $db_connection['database'];
 
-//    $username = "root";
-//    $password = "mysql";
-//    $host = "localhost";
-//    $database="lobbywatch";
-
-
   $optionen = array (
     PDO::ATTR_PERSISTENT => true
   );
@@ -30,9 +24,7 @@
 
    if ($option == "kommission") {
       $kommission_id = (int) @urldecode($_GET["id"]);
-//       df($kommission_id, '$kommission_id init');
       $kommission_id = !isset($kommission_id) || !is_int($kommission_id) || $kommission_id == 0 ? 1 : $kommission_id;
-//       df($kommission_id, '$kommission_id');
       $cmd = "select 'parlamentarier' as type, count(*) as value, 'nicht bearbeitet' as label, null as color
       from v_parlamentarier p
       where
@@ -128,7 +120,6 @@
       $color_map["SVP"] = "#0A7D3A";
    } elseif (utils_startsWith($option,"bearbeitungsanteil")) {
      if (utils_endsWith($option,"-periode")) {
-//        df('bearbeitungsanteil-periode');
 
        $periodeStart = getSettingValue('erfassungsPeriodeStart', false, '01.03.2015');
        $periodeEnde = getSettingValue('erfassungsPeriodeEnde', false, null);
@@ -140,10 +131,6 @@
        } else {
        $periodeSQL = '';
      }
-
-//      df($periodeStart, '$periodeStart');
-//      df($periodeEnde, '$periodeEnde');
-
 
      $cmd = "
 SELECT '' as type, visa as label, COUNT(visa) as value, NULL as color  FROM (
@@ -195,7 +182,6 @@ ORDER BY value DESC;
   if (utils_endsWith(
       $option,
       "-periode")) {
-//        df('erstellungsanteil-periode');
 
       $periodeStart = getSettingValue(
         'erfassungsPeriodeStart',
@@ -209,9 +195,6 @@ ORDER BY value DESC;
         null) {
       $periodeEnde = '31.12.2030';
     }
-
-//     df($periodeStart, '$periodeStart');
-//     df($periodeEnde, '$periodeEnde');
 
     $periodeSQL = " WHERE created_date BETWEEN STR_TO_DATE('$periodeStart','%d.%m.%Y') AND  STR_TO_DATE('$periodeEnde','%d.%m.%Y') ";
   } else {
@@ -278,9 +261,6 @@ ORDER BY value DESC;
            $cmd = '';
          }
 
-//          df($cmd, 'cmd');
-
-//    $query = $connection->query($cmd);
     $stmt = $db->prepare($cmd);
 
     $stmt->execute(array());
@@ -294,8 +274,6 @@ ORDER BY value DESC;
    $data = array();
 
    foreach($result as $row) {
-//       echo "Label: {$row["label"]}, value: {$row["value"]}, color:{$row["color"]} \n";
-
       $rowdata = [
          "type" => $row["type"],
          "label" => $row["label"],
@@ -305,12 +283,6 @@ ORDER BY value DESC;
 
       $data[] = $rowdata;
    }
-
-   /*
-   for ($x = 0; $x < mysql_num_rows($query); $x++) {
-      $data[] = mysql_fetch_assoc($query);
-   }
-   */
 
    echo json_encode($data);
 

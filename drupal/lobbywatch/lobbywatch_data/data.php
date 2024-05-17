@@ -66,8 +66,6 @@ if (is_int($return) && $delivery_callback === 'drupal_json_output') {
 elseif (isset($return)) {
   // If JavaScript callback did not exit, print any value (including an empty
   // string) except NULL or undefined.
-//   df($delivery_callback, '$delivery_callback');
-//   df(array($return), 'array($return)');
   call_user_func_array($delivery_callback, array($return));
 }
 
@@ -301,7 +299,6 @@ function js_execute_callback(&$delivery_callback = 'drupal_json_output') {
  *   The arguments array replaced with correct path values.
  */
 function js_replace_callback_args(array $args = []) {
-//   df($args, '$args');
   // Retrieve the original arguments again, but strip first and second
   // arguments ('data' and 'module').
   $original_args = array_slice(explode('/', $_GET['q']), 2);
@@ -317,8 +314,6 @@ function js_replace_callback_args(array $args = []) {
       unset($args[$key]);
     }
   }
-//   df($original_args, '$$original_args');
-//   df($args, '$args');
 
   return $args;
 }

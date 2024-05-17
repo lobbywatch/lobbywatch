@@ -103,15 +103,11 @@ abstract class AbstractCommitEditSelectedOperationValuesGridState extends Commit
 
     protected function getSelectionOperationParametersFromPost() {
       $input_date = GetApplication()->GetPOSTValue('date');
-  //     df('Dates:');
-  //     df($input_date);
-  //     df($this->GetPage()->GetEnvVar('CURRENT_DATETIME'));
       if ($this->isValidDate($input_date)) {
         $this->date = $input_date;
       } else { // includes empty date
         $this->date = $this->transactionDateTime;
       }
-  //     df($this->date);
       $this->text1 = GetApplication()->GetPOSTValue('text1');
       $this->text2 = GetApplication()->GetPOSTValue('text2');
       $this->text3 = GetApplication()->GetPOSTValue('text3');
@@ -240,7 +236,6 @@ class SetEhrenamtlichSelectedGridState extends AbstractCommitEditSelectedOperati
 
     // Quick and dirty solution to fill another table
     $sql = "INSERT INTO {$table}_jahr (`{$table}_id`, `jahr`, `verguetung`, `beschreibung`, `quelle_url`, `quelle_url_gueltig`, `quelle`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES ($id, $year, 0, $desc, $url, NULL, $src, NULL, '$this->userName', $sql_date, '$this->userName', $sql_date);"; // CURRENT_TIMESTAMP
-//     df($sql, "SQL");
 
     $eng_con = getDBConnection();
     $eng_con->ExecSQL($sql);
@@ -261,7 +256,6 @@ class SetBezahltSelectedGridState extends AbstractCommitEditSelectedOperationVal
 
     // Quick and dirty solution to fill another table
     $sql = "INSERT INTO {$table}_jahr (`{$table}_id`, `jahr`, `verguetung`, `beschreibung`, `quelle_url`, `quelle_url_gueltig`, `quelle`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES ($id, $year, 1, $desc, $url, NULL, $src, NULL, '$this->userName', $sql_date, '$this->userName', $sql_date);"; // CURRENT_TIMESTAMP
-//     df($sql, "SQL");
 
     $eng_con = getDBConnection();
     $eng_con->ExecSQL($sql);
@@ -271,7 +265,6 @@ class SetBezahltSelectedGridState extends AbstractCommitEditSelectedOperationVal
 class SetZahlendSelectedGridState extends AbstractCommitEditSelectedOperationValuesGridState {
   protected function DoOperation($rowValues) {
     $id = $this->grid->GetDataset()->GetFieldValueByName('id');
-//     df($id, "SetZahlendSelectedGridState.DoOperation($rowValues) id");
     $sql_date = "STR_TO_DATE('$this->transactionDateTime','%d-%m-%Y %T')";
     $table_raw = preg_replace('/[`]/i', '', $this->grid->GetDataset()->GetName());
     $table = preg_replace('/^vf_/i', '', $table_raw);
@@ -282,7 +275,6 @@ class SetZahlendSelectedGridState extends AbstractCommitEditSelectedOperationVal
 
     // Quick and dirty solution to fill another table
     $sql = "INSERT INTO {$table}_jahr (`{$table}_id`, `jahr`, `verguetung`, `beschreibung`, `quelle_url`, `quelle_url_gueltig`, `quelle`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES ($id, $year, -1, $desc, $url, NULL, $src, NULL, '$this->userName', $sql_date, '$this->userName', $sql_date);"; // CURRENT_TIMESTAMP
-//     df($sql, "SQL");
 
     $eng_con = getDBConnection();
     $eng_con->ExecSQL($sql);
@@ -313,7 +305,6 @@ SELECT id, $stichdatum, '$this->userName', '$this->userName', $sql_date, $sql_da
 FROM parlamentarier
 WHERE (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())
 ORDER BY nachname, vorname, id;";
-//     df($sql, "SQL");
 
     $eng_con = getDBConnection();
     $eng_con->ExecSQL($sql);
@@ -366,7 +357,6 @@ class CopyInteressenbindungsverguetungen extends AbstractCommitEditSelectedOpera
         GROUP BY ijn.interessenbindung_id)
     AND interessenbindung_jahr.jahr < YEAR($sql_date)
     ORDER BY `interessenbindung_jahr`.`jahr`  DESC, `interessenbindung_jahr`.`id` DESC;";
-//     df($sql, "SQL");
 
     $eng_con = getDBConnection();
     $eng_con->ExecSQL($sql);

@@ -40,31 +40,24 @@ _lobbywatch_search_autocomplete();
 
 // Ref https://api.drupal.org/api/examples/ajax_example!ajax_example_autocomplete.inc/7
 function _lobbywatch_search_autocomplete($str = '') {
-//   df($_SERVER, '$$$$_SERVER');
 
   $type = 'publ';
   if (!$str) {
-//     $str = preg_replace('|^/|', '', $_SERVER['PATH_INFO']);
       $matches = [];
       if (preg_match('%(/(de|fr)/(.+))?/(.*)%', $_SERVER['PATH_INFO'], $matches)) {
         $lang = $matches[2];
         $type = $matches[3];
         $str = $matches[4];
-//         df($matches, '$matches');
       }
   }
 
   $lang_suffix = get_lang_suffix($lang);
-//   df($lang_suffix, '$lang_suffix');
 
 //     $result = _lobbywatch_search_autocomplete_LIKE_UNION($str);
     $result = _lobbywatch_search_autocomplete_LIKE_search_table($str, $lang, !($type == 'all' || $type == 'unpubl'), !($type == 'all' || $type == 'hist'));
 //     $result = _lobbywatch_search_autocomplete_FULLTEXT($str);
 
-  //   dpm($result, 'result');
-
     $items = [];
-//     while($record = $result->fetchAssoc()) {
     foreach($result as $record) {
       $key = $record["name$lang_suffix"] . " [" . common_check_plain($record['page']). '=' . common_check_plain($record['id']) . "]";
       $items[$key] = common_check_plain(fast_translation($record['page'], $lang) . ': ' . $record["name$lang_suffix"]);
@@ -83,7 +76,6 @@ function output_json($var) {
 // Duplicated in lobbywatch_data.interface.inc
 function _lobbywatch_search_keyword_processing($str) {
   $search_str = preg_replace('!\*+!', '%', $str);
-  //     $search_str = '%' . db_like($keys) . '%'
   if (!preg_match('/[%_]/', $search_str)) {
     $search_str = "%$search_str%";
   }
@@ -105,8 +97,6 @@ search_keywords$lang_suffix LIKE :str ".
 ($filter_unpublished ? ' AND (table_name=\'parlamentarier\' OR table_name=\'zutrittsberechtigung\' OR freigabe_datum <= NOW())' : '') . "
 ORDER BY table_weight, weight
 LIMIT 20;";
-  //dpm($sql, 'suche');
-//   $result = db_query($sql, array(':str' => _lobbywatch_search_keyword_processing($str)));
 
   $q = get_PDO_lobbywatch_DB_connection()->prepare($sql);
   $q->execute(array(':str' => _lobbywatch_search_keyword_processing($str)));

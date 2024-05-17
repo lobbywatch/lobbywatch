@@ -21,34 +21,11 @@ require_once dirname(__FILE__) . '/../custom/custom_page.php';
 
 // Main
 
-// lobbywatch_set_language('fr');
-
-// df(lt('test'), 'lt-test');
-
-// df(lobbywatch_lang_field('organisation.name'));
-// df(lobbywatch_lang_field('organisation.name_de'));
-
-// lobbywatch_set_language('de');
-// df(lobbywatch_lang_field('organisation.name'));
-// df(lobbywatch_lang_field('organisation.name_de'));
-
 function check_plain($raw) {
   return $raw;
 }
 
-try
-{
-
-//     $con_factory = new MyPDOConnectionFactory();
-//     $options = GetConnectionOptions();
-//     $eng_con = $con_factory->CreateConnection($options);
-// //     try {
-//       $eng_con->Connect();
-//       $con = $eng_con->GetConnectionHandle();
-// //         df($eng_con->Connected(), 'connected');
-// //         df($con, 'con');
-//       $cmd = $con_factory->CreateEngCommandImp();
-
+try {
   date_default_timezone_set('Europe/Zurich');
   $now = date('d.m.Y H:i:s');
 
