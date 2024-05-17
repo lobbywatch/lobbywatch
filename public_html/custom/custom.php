@@ -22,46 +22,6 @@
 // MIGR Intercept pageInfo()
 // MIGR Increase gint popover window width
 // MIGR forms partition omit ", .
-// MIGROK Create doc for new features for data team
-// MIGROK Header img -> /, title index.php
-// MIGROK Restore feature: Hints
-// MIGROK Extract all settings of generator such as header or footer to custom.php
-// MIGROK migrate custom templates http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_19_get_custom_template/
-// MIGROK fix build process
-// MIGROK Restore build process
-// MIGROK fix jslang.js
-// MIGROK fix navigation side-bar
-// MIGROK save migrated .pgtm file
-// MIGROK commit
-// MIGROK fix PHP errors in Eclipse
-// MIGROK change to PHP 7
-// MIGROK install xamp 7
-// MIGROK enable new features
-// MIGROK Restore feature: Bulk Ops
-// MIGROK Restore feature: Colors
-// MIGROK Restore feature: Custom templates
-// MIGROK Restore feature: Show type of table (entity, relation, Stamdaten)
-// MIGROK fields of same type together, name and name_fr
-// MIGRNO try avoid afterburner.sh
-// MIGROK Enable feature: Quick-edit
-// MIGROK Enable feature: New filter builder
-// MIGROK Enable feature: Multi column sorting
-// MIGROK Enable feature: Add index page
-// MIGROK Enable feature: Custom view/edit form titles
-// MIGROK Custom form titles?
-// MIGROK Decide navigation: side bare or top menu -> top menu
-// MIGRNO Docu new features
-// MIGROK Better visual distinction of PROD and TEST, DEV (red in title?)
-// MIGROK - or Ø \u2205 "\u{2205}" instead of NULL in forms output
-// MIGROK Add "Click the \e604 button to see how to do it."
-// MIGROK Fix TypeError: editorNames[editorName] is not a constructor in pgui.editors.js:76:30
-// MIGROK Copy prod bearbeitung to bearbeitung 2 for fallback
-// MIGROK Add rsync dirs to new structure in deploy.sh
-// MIGRNO custom display link fields, e.g name + vorname
-// MIGROK Clean up and restore functionality of preview
-// MIGROK New feature: Add OnCustomizePageList() for additional menu entries
-// MIGROK Enable filter
-// MIGRNO Add $obj to arguments and fill with $this
 
 timer_start('page_build');
 
@@ -360,11 +320,6 @@ $result = <<<'EOD'
   <link rel="shortcut icon" href="/favicon.png" type="image/png" />
 
 EOD;
-// MIGR $page->GetCaption() in link rel="alternate"
-// $result .= <<<EOD
-//   <link rel="alternate" type="application/rss+xml" title="{$page->GetCaption()} Update RSS" href="{$page->GetRssLink()}" />
-// EOD;
-
 }
 
 function parlamentarier_update_photo_metadata($page, &$rowData, &$cancel, &$message, $tableName)
@@ -628,21 +583,6 @@ function clean_fields(/*$page,*/ &$rowData /*, &$cancel, &$message, $tableName*/
   }
 }
 
-// MIGR delete, not used anymore, see customGetPageInfos() and globalOnCustomizePageList()
-function add_more_navigation_links(&$result) {
-  $result->AddGroup('Links');
-
-  $result->AddPage(new PageLink('<span class="overview">Verguetungsuebersicht</span>', 'parlamentarier_overview.php', 'Uebersicht auf einer Seite', false, true, 'Links'));
-  $result->AddPage(new PageLink('<span class="website">Website</span>', '/', 'Homepage', false, false, 'Links'));
-  $result->AddPage(new PageLink('<span class="wiki">Wiki</span>', '/wiki', 'Wiki', false, false, 'Links'));
-  $result->AddPage(new PageLink('<span class="kommissionen">Kommissionen</span>', '/de/daten/kommission', 'Kommissionen', false, false, 'Links'));
-  $result->AddPage(new PageLink('<span class="auswertung"><s>Auswertung</s></span>', $GLOBALS['env_dir'] . 'auswertung', 'Auswertung ' . $GLOBALS['env'] , false, false, 'Links'));
-  $result->AddPage(new PageLink('<span class="state">Erstellungsanteil</span>', 'anteil.php?option=erstellungsanteil', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false, 'Links'));
-  $result->AddPage(new PageLink('<span class="state">Bearbeitungsanteil</span>', 'anteil.php?option=bearbeitungsanteil', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false, 'Links'));
-  $result->AddPage(new PageLink('<span class="state">Erstellungsanteil (Zeitraum)</span>', 'anteil.php?option=erstellungsanteil-periode', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false, 'Links'));
-  $result->AddPage(new PageLink('<span class="state">Bearbeitungsanteil (Zeitraum)</span>', 'anteil.php?option=bearbeitungsanteil-periode', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false, 'Links'));
-}
-
 function clean_non_ascii($str) {
   return preg_replace('/[^\w\d_-]*/','', $str);
 }
@@ -703,7 +643,6 @@ class PrivateFileDownloadHTTPHandler extends AbstractHTTPHandler
       fclose($fd);
     }
     else {
-      //drupal_not_found();
       // error handling
     }
   }
@@ -715,18 +654,7 @@ function DisplayTemplateSimple($TemplateName, $InputObjects, $InputValues, $disp
   $smarty->template_dir = '/components/templates';
   foreach($InputObjects as $ObjectName => &$Object)
     $smarty->assign_by_ref($ObjectName, $Object);
-  //       $smarty->assign_by_ref('Renderer', $this);
   $smarty->assign_by_ref('Captions', $captions);
-  //       $smarty->assign('RenderScripts', $this->renderScripts);
-  //       $smarty->assign('RenderText', $this->renderText);
-
-//   if (isset($this->additionalParams))
-//   {
-//     foreach($this->additionalParams as $ValueName => $Value)
-//     {
-//       $smarty->assign($ValueName, $Value);
-//     }
-//   }
 
   foreach($InputValues as $ValueName => $Value)
     $smarty->assign($ValueName, $Value);
@@ -1153,7 +1081,6 @@ function zutrittsberechtigung_state($parlamentarier_id) {
     foreach($zbs as $zb) {
       $zb_state[$zb['parlamentarier_id']][] = $zb;
     }
-//     df($zb_state, '$zb_state');
   }
 
   // Fetch a single parlamentarier, should not be called anymore
@@ -1330,7 +1257,6 @@ function globalOnBeforeInsert($page, &$rowData, &$cancel, &$message, $tableName)
  * @return boolean true for full workflow users
  */
 function isFullWorkflowUser() {
-//   df(Application::Instance()->GetCurrentUserId(), 'id');
   return in_array(Application::Instance()->GetCurrentUserId(), array(
   1, // admin
   2, // roland
@@ -1345,6 +1271,7 @@ function isFullWorkflowUser() {
   // 67, // Alexandra Baertsch
   // 69, // Samuel Meier
   71, // Strässle Fabian
+  72, // Priscilla Imboden
   ), false);
 }
 
