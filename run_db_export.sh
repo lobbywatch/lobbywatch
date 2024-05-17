@@ -9,10 +9,11 @@
 enable_fail_onerror
 
 if [[ "$USER" == "lobbywat" ]]; then
-  PHP='php74 -d error_reporting=E_ALL'
+  PHP='php83 -d error_reporting=E_ALL'
 else
   PHP='php -d error_reporting=E_ALL'
 fi
+$PHP -v
 LS='ls -Alh'
 ZIP='zip -j -9'
 ZIP_TREE='zip -9'
