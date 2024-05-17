@@ -2641,7 +2641,7 @@ function buildRowsSelect(string $table, string $query_table_alias, string $query
 
   $sql_join = ' '. implode(' ', $sql_joins);
 
-  $sql_order = " ORDER BY " . (empty($table_meta['order_by']) || !str_contains($table_meta['order_by'], '.') ? "$query_table_alias." : '') . ($table_meta['order_by'] ?? $table_meta['id'] ?? 'id');
+  $sql_order = " ORDER BY " . (!str_contains($table_meta['order_by'] ?? '', '.') ? "$query_table_alias." : '') . ($table_meta['order_by'] ?? $table_meta['id'] ?? 'id');
 
   $sql_limit = '';
   if ($records_limit > 0) {
