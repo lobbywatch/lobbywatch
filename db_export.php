@@ -742,7 +742,7 @@ class CsvExporter extends FlatExporter {
     $qes = array_fill(0, $extra_val ? count($data_types) : count($data_types), $this->qe);
 
     return ($extra_val ? ($type_col ? str_replace(' ', '_', strtoupper($row[$type_col])) : $extra_val) . "$this->sep" : '') .
-    implode($this->sep, array_map(['self', 'escape_csv_field'], $row, $data_types, $qes));
+    implode($this->sep, array_map([self::class, 'escape_csv_field'], $row, $data_types, $qes));
   }
 
   protected static function escape_csv_field(string $field = null, string $data_type, string $qe): string {
@@ -969,7 +969,7 @@ class SqlExporter extends FlatExporter implements IExporter {
   }
   function formatRow(array $row, array $data_types, int $level, string $table_key, string $table, array $table_meta): string {
     $qes = array_fill(0, count($data_types), $this->qe);
-    return '(' . implode(",", array_map(['self', 'escape_sql_field'], $row, $data_types, $qes)) . ')';
+    return '(' . implode(",", array_map([self::class, 'escape_sql_field'], $row, $data_types, $qes)) . ')';
   }
   function getTableFooter(string $table, array $table_meta, bool $wrap, bool $last): array {
     return [';', ''];
