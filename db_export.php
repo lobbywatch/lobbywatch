@@ -1004,6 +1004,7 @@ class SqlExporter extends FlatExporter implements IExporter {
       case 'enum':
       case 'set':
       case 'mediumtext':
+      case 'longtext':
       case 'text':
       default: return "'" . str_replace("'", $qe . "'", str_replace("\n", '\n', $field)) . "'";
     }
@@ -1476,6 +1477,7 @@ class GraphMLExporter extends XmlExporter {
       'enum' => 'string',
       'set' => 'string',
       'mediumtext' => 'string',
+      'longtext' => 'string',
       'text' => 'string',
       'json' => 'string',
       'date' => 'string',
