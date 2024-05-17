@@ -801,6 +801,7 @@ class Neo4jCsvExporter extends CsvExporter {
     'enum' => 'string',
     'set' => 'string[]', // TODO fix export, set quotes correctly, use ; as delim
     'mediumtext' => 'string',
+    'longtext' => 'string',
     'text' => 'string',
     'json' => 'string',
     'date' => 'date',
