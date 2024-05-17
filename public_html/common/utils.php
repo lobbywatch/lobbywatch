@@ -763,21 +763,6 @@ function lt($string, array $args = [], array $options = []) {
     $options['context'] = '';
   }
 
-//   // First, check for an array of customized strings. If present, use the array
-//   // *instead of* database lookups. This is a high performance way to provide a
-//   // handful of string replacements. See settings.php for examples.
-//   // Cache the $custom_strings variable to improve performance.
-//   if (!isset($custom_strings[$options['langcode']])) {
-//     $custom_strings[$options['langcode']] = variable_get('locale_custom_strings_' . $options['langcode'], []);
-//   }
-//   // Custom strings work for English too, even if locale module is disabled.
-//   if (isset($custom_strings[$options['langcode']][$options['context']][$string])) {
-//     $string = $custom_strings[$options['langcode']][$options['context']][$string];
-//   }
-//   // Translate with locale module if enabled.
-//   elseif ($options['langcode'] != 'en' && function_exists('locale')) {
-//     $string = locale($string, $options['context'], $options['langcode']);
-//   }
   $string = lobbywatch_translate($string, $options['context'], $options['langcode']);
   if (empty($args)) {
     return $string;
@@ -1129,98 +1114,6 @@ function lobbywatch_translate_reset() {
   drupal_static_reset('lobbywatch_translate');
 }
 
-// /**
-//  * Returns plural form index for a specific number.
-//  *
-//  * The index is computed from the formula of this language.
-//  *
-//  * @param $count
-//  *   Number to return plural for.
-//  * @param $langcode
-//  *   Optional language code to translate to a language other than
-//  *   what is used to display the page.
-//  *
-//  * @return
-//  *   The numeric index of the plural variant to use for this $langcode and
-//  *   $count combination or -1 if the language was not found or does not have a
-//  *   plural formula.
-//  */
-// function locale_get_plural($count, $langcode = NULL) {
-//   global $language;
-
-//   // Used to locally cache the plural formulas for all languages.
-//   $plural_formulas = &drupal_static(__FUNCTION__, []);
-
-//   // Used to store precomputed plural indexes corresponding to numbers
-//   // individually for each language.
-//   $plural_indexes = &drupal_static(__FUNCTION__ . ':plurals', []);
-
-//   $langcode = $langcode ? $langcode : $language->language;
-
-//   if (!isset($plural_indexes[$langcode][$count])) {
-//     // Retrieve and statically cache the plural formulas for all languages.
-//     if (empty($plural_formulas)) {
-//       foreach (language_list() as $installed_language) {
-//         $plural_formulas[$installed_language->language] = $installed_language->formula;
-//       }
-//     }
-//     // If there is a plural formula for the language, evaluate it for the given
-//     // $count and statically cache the result for the combination of language
-//     // and count, since the result will always be identical.
-//     if (!empty($plural_formulas[$langcode])) {
-//       // $n is used inside the expression in the eval().
-//       $n = $count;
-//       $plural_indexes[$langcode][$count] = @eval('return intval(' . $plural_formulas[$langcode] . ');');
-//     }
-//     // In case there is no plural formula for English (no imported translation
-//     // for English), use a default formula.
-//     elseif ($langcode == 'en') {
-//       $plural_indexes[$langcode][$count] = (int) ($count != 1);
-//     }
-//     // Otherwise, return -1 (unknown).
-//     else {
-//       $plural_indexes[$langcode][$count] = -1;
-//     }
-//   }
-//   return $plural_indexes[$langcode][$count];
-// }
-
-
-// /**
-//  * Returns a language name
-//  */
-// function locale_language_name($lang) {
-//   $list = &drupal_static(__FUNCTION__);
-//   if (!isset($list)) {
-//     $list = locale_language_list();
-//   }
-//   return ($lang && isset($list[$lang])) ? $list[$lang] : t('All');
-// }
-
-// /**
-//  * Returns array of language names
-//  *
-//  * @param $field
-//  *   'name' => names in current language, localized
-//  *   'native' => native names
-//  * @param $all
-//  *   Boolean to return all languages or only enabled ones
-//  */
-// function locale_language_list($field = 'name', $all = FALSE) {
-//   if ($all) {
-//     $languages = language_list();
-//   }
-//   else {
-//     $languages = language_list('enabled');
-//     $languages = $languages[1];
-//   }
-//   $list = [];
-//   foreach ($languages as $language) {
-//     $list[$language->language] = ($field == 'name') ? t($language->name) : $language->$field;
-//   }
-//   return $list;
-// }
-
 function get_lang_suffix($lang = null) {
   if ($lang === null) {
     $lang = get_lang();
@@ -1316,28 +1209,17 @@ function getSettingValue($key, $json = false, $defaultValue = null) {
  */
 function getSettingCategoryValues($categoryName, $defaultValue = null) {
   $settings = &php_static_cache(__FUNCTION__);
-  //   if (!isset($settings)) {
-  //     // If this function is being called for the first time after a reset,
-  //     // query the database and execute any other code needed to retrieve
-  //     // information about the supported languages.
-  //   }
   if (!isset($settings[$categoryName])) {
-//     $eng_con = getDBConnection();
     $values = [];
-    try {
-      $con = get_PDO_lobbywatch_DB_connection();
-      // TODO close connection
-      $sql = "SELECT id, key_name, value
-    FROM v_settings settings
-    WHERE settings.category_name=:categoryName";
+    $con = get_PDO_lobbywatch_DB_connection();
+    // TODO close connection
+    $sql = "SELECT id, key_name, value
+  FROM v_settings settings
+  WHERE settings.category_name=:categoryName";
 
-      $sth = $con->prepare($sql);
-      $sth->execute(array(':categoryName' => $categoryName));
-      $values = $sth->fetchAll();
-    } finally {
-      // Connection will automatically be closed at the end of the request.
-      //       $eng_con->Disconnect();
-    }
+    $sth = $con->prepare($sql);
+    $sth->execute(array(':categoryName' => $categoryName));
+    $values = $sth->fetchAll();
 
     if (count($values) == 0) {
       // Nothing found, return defaultValue
@@ -1376,21 +1258,6 @@ function cut($str, $maxLength = 20, $show_dots = true) {
     return $s;
   }
 }
-
-// http://stackoverflow.com/questions/14773072/php-str-pad-unicode-issue
-// function mb_str_pad($str, $pad_len, $pad_str = ' ', $dir = STR_PAD_RIGHT, $encoding = NULL) {
-//   $encoding = $encoding === NULL ? mb_internal_encoding() : $encoding;
-//   $padBefore = $dir === STR_PAD_BOTH || $dir === STR_PAD_LEFT;
-//   $padAfter = $dir === STR_PAD_BOTH || $dir === STR_PAD_RIGHT;
-//   $pad_len -= mb_strlen($str, $encoding);
-//   $targetLen = $padBefore && $padAfter ? $pad_len / 2 : $pad_len;
-//   $strToRepeatLen = mb_strlen($pad_str, $encoding);
-//   $repeatTimes = ceil($targetLen / $strToRepeatLen);
-//   $repeatedString = str_repeat($pad_str, max(0, $repeatTimes)); // safe if used with valid unicode sequences (any charset)
-//   $before = $padBefore ? mb_substr($repeatedString, 0, floor($targetLen), $encoding) : '';
-//   $after = $padAfter ? mb_substr($repeatedString, 0, ceil($targetLen), $encoding) : '';
-//   return $before . $str . $after;
-// }
 
 //  make php83 compatible
 if(!function_exists("mb_str_pad")) {
@@ -1547,10 +1414,6 @@ function utils_set_db_session_parameters_exec($con) {
  * @see DatabaseConnection::defaultOptions()
  */
 function lobbywatch_forms_db_query($query, array $args = [], array $options = []) {
-
-//   if (empty($options['target'])) {
-//     $options['target'] = 'default';
-//   }
 
   $con_factory = MyPDOConnectionFactory::getInstance();
   $con_options =   function_exists('GetConnectionOptions') ? GetConnectionOptions() : custom_GetConnectionOptions();
@@ -2109,8 +1972,7 @@ function initSoapClient(&$data, $login, $verbose = 0, $ssl = true) {
       'disable_compression' => true,
       'SNI_enabled'         => true,
       'ciphers'             => 'ALL!EXPORT!EXPORT40!EXPORT56!aNULL!LOW!RC4',
-//       'ciphers'             => 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:ECDHE-RSA-RC4-SHA:ECDHE-ECDSA-RC4-SHA:AES128:AES256:RC4-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK',
-      );
+    );
   } else {
     $ssl_config = array(
         'verify_peer' => false,
@@ -2140,14 +2002,10 @@ function initSoapClient(&$data, $login, $verbose = 0, $ssl = true) {
 
   $wsdl = $login['wsdl'];
 
-//    print_r($soapParam);
-//   print($wsdl);
-
   $data['sql'] .= " | wsdl=$wsdl";
 
   /* Initialize webservice with your WSDL */
   $client = new SoapClient($wsdl, $soapParam);
-//   var_dump($client->__getFunctions());
   return $client;
 }
 
@@ -2325,7 +2183,6 @@ function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose, $
         'uidOrganisationId' => $uid,
       ),
     );
-//     $response = $client->__soapCall("GetByUID", array($params));
     for ($i = 0; !$response; $i++) {
       try {
         $response = $client->GetByUID($params);
@@ -2353,7 +2210,6 @@ function ws_get_organization_from_uid_bfs($uid_raw, $client, &$data, $verbose, $
       $data['sql'] = "uid=$uid";
     }
   } catch(Exception $e) {
-    // $data['message'] .= _utils_get_exception($e);
     $data['message'] .= $e->GetMessage();
     $data['success'] = false;
     $data['sql'] = "uid=$uid";
@@ -2393,7 +2249,6 @@ function ws_search_uid_bfs_raw($name, $plz, $ort, $rechtsform, $n, $client, &$da
     }
     for ($i = 0; !$response; $i++) {
       try {
-        // $response = $client->__soapCall("GetByUID", array($params));
         $response = $client->Search($params);
       } catch (SoapFault $e) {
         if ($e->faultstring == 'Request_limit_exceeded') {
@@ -2420,7 +2275,6 @@ function ws_search_uid_bfs_raw($name, $plz, $ort, $rechtsform, $n, $client, &$da
       $data['sql'] = "search=$name";
     }
   } catch(Exception $e) {
-    // $data['message'] .= _utils_get_exception($e);
     $data['message'] .= $e->GetMessage();
     $data['success'] = false;
     $data['sql'] = "search=$name";
@@ -2452,7 +2306,6 @@ function call_ws_search_uid_bfs(string $marker, string $name, ?string $plz, ?str
       $uid_rechtsform = _lobbywatch_ws_get_rechtsform($oid->legalForm ?? null);
       $uid_rating = $uid_item->rating;
       $uid_historic = $uid_item->isHistoryMatch;
-      // $uid_candiates[] = sprintf("    %s %s: %3d %s - %s - %s - %s %s", $marker, $uid, $uid_rating, $uid_historic ? 'H' :  ' ', $uid_name, $uid_rechtsform, $uid_plz, $uid_ort);
       $uid_candiates[] = sprintf("%s |%3d | %s | %s| %s| %s %s| %s", $marker, $uid_rating, $uid_historic ? 'H' :  ' ', str_cut_pad($uid_name, 70),str_cut_pad($uid_rechtsform, 12), str_cut_pad($uid_plz, 4), str_cut_pad($uid_ort, 12), $uid);
     }
   }
@@ -2492,8 +2345,6 @@ function ws_get_uid_from_name_search($name, $plz, $ort, $rechtsform, $client, &$
     $data['message'] .= _utils_get_exception($e);
     $data['success'] = false;
     return null;
-  } finally {
-    // ws_verbose_logging($client, $response, $data, $verbose);
   }
 }
 
@@ -2523,7 +2374,6 @@ function _lobbywatch_fetch_ws_uid_data_from_old_hr_id($old_hr_id_raw, $verbose =
     $response = $client->Search($params);
     fillDataFromUidBfsResult($response->SearchResult, $data);
   } catch(Exception $e) {
-    // $data['message'] .= _utils_get_exception($e);
     $data['message'] .= $e->GetMessage();
     $data['success'] = false;
   } finally {
@@ -2549,7 +2399,6 @@ function ws_verbose_logging($client, $response, &$data, $verbose) {
 
 function fillDataFromUidBfsResult50($object, &$data) {
     if (!empty((array) $object)) {
-//       print_r($object);
       if (is_array($object->organisationType ?? null)) {
         $ot = $object->organisationType[0];
         $data['count'] = count($object->organisationType);
@@ -2666,7 +2515,6 @@ function fillDataFromUidBfsResult50($object, &$data) {
  */
 function fillDataFromUidBfsResult30($object, &$data) {
     if (!empty((array) $object)) {
-//       print_r($object);
       if (is_array($object->organisationType)) {
         $ot = $object->organisationType[0];
         $data['count'] = count($object->organisationType);
@@ -2744,7 +2592,6 @@ function fillDataFromUidBfsResult30($object, &$data) {
  */
 function fillDataFromZefixSoapResult($object, &$data) {
     if (!empty((array) $object)) {
-//       print_r($object);
       if (is_array($object->companyInfo)) {
         $ot = $object->companyInfo[0];
         $data['count'] = count($object->companyInfo);
@@ -2933,7 +2780,6 @@ function formatUID($uid_raw) {
   } else if (preg_match('/^CHE-\d{3}[.]\d{3}[.]\d{3}$/',$uid_raw, $matches)) {
     $uid = $matches[0];
   } else {
-    //throw new Exception("Not an UID: $uid_raw");
     $uid = null;
   }
   return $uid;
@@ -2952,7 +2798,6 @@ function getUIDnumber($uid_raw) {
   } else if (preg_match('/^CHE(\d{9})$/', $formatted_uid, $matches)) {
     $uid = $matches[1];
   } else {
-    //throw new Exception("Not an UID: $uid_raw");
     $uid = null;
   }
 
@@ -3602,8 +3447,6 @@ WHERE
         'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
       );
         $result = lobbywatch_forms_db_query($sql, array(':id' => $id), $options)->fetchAll();
-//       df($sql, 'sql');
-//       $result = $sth->fetchAll();
 
       if (!$result) {
         throw new Exception("ID not found '$id'");
@@ -3624,21 +3467,6 @@ function _lobbywatch_interessenbindung_verguetung_SQL($jahr) {
   END";
 }
 
-// SELECT seq1.rowid, seq1.id, seq1.log_id, seq1.parlament_interessenbindungen_normalized, seq2.rowid, seq2.id, seq2.log_id, seq2.parlament_interessenbindungen_normalized FROM
-// (SELECT @rowid:=@rowid+1 as rowid, parlamentarier_log.*, REPLACE(REPLACE(REPLACE(REPLACE(parlament_interessenbindungen, '"', '\''), '\r\n', '\n'), '\r', '\n'), '</table>\n', '</table>') parlament_interessenbindungen_normalized
-// FROM `parlamentarier_log`, (SELECT @rowid:=0) as init
-// WHERE id=:id
-// ORDER BY log_id DESC) seq1
-// INNER JOIN
-// (SELECT @rowid2:=@rowid2+1 as rowid, parlamentarier_log.*, REPLACE(REPLACE(REPLACE(REPLACE(parlament_interessenbindungen, '"', '\''), '\r\n', '\n'), '\r', '\n'), '</table>\n', '</table>') parlament_interessenbindungen_normalized
-// FROM `parlamentarier_log`, (SELECT @rowid2:=0) as init
-// WHERE id=:id
-// ORDER BY log_id DESC) seq2
-// ON seq1.rowid = seq2.rowid + 1
-// WHERE seq1.parlament_interessenbindungen_normalized != seq2.parlament_interessenbindungen_normalized
-// -- LIMIT 100
-// ;
-
 function get_parlamentarier_log_last_changed_parlament_interessenbindungen($con, $id) {
   $result = [];
   $sql = "SELECT parlamentarier.id parlamentarier_id, parlamentarier_log.*, REPLACE(REPLACE(REPLACE(parlamentarier_log.parlament_interessenbindungen, '\"', '\\''), '\\n', ''), '\\r', '') parlament_interessenbindungen_normalized
@@ -3647,7 +3475,7 @@ WHERE parlamentarier.id=:id
 ORDER BY log_id DESC
 LIMIT 1;
 ";
-//         df($sql);
+
   $result = [];
   $options = array(
     'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
@@ -3714,10 +3542,6 @@ function decodeJson($json, $assoc = false) {
 
 function get_parlamentarier_transparenz($con, $id) {
       $result = [];
-//       $sql = "SELECT parlamentarier.parlamentarier_id as id, parlamentarier.*
-//       FROM v_parlamentarier_transparenz_calculated parlamentarier
-//       WHERE parlamentarier.parlamentarier_id=:id;";
-
       $sql = "SELECT interessenbindung.parlamentarier_id as id,
 COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()), 1, NULL)) anzahl_interessenbindungen,
 COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.hauptberuflich, 1, NULL)) anzahl_hauptberufliche_interessenbindungen,
@@ -3743,15 +3567,6 @@ LEFT JOIN v_parlamentarier_transparenz_last_stichdatum_all parlamentarier_transp
 WHERE
   parlamentarier.id=:id
 GROUP BY parlamentarier.id;";
-
-// COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()), 1, NULL)) interessenbindungen_count,
-// COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW()), 1, NULL)) interessenbindungen_count_old,
-// COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL, 1, NULL)) interessenbindungen_count_all,
-// COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL, 1, NULL)) verguetung_count,
-// SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()), 1, 0)) interessenbindungen_sum,
-// SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW()), 1, 0)) interessenbindungen_sum_old,
-// SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL, 1, 0)) interessenbindungen_sum_all,
-// SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL, 1, 0)) verguetung_sum
 
   $result = [];
   $options = array(
@@ -3922,9 +3737,6 @@ function clean_for_display(string $str): string {
     "\u{2029}" => '\u2029',
     "\r" => '\r',
     "\n" => '\n',
-    // "'" => "\\'",
-    // '"' => '\\"',
-    // ' ' => '" "',
     ]
     )) !== '' ? $cleaned : '';
 }
@@ -3946,9 +3758,7 @@ function getRechercheJahrFromSettings(): int {
 }
 
 function get_web_data($url) {
-//   print("Call $url\n");
   $data = get_web_data_fgc_retry($url);
-//   print_r($url . "→ " . $data);
   return $data;
 }
 
@@ -3972,14 +3782,12 @@ function get_object_from_json_url($url) {
   exit(3);
 }
 
-// $response = get_web_data('http://images.google.com/images?hl=en&q=' . urlencode ($query) . '&imgsz=' . $size . '&imgtype=' . $type . '&start=' . (($page - 1) * 21));
 // https://stackoverflow.com/questions/11920026/replace-file-get-content-with-curl
 // https://stackoverflow.com/questions/8540800/how-to-use-curl-instead-of-file-get-contents
 function get_web_data_curl($url) {
   $ch = curl_init();
   $timeout = 10;
   curl_setopt($ch, CURLOPT_URL, $url);
-//   curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Content-Type: application/json'));
   curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json',
                                              'Content-Type: application/json',));
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -4004,9 +3812,7 @@ function get_web_data_fgc_retry($url) {
       return false;
     }
     $code = get_http_code($http_response_header);
-//     print("Code: $code\n");
     if ($code == 200) {
-//       print("$url: OK\n");
       return $data;
     } else if ($code == 404) {
       if ($verbose > 1) print("$url not found: $code, retry $i\n");
@@ -4016,9 +3822,7 @@ function get_web_data_fgc_retry($url) {
       sleep(1);
     } else {
       if ($verbose > 1) print("WARNING: $url failed with $code, retry $i\n");
-      // print_r($http_response_header);
       sleep(1);
-      // return $data;
     }
   }
   print("\nERROR: $url failed $num_retry times\n");
