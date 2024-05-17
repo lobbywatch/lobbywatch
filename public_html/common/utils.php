@@ -1392,11 +1392,14 @@ function cut($str, $maxLength = 20, $show_dots = true) {
 //   return $before . $str . $after;
 // }
 
-// http://stackoverflow.com/questions/17851138/strpad-with-non-english-characters
-function mb_str_pad ($input, $pad_length, $pad_string = ' ', $pad_style = STR_PAD_RIGHT, $encoding="UTF-8") {
-  return str_pad($input,
-      strlen($input) - mb_strlen($input, $encoding) + $pad_length,
-      $pad_string, $pad_style);
+//  make php83 compatible
+if(!function_exists("mb_str_pad")) {
+  // http://stackoverflow.com/questions/17851138/strpad-with-non-english-characters
+  function mb_str_pad ($input, $pad_length, $pad_string = ' ', $pad_style = STR_PAD_RIGHT, $encoding="UTF-8") {
+    return str_pad($input,
+        strlen($input) - mb_strlen($input, $encoding) + $pad_length,
+        $pad_string, $pad_style);
+  }
 }
 
 // function to replace file_get_contents()
