@@ -2266,7 +2266,7 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
   if (!empty($expressions_filtered)) {
     $expression_cols_cache_key = "$source.$table_key.$table_schema.$query_table_with_alias#" . implode(',', $expressions_filtered);
     if (empty($cached_cols[$expression_cols_cache_key])) {
-      list($sql, $parent_id_col, $sql_select, $sql_from, $sql_join, $sql_where, $sql_order) = buildRowsSelect($table, $query_table_alias, $query_table_with_alias, $table_meta, array_map(function ($str, $alias) { return $str . ' ' . $alias;}, array_keys($expressions_filtered), $expressions_filtered), $filter, 0);
+      list($sql, $parent_id_col, $sql_select, $sql_from, $sql_join, $sql_where, $sql_order) = buildRowsSelect($table, $query_table_alias, $query_table_with_alias, $table_meta, array_map(function ($str, $alias) { return $str . ' ' . $alias;}, array_keys($expressions_filtered), $expressions_filtered), $filter, $exporter->getFormat(), 0);
 
       $sql = "$sql_select$sql_from$sql_join$sql_where LIMIT 0;";
       if ($verbose > 5) print("$level_indent$sql\n");
