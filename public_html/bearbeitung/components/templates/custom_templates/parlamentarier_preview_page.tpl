@@ -167,6 +167,12 @@
               {$Parlamentarier.State}
             </div>
 
+            {if $Parlamentarier.Gender == null}
+              <div class="well span8">
+              <img src="img/exclamation.png"> Kein Geschlecht vorhanden. Non binär?
+              </div>
+            {/if}
+
             <div id="email-content-parlam" {*style="padding-left: 20px;"*} class="email-content span8">{$Parlamentarier.EmailText}
             </div>
 
@@ -257,6 +263,12 @@
             <div {*style="padding-left: 20px;"*} class="span8">
               {$Zutrittsberechtigter0.State}
             </div>
+
+            {if $Zutrittsberechtigter0.Gender == null}
+              <div class="well span8">
+                <img src="img/exclamation.png"> Kein Geschlecht vorhanden. Non binär?
+              </div>
+            {/if}
 
             <div id="email-content-zb0" {*style="padding-left: 20px;"*} class="email-content span8">{$Zutrittsberechtigter0.EmailText}
             </div>
@@ -349,6 +361,12 @@
             <div {*style="padding-left: 20px;"*} class="span8">
               {$Zutrittsberechtigter1.State}
             </div>
+
+            {if $Zutrittsberechtigter1.Gender == null}
+              <div class="well span8">
+              <img src="img/exclamation.png"> Kein Geschlecht vorhanden. Non binär?
+              </div>
+            {/if}
 
             <div id="email-content-zb1" {*style="padding-left: 20px;"*} class="email-content span8">{$Zutrittsberechtigter1.EmailText}
             </div>

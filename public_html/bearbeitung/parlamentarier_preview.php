@@ -175,6 +175,7 @@ try {
           'Title' => 'Vorschau: ' . $rowData["parlamentarier_name"],
           'parlamentarier_name' => $rowData["parlamentarier_name"],
           'State' =>  $state,
+          'Gender' => $rowData['geschlecht'],
           'Preview' => '<p><b>Beruf</b>: ' . $rowData['beruf'] . '</p>' .
             '<h4>Kommissionen</h4><ul>' . $rowData['kommissionen'] . '</ul>' .
             '<h4>Interessenbindungen</h4><ul>' . $rowData['interessenbindungen'] . '</ul>' .

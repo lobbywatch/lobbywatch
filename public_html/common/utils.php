@@ -3115,6 +3115,7 @@ function fillZutrittsberechtigterEmail($i, $rowData, $zbList, $emailEndZb, $mail
         'PersonId'  => $zbList[$i]['person_id'],
         'Title' => 'Vorschau: ' . $zbList[$i]["zutrittsberechtigung_name"],
         'State' =>  $state,
+        'Gender' => $zbList[$i]['geschlecht'],
         'Preview' =>  '<p>Zutrittsberechtigung von '. $rowData["parlamentarier_name2"] . '<br><b>Funktion</b>: ' . $zbList[$i]['funktion'] . '<br><b>Beruf</b>: ' . $zbList[$i]['beruf'] . '</p>' . '<h4>Mandate</h4><ul>' . $zbList[$i]['mandate'] . '</ul>',
         'EmailTitle' => ($isZbAuthorizationReminder[$i] ? 'Reminder-' : '') . ($isReAuthorization ? 'Re-' : '') . 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoZb[$i]. '" target="_blank">' . $zbList[$i]["zutrittsberechtigung_name"] . '</a>',
         'EmailText' => '<div>' . $zbList[$i]['anrede'] .  $emailIntroZb[$i] . (isset($zbList[$i]['funktion']) ? '<br><b>' . lt('Deklarierte Funktion:') . '</b> ' . $zbList[$i]['funktion'] : '') . '<br><b>' . lt('Beruf:') . '</b> ' . (isset($zbList[$i]['beruf']) ? translate_record_field($zbList[$i], 'beruf', false, true) : '___________'). '<br><br><b>' . lt('Ihre Tätigkeiten:') . '</b><br>' . ($zbList[$i]['mandate'] ? '<ul>' . $zbList[$i]['mandate'] . '</ul>' : lt('keine') . '<br>') . /*$zbList[$i]['organisationsbeziehungen'] .*/
