@@ -3266,7 +3266,7 @@ GROUP BY zutrittsberechtigung.id;";
     CASE zutrittsberechtigung.geschlecht
       WHEN 'M' THEN CONCAT(" . lts('Sehr geehrter Herr') . ",' ', zutrittsberechtigung.nachname)
       WHEN 'F' THEN CONCAT(" . lts('Sehr geehrte Frau') . ",' ', zutrittsberechtigung.nachname)
-      ELSE CONCAT(" . lts('Sehr geehrte(r) Herr/Frau') . ",' ', zutrittsberechtigung.nachname)
+      ELSE CONCAT(" . lts('Guten Tag') . ")
   END anrede
   FROM v_zutrittsberechtigung_simple_compat zutrittsberechtigung
   LEFT JOIN v_mandat_simple mandat
