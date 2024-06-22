@@ -87,3 +87,4 @@ parlamentarische-freundschaftsgruppen.json
 *.new
 node_modules/*
 public_html/bearbeitung/components/js/main-bundle-custom.raw.js
+20240504_new_pg.sh

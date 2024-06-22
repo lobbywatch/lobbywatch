@@ -300,12 +300,6 @@ function lobbywatch_block_view($delta = '') {
       // Form in a block: http://zerotodrupal.com/content/creating-form-block-drupal-7
       $block['content'] = drupal_get_form('lobbywatch_autocomplete_search_form');
       break;
-    case 'parlamentarier_erfasst':
-      $block['subject'] = NULL;
-      $block['content'] = array(
-          '#markup' => _lobbywatch_parlamentarier_erfasst(),
-      );
-      break;
   }
   return $block;
 }
@@ -539,29 +533,6 @@ function lobbywatch_boot() {
 
 function _lobbywatch_page_build_secs() {
   return round(timer_read('page')/1000, 2);
-}
-
-function lobbywatch_init() {
-//     require_once DRUPAL_ROOT . '/sites/lobbywatch.ch/app/common/utils.php';
-//     require_once DRUPAL_ROOT . '/sites/lobbywatch.ch/app/settings/settings.php';
-
-  // Copied from d3.module d3_draw
-
-  // Ensure we have d3 installed, don't just show a blank screen.
-  $d3 = libraries_load('d3');
-  if (empty($d3['installed'])) {
-    drupal_set_message(t('The d3 library is not correctly installed'), 'error');
-    return;
-  }
-
-  // If user selected cdn, we need to load this manually.
-  // @see http://drupal.org/node/864376
-  if (!empty($d3['cdn'])) {
-    drupal_add_js($d3['library path'] . '/' . $d3['files']['js']['data'], array('type' => 'external', 'group' => JS_LIBRARY));
-  }
-
-  drupal_add_js(drupal_get_path('module', 'lobbywatch') . '/js/parlamentarier_erfasst.js');
-//   drupal_set_message(t('parlamentarier_erfasst.js added'));
 }
 
 function lobbywatch_exit() {
@@ -968,18 +939,6 @@ function _lobbywatch_fetch_parlamentarier_title($table, $id) {
     db_set_active();
   }
   return $title;
-}
-
-/**
- * Quick and dirty IP visitors listing.
- */
-function _lobbywatch_parlamentarier_erfasst() {
-  $markup = '';
-  $markup = '<div id="d3-parlamentarier-erfasst-graphic" class="parlamentarier-erfasst"/>
-      <script>jQuery(document).ready(function() {
-        parlamentarierErfasst("#d3-parlamentarier-erfasst-graphic");
-      });</script>';
-  return $markup;
 }
 
 function lobbywatch_preprocess_html(&$vars) {
