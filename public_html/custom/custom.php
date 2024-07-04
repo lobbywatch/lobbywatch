@@ -1272,6 +1272,7 @@ function isFullWorkflowUser() {
   // 69, // Samuel Meier
   71, // Strässle Fabian
   72, // Priscilla Imboden
+  73, // Balz Oertli
   ), false);
 }
 
