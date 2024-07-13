@@ -188,6 +188,7 @@ def get_parlamentarier_id_by_name(database, names, prename_first: bool):
 
         print(
             "\n\nDATA INTEGRITY ERROR: Member of parliament '{}' referenced in PDF is not in database.\nNames: {}, Prename first: {}\nSQL:\n{}".format(names, names, prename_first, current_query))
+        sys.exit(1)
     return None, None
 
 

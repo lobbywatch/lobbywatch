@@ -3594,7 +3594,7 @@ function create_parent_dir_if_not_exists($filename) {
  */
 function normalizeDBHtmlParlamentInteressenbindungen($str) {
   if (empty($str)) {
-    return null;
+    return '';
   }
   $normalized = str_replace(array("\r\n","\n","\r"), "\n", $str);
   $normalized = preg_replace('%<table border="0"><thead><tr><th>Name</th><th>Rechtsform</th><th><abbr title="Gremium">Gr.</abbr></th><th><abbr title="Funktion">F.</abbr></th></tr></thead>%',
