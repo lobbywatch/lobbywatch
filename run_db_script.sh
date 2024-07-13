@@ -36,8 +36,20 @@ _alarm() {
 #   \kill -9 $pid > /dev/null 2> /dev/null
 }
 
-beep() {
+xbeep() {
+  :
+}
+
+alarm() {
   _alarm 400 200
+}
+
+bell() {
+  echo -e '\a'
+}
+
+beep() {
+  bell
 }
 
 # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
