@@ -701,7 +701,7 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
       /*i18n t*/ '<p><a id="show-bio" class="toggle-text" onclick="false"><span id="bio-text-show">' . lt('Angaben zur Person') . '</span><span id="bio-text-hide" style="display:none">' . lt('Verstecke Angaben zur Person') . '</span></a></p>'.
 
     '</div>' .
-//       (!$active ? /*i18n t*/ "<p><strong><em>Nicht mehr im Parlament. ${record['name']} war im Parlament bis " . check_plain($record['im_rat_bis_formatted']) . '.</em></strong></p>' : '') .
+//       (!$active ? /*i18n t*/ "<p><strong><em>Nicht mehr im Parlament. {$record['name']} war im Parlament bis " . check_plain($record['im_rat_bis_formatted']) . '.</em></strong></p>' : '') .
       '<script>
       function toggleBio(scroll) {
       // http://stackoverflow.com/questions/894860/set-a-default-parameter-value-for-a-javascript-function
@@ -1170,18 +1170,18 @@ function _lobbywatch_print_organisation_beziehung($record, $title, $field_name_b
   $adminBool = $admin ? "1" : "0";
 
   $markup = '';
-  if ($record["${field_name_base}_0"]) {
+  if ($record["{$field_name_base}_0"]) {
     $markup .= "<h3>$title</h3>"
     . '<ul>'
-    . $record["${field_name_base}_0"]
+    . $record["{$field_name_base}_0"]
     . '</ul>';
     if ($admin) {
       $markup .= "<div class='admin'>";
       for($i = 1; $i <= $transitiv_num; $i++) {
-        if ($record["${field_name_base}_$i"]) {
+        if ($record["{$field_name_base}_$i"]) {
           $markup .= '<h4>'. lt('Transitiv') . ' ' . $i . '</h4>'
               . '<ul>'
-              . $record["${field_name_base}_$i"]
+              . $record["{$field_name_base}_$i"]
               . '</ul>';
         } else {
           break;

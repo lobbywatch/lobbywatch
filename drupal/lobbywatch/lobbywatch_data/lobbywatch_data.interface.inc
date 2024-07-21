@@ -153,18 +153,18 @@ function _lobbywatch_data_clean_DB_value($value) {
 
 /** TODO Docu */
 function _lobbywatch_data_filter_field_SQL($table, $field) {
-  $paramSingle = "filter_${field}";
-  $paramList = "filter_${field}_list";
-  $paramLike = "filter_${field}_like";
+  $paramSingle = "filter_{$field}";
+  $paramList = "filter_{$field}_list";
+  $paramLike = "filter_{$field}_like";
   $matches = [];
   if (isset($_GET[$paramSingle]) && is_numeric($_GET[$paramSingle])) {
-    return " AND $table.${field} = " . intval($_GET[$paramSingle]);
+    return " AND $table.{$field} = " . intval($_GET[$paramSingle]);
   } else if (isset($_GET[$paramSingle])) {
-    return " AND $table.${field} = '" . _lobbywatch_data_clean_DB_value($_GET[$paramSingle]) . "'";
+    return " AND $table.{$field} = '" . _lobbywatch_data_clean_DB_value($_GET[$paramSingle]) . "'";
   } else if (isset($_GET[$paramList]) && preg_match_all('/([' . SUPPORTED_DB_CHARS . ']+)/', $_GET[$paramList], $matches)) {
-    return " AND $table.${field} IN ( " . implode(',', $matches[1]) . ')';
+    return " AND $table.{$field} IN ( " . implode(',', $matches[1]) . ')';
   } else if (isset($_GET[$paramLike])) {
-    return " AND $table.${field} LIKE '" . _lobbywatch_data_clean_DB_value($_GET[$paramLike]) . "'";
+    return " AND $table.{$field} LIKE '" . _lobbywatch_data_clean_DB_value($_GET[$paramLike]) . "'";
   } else {
     return '';
   }
@@ -245,18 +245,18 @@ function _lobbywatch_data_handle_lang_fields(&$items) {
         $base_field_name = $matches[1];
 //         df($base_field_name, '$base_field_name');
         if (
-          isset($fields["${base_field_name}_de"]) ||
-          (array_key_exists("${base_field_name}_de", $fields) && !array_key_exists($base_field_name, $fields))
+          isset($fields["{$base_field_name}_de"]) ||
+          (array_key_exists("{$base_field_name}_de", $fields) && !array_key_exists($base_field_name, $fields))
         ) {
-          $de_field_name = "${base_field_name}_de";
+          $de_field_name = "{$base_field_name}_de";
         } else {
           $de_field_name = $base_field_name;
         }
         $lang_value = translate_record_field($fields, $de_field_name);
 //          df($lang_value, '$lang_value');
-        unset($fields["${base_field_name}_fr"]);
-        unset($fields["${base_field_name}_de"]);
-        unset($fields["${base_field_name}_it"]);
+        unset($fields["{$base_field_name}_fr"]);
+        unset($fields["{$base_field_name}_de"]);
+        unset($fields["{$base_field_name}_it"]);
         $fields[$base_field_name] = $lang_value;
       }
     }
@@ -710,7 +710,7 @@ function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = t
       $last_modified_date_unix = max($last_modified_date_unix, max_attribute_in_array($aggregated['mandate'], 'updated_date_unix'));
 
       foreach ($aggregated['mandate'] as $key => $value) {
-        $verguetungen = _lobbywatch_data_table_flat_list('mandat_jahr', "mandat_jahr.mandat_id = ${value['id']}", false, 'ORDER BY jahr DESC');
+        $verguetungen = _lobbywatch_data_table_flat_list('mandat_jahr', "mandat_jahr.mandat_id = {$value['id']}", false, 'ORDER BY jahr DESC');
         $message .= ' | ' . $verguetungen['message'];
         $sql .= ' | ' . $verguetungen['sql'];
         _add_verguetungen($aggregated['mandate'][$key], $verguetungen, $value['von']);
@@ -831,7 +831,7 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
       $last_modified_date_unix = max($last_modified_date_unix, max_attribute_in_array($aggregated['interessenbindungen'], 'updated_date_unix'));
 
       foreach ($aggregated['interessenbindungen'] as $key => $value) {
-        $verguetungen = _lobbywatch_data_table_flat_list('interessenbindung_jahr', "interessenbindung_jahr.interessenbindung_id = ${value['id']}", false, 'ORDER BY jahr DESC');
+        $verguetungen = _lobbywatch_data_table_flat_list('interessenbindung_jahr', "interessenbindung_jahr.interessenbindung_id = {$value['id']}", false, 'ORDER BY jahr DESC');
         $message .= ' | ' . $verguetungen['message'];
         $sql .= ' | ' . $verguetungen['sql'];
         _add_verguetungen($aggregated['interessenbindungen'][$key], $verguetungen, $value['von'], $parlamentarier['data']['im_rat_seit']);
@@ -953,7 +953,7 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
       // $success = $success && $parlamentarier['success'];
 
       foreach ($aggregated['parlamentarier'] as $key => $value) {
-        $verguetungen = _lobbywatch_data_table_flat_list('interessenbindung_jahr', "interessenbindung_jahr.interessenbindung_id = ${value['id']}", false, 'ORDER BY jahr DESC');
+        $verguetungen = _lobbywatch_data_table_flat_list('interessenbindung_jahr', "interessenbindung_jahr.interessenbindung_id = {$value['id']}", false, 'ORDER BY jahr DESC');
         $message .= ' | ' . $verguetungen['message'];
         $sql .= ' | ' . $verguetungen['sql'];
         _add_verguetungen($aggregated['parlamentarier'][$key], $verguetungen, $value['von'], $parlamentarier['data']['im_rat_seit']);
@@ -1305,7 +1305,7 @@ order by count(*) desc, $table.partei asc "
     $success = $count > 0;
 
     foreach ($items['parteien'] as &$record) {
-      $parlamentarier =  _lobbywatch_data_table_flat_list('parlamentarier', "parlamentarier.partei_id = ${record['id']}", false);
+      $parlamentarier =  _lobbywatch_data_table_flat_list('parlamentarier', "parlamentarier.partei_id = {$record['id']}", false);
       $record['members'] = $parlamentarier['data'];
       $message .= ' | ' . $parlamentarier['message'];
       $sql .= ' | ' . $parlamentarier['sql'];
@@ -1650,7 +1650,7 @@ function _lobbywatch_data_ws_uid($table, $uid, $json = true) {
     } else if ($table == 'uid') {
       $items = _lobbywatch_fetch_ws_zefix_rest_data($uid, 0, false);
       if (!$items['success']) {
-        $message .= "zefix-rest unsuccessful (${items['message']}), calling uid@bfs | ";
+        $message .= "zefix-rest unsuccessful ({$items['message']}), calling uid@bfs | ";
         $items = _lobbywatch_fetch_ws_uid_bfs_data($uid, 0, false, false, 0);
       }
       $no_cors = true; // Disable CORS since it is a protected service

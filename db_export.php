@@ -1064,6 +1064,8 @@ class JsonExporter extends AggregatedExporter {
 // http://orientdb.com/docs/3.0.x/etl/Import-from-JSON.html
 class JsonOrientDBExporter extends AbstractExporter {
 
+  protected $db_name;
+
   function __construct() {
     $this->format = 'orientdb_etl_json';
     $this->fileSuffix = 'etl.json';
@@ -1329,6 +1331,8 @@ class SimpleXMLExtended extends SimpleXMLElement {
 }
 
 class XmlExporter extends AggregatedExporter {
+
+  protected $as_attributes;
 
   function __construct(bool $as_attributes = true) {
     $this->format = 'xml';

@@ -831,7 +831,7 @@ function _lobbywatch_refresh_materialized_views($base_table = null, $only_if_mod
     if ($base_table == null) {
       db_query('CALL `refreshMaterializedViews`()');
     } else {
-      db_query("REPLACE INTO `mv_$base_table` SELECT v.* FROM `v_${base_table}_raw` v;");
+      db_query("REPLACE INTO `mv_$base_table` SELECT v.* FROM `v_{$base_table}_raw` v;");
       db_query("REPLACE INTO `mv_search_table` SELECT v.* FROM `v_search_table_raw` v;"); // Update also search table
     }
     $end = time();
