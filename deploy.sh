@@ -37,9 +37,7 @@ drupal_dir="$SCRIPT_DIR/drupal"         # Lobbywatch Drupal modules
 db_dir="../data/"
 remote_db_dir="/home/lobbywat/sql_scripts"
 
-# ssh_user="lobbywat@s034.cyon.net"
-# ssh_user="lobbywat@cms.lobbywatch.ch"
-ssh_user="lobbywat@lw.chIP4"
+ssh_user="lobbywat@s034.cyon.net"
 ssh_port="22"
 db_base_name=lobbywat_lobbywatch
 db_user=lobbywat_script
