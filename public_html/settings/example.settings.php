@@ -78,7 +78,7 @@ if ($stage) {
   $rel_files_url = "/$public_files_dir_rel";
   $private_files_dir = "/home/lobbywatch/private_files/lobbywatch_db_files";
 
-  $db_connection = $db_connections[0];
+  $db_connection = $db_connections['lobbywatch'];
 } else {
   $env = "DEV";
 
@@ -89,7 +89,7 @@ if ($stage) {
   $rel_files_url = "/$public_files_dir_rel";
   $private_files_dir = "/home/lobbywatch/private_files/lobbywatch_db_files/test";
 
-  $db_connection = $db_connections[1];
+  $db_connection = $db_connections['lobbywatchtest'];
 }
 
     $mail_connection = [
