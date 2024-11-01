@@ -1,0 +1,8 @@
+# https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html#build-units-build
+[Build]
+SetWorkingDirectory=https://github.com/lobbywatch/lobbywatch/archive/refs/heads/containerize-scraper.tar.gz
+File=lobbywatch-containerize-scraper/Containerfile
+ImageTag=localhost/lobbywatch/scraper:production
+
+[Install]
+WantedBy=default.target

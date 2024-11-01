@@ -1,0 +1,36 @@
+---
+- name: setup lobbywatch vm
+  hosts: lobbywatch
+  tasks:
+    - name: create directories
+      ansible.builtin.file:
+        dest: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - /home/core/.config/containers/systemd/
+        - /home/core/.config/systemd/user
+    - name: copy container units
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "/home/core/.config/containers/systemd/{{ item }}"
+        mode: '0644'
+      loop:
+        - scraper.build
+        - scraper.container
+    - name: copy timer units
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "/home/core/.config/systemd/user/{{ item }}"
+        mode: '0644'
+      loop:
+        - scraper.timer
+    - name: enable systemd timer
+      ansible.builtin.systemd_service:
+        scope: user
+        daemon_reload: true
+        enabled: true
+        name: "{{ item }}"
+        state: started
+      loop:
+        - scraper.timer

@@ -31,7 +31,7 @@ enable_fail_onerror
 [ -z "${2-}"  ] && script=db_views.sql || script=$2
 [ -z "${3-}"  ] && mode=interactive || mode=$3
 
-username=script
+username=root
 
 checkLocalMySQLRunning
 

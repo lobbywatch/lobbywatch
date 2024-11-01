@@ -137,9 +137,9 @@ last_dbdump_struct_file="last_dbdump_struct.txt"
 last_dbdump_op_file="last_dbdump_file.txt"
 SRC_DB="lobbywat_lobbywatch"
 
-HOST=127.0.0.1
+HOST=mariadb
 PORT=3306
-MYSQL_CONTAINER=mysql57
+MYSQL_CONTAINER=mariadb
 
 charset=utf8mb4
 

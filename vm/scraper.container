@@ -1,0 +1,12 @@
+# https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html#container-units-container
+[Unit]
+Description=Lobbywatch nightly scraper service
+
+[Container]
+Image=scraper.build
+
+[Service]
+# Restart service when sleep finishes
+Restart=always
+# Extend Timeout to allow time to pull the image
+TimeoutStartSec=900

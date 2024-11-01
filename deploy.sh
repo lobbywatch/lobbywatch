@@ -37,9 +37,8 @@ drupal_dir="$SCRIPT_DIR/drupal"         # Lobbywatch Drupal modules
 db_dir="../data/"
 remote_db_dir="/home/lobbywat/sql_scripts"
 
-# ssh_user="lobbywat@s034.cyon.net"
+ssh_user="lobbywat@s034.cyon.net"
 # ssh_user="lobbywat@cms.lobbywatch.ch"
-ssh_user="lobbywat@lw.chIP4"
 ssh_port="22"
 db_base_name=lobbywat_lobbywatch
 db_user=lobbywat_script
@@ -74,7 +73,7 @@ downloaddbbaks=false
 DUMP_FILE=last_dbdump_data.txt
 dry_run="";
 
-local_db_user=script
+local_db_user=root
 
 NOW=$(date +"%d.%m.%Y %H:%M");
 NOW_SHORT=$(date +"%d.%m.%Y");
@@ -319,8 +318,8 @@ echo -e "Document root: $document_root\n"
 
 # read -s -p "Password: " passw
 # Ref http://blog.sanctum.geek.nz/testing-exit-values-bash/
-if ! ssh-add -l | grep id_rsa_r; then
-    ssh-add ~/.ssh/id_rsa_rk || ssh-add ~/.ssh/id_rsa_rpiw
+if ! ssh-add -l | grep id_rsa; then
+    ssh-add /opt/lobbywatch/.ssh/id_rsa || ssh-add ~/.ssh/id_rsa_rpiw
     checkLocalMySQLRunning
 fi
 

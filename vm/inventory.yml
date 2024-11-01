@@ -1,0 +1,5 @@
+lwinfra:
+  hosts:
+    lobbywatch:
+      ansible_host: 195.15.201.179
+      ansible_user: core

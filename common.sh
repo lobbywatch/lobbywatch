@@ -47,7 +47,7 @@ HOST=127.0.0.1
 MYSQL_CONTAINER=mysql57
 # MYSQLADMIN=mysqladmin
 MYSQLADMIN="docker exec -it $MYSQL_CONTAINER mysqladmin"
-DB_USER=script
+DB_USER=root
 
 DATE=`date +%Y%m%d_%H%M%S`
 DATE_SHORT=`date +%Y%m%d`
