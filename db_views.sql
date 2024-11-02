@@ -468,7 +468,7 @@ FROM `in_fraktion`;
 
 CREATE OR REPLACE VIEW `v_rat` AS
 SELECT rat.name_de as anzeige_name, rat.name_de as anzeige_name_de, rat.name_de as anzeige_name_fr,
-CONCAT_WS(' / ', rat.name_de, rat.name_de) as anzeige_name_mixed,
+CONCAT_WS(' / ', rat.name_de, rat.name_fr) as anzeige_name_mixed,
 CONCAT_WS(' / ', rat.abkuerzung, rat.abkuerzung_fr) as abkuerzung_mixed,
 rat.*,
 IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
