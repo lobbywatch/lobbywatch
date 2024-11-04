@@ -1257,7 +1257,7 @@ function globalOnBeforeInsert($page, &$rowData, &$cancel, &$message, $tableName)
  * @return boolean true for full workflow users
  */
 function isFullWorkflowUser() {
-  return in_array(Application::Instance()->GetCurrentUserId(), array(
+  return in_array(Application::Instance()->GetCurrentUserId(), [
   1, // admin
   2, // roland
   3, // otto
@@ -1273,7 +1273,8 @@ function isFullWorkflowUser() {
   71, // Strässle Fabian
   72, // Priscilla Imboden
   73, // Balz Oertli
-  ), false);
+  76, // Etienne Kocher
+  ], false);
 }
 
 function defaultOnAfterLogin($userName, $connection) {
