@@ -17,7 +17,14 @@ class DatasetUtils
             $dataSet->SetFieldValueByName($fieldName, $value);
     }
 
-    public static function FormatDatasetFieldsTemplate(Dataset $dataset, $template, IDelegate $processValue = null)
+    /**
+     * @param Dataset $dataset
+     * @param string $template
+     * @param null|IDelegate $processValue
+     *
+     * @return string
+     */
+    public static function FormatDatasetFieldsTemplate($dataset, $template, $processValue = null)
     {
         $result = $template;
         foreach($dataset->GetFields() as $field)

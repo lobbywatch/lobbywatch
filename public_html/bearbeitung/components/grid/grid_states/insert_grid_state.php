@@ -29,7 +29,7 @@ class InsertGridState extends GridState {
         $columnDefaultValues = array();
         foreach ($this->grid->GetInsertColumns() as $column) {
             $column->ProcessMessages();
-            $columnDefaultValues[$column->GetFieldName()] = $column->GetEditControl()->GetDisplayValue();
+            $columnDefaultValues[$column->GetFieldName()] = $column->GetEditControl()->GetValue();
         }
 
         $this->processParentFieldValue();

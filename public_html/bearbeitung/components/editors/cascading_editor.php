@@ -247,7 +247,16 @@ abstract class CascadingEditor extends CustomEditor {
         return $this->GetName() . '_editor_level_' . $value;
     }
 
-    public function createHttpHandler(Dataset $dataset, $idFieldName, $captionFieldName, ForeignKeyInfo $foreignKey = null, ArrayWrapper $arrayWrapper) {
+    /**
+     * @param Dataset $dataset
+     * @param string $idFieldName
+     * @param string $captionFieldName
+     * @param null|ForeignKeyInfo $foreignKey
+     * @param ArrayWrapper $arrayWrapper
+     *
+     * @return MultiLevelSelectionHandler
+     */
+    public function createHttpHandler($dataset, $idFieldName, $captionFieldName, $foreignKey, $arrayWrapper) {
         return new MultiLevelSelectionHandler(
             $this->getHttpHandlerName(),
             $dataset, $idFieldName, $captionFieldName,

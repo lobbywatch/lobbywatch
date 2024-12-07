@@ -28,7 +28,7 @@ class ColumnFilter extends AbstractFilter
     /**
      * @param FixedKeysArray|null $possibleColumns
      */
-    public function __construct(FixedKeysArray $possibleColumns = null)
+    public function __construct($possibleColumns = null)
     {
         $this->possibleColumns = $possibleColumns;
         $this->filterComponent = new FilterGroup(

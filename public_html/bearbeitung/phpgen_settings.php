@@ -144,7 +144,7 @@ function Global_CustomHTMLHeaderHandler($page, &$customHtmlHeaderText)
     globalOnCustomHTMLHeader($page, $customHtmlHeaderText);
 }
 
-function Global_GetCustomTemplateHandler($type, $part, $mode, &$result, &$params, CommonPage $page = null)
+function Global_GetCustomTemplateHandler($type, $part, $mode, &$result, &$params, $page = null)
 {
     globalOnGetCustomTemplate($type, $part, $mode, $result, $params, $page);
 }

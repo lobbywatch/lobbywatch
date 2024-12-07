@@ -30,7 +30,7 @@ class FilterColumn
      * @param string  $displayFieldName
      * @param string  $caption
      */
-    public function __construct(Dataset $dataset = null, $fieldName, $displayFieldName, $caption)
+    public function __construct($dataset, $fieldName, $displayFieldName, $caption)
     {
         $this->dataset = $dataset;
         $this->fieldName = $fieldName;

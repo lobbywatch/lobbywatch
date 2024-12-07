@@ -29,7 +29,7 @@ class ConditionalFilterGroup extends FilterGroup
     public function __construct(
         $operator = FilterGroupOperator::OPERATOR_AND,
         array $children = array(),
-        FilterComponentInterface $filterComponent = null,
+        $filterComponent = null,
         $isEnabled = true,
         $isDateTreePart = false)
     {

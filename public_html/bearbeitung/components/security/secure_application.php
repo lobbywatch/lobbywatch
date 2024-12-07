@@ -48,8 +48,10 @@ class SecureApplication
         return $this->userGrantManager;
     }
 
-    public function SetDataSourceRecordPermissionRetrieveStrategy(
-        HardCodedDataSourceRecordPermissionRetrieveStrategy $value = null)
+    /**
+     * @param null|HardCodedDataSourceRecordPermissionRetrieveStrategy $value
+     */
+    public function SetDataSourceRecordPermissionRetrieveStrategy($value = null)
     {
         $this->dataSourceRecordPermissionRetrieveStrategy = $value;
     }

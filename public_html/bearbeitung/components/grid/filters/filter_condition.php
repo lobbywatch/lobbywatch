@@ -23,17 +23,17 @@ class FilterCondition implements FilterComponentInterface
     private $isEnabled = true;
 
     /**
-     * @param FilterColumn $column
+     * @param null|FilterColumn $column
      * @param string $operator
      * @param array $values
-     * @param array $displayValues
+     * @param null|array $displayValues
      * @param bool $isEnabled
      */
     public function __construct(
-        FilterColumn $column = null,
+        $column = null,
         $operator = FilterConditionOperator::EQUALS,
         array $values = array(),
-        array $displayValues = null,
+        $displayValues = null,
         $isEnabled = true)
     {
         $this->column = $column;

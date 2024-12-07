@@ -213,7 +213,7 @@ class TableBasedUserGrantManager extends UserGrantManager
      * @param array|null $dataSources
      * @return array
      */
-    public function GetUserGrants($userId, Captions $captions, array $dataSources = null)
+    public function GetUserGrants($userId, $captions, $dataSources = null)
     {
         $queryBuilder = new SelectCommand($this->connectionFactory->CreateEngCommandImp());
 

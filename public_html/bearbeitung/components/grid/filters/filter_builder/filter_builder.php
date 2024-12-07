@@ -91,16 +91,16 @@ class FilterBuilder extends AbstractFilter
     }
 
     /**
-     * @param FilterColumn    $column
-     * @param string|string[] $operators
-     * @param CustomEditor    $editor
+     * @param FilterColumn         $column
+     * @param string|string[]      $operators
+     * @param null|CustomEditor    $editor
      *
      * @return $this
      */
     public function setEditorFor(
-        FilterColumn $column,
+        $column,
         $operators,
-        CustomEditor $editor = null)
+        $editor = null)
     {
         $fieldName = $column->getFieldName();
 

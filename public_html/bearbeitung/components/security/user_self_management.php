@@ -15,7 +15,11 @@ class UserSelfManagement
     /** @var IUserManager */
     private $userManager;
 
-    public function __construct(SecureApplication $app, IUserManager $um = null)
+    /**
+     * @param SecureApplication $app
+     * @param null|IUserManager $um
+     */
+    public function __construct($app, $um = null)
     {
         $this->app = $app;
         $this->userAuthentication = $this->app->GetUserAuthentication();

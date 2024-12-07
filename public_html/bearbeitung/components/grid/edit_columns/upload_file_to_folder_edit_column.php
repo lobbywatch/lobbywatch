@@ -33,13 +33,13 @@ class UploadFileToFolderColumn extends CustomEditColumn
      * @param string     $caption
      * @param string     $fieldName
      * @param CustomEditor     $editControl
-     * @param Dataset     $dataset
+     * @param Dataset    $dataset
      * @param boolean    $allowSetToNull
      * @param boolean    $allowSetToDefault
      * @param string     $targetFolderTemplate
      * @param string     $targetFilenameTemplate
      * @param Event|null $onFileUpload
-     * @param bool $keepFileNameOnly
+     * @param boolean    $keepFileNameOnly
      */
     public function __construct(
         $caption,
@@ -50,7 +50,7 @@ class UploadFileToFolderColumn extends CustomEditColumn
         $allowSetToDefault = false,
         $targetFolderTemplate = '',
         $targetFilenameTemplate = null,
-        Event $onFileUpload = null,
+        $onFileUpload = null,
         $keepFileNameOnly = false)
     {
         parent::__construct(

@@ -134,7 +134,10 @@ class RssItem
     public function GetDescription()
     { return $this->description; }
 
-    public function SetPublicationDate(SMDateTime $value = null)
+    /**
+     * @param null|SMDateTime $value
+     */
+    public function SetPublicationDate($value = null)
     { $this->publicationDate = $value; }
     public function GetPublicationDate()
     { return $this->publicationDate; }

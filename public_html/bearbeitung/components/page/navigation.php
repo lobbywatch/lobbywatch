@@ -21,12 +21,13 @@ class Navigation implements IteratorAggregate, Countable
     }
 
     /**
-     * @param string     $title
-     * @param string     $url
-     * @param Navigation $siblings
-     * @return Navigation
+     * @param string          $title
+     * @param null|string     $url
+     * @param null|Navigation $siblings
+     *
+     * @return $this
      */
-    public function append($title, $url = null, Navigation $siblings = null)
+    public function append($title, $url = null, $siblings = null)
     {
         $this->navigation[] = array(
             'title' => $title,
@@ -37,7 +38,14 @@ class Navigation implements IteratorAggregate, Countable
         return $this;
     }
 
-    public function prepend($title, $url = null, Navigation $siblings = null)
+    /**
+     * @param string          $title
+     * @param null|string     $url
+     * @param null|Navigation $siblings
+     *
+     * @return $this
+     */
+    public function prepend($title, $url = null, $siblings = null)
     {
         array_unshift($this->navigation, array(
             'title' => $title,

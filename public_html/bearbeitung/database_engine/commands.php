@@ -659,7 +659,13 @@ abstract class EngCommandImp
         return 1;
     }
 
-    public function GetValueAsSQLString($value, FieldInfo $fieldInfo = null)
+    /**
+     * @param string $value
+     * @param null|FieldInfo $fieldInfo
+     *
+     * @return string
+     */
+    public function GetValueAsSQLString($value, $fieldInfo = null)
     {
         return '\'' . $this->EscapeString($value) . '\'';
     }

@@ -105,7 +105,7 @@ class ColumnFilterColumn
     }
 
     /**
-     * @param FilterComponentInterfaces[] $options
+     * @param FilterComponentInterface[] $options
      * @return $this
      */
     public function setOptions(array $options)
@@ -115,7 +115,7 @@ class ColumnFilterColumn
     }
 
     /**
-     * @return FilterComponentInterfaces[]
+     * @return FilterComponentInterface[]
      */
     public function getOptions()
     {

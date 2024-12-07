@@ -23,9 +23,11 @@ class UserIdentitySessionStorage implements UserIdentityStorage
     /** @var RememberMeGenerator */
     private $rememberMeGenerator;
 
-    public function __construct(
-        ArrayWrapper $sessionWrapper = null,
-        ArrayWrapper $cookiesWrapper = null)
+    /**
+     * @param null|ArrayWrapper $sessionWrapper
+     * @param null|ArrayWrapper $cookiesWrapper
+     */
+    public function __construct($sessionWrapper = null, $cookiesWrapper = null)
     {
         $this->sessionWrapper = is_null($sessionWrapper)
             ? ArrayWrapper::createSessionWrapperForDirectory()

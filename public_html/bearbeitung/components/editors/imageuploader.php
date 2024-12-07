@@ -40,7 +40,14 @@ class ImageUploader extends CustomEditor {
         $this->acceptableFileTypes = $value;
     }
 
-    public function extractValueFromArray(ArrayWrapper $arrayWrapper, &$valueChanged, ArrayWrapper $filesWrapper = null) {
+    /**
+     * @param ArrayWrapper $arrayWrapper
+     * @param boolean $valueChanged
+     * @param null|ArrayWrapper $filesWrapper
+     *
+     * @return mixed
+     */
+    public function extractValueFromArray(ArrayWrapper $arrayWrapper, &$valueChanged, $filesWrapper = null) {
         $action = $this->extractImageActionFromArray($arrayWrapper);
 
         if ($action != REPLACE_IMAGE_ACTION) {

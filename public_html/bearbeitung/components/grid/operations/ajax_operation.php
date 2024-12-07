@@ -31,10 +31,10 @@ class AjaxOperation extends BaseRowOperation
      * @param string $dialogTitle
      * @param Dataset $dataset
      * @param string $handlerName
-     * @param Grid $grid
-     * @param string $type
+     * @param null|Grid $grid
+     * @param null|string $type
      */
-    function __construct($operationName, $caption, $dialogTitle, $dataset, $handlerName, Grid $grid = null, $type = null)
+    function __construct($operationName, $caption, $dialogTitle, $dataset, $handlerName, $grid = null, $type = null)
     {
         parent::__construct($caption, $handlerName, $dataset, $grid);
         $this->operationName = $operationName;

@@ -1288,7 +1288,10 @@ abstract class Page extends CommonPage implements IVariableContainer
     public function GetRecordPermission()
     { return $this->recordPermission; }
 
-    public function SetRecordPermission(IRecordPermissions $value = null)
+    /**
+     * @param null|IRecordPermissions $value
+     */
+    public function SetRecordPermission($value = null)
     { $this->recordPermission = $value; }
 
     function RaiseSecurityError($condition, $operation)

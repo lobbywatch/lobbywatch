@@ -125,7 +125,10 @@ class CustomEditColumn implements ColumnInterface
     public function SetInsertDefaultValue($value)
     { $this->insertDefaultValue = $value; }
 
-    public function SetVariableContainer(IVariableContainer $variableContainer = null)
+    /**
+     * @param null|IVariableContainer $variableContainer
+     */
+    public function SetVariableContainer($variableContainer = null)
     {
         if ($variableContainer == null)
             $this->variableContainer = new NullVariableContainer();

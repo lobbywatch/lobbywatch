@@ -183,7 +183,7 @@ class InsertCommand extends EngCommand
         return null;
     }
 
-    public function IsFieldValueSettedToDefault($fieldName)
+    public function IsFieldValueSetToDefault($fieldName)
     {
         return isset($this->setToDefaultFields[$fieldName]);
     }
@@ -193,12 +193,12 @@ class InsertCommand extends EngCommand
         $result = '';
         foreach($this->fieldValues as $fieldName => $value)
         {
-            if ($this->IsFieldValueSettedToDefault($fieldName) & !$this->GetCommandImp()->SupportsDefaultValue())
+            if ($this->IsFieldValueSetToDefault($fieldName) & !$this->GetCommandImp()->SupportsDefaultValue())
                 continue;
             AddStr(
                 $result,
                 $this->GetCommandImp()->GetFieldValueForInsert(
-                    $this->GetFieldByName($fieldName), $value, $this->IsFieldValueSettedToDefault($fieldName)
+                    $this->GetFieldByName($fieldName), $value, $this->IsFieldValueSetToDefault($fieldName)
                 ),
                 ', '
             );
@@ -211,7 +211,7 @@ class InsertCommand extends EngCommand
         $result = '';
         foreach($this->fieldValues as $fieldName => $value)
         {
-            if ($this->IsFieldValueSettedToDefault($fieldName) & !$this->GetCommandImp()->SupportsDefaultValue())
+            if ($this->IsFieldValueSetToDefault($fieldName) & !$this->GetCommandImp()->SupportsDefaultValue())
                 continue;
             AddStr($result, $this->GetCommandImp()->GetFieldFullName($this->GetFieldByName($fieldName)), ', ');
         }
