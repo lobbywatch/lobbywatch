@@ -18,7 +18,7 @@
 . common.sh
 
 # enable_fail_onerror_no_vars_check
-enable_fail_onerror_no_vars_no_pipe
+enable_fail_onerror_no_vars_check
 
 PHP="php -d error_reporting=E_ALL"
 LOCAL_PHP="php -d error_reporting=E_ALL"
