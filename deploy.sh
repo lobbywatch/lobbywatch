@@ -317,8 +317,8 @@ echo -e "Document root: $document_root\n"
 
 # read -s -p "Password: " passw
 # Ref http://blog.sanctum.geek.nz/testing-exit-values-bash/
-if ! ssh-add -l | grep id_rsa_r; then
-    ssh-add ~/.ssh/id_rsa_rk || ssh-add ~/.ssh/id_rsa_rpiw
+if ! ssh-add -l | grep -E 'id_rsa_r|id_ed25519'; then
+    ssh-add ~/.ssh/id_rsa_rk || ssh-add ~/.ssh/id_rsa_rpiw || ssh-add ~/.ssh/id_ed25519
     checkLocalMySQLRunning
 fi
 
