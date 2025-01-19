@@ -116,7 +116,7 @@ def read_groups(filename):
                 duplicate_reading_modes = set([reading_mode for reading_mode in passed_reading_modes if passed_reading_modes.count(reading_mode) > 1])
                 if len(duplicate_reading_modes) > 1:
                     raise Exception("ERROR: duplicate reading modes: {}".format(duplicate_reading_modes))
-                if len(titles[0]) > 75 or (len(titles) > 1 and len(titles[1]) > 90) or (len(titles) > 2 and len(titles[2])) > 90 or len(titles) > 3:
+                if len(titles[0]) > 75 or (len(titles) > 1 and len(titles[1]) > 90) or (len(titles) > 2 and len(titles[2]) > 90) or len(titles) > 3:
                     raise Exception("ERROR: title too long:\n titles={}".format(titles))
                 groups.append((titles, presidents, sekretariat, konstituierung, beschreibung, zweck, aktivitaeten, mitglieder))
 
@@ -310,8 +310,8 @@ def scarpe_parl_pdf(group_type, url, json_filename, local_pdf):
         print("PDF creation date: {}".format(creation_date.strftime("%d.%m.%Y")))
         print("PDF modified date: {}\n".format(modified_date.strftime("%d.%m.%Y")))
 
-        print("removing first page of PDF...")
-        call(["qpdf", "--pages", pdf_name, "2-z", "--", pdf_name, CONTENT_PDF])
+        print("removing first 2 pages of PDF...")
+        call(["qpdf", "--pages", pdf_name, "3-z", "--", pdf_name, CONTENT_PDF])
 
         print("parsing PDF...")
         cmd = ["java", "-Djava.util.logging.config.file=web_scrapers/logging.properties", "-jar", tabula_path, CONTENT_PDF, "-o", DATA_CSV, "--pages", "all", "-t", "-i"]
