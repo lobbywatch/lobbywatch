@@ -448,13 +448,21 @@ if ! $nozb ; then
     echo "Use latest zb PDF by filename from web_scrapers/backup/"
     # -r: reverse order
     # -t: by time
-    zb_pdf_nr=$(ls -r web_scrapers/backup/*zutrittsberechtigte-nr.pdf | head -1)
-    zb_pdf_sr=$(ls -r web_scrapers/backup/*zutrittsberechtigte-sr.pdf | head -1)
-    echo "Latest PDFs $zb_pdf_nr $zb_pdf_sr"
+    zb_pdf_nr=$(ls -r web_scrapers/backup/*zutrittsberechtigte-nr.pdf | head -1) || zb_pdf_nr=""
+    zb_pdf_sr=$(ls -r web_scrapers/backup/*zutrittsberechtigte-sr.pdf | head -1) || zb_pdf_sr=""
+    if [ -z "$zb_pdf_nr" ] || [ -z "$zb_pdf_sr" ]; then
+      echo "WARN: No zutrittsberechtigte-nr|sr.pdf found in web_scrapers/backup/"
+    else
+      echo "Latest PDFs $zb_pdf_nr $zb_pdf_sr"
+    fi
   elif [ -n "$pdf_date" ]; then
-    zb_pdf_nr=$(ls -r web_scrapers/import/$pdf_date*zutrittsberechtigte-nr.pdf | head -1)
-    zb_pdf_sr=$(ls -r web_scrapers/import/$pdf_date*zutrittsberechtigte-sr.pdf | head -1)
-    echo "PDFs from $pdf_date: $zb_pdf_nr $zb_pdf_sr"
+    zb_pdf_nr=$(ls -r web_scrapers/import/$pdf_date*zutrittsberechtigte-nr.pdf | head -1) || zb_pdf_nr=""
+    zb_pdf_sr=$(ls -r web_scrapers/import/$pdf_date*zutrittsberechtigte-sr.pdf | head -1) || zb_pdf_sr=""
+    if [ -z "$zb_pdf_nr" ] || [ -z "$zb_pdf_sr" ]; then
+      echo "WARN: No zutrittsberechtigte-nr|sr.pdf found in web_scrapers/backup/"
+    else
+      echo "PDFs from $pdf_date: $zb_pdf_nr $zb_pdf_sr"
+    fi
   else
     zb_pdf_nr=''
     zb_pdf_sr=''
