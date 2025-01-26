@@ -3758,6 +3758,14 @@ function get_web_data($url) {
 }
 
 function get_object_from_json_url($url) {
+  $obj = get_object_from_json_url_raw($url);
+  for ($i=0; $i < 6 && empty($obj); $i++) {
+    $obj = get_object_from_json_url_raw($url);
+  }
+  return $obj;
+}
+
+function get_object_from_json_url_raw($url) {
   $max_retry = 3;
   for ($i = 0; $i < $max_retry; $i++) {
     $json_str = get_web_data($url);
