@@ -83,9 +83,8 @@ def get_partei_id(database, partei_kuerzel):
         partei_id = cursor.fetchone()
 
         if partei_id is None:
-            print("\n\nDATA INTEGRITY FAILURE: Partei '{}' referenced in PDF is not in database. Aborting.".format(
+            raise Exception("DATA INTEGRITY FAILURE: Partei '{}' referenced in PDF is not in database. Aborting.".format(
                 partei_kuerzel))
-            sys.exit(1)
 
     return partei_id[0]
 
@@ -105,9 +104,8 @@ def get_fraktion_id(database, fraktion_kuerzel):
         faction_id = cursor.fetchone()
 
         if faction_id is None:
-            print("\n\nDATA INTEGRITY FAILURE: Fraktion '{}' referenced in PDF is not in database. Aborting.".format(
+            raise Exception("DATA INTEGRITY FAILURE: Fraktion '{}' referenced in PDF is not in database. Aborting.".format(
                 fraktion_kuerzel))
-            sys.exit(1)
 
     return faction_id[0]
 
@@ -137,12 +135,10 @@ def get_parlamentarier_id_by_names_kanton_partei(database, names, kanton_id, par
                 (parlamentarier_id, ) = result[0]
                 return parlamentarier_id
 
-    print(
-        "\n\nDATA INTEGRITY FAILURE: Member of parliament '{0}' referenced in PDF is not in database. Aborting.".format(names))
-    sys.exit(1)
+    raise Exception("DATA INTEGRITY FAILURE: Member of parliament '{0}' referenced in PDF is not in database. Aborting.".format(names))
 
 
-# get a parlamentarier_id by names, kanton_id and partei_id
+# get a parlamentarier_id by names, kanton_id and faction_id
 def get_parlamentarier_id_by_names_kanton_fraktion(database, names, kanton_id, faction_id):
     with database.cursor() as cursor:
         query = """
@@ -164,9 +160,27 @@ def get_parlamentarier_id_by_names_kanton_fraktion(database, names, kanton_id, f
                 (parlamentarier_id, ) = result[0]
                 return parlamentarier_id
 
-    print(
-        "\n\nDATA INTEGRITY FAILURE: Member of parliament '{0}' referenced in PDF is not in database. Aborting.".format(names))
-    sys.exit(1)
+    raise Exception("DATA INTEGRITY FAILURE: Member of parliament '{0}' referenced in PDF is not in database. Aborting.".format(names))
+
+
+# get a parlamentarier_id by names, kanton_id and faction_id
+def get_parlamentarier_id_by_names_kanton(database, names, kanton_id):
+    with database.cursor() as cursor:
+        query = """
+        SELECT id
+        FROM parlamentarier
+        WHERE kanton_id = {0}
+        """.format(kanton_id)
+
+        for description in ["NV", "NZV", "NNV", "NVV", "NNNV", "NS"]:
+            current_query = query + _generate_name_query(description, names, False)
+            cursor.execute(current_query)
+            result = cursor.fetchall()
+            if result and len(result) == 1:
+                (parlamentarier_id, ) = result[0]
+                return parlamentarier_id
+
+    raise Exception("DATA INTEGRITY FAILURE: Member of parliament '{0}' referenced in PDF is not in database. Aborting.".format(names))
 
 
 def get_parlamentarier_id_by_name(database, names, prename_first: bool):
@@ -186,9 +200,7 @@ def get_parlamentarier_id_by_name(database, names, prename_first: bool):
                 (parlamentarier_id, bis, ) = result[0]
                 return parlamentarier_id, bis
 
-        print(
-            "\n\nDATA INTEGRITY ERROR: Member of parliament '{}' referenced in PDF is not in database.\nNames: {}, Prename first: {}\nSQL:\n{}".format(names, names, prename_first, current_query))
-        sys.exit(1)
+        raise Exception("DATA INTEGRITY ERROR: Member of parliament '{}' referenced in PDF is not in database.\nNames: {}, Prename first: {}\nSQL:\n{}".format(names, names, prename_first, current_query))
     return None, None
 
 
@@ -209,9 +221,8 @@ def get_parlamentarier_dict(database, parlamentarier_id):
             parlamentarier = result[0]
             return parlamentarier
 
-    print("\n\nA parlamentarier with parlamentarier_id '{}' does not exist.".format(
+    raise Exception("A parlamentarier with parlamentarier_id '{}' does not exist.".format(
         parlamentarier_id))
-    sys.exit(1)
 
 
 # get person_id by names
@@ -227,9 +238,7 @@ def get_person_id(database, names):
             cursor.execute(current_query)
             result = cursor.fetchall()
             if result and len(result) > 1:
-                print(
-                    "\n\nDATA INTEGRITY FAILURE: There are multiple possibilities in the database for guest {0}: '{1}'. Aborting.".format(names, result))
-                sys.exit(1)
+                raise Exception("DATA INTEGRITY FAILURE: There are multiple possibilities in the database for guest {0}: '{1}'. Aborting.".format(names, result))
 
             if result and len(result) == 1:
                 (person_id, ) = result[0]
@@ -434,9 +443,8 @@ def get_interessenbindung_id(database, parlamentarier_id, organisation_id, stich
         result = cursor.fetchall()
         if result and len(result) > 1:
             # DONE find and fix problem in 2nd run
-            print("\n\nDATA INTEGRITY FAILURE: There are multiple interessenbindungen in the database for organisation '{}' and parlamentarier '{}'.  Aborting.\n{}".format(
+            raise Exception("DATA INTEGRITY FAILURE: There are multiple interessenbindungen in the database for organisation '{}' and parlamentarier '{}'.  Aborting.\n{}".format(
                 organisation_id, parlamentarier_id, query))
-            sys.exit(1)
 
         if result and len(result) == 1:
             (interessenbindung_id, art, funktion_im_gremium, beschreibung, beschreibung_fr, ) = result[0]

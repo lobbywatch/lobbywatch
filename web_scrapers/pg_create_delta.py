@@ -160,8 +160,7 @@ def sync_data(group_type, conn, filename, batch_time):
                 parlamentarier_id, parlamentarier_bis = db.get_parlamentarier_id_by_name(conn, names, title != None)
 
                 if not parlamentarier_id:
-                    print("DATA INTEGRITY FAILURE: Parlamentarier '{}' of group '{}' not found in database.".format(member, name_de))
-                    sys.exit(1)
+                    raise Exception("DATA INTEGRITY FAILURE: Parlamentarier '{}' of group '{}' not found in database.".format(member, name_de))
                 elif parlamentarier_bis and parlamentarier_bis < date.today():
                     print("-- INFO: Parlamentarier '{}' ({}) ist nicht mehr aktiv ('{}')".format(member, parlamentarier_id, parlamentarier_bis))
                     continue
@@ -250,8 +249,7 @@ def handle_removed_groups(group_type, content, conn, summary, stichdatum, batch_
                             parlamentarier_id_cache[parl_key] = (parlamentarier_id, parlamentarier_bis)
 
                         if not parlamentarier_id:
-                            print("DATA INTEGRITY FAILURE: Parlamentarier '{}' of group '{}' not found in database.".format(member, name_de))
-                            sys.exit(1)
+                            raise Exception("DATA INTEGRITY FAILURE: Parlamentarier '{}' of group '{}' not found in database.".format(member, name_de))
                         elif parlamentarier_bis and parlamentarier_bis < date.today():
                             # print("-- INFO: Parlamentarier '{}' ({}) ist nicht mehr aktiv ('{}')".format(member, parlamentarier_id, parlamentarier_bis))
                             continue
