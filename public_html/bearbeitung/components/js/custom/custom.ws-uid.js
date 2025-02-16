@@ -44,7 +44,7 @@ $(function() {
         // http://api.jquery.com/category/ajax/global-ajax-event-handlers/
         $('#btn-ws-uid').addClass('btn-loading');
 
-       $.getJSON(`/de/data/interface/v1/json/ws/uid/flat/uid/${uid_raw}?access_key=cdaVCGjrDqbuR0kuD0lx4eHF9eJmiWBUP6OgLA4t`, function(data, textStatus, jqXHR) {
+       $.getJSON(`${window.ws_uid_base_url}/${uid_raw}?access_key=cdaVCGjrDqbuR0kuD0lx4eHF9eJmiWBUP6OgLA4t`, function(data, textStatus, jqXHR) {
           if (data && data.success && data.data) {
             setWSFieldValue(formId, 'name_de', data.data.name_de);
             setWSFieldValue(formId, 'abkuerzung_de', data.data.abkuerzung_de);

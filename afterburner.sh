@@ -113,6 +113,8 @@ do
    perl -p -e's/\$import_date_wsparlamentch_short/'\'' \. \$GLOBALS["import_date_wsparlamentch_short"] \/*afterburner*\/  \. '\''/g' |
    perl -p -e's/\$build_secs/'\'' \. _custom_page_build_secs() \/*afterburner*\/  \. '\''/g' |
    perl -p -e's/\$version/'\'' \. \$GLOBALS["version"] \/*afterburner*\/  \. '\''/g' |
+   perl -p -e's/\$api_base_url/'\'' \. \$GLOBALS["api_base_url"] \/*afterburner*\/  \. '\''/g' |
+   perl -p -e's/\$ws_uid_base_url/'\'' \. \$GLOBALS["ws_uid_base_url"] \/*afterburner*\/  \. '\''/g' |
    perl -p -e's/\$edit_general_hint/'\'' \. \$GLOBALS["edit_general_hint"] \/*afterburner*\/  \. '\''/g' |
    perl -p -e's/\$edit_header_message/'\'' \. \$GLOBALS["edit_header_message"] \/*afterburner*\/  \. '\''/g' |
    perl -p -e's%'\''\[getCustomPagesHeader\(\)\]'\''%getCustomPagesHeader\(\)%g' |

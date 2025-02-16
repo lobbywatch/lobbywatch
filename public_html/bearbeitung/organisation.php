@@ -45720,7 +45720,11 @@
             '           editors[\'inaktiv\'].setReadonly(true);'. "\n" .
             '        }'. "\n" .
             '    }'. "\n" .
-            '}';
+            '}'. "\n" .
+            ''. "\n" .
+            '// global variables'. "\n" .
+            'window.api_base_url = \'' . $GLOBALS["api_base_url"] /*afterburner*/  . '\';'. "\n" .
+            'window.ws_uid_base_url = \'' . $GLOBALS["ws_uid_base_url"] /*afterburner*/  . '\';';
         }
         
         function GetOnPageLoadedClientScript()

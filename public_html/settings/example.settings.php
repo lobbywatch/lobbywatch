@@ -68,6 +68,9 @@ $settings['file_secret_dir_hist'] = '/home/lobbywatch/.exports_secret_dir_hist';
 $settings['file_secret_dir_hist+unpubl'] = '/home/lobbywatch/.exports_secret_dir_hist+unpubl';
 $settings['file_secret_dir_dump'] = '/home/lobbywatch/.exports_secret_dir_dump';
 
+$api_base_url = "/";
+$ws_uid_base_url = $api_base_url . "de/data/interface/v1/json/ws/uid/flat/uid/";
+
 if ($stage) {
   $env = "STAGE";
 

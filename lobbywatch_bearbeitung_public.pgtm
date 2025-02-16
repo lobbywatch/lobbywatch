@@ -8722,6 +8722,8 @@ check_organisation_interessengruppe_order($page, $rowData, $cancel, $message, $t
 check_organisation_interessengruppe_order($page, $rowData, $cancel, $message, $tableName);          </BeforeUpdateRecord>
           <CustomRenderColumnHandlerText enabled="true">
 customOnCustomRenderColumn('organisation', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
+          <CustomHTMLHeaderHandlerText enabled="false">
+customHTMLHeader($page, $customHtmlHeaderText);          </CustomHTMLHeaderHandlerText>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
           <OnBeforePageLoad enabled="true">
@@ -8772,7 +8774,12 @@ window.disable_organisation_imported_fields = function (editors) {
            editors['inaktiv'].setReadonly(true);
         }
     }
-}          </OnBeforePageLoad>
+}
+
+// global variables
+window.api_base_url = '$api_base_url';
+window.ws_uid_base_url = '$ws_uid_base_url';
+          </OnBeforePageLoad>
           <OnInsertFormEditorValueChanged enabled="true">
 window.format_uid(sender, editors);
 if (sender.getFieldName() == 'uid') {
