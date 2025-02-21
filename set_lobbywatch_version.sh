@@ -18,6 +18,6 @@ fi
 # echo -e "<?php\n\$version = '$VERSION';" >  $root_dir/common/version.php;
 
 # Also in afterburner.sh
-VERSION=$(git describe --abbrev=0 --tags)
+VERSION=$(git rev-parse --verify HEAD)
 echo -e "<?php\n// Generated file\n/**\n * The current system version.\n */\ndefine('LOBBYWATCH_VERSION', '$VERSION');\n\$version = LOBBYWATCH_VERSION;\n\$lobbywatch_version = LOBBYWATCH_VERSION;" >  $dir/custom/version.php;
 

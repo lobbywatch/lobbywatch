@@ -1,0 +1,11 @@
+# https://www.freedesktop.org/software/systemd/man/latest/systemd.timer.html
+[Install]
+WantedBy=default.target
+
+[Unit]
+Description=timer for lobbywatch scraper
+
+[Timer]
+OnCalendar=Fri 20:00
+Unit=scraper.service
+Persistent=True

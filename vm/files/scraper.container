@@ -1,0 +1,19 @@
+# https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html#container-units-container
+[Unit]
+Description=Lobbywatch scraper service
+Requires=mariadb.service
+
+[Container]
+Image=scraper.build
+PodmanArgs=--privileged
+Exec=-a -v -d -f
+Mount=type=bind,source=%t/ssh-agent.socket,target=%t/ssh-agent.socket
+Mount=type=bind,source=/home/almalinux/scraper/settings.php,target=/opt/lobbywatch/public_html/settings/settings.php,ro
+Mount=type=bind,source=/home/almalinux/scraper/sql,target=/opt/lobbywatch/sql
+Network=scraper.network
+
+[Service]
+Restart=no
+PassEnvironment=SSH_AUTH_SOCK
+# Extend Timeout to allow time to pull the image
+TimeoutStartSec=900
