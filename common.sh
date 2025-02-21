@@ -43,7 +43,8 @@ whiteBold='\e[1;37m'
 whiteBackground='\e[0;47m'
 reset='\e[0m'
 
-HOST=127.0.0.1
+HOST="${LW_DB_HOST:-127.0.0.1}"
+PORT="${LW_DB_PORT:-3306}"
 MYSQL_CONTAINER=mysql57
 # MYSQLADMIN=mysqladmin
 MYSQLADMIN="docker exec -it $MYSQL_CONTAINER mysqladmin"
@@ -149,7 +150,7 @@ wait_mysql() {
   local max_wait_seconds=wait_seconds
 
   OK=false
-  until test $((wait_seconds--)) -eq 0 -o $OK ; do sleep 1; $MYSQLADMIN -h$HOST -u$DB_USER processlist >/dev/null 2>&1 && OK=true; done
+  until test $((wait_seconds--)) -eq 0 -o $OK ; do sleep 1; $MYSQLADMIN -h$HOST -P$PORT -u$DB_USER processlist >/dev/null 2>&1 && OK=true; done
   # $MYSQLADMIN -h$HOST -u$DB_USER processlist >/dev/null 2>&1
   # until test $((wait_seconds--)) -eq 0 -o $? -eq 0 ; do sleep 1; $MYSQLADMIN -h$HOST -u$DB_USER processlist >/dev/null 2>&1; done
 
@@ -207,39 +208,12 @@ checkLocalMySQLRunning() {
           docker ps
         fi
         ;;
-      "rkurmannXampp" )
-        $MYSQLADMIN -h$HOSTNAME -u$DB_USER processlist >/dev/null 2>&1 && OK=true || OK=false
-        if ! $OK ; then
-          askContinueYn "DB not running. Start?"
-
-          # start xampp
-          sudo /opt/lampp/xampp restart
-
-          sudo mv /usr/bin/mysql /usr/bin/~mysql.bak
-          sudo ln -s /opt/lampp/bin/mysql /usr/bin/mysql
-
-          sudo mv /usr/bin/mysqladmin /usr/bin/~mysqladmin.bak
-          sudo ln -s /opt/lampp/bin/mysqladmin /usr/bin/mysqladmin
-
-          sudo mv /usr/bin/mysqldump /usr/bin/~mysqldump.bak
-          sudo ln -s /opt/lampp/bin/mysqldump /usr/bin/mysqldump
-
-          sudo mv /usr/bin/mysql_config /usr/bin/~mysql_config.bak
-          sudo ln -s /opt/lampp/bin/mysql_config /usr/bin/mysql_config
-          # end xampp
-
-          echo "Wait MySQL starting..."
-          wait_mysql $wait_secs || {
-            echo "MySQL not running after $wait_secs s"
-            exit 1
-          }
-        fi
-        ;;
       "lobbywat" )
         # Do nothing
         ;;
       * )
-        askContinueYn "MySQL not running. Start MySQL manually. Ready?"
+        # Do nothing
+        ;;
     esac
 }
 

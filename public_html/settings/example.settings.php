@@ -40,8 +40,8 @@ $allowed_uid_access_keys = [
 
 $db_connections = [
   'lobbywatch' => [
-      'server' => '127.0.0.1',
-      'port' => '3306',
+      'server' => $_SERVER['LW_DB_HOST'] ?? '127.0.0.1',
+      'port' => $_SERVER['LW_DB_PORT'] ?? '3306',
       'database' => 'lobbywatch',
       'username' => 'lobbywatch',
       'password' => '',
@@ -51,8 +51,8 @@ $db_connections = [
       'adv_password' => '',
   ],
   'lobbywatchtest' => [
-      'server' => '127.0.0.1',
-      'port' => '3306',
+      'server' => $_SERVER['LW_DB_HOST'] ?? '127.0.0.1',
+      'port' => $_SERVER['LW_DB_PORT'] ?? '3306',
       'database' => 'lobbywatchtest',
       'username' => 'lobbywatch',
       'password' => '',
