@@ -1,0 +1,96 @@
+---
+- name: setup lobbywatch vm
+  hosts: lobbywatch
+  tasks:
+    - name: install some stuff
+      ansible.builtin.dnf:
+        state: present
+        name:
+          - nano
+          - vim
+          - git
+          - podman
+          - podman-plugins
+      become: yes
+
+    - name: create directories
+      ansible.builtin.file:
+        dest: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - /home/almalinux/.config/containers/systemd/
+        - /home/almalinux/.config/systemd/user
+        - /home/almalinux/.config/environment.d
+        - /home/almalinux/scraper
+        - /home/almalinux/mariadb
+
+    - name: copy scraper files
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "/home/almalinux/scraper/{{ item | basename }}"
+        mode: '0644'
+      loop:
+        - files/debug-scraper.sh
+        - files/my.cnf
+
+    - name: copy mariadb files
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "/home/almalinux/mariadb/{{ item | basename }}"
+        mode: '0644'
+      loop:
+        - files/mariadb-init.sql
+
+    - name: copy quadlet files
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "/home/almalinux/.config/containers/systemd/{{ item | basename }}"
+        mode: '0644'
+      loop:
+        - files/scraper.build
+        - files/scraper.container
+        - files/scraper.network
+        - files/mariadb.container
+        - files/mariadb.volume
+
+    - name: copy systemd user units
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "/home/almalinux/.config/systemd/user/{{ item | basename }}"
+        mode: '0644'
+      loop:
+        - files/scraper.timer
+        - files/ssh-agent.service
+
+    - name: copy ssh-agent environment config
+      ansible.builtin.copy:
+        src: files/90-ssh-auth-sock.conf
+        dest: /home/almalinux/.config/environment.d/90-ssh-auth-sock.conf
+        mode: '0644'
+
+    - name: source ssh-agent-sock
+      ansible.builtin.lineinfile:
+        state: present
+        line: source /home/almalinux/.config/environment.d/90-ssh-auth-sock.conf
+        path: /home/almalinux/.bashrc
+
+    - name: copy ssh known_hosts
+      ansible.builtin.copy:
+        src: files/known_hosts
+        dest: /home/almalinux/.ssh/known_hosts
+        mode: '0600'
+
+    - name: enable systemd services
+      ansible.builtin.systemd_service:
+        scope: user
+        daemon_reload: true
+        enabled: true
+        name: "{{ item }}"
+        state: started
+      loop:
+        - scraper.timer
+        - ssh-agent.service
+
+    - name: enable linger for user
+      ansible.builtin.command: loginctl enable-linger

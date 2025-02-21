@@ -1,0 +1,7 @@
+# https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html#build-units-build
+[Build]
+SetWorkingDirectory=https://github.com/lobbywatch/lobbywatch.git#master
+ImageTag=localhost/lobbywatch/scraper:production
+
+[Install]
+WantedBy=default.target
