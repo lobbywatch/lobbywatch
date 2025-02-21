@@ -43,11 +43,11 @@ whiteBold='\e[1;37m'
 whiteBackground='\e[0;47m'
 reset='\e[0m'
 
-HOST=127.0.0.1
+HOST=${DB_HOST:-127.0.0.1}
 MYSQL_CONTAINER=mysql57
 # MYSQLADMIN=mysqladmin
 MYSQLADMIN="docker exec -it $MYSQL_CONTAINER mysqladmin"
-DB_USER=script
+DB_USER=root
 
 DATE=`date +%Y%m%d_%H%M%S`
 DATE_SHORT=`date +%Y%m%d`
@@ -165,7 +165,7 @@ checkLocalMySQLRunning() {
     return
   fi
 
-  mysqladmin -h$HOSTNAME -u$DB_USER processlist >/dev/null 2>&1 && OK=true || OK=false
+  mysqladmin -h$DB_HOST -u$DB_USER processlist >/dev/null 2>&1 && OK=true || OK=false
   if $OK ; then
     # default MySQL is running, return
     return
