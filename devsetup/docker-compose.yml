@@ -1,0 +1,37 @@
+services:
+  mariadb:
+    image: mariadb:10.6
+    environment:
+      MARIADB_ROOT_PASSWORD: verysecret
+      MARIADB_PASSWORD: lobbywatch
+      MARIADB_USER: lobbywatch
+      MARIADB_DATABASE: lobbywatchtest
+    ports:
+      - '3306:3306'
+    networks:
+      - lw
+    volumes:
+      - mariadb-data:/var/lib/mysql
+      # - ./dbinit:/docker-entrypoint-initdb.d:ro,z
+  scraper:
+    depends_on:
+      - mariadb
+    build:
+      dockerfile: Containerfile
+      context: ..
+    # entrypoint: ./run_update_ws_parlament.sh
+    restart: 'no'
+    environment:
+      SSH_AUTH_SOCK:
+    privileged: true # because of ssh-agent 
+    networks:
+      - lw
+    volumes:
+      - ${SSH_AUTH_SOCK}:${SSH_AUTH_SOCK}
+      - ./my.cnf:/root/.my.cnf
+
+
+networks:
+  lw:
+volumes:
+  mariadb-data:
