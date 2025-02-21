@@ -1,0 +1,15 @@
+# https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html#container-units-container
+[Unit]
+Description=MariaDB for Lobbywatch scraper
+
+[Container]
+Image=docker.io/mariadb:10.6.19@sha256:aaf44ec55c0513da24d0a893b79821095d1cf41de9d3dfb60257846d7f20da5c
+Environment=MARIADB_ROOT_PASSWORD=changeme
+Network=scraper.network
+HostName=mariadb
+Mount=type=bind,source=/home/almalinux/mariadb,target=/docker-entrypoint-initdb.d,readonly,relabel=shared
+
+[Service]
+Restart=no
+# Extend Timeout to allow time to pull the image
+TimeoutStartSec=900

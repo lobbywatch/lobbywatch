@@ -1,0 +1,95 @@
+---
+- name: setup lobbywatch vm
+  hosts: lobbywatch
+  tasks:
+    - name: install some stuff
+      ansible.builtin.dnf:
+        state: present
+        name:
+          - nano
+          - vim
+          - git
+          - podman
+          - podman-plugins
+      become: yes
+
+    - name: create directories
+      ansible.builtin.file:
+        dest: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - /home/almalinux/.config/containers/systemd/
+        - /home/almalinux/.config/systemd/user
+        - /home/almalinux/.config/environment.d
+        - /home/almalinux/scraper
+        - /home/almalinux/mariadb
+
+    - name: copy scraper files
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "/home/almalinux/scraper/{{ item }}"
+        mode: '0644'
+      loop:
+        - debug-scraper.sh
+        - my.cnf
+
+    - name: copy mariadb files
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "/home/almalinux/mariadb/{{ item }}"
+        mode: '0644'
+      loop:
+        - mariadb-init.sql
+
+    - name: copy settings php
+      ansible.builtin.copy:
+        src: ../public_html/settings/example.settings.php
+        dest: /home/almalinux/scraper/settings.php
+        mode: '0644'
+
+    - name: copy container units
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "/home/almalinux/.config/containers/systemd/{{ item }}"
+        mode: '0644'
+      loop:
+        - scraper.build
+        - scraper.container
+        - scraper.network
+        - mariadb.container
+        - mariadb.volume
+
+    - name: copy timer units
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "/home/almalinux/.config/systemd/user/{{ item }}"
+        mode: '0644'
+      loop:
+        - scraper.timer
+        - ssh-agent.service
+
+    - name: copy ssh-agent environment config
+      ansible.builtin.copy:
+        src: ssh_auth_sock.conf
+        dest: /home/almalinux/.config/environment.d/ssh_auth_sock.conf
+        mode: '0644'
+
+    - name: copy ssh known_hosts
+      ansible.builtin.copy:
+        src: known_hosts
+        dest: /home/almalinux/.ssh/known_hosts
+        mode: '0600'
+
+    - name: enable systemd timer
+      ansible.builtin.systemd_service:
+        scope: user
+        daemon_reload: true
+        enabled: true
+        name: "{{ item }}"
+        state: started
+      loop:
+        - scraper.timer
+
+    - name: enable linger for user
+      ansible.builtin.command: loginctl enable-linger
