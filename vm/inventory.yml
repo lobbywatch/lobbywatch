@@ -1,0 +1,5 @@
+lwinfra:
+  hosts:
+    lobbywatch:
+      ansible_host: 84.234.16.49
+      ansible_user: almalinux
