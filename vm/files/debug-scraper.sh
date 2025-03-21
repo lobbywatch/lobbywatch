@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source /home/almalinux/.config/environment.d/90-ssh-auth-sock.conf
-
 podman run --rm -it \
 --mount=type=bind,source="${SSH_AUTH_SOCK}",target="${SSH_AUTH_SOCK}" \
 --mount=type=bind,source=/home/almalinux/scraper/settings.php,target=/opt/lobbywatch/public_html/settings/settings.php,ro \
@@ -11,5 +9,6 @@ podman run --rm -it \
 --network systemd-scraper \
 --entrypoint sh \
 --privileged \
---env=SSH_AUTH_SOCK="${SSH_AUTH_SOCK}" \
+--env=SSH_AUTH_SOCK \
+--env=LW_DB_HOST=mariadb \
 localhost/lobbywatch/scraper:production

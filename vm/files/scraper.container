@@ -7,13 +7,16 @@ Requires=mariadb.service
 Image=scraper.build
 PodmanArgs=--privileged
 Exec=-a -v -d -f
-Mount=type=bind,source=%t/ssh-agent.socket,target=%t/ssh-agent.socket
+Mount=type=bind,source=/run/user/1000/ssh-agent.socket,target=/run/user/1000/ssh-agent.socket
 Mount=type=bind,source=/home/almalinux/scraper/settings.php,target=/opt/lobbywatch/public_html/settings/settings.php,ro
 Mount=type=bind,source=/home/almalinux/scraper/sql,target=/opt/lobbywatch/sql
+Mount=type=bind,source=/home/almalinux/.ssh/known_hosts,target=/root/.ssh/known_hosts,ro
+Mount=type=bind,source=/home/almalinux/scraper/my.cnf,target=/root/.my.cnf,ro
 Network=scraper.network
+Environment=LW_DB_HOST=mariadb
+Environment=SSH_AUTH_SOCK=/run/user/1000/ssh-agent.socket
 
 [Service]
 Restart=no
-PassEnvironment=SSH_AUTH_SOCK
 # Extend Timeout to allow time to pull the image
 TimeoutStartSec=900

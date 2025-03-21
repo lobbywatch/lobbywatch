@@ -21,7 +21,6 @@
       loop:
         - /home/almalinux/.config/containers/systemd/
         - /home/almalinux/.config/systemd/user
-        - /home/almalinux/.config/environment.d
         - /home/almalinux/scraper
         - /home/almalinux/mariadb
 
@@ -63,16 +62,10 @@
         - files/scraper.timer
         - files/ssh-agent.service
 
-    - name: copy ssh-agent environment config
-      ansible.builtin.copy:
-        src: files/90-ssh-auth-sock.conf
-        dest: /home/almalinux/.config/environment.d/90-ssh-auth-sock.conf
-        mode: '0644'
-
-    - name: source ssh-agent-sock
+    - name: add SSH_AUTH_SOCK env var
       ansible.builtin.lineinfile:
         state: present
-        line: source /home/almalinux/.config/environment.d/90-ssh-auth-sock.conf
+        line: export SSH_AUTH_SOCK=/run/user/1000/ssh-agent.socket
         path: /home/almalinux/.bashrc
 
     - name: copy ssh known_hosts
