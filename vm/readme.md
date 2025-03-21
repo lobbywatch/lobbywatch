@@ -6,10 +6,11 @@
 1. (On VM) Put SSH key into `.ssh`
 1. (On VM) Add SSH key to agent (see below)
 1. (On VM) Place copy of `public_html/settings/example.settings.php` in `~/scraper/settings.php`, change users and passwords accordingly. 
+2. Initial DB import, see MariaDB chapter below
 
 ## Access
 
-If your SSH public key is allowed, you can connect to the VM via `ssh  almalinux@84.234.16.49`
+If your SSH public key is allowed, you can connect to the VM via `ssh almalinux@84.234.16.49`
 
 ## Scraper
 
@@ -38,26 +39,39 @@ systemctl --user list-units --all '*scraper*'
 ```
 ### Force rebuilding scraper container image
 
+Currently the scraper image must be rebuilt manually whenever changes are made to the repository.
+
 ```shell
 systemctl --user restart scraper-build.service
 ```
 
-## Run scraper manually
+You can look the build process with `journalctl --user-unit=scraper-build`.
+
+### Scraper shell
 
 ```shell
 sh scraper/debug-scraper.sh
 # shell opens in container, same image as scraper.service uses
+
+# run scraping script
 ./run_update_ws_parlament.sh -h
-mariadb -h mariadb -u root -p # connect to local mariadb
+
+# or connect to local mariadb
+mariadb -h mariadb -u root -p
 ```
+
+### Troubleshooting
+
+1. Check output of `journalctl --user-unit=scraper`
+2. Check files in `/home/almalinux/scraper/sql`
+3. [Open a scraper shell](#scraper-shell) and re-run the scraping process to see errors happening live
 
 ## ssh-agent
 
 The scraper containers need a running SSH agent in order to be able to connect to the cyon host. To find out whether it is up and running, run 
 
 ```shell
-# For some reason ssh-add ignores the SSH_AUTH_SOCK variable in the environment
-SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/ssh-agent.socket ssh-add -l
+ssh-add -l
 ```
 It should list a single `ED25519` key.
 
@@ -78,10 +92,22 @@ systemctl --user restart ssh-agent
 ### Add SSH key to agent
 
 ```shell
-# For some reason ssh-add ignores the SSH_AUTH_SOCK variable in the environment
-SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/ssh-agent.socket
+ssh-add
 # you will be asked for a passphrase, which is stored in the IT keepass file 
 ```
+
+## MariaDB
+
+### Initial DB import
+
+The init script mounted into the mariadb only creates a few basic items. For the import to work you have to import a full dump from the cyon DB. To do this, [open a scraper shell](#scraper-shell) and run
+
+```shell
+./run_update_ws_parlament.sh -f
+./run_update_ws_parlament.sh -f -i -l=lobbywatch
+```
+
+Now both `lobbywatch` and `lobbywatchtest` in the local mariadb contain a recent dump of the cyon database. 
 
 ## Resources
 
