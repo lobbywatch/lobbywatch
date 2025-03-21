@@ -8,6 +8,7 @@ Environment=MARIADB_ROOT_PASSWORD=changeme
 Network=scraper.network
 HostName=mariadb
 Mount=type=bind,source=/home/almalinux/mariadb,target=/docker-entrypoint-initdb.d,readonly,relabel=shared
+Mount=type=volume,source=mariadb.volume,target=/var/lib/mysql
 
 [Service]
 Restart=no
