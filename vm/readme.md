@@ -45,7 +45,7 @@ Currently the scraper image must be rebuilt manually whenever changes are made t
 systemctl --user restart scraper-build.service
 ```
 
-You can look the build process with `journalctl --user-unit=scraper-build`.
+You can look at the build process with `journalctl --user-unit=scraper-build`.
 
 ### Scraper shell
 
