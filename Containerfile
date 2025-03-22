@@ -3,7 +3,7 @@ FROM fedora:39
 
 ENV TZ=Europe/Zurich
 
-RUN dnf install -y nano python3.12 python3.12-devel java-17-openjdk mariadb-connector-c-devel gcc php composer php-mysqlnd git rsync mariadb qpdf jq ImageMagick
+RUN dnf install -y nano python3.12 python3.12-devel java-17-openjdk mariadb-connector-c-devel gcc php composer php-mysqlnd git rsync mariadb qpdf jq ImageMagick unzip
 
 WORKDIR /opt/lobbywatch
 
@@ -16,6 +16,8 @@ RUN pip install -r requirements.txt
 
 WORKDIR /opt/lobbywatch
 
-ENTRYPOINT ["./run_update_ws_parlament.sh"]
+RUN composer install
+
+ENTRYPOINT ["run_update_ws_parlament.sh"]
 
 CMD ["-h"]
