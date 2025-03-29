@@ -1,0 +1,7 @@
+[Unit]
+Description=Notifying slack channel about outcome of scraper job
+
+[Service]
+Type=oneshot
+EnvironmentFile=/home/almalinux/scraper/notify.env
+ExecStart=curl -X POST -H 'Content-type: application/json' --data ${LW_SCRAPER_NOTIFY_MESSAGE} ${LW_SCRAPER_NOTIFY_WEBHOOK_URL}
