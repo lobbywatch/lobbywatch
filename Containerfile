@@ -18,6 +18,6 @@ WORKDIR /opt/lobbywatch
 
 RUN composer install
 
-ENTRYPOINT ["run_update_ws_parlament.sh"]
+ENTRYPOINT ["./run_update_ws_parlament.sh"]
 
 CMD ["-h"]
