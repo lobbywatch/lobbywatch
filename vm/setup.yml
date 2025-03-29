@@ -43,24 +43,15 @@
 
     - name: copy quadlet files
       ansible.builtin.copy:
-        src: "{{ item }}"
-        dest: "/home/almalinux/.config/containers/systemd/{{ item | basename }}"
+        src: files/quadlet/
+        dest: /home/almalinux/.config/containers/systemd/
         mode: '0644'
-      loop:
-        - files/scraper.build
-        - files/scraper.container
-        - files/scraper.network
-        - files/mariadb.container
-        - files/mariadb.volume
 
-    - name: copy systemd user units
+    - name: copy systemd user files
       ansible.builtin.copy:
-        src: "{{ item }}"
-        dest: "/home/almalinux/.config/systemd/user/{{ item | basename }}"
+        src: files/systemd/
+        dest: /home/almalinux/.config/systemd/user/
         mode: '0644'
-      loop:
-        - files/scraper.timer
-        - files/ssh-agent.service
 
     - name: add SSH_AUTH_SOCK env var
       ansible.builtin.lineinfile:

@@ -2,6 +2,8 @@
 [Unit]
 Description=Lobbywatch scraper service
 Requires=mariadb.service
+OnFailure=scraper-notify@failure.service
+OnSuccess=scraper-notify@success.service
 
 [Container]
 Image=scraper.build
