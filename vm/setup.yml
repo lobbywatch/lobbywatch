@@ -21,7 +21,9 @@
       loop:
         - /home/almalinux/.config/containers/systemd/
         - /home/almalinux/.config/systemd/user
-        - /home/almalinux/scraper
+        - /home/almalinux/scraper/sql
+        - /home/almalinux/scraper/prod_bak
+        - /home/almalinux/scraper/archive
         - /home/almalinux/mariadb
 
     - name: copy scraper files
