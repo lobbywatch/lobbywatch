@@ -1274,6 +1274,7 @@ function isFullWorkflowUser() {
   72, // Priscilla Imboden
   73, // Balz Oertli
   76, // Etienne Kocher
+  86, // Lucas
   ], false);
 }
 

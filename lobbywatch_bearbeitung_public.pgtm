@@ -8778,8 +8778,7 @@ window.disable_organisation_imported_fields = function (editors) {
 
 // global variables
 window.api_base_url = '$api_base_url';
-window.ws_uid_base_url = '$ws_uid_base_url';
-          </OnBeforePageLoad>
+window.ws_uid_base_url = '$ws_uid_base_url';          </OnBeforePageLoad>
           <OnInsertFormEditorValueChanged enabled="true">
 window.format_uid(sender, editors);
 if (sender.getFieldName() == 'uid') {
