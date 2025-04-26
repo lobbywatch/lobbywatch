@@ -4487,3 +4487,8 @@ ALTER TABLE `zutrittsberechtigung`
 
 ALTER TABLE `zutrittsberechtigung_log`
   ADD `zutrittsberechtigung_parlamentarier_person_unique` VARCHAR(0) NULL DEFAULT NULL COMMENT 'Platzhalter für fachlichen unique constraint' AFTER `updated_date`;
+
+-- 26.04.2025
+
+ALTER TABLE `organisation_beziehung`
+  CHANGE `organisation_beziehung_organisation_ziel_organisation_art_unique` `organisation_beziehung_organisation_ziel_organisation_art_unique` VARCHAR(55) CHARACTER SET utf8mb4 AS (concat_ws('_',`organisation_id`,`ziel_organisation_id`,`art`,ifnull(`bis`,'9999-12-31'))) VIRTUAL COMMENT 'Kombination aus organisation_id, ziel_organisation_id, art und bis muss eindeutig sein. (Fachlicher unique constraint)';
