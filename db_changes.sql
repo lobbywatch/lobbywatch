@@ -4492,3 +4492,11 @@ ALTER TABLE `zutrittsberechtigung_log`
 
 ALTER TABLE `organisation_beziehung`
   CHANGE `organisation_beziehung_organisation_ziel_organisation_art_unique` `organisation_beziehung_organisation_ziel_organisation_art_unique` VARCHAR(55) CHARACTER SET utf8mb4 AS (concat_ws('_',`organisation_id`,`ziel_organisation_id`,`art`,ifnull(`bis`,'9999-12-31'))) VIRTUAL COMMENT 'Kombination aus organisation_id, ziel_organisation_id, art und bis muss eindeutig sein. (Fachlicher unique constraint)';
+
+-- 28.4.2025 Changed from version string (1.2.3) to Git hashes.
+
+ALTER TABLE `translation_source`
+  CHANGE `version` `version` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Version of Lobbywatch, where the string was last updated (for translation optimization).';
+
+ALTER TABLE `translation_source_log`
+  CHANGE `version` `version` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Version of Lobbywatch, where the string was last updated (for translation optimization).';
