@@ -1275,6 +1275,7 @@ function isFullWorkflowUser() {
   73, // Balz Oertli
   76, // Etienne Kocher
   86, // Lucas
+  87, // Flavia
   ], false);
 }
 
