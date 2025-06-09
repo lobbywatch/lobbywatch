@@ -310,8 +310,8 @@ def scarpe_parl_pdf(group_type, url, json_filename, local_pdf):
         print("PDF creation date: {}".format(creation_date.strftime("%d.%m.%Y")))
         print("PDF modified date: {}\n".format(modified_date.strftime("%d.%m.%Y")))
 
-        print("removing first 3 pages of PDF...")
-        call(["qpdf", "--pages", pdf_name, "4-z", "--", pdf_name, CONTENT_PDF])
+        print("removing first 2 pages of PDF...")
+        call(["qpdf", "--pages", pdf_name, "3-z", "--", pdf_name, CONTENT_PDF])
 
         print("parsing PDF...")
         cmd = ["java", "-Djava.util.logging.config.file=web_scrapers/logging.properties", "-jar", tabula_path, CONTENT_PDF, "-o", DATA_CSV, "--pages", "all", "-t", "-i"]
