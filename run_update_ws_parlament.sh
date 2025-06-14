@@ -39,7 +39,7 @@ LOCAL_PHP="php -d error_reporting=E_ALL"
 db=lobbywatchtest
 env="local_${db}"
 ARCHIVE_PDF_DIR="web_scrapers/archive"
-MAIL_TO="redaktion@lobbywatch.ch,roland.kurmann@lobbywatch.ch"
+MAIL_TO="redaktion@lobbywatch.ch,dev@lobbywatch.ch"
 subject="Lobbywatch-Import:"
 nobackup=false
 allowProdWithoutBackup=false
