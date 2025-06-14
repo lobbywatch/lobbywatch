@@ -5,7 +5,7 @@
 1. (Your machine) Install some needed packages and prepare the scraper container and scheduling: `ansible-playbook -i inventory.yml setup.yml`
 1. (On VM) Put SSH key into `.ssh`
 1. (On VM) Add SSH key to agent (see below)
-1. (On VM) Place copy of `public_html/settings/example.settings.php` in `~/scraper/settings.php`, change users and passwords accordingly.
+1. (On VM) Place copy of `public_html/settings/example.settings.php` in `~/scraper/settings.php`, change users and passwords accordingly. Especially `$mail_connection` (send@lobbywatch.ch in keepass) and `$db_connections` (matching local mariadb)
 2. (On VM) Place `notify.env` into `/home/almalinux/scraper`. It must contain a environment variable `LW_SCRAPER_NOTIFY_WEBHOOK_URL` with a valid slack webhook URL. 
 2. Initial DB import, see MariaDB chapter below
 
