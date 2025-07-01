@@ -1273,6 +1273,7 @@ function isFullWorkflowUser() {
   71, // Strässle Fabian
   72, // Priscilla Imboden
   73, // Balz Oertli
+  74, // Reto Naegeli
   76, // Etienne Kocher
   86, // Lucas
   87, // Flavia
