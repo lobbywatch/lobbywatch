@@ -35,9 +35,11 @@ president_mapping = {'Co-Präsidenten': ('praesident', ('Co-Präsident', 'Co-Pr�
                      'Vize-Präsidentin': ('vizepraesident', ('Vize-Präsident', 'Vize-Präsidentin'), ('Vice-président', 'Vice-présidente')),
                      'Vize-Präsident/in': ('vizepraesident', ('Vize-Präsident', 'Vize-Präsidentin'), ('Vice-président', 'Vice-présidente')),
                      'Vice-président-e' : ('vizepraesident', ('Vize-Präsident', 'Vize-Präsidentin'), ('Vice-président', 'Vice-présidente')),
+                     'Vice-président/e' : ('vizepraesident', ('Vize-Präsident', 'Vize-Präsidentin'), ('Vice-président', 'Vice-présidente')),
                      'Präsidentin': ('praesident', ('Präsident', 'Präsidentin'), ('Président', 'Présidente')),
                      'Präsident/in': ('praesident', ('Präsident', 'Präsidentin'), ('Président', 'Présidente')),
                      'Präsidium': ('praesident', ('Präsidium', 'Präsidium'), ('Président', 'Présidente')),
                      'Président-e': ('praesident', ('Präsident', 'Präsidentin'), ('Président', 'Présidente')),
+                     'Président/e': ('praesident', ('Präsident', 'Präsidentin'), ('Président', 'Présidente')),
                      'Präsident': ('praesident', ('Präsident', 'Präsidentin'), ('Président', 'Présidente')),
                      }
