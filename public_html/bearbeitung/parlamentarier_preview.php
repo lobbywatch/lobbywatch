@@ -86,7 +86,7 @@ try {
     $zbRet = zutrittsberechtigteForParlamentarier($con, $id, true);
     $zbList = $zbRet['zutrittsberechtigte'];
 
-    $mailtoParlam = 'mailto:' . rawurlencode($rowData["email"]) . '?subject=' . rawurlencode($emailSubjectParlam) . '&body=' . rawurlencode('[Kopiere von Vorlage]') . '&bcc=redaktion@lobbywatch.ch';
+    $mailtoParlam = 'mailto:' . rawurlencode($rowData["email"]) . '?subject=' . rawurlencode($emailSubjectParlam) . '&body=' . rawurlencode('[Kopiere von Vorlage]');
 
     $emailEndZb = [];
     $mailtoZb = [];
@@ -128,7 +128,7 @@ try {
       $rowStyles = '';
       customDrawRow('zutrittsberechtigung', $rowData, $rowCellStylesZb[$i], $rowStyles);
 
-      $mailtoZb[$i] = 'mailto:' . rawurlencode($zb["email"]) . '?subject=' . rawurlencode($emailSubjectZb[$i]) . '&body=' . rawurlencode('[Kopiere von Vorlage]') . '&bcc=redaktion@lobbywatch.ch';
+      $mailtoZb[$i] = 'mailto:' . rawurlencode($zb["email"]) . '?subject=' . rawurlencode($emailSubjectZb[$i]) . '&body=' . rawurlencode('[Kopiere von Vorlage]');
 
       $i++;
     }
