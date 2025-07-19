@@ -705,7 +705,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
           </ColumnPresentation>
           <ColumnPresentation fieldName="youtube_user" caption="Youtube User" headerHint="Youtube Username" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
-            <Hyperlink template="https://www.youtube.com/user/%youtube_user%" target=""/>
+            <Hyperlink template="https://www.youtube.com/@%youtube_user%" target=""/>
             <EditProperties type="textBox" maxLength="50"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Beschreibung der Lobbyorganisation. Beispielsweise von der Webseite, falls es keinen besseren Text gibt Zweck gemäss Handelsregister oder Statuten." canSetNull="true" selectedFilterOperators="1589247">
@@ -21317,7 +21317,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
           </ColumnPresentation>
           <ColumnPresentation fieldName="youtube_user" caption="Youtube" headerHint="Youtube Username" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
-            <Hyperlink template="https://www.youtube.com/user/%youtube_user%" target=""/>
+            <Hyperlink template="https://www.youtube.com/@%youtube_user%" target=""/>
             <EditProperties type="textBox" maxLength="50"/>
             <Validators>
               <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@))"/>
@@ -42937,7 +42937,7 @@ Tabelle der Parteien        </homePageDescription>
           </ColumnPresentation>
           <ColumnPresentation fieldName="youtube_user" caption="Youtube" headerHint="Youtube Username" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
-            <Hyperlink template="https://www.youtube.com/user/%youtube_user%" target=""/>
+            <Hyperlink template="https://www.youtube.com/@%youtube_user%" target=""/>
             <EditProperties type="textBox" maxLength="50"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="facebook_name" caption="Facebook" headerHint="Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
