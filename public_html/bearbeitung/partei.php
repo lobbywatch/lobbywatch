@@ -14718,7 +14718,7 @@
             //
             $column = new TextViewColumn('youtube_user', 'youtube_user', 'Youtube', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('https://www.youtube.com/user/%youtube_user%');
+            $column->setHrefTemplate('https://www.youtube.com/@%youtube_user%');
             $column->setTarget('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->setDescription('Youtube Username');
@@ -15010,7 +15010,7 @@
             //
             $column = new TextViewColumn('youtube_user', 'youtube_user', 'Youtube', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('https://www.youtube.com/user/%youtube_user%');
+            $column->setHrefTemplate('https://www.youtube.com/@%youtube_user%');
             $column->setTarget('');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -16384,7 +16384,7 @@
             //
             $column = new TextViewColumn('youtube_user', 'youtube_user', 'Youtube', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('https://www.youtube.com/user/%youtube_user%');
+            $column->setHrefTemplate('https://www.youtube.com/@%youtube_user%');
             $column->setTarget('');
             $grid->AddPrintColumn($column);
             
@@ -16660,7 +16660,7 @@
             //
             $column = new TextViewColumn('youtube_user', 'youtube_user', 'Youtube', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('https://www.youtube.com/user/%youtube_user%');
+            $column->setHrefTemplate('https://www.youtube.com/@%youtube_user%');
             $column->setTarget('');
             $grid->AddExportColumn($column);
             
@@ -16936,7 +16936,7 @@
             //
             $column = new TextViewColumn('youtube_user', 'youtube_user', 'Youtube', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('https://www.youtube.com/user/%youtube_user%');
+            $column->setHrefTemplate('https://www.youtube.com/@%youtube_user%');
             $column->setTarget('');
             $grid->AddCompareColumn($column);
             
