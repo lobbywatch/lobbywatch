@@ -80,3 +80,10 @@
 
     - name: enable linger for user
       ansible.builtin.command: loginctl enable-linger
+
+    - name: install clean-up job
+      ansible.builtin.copy:
+        dest: /etc/cron.weekly/import-clean-up.sh
+        src: files/import-clean-up.sh
+        mode: '0500'
+      become: true
