@@ -51,3 +51,21 @@ def read_stand(filename):
             return stand_date
 
     return None
+
+PARL_PDF_SKIP_MARKER = 'segreteria dell’intergruppo in questione.'
+
+def get_page_to_start_from(parl_pdf_filename: str) -> int:
+    '''return page number to start parsing parliamentary groups from.
+    
+    There is some text at the beginning of the PDF we want to skip but for some reason
+    the number of pages to skip varies. Therefore we look for a marker
+    sentence and return the next page number.
+    '''
+    with open(parl_pdf_filename, "rb") as pdf_file:
+        parl_pdf = PdfReader(pdf_file, strict=False)
+        for page in parl_pdf.pages:
+            text = page.extract_text()
+            if PARL_PDF_SKIP_MARKER in text:
+                return page.page_number + 2 # page numbers are zero-based
+
+        raise RuntimeError("failed to find marker text in PDF")
