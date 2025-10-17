@@ -33,6 +33,8 @@ We define the following units
 | mariadb-volume.service | mariadb.volume | podman volume for local mariadb | 
 | ssh-agent.service | ssh-agent.service | ssh-agent service, for access to cyon host | 
 | scraper-notify@.service | scraper-notify@.service | notification service | 
+| website-watcher.timer | website-watcher.timer  | triggers the website-watcher |
+| website-watcher.service | website-watcher.container  | website-watcher container |
 
 You can get their status using
 

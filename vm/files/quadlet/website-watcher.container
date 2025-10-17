@@ -1,0 +1,13 @@
+# https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html#container-units-container
+[Unit]
+Description=Lobbywatch website watcher
+
+[Container]
+Image=lobbywatch/website-watcher
+Secret=website-watcher-repo-ssh-key,target=/home/bot/.ssh/id_ed25519
+Secret=website-watcher-env-file,target=/opt/website-updates/.env
+
+[Service]
+Restart=no
+# Extend Timeout to allow time to pull the image
+TimeoutStartSec=900

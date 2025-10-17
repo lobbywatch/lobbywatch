@@ -1,0 +1,11 @@
+# https://www.freedesktop.org/software/systemd/man/latest/systemd.timer.html
+[Install]
+WantedBy=default.target
+
+[Unit]
+Description=timer for website watcher
+
+[Timer]
+OnCalendar=Mon..Fri 19:00
+Unit=website-watcher.service
+Persistent=True
