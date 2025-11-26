@@ -368,7 +368,7 @@ def handle_organisation(group_type, rechtsform, group, inaktiv, name_de, name_fr
 
     adresse = (adresse_str, adresse_zusatz, adresse_plz, adresse_ort)
 
-    email_hosts = ('parl.ch', 'bluewin.ch', 'gmail.com', 'yahoo.com', 'yahoo.de', 'yahoo.fr', 'gmx.ch', 'gmx.net', 'gmx.de', 'swissonline.ch', 'hotmail.com', 'bluemail.ch', 'outlook.com')
+    email_hosts = ('bluemail.ch', 'bluewin.ch', 'gmail.com', 'gmx.ch', 'gmx.de', 'gmx.net', 'hotmail.com', 'outlook.com', 'parl.ch', 'sunrise.ch', 'swissonline.ch', 'yahoo.com', 'yahoo.de', 'yahoo.fr')
 
     homepage = re.findall(HOST_REGEX, sekretariat)
     email_host = re.findall(r"(?i)@([-\w.]+)", sekretariat)
