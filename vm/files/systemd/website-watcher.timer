@@ -6,6 +6,6 @@ WantedBy=default.target
 Description=timer for website watcher
 
 [Timer]
-OnCalendar=Mon..Fri 19:00
+OnCalendar=Mon 19:00
 Unit=website-watcher.service
 Persistent=True
