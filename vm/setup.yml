@@ -78,6 +78,7 @@
         - scraper.timer
         - ssh-agent.service
         - website-watcher.timer
+        - hr-watcher.timer
 
     - name: enable linger for user
       ansible.builtin.command: loginctl enable-linger
