@@ -8,6 +8,8 @@ from pg_create_delta import normalize_organisation
         (None, None),
         (" ", ""),
         (" ()", ""),
+        ("-- ()", ""),
+        ("--- ()", ""),
         ("Kindes- und Erwachsenenschutz ()", "Kindes- und Erwachsenenschutz"),
         ("Enfance et jeunesse (IPEJ)", "Enfance et jeunesse"),
         ("Climat", "Climat"),

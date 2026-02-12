@@ -72,7 +72,7 @@ def print_summary(summary, batch_time):
 # Often some small details in organisation naming can be ignored
 def normalize_organisation(name):
     if name == None: return None
-    return re.sub(r'\([^)]*\)', '', name).strip()
+    return re.sub(r'^[-]+|\([^)]*\)', '', name).strip()
 
 def get_organisation(group, conn):
     name_de = normalize_organisation(group["name_de"])
