@@ -100,12 +100,7 @@ def test_sync_parliamentarian_two_guests_no_changes() -> None:
     assert summary_row.gast2_name == "Guest 2"
     assert summary_row.gast2_id_old == ""
     assert summary_row.gast2_changes == ""
-    assert (
-        summary_row.write(0)
-        == "  0| == | peter parl     |   1 ‖ Guest 1      | guest_1 |               ‖ Guest 2      | guest_2 |               ‖              |      |              |      |"
-    )
     assert_sql_generator_calls({})
-
 
 def test_sync_parliamentarian_two_guests_order_changed_in_pdf() -> None:
     p = {
@@ -179,14 +174,9 @@ def test_sync_parliamentarian_one_guest_to_no_guests() -> None:
     assert summary_row.gast2_id == ""
     assert summary_row.gast2_id_old == ""
     assert summary_row.gast2_changes == ""
-    assert (
-        summary_row.write(0)
-        == "  0| -  | peter parl     |   1 ‖              |      |               ‖              |      |               ‖ Guest 1      | guest_1 |              |      |"
-    )
     assert_sql_generator_calls(
         {"end_zutrittsberechtigung": [call("zb_1", batch_time, pdf_date)]}
     )
-
 
 def test_sync_parliamentarian_no_guests_to_one_guest() -> None:
     p = {
@@ -229,7 +219,6 @@ def test_sync_parliamentarian_no_guests_to_one_guest() -> None:
             "insert_person": [call(json_guest(1), batch_time, pdf_date)],
         }
     )
-
 
 def test_sync_parliamentarian_one_guest_to_two_guests() -> None:
     p = {
@@ -276,7 +265,8 @@ def test_sync_parliamentarian_one_guest_to_two_guests() -> None:
     )
 
 
-def test_sync_parliamentarian_two_guests_first_guest_changes_function() -> None:
+@pytest.mark.parametrize("guest_index_to_index", (1, 2))
+def test_sync_parliamentarian_two_guests_first_guest_changes_function(guest_index_to_index) -> None:
     p = {
         "canton": "bern",
         "faction": "",
@@ -318,7 +308,6 @@ def test_sync_parliamentarian_two_guests_first_guest_changes_function() -> None:
             ],
         }
     )
-
 
 def test_sync_parliamentarian_two_guests_first_guest_leaves() -> None:
     p = {

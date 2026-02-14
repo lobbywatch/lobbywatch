@@ -1,97 +1,158 @@
-from datetime import date, datetime
+from dataclasses import dataclass
+from datetime import date
+from typing import List
+
+
+@dataclass
+class Guest:
+    symbol: str = " "
+    id: str = ""
+    id_old: str = ""
+    name: str = ""
+    name_old: str = ""
+    changes: str = ""
+
+    def update_symbols(self):
+        if self.name_old != "" and self.name != "":
+            self.symbol = "±"
+
+    def has_changed(self):
+        return not (self.symbol == "=" or self.symbol == " ")
 
 class SummaryRow:
     def __init__(self, parlamentarier, count, parlamentarier_db_dict):
         self.number = str(count)
-        self.symbol1 = " "
-        self.symbol2 = " "
         self.parlamentarier_name = _display_name(parlamentarier["names"])
         self.parlamentarier_id = str(parlamentarier["id"])
-        self.gast1_name = ""
-        self.gast1_id = ""
-        self.gast1_changes = ""
-        self.gast2_name = ""
-        self.gast2_id = ""
-        self.gast2_changes = ""
-        self.gast1_name_old = ""
-        self.gast1_id_old = ""
-        self.gast2_name_old = ""
-        self.gast2_id_old = ""
         self.parlamentarier_db_dict = parlamentarier_db_dict
+        self._guests: List[Guest] = [Guest(), Guest()]
+
+    def get_guest(self, index: int) -> Guest:
+        return self._guests[index - 1]
+
+    def set_new_guest(self, index: int, person) -> None:
+        self.set_guest(index, person)
+        if person:
+            self.get_guest(index).symbol = "+"
+
+    def set_guest(self, index: int, person) -> None:
+        if person:
+            guest = self.get_guest(index)
+            guest.name = _display_name(person["names"])
+            if "id" in person:
+                guest.id = str(person["id"])
+                guest.symbol = "="
+
+    def set_removed_guest(self, index: int, person):
+        if person:
+            guest = self.get_guest(index)
+            guest.name_old = _display_name(person["names"])
+            guest.id_old = str(person["id"])
+            guest.symbol = "-"
+
+    def set_guest_changes(self, index, changes):
+        guest = self.get_guest(index)
+        guest.changes = changes
+        guest.symbol = "≠"
+
+    @property
+    def gast1_id(self):
+        return self.get_guest(1).id
+
+    @property
+    def gast2_id(self):
+        return self.get_guest(2).id
+
+    @property
+    def gast1_name(self):
+        return self.get_guest(1).name
+
+    @property
+    def gast2_name(self):
+        return self.get_guest(2).name
+
+    @property
+    def gast1_id_old(self):
+        return self.get_guest(1).id_old
+
+    @property
+    def gast2_id_old(self):
+        return self.get_guest(2).id_old
+
+    @property
+    def gast1_name_old(self):
+        return self.get_guest(1).name_old
+
+    @property
+    def gast2_name_old(self):
+        return self.get_guest(2).name_old
+
+    @property
+    def gast1_changes(self):
+        return self.get_guest(1).changes
+
+    @property
+    def gast2_changes(self):
+        return self.get_guest(2).changes
+
+    @property
+    def symbol1(self):
+        return self.get_guest(1).symbol
+
+    @property
+    def symbol2(self):
+        return self.get_guest(2).symbol
 
     def set_guest_1(self, person):
-        if person:
-            self.gast1_name = _display_name(person["names"])
-            if "id" in person:
-                self.gast1_id = str(person["id"])
-                self.symbol1 = "="
+        self.set_guest(1, person)
 
     def set_removed_guest_1(self, person):
-        if person:
-            self.gast1_name_old = _display_name(person["names"])
-            self.gast1_id_old = str(person["id"])
-            self.symbol1 = "-"
+        self.set_removed_guest(1, person)
 
     def set_new_guest_1(self, person):
-        self.set_guest_1(person)
-        if person:
-            self.symbol1 = "+"
+        self.set_new_guest(1, person)
 
     def set_guest_2(self, person):
-        if person:
-            self.gast2_name = _display_name(person["names"])
-            if "id" in person:
-                self.gast2_id = str(person["id"])
-                self.symbol2 = "="
+        self.set_guest(2, person)
 
     def set_removed_guest_2(self, person):
-        if person:
-            self.gast2_name_old = _display_name(person["names"])
-            self.gast2_id_old = str(person["id"])
-            self.symbol2 = "-"
+        self.set_removed_guest(2, person)
 
     def set_new_guest_2(self, person):
-        self.set_guest_2(person)
-        if person:
-            self.symbol2 = "+"
+        self.set_new_guest(2, person)
 
     def set_guest_1_changes(self, changes):
-        self.gast1_changes = changes
-        self.symbol1 = "≠"
+        self.set_guest_changes(1, changes)
 
     def set_guest_2_changes(self, changes):
-        self.gast2_changes = changes
-        self.symbol2 = "≠"
+        self.set_guest_changes(2, changes)
 
     def update_symbols(self):
-        if self.gast1_name_old != "":
-            if self.gast1_name != "":
-                self.symbol1 = "±"
-
-        if self.gast2_name_old != "":
-            if self.gast2_name != "":
-                self.symbol2 = "±"
+        for guest in self._guests:
+            guest.update_symbols()
 
     def has_changed(self):
-        return not ((self.symbol1 == "=" or self.symbol1 == " ") and (self.symbol2 == "=" or self.symbol2 == " "))
+        return any([guest.has_changed() for guest in self._guests])
 
     def get_symbol1(self):
-        return self.symbol1
+        return self.get_guest(1).symbol
 
     def get_symbol2(self):
-        return self.symbol2
+        return self.get_guest(2).symbol
 
     def is_parlamentarier_active(self):
-        return self.parlamentarier_db_dict['im_rat_bis'] == None or self.parlamentarier_db_dict['im_rat_bis'] > date.today()
+        return (
+            self.parlamentarier_db_dict["im_rat_bis"] is None
+            or self.parlamentarier_db_dict["im_rat_bis"] > date.today()
+        )
 
     def write(self, row_nr):
         self.update_symbols()
-        mark = ' ' if self.is_parlamentarier_active() else '~'
-        return "{:3d}|{}{}{}{}|{}{}{}|{}{}{}‖ {} | {} | {} ‖ {} | {} | {} ‖ {} | {} | {} | {} |".format(
+        mark = " " if self.is_parlamentarier_active() else "~"
+        first_block = "{:3d}|{}{}{}{}|{}{}{}|{}{}{}".format(
             row_nr,  # self.number.ljust(3),
             mark,
-            self.symbol1,
-            self.symbol2,
+            *(guest.symbol for guest in self._guests),
             mark,
             mark,
             self.parlamentarier_name[:14].ljust(14),
@@ -99,16 +160,23 @@ class SummaryRow:
             mark,
             self.parlamentarier_id.rjust(3),
             mark,
-            self.gast1_name[:12].ljust(12),
-            self.gast1_id.rjust(4),
-            self.gast1_changes.ljust(13),
-            self.gast2_name[:12].ljust(12),
-            self.gast2_id.rjust(4),
-            self.gast2_changes.ljust(13),
-            self.gast1_name_old[:12].ljust(12),
-            self.gast1_id_old.rjust(4),
-            self.gast2_name_old[:12].ljust(12),
-            self.gast2_id_old.rjust(4))
+        )
+        guest_block = (
+            " {} | {} | {} ".format(
+                guest.name[:12].ljust(12),
+                guest.id.rjust(4),
+                guest.changes.ljust(13),
+            )
+            for guest in self._guests
+        )
+        guest_old_block = (
+            " {} | {} ".format(
+                guest.name_old[:12].ljust(12),
+                guest.id_old.rjust(4),
+            )
+            for guest in self._guests
+        )
+        return "‖".join([first_block, *guest_block, *guest_old_block])
 
 
 def write_header():
