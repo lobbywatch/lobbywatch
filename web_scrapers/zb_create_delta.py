@@ -181,41 +181,41 @@ def sync_parliamentarian(parlamentarier: Dict, conn, batch_time: datetime, pdf_d
 
     #check if existing guest 1 left or stayed
     if name_logic.are_guests_equal(existing_guest_1, new_guest_1):
-        summary_row.set_guest_1(existing_guest_1)
+        summary_row.set_guest(1, existing_guest_1)
         funktion_equal = guest_remained(parlamentarier, existing_guest_1, new_guest_1, batch_time, pdf_date)
         if not funktion_equal:
-            summary_row.set_guest_1_changes("funktion")
+            summary_row.set_guest_changes(1, "funktion")
 
     elif name_logic.are_guests_equal(existing_guest_1, new_guest_2):
-        summary_row.set_guest_1(existing_guest_1)
+        summary_row.set_guest(1, existing_guest_1)
         funktion_equal = guest_remained(parlamentarier, existing_guest_1, new_guest_2, batch_time, pdf_date)
         if not funktion_equal:
-            summary_row.set_guest_1_changes("funktion")
+            summary_row.set_guest_changes(1, "funktion")
     else:
         guest_removed(parlamentarier, existing_guest_1, batch_time, pdf_date)
-        summary_row.set_removed_guest_1(existing_guest_1)
+        summary_row.set_removed_guest(1, existing_guest_1)
 
     #check if existing guest 2 left or stayed
     if name_logic.are_guests_equal(existing_guest_2, new_guest_1):
-        summary_row.set_guest_2(existing_guest_2)
+        summary_row.set_guest(2, existing_guest_2)
         funktion_equal = guest_remained(parlamentarier, existing_guest_2, new_guest_1, batch_time, pdf_date)
         if not funktion_equal:
-            summary_row.set_guest_2_changes("funktion")
+            summary_row.set_guest_changes(2, "funktion")
 
     elif name_logic.are_guests_equal(existing_guest_2, new_guest_2):
-        summary_row.set_guest_2(existing_guest_2)
+        summary_row.set_guest(2, existing_guest_2)
         funktion_equal = guest_remained(parlamentarier, existing_guest_2, new_guest_2, batch_time, pdf_date)
         if not funktion_equal:
-            summary_row.set_guest_2_changes("funktion")
+            summary_row.set_guest_changes(2, "funktion")
 
     else:
         guest_removed(parlamentarier, existing_guest_2, batch_time, pdf_date)
-        summary_row.set_removed_guest_2(existing_guest_2)
+        summary_row.set_removed_guest(2, existing_guest_2)
 
     # check if new guest 1 was already here
     if not name_logic.are_guests_equal(new_guest_1, existing_guest_1) and not name_logic.are_guests_equal(new_guest_1, existing_guest_2) and parlamentarier_active:
         guest_added(conn, parlamentarier, new_guest_1, batch_time, pdf_date)
-        summary_row.set_new_guest_1(new_guest_1)
+        summary_row.set_new_guest(1, new_guest_1)
 
     # check if new guest 2 was already here
     if not name_logic.are_guests_equal(new_guest_2, existing_guest_1) and not name_logic.are_guests_equal(new_guest_2, existing_guest_2) and parlamentarier_active:
@@ -223,9 +223,9 @@ def sync_parliamentarian(parlamentarier: Dict, conn, batch_time: datetime, pdf_d
         guest_added(conn, parlamentarier, new_guest_2, batch_time, pdf_date)
 
         if name_logic.are_guests_equal(new_guest_1, existing_guest_2):
-            summary_row.set_new_guest_1(new_guest_2)
+            summary_row.set_new_guest(1, new_guest_2)
         else:
-            summary_row.set_new_guest_2(new_guest_2)
+            summary_row.set_new_guest(2, new_guest_2)
 
     return summary_row
 
