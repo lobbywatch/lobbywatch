@@ -21,12 +21,12 @@ class Guest:
 
 
 class SummaryRow:
-    def __init__(self, parlamentarier, count, parlamentarier_db_dict):
+    def __init__(self, parlamentarier, count, parlamentarier_db_dict, guest_limit):
         self.number = str(count)
         self.parlamentarier_name = _display_name(parlamentarier["names"])
         self.parlamentarier_id = str(parlamentarier["id"])
         self.parlamentarier_db_dict = parlamentarier_db_dict
-        self._guests: List[Guest] = [Guest(), Guest()]
+        self._guests: List[Guest] = [Guest() for _ in range(guest_limit)]
 
     def get_guest(self, index: int) -> Guest:
         return self._guests[index - 1]
@@ -150,10 +150,10 @@ class SummaryRow:
     def write(self, row_nr):
         self.update_symbols()
         mark = " " if self.is_parlamentarier_active() else "~"
-        first_block = "{:3d}|{}{}{}{}|{}{}{}|{}{}{}".format(
+        first_block = "{:3d}|{}{}{}|{}{}{}|{}{}{}".format(
             row_nr,  # self.number.ljust(3),
             mark,
-            *(guest.symbol for guest in self._guests),
+            "".join([guest.symbol for guest in self._guests]),
             mark,
             mark,
             self.parlamentarier_name[:14].ljust(14),

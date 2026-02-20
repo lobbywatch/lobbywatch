@@ -177,8 +177,7 @@ def test_sync_parliamentarian_one_guest_to_no_guests() -> None:
     assert summary_row.get_guest(2).changes == ""
     assert_sql_generator_calls(
         {"end_zutrittsberechtigung": [call("zb_1", batch_time, pdf_date)]}
-    )
-
+)
 
 def test_sync_parliamentarian_no_guests_to_one_guest() -> None:
     p = {
