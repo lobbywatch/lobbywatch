@@ -2,7 +2,7 @@ import json
 from datetime import date, datetime
 from operator import attrgetter
 from argparse import ArgumentParser
-
+from typing import Dict
 import db
 import name_logic
 import sql_statement_generator
@@ -105,83 +105,11 @@ def sync_data(conn, filename, council, batch_time):
 
         count = 1
         for parlamentarier in content["data"]:
-
-            #load info about parlamentarier
-            kanton_id = db.get_kanton_id(conn, parlamentarier["canton"])
-            fraktion_id = db.get_fraktion_id(conn, parlamentarier["faction"])
-            try:
-                parlamentarier_id = db.get_parlamentarier_id_by_names_kanton_fraktion(conn, parlamentarier["names"], kanton_id, fraktion_id)
-            except:
-                parlamentarier_id = db.get_parlamentarier_id_by_names_kanton(conn, parlamentarier["names"], kanton_id)
-            parlamentarier["id"] = parlamentarier_id
-            parlamentarier_db_dict = db.get_parlamentarier_dict(conn, parlamentarier_id)
-            parlamentarier_active = parlamentarier_db_dict['im_rat_bis'] == None or parlamentarier_db_dict['im_rat_bis'] > date.today()
-
-            #existing guests (from database)
-            existing_guest_1, existing_guest_2  = db.get_guests(conn, parlamentarier_id)
-
-            #new guests (from JSON file)
-            new_guests = parlamentarier["guests"]
-            new_guest_1 = new_guests[0] if len(new_guests) > 0 else None
-            new_guest_2 = new_guests[1] if len(new_guests) > 1 else None
-
-            #summary row
-            summary_row = summary.SummaryRow(parlamentarier, count, parlamentarier_db_dict)
+            summary_row = sync_parliamentarian(parlamentarier, conn, batch_time, pdf_date, count)
             count += 1
-
-
-            #check if existing guest 1 left or stayed
-            if name_logic.are_guests_equal(existing_guest_1, new_guest_1):
-                summary_row.set_guest_1(existing_guest_1)
-                funktion_equal = guest_remained(parlamentarier, existing_guest_1, new_guest_1, batch_time, pdf_date)
-                if not funktion_equal:
-                    summary_row.set_guest_1_changes("funktion")
-
-            elif name_logic.are_guests_equal(existing_guest_1, new_guest_2):
-                summary_row.set_guest_1(existing_guest_1)
-                funktion_equal = guest_remained(parlamentarier, existing_guest_1, new_guest_2, batch_time, pdf_date)
-                if not funktion_equal:
-                    summary_row.set_guest_1_changes("funktion")
-            else:
-                guest_removed(parlamentarier, existing_guest_1, batch_time, pdf_date)
-                summary_row.set_removed_guest_1(existing_guest_1)
-
-            #check if existing guest 2 left or stayed
-            if name_logic.are_guests_equal(existing_guest_2, new_guest_1):
-                summary_row.set_guest_2(existing_guest_2)
-                funktion_equal = guest_remained(parlamentarier, existing_guest_2, new_guest_1, batch_time, pdf_date)
-                if not funktion_equal:
-                    summary_row.set_guest_2_changes("funktion")
-
-            elif name_logic.are_guests_equal(existing_guest_2, new_guest_2):
-                summary_row.set_guest_2(existing_guest_2)
-                funktion_equal = guest_remained(parlamentarier, existing_guest_2, new_guest_2, batch_time, pdf_date)
-                if not funktion_equal:
-                    summary_row.set_guest_2_changes("funktion")
-
-            else:
-                guest_removed(parlamentarier, existing_guest_2, batch_time, pdf_date)
-                summary_row.set_removed_guest_2(existing_guest_2)
-
-            # check if new guest 1 was already here
-            if not name_logic.are_guests_equal(new_guest_1, existing_guest_1) and not name_logic.are_guests_equal(new_guest_1, existing_guest_2) and parlamentarier_active:
-                guest_added(conn, parlamentarier, new_guest_1, batch_time, pdf_date)
-                summary_row.set_new_guest_1(new_guest_1)
-
-            # check if new guest 2 was already here
-            if not name_logic.are_guests_equal(new_guest_2, existing_guest_1) and not name_logic.are_guests_equal(new_guest_2, existing_guest_2) and parlamentarier_active:
-                # and not (parlamentarier_id == 223 and new_guest_2 != None and new_guest_2["names"] != None and new_guest_2["names"][0] == "Egger") # Quick and dirty fix for SR Engler + ZB Egger (new NR)
-                guest_added(conn, parlamentarier, new_guest_2, batch_time, pdf_date)
-
-                if name_logic.are_guests_equal(new_guest_1, existing_guest_2):
-                    summary_row.set_new_guest_1(new_guest_2)
-                else:
-                    summary_row.set_new_guest_2(new_guest_2)
-
             summary_rows.append(summary_row)
 
-    #return("\n".join(summary_rows))
-    return(summary_rows)
+    return (summary_rows)
 
 
 # a guest has been removed from a parlamentarier
@@ -225,6 +153,81 @@ def guest_remained(member_of_parliament, existing_guest, new_guest, date, pdf_da
             new_guest["function"]))
         print(sql_statement_generator.update_function_of_zutrittsberechtigung(existing_guest["zutrittsberechtigung_id"], new_guest["function"], date, pdf_date))
     return funktion_equal
+
+
+def sync_parliamentarian(parlamentarier: Dict, conn, batch_time: datetime, pdf_date: date, count: int) -> summary.SummaryRow:
+    #load info abo?ut parlamentarier
+    kanton_id = db.get_kanton_id(conn, parlamentarier["canton"])
+    fraktion_id = db.get_fraktion_id(conn, parlamentarier["faction"])
+    try:
+        parlamentarier_id = db.get_parlamentarier_id_by_names_kanton_fraktion(conn, parlamentarier["names"], kanton_id, fraktion_id)
+    except:
+        parlamentarier_id = db.get_parlamentarier_id_by_names_kanton(conn, parlamentarier["names"], kanton_id)
+    parlamentarier["id"] = parlamentarier_id
+    parlamentarier_db_dict = db.get_parlamentarier_dict(conn, parlamentarier_id)
+    parlamentarier_active = parlamentarier_db_dict['im_rat_bis'] is None or parlamentarier_db_dict['im_rat_bis'] > date.today()
+
+    #existing guests (from database)
+    existing_guest_1, existing_guest_2  = db.get_guests(conn, parlamentarier_id)
+
+    #new guests (from JSON file)
+    new_guests = parlamentarier["guests"]
+    new_guest_1 = new_guests[0] if len(new_guests) > 0 else None
+    new_guest_2 = new_guests[1] if len(new_guests) > 1 else None
+
+    #summary row
+    summary_row = summary.SummaryRow(parlamentarier, count, parlamentarier_db_dict)
+
+
+    #check if existing guest 1 left or stayed
+    if name_logic.are_guests_equal(existing_guest_1, new_guest_1):
+        summary_row.set_guest_1(existing_guest_1)
+        funktion_equal = guest_remained(parlamentarier, existing_guest_1, new_guest_1, batch_time, pdf_date)
+        if not funktion_equal:
+            summary_row.set_guest_1_changes("funktion")
+
+    elif name_logic.are_guests_equal(existing_guest_1, new_guest_2):
+        summary_row.set_guest_1(existing_guest_1)
+        funktion_equal = guest_remained(parlamentarier, existing_guest_1, new_guest_2, batch_time, pdf_date)
+        if not funktion_equal:
+            summary_row.set_guest_1_changes("funktion")
+    else:
+        guest_removed(parlamentarier, existing_guest_1, batch_time, pdf_date)
+        summary_row.set_removed_guest_1(existing_guest_1)
+
+    #check if existing guest 2 left or stayed
+    if name_logic.are_guests_equal(existing_guest_2, new_guest_1):
+        summary_row.set_guest_2(existing_guest_2)
+        funktion_equal = guest_remained(parlamentarier, existing_guest_2, new_guest_1, batch_time, pdf_date)
+        if not funktion_equal:
+            summary_row.set_guest_2_changes("funktion")
+
+    elif name_logic.are_guests_equal(existing_guest_2, new_guest_2):
+        summary_row.set_guest_2(existing_guest_2)
+        funktion_equal = guest_remained(parlamentarier, existing_guest_2, new_guest_2, batch_time, pdf_date)
+        if not funktion_equal:
+            summary_row.set_guest_2_changes("funktion")
+
+    else:
+        guest_removed(parlamentarier, existing_guest_2, batch_time, pdf_date)
+        summary_row.set_removed_guest_2(existing_guest_2)
+
+    # check if new guest 1 was already here
+    if not name_logic.are_guests_equal(new_guest_1, existing_guest_1) and not name_logic.are_guests_equal(new_guest_1, existing_guest_2) and parlamentarier_active:
+        guest_added(conn, parlamentarier, new_guest_1, batch_time, pdf_date)
+        summary_row.set_new_guest_1(new_guest_1)
+
+    # check if new guest 2 was already here
+    if not name_logic.are_guests_equal(new_guest_2, existing_guest_1) and not name_logic.are_guests_equal(new_guest_2, existing_guest_2) and parlamentarier_active:
+        # and not (parlamentarier_id == 223 and new_guest_2 != None and new_guest_2["names"] != None and new_guest_2["names"][0] == "Egger") # Quick and dirty fix for SR Engler + ZB Egger (new NR)
+        guest_added(conn, parlamentarier, new_guest_2, batch_time, pdf_date)
+
+        if name_logic.are_guests_equal(new_guest_1, existing_guest_2):
+            summary_row.set_new_guest_1(new_guest_2)
+        else:
+            summary_row.set_new_guest_2(new_guest_2)
+
+    return summary_row
 
 
 # main method
