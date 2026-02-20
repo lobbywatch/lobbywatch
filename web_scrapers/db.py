@@ -8,6 +8,7 @@ import os
 import re
 import name_logic
 from utils import escape_SQL, _quote_str_or_NULL, _date_as_sql_string, _datetime_as_sql_string
+from typing import Dict, Tuple
 
 def get_script_path():
     return os.path.dirname(os.path.realpath(__file__))
@@ -480,7 +481,7 @@ def get_person_names(database, person_id):
 
 # get guests for parlamentarier
 # returns a 2-tuple of person_id or None
-def get_guests(conn, parlamentarier_id):
+def get_guests(conn, parlamentarier_id: str, limit: int) -> Tuple[Dict]:
     with conn.cursor() as cursor:
         guest_query = """
         SELECT person_id, funktion, id
@@ -491,27 +492,20 @@ def get_guests(conn, parlamentarier_id):
 
         # get additional information for loaded guest
         def extract_existing_guest(conn, guest_id, function, zutrittsberechtigung_id):
-            guest = {}
-            guest["names"] = get_person_names(conn, guest_id)
-            guest["function"] = function
-            guest["id"] = guest_id
-            guest["zutrittsberechtigung_id"] = zutrittsberechtigung_id
-            return guest
+            return {
+                "names": get_person_names(conn, guest_id),
+                "function": function,
+                "id": guest_id,
+                "zutrittsberechtigung_id": zutrittsberechtigung_id
+            }
 
         cursor.execute(guest_query)
         existing_guests = cursor.fetchall()
 
-        if (count_guests := len(existing_guests)) > 2:
+        if (count_guests := len(existing_guests)) > limit:
             raise Exception("DATA INTEGRITY FAILURE! Too many guests in DB: {}, parlamentarier_id={}".format(count_guests, parlamentarier_id))
 
-        existing_guest_1 = extract_existing_guest(
-            conn, *existing_guests[0]) if len(existing_guests) > 0 else None
-
-        existing_guest_2 = extract_existing_guest(
-            conn, *existing_guests[1]) if len(existing_guests) > 1 else None
-
-        return (existing_guest_1, existing_guest_2)
-
+        return tuple(extract_existing_guest(*guest) for guest in existing_guests)
 
 # create query according to list and pattern (which name belongs to vorname, zweiter_vorname, and nachname)
 # example: names = ["Markus", "Alexander", "Michael", "von", "Meier"]

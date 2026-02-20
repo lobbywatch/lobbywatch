@@ -10,6 +10,8 @@ import sql_statement_generator
 import funktion_logic
 import zb_summary as summary
 
+GUEST_LIMIT = 4
+
 def run():
     parser = ArgumentParser(description='Create SQL files for data differences')
     parser.add_argument("--db", dest="db_name", help="name of DB to use", metavar="DB", default=None)
@@ -169,13 +171,13 @@ def sync_parliamentarian(parlamentarier: Dict, conn, batch_time: datetime, pdf_d
     parlamentarier_active = parlamentarier_db_dict['im_rat_bis'] is None or parlamentarier_db_dict['im_rat_bis'] > date.today()
 
     #existing guests (from database)
-    existing_guests  = db.get_guests(conn, parlamentarier_id)
+    existing_guests  = db.get_guests(conn, parlamentarier_id, GUEST_LIMIT)
 
     #new guests (from JSON file)
     new_guests = parlamentarier["guests"]
 
     #summary row
-    summary_row = summary.SummaryRow(parlamentarier, count, parlamentarier_db_dict)
+    summary_row = summary.SummaryRow(parlamentarier, count, parlamentarier_db_dict, GUEST_LIMIT)
 
     limit = max(len(existing_guests), len(new_guests))+1
 
