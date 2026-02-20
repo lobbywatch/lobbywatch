@@ -177,7 +177,9 @@ def sync_parliamentarian(parlamentarier: Dict, conn, batch_time: datetime, pdf_d
     #summary row
     summary_row = summary.SummaryRow(parlamentarier, count, parlamentarier_db_dict)
 
-    for (index_guest_1, index_guest_2) in itertools.combinations(range(1, 3), 2):
+    limit = max(len(existing_guests), len(new_guests))+1
+
+    for (index_guest_1, index_guest_2) in itertools.combinations(range(1, limit), 2):
         new_guest_1 = new_guests[index_guest_1-1] if len(new_guests) > index_guest_1-1 else None
         new_guest_2 = new_guests[index_guest_2-1] if len(new_guests) > index_guest_2-1 else None
         existing_guest_1 = existing_guests[index_guest_1-1] if len(existing_guests) > index_guest_1-1 else None
