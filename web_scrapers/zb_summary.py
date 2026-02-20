@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import date
-from typing import List
+from typing import List, Literal
 
 
 @dataclass
@@ -18,6 +18,7 @@ class Guest:
 
     def has_changed(self):
         return not (self.symbol == "=" or self.symbol == " ")
+
 
 class SummaryRow:
     def __init__(self, parlamentarier, count, parlamentarier_db_dict):
@@ -50,7 +51,7 @@ class SummaryRow:
             guest.id_old = str(person["id"])
             guest.symbol = "-"
 
-    def set_guest_changes(self, index, changes):
+    def set_guest_changes(self, index: int, changes: Literal["funktion"]):
         guest = self.get_guest(index)
         guest.changes = changes
         guest.symbol = "≠"
