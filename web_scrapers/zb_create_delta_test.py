@@ -1,17 +1,22 @@
 import sys
 from datetime import date, datetime
-from typing import Dict
-from unittest.mock import Mock, create_autospec, patch
+from typing import Dict, List
+from unittest.mock import Mock, create_autospec, patch, call, _Call
 
 import db
+import sql_statement_generator
 import pytest
 
 mock_db = create_autospec(db)
+sql_statement_generator_mock = create_autospec(sql_statement_generator)
 conn = Mock()
 batch_time = datetime.fromisoformat("2025-10-15T10:12:16Z")
 pdf_date = date.fromisoformat("2025-10-11")
 
-with patch.dict(sys.modules, {"db": mock_db}):
+with patch.dict(
+    sys.modules,
+    {"db": mock_db, "sql_statement_generator": sql_statement_generator_mock},
+):
     from zb_create_delta import sync_parliamentarian
 
 
@@ -29,6 +34,33 @@ def json_guest(num: int, function=None) -> Dict:
         "names": ["Guest", str(num)],
         "function": function if function else f"guest {num} function",
     }
+
+
+def filter_str_calls(item):
+    """filters out calls to __str__ created when mocks are printed, e.g. by the logger"""
+    match item:
+        case ("().__str__", (), {}):
+            return False
+        case _:
+            return True
+
+
+def assert_sql_generator_calls(calls: Dict[str, List[_Call]]) -> None:
+    for name in calls:
+        if name not in dir(sql_statement_generator):
+            pytest.fail(f"{name} not in {sql_statement_generator.__name__}")  # ty:ignore[invalid-argument-type]
+
+    for name in dir(sql_statement_generator):
+        fn = getattr(sql_statement_generator_mock, name)
+        if isinstance(fn, Mock):
+            if name in calls:
+                assert list(filter(filter_str_calls, fn.mock_calls)) == calls[name]
+            else:
+                fn.assert_not_called()
+
+
+def setup_function(function):
+    sql_statement_generator_mock.reset_mock()
 
 
 def test_sync_parliamentarian_two_guests_no_changes() -> None:
@@ -68,7 +100,12 @@ def test_sync_parliamentarian_two_guests_no_changes() -> None:
     assert summary_row.gast2_name == "Guest 2"
     assert summary_row.gast2_id_old == ""
     assert summary_row.gast2_changes == ""
-    assert summary_row.write(0) == "  0| == | peter parl     |   1 ‖ Guest 1      | guest_1 |               ‖ Guest 2      | guest_2 |               ‖              |      |              |      |"
+    assert (
+        summary_row.write(0)
+        == "  0| == | peter parl     |   1 ‖ Guest 1      | guest_1 |               ‖ Guest 2      | guest_2 |               ‖              |      |              |      |"
+    )
+    assert_sql_generator_calls({})
+
 
 def test_sync_parliamentarian_two_guests_order_changed_in_pdf() -> None:
     p = {
@@ -107,7 +144,8 @@ def test_sync_parliamentarian_two_guests_order_changed_in_pdf() -> None:
     assert summary_row.gast2_name == "Guest 2"
     assert summary_row.gast2_id_old == ""
     assert summary_row.gast2_changes == ""
-    assert summary_row.write(0) == "  0| == | peter parl     |   1 ‖ Guest 1      | guest_1 |               ‖ Guest 2      | guest_2 |               ‖              |      |              |      |"
+    assert_sql_generator_calls({})
+
 
 def test_sync_parliamentarian_one_guest_to_no_guests() -> None:
     p = {
@@ -141,7 +179,14 @@ def test_sync_parliamentarian_one_guest_to_no_guests() -> None:
     assert summary_row.gast2_id == ""
     assert summary_row.gast2_id_old == ""
     assert summary_row.gast2_changes == ""
-    assert summary_row.write(0) == "  0| -  | peter parl     |   1 ‖              |      |               ‖              |      |               ‖ Guest 1      | guest_1 |              |      |"
+    assert (
+        summary_row.write(0)
+        == "  0| -  | peter parl     |   1 ‖              |      |               ‖              |      |               ‖ Guest 1      | guest_1 |              |      |"
+    )
+    assert_sql_generator_calls(
+        {"end_zutrittsberechtigung": [call("zb_1", batch_time, pdf_date)]}
+    )
+
 
 def test_sync_parliamentarian_no_guests_to_one_guest() -> None:
     p = {
@@ -176,7 +221,14 @@ def test_sync_parliamentarian_no_guests_to_one_guest() -> None:
     assert summary_row.gast2_id == ""
     assert summary_row.gast2_id_old == ""
     assert summary_row.gast2_changes == ""
-    assert summary_row.write(0) == "  0| +  | peter parl     |   1 ‖ Guest 1      |      |               ‖              |      |               ‖              |      |              |      |"
+    assert_sql_generator_calls(
+        {
+            "insert_zutrittsberechtigung": [
+                call("1", "", json_guest(1)["function"], batch_time, pdf_date)
+            ],
+            "insert_person": [call(json_guest(1), batch_time, pdf_date)],
+        }
+    )
 
 
 def test_sync_parliamentarian_one_guest_to_two_guests() -> None:
@@ -214,7 +266,15 @@ def test_sync_parliamentarian_one_guest_to_two_guests() -> None:
     assert summary_row.gast2_id == ""
     assert summary_row.gast2_id_old == ""
     assert summary_row.gast2_changes == ""
-    assert summary_row.write(0) == "  0| =+ | peter parl     |   1 ‖ Guest 1      | guest_1 |               ‖ Guest 2      |      |               ‖              |      |              |      |"
+    assert_sql_generator_calls(
+        {
+            "insert_zutrittsberechtigung": [
+                call("1", "", json_guest(2)["function"], batch_time, pdf_date)
+            ],
+            "insert_person": [call(json_guest(2), batch_time, pdf_date)],
+        }
+    )
+
 
 def test_sync_parliamentarian_two_guests_first_guest_changes_function() -> None:
     p = {
@@ -251,7 +311,14 @@ def test_sync_parliamentarian_two_guests_first_guest_changes_function() -> None:
     assert summary_row.gast2_id == "guest_2"
     assert summary_row.gast2_id_old == ""
     assert summary_row.gast2_changes == ""
-    assert summary_row.write(0) == "  0| ≠= | peter parl     |   1 ‖ Guest 1      | guest_1 | funktion      ‖ Guest 2      | guest_2 |               ‖              |      |              |      |"
+    assert_sql_generator_calls(
+        {
+            "update_function_of_zutrittsberechtigung": [
+                call("zb_1", "something fancy", batch_time, pdf_date)
+            ],
+        }
+    )
+
 
 def test_sync_parliamentarian_two_guests_first_guest_leaves() -> None:
     p = {
@@ -287,7 +354,12 @@ def test_sync_parliamentarian_two_guests_first_guest_leaves() -> None:
     assert summary_row.gast2_id == "guest_2"
     assert summary_row.gast2_id_old == ""
     assert summary_row.gast2_changes == ""
-    assert summary_row.write(0) == "  0| -= | peter parl     |   1 ‖              |      |               ‖ Guest 2      | guest_2 |               ‖ Guest 1      | guest_1 |              |      |"
+    assert_sql_generator_calls(
+        {
+            "end_zutrittsberechtigung": [call("zb_1", batch_time, pdf_date)],
+        }
+    )
+
 
 def test_sync_parliamentarian_two_guests_first_guest_changes() -> None:
     p = {
@@ -321,4 +393,12 @@ def test_sync_parliamentarian_two_guests_first_guest_changes() -> None:
     assert summary_row.gast2_id == "guest_2"
     assert summary_row.gast2_id_old == ""
     assert summary_row.gast2_changes == ""
-    assert summary_row.write(0) == "  0| ±= | peter parl     |   1 ‖ Guest 3      |      |               ‖ Guest 2      | guest_2 |               ‖ Guest 1      | guest_1 |              |      |"
+    assert_sql_generator_calls(
+        {
+            "end_zutrittsberechtigung": [call("zb_1", batch_time, pdf_date)],
+            "insert_zutrittsberechtigung": [
+                call("1", "", json_guest(3)["function"], batch_time, pdf_date)
+            ],
+            "insert_person": [call(json_guest(3), batch_time, pdf_date)],
+        }
+    )
