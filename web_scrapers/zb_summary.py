@@ -19,6 +19,15 @@ class Guest:
     def has_changed(self):
         return not (self.symbol == "=" or self.symbol == " ")
 
+    def write(self) -> str:
+        return " {} | {} | {}  {} | {} ".format(
+            self.name[:12].ljust(12),
+            self.id.rjust(4),
+            self.changes.ljust(13),
+            self.name_old[:12].ljust(12),
+            self.id_old.rjust(4),
+        )
+
 
 class SummaryRow:
     def __init__(self, parlamentarier, count, parlamentarier_db_dict, guest_limit):
@@ -162,26 +171,20 @@ class SummaryRow:
             self.parlamentarier_id.rjust(3),
             mark,
         )
-        guest_block = (
-            " {} | {} | {} ".format(
-                guest.name[:12].ljust(12),
-                guest.id.rjust(4),
-                guest.changes.ljust(13),
-            )
-            for guest in self._guests
-        )
-        guest_old_block = (
-            " {} | {} ".format(
-                guest.name_old[:12].ljust(12),
-                guest.id_old.rjust(4),
-            )
-            for guest in self._guests
-        )
-        return "‖".join([first_block, *guest_block, *guest_old_block])
+        guest_block = (guest.write() for guest in self._guests)
+        return "‖".join([first_block, *guest_block])
 
 
-def write_header():
-    return "No |    | Parlamentarier | ID  ‖ Gast 1       | ID   | Changes       ‖ Gast 2       | ID   | Changes       ‖ -Gast 1      | ID   | -Gast 2      | ID   |"
+def write_header(num_guests: int) -> str:
+    return "‖".join(
+        [
+            "No |    | Parlamentarier |",
+            *(
+                f" ID  ‖ Gast {i}       | ID   | Changes  |  -Gast {i}      | ID "
+                for i in range(num_guests)
+            ),
+        ]
+    )
 
 
 def _display_name(names):
