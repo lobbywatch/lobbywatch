@@ -36,7 +36,7 @@ def print_summary(rows, batch_time):
     sorted_rows.append(sorted(rows[0], key=attrgetter('parlamentarier_name')))
     sorted_rows.append(sorted(rows[1], key=attrgetter('parlamentarier_name')))
 
-    print(summary.write_header())
+    print(summary.write_header(GUEST_LIMIT))
     data_changed = False
     count_equal = 0
     count_no_zb = 0
