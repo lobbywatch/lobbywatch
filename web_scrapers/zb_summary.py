@@ -35,107 +35,41 @@ class SummaryRow:
         self.parlamentarier_name = _display_name(parlamentarier["names"])
         self.parlamentarier_id = str(parlamentarier["id"])
         self.parlamentarier_db_dict = parlamentarier_db_dict
-        self._guests: List[Guest] = [Guest() for _ in range(guest_limit)]
+        self._guests: List[Guest] = []
 
     def get_guest(self, index: int) -> Guest:
         return self._guests[index - 1]
 
-    def set_new_guest(self, index: int, person) -> None:
-        self.set_guest(index, person)
-        if person:
-            self.get_guest(index).symbol = "+"
+    def set_new_guest(self, person) -> None:
+        guest = Guest()
+        guest.name = _display_name(person["names"])
+        guest.symbol = "+"
+        self._guests.append(guest)
 
-    def set_guest(self, index: int, person) -> None:
-        if person:
-            guest = self.get_guest(index)
-            guest.name = _display_name(person["names"])
-            if "id" in person:
-                guest.id = str(person["id"])
-                guest.symbol = "="
+    def set_guest(self, person) -> None:
+        guest = Guest()
+        guest.name = _display_name(person["names"])
+        if "id" in person:
+            guest.id = str(person["id"])
+            guest.symbol = "="
 
-    def set_removed_guest(self, index: int, person):
-        if person:
-            guest = self.get_guest(index)
-            guest.name_old = _display_name(person["names"])
-            guest.id_old = str(person["id"])
-            guest.symbol = "-"
+        self._guests.append(guest)
 
-    def set_guest_changes(self, index: int, changes: Literal["funktion"]):
-        guest = self.get_guest(index)
+    def set_removed_guest(self, person):
+        guest = Guest()
+        guest.name_old = _display_name(person["names"])
+        guest.id_old = str(person["id"])
+        guest.symbol = "-"
+        self._guests.append(guest)
+
+    def set_guest_changes(self, person, changes: Literal["funktion"]):
+        guest = Guest()
         guest.changes = changes
+        guest.name = _display_name(person["names"])
+        if "id" in person:
+            guest.id = str(person["id"])
         guest.symbol = "≠"
-
-    @property
-    def gast1_id(self):
-        return self.get_guest(1).id
-
-    @property
-    def gast2_id(self):
-        return self.get_guest(2).id
-
-    @property
-    def gast1_name(self):
-        return self.get_guest(1).name
-
-    @property
-    def gast2_name(self):
-        return self.get_guest(2).name
-
-    @property
-    def gast1_id_old(self):
-        return self.get_guest(1).id_old
-
-    @property
-    def gast2_id_old(self):
-        return self.get_guest(2).id_old
-
-    @property
-    def gast1_name_old(self):
-        return self.get_guest(1).name_old
-
-    @property
-    def gast2_name_old(self):
-        return self.get_guest(2).name_old
-
-    @property
-    def gast1_changes(self):
-        return self.get_guest(1).changes
-
-    @property
-    def gast2_changes(self):
-        return self.get_guest(2).changes
-
-    @property
-    def symbol1(self):
-        return self.get_guest(1).symbol
-
-    @property
-    def symbol2(self):
-        return self.get_guest(2).symbol
-
-    def set_guest_1(self, person):
-        self.set_guest(1, person)
-
-    def set_removed_guest_1(self, person):
-        self.set_removed_guest(1, person)
-
-    def set_new_guest_1(self, person):
-        self.set_new_guest(1, person)
-
-    def set_guest_2(self, person):
-        self.set_guest(2, person)
-
-    def set_removed_guest_2(self, person):
-        self.set_removed_guest(2, person)
-
-    def set_new_guest_2(self, person):
-        self.set_new_guest(2, person)
-
-    def set_guest_1_changes(self, changes):
-        self.set_guest_changes(1, changes)
-
-    def set_guest_2_changes(self, changes):
-        self.set_guest_changes(2, changes)
+        self._guests.append(guest)
 
     def update_symbols(self):
         for guest in self._guests:
@@ -143,12 +77,6 @@ class SummaryRow:
 
     def has_changed(self):
         return any([guest.has_changed() for guest in self._guests])
-
-    def get_symbol1(self):
-        return self.get_guest(1).symbol
-
-    def get_symbol2(self):
-        return self.get_guest(2).symbol
 
     def is_parlamentarier_active(self):
         return (
