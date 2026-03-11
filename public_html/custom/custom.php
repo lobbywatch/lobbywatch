@@ -1266,6 +1266,10 @@ function isFullWorkflowUser() {
   76, // Etienne Kocher
   86, // Lucas
   87, // Flavia
+  89, // andres
+  90, // theres
+  91, // philip.sch
+  92, // timon.stad
   ], false);
 }
 
