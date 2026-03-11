@@ -1259,17 +1259,6 @@ function globalOnBeforeInsert($page, &$rowData, &$cancel, &$message, $tableName)
 function isFullWorkflowUser() {
   return in_array(Application::Instance()->GetCurrentUserId(), [
   1, // admin
-  2, // roland
-  3, // otto
-  4, // thomas
-  // 5, // rebecca
-  // 6, // bane
-  12, // Alice Kohli
-  18, // philippe
-  // 37, // Graf, Céline Graf
-  // 63, // Flavia, Von Gunten
-  // 67, // Alexandra Baertsch
-  // 69, // Samuel Meier
   71, // Strässle Fabian
   72, // Priscilla Imboden
   73, // Balz Oertli
