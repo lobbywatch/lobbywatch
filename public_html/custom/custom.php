@@ -1264,6 +1264,7 @@ function isFullWorkflowUser() {
   73, // Balz Oertli
   74, // Reto Naegeli
   76, // Etienne Kocher
+  80, // Peter Gassner
   86, // Lucas
   87, // Flavia
   89, // andres
