@@ -4500,3 +4500,9 @@ ALTER TABLE `translation_source`
 
 ALTER TABLE `translation_source_log`
   CHANGE `version` `version` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Version of Lobbywatch, where the string was last updated (for translation optimization).';
+
+-- 29.5.2026 Allow longer abbreviations for committees
+
+ALTER TABLE `kommission` CHANGE `abkuerzung` `abkuerzung` VARCHAR(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Kürzel der Kommission';
+ALTER TABLE `kommission` CHANGE `abkuerzung_fr` `abkuerzung_fr` VARCHAR(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Französisches Kürzel der Kommission';
+
