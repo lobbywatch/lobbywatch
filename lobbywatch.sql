@@ -2450,8 +2450,8 @@ SET @saved_cs_client     = @@character_set_client ;
 SET character_set_client = utf8 ;
 CREATE TABLE `kommission` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Kommission',
-  `abkuerzung` varchar(15) NOT NULL COMMENT 'Kürzel der Kommission',
-  `abkuerzung_fr` varchar(15) DEFAULT NULL COMMENT 'Französisches Kürzel der Kommission',
+  `abkuerzung` varchar(64) NOT NULL COMMENT 'Kürzel der Kommission',
+  `abkuerzung_fr` varchar(64) DEFAULT NULL COMMENT 'Französisches Kürzel der Kommission',
   `name` varchar(100) NOT NULL COMMENT 'Ausgeschriebener Name der Kommission',
   `name_fr` varchar(120) DEFAULT NULL COMMENT 'Ausgeschriebener französischer Name der Kommission',
   `rat_id` int(11) DEFAULT NULL COMMENT 'Ratszugehörigkeit; Fremdschlüssel des Rates',
