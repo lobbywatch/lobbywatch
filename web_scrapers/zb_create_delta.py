@@ -3,7 +3,7 @@ import json
 from datetime import date, datetime
 from operator import attrgetter
 from argparse import ArgumentParser
-from typing import Dict
+from typing import TypedDict, List
 import db
 import name_logic
 import sql_statement_generator
@@ -11,6 +11,17 @@ import funktion_logic
 import zb_summary as summary
 
 GUEST_LIMIT = 4
+
+
+class JsonGuest(TypedDict):
+    names: List[str]
+
+class JsonParlamentarier(TypedDict):
+    canton: str
+    faction: str | None
+    guests: List[JsonGuest]
+    id: int
+    names: List[str]
 
 def run():
     parser = ArgumentParser(description='Create SQL files for data differences')
@@ -158,7 +169,7 @@ def guest_remained(member_of_parliament, existing_guest, new_guest, date, pdf_da
     return funktion_equal
 
 
-def sync_parliamentarian(parlamentarier: Dict, conn, batch_time: datetime, pdf_date: date, count: int) -> summary.SummaryRow:
+def sync_parliamentarian(parlamentarier: JsonParlamentarier, conn, batch_time: datetime, pdf_date: date, count: int) -> summary.SummaryRow:
     #load info abo?ut parlamentarier
     kanton_id = db.get_kanton_id(conn, parlamentarier["canton"])
     fraktion_id = db.get_fraktion_id(conn, parlamentarier["faction"])
