@@ -3,25 +3,15 @@ import json
 from datetime import date, datetime
 from operator import attrgetter
 from argparse import ArgumentParser
-from typing import TypedDict, List
 import db
 import name_logic
 import sql_statement_generator
 import funktion_logic
 import zb_summary as summary
+from zb_types import JsonParlamentarier, DbParlamentarier, JsonGuest
 
 GUEST_LIMIT = 4
 
-
-class JsonGuest(TypedDict):
-    names: List[str]
-
-class JsonParlamentarier(TypedDict):
-    canton: str
-    faction: str | None
-    guests: List[JsonGuest]
-    id: int
-    names: List[str]
 
 def run():
     parser = ArgumentParser(description='Create SQL files for data differences')
@@ -63,29 +53,6 @@ def print_summary(rows, batch_time):
             j += 1
             print(row.write(j))
             data_changed |= row.has_changed()
-            if row.get_symbol1() == '=':
-                count_equal += 1
-            if row.get_symbol2() == '=':
-                count_equal += 1
-            if row.get_symbol1() == ' ':
-                count_no_zb += 1
-            if row.get_symbol2() == ' ':
-                count_no_zb += 1
-            if row.get_symbol1() == '≠':
-                count_field_change += 1
-            if row.get_symbol2() == '≠':
-                count_field_change += 1
-            if row.get_symbol1() == '+':
-                count_added += 1
-            if row.get_symbol2() == '+':
-                count_added += 1
-            if row.get_symbol1() == '-':
-                count_removed += 1
-            if row.get_symbol2() == '-':
-                count_removed += 1
-            if row.get_symbol1() == '±':
-                count_replaced += 1
-            if row.get_symbol2() == '±':
             for guest in row._guests:
                 if guest.symbol == '=':
                     count_equal += 1
@@ -119,8 +86,8 @@ def sync_data(conn, filename, council, batch_time):
         content = json.load(data_file)
         pdf_date_str = content["metadata"]["pdf_creation_date"]
         stand_date_str = content["metadata"]["stand_date"]
-        pdf_creation_date = datetime.strptime(pdf_date_str, "%Y-%m-%d %H:%M:%S") # 2019-07-12 14:55:08
-        stand_date = datetime.strptime(stand_date_str, "%Y-%m-%d").date() # 2019-07-12
+        pdf_creation_date = datetime.fromisoformat(pdf_date_str) # 2019-07-12 14:55:08
+        stand_date = datetime.fromisoformat(stand_date_str).date() # 2019-07-12
         pdf_date = stand_date
         archive_pdf_name = content["metadata"]["archive_pdf_name"]
         print("-- PDF stand: {}".format(stand_date))
@@ -149,51 +116,47 @@ def guest_removed(member_of_parliament, guest_to_remove, date, pdf_date):
 
 
 # a new guest has been added to a parlamentarier
-def guest_added(conn, member_of_parliament, guest_to_add, date, pdf_date):
+def guest_added(conn, member_of_parliament:JsonParlamentarier, guest_to_add: JsonGuest, date, pdf_date, parlamentarier_db_dict: DbParlamentarier):
     if guest_to_add is not None:
+        function = get_function(guest_to_add, parlamentarier_db_dict)
+
         print("\n-- Parlamentarier_in '{}' hat einen neuen Gast '{}' mit Funktion '{}'.".format(
             name_logic.fullname(member_of_parliament),
             name_logic.fullname(guest_to_add),
-            guest_to_add["function"]))
+            function))
 
         guest_to_add["names"] = name_logic.fixNobleNames(guest_to_add["names"])
         # check if the new guest is already a person in the database, if not create them
         person_id = db.get_person_id(conn, guest_to_add["names"])
         if not person_id:
             print("-- Diese_r muss neu in der Datenbank erzeugt werden")
-            print(sql_statement_generator.insert_person(guest_to_add, date, pdf_date))
+            print(sql_statement_generator.insert_person(guest_to_add, date, pdf_date, function))
         else:
             guest_to_add["id"] = person_id
 
-        print(sql_statement_generator.insert_zutrittsberechtigung(member_of_parliament["id"], person_id, guest_to_add["function"], date, pdf_date))
+        print(sql_statement_generator.insert_zutrittsberechtigung(parlamentarier_db_dict["id"], person_id, function, date, pdf_date))
 
 
 # if a guest remains, we may update their function
-def guest_remained(member_of_parliament, existing_guest, new_guest, date, pdf_date):
-    funktion_equal = funktion_logic.are_functions_equal(existing_guest["function"], new_guest["function"])
+def guest_remained(member_of_parliament: JsonParlamentarier, existing_guest, new_guest: JsonGuest, date, pdf_date, parlamentarier_db_dict: DbParlamentarier):
+    function = get_function(new_guest, parlamentarier_db_dict)
+    funktion_equal = funktion_logic.are_functions_equal(existing_guest["function"], function)
     if not funktion_equal:
         print("\n-- Parlamentarier_in '{}' hat beim Gast '{}' die Funktion von '{}' auf '{}' geändert.".format(
             name_logic.fullname(member_of_parliament),
             name_logic.fullname(existing_guest),
             existing_guest["function"],
-            new_guest["function"]))
-        print(sql_statement_generator.update_function_of_zutrittsberechtigung(existing_guest["zutrittsberechtigung_id"], new_guest["function"], date, pdf_date))
+            function))
+        print(sql_statement_generator.update_function_of_zutrittsberechtigung(existing_guest["zutrittsberechtigung_id"], function, date, pdf_date))
     return funktion_equal
 
 
 def sync_parliamentarian(parlamentarier: JsonParlamentarier, conn, batch_time: datetime, pdf_date: date, count: int) -> summary.SummaryRow:
     #load info abo?ut parlamentarier
-    kanton_id = db.get_kanton_id(conn, parlamentarier["canton"])
-    fraktion_id = db.get_fraktion_id(conn, parlamentarier["faction"])
-    try:
-        parlamentarier_id = db.get_parlamentarier_id_by_names_kanton_fraktion(conn, parlamentarier["names"], kanton_id, fraktion_id)
-    except:
-        parlamentarier_id = db.get_parlamentarier_id_by_names_kanton(conn, parlamentarier["names"], kanton_id)
-    parlamentarier["id"] = parlamentarier_id
-    parlamentarier_db_dict = db.get_parlamentarier_dict(conn, parlamentarier_id)
+    parlamentarier_db_dict: DbParlamentarier = db.get_parlamentarier_by_biography_id(conn, parlamentarier['biography_id'])
 
     #existing guests (from database)
-    existing_guests = db.get_guests(conn, parlamentarier_id, GUEST_LIMIT)
+    existing_guests = db.get_guests(conn, parlamentarier_db_dict['id'], GUEST_LIMIT)
     unmatched_existing_guests = list(copy.copy(existing_guests))
     # new guests (from JSON file)
     new_guests = parlamentarier["guests"]
@@ -209,7 +172,7 @@ def sync_parliamentarian(parlamentarier: JsonParlamentarier, conn, batch_time: d
                 unmatched_existing_guests.remove(existing_guest)
                 unmatched_new_guests.remove(new_guest)
                 funktion_equal = guest_remained(
-                    parlamentarier, existing_guest, new_guest, batch_time, pdf_date
+                    parlamentarier, existing_guest, new_guest, batch_time, pdf_date, parlamentarier_db_dict
                 )
                 if not funktion_equal:
                     summary_row.set_guest_changes(existing_guest, "funktion")
@@ -217,7 +180,7 @@ def sync_parliamentarian(parlamentarier: JsonParlamentarier, conn, batch_time: d
                     summary_row.set_guest(existing_guest)
 
     for unmatched_new_guest in unmatched_new_guests:
-        guest_added(conn, parlamentarier, unmatched_new_guest, batch_time, pdf_date)
+        guest_added(conn, parlamentarier, unmatched_new_guest, batch_time, pdf_date, parlamentarier_db_dict)
         summary_row.set_new_guest(unmatched_new_guest)
 
     for unmatched_existing_guest in unmatched_existing_guests:
@@ -226,6 +189,19 @@ def sync_parliamentarian(parlamentarier: JsonParlamentarier, conn, batch_time: d
 
     return summary_row
 
+def get_function(guest: JsonGuest, parlamentarier_db_dict: DbParlamentarier) -> str:
+    language = parlamentarier_db_dict['arbeitssprache']
+    beneficiary_group = guest["beneficiary_group"]
+    function = guest["function"][language] if guest["function"] else ''
+
+    if beneficiary_group and function:
+        return f'{function}: {beneficiary_group}'
+    elif function:
+        return function
+    elif beneficiary_group:
+        return beneficiary_group
+    else:
+        return ''
 
 # main method
 if __name__ == "__main__":

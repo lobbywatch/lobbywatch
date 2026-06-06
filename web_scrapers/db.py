@@ -15,7 +15,7 @@ def get_script_path():
 
 # establish connection to the database
 def connect(db_name):
-    if db_name != None:
+    if db_name is not None:
         db_param = '--db=' + db_name
     else:
         db_param = ''
@@ -204,6 +204,24 @@ def get_parlamentarier_id_by_name(database, names, prename_first: bool):
         raise Exception("DATA INTEGRITY ERROR: Member of parliament '{}' referenced in PDF is not in database.\nNames: {}, Prename first: {}\nSQL:\n{}".format(names, names, prename_first, current_query))
     return None, None
 
+
+def get_parlamentarier_by_biography_id(database, biography_id):
+    with database.cursor(dictionary = True) as cursor:
+        parlamentarier = None
+        query = """
+        SELECT *
+        FROM parlamentarier
+        WHERE parlament_biografie_id = {0}
+        """.format(biography_id)
+
+        cursor.execute(query)
+        result = cursor.fetchall()
+        if result and len(result) == 1:
+            parlamentarier = result[0]
+            return parlamentarier
+
+    raise Exception("A parlamentarier with biography_id '{}' does not exist.".format(
+        biography_id))
 
 # get a parlamentarier dict by parlamentarier_id
 def get_parlamentarier_dict(database, parlamentarier_id):
@@ -505,7 +523,7 @@ def get_guests(conn, parlamentarier_id: str, limit: int) -> Tuple[Dict]:
         if (count_guests := len(existing_guests)) > limit:
             raise Exception("DATA INTEGRITY FAILURE! Too many guests in DB: {}, parlamentarier_id={}".format(count_guests, parlamentarier_id))
 
-        return tuple(extract_existing_guest(*guest) for guest in existing_guests)
+        return tuple(extract_existing_guest(conn, *guest) for guest in existing_guests)
 
 # create query according to list and pattern (which name belongs to vorname, zweiter_vorname, and nachname)
 # example: names = ["Markus", "Alexander", "Michael", "von", "Meier"]

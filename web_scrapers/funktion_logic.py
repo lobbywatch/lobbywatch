@@ -2,7 +2,7 @@ import re
 import literals
 
 # decide whether two functions of guests are different enough to warrant a mutation
-def are_functions_equal(function1, function2):
+def are_functions_equal(function1: str, function2: str) -> bool:
 
     if function1 is None and function2 is not None:
         return False
@@ -18,7 +18,7 @@ def are_functions_equal(function1, function2):
 
 
 # Often some small details in function naming can be ignored
-def normalize_function(function):
+def normalize_function(function: str) -> str:
     stripped = function.lower().replace("-", "").replace(" ", "")
 
     # remove anything in braces ()
