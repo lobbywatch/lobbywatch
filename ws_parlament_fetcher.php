@@ -1376,7 +1376,13 @@ function getFraktionId($faction) {
     case 'RL': return 1;
     case 'S': return 3;
     case 'V': return 5;
-    case '-': case '': case null: return null; // 9 fraktionslos
+
+    case '-':
+    case '':
+    case null:
+    case 'FRAKTIONSLOS':
+      return null; // 9 fraktionslos
+
     default: $errors[] = "Wrong fraktion code '$factionCode'"; return "ERR $factionCode";
   }
 }
