@@ -887,6 +887,10 @@ function insert_in_partei(&$fields, $id, $parlamentarier_ws, $vonDate) {
   global $sql_today;
   global $user;
 
+  if (isParteilos($ws_parlamentarier)){
+    return false;
+  }
+
   $insertInPartei = [];
   $fields[] = "in_partei+";
   $insertInPartei['parlamentarier_id'] = $id;
@@ -908,6 +912,10 @@ function insert_in_fraktion(&$fields, $id, $parlamentarier_ws, $vonDate) {
   global $today;
   global $sql_today;
   global $user;
+
+  if (isFraktionslos($ws_parlamentarier)){
+    return false;
+  }
 
   $insertInFraktion = [];
   $fields[] = "in_fraktion+";
@@ -1804,4 +1812,12 @@ function findIDOfParlamentarierWithoutBiografieIDByName($nachname) {
     return $obj->id;
   }
   return false;
+}
+
+function isFraktionslos($parlamentarier_ws): bool {
+  return getFraktionId($parlamentarier_ws->faction) == null;
+}
+
+function isParteilos($parlamentarier_ws): bool {
+  return getParteiId($parlamentarier_ws->party) == null;
 }
