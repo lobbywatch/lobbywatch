@@ -86,7 +86,19 @@ def print_summary(rows, batch_time):
             if row.get_symbol1() == '±':
                 count_replaced += 1
             if row.get_symbol2() == '±':
-                count_replaced += 1
+            for guest in row._guests:
+                if guest.symbol == '=':
+                    count_equal += 1
+                elif guest.symbol == ' ':
+                    count_no_zb += 1
+                elif guest.symbol == '≠':
+                    count_field_change += 1
+                elif guest.symbol == '+':
+                    count_added += 1
+                elif guest.symbol == '-':
+                    count_removed += 1
+                elif guest.symbol == '±':
+                    count_replaced += 1
 
     print("\n = : {:>3d} unchanged\n   : {:>3d} no zutrittsberechtigte\n ≠ : {:>3d} Fields changed\n + : {:>3d} Zutrittsberechtigung added\n - : {:>3d} Zutrittsberechtigung removed\n ± : {:>3d} Zutrittsberechtigung replaced\n\n */".format(count_equal, count_no_zb, count_field_change, count_added, count_removed, count_replaced))
 
