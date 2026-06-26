@@ -1,0 +1,32 @@
+services:
+  mariadb:
+    build:
+      context: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: verysecret
+      MARIADB_PASSWORD: lobbywatch
+      MARIADB_USER: lobbywatch
+      MARIADB_DATABASE: lobbywatch
+    volumes:
+      - mariadb-data:/var/lib/mysql
+  scraper:
+    depends_on:
+      - mariadb
+    build:
+      context: ..
+    restart: 'no'
+    environment:
+      SSH_AUTH_SOCK:
+      LW_DB_HOST: mariadb
+    privileged: true # because of ssh-agent
+    volumes:
+      - ${SSH_AUTH_SOCK}:${SSH_AUTH_SOCK}
+      - ./.my.cnf:/root/.my.cnf
+      - prod_bak:/opt/lobbywatch/prod_bak
+      - sql:/opt/lobbywatch/sql
+      - ./settings.php:/opt/lobbywatch/public_html/settings/settings.php
+
+volumes:
+  mariadb-data:
+  prod_bak:
+  sql:
