@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import date
 from typing import List, Literal
-from zb_types import JsonParlamentarier
+from zb_types import JsonParlamentarier, DbParlamentarier
 
 @dataclass
 class Guest:
@@ -30,7 +30,7 @@ class Guest:
 
 
 class SummaryRow:
-    def __init__(self, parlamentarier: JsonParlamentarier, count, parlamentarier_db_dict: dict, guest_limit):
+    def __init__(self, parlamentarier: JsonParlamentarier, count, parlamentarier_db_dict: DbParlamentarier, guest_limit):
         self.number = str(count)
         self.parlamentarier_name = _display_name([parlamentarier_db_dict["vorname"], parlamentarier_db_dict['nachname']])
         self.parlamentarier_id = str(parlamentarier_db_dict["id"])

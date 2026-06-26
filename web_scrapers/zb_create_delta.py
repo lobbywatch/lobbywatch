@@ -10,6 +10,7 @@ import funktion_logic
 import zb_summary as summary
 from zb_types import JsonParlamentarier, DbParlamentarier, JsonGuest
 
+# Most MPs can have two guests, but those who need more assistance can have up to four guests
 GUEST_LIMIT = 4
 
 
@@ -152,7 +153,7 @@ def guest_remained(member_of_parliament: JsonParlamentarier, existing_guest, new
 
 
 def sync_parliamentarian(parlamentarier: JsonParlamentarier, conn, batch_time: datetime, pdf_date: date, count: int) -> summary.SummaryRow:
-    #load info abo?ut parlamentarier
+    #load info about parlamentarier
     parlamentarier_db_dict: DbParlamentarier = db.get_parlamentarier_by_biography_id(conn, parlamentarier['biography_id'])
 
     #existing guests (from database)

@@ -9,6 +9,7 @@ import re
 import name_logic
 from utils import escape_SQL, _quote_str_or_NULL, _date_as_sql_string, _datetime_as_sql_string
 from typing import Dict, Tuple
+from zb_types import DbParlamentarier
 
 def get_script_path():
     return os.path.dirname(os.path.realpath(__file__))
@@ -205,7 +206,7 @@ def get_parlamentarier_id_by_name(database, names, prename_first: bool):
     return None, None
 
 
-def get_parlamentarier_by_biography_id(database, biography_id):
+def get_parlamentarier_by_biography_id(database, biography_id: int) -> DbParlamentarier:
     with database.cursor(dictionary = True) as cursor:
         parlamentarier = None
         query = """
@@ -499,7 +500,7 @@ def get_person_names(database, person_id):
 
 # get guests for parlamentarier
 # returns a 2-tuple of person_id or None
-def get_guests(conn, parlamentarier_id: str, limit: int) -> Tuple[Dict]:
+def get_guests(conn, parlamentarier_id: int, limit: int) -> Tuple[Dict]:
     with conn.cursor() as cursor:
         guest_query = """
         SELECT person_id, funktion, id
