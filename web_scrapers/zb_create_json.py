@@ -27,6 +27,7 @@ def scrape():
                         "names": badge.beneficiary_person_fullname.split(" "),
                         "function": badge.type.model_dump() if badge.type else None,
                         "beneficiary_group": badge.beneficiary_group,
+                        "valid_from": badge.valid_from
                     }
                     for badge in badges_per_mp[person_external_id]
                 ],

@@ -35,6 +35,7 @@ class OpdAccessBadge(BaseModel):
     person_id: int
     body_key: Literal["CHE", "UR"]  # TODO remove all except CHE
     person: Data[OpdMp]
+    valid_from: str
 
 
 def get_mps_and_access_badges() -> List[OpdAccessBadge]:

@@ -134,8 +134,8 @@ def guest_added(conn, member_of_parliament:JsonParlamentarier, guest_to_add: Jso
             print(sql_statement_generator.insert_person(guest_to_add, date, pdf_date, function))
         else:
             guest_to_add["id"] = person_id
-
-        print(sql_statement_generator.insert_zutrittsberechtigung(parlamentarier_db_dict["id"], person_id, function, date, pdf_date))
+        valid_from = datetime.fromisoformat(guest_to_add["valid_from"]).date()
+        print(sql_statement_generator.insert_zutrittsberechtigung(parlamentarier_db_dict["id"], person_id, function, date, valid_from))
 
 
 # if a guest remains, we may update their function
