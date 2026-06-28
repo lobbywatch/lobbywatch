@@ -4,3 +4,4 @@ mariadb
 pypdf
 guess_language-spirit
 pytest
+pydantic

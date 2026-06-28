@@ -1,3 +1,4 @@
+from typing import Union
 import re
 import unicodedata as ud
 
@@ -14,7 +15,7 @@ def _quote_str_or_NULL(str):
 
 
 # simple esape function for input strings
-def _escape_string(string):
+def _escape_string(string: str) -> Union[None, str]:
     if string is None: return None
     result = string.replace('\\', '\\\\').replace("'", "''").replace('\n', '\\n')
     return result

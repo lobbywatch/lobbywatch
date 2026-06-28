@@ -1,419 +1,87 @@
-import csv
+from typing import List, Dict
+from collections import defaultdict
 import json
-import os
-import re
-from argparse import ArgumentParser
 from datetime import datetime
-from shutil import copyfile
-from subprocess import call
-from typing import Union
-
-import pdf_helpers
-from utils import clean_str, clean_whitespace
-
-TITLE_CSV = "zb_title.csv"
-DATA_CSV = "zb_data.csv"
-CONTENT_PDF = "zb_file-content.pdf"
-
-def split_names(names):
-    return names.replace('"', "").replace(".", "").split(" ")
+import opd
 
 
-class Entity:
-    # remove invalid characters from cell entries
-    def clean_string(self, s):
-        return clean_str(s).replace("\n", " ").replace(' - ', '-')
+def scrape():
+    badges = opd.get_mps_and_access_badges()
 
+    badges_per_mp = defaultdict(list)
+    for badge in badges:
+        apply_data_fixes_to_single_badge(badge)
+        badges_per_mp[badge.person_external_id].append(badge)
 
-# represents a member of parliament
-class MemberOfParliament(Entity):
-    def __init__(self, s):
-        # members of parliament are formatted as
-        # "[names]"
-        # this entire text is passed into the constructor
-        full_name = self.clean_string(s)
-        self.names = split_names(full_name)
-        self.names = self.fix_names(self.names)
+    apply_data_fixes_after_grouping(badges_per_mp)
 
-    def fix_names(self, names):
-        if names == ['Docourt', 'Ducommun-', 'dit-Boudry', 'Martine']:
-            return ['Docourt', 'Martine']
-        elif names == ['Bally', 'Frehner', 'Maja']:
-            return ['Bally', 'Maya']
-        else:
-            return names
-
-    # <faction>/<canton>
-    def set_faction_and_canton(self, s):
-        faction_and_canton = s.split("/")
-        self.faction = faction_and_canton[0].strip()
-        # Hack for wrong faction
-        if self.faction == 'los' and self.names == ['Poggia', 'Mauro']:
-            self.faction = 'V'
-        self.canton = faction_and_canton[1].strip()
-
-        # TODO remove
-        # # The FDP can show up as "FDP-Liberale",
-        # # so we need to get only the part before the dash
-        # faction_split = faction.split("-")
-        # if len(faction_split) == 1:
-        #     self.faction = faction
-        # else:
-        #     self.faction = faction_split[0]
-        # Partei mapping al -> ALG (hack)
-        # if self.faction == 'Al':
-        #     self.faction = 'ALG'
-
-    def append_names(self, s):
-        names = self.clean_string(s)
-        self.names += split_names(names)
-        self.names = self.fix_names(self.names)
-
-# represents a guest of a member of parliament
-class Guest(Entity):
-    def __init__(self, name_raw, function):
-        name = self.clean_string(name_raw)
-        name = self.fix_name_typos(name)
-        self.names = split_names(name)
-        self.function = self.clean_string(function)
-        self.gender = 'F' if "Frau" in name_raw or "Madame" in name_raw else "M"
-
-    # namemapping fixes, a hack
-    def fix_name_typos(self, name):
-        # () around calls for multi line writing, insteaf of "\" at EOL
-        # https://stackoverflow.com/questions/4768941/how-to-break-a-line-of-chained-methods-in-python
-        return (name
-        .replace("Schürch Florence", "Schurch Florence")
-        .replace("Grunder Michael", "Grunder Michel")
-        .replace("Voegeli Tobias", "Vögeli Tobias")
-        .replace("Durig Terence", "Durig Térence")
-        .replace("Giovanoli Remco", "Giovanoli Remco André")
-        .replace("Rosenkrantz Linda", "Rosenkranz Linda")
+    badges_per_council = defaultdict(list)
+    for person_external_id in badges_per_mp:
+        person = badges_per_mp[person_external_id][0].person.data[0]
+        badges_per_council[person.parliament_sector].append(
+            {
+                "names": [person.firstname, person.lastname],
+                "biography_id": person_external_id,
+                "guests": [
+                    {
+                        "names": badge.beneficiary_person_fullname.split(" "),
+                        "function": badge.type.model_dump() if badge.type else None,
+                        "beneficiary_group": badge.beneficiary_group,
+                        "valid_from": badge.valid_from
+                    }
+                    for badge in badges_per_mp[person_external_id]
+                ],
+            }
         )
 
-    def remove_title(self, name):
-        return re.sub(r'(Herr|Frau|Monsieur|Madame|Dr.|Signora?)\s+', ' ', name).strip()
+    for council_type in ["nr", "sr"]:
+        now = datetime.now()
 
-    def append_function(self, s):
-        self.function += " " + self.clean_string(s)
+        data = {
+            "metadata": {
+                "pdf_creation_date": now.isoformat(),
+                "stand_date": now.isoformat(),
+                "pdf_date": now.isoformat(),
+                "archive_pdf_name": "",
+                "url": "https://api.openparldata.ch/v1/access_badges",
+            },
+            "data": badges_per_council[council_type.upper()],
+        }
 
-    def append_names(self, s):
-        name = self.clean_string(s)
-        name = self.fix_name_typos(name)
-        self.names += split_names(name)
-
-# create a guest object from the passed csv row
-# taking name and function from the passed indexes of the row
-# if the row is not long enough, the function of the
-# guest is missing
-def create_guest(row, name_index, function_index):
-    # guest has no name
-    if (is_empty(row[name_index])):
-        return None
-
-    # guest has name and function
-    if len(row) > function_index:
-        return Guest(row[name_index], row[function_index])
-
-    # guest has only a name, but no function
-    else:
-        return Guest(row[name_index], "")
+        with open(f"zutrittsberechtigte-{council_type}.json", "w") as file:
+            json.dump(data, file)
 
 
-# read the csv generated by tabula and get rid of empty rows and headers
-def read_guests(filename: str) -> list[dict[str, str]]:
-    guests: dict[MemberOfParliament, list[Guest]] = {}
-    current_member_of_parliament = None
-    # in general, if row[0] is not empty, we are at a new member of
-    # parliament. all guests from that row and the following rows belong
-    # to that member of parliament, until a new name shows up in row[0].
+def apply_data_fixes_to_single_badge(badge) -> None:
+    """OPD data is not alyways correct. This is the place to make (temporary) fixes. Try to include gitlab tickets so we know when to remove a fix."""
 
-    # but: sometimes tabula gets mixed up and puts the guest in row[0].
-    # So we need to check if the first cell is a member of parliament
-    # manually so we don't miss anything.
-
-    new_member: bool = True
-    member_2nd_line: bool = False
-    guest_line_count = 0
-
-    for row in csv.reader(open(filename, encoding="utf-8")):
-        if not is_header(row) and not is_empty_row(row) and not is_page_number(row):
-            if len(row) > 3 and row[3] != '':
-                raise Exception("Too long line: {}".format(row))
-            if is_empty(row[0]):
-                # row[0] is empty
-                # guest name is in row[1]
-                # and guest function is in row[2]
-                # for member of parliament defined in a previous row
-                if len(guests[current_member_of_parliament]) == 1:
-                    guest = create_guest(row, 1, 2)
-                    guest_line_count = 1
-                    if guest is not None:
-                        guests[current_member_of_parliament].append(guest)
-                elif len(guests[current_member_of_parliament]) == 2:
-                    if row[1] != "":
-                        if guest_line_count < 2:
-                            guests[current_member_of_parliament][1].append_names(row[1])
-                            guest_line_count += 1
-                        else:
-                            log_warn_guest_too_many_lines(guest_line_count, current_member_of_parliament, row)
-                    elif len(guests[current_member_of_parliament]) > 2:
-                        raise Exception("too many guests")
-                    if row[2] != "":
-                        if guest_line_count < 2:
-                            guests[current_member_of_parliament][1].append_function(row[2])
-                            guest_line_count += 1
-                        else:
-                            log_warn_guest_too_many_lines(guest_line_count, current_member_of_parliament, row)
-                else:
-                    raise Exception("Invalid case in reading guest: {}".format(row))
-
-            else:
-                # new member of parliament
-                if not is_faction_and_canton(row[0]) and new_member:
-                    # row[0] is member of parliament,
-                    # row[1] and row[2] are guest name and function
-                    current_member_of_parliament = MemberOfParliament(row[0])
-                    new_member = False
-                    guests[current_member_of_parliament] = []
-                    guest = create_guest(row, 1, 2)
-                    guest_line_count = 1
-                    if guest is not None:
-                        guests[current_member_of_parliament].append(guest)
-
-                # second line of name of member of parliament
-                elif not is_faction_and_canton(row[0]) and not new_member:
-                    current_member_of_parliament.append_names(row[0])
-                    member_2nd_line = True
-                    if row[2] != "":
-                        if guest_line_count < 2:
-                            guests[current_member_of_parliament][0].append_function(row[2])
-                            guest_line_count += 1
-                        else:
-                            log_warn_guest_too_many_lines(guest_line_count, current_member_of_parliament, row)
+    # her name is wrong in the PDFs provided by the Parlamentsdienste, not sure why
+    if badge.beneficiary_person_fullname == "Schürch Florence":
+        badge.beneficiary_person_fullname = "Schurch Florence"
 
 
-                elif is_faction_and_canton(row[0]):
-                    current_member_of_parliament.set_faction_and_canton(row[0])
-                    # name of member of parliament is on 2 lines
-                    if len(guests[current_member_of_parliament]) == 0:
-                        if row[1] != "":
-                            guest = create_guest(row, 1, 2)
-                            guest_line_count = 1
-                            if guest is not None:
-                                guests[current_member_of_parliament].append(guest)
-                    elif member_2nd_line:
-                        if row[1] != "":
-                            guest = create_guest(row, 1, 2)
-                            guest_line_count = 1
-                            if guest is not None:
-                                guests[current_member_of_parliament].append(guest)
-                    elif len(guests[current_member_of_parliament]) == 1:
-                        if guest_line_count < 2:
-                            if row[1] != "":
-                                guests[current_member_of_parliament][0].append_names(row[1])
-                            if row[2] != "":
-                                guests[current_member_of_parliament][0].append_function(row[2])
-                            if row[1] != "" or row[2] != "":
-                                guest_line_count += 1
-                        else:
-                            log_warn_guest_too_many_lines(guest_line_count, current_member_of_parliament, row)
+def apply_data_fixes_after_grouping(
+    badges_per_mp: Dict[int, List[opd.OpdAccessBadge]],
+) -> Dict[int, List[opd.OpdAccessBadge]]:
+    """OPD data is not alyways correct. This is the place to make (temporary) fixes. Try to include gitlab tickets so we know when to remove a fix."""
 
-                    elif row[1] != "" or row[2] != "":
-                        raise Exception("Invalid case for guest name of function")
-                    new_member = True
-                    member_2nd_line = False
+    for person_external_id in badges_per_mp:
+        # Andrea Caroni, https://gitlab.com/opendata.ch/openparldatach/data-infrastructure/-/work_items/15f (
+        # OPD reports two badges where it should just be one.
+        if person_external_id == "4075":
+            badges = badges_per_mp[person_external_id]
+            names = sorted(
+                [badge.beneficiary_person_fullname for badge in badges], reverse=True
+            )
 
-    # print counts for sanity check
-    print("{} members of parliament\n"
-          "{} guests total\n"
-          "{} members with 0 guests\n"
-          "{} members with 1 guest\n"
-          "{} members with 2 guests".format(
-              len(guests),
-              sum(len(guest) for guest in guests.values()),
-              sum(1 for guest in guests.values() if len(guest) == 0),
-              sum(1 for guest in guests.values() if len(guest) == 1),
-              sum(1 for guest in guests.values() if len(guest) == 2)))
+            if names == ["Monika Ruth", "Bodenmann-Odermatt"]:
+                badges[0].beneficiary_person_fullname = " ".join(names)
+                badges.remove(badges[1])
 
-    return convert_guests(guests)
+            badges_per_mp[person_external_id] = badges
 
-def log_warn_guest_too_many_lines(guest_line_count: int, current_member_of_parliament: MemberOfParliament, row: list[str]):
-    print("WARN: too many guest lines for parlamentarier {}: {}".format(current_member_of_parliament.names, guest_line_count))
-    print(row)
-
-# PYTHON <= 3.9 workaround: list[dict[str, str|dict[str, str]]]:
-def convert_guests(guests: dict[MemberOfParliament, list[Guest]]) -> list[dict[str, Union[str, dict[str, str]]]]:
-    return [{
-        "names": member_of_parliament.names,
-        "faction": member_of_parliament.faction,
-        "canton": member_of_parliament.canton,
-        "guests": [{
-            "names": guest.names,
-            "function": guest.function,
-            # "gender": guest.gender
-            } for guest in current_guests]
-        } for member_of_parliament, current_guests in guests.items()]
+    return badges_per_mp
 
 
-# is this table row a header row?
-def is_header(row):
-    if len(row) < 2:
-        return True
-    header_words = [
-        "Ratsmitglied",
-        "Fraktion / Kanton",
-        "Partei / Kanton",
-        "Membre du Conseil",
-        "Parti / Canton",
-        "Groupe / Canton",
-        "Membro del Consiglio",
-        "Partito / Cantone",
-        "Gruppo / Cantone"
-    ]
-
-    return any(header_word in row_entry
-               for header_word in header_words
-               for row_entry in row)
-
-
-# is this table row empty?
-def is_empty_row(row):
-    return all(len(entry.strip()) == 0 for entry in row)
-
-
-def is_page_number(row):
-    return row[0] == '' and row[1] == '' and (re.match(r'\d+/\d+', row[2]) != None or (len(row) > 3 and re.match(r'\d+/\d+', row[3]) != None))
-
-# is the field empty or contains only whitespace?
-def is_empty(s):
-    return len(s.strip()) == 0
-
-
-def is_faction_and_canton(s):
-    # members of parliament are formatted as
-    # <fraction>/<canton>"
-    return "/" in s
-
-
-# write member of parliament and guests to json file
-def write_to_json(guests_data, archive_pdf_name, filename, url, creation_date, modified_date, imported_date, stand_date):
-    metadata_data = {
-                "metadata": {
-                    "archive_pdf_name": archive_pdf_name,
-                    "filename": filename,
-                    "url": url,
-                    "pdf_creation_date": creation_date.isoformat(' '), # , timespec is addedin Python 3.6: 'seconds'
-                    "pdf_modified_date": modified_date.isoformat(' '), # , timespec is addedin Python 3.6: 'seconds'
-                    "imported_date": imported_date.isoformat(' '), # , timespec is addedin Python 3.6: 'seconds'
-                    "stand_date": stand_date.isoformat()
-                },
-                "data": guests_data
-    }
-    with open(filename, "wb") as json_file:
-        contents = json.dumps(metadata_data, indent=2,
-                              separators=(',', ': '),
-                              ensure_ascii=False).encode("utf-8")
-        json_file.write(contents)
-
-# Get path of this python script
-# http://stackoverflow.com/questions/4934806/how-can-i-find-scripts-directory-with-python
-def get_script_path():
-    return os.path.dirname(os.path.realpath(__file__))
-
-# download a pdf containing the guest lists of members of parlament in a table
-# then parse the file into json and save the json files to disk
-def scrape_pdf(url: str, local_pdf: str, json_filename: str, suffix: str):
-    script_path = get_script_path()
-    try:
-        raw_pdf_name = url.split("/")[-1]
-        import_date = datetime.now().replace(microsecond=0)
-        pdf_name = "{}-{}".format(import_date.strftime("%Y-%m-%d"), raw_pdf_name)
-        if local_pdf is None:
-            print("\ndownloading " + url)
-            pdf_helpers.get_pdf_from_admin_ch(url, pdf_name)
-        else:
-            print("\ncopy local PDF " + local_pdf)
-            copyfile(local_pdf, pdf_name)
-
-        print("\nextracting metadata...")
-        creation_date, modified_date = pdf_helpers.extract_creation_date(pdf_name)
-
-        tabula_path = script_path + "/tabula-1.0.5-jar-with-dependencies.jar"
-        print("parsing title page PDF...")
-        cmd = ["java", "-Djava.util.logging.config.file=web_scrapers/logging.properties", "-jar", tabula_path, pdf_name, "-o", TITLE_CSV, "--pages", "1", "-t", "-i"]
-        print(" ".join(cmd))
-        call(cmd, stderr=None)
-        stand_date = pdf_helpers.read_stand(TITLE_CSV)
-        print("\nStand: {}".format(stand_date.strftime("%d.%m.%Y")))
-        print("PDF creation date: {}".format(creation_date.strftime("%d.%m.%Y")))
-        print("PDF modified date: {}\n".format(modified_date.strftime("%d.%m.%Y")))
-        archive_pdf_name = "{}-{}".format(stand_date.strftime("%Y-%m-%d"), raw_pdf_name)
-
-        print("removing first page of PDF...")
-        call(["qpdf", "--pages", pdf_name, "2-z", "--", pdf_name, CONTENT_PDF])
-
-        print("parsing content PDF...")
-        cmd = ["java", "-Djava.util.logging.config.file=web_scrapers/logging.properties", "-jar", tabula_path, CONTENT_PDF, "-o", DATA_CSV, "--pages", "all", "-i"]
-        print(" ".join(cmd))
-        call(cmd, stderr=None)
-
-        print("cleaning up parsed data...")
-        guests = read_guests(DATA_CSV)
-
-        print("writing " + json_filename + "...")
-        write_to_json(guests, archive_pdf_name, json_filename, url, creation_date, modified_date, import_date, stand_date)
-
-        if local_pdf is None:
-            archive_json_filename = "{}-{}".format(creation_date.strftime("%Y-%m-%d"), json_filename)
-            print("archiving PDF " + archive_pdf_name)
-            copyfile(pdf_name, script_path + "/archive/{}".format(archive_pdf_name))
-            print("archiving JSON ...")
-            copyfile(json_filename, script_path + "/archive/{}".format(archive_json_filename))
-
-    finally:
-        print("cleaning up...")
-        if local_pdf is None:
-            os.rename(pdf_name, script_path + "/backup/{}".format(pdf_name))
-        else:
-            if os.path.isfile(pdf_name): os.remove(pdf_name)
-        backup_filename = "{}-{}".format(import_date.strftime("%Y-%m-%d"), json_filename)
-        if os.path.isfile(json_filename): copyfile(json_filename, script_path + "/backup/{}".format(backup_filename))
-        if os.path.isfile(CONTENT_PDF): os.remove(CONTENT_PDF)
-        if os.path.isfile(TITLE_CSV): os.remove(TITLE_CSV)
-        if os.path.isfile(DATA_CSV): os.rename(DATA_CSV, "zb_data_{}.csv".format(suffix))
-
-# scrape the nationalrat and ständerat guest lists and write them to
-# structured JSON files
-def scrape():
-    parser = ArgumentParser(description='Scarpe Parlamentarische Gruppen PDF')
-    parser.add_argument("local_pdf_NR", metavar="file", nargs='?', help="local PDF file for NR to use", default=None)
-    parser.add_argument("local_pdf_SR", metavar="file", nargs='?', help="local PDF file for SR to use", default=None)
-    args = parser.parse_args()
-    local_pdf_nr = args.local_pdf_NR
-    local_pdf_sr = args.local_pdf_SR
-
-    if local_pdf_nr and not local_pdf_sr:
-        print('Error: local PDF files must be filled for NR and SR')
-        exit(1)
-
-    root = "https://www.parlament.ch/centers/documents/de/"
-
-    #scrape nationalrat
-    scrape_pdf(root +
-               "zutrittsberechtigte-nr.pdf",
-               local_pdf_nr,
-               "zutrittsberechtigte-nr.json",
-               "nr")
-
-    #scrape ständerat
-    scrape_pdf(root +
-               "zutrittsberechtigte-sr.pdf",
-               local_pdf_sr,
-               "zutrittsberechtigte-sr.json",
-               "sr")
-
-
-#main method
 if __name__ == "__main__":
     scrape()
