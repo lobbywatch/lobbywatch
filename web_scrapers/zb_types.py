@@ -13,6 +13,7 @@ class JsonGuest(TypedDict):
     function: JsonFunction
     id: Optional[str]  # FIXME: only set by guest_added before inserting a new guest
     beneficiary_group: Optional[str]
+    valid_from: str
 
 
 class JsonParlamentarier(TypedDict):
