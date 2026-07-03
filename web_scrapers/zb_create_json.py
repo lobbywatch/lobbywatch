@@ -54,32 +54,12 @@ def scrape():
 
 def apply_data_fixes_to_single_badge(badge) -> None:
     """OPD data is not alyways correct. This is the place to make (temporary) fixes. Try to include gitlab tickets so we know when to remove a fix."""
-
-    # her name is wrong in the PDFs provided by the Parlamentsdienste, not sure why
-    if badge.beneficiary_person_fullname == "Schürch Florence":
-        badge.beneficiary_person_fullname = "Schurch Florence"
-
+    pass
 
 def apply_data_fixes_after_grouping(
     badges_per_mp: Dict[int, List[opd.OpdAccessBadge]],
 ) -> Dict[int, List[opd.OpdAccessBadge]]:
     """OPD data is not alyways correct. This is the place to make (temporary) fixes. Try to include gitlab tickets so we know when to remove a fix."""
-
-    for person_external_id in badges_per_mp:
-        # Andrea Caroni, https://gitlab.com/opendata.ch/openparldatach/data-infrastructure/-/work_items/15f (
-        # OPD reports two badges where it should just be one.
-        if person_external_id == "4075":
-            badges = badges_per_mp[person_external_id]
-            names = sorted(
-                [badge.beneficiary_person_fullname for badge in badges], reverse=True
-            )
-
-            if names == ["Monika Ruth", "Bodenmann-Odermatt"]:
-                badges[0].beneficiary_person_fullname = " ".join(names)
-                badges.remove(badges[1])
-
-            badges_per_mp[person_external_id] = badges
-
     return badges_per_mp
 
 
