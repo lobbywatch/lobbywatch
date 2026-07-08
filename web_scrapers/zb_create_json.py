@@ -54,7 +54,10 @@ def scrape():
 
 def apply_data_fixes_to_single_badge(badge) -> None:
     """OPD data is not alyways correct. This is the place to make (temporary) fixes. Try to include gitlab tickets so we know when to remove a fix."""
-    pass
+
+    # her name is wrong in the PDFs provided by the Parlamentsdienste, not sure why
+    if badge.beneficiary_person_fullname == "Schürch Florence":
+        badge.beneficiary_person_fullname = "Schurch Florence"
 
 def apply_data_fixes_after_grouping(
     badges_per_mp: Dict[int, List[opd.OpdAccessBadge]],
