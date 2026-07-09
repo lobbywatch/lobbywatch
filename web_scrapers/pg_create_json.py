@@ -51,7 +51,7 @@ def extract_mitglied(line):
     return name, rat, fraktion, kanton
 
 def match_mitglied(line):
-    return re.search(r'(.+)\s+(NR/CN/CN|SR/CE/CS)\s+(Fraktion|Groupe)\s+([-A-Z]+)\s+([A-Z]{2})\s*', line)
+    return re.search(r'(.+)\s+(NR/CN/CN|SR/CE/CS)\s+(Fraktion|Groupe|Fraktionslos)\s+([-A-Z]+)?\s*([A-Z]{2})\s*', line)
 
 def extract_sekretariat(line):
     if ':' in line and '://' not in line:
