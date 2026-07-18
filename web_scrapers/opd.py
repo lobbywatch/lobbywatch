@@ -24,7 +24,7 @@ class TranslatedString(BaseModel):
 
 
 class OpdAccessBadge(BaseModel):
-    type_harmonized: Optional[Literal["lobbyist", "staff", "guest"]]
+    type_harmonized: Optional[Literal["lobbyist", "staff", "guest", "language_assistant"]]
     type: Union[
         Optional[TranslatedString], dict
     ]  # sometimes it really is an empty dict
