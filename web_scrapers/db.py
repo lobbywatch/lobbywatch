@@ -271,18 +271,18 @@ def get_person_id(database, names):
 def get_organisation_id(database, name_de, name_fr, name_it):
     with database.cursor() as cursor:
         organisation_id = None
-        # Exlcude Wasser since Wasser matches also with Wasserstoff
+        # Exclude 'Kunst' since 'Kunst' matches also with 'Künstliche Intelligenz'
         query = """
 SELECT id, inaktiv, rechtsform
 FROM organisation
 WHERE (
 name_de = '{0}'
-OR (name_de LIKE '{0}%' AND '{0}' <> 'Wasser')
+OR (name_de LIKE '{0}%' AND '{0}' <> 'Kunst')
 OR name_de LIKE 'Parlamentarische Gruppe%{0}'
 OR CONCAT_WS(' ', name_de, abkuerzung_de) LIKE 'Parlamentarische Gruppe%{0}'
 OR name_de LIKE 'Parlamentarische%{0}'
 OR (CHAR_LENGTH(name_de) > 8 AND LOWER(name_de) = LOWER(SUBSTR('{0}', 1, CHAR_LENGTH(name_de))))
-OR (CHAR_LENGTH('{0}') > 8 AND LOWER('{0}') = LOWER(SUBSTR(name_de, 1, CHAR_LENGTH('{0}')))) AND '{0}' <> 'Wasser')
+OR (CHAR_LENGTH('{0}') > 8 AND LOWER('{0}') = LOWER(SUBSTR(name_de, 1, CHAR_LENGTH('{0}')))) AND '{0}' <> 'Kunst')
 AND rechtsform IN ('Parlamentarische Gruppe', 'Parlamentarische Freundschaftsgruppe')
         """.format(escape_SQL(name_de))
 
